@@ -8,6 +8,9 @@
     <%= stylesheet_link_tag "blueprint/print.css", :media => "print" %>
     <!--[if IE]><%= stylesheet_link_tag "blueprint/lib/ie.css", 
                       :media => "screen, projection" %><![endif]-->
+    <style type="text/css">
+      .with-grid { background: url('/stylesheets/blueprint/lib/grid.png'); }
+    </style>
   </head>
   <body>
     <div id="main" class="container">
@@ -31,6 +34,13 @@
         </p>
       </div>
     </div>
+    <%- if development? -%>
+    <div>
+      <%= link_to 'Show Grid', '#',
+                  :onclick => "$('main').className+=' with-grid'; "%>
+      <%= render :partial => "shared/debug" %>
+    </div>
+    <%- end -%>
     <%= javascript_include_tag :defaults %>
   </body>
 </html>
