@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>InstantSocial | <%= yield :main_title %></title>
+    <%= stylesheet_link_tag "blueprint/screen.css", 
+                            :media => "screen, projection" %>
+    <%= stylesheet_link_tag "blueprint/print.css", :media => "print" %>
+    <!--[if IE]><%= stylesheet_link_tag "blueprint/lib/ie.css", 
+                      :media => "screen, projection" %><![endif]-->
+  </head>
+  <body>
+    <div id="main" class="container">
+      <div class="column first last span-24">
+        <h1>InstantSocial</h1>
+      </div>
+      <div class="column first span-6">
+        <h3>Left</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+      <div class="column span-12">
+        <% flash.each do |key, msg| %>  
+          <%= content_tag :div, msg, :class => "span-12 flash flash-#{key}" %>
+        <% end %>
+        <%= yield %>
+      </div>
+      <div class="column span-6 last">
+        <h3>Right</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+      </div>
+    </div>
+    <%= javascript_include_tag :defaults %>
+  </body>
+</html>
