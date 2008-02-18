@@ -1,0 +1,14 @@
+log/*.log
+log/*.out
+tmp/**/*
+.DS_Store
+doc/api
+doc/app
+db/schema.rb
+db/schema.sql
+db/*.sqlite3*
+config/database.yml
+public/photos/*
+uuid.state
+nbproject*
+index/*
