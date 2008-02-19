@@ -6,6 +6,7 @@ include AuthenticatedTestHelper
 
 describe PeopleController do
   fixtures :people
+  integrate_views
 
   it 'allows signup' do
     lambda do
@@ -13,10 +14,6 @@ describe PeopleController do
       response.should be_redirect      
     end.should change(Person, :count).by(1)
   end
-
-  
-
-  
 
   it 'requires login on signup' do
     lambda do
