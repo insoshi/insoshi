@@ -2,12 +2,13 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>InstantSocial | <%= yield :main_title %></title>
+    <title>InstantSocial</title>
     <%= stylesheet_link_tag "blueprint/screen.css", 
                             :media => "screen, projection" %>
     <%= stylesheet_link_tag "blueprint/print.css", :media => "print" %>
     <!--[if IE]><%= stylesheet_link_tag "blueprint/lib/ie.css", 
                       :media => "screen, projection" %><![endif]-->
+    <%= stylesheet_link_tag "menus.css" %>
     <style type="text/css">
       .with-grid { background: url('/stylesheets/blueprint/lib/grid.png'); }
     </style>
@@ -16,6 +17,18 @@
     <div id="main" class="container">
       <div class="column first last span-24">
         <h1>InstantSocial</h1>
+      </div>
+      <div class="column first last span-24">
+        
+        <div id="navcontainer">
+          <ul id="navlist">
+          <li id="active"><a href="#" id="current">Item one</a></li>
+          <li><a href="#">Item two</a></li>
+          <li><a href="#">Item three</a></li>
+          <li><a href="#">Item four</a></li>
+          <li><a href="#">Item five</a></li>
+          </ul>
+        </div>
       </div>
       <div class="column first span-6">
         <h3>Left</h3>
