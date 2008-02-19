@@ -14,14 +14,6 @@ describe PeopleController do
       response.should be_redirect      
     end.should change(Person, :count).by(1)
   end
-
-  it 'requires login on signup' do
-    lambda do
-      create_person(:login => nil)
-      assigns[:person].errors.on(:login).should_not be_nil
-      response.should be_success
-    end.should_not change(Person, :count)
-  end
   
   it 'requires password on signup' do
     lambda do

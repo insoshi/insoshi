@@ -20,14 +20,7 @@ describe Person do
       @creating_person.should change(Person, :count).by(1)
     end
   end
-
-  it 'requires login' do
-    lambda do
-      u = create_person(:login => nil)
-      u.errors.on(:login).should_not be_nil
-    end.should_not change(Person, :count)
-  end
-
+  
   it 'requires password' do
     lambda do
       u = create_person(:password => nil)
@@ -51,16 +44,16 @@ describe Person do
 
   it 'resets password' do
     people(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
-    Person.authenticate('quentin', 'new password').should == people(:quentin)
+    Person.authenticate('quentin@example.com', 'new password').should == people(:quentin)
   end
 
   it 'does not rehash password' do
-    people(:quentin).update_attributes(:login => 'quentin2')
-    Person.authenticate('quentin2', 'test').should == people(:quentin)
+    people(:quentin).update_attributes(:email => 'quentin2@example.com')
+    Person.authenticate('quentin2@example.com', 'test').should == people(:quentin)
   end
 
   it 'authenticates person' do
-    Person.authenticate('quentin', 'test').should == people(:quentin)
+    Person.authenticate('queNTin@eXample.com', 'test').should == people(:quentin)
   end
 
   it 'sets remember token' do
@@ -104,7 +97,7 @@ describe Person do
 
 protected
   def create_person(options = {})
-    record = Person.new({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
+    record = Person.new({ :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
     record.save
     record
   end

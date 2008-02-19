@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    self.current_person = Person.authenticate(params[:login], params[:password])
+    self.current_person = Person.authenticate(params[:email], params[:password])
     if logged_in?
       if params[:remember_me] == "1"
         self.current_person.remember_me

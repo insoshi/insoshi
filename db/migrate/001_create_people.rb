@@ -10,9 +10,11 @@ class CreatePeople < ActiveRecord::Migration
       t.column :remember_token,            :string
       t.column :remember_token_expires_at, :datetime
     end
+    add_index :people, :email
   end
 
   def self.down
     drop_table "people"
+    remove_index :people, :email
   end
 end

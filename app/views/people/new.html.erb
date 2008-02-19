@@ -1,7 +1,7 @@
 <%= error_messages_for :person %>
 <% form_for :person, :url => people_path do |f| -%>
-<p><label for="login">Login</label><br/>
-<%= f.text_field :login %></p>
+<p><label for="email">Email address</label><br/>
+<%= f.text_field :email %></p>
 
 <p><label for="email">Email</label><br/>
 <%= f.text_field :email %></p>
