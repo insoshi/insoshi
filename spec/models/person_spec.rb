@@ -5,24 +5,26 @@ describe Person do
   before(:each) do
     @person = people(:quentin)
   end
-  
-  it "should be valid" do
-    create_person.should be_valid
-  end
-  
-  it 'requires password' do
-    u = create_person(:password => nil)
-    u.errors.on(:password).should_not be_nil
-  end
 
-  it 'requires password confirmation' do
-    u = create_person(:password_confirmation => nil)
-    u.errors.on(:password_confirmation).should_not be_nil
-  end
+  describe "attributes" do
+    it "should be valid" do
+      create_person.should be_valid
+    end
+  
+    it 'requires password' do
+      u = create_person(:password => nil)
+      u.errors.on(:password).should_not be_nil
+    end
 
-  it 'requires email' do
-    u = create_person(:email => nil)
-    u.errors.on(:email).should_not be_nil
+    it 'requires password confirmation' do
+      u = create_person(:password_confirmation => nil)
+      u.errors.on(:password_confirmation).should_not be_nil
+    end
+
+    it 'requires email' do
+      u = create_person(:email => nil)
+      u.errors.on(:email).should_not be_nil
+    end
   end
 
   it 'resets password' do
@@ -87,7 +89,9 @@ protected
   def create_person(options = {})
     record = Person.new({ :email => 'quire@example.com',
                           :password => 'quire',
-                          :password_confirmation => 'quire' }.merge(options))
+                          :password_confirmation => 'quire',
+                          :name => 'Quire',
+                          :description => 'A new person' }.merge(options))
     record.valid?
     record
   end
