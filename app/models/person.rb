@@ -4,13 +4,14 @@ class Person < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description
 
-  validates_presence_of     :email, :name, :description
+  validates_presence_of     :email
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 4..40, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :email
+  validates_presence_of     :name, :description, :on => :update
   
   before_save :downcase_email, :encrypt_password
   
