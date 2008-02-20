@@ -5,7 +5,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 include AuthenticatedTestHelper
 
 describe PeopleController do
-  fixtures :people
   integrate_views
 
   it 'allows signup' do

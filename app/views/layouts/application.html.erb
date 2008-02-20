@@ -37,12 +37,22 @@
       </div>
       <div class="column span-12">
         <% flash.each do |key, msg| %>  
-          <%= content_tag :div, msg, :class => "span-12 flash flash-#{key}" %>
+          <%= content_tag :div, msg, :class => "span-11 flash #{key}" %>
         <% end %>
         <%= yield %>
       </div>
       <div class="column span-6 last">
         <h3>Right</h3>
+        <div class="box">
+          <h4>
+            <%- if logged_in? -%>
+              <%= link_to "Sign out", logout_path %>
+            <%- else -%>
+              <%= link_to "Sign in", login_path %> or
+              <%= link_to "Sign up", signup_path %>
+            <%- end -%>
+          </h4>
+        </div>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </div>

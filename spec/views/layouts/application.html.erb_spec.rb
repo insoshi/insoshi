@@ -20,4 +20,36 @@ describe "layout when not logged in" do
                                                       "screen, projection")
     response.should have_tag("link[type=?][media=?]", "text/css", "print")
   end
+  
+  it "should have a login link" do
+    response.should have_tag("a[href=?]", login_path)
+  end
+  
+  it "should have a signup link" do
+    response.should have_tag("a[href=?]", signup_path)
+  end
+  
+  it "should not have a sign out link" do
+    response.should_not have_tag("a[href=?]", logout_path)
+  end
+end
+
+describe "layout when logged in" do
+  
+  before(:each) do
+    login_as :quentin
+    render "/layouts/application.html.erb"
+  end
+  
+  it "should not have a login link" do
+    response.should_not have_tag("a[href=?]", login_path)
+  end
+  
+  it "should not have a signup link" do
+    response.should_not have_tag("a[href=?]", signup_path)
+  end
+  
+  it "should have a sign out link" do
+    response.should have_tag("a[href=?]", logout_path)
+  end
 end

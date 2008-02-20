@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-# Be sure to include AuthenticatedTestHelper in spec/spec_helper.rb instead
-# Then, you can remove it from this and the units test.
-include AuthenticatedTestHelper
-
 describe SessionsController do
-  fixtures :people
+  
+  it "should render the new session page" do
+    get :new
+    response.should be_success
+  end
 
   it 'logins and redirects' do
     post :create, :email => 'quentin@example.com', :password => 'test'
