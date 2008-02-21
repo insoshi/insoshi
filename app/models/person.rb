@@ -1,5 +1,6 @@
 require 'digest/sha1'
 class Person < ActiveRecord::Base
+  
   TEXT_LENGTH = 120 # truncation parameter for people listings
   NAME_LENGTH = 32
   DESCRIPTION_LENGTH = 2000
