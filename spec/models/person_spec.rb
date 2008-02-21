@@ -25,6 +25,14 @@ describe Person do
       u = create_person(:email => nil)
       u.errors.on(:email).should_not be_nil
     end
+    
+    it "should have associated photos" do
+      @person.photos.should_not be_nil
+    end
+    
+    it "should not currently have any photos" do
+      @person.photos.should be_empty
+    end
   end
 
   it 'resets password' do

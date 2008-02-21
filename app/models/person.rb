@@ -13,6 +13,7 @@ class Person < ActiveRecord::Base
   NUM_RECENT_MESSAGES = 4
   NUM_RECENTLY_VIEWED = 4
   
+  has_many :photos
   attr_accessor :password
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description
