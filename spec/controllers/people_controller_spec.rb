@@ -24,7 +24,8 @@ describe PeopleController do
     end
         
     it "should have a working edit page" do
-      get :edit, :id => people(:quentin)
+      person = login_as(:quentin)
+      get :edit, :id => person
       response.should be_success
       response.should render_template("edit")      
     end    
@@ -65,6 +66,7 @@ describe PeopleController do
   end
   
   describe "edit" do
+    integrate_views
     
     before(:each) do
       @person = login_as(:quentin)
@@ -81,10 +83,24 @@ describe PeopleController do
       assigns(:current_person).description.should == "Me!"
       response.should redirect_to(person_url(assigns(:current_person)))
     end
+    
+    it "should render edit page on invalid update" do
+      put :update, :id => @person, :person => { :email => "foo" }
+      response.should be_success
+      response.should render_template("edit")
+    end
+    
+    it "should require the right authorized user" do
+      login_as(:aaron)
+      put :update, :id => @person
+      response.should redirect_to(home_url)
+    end
   end
   
-  def create_person(options = {})
-    post :create, :person => { :email => 'quire@example.com',
-      :password => 'quire', :password_confirmation => 'quire' }.merge(options)
-  end
+  private
+
+    def create_person(options = {})
+      post :create, :person => { :email => 'quire@example.com',
+        :password => 'quux', :password_confirmation => 'quux' }.merge(options)
+    end
 end

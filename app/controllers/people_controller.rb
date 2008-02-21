@@ -1,5 +1,7 @@
 class PeopleController < ApplicationController
   
+  before_filter :correct_user_required, :only => [ :edit, :update ]
+  
   def index
     @people = Person.paginate(:all, :page => params[:page])
 
@@ -35,10 +37,11 @@ class PeopleController < ApplicationController
   end
 
   def update
+    @person = current_person
     respond_to do |format|
-      if current_person.update_attributes(params[:person])
+      if @person.update_attributes(params[:person])
         flash[:success] = 'Profile updated!'
-        format.html { redirect_to(current_person) }
+        format.html { redirect_to(@person) }
       else
         format.html { render :action => "edit" }
       end
@@ -46,4 +49,8 @@ class PeopleController < ApplicationController
   end
   
   private
+  
+  def correct_user_required
+    redirect_to home_url unless Person.find(params[:id]) == current_person
+  end
 end
