@@ -1,14 +1,24 @@
 <%= error_messages_for :person %>
+
 <% form_for :person, :url => people_path do |f| -%>
-<p><label for="email">Email address</label><br/>
-<%= f.text_field :email %></p>
-<%= set_focus_to_id "person_email" %>
+<div class="form_row">
+  <label for="email">Email address (never made public)</label>
+  <br />
+  <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
+  <%= set_focus_to_id "person_email" %>
+</div>
 
-<p><label for="password">Password</label><br/>
-<%= f.password_field :password %></p>
+<div class="form_row">
+  <label for="password">Password</label>
+  <br />
+  <%= f.password_field :password, :maxlength => Person::MAX_PASSWORD %>
+</div>
 
-<p><label for="password_confirmation">Confirm Password</label><br/>
-<%= f.password_field :password_confirmation %></p>
-
-<p><%= submit_tag 'Sign up' %></p>
-<% end -%>
+<div class="form_row">
+  <label for="password_confirmation">Confirm Password</label>
+  <br />
+  <%= f.password_field :password_confirmation, 
+                       :maxlength => Person::MAX_PASSWORD,
+                       :value => "" %>
+</div>
+<% end %>

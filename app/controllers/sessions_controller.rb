@@ -15,6 +15,8 @@ class SessionsController < ApplicationController
       redirect_back_or_default('/')
       flash[:success] = "Logged in successfully"
     else
+      flash[:error] = "Invalid email/password combination"
+      params[:password] = nil      
       render :action => 'new'
     end
   end

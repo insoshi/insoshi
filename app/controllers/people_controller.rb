@@ -1,8 +1,6 @@
 class PeopleController < ApplicationController
   
   
-  
-  # render new.rhtml
   def new
   end
 
@@ -23,7 +21,6 @@ class PeopleController < ApplicationController
   def edit
   end
 
-  # PUT /people/1
   def update
     respond_to do |format|
       if current_person.update_attributes(params[:person])

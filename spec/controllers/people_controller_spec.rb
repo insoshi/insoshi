@@ -1,9 +1,10 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PeopleController do
-  integrate_views
   
   describe "signup" do
+    integrate_views
+
     it 'allows signup' do
       lambda do
         create_person
