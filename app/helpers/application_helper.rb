@@ -1,8 +1,14 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def menu
-    [{ :content => "Home",   :href => home_url },
-     { :content => "People", :href => people_url }]
+    if logged_in?
+      [{ :content => "Home",   :href => home_path },
+       { :content => "My Profile" , :href => person_path(current_person) },
+       { :content => "People", :href => people_path }]
+    else
+      [{ :content => "Home",   :href => home_path },
+       { :content => "People", :href => people_path }]
+    end
   end
   
   def menu_link_to(link, options = {})

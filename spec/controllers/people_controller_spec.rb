@@ -40,6 +40,11 @@ describe PeopleController do
       get :index
       response.should be_success
     end
+    
+    it "should show a person" do
+      get :show, :id => people(:quentin)
+      response.should be_success
+    end
   end
   
   describe "edit" do

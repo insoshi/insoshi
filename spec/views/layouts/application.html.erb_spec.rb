@@ -37,7 +37,7 @@ end
 describe "layout when logged in" do
   
   before(:each) do
-    login_as :quentin
+    @person = login_as :quentin
     render "/layouts/application.html.erb"
   end
   
@@ -51,5 +51,9 @@ describe "layout when logged in" do
   
   it "should have a sign out link" do
     response.should have_tag("a[href=?]", logout_path)
+  end
+  
+  it "should have a profile link" do
+    response.should have_tag("a[href=?]", person_path(@person))
   end
 end
