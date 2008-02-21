@@ -51,4 +51,16 @@ Spec::Runner.configure do |config|
     end
     return t
   end
+  
+  def all_pages_protected
+    logout
+    # [:index, :show, :sent, :trash, :new, :edit].each do |action|
+    #   get action
+    #   assert_redirected_to login_url
+    # end
+    # post :create
+    # assert_redirected_to login_url
+    # put :update
+    # assert_redirected_to login_url    
+  end
 end

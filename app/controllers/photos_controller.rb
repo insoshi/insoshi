@@ -1,19 +1,17 @@
 class PhotosController < ApplicationController
 
-  # before_filter :login_required
+  before_filter :login_required
   # before_filter :correct_user_required, :only => [ :edit, :update, :destroy ]
   # before_filter :cancellation, :only => [ :create ]
-  # 
-  # 
-  # def index
-  #   @person = Person.find_by_hashed_id(params[:person_id])
-  #   @photos = @person.photos
-  # 
-  #   respond_to do |format|
-  #     format.html # index.html.erb
-  #     format.xml  { render :xml => @photos }
-  #   end
-  # end
+
+
+  def index
+    @photos = current_person.photos
+  
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
 
   # # GET /photos/new
   # # GET /photos/new.xml

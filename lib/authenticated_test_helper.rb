@@ -14,6 +14,10 @@ module AuthenticatedTestHelper
     person
   end
 
+  def logout
+    @request.session[:person_id] = nil
+  end
+
   def authorize_as(user)
     @request.env["HTTP_AUTHORIZATION"] = user ? ActionController::HttpAuthentication::Basic.encode_credentials(users(user).login, 'test') : nil
   end
