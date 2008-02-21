@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe SessionsController do
+  integrate_views
   
   it "should render the new session page" do
     get :new

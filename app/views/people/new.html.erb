@@ -2,6 +2,7 @@
 <% form_for :person, :url => people_path do |f| -%>
 <p><label for="email">Email address</label><br/>
 <%= f.text_field :email %></p>
+<%= set_focus_to_id "person_email" %>
 
 <p><label for="password">Password</label><br/>
 <%= f.password_field :password %></p>

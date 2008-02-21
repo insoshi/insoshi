@@ -12,6 +12,7 @@
     <style type="text/css">
       .with-grid { background: url('/stylesheets/blueprint/lib/grid.png'); }
     </style>
+    <%= javascript_include_tag :defaults %>
   </head>
   <body>
     <div id="main" class="container">
@@ -60,6 +61,5 @@
       <%= render :partial => "shared/debug" %>
     </div>
     <%- end -%>
-    <%= javascript_include_tag :defaults %>
   </body>
 </html>

@@ -1,6 +1,8 @@
 require 'digest/sha1'
 class Person < ActiveRecord::Base
   
+  MAX_EMAIL = MAX_PASSWORD = 40
+  EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
   TEXT_LENGTH = 120 # truncation parameter for people listings
   NAME_LENGTH = 32
   DESCRIPTION_LENGTH = 2000
@@ -16,11 +18,15 @@ class Person < ActiveRecord::Base
                   :description
   
   validates_presence_of     :email
-  validates_presence_of     :password,                   :if => :password_required?
-  validates_presence_of     :password_confirmation,      :if => :password_required?
-  validates_length_of       :password, :within => 4..40, :if => :password_required?
-  validates_confirmation_of :password,                   :if => :password_required?
-  validates_length_of       :email,    :within => 3..100
+  validates_presence_of     :password,              :if => :password_required?
+  validates_presence_of     :password_confirmation, :if => :password_required?
+  validates_length_of       :password, :within => 4..MAX_PASSWORD,
+                                       :if => :password_required?
+  validates_confirmation_of :password, :if => :password_required?
+  validates_length_of       :email,    :within => 3..MAX_EMAIL
+  validates_format_of       :email,                                    
+                            :with => EMAIL_REGEX,                      
+                            :message => "must be a valid email address"
   validates_uniqueness_of   :email
   
   before_save :downcase_email, :encrypt_password
