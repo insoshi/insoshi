@@ -31,10 +31,24 @@ Spec::Runner.configure do |config|
   #
   # == Mock Framework
   #
-  # RSpec uses it's own mocking framework by default. If you prefer to
+  # RSpec uses its own mocking framework by default. If you prefer to
   # use mocha, flexmock or RR, uncomment the appropriate line:
   #
   # config.mock_with :mocha
   # config.mock_with :flexmock
   # config.mock_with :rr
+  
+  # Simulate an uploaded file.
+  def uploaded_file(filename, content_type)
+    t = Tempfile.new(filename)
+    t.binmode
+    path = File.join(RAILS_ROOT, "spec", "images", filename)
+    FileUtils.copy_file(path, t.path)
+    (class << t; self; end).class_eval do
+      alias local_path path
+      define_method(:original_filename) {filename}
+      define_method(:content_type) {content_type}
+    end
+    return t
+  end
 end
