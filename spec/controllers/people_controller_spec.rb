@@ -38,10 +38,20 @@ describe PeopleController do
     end.should_not change(Person, :count)
   end
   
+  it "should allow mass assignment to name" do
+    put :update, :id => create_person, :person => { :name => "Foo Bar" }
+    assigns(:current_person).name.should == "Foo Bar"
+    response.should redirect_to(person_url(assigns(:current_person)))
+  end
   
+  it "should allow mass assignment to description" do
+    put :update, :id => create_person, :person => { :description => "Me!" }
+    assigns(:current_person).description.should == "Me!"
+    response.should redirect_to(person_url(assigns(:current_person)))
+  end
   
   def create_person(options = {})
-    post :create, :person => { :login => 'quire', :email => 'quire@example.com',
+    post :create, :person => { :email => 'quire@example.com',
       :password => 'quire', :password_confirmation => 'quire' }.merge(options)
   end
 end

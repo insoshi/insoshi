@@ -1,9 +1,19 @@
 require 'digest/sha1'
 class Person < ActiveRecord::Base
+  TEXT_LENGTH = 120 # truncation parameter for people listings
+  NAME_LENGTH = 32
+  DESCRIPTION_LENGTH = 2000
+  TRASH_TIME_AGO = 1.month.ago
+  SEARCH_LIMIT = 20
+  SEARCH_PER_PAGE = 5
+  MESSAGES_PER_PAGE = 5
+  NUM_RECENT_MESSAGES = 4
+  NUM_RECENTLY_VIEWED = 4
+  
   attr_accessor :password
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description
-
+  
   validates_presence_of     :email
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
@@ -11,7 +21,6 @@ class Person < ActiveRecord::Base
   validates_confirmation_of :password,                   :if => :password_required?
   validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :email
-  validates_presence_of     :name, :description, :on => :update
   
   before_save :downcase_email, :encrypt_password
   
