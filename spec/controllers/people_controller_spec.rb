@@ -35,6 +35,11 @@ describe PeopleController do
         response.should be_success
       end.should_not change(Person, :count)
     end
+    
+    it "should have a working index" do
+      get :index
+      response.should be_success
+    end
   end
   
   describe "edit" do

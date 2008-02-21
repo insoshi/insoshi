@@ -1,5 +1,12 @@
 class PeopleController < ApplicationController
   
+  def index
+    @people = Person.paginate(:all, :page => params[:page])
+
+    respond_to do |format|
+      format.html # index.html.erb
+    end
+  end
   
   def new
   end

@@ -1,1 +1,13 @@
-foo
+<% unless @people.empty? -%>
+  <%= will_paginate %>
+  <ul>
+    <%- @people.each do |person| -%>
+     <li><%= person.name %></li>
+    <%- end -%>
+  </ul>
+  <%= will_paginate %>
+<% else %>
+  <h2>No results to show.</h2>
+<% end -%>
+
+<div class="clear"></div>
