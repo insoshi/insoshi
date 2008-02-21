@@ -30,19 +30,27 @@ class Person < ActiveRecord::Base
     u = find_by_email(email.downcase) # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
-
-  # Encrypts some data with the salt.
-  def self.encrypt(password, salt)
-    Digest::SHA1.hexdigest("--#{salt}--#{password}--")
+  
+  def self.encrypt(password)
+    Crypto::Key.from_file('rsa_key.pub').encrypt(password)
   end
 
   # Encrypts the password with the user salt
   def encrypt(password)
-    self.class.encrypt(password, salt)
+    self.class.encrypt(password)
+  end
+
+  def decrypt(password)
+    Crypto::Key.from_file('rsa_key').decrypt(password)
   end
 
   def authenticated?(password)
-    crypted_password == encrypt(password)
+    unencrypted_password == password
+  end
+  
+  def unencrypted_password
+    # The gsub trickery is to unescape the key from the DB.
+    decrypt(crypted_password.gsub(/\\n/, "\n"))
   end
 
   def remember_token?
@@ -51,7 +59,7 @@ class Person < ActiveRecord::Base
 
   # These create and unset the fields required for remembering users between browser closes
   def remember_me
-    remember_me_for 2.weeks
+    remember_me_for 2.years
   end
 
   def remember_me_for(time)
@@ -60,7 +68,8 @@ class Person < ActiveRecord::Base
 
   def remember_me_until(time)
     self.remember_token_expires_at = time
-    self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
+    key = "#{email}--#{remember_token_expires_at}"
+    self.remember_token = Digest::SHA1.hexdigest(key)
     save(false)
   end
 
@@ -78,13 +87,10 @@ class Person < ActiveRecord::Base
 
     def encrypt_password
       return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{email}--") if new_record?
       self.crypted_password = encrypt(password)
     end
       
     def password_required?
       crypted_password.blank? || !password.blank?
     end
-    
-    
 end

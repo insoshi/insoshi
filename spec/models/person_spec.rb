@@ -33,11 +33,6 @@ describe Person do
     Person.authenticate('quentin@example.com', 'newp').should == @person
   end
 
-  it 'does not rehash password' do
-    @person.update_attributes(:email => 'quentin2@example.com')
-    Person.authenticate('quentin2@example.com', 'test').should == @person
-  end
-
   it 'authenticates person' do
     Person.authenticate('quentin@example.com', 'test').should == @person
   end
@@ -77,9 +72,9 @@ describe Person do
   end
 
   it 'remembers me default two weeks' do
-    before = 2.weeks.from_now.utc
+    before = 2.years.from_now.utc
     @person.remember_me
-    after = 2.weeks.from_now.utc
+    after = 2.years.from_now.utc
     @person.remember_token.should_not be_nil
     @person.remember_token_expires_at.should_not be_nil
     @person.remember_token_expires_at.between?(before, after).should be_true
