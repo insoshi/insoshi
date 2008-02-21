@@ -9,11 +9,8 @@
 
 /* Indentation instead of line shifts for sibling paragraphs. */
    p + p { text-indent:2em; margin-top:-1.5em; }
-
-/* Ornaments on first paragraph.
-   Commented out by default. Use with care.
-   p:before { content: "\2767"; padding-right: 0.4em; }
-   p + p:before { content: ""; padding:0; } */
+   form p + p  { text-indent: 0; } /* Don't want this in forms. */
+   
 
 /* For great looking type, use this code instead of asdf: 
    <span class="alt">asdf</span>  
