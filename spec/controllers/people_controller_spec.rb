@@ -2,8 +2,35 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PeopleController do
   
-  describe "signup" do
+  describe "people pages" do
     integrate_views
+    
+    it "should have a working index" do
+      get :index
+      response.should be_success
+      response.should render_template("index")
+    end
+
+    it "should have a working new page" do
+      get :new
+      response.should be_success
+      response.should render_template("new")
+    end
+    
+    it "should have a working show page" do
+      get :show, :id => people(:quentin)
+      response.should be_success
+      response.should render_template("show")
+    end
+        
+    it "should have a working edit page" do
+      get :edit, :id => people(:quentin)
+      response.should be_success
+      response.should render_template("edit")      
+    end    
+  end
+  
+  describe "signup" do
 
     it 'allows signup' do
       lambda do
@@ -35,22 +62,12 @@ describe PeopleController do
         response.should be_success
       end.should_not change(Person, :count)
     end
-    
-    it "should have a working index" do
-      get :index
-      response.should be_success
-    end
-    
-    it "should show a person" do
-      get :show, :id => people(:quentin)
-      response.should be_success
-    end
   end
   
   describe "edit" do
     
     before(:each) do
-      @person = create_person
+      @person = login_as(:quentin)
     end
     
     it "should allow mass assignment to name" do
@@ -63,11 +80,6 @@ describe PeopleController do
       put :update, :id => @person, :person => { :description => "Me!" }
       assigns(:current_person).description.should == "Me!"
       response.should redirect_to(person_url(assigns(:current_person)))
-    end
-  
-    it "should have a working edit page" do
-      get :edit, :id => @person
-      response.should be_success
     end
   end
   

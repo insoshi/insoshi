@@ -13,6 +13,7 @@ class PeopleController < ApplicationController
   end
   
   def new
+    @person = Person.new
   end
 
   def create
@@ -30,6 +31,7 @@ class PeopleController < ApplicationController
 
 
   def edit
+    @person = Person.find(params[:id])
   end
 
   def update
@@ -42,4 +44,6 @@ class PeopleController < ApplicationController
       end
     end
   end
+  
+  private
 end

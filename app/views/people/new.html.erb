@@ -1,6 +1,6 @@
 <%= error_messages_for :person %>
 
-<% form_for :person, :url => people_path do |f| -%>
+<% form_for @person do |f| -%>
 <div class="form_row">
   <label for="email">Email address (never made public)</label>
   <br />

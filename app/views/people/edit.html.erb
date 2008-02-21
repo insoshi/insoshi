@@ -2,7 +2,7 @@
 
 <h2>Name</h2>
 
-<% form_for(current_person) do |f| %>
+<% form_for @person do |f| %>
   <div class="form_row">
     <%= f.text_field :name, :maxlength => Person::NAME_LENGTH %>
   </div>
