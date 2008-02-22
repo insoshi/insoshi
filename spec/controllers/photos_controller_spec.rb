@@ -37,5 +37,13 @@ describe PhotosController do
       response.should be_success
       response.should render_template("edit")
     end
+    
+    it "should create photo" do
+      image = uploaded_file("rails.png")
+      num_thumbnails = 2
+      lambda do
+        post :create, :photo => { :uploaded_data => image }
+      end.should change(Photo, :count).by(num_thumbnails + 1)
+    end
   end
 end

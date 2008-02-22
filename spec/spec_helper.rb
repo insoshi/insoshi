@@ -39,7 +39,7 @@ Spec::Runner.configure do |config|
   # config.mock_with :rr
   
   # Simulate an uploaded file.
-  def uploaded_file(filename, content_type)
+  def uploaded_file(filename, content_type = "image/png")
     t = Tempfile.new(filename)
     t.binmode
     path = File.join(RAILS_ROOT, "spec", "images", filename)
