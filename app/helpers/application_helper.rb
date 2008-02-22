@@ -4,6 +4,7 @@ module ApplicationHelper
     if logged_in?
       [{ :content => "Home",   :href => home_path },
        { :content => "My Profile" , :href => person_path(current_person) },
+       { :content => "My Photos" , :href => photos_path },
        { :content => "People", :href => people_path }]
     else
       [{ :content => "Home",   :href => home_path },

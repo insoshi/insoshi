@@ -10,7 +10,7 @@ class Photo < ActiveRecord::Base
                  :thumbnails => { :thumbnail => '110x110>',
                                   :icon      => '40x40>' },
                  :processor => 'ImageScience'
-  # validates_as_attachment
+                 
   # Override the crappy default AttachmentFu error messages.
   def validate
     if filename.nil?
