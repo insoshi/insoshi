@@ -52,15 +52,13 @@ Spec::Runner.configure do |config|
     return t
   end
   
-  def all_pages_protected
-    logout
-    # [:index, :show, :sent, :trash, :new, :edit].each do |action|
-    #   get action
-    #   assert_redirected_to login_url
-    # end
-    # post :create
-    # assert_redirected_to login_url
-    # put :update
-    # assert_redirected_to login_url    
+
+
+  def mock_photo(options = {})
+    photo = mock_model(Photo)
+    photo.stub!(:public_filename).and_return("photo.png")
+    photo.stub!(:primary).and_return(options[:primary])
+    photo.stub!(:primary?).and_return(photo.primary)
+    photo
   end
 end

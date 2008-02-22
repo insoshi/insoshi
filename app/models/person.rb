@@ -13,8 +13,8 @@ class Person < ActiveRecord::Base
   NUM_RECENT_MESSAGES = 4
   NUM_RECENTLY_VIEWED = 4
   
-  has_many :photos
-  attr_accessor :password
+  has_many :photos, :dependent => :destroy, :order => 'created_at'
+  attr_accessor :password, :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description
   
@@ -56,6 +56,14 @@ class Person < ActiveRecord::Base
     photo.nil? ? "default_icon.png" : photo.public_filename(:icon)
   end  
   
+  # Return the photos ordered by primary first, then by created_at.
+  # They are already ordered by created_at as per the has_many association.
+  def sorted_photos
+    # The call to partition ensures that the primary photo comes first.
+    # photos.partition(&:primary) => [[primary], [other one, another one]]
+    # flatten yields [primary, other one, another one]
+    @sorted_photos ||= photos.partition(&:primary).flatten
+  end
   
   ## Authentication methods
   

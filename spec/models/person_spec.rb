@@ -38,12 +38,10 @@ describe Person do
   describe "photo methods" do
     
     before(:each) do
-      photo_1 = mock_model(Photo)
-      photo_1.stub!(:public_filename).and_return("photo_1.png")
-      photo_2 = mock_model(Photo)
-      photo_2.stub!(:public_filename).and_return("photo_2.png")
-      @photos = [photo_1, photo_2]
-      @photos.stub!(:find_all_by_primary).and_return([photo_1])
+      @photo_1 = mock_photo(:primary => true)
+      @photo_2 = mock_photo
+      @photos = [@photo_1, @photo_2]
+      @photos.stub!(:find_all_by_primary).and_return([@photo_1])
       @person.stub!(:photos).and_return(@photos)
     end
     
@@ -73,6 +71,10 @@ describe Person do
 
     it "should have an icon" do
       @person.icon.should_not be_nil
+    end
+    
+    it "should have sorted photos" do
+      @person.sorted_photos.should == [@photo_1, @photo_2]
     end
   end
   

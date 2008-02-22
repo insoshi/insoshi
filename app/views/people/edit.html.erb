@@ -1,3 +1,75 @@
+<h2>Photos</h2>
+  
+  <%# raise @person.photos.inspect %>
+
+  <% if @person.photos.empty? %>
+    <%= image_tag @person.thumbnail %>
+  <% else %>
+  <table>
+    <% @person.sorted_photos.collect_every(4) do |row| %>
+    <tr>
+    <% row.each do |photo| %>
+      <td><%= image_tag photo.public_filename(:thumbnail) %></td>
+    <% end %>
+    </tr>
+    <tr>
+      <% row.each do |photo| %>
+      <td>
+        <% if photo.primary? %>
+          primary
+        <% else %>
+          <%= link_to "(make primary)", photo_path(photo),
+                                        :method => :put %>
+        <% end %>
+        |
+        <%= link_to image_tag("delete.png"), photo_path(photo),
+                                             :method => :delete %>
+      </td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+  <% end %>
+  <br />
+  <%= button_to "Add a photo", new_photo_path %>
+
+<br />
+
+<%= error_messages_for :person %>
+
+<h2>Name</h2>
+
+<% form_for @person do |f| %>
+  <div class="form_row">
+  <%= f.text_field :name, :maxlength => Person::NAME_LENGTH %></div>
+  
+  
+  <h2>Description</h2>
+
+  <table class="layout">
+  <tr>
+  <td class="span-10">
+    <div class="form_row"><%= f.text_area :description %></div>
+    <div class="form_row">
+      <%= f.submit "Update" %>
+    </div>
+  </td>
+  <td class="span-4">
+    <p><strong>Be specific!</strong>  Movies you like, bands you dig,  
+    places you've been.</p>
+  
+  </td>
+</tr>
+</table>
+
+<% end %>
+
+
+
+
+
+
+
 <%= error_messages_for :person %>
 
 <h2>Name</h2>

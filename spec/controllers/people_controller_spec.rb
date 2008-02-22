@@ -4,9 +4,8 @@ describe PeopleController do
 
   before(:each) do
     @person = people(:quentin)
-    @photo = mock_model(Photo)
-    @photo.stub!(:public_filename).and_return("main photo")
-    @person.stub!(:photos).and_return([@photo])
+    photos = [mock_photo(:primary => true), mock_photo]
+    @person.stub!(:photos).and_return(photos)
   end
   
   describe "people pages" do
@@ -32,8 +31,8 @@ describe PeopleController do
     end
         
     it "should have a working edit page" do
-      person = login_as(:quentin)
-      get :edit, :id => person
+      login_as @person
+      get :edit, :id => @person
       response.should be_success
       response.should render_template("edit")      
     end    
@@ -80,16 +79,22 @@ describe PeopleController do
       @person = login_as(:quentin)
     end
     
+    it "should render the edit page when photos are present" do
+      get :edit, :id => @person
+      response.should be_success
+      response.should render_template("edit")
+    end
+    
     it "should allow mass assignment to name" do
       put :update, :id => @person, :person => { :name => "Foo Bar" }
-      assigns(:current_person).name.should == "Foo Bar"
-      response.should redirect_to(person_url(assigns(:current_person)))
+      assigns(:person).name.should == "Foo Bar"
+      response.should redirect_to(person_url(assigns(:person)))
     end
-  
+      
     it "should allow mass assignment to description" do
       put :update, :id => @person, :person => { :description => "Me!" }
-      assigns(:current_person).description.should == "Me!"
-      response.should redirect_to(person_url(assigns(:current_person)))
+      assigns(:person).description.should == "Me!"
+      response.should redirect_to(person_url(assigns(:person)))
     end
     
     it "should render edit page on invalid update" do
@@ -108,30 +113,28 @@ describe PeopleController do
   describe "show" do
     integrate_views
     
-    before(:each) do
-      # WARNING: calling this *after* the Person.stub! returns Quentin (!)
-      # instead of Aaron, since people() apparently calls find under the hood.
-      @aaron = people(:aaron)
-      # Needed to get the photo.
-      Person.stub!(:find).and_return(@person)
-    end
-    
     it "should display the edit link for current user" do
-      login_as(@person)
+      login_as @person
+      # The mock is needed to get @person.photos.
+      Person.should_receive(:find).with(@person).and_return(@person)
       get :show, :id => @person
-      assigns[:person].photos = [@photo]
+      assigns[:person].photos = @person.photos
       response.should have_tag("a[href=?]", edit_person_path(@person))
     end
     
     it "should not display the edit link for other viewers" do
       login_as(:aaron)
-      Person.should_receive(:find).with(@aaron.id).and_return(@aaron)
+      # Note: the Person mock must go *after* the login_as.
+      # The reason is subtle: login_as calls the people() fixture method,
+      # which (apparently) uses find under the hood.
+      Person.should_receive(:find).with(@person).and_return(@person)
       get :show, :id => @person
       response.should_not have_tag("a[href=?]", edit_person_path(@person))
     end
     
     it "should not display the edit link for non-logged-in viewers" do
       logout
+      Person.should_receive(:find).with(@person).and_return(@person)
       get :show, :id => @person
       response.should_not have_tag("a[href=?]", edit_person_path(@person))
     end
