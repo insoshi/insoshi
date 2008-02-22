@@ -12,28 +12,41 @@ class PeopleController < ApplicationController
   
   def show
     @person = Person.find(params[:id])
+    
+    respond_to do |format|
+      format.html
+    end
   end
   
   def new
     @person = Person.new
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   def create
     cookies.delete :auth_token
     @person = Person.new(params[:person])
-    @person.save
-    if @person.errors.empty?
-      self.current_person = @person
-      redirect_back_or_default('/')
-      flash[:notice] = "Thanks for signing up!"
-    else
-      render :action => 'new'
+    respond_to do |format|
+      if @person.save
+        self.current_person = @person
+        flash[:notice] = "Thanks for signing up!"
+        format.html { redirect_back_or_default(home_url) }
+      else
+        format.html { render :action => 'new' }
+      end
     end
   end
 
 
   def edit
     @person = Person.find(params[:id])
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   def update

@@ -9,26 +9,24 @@ class PhotosController < ApplicationController
     @photos = current_person.photos
   
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
     end
   end
 
-  # # GET /photos/new
-  # # GET /photos/new.xml
-  # def new
-  #   @photo = Photo.new
-  # 
-  #   respond_to do |format|
-  #     format.html # new.html.erb
-  #     format.xml  { render :xml => @photo }
-  #   end
-  # end
-  # 
-  # # GET /photos/1/edit
-  # def edit
-  #   @photo = Photo.find_by_hashed_id(params[:id])
-  #   @display_photo = @photo
-  # end
+  def new
+    @photo = Photo.new
+  
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def edit
+    @photo = Photo.find_by_hashed_id(params[:id])
+    @display_photo = @photo
+  end
+
+
   # 
   # # POST /photos
   # # POST /photos.xml
