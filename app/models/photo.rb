@@ -9,17 +9,4 @@ class Photo < ActiveRecord::Base
                                   :icon      => '40x40>' },
                  :processor => 'ImageScience'
   validates_as_attachment
-  
-  # Provide a public_filename for tests.
-  # TODO: mock this out
-  def public_filename(arg = nil)
-    case arg
-    when nil
-      'filename'
-    when :thumbnail
-      'thumbnail'
-    when :icon
-      'icon'
-    end
-  end if ENV['RAILS_ENV'] == 'test'
 end

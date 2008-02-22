@@ -15,41 +15,42 @@ class PhotosController < ApplicationController
 
   def new
     @photo = Photo.new
-  
+
     respond_to do |format|
       format.html
     end
   end
 
   def edit
-    @photo = Photo.find_by_hashed_id(params[:id])
+    @photo = Photo.find(params[:id])
     @display_photo = @photo
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def create
+    if params[:photo][:uploaded_data].blank?
+      flash[:error] = "Please choose an image"
+      redirect_to new_photo_url and return
+    end
+    
+    @photo = Photo.new(params[:photo].merge(
+                        { :person => current_person,
+                          :primary => current_person.photos.empty? }))
+  
+    respond_to do |format|
+      if @photo.save
+        format.html { redirect_to(edit_person_path(current_person)) }
+        format.xml  { render :xml => @photo, :status => :created, :location => @photo }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
 
-  # 
-  # # POST /photos
-  # # POST /photos.xml
-  # def create
-  #   if params[:photo][:uploaded_data].blank?
-  #     flash[:error] = "Please choose an image"
-  #     redirect_to new_photo_url and return
-  #   end
-  #   
-  #   @photo = Photo.new(params[:photo].merge(
-  #                       { :person => current_person,
-  #                         :primary => current_person.photos.empty? }))
-  # 
-  #   respond_to do |format|
-  #     if @photo.save
-  #       format.html { redirect_to(edit_person_path(current_person)) }
-  #       format.xml  { render :xml => @photo, :status => :created, :location => @photo }
-  #     else
-  #       format.html { render :action => "new" }
-  #       format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
-  #     end
-  #   end
-  # end
   # 
   # # PUTUT /photos/1
   # # PUT /photos/1.xml
