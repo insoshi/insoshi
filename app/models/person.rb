@@ -32,6 +32,33 @@ class Person < ActiveRecord::Base
   
   before_save :downcase_email, :encrypt_password
   
+  ## Photo helpers
+  
+  def photo
+    # This should only have one entry, but be paranoid.
+    photos.find_all_by_primary(true).first
+  end
+  
+  # Return all the photos other than the primary one
+  def other_photos
+    photos.length > 1 ? photos - [photo] : []
+  end
+
+  def main_photo
+    photo.nil? ? "default.png" : photo.public_filename
+  end
+
+  def thumbnail
+    photo.nil? ? "default_thumbnail.png" : photo.public_filename(:thumbnail)
+  end  
+
+  def icon
+    photo.nil? ? "default_icon.png" : photo.public_filename(:icon)
+  end  
+  
+  
+  ## Authentication methods
+  
   # Authenticates a user by their email address and unencrypted password.  Returns the user or nil.
   def self.authenticate(email, password)
     u = find_by_email(email.downcase) # need to get the salt

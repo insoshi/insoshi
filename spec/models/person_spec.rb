@@ -34,58 +34,101 @@ describe Person do
       @person.photos.should be_empty
     end
   end
+  
+  describe "photo methods" do
+    
+    before(:each) do
+      photo_1 = mock_model(Photo)
+      photo_1.stub!(:public_filename).and_return("photo_1.png")
+      photo_2 = mock_model(Photo)
+      photo_2.stub!(:public_filename).and_return("photo_2.png")
+      @photos = [photo_1, photo_2]
+      @photos.stub!(:find_all_by_primary).and_return([photo_1])
+      @person.stub!(:photos).and_return(@photos)
+    end
+    
+    it "should have a photo method" do
+      @person.should respond_to(:photo)
+    end
+    
+    it "should have a non-nil primary photo" do
+      @person.photo.should_not be_nil
+    end
+    
+    it "should have other photos" do
+      @person.other_photos.should_not be_empty
+    end
+    
+    it "should have the right other photos" do
+      @person.other_photos.should == (@photos - [@person.photo])
+    end
+    
+    it "should have a main photo" do
+      @person.main_photo.should == @person.photo.public_filename
+    end
+    
+    it "should have a thumbnail" do
+      @person.thumbnail.should_not be_nil
+    end
 
-  it 'resets password' do
-    @person.update_attributes(:password => 'newp',
-                              :password_confirmation => 'newp')
-    Person.authenticate('quentin@example.com', 'newp').should == @person
-  end
-
-  it 'authenticates person' do
-    Person.authenticate('quentin@example.com', 'test').should == @person
+    it "should have an icon" do
+      @person.icon.should_not be_nil
+    end
   end
   
-  it "should authenticate case-insensitively" do
-    Person.authenticate('queNTin@eXample.com', 'test').should == @person    
-  end
+  describe "authentication" do
+    it 'resets password' do
+      @person.update_attributes(:password => 'newp',
+                                :password_confirmation => 'newp')
+      Person.authenticate('quentin@example.com', 'newp').should == @person
+    end
 
-  it 'sets remember token' do
-    @person.remember_me
-    @person.remember_token.should_not be_nil
-    @person.remember_token_expires_at.should_not be_nil
-  end
+    it 'authenticates person' do
+      Person.authenticate('quentin@example.com', 'test').should == @person
+    end
+  
+    it "should authenticate case-insensitively" do
+      Person.authenticate('queNTin@eXample.com', 'test').should == @person    
+    end
 
-  it 'unsets remember token' do
-    @person.remember_me
-    @person.remember_token.should_not be_nil
-    @person.forget_me
-    @person.remember_token.should be_nil
-  end
+    it 'sets remember token' do
+      @person.remember_me
+      @person.remember_token.should_not be_nil
+      @person.remember_token_expires_at.should_not be_nil
+    end
 
-  it 'remembers me for one week' do
-    before = 1.week.from_now.utc
-    @person.remember_me_for 1.week
-    after = 1.week.from_now.utc
-    @person.remember_token.should_not be_nil
-    @person.remember_token_expires_at.should_not be_nil
-    @person.remember_token_expires_at.between?(before, after).should be_true
-  end
+    it 'unsets remember token' do
+      @person.remember_me
+      @person.remember_token.should_not be_nil
+      @person.forget_me
+      @person.remember_token.should be_nil
+    end
 
-  it 'remembers me until one week' do
-    time = 1.week.from_now.utc
-    @person.remember_me_until time
-    @person.remember_token.should_not be_nil
-    @person.remember_token_expires_at.should_not be_nil
-    @person.remember_token_expires_at.should == time
-  end
+    it 'remembers me for one week' do
+      before = 1.week.from_now.utc
+      @person.remember_me_for 1.week
+      after = 1.week.from_now.utc
+      @person.remember_token.should_not be_nil
+      @person.remember_token_expires_at.should_not be_nil
+      @person.remember_token_expires_at.between?(before, after).should be_true
+    end
 
-  it 'remembers me default two weeks' do
-    before = 2.years.from_now.utc
-    @person.remember_me
-    after = 2.years.from_now.utc
-    @person.remember_token.should_not be_nil
-    @person.remember_token_expires_at.should_not be_nil
-    @person.remember_token_expires_at.between?(before, after).should be_true
+    it 'remembers me until one week' do
+      time = 1.week.from_now.utc
+      @person.remember_me_until time
+      @person.remember_token.should_not be_nil
+      @person.remember_token_expires_at.should_not be_nil
+      @person.remember_token_expires_at.should == time
+    end
+
+    it 'remembers me default two weeks' do
+      before = 2.years.from_now.utc
+      @person.remember_me
+      after = 2.years.from_now.utc
+      @person.remember_token.should_not be_nil
+      @person.remember_token_expires_at.should_not be_nil
+      @person.remember_token_expires_at.between?(before, after).should be_true
+    end    
   end
 
 protected
