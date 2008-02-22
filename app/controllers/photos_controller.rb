@@ -30,22 +30,15 @@ class PhotosController < ApplicationController
   end
 
   def create
-    if params[:photo][:uploaded_data].blank?
-      flash[:error] = "Please choose an image"
-      redirect_to new_photo_url and return
-    end
-    
-    @photo = Photo.new(params[:photo].merge(
-                        { :person => current_person,
-                          :primary => current_person.photos.empty? }))
+    person_data = { :person => current_person,
+                    :primary => current_person.photos.empty? }
+    @photo = Photo.new(params[:photo].merge(person_data))
   
     respond_to do |format|
       if @photo.save
         format.html { redirect_to(edit_person_path(current_person)) }
-        format.xml  { render :xml => @photo, :status => :created, :location => @photo }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @photo.errors, :status => :unprocessable_entity }
       end
     end
   end

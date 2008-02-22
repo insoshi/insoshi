@@ -18,7 +18,12 @@ describe PeopleController do
     end
     
     it "should have a working show page" do
-      get :show, :id => people(:quentin)
+      person = people(:quentin)
+      photo = mock_model(Photo)
+      photo.stub!(:public_filename).and_return("main photo")
+      person.stub!(:photos).and_return([photo])
+      Person.stub!(:find).and_return(person)
+      get :show, :id => person
       response.should be_success
       response.should render_template("show")
     end

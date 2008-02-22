@@ -45,5 +45,12 @@ describe PhotosController do
         post :create, :photo => { :uploaded_data => image }
       end.should change(Photo, :count).by(num_thumbnails + 1)
     end
+    
+    it "should handle empty photo upload" do
+      lambda do
+        post :create, :photo => { :uploaded_data => nil }
+        response.should render_template("new")
+      end.should_not change(Photo, :count)
+    end
   end
 end

@@ -1,5 +1,7 @@
+<h3 style="clear">About <%= @person.name %></h3>
+<div>
+  <%= image_tag @person.photos.first.public_filename %>
+</div>
+<p><%= sanitize @person.description %></p>
 
-      <h3 style="clear">About <%= @person.name %></h3>
-      <p><%= sanitize @person.description %></p>        
-
-<div class="clear"></div>
+<%= link_to "New photo", new_photo_path %>

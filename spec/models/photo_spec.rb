@@ -25,6 +25,13 @@ describe Photo do
     new_photo.person.should == @person
   end
   
+  it "should not have default AttachmentFu errors for an empty image" do
+    photo = new_photo(:uploaded_data => nil)
+    photo.should_not be_valid
+    photo.errors.on(:size).should be_nil
+    photo.errors.on(:base).should_not be_nil
+  end
+  
   private
   
     def new_photo(options = {})
