@@ -1,6 +1,13 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PeopleController do
+
+  before(:each) do
+    @person = people(:quentin)
+    @photo = mock_model(Photo)
+    @photo.stub!(:public_filename).and_return("main photo")
+    @person.stub!(:photos).and_return([@photo])
+  end
   
   describe "people pages" do
     integrate_views
@@ -18,12 +25,8 @@ describe PeopleController do
     end
     
     it "should have a working show page" do
-      person = people(:quentin)
-      photo = mock_model(Photo)
-      photo.stub!(:public_filename).and_return("main photo")
-      person.stub!(:photos).and_return([photo])
-      Person.stub!(:find).and_return(person)
-      get :show, :id => person
+      Person.should_receive(:find).with(@person).and_return(@person)
+      get :show, :id => @person
       response.should be_success
       response.should render_template("show")
     end
@@ -99,6 +102,38 @@ describe PeopleController do
       login_as(:aaron)
       put :update, :id => @person
       response.should redirect_to(home_url)
+    end
+  end
+  
+  describe "show" do
+    integrate_views
+    
+    before(:each) do
+      # WARNING: calling this *after* the Person.stub! returns Quentin (!)
+      # instead of Aaron, since people() apparently calls find under the hood.
+      @aaron = people(:aaron)
+      # Needed to get the photo.
+      Person.stub!(:find).and_return(@person)
+    end
+    
+    it "should display the edit link for current user" do
+      login_as(@person)
+      get :show, :id => @person
+      assigns[:person].photos = [@photo]
+      response.should have_tag("a[href=?]", edit_person_path(@person))
+    end
+    
+    it "should not display the edit link for other viewers" do
+      login_as(:aaron)
+      Person.should_receive(:find).with(@aaron.id).and_return(@aaron)
+      get :show, :id => @person
+      response.should_not have_tag("a[href=?]", edit_person_path(@person))
+    end
+    
+    it "should not display the edit link for non-logged-in viewers" do
+      logout
+      get :show, :id => @person
+      response.should_not have_tag("a[href=?]", edit_person_path(@person))
     end
   end
   
