@@ -14,7 +14,12 @@ describe PhotosController do
     integrate_views
     
     before(:each) do
-      @person = login_as :quentin
+      @person = login_as(:quentin)
+      @primary, @secondary = [mock_photo(:primary => true), mock_photo]
+      photos = [@primary, @secondary]
+      photos.each { |p| p.stub!(:person).and_return(@person) }
+      @photo = @primary
+      @person.stub!(:photos).and_return([@primary, @secondary])
     end
   
     it "should have an index page" do
@@ -30,9 +35,7 @@ describe PhotosController do
     end
 
     it "should have an edit photo page" do
-      @photo = mock_model(Photo)
-      @photo.stub!(:public_filename).with(:thumbnail).and_return("thumb")
-      Photo.stub!(:find).and_return(@photo)
+      Photo.should_receive(:find).and_return(@photo)
       get :edit, :id => @photo
       response.should be_success
       response.should render_template("edit")
@@ -51,6 +54,41 @@ describe PhotosController do
         post :create, :photo => { :uploaded_data => nil }
         response.should render_template("new")
       end.should_not change(Photo, :count)
+    end
+    
+    it "should handle cancellation" do
+      post :create, :commit => "Cancel"
+      response.should redirect_to(edit_person_url(@person))
+    end
+    
+    it "should mark a photo as primary" do
+      # We check that the secondary photo is made primary, while the old
+      # primary photo is marked non-primary.
+      Photo.should_receive(:find).and_return(@secondary)
+      @secondary.should_receive(:update_attributes).with(:primary => true).
+        and_return(true)
+      @primary.should_receive(:update_attributes!).with(:primary => false)
+      put :update, :photo => @secondary
+    end
+    
+    it "should destroy a photo" do
+      Photo.should_receive(:find).and_return(@secondary)
+      @secondary.should_receive(:destroy).and_return(true)
+      delete :destroy, :id => @secondary
+    end
+    
+    it "should mark another photo as primary if destroying primary" do
+      Photo.should_receive(:find).and_return(@primary)
+      @primary.should_receive(:destroy).and_return(true)
+      @secondary.should_receive(:update_attributes!).with(:primary => true)
+      delete :destroy, :id => @primary
+    end
+    
+    it "should require the correct user to edit" do
+      login_as :aaron
+      Photo.should_receive(:find).and_return(@photo)
+      get :edit, :id => @photo
+      response.should redirect_to(home_url)
     end
   end
 end
