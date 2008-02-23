@@ -56,6 +56,7 @@ class MessagesController < ApplicationController
   end
 
   def create
+    # TODO: refactor this
     redirect_to messages_url and return if params[:commit] == "Cancel"
     @recipient = Person.find(params[:person_id])
     if @recipient == current_person

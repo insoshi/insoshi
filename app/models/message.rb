@@ -30,7 +30,7 @@ class Message < Communication
       self.recipient_deleted_at = time
     else
       # Given our controller before filters, this should never happen...
-      false
+      raise ArgumentError,  "Unauthorized person"
     end
     save!
   end

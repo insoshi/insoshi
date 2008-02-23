@@ -52,8 +52,6 @@ Spec::Runner.configure do |config|
     return t
   end
   
-
-
   def mock_photo(options = {})
     photo = mock_model(Photo)
     photo.stub!(:public_filename).and_return("photo.png")

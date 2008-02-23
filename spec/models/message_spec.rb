@@ -30,7 +30,31 @@ describe Message do
     new_message(:content => too_long_content).should_not be_valid
   end
 
-  it "should be able to trash messages" 
+  it "should be able to trash messages as sender" do
+    @message.trash(@message.sender)
+    @message.should be_trashed(@message.sender)
+    @message.should_not be_trashed(@message.recipient)
+  end
+  
+  it "should be able to trash message as recipient" do
+    @message.trash(@message.recipient)
+    @message.should be_trashed(@message.recipient) 
+    @message.should_not be_trashed(@message.sender)
+  end
+  
+  it "should description not be able to trash as another user" do
+    kelly = people(:kelly)
+    kelly.should_not == @message.sender
+    kelly.should_not == @message.recipient
+    lambda { @message.trash(kelly) }.should raise_error(ArgumentError)
+  end
+  
+  it "should untrash messages" do
+    @message.trash(@message.sender)
+    @message.should be_trashed(@message.sender)
+    @message.untrash(@message.sender)
+    @message.should_not be_trashed(@message.sender)
+  end
   
   it "should handle replies" 
   
