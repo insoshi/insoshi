@@ -1,7 +1,7 @@
 <h3 style="clear">About <%= @person.name %></h3>
 
 <div>
-  <%= image_tag @person.photos.first.public_filename(:thumbnail) %>
+  <%= image_tag @person.thumbnail %>
 </div>
 <p><%= sanitize @person.description %></p>
 

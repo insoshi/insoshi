@@ -5,6 +5,7 @@ describe PeopleController do
   before(:each) do
     @person = people(:quentin)
     photos = [mock_photo(:primary => true), mock_photo]
+    photos.stub!(:find_all_by_primary).and_return(photos.select(&:primary?))
     @person.stub!(:photos).and_return(photos)
   end
   

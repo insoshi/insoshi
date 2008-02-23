@@ -86,8 +86,9 @@ class PhotosController < ApplicationController
   
     def correct_user_required
       @photo = Photo.find(params[:id])
-      redirect_to edit_person_url(current_person) and return if @photo.nil?
-      unless @photo.person == current_person
+      if @photo.nil?
+        redirect_to edit_person_url(current_person)
+      elsif @photo.person != current_person
         redirect_to home_url
       end
     end
