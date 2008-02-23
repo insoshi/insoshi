@@ -10,7 +10,7 @@ describe MessagesController do
 
   describe "pages" do
     integrate_views
-
+    
     it "should have a working index" do
       working_page(:index, :received_messages)
     end
@@ -81,6 +81,12 @@ describe MessagesController do
       put :undestroy, :id => @message
       assigns(:message).should_not be_trashed(@message.recipient)
     end
+    
+    it "should require login" do
+      logout
+      get :index
+      response.should redirect_to(login_url)
+    end
   end
   
   
@@ -102,6 +108,4 @@ describe MessagesController do
       assigns(:message).should be_reply
     end.should change(Message, :count).by(1)
   end
-  
-
 end

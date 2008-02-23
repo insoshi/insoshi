@@ -20,6 +20,9 @@ module AuthenticatedTestHelper
 
   def logout
     @request.session[:person_id] = nil
+    if defined?(controller)
+      controller.stub!(:current_person).and_return(:false)
+    end
   end
 
   def authorize_as(user)
