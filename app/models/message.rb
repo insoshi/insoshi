@@ -53,7 +53,7 @@ class Message < Communication
   
   # Return true if the message is a reply to a previous message.
   def reply?
-    !parent_id.nil?
+    !parent_id.nil? && sender == parent.recipient && recipient == parent.sender
   end
   
   # Return true if the message has been replied to.

@@ -56,7 +56,23 @@ describe Message do
     @message.should_not be_trashed(@message.sender)
   end
   
-  it "should handle replies" 
+  it "should handle replies" do
+    @message.save!
+    @reply = create_message(:sender    => @message.recipient,
+                            :recipient => @message.sender,
+                            :parent_id => @message)
+    @reply.should be_reply
+    @reply.parent.should be_replied_to
+  end
+
+  it "should not allow anyone but recipient to reply" do
+    @message.save!
+    @next_message = create_message(:sender    => people(:kelly),
+                                   :recipient => @message.sender,
+                                   :parent_id => @message)
+    @next_message.should_not be_reply
+    @next_message.parent.should_not be_replied_to
+  end
   
   it "should mark messages as read" 
 
@@ -69,9 +85,8 @@ describe Message do
     end
   
     # TODO: remove this (?)
-    def create_message(sender = @sender, recipient = @recipient)   
-      Message.create(:content   => "Lorem ipsum",
-                     :sender    => sender,
-                     :recipient => recipient)
+    def create_message(options = { :sender => @sender,
+                                   :recipient => @recipient })   
+      Message.create({ :content   => "Lorem ipsum" }.merge(options))
     end
 end
