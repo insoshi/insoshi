@@ -22,4 +22,37 @@ module ApplicationHelper
   def set_focus_to_id(id)
     javascript_tag("$('#{id}').focus()");
   end
+  
+  def set_main_title(title = "Instant Social")
+    content_for :main_title do 
+      title
+    end
+  end
+
+
+  # TODO: polish these & move them somewhere
+  def linked_image(person, options = {})
+    href = options[:href] || person
+    o = { :size => 'thumbnail' }.merge(options)    
+    link_to image_tag(person.send(o[:size])), href 
+  end
+
+  def name_link(person, options = {})
+     link_to h(person.name), person, options
+  end
+
+  def email_link(person, options = {})
+    reply = options[:replying_to]
+    if reply
+      path = reply_message_path(reply)
+    else
+      path = new_person_message_path(person)
+    end
+    img = image_tag "email.png", :class => "inlined"
+    action = reply.nil? ? "Send message" : "Send reply"
+    opts = { :class => 'email-link' }
+    str = link_to(img, path, opts)
+    str << "&nbsp;"
+    str << link_to_unless_current(action, path, opts)
+  end  
 end

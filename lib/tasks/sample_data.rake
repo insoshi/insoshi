@@ -17,7 +17,7 @@ namespace :db do
     task :load => :environment do |t|
       lipsum = File.open(File.join(DATA_DIRECTORY, "lipsum.txt")).read
       create_people
-#      make_messages(lipsum)
+      make_messages(lipsum)
     end
       
     desc "Remove sample data" 
@@ -35,7 +35,7 @@ namespace :db do
 end
 
 def create_people
-  [%w(male M), %w(female F)].each do |pair|
+  [%w(female F), %w(male M)].each do |pair|
     filename = File.join(DATA_DIRECTORY, "#{pair[0]}_names.txt")
     names = File.open(filename).readlines
     password = "foobar"
@@ -46,9 +46,9 @@ def create_people
     names.each_with_index do |name, i|
       name.strip!
       person = Person.create!(:email => "#{name.downcase}@michaelhartl.com",
-                          :password => password, 
-                          :password_confirmation => password,
-                          :gender => pair[1])
+                              :password => password, 
+                              :password_confirmation => password,
+                              :gender => pair[1])
       # For security, these attributes aren't attr_accessible, so they
       # have to be assigned separately.
       # Now make the person.
@@ -59,20 +59,17 @@ def create_people
     end
   end
 end
-# 
-# def make_messages(text)
-#   n = 10
-#   michael = User.find_by_username("michael@michaelhartl.com").person
-#   senders = Person.find_all_by_gender("F").slice(0...n)
-#   senders.each do |sender|
-#     sender.balance += michael.price
-#     michael.balance += sender.price
-#     Message.create!(:content => text, :sender => michael,
-#                     :recipient => sender, :skip_send_mail => true)
-#     Message.create!(:content => text, :sender => sender,
-#                     :recipient => michael, :skip_send_mail => true)
-#   end
-# end
+
+def make_messages(text)
+  michael = Person.find_by_email("michael@michaelhartl.com")
+  senders = Person.find(:all, :limit => 10)
+  senders.each do |sender|
+    Message.create!(:content => text, :sender => michael,
+                    :recipient => sender, :skip_send_mail => true)
+    Message.create!(:content => text, :sender => sender,
+                    :recipient => michael, :skip_send_mail => true)
+  end
+end
 
 def uploaded_file(filename, content_type)
   t = Tempfile.new(filename.split('/').last)

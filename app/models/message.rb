@@ -41,40 +41,38 @@ class Message < Communication
   #   trash(user, nil)
   # end
   # 
-  # # Return true if the message has been trashed.
-  # def trashed?(arg)
-  #   # Handle both Person and User objects
-  #   person = arg.is_a?(Person) ? arg : arg.person
-  #   case person
-  #   when sender
-  #     !sender_deleted_at.nil? and sender_deleted_at > Person::TRASH_TIME_AGO
-  #   when recipient
-  #     !recipient_deleted_at.nil? and recipient_deleted_at > Person::TRASH_TIME_AGO
-  #   end
-  # end
+  # Return true if the message has been trashed.
+  def trashed?(person)
+    case person
+    when sender
+      !sender_deleted_at.nil? and sender_deleted_at > Person::TRASH_TIME_AGO
+    when recipient
+      !recipient_deleted_at.nil? and recipient_deleted_at > Person::TRASH_TIME_AGO
+    end
+  end
   # 
   # # Return true if the message is a reply to a previous message.
   # def reply?
   #   !hashed_parent_id.nil?
   # end
   # 
-  # # Return true if the message has been replied to.
-  # def replied_to?
-  #   !replied_at.nil?
-  # end
-  # 
-  # # Possibly mark a message as read.
-  # def read(time=Time.now)
-  #   unless read?
-  #     self.recipient_read_at = time
-  #     save!
-  #   end
-  # end
-  # 
-  # # Return true if a message has been read.
-  # def read?
-  #   !recipient_read_at.nil?
-  # end
+  # Return true if the message has been replied to.
+  def replied_to?
+    !replied_at.nil?
+  end
+  
+  # Possibly mark a message as read.
+  def read(time=Time.now)
+    unless read?
+      self.recipient_read_at = time
+      save!
+    end
+  end
+  
+  # Return true if a message has been read.
+  def read?
+    !recipient_read_at.nil?
+  end
 
   private
   

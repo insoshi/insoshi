@@ -35,6 +35,7 @@
         </p>
       </div>
       <div class="column span-12">
+        <h1 class="box_title"><%= yield :main_title %></h1> 
         <% flash.each do |key, msg| %>  
           <%= content_tag :div, msg, :class => "span-11 flash #{key}" %>
         <% end %>

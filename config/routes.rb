@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :communications
-
+  map.resources :messages, :collection => { :sent => :get, :trash => :get },
+                           :member => { :reply => :get, :undestroy => :put }
   map.resources :photos
   map.resources :people
   map.resource :session
