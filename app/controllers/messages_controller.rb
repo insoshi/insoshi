@@ -2,6 +2,8 @@ class MessagesController < ApplicationController
 
   before_filter :login_required
   before_filter :authenticate_person, :only => [:show]
+  before_filter :handle_cancel, :only => [:create]
+  before_filter :validate_reply, :only => [:create]
 
   # GET /messages
   def index
@@ -44,7 +46,6 @@ class MessagesController < ApplicationController
   end
 
   def reply
-    # TODO: refactor this mess
     original_message = Message.find(params[:id])
     @message = Message.new(:parent => original_message)
     @recipient = not_current_person(original_message)
@@ -54,18 +55,8 @@ class MessagesController < ApplicationController
   end
 
   def create
-    # TODO: refactor this
-    redirect_to messages_url and return if params[:commit] == "Cancel"
-    @recipient = Person.find(params[:person_id])
-    if @recipient == current_person
-      flash[:error] = "You can't send messages to yourself"
-      redirect_to home_url and return
-    end
-    redirect_to '/' and return if reply? and not valid_reply?
-    
-    @data = params[:message_id].merge(:sender    => current_person,
-                                      :recipient => @recipient)
-    @message = Message.new(@data)
+    @message = Message.new(params[:message].merge(:sender => current_person,
+                                                  :recipient => @recipient))
     
     respond_to do |format|
       if @message.save
@@ -113,14 +104,23 @@ class MessagesController < ApplicationController
         redirect_to login_url
       end
     end
+
+    def handle_cancel
+      redirect_to messages_url if params[:commit] == "Cancel"
+    end
+    
+    def validate_reply
+      @recipient = Person.find(params[:person_id])
+      redirect_to home_url if reply? and not valid_reply?(@recipient)
+    end
     
     def reply?
       !params[:parent_id].nil?
     end
 
-    def valid_reply?
+    def valid_reply?(recipient)
       original = Message.find(params[:parent_id])
-      original.recipient == current_person and original.sender == @recipient
+      original.recipient == current_person and original.sender == recipient
     end
     
     # Return the proper recipient for a message.

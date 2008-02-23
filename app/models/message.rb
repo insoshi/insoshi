@@ -57,7 +57,16 @@ class Message < Communication
   
   # Return true if the message is a reply to a previous message.
   def reply?
-    !parent_id.nil? && sender == parent.recipient && recipient == parent.sender
+    !parent_id.nil? and correct_sender_recipient_pair?
+  end
+  
+  # Return true if the sender/recipient pair is valid for a given parent.
+  def correct_sender_recipient_pair?
+    # People can send multiple replies to the same message, in which case
+    # the recipient is the same as the parent recipient.
+    # For most replies, the message recipient should be the parent sender.
+    # We use Set to handle both cases uniformly.
+    Set.new([sender, recipient]) == Set.new([parent.sender, parent.recipient])
   end
   
   # Return true if the message has been replied to.

@@ -4,6 +4,7 @@ describe MessagesController do
 
   before(:each) do
     @person = login_as(:quentin)
+    @other_person = people(:aaron)
     @message = @person.received_messages.first
   end
 
@@ -42,8 +43,36 @@ describe MessagesController do
       get :reply, :id => @message
       assigns(:recipient).should == @message.recipient
     end
+    
+    it "should allow create cancellation" do
+      post :create, :commit => "Cancel"
+      response.should redirect_to(messages_url)
+    end
+    
+    it "should handle invalid reply creation" do
+      login_as(:kelly)
+      post :create, :parent_id => @message, :person_id => @person
+      response.should redirect_to(home_url)
+    end
+    
+    it "should create a message" do
+      lambda do
+        post :create, :message => { :content => "Hey there!" },
+                      :person_id => @other_person
+      end.should change(Message, :count).by(1)
+    end
+    
+    it "should handle replies as recipient" do
+      handle_replies(@message, @message.recipient, @message.sender)
+    end
+    
+    it "should handle replies as sender" do
+      handle_replies(@message, @message.sender, @message.recipient)
+    end
   end
   
+  
+  private
 
   def working_page(page, message_type)
     get page      
@@ -51,5 +80,16 @@ describe MessagesController do
     response.should render_template("index")
     assigns(:messages).should == @person.send(message_type)
   end
+  
+  def handle_replies(message, recipient, sender)
+    login_as(recipient)
+    lambda do
+      post :create, :message => { :content   => "This is a reply",
+                                  :parent_id => message },
+                    :person_id => sender
+      assigns(:message).should be_reply
+    end.should change(Message, :count).by(1)
+  end
+  
 
 end
