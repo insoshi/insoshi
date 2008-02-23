@@ -69,6 +69,18 @@ describe MessagesController do
     it "should handle replies as sender" do
       handle_replies(@message, @message.sender, @message.recipient)
     end
+    
+    it "should trash messages" do
+      delete :destroy, :id => @message
+      assigns(:message).should be_trashed(@message.recipient)
+      assigns(:message).should_not be_trashed(@message.sender)
+    end
+    
+    it "should untrash messages" do
+      delete :destroy, :id => @message
+      put :undestroy, :id => @message
+      assigns(:message).should_not be_trashed(@message.recipient)
+    end
   end
   
   
