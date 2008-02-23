@@ -1,4 +1,5 @@
 require 'digest/sha1'
+# TODO: move ^ this ^ to a global include place.
 class Person < ActiveRecord::Base
   
   MAX_EMAIL = MAX_PASSWORD = 40
@@ -14,6 +15,17 @@ class Person < ActiveRecord::Base
   NUM_RECENTLY_VIEWED = 4
   
   has_many :photos, :dependent => :destroy, :order => 'created_at'
+  # TODO: use with_options here
+  has_many :_sent_messages,     :foreign_key => "sender_id",
+                                :class_name => "Message",
+                                :dependent => :destroy,
+                                :conditions => "sender_deleted_at IS NULL",
+                                :order => 'created_at DESC'
+  has_many :_received_messages, :foreign_key => "recipient_id",
+                                :class_name => "Message",
+                                :dependent => :destroy,
+                                :conditions => "recipient_deleted_at IS NULL",
+                                :order => 'created_at DESC'
   attr_accessor :password, :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description
@@ -31,6 +43,16 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of   :email
   
   before_save :downcase_email, :encrypt_password
+  
+  ## Message methods
+
+  def received_messages(page = 1)
+    _received_messages.paginate(:page => page, :per_page => MESSAGES_PER_PAGE)
+  end  
+  
+  def sent_messages(page = 1)
+    _sent_messages.paginate(:page => page, :per_page => MESSAGES_PER_PAGE)
+  end
   
   ## Photo helpers
   

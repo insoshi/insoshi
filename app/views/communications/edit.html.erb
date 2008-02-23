@@ -1,0 +1,12 @@
+<h1>Editing communication</h1>
+
+<%= error_messages_for :communication %>
+
+<% form_for(@communication) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @communication %> |
+<%= link_to 'Back', communications_path %>

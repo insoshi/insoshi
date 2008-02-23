@@ -78,6 +78,16 @@ describe Person do
     end
   end
   
+  describe "message associations" do
+    it "should have sent messages" do
+      @person.sent_messages.should_not be_nil
+    end
+    
+    it "should have received messages" do
+      @person.received_messages.should_not be_nil
+    end
+  end
+  
   describe "authentication" do
     it 'resets password' do
       @person.update_attributes(:password => 'newp',
