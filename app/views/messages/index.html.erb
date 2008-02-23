@@ -1,0 +1,7 @@
+<%= render :partial => 'message_nav' %>
+
+<%= will_paginate %>
+<table class="listing">
+  <%= render :partial => "message", :collection => @messages %>
+</table>
+<%= will_paginate %>

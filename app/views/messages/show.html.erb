@@ -1,0 +1,26 @@
+<% if @message.sender == @current_person %>
+    <% set_main_title "Message sent to #{@message.recipient.name}" %>
+<% elsif @message.recipient == @current_person %>
+    <% set_main_title "Message from #{@message.sender.name}" %>
+<% else %>
+    <% set_main_title "Message" %>
+<% end %>
+
+<%= render :partial => 'message_nav' %>
+
+<%= link_to "&laquo; Back", :back %>
+
+<table class="userlayout">
+  <tr>
+    <td class="sender span-3" style="text-align: center;">
+      <%= linked_image @message.sender, :size => 'thumbnail' %>
+    </td>
+    <td class="span-12" style="vertical-align: top;">
+      <%= render :partial => 'sender_info', 
+                 :locals => { :message => @message,
+                              :rowclass => nil } %>
+      
+      <p><%=h @message.content %></p>
+    </td>
+  </tr>
+</table>

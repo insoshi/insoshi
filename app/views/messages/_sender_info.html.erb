@@ -1,0 +1,14 @@
+<h3 class="name">
+  <% if message.sender == current_person %>
+    <% other_person = message.recipient %>
+    Sent to <%= name_link other_person %>
+  <% else %>
+    <% other_person = message.sender %>
+    Sent by <%= name_link other_person %>
+  <% end %>
+  <%= time_ago_in_words message.created_at %> ago
+</h3>
+<div class="status-mail">
+  <%= email_link other_person, :replying_to => message,
+                                    :rowclass => rowclass %>
+</div>

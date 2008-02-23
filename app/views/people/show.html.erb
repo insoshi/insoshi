@@ -1,7 +1,9 @@
 <h3 style="clear">About <%= @person.name %></h3>
 
+<%= email_link @person %>
+
 <div>
-  <%= image_tag @person.thumbnail %>
+  <%= image_tag @person.main_photo %>
 </div>
 <p><%= sanitize @person.description %></p>
 

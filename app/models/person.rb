@@ -54,6 +54,17 @@ class Person < ActiveRecord::Base
     _sent_messages.paginate(:page => page, :per_page => MESSAGES_PER_PAGE)
   end
   
+  def trashed_messages(page = 1)
+    conditions = [%((sender_id = :person AND sender_deleted_at > :t) OR
+                    (recipient_id = :person AND recipient_deleted_at > :t)),
+                  { :person => id, :t => TRASH_TIME_AGO }]
+    order = 'created_at DESC'
+    trashed = Message.paginate(:all, :conditions => conditions,
+                                     :order => order,
+                                     :page => page,
+                                     :per_page => MESSAGES_PER_PAGE)
+  end  
+  
   ## Photo helpers
   
   def photo

@@ -5,7 +5,8 @@ module ApplicationHelper
       [{ :content => "Home",   :href => home_path },
        { :content => "My Profile" , :href => person_path(current_person) },
        { :content => "My Photos" , :href => photos_path },
-       { :content => "People", :href => people_path }]
+       { :content => "People", :href => people_path },
+       { :content => "Messages", :href => messages_path }]
     else
       [{ :content => "Home",   :href => home_path },
        { :content => "People", :href => people_path }]

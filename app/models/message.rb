@@ -12,8 +12,8 @@ class Message < Communication
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
   
-  # after_create :update_recipient_last_contacted_at,
-  #              :save_recipient, :set_replied_to, :send_receipt_reminder
+  after_create :update_recipient_last_contacted_at,
+               :save_recipient, :set_replied_to, :send_receipt_reminder
 
   attr_accessor :reply, :parent
   
@@ -21,26 +21,26 @@ class Message < Communication
     @parent ||= Message.find(parent_id)
   end
 
-  # # Put the message in the trash for the given person.
-  # def trash(person, time=Time.now)
-  #   case person
-  #   when sender
-  #     self.sender_deleted_at = time
-  #   when recipient
-  #     self.recipient_deleted_at = time
-  #   else
-  #     # Given our controller before filters, this should never happen...
-  #     false
-  #   end
-  #   save!
-  # end
-  # 
-  # # Move the message back to the inbox.
-  # def untrash(user)
-  #   return false unless trashed?(user)
-  #   trash(user, nil)
-  # end
-  # 
+  # Put the message in the trash for the given person.
+  def trash(person, time=Time.now)
+    case person
+    when sender
+      self.sender_deleted_at = time
+    when recipient
+      self.recipient_deleted_at = time
+    else
+      # Given our controller before filters, this should never happen...
+      false
+    end
+    save!
+  end
+  
+  # Move the message back to the inbox.
+  def untrash(user)
+    return false unless trashed?(user)
+    trash(user, nil)
+  end
+  
   # Return true if the message has been trashed.
   def trashed?(person)
     case person
@@ -50,12 +50,12 @@ class Message < Communication
       !recipient_deleted_at.nil? and recipient_deleted_at > Person::TRASH_TIME_AGO
     end
   end
-  # 
-  # # Return true if the message is a reply to a previous message.
-  # def reply?
-  #   !hashed_parent_id.nil?
-  # end
-  # 
+  
+  # Return true if the message is a reply to a previous message.
+  def reply?
+    !parent_id.nil?
+  end
+  
   # Return true if the message has been replied to.
   def replied_to?
     !replied_at.nil?

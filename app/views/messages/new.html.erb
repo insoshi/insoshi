@@ -1,0 +1,30 @@
+<% set_main_title "New message" %>
+
+<%= error_messages_for :message %>
+
+<table>
+  <tr>
+    <th></th>
+    <th>
+      <label>To:</label> <%= @recipient.name %>
+    </th>
+  </tr>
+  <tr>
+    <td class="span-3 center" style="vertical-align: top;">
+      
+      <%= linked_image(@recipient, :size => 'thumbnail') %>
+    </td>
+    
+    <td class="span-9"  style="vertical-align: top;">
+      <% form_for(:message, :url => person_messages_path(@recipient)) do |f| %>
+            <%= f.text_area :content, :style => "margin: 0;" %>
+            <%= set_focus_to_id "message_content" %>      
+        <p>
+          <%= f.submit "Send!" %>
+          <%= f.submit "Cancel", :id => "cancel" %>
+        </p>
+        <%= f.hidden_field :parent_id if @message.reply? %>
+<% end %>
+    </td>
+  </tr>
+</table>
