@@ -74,9 +74,10 @@ describe Message do
     @next_message.parent.should_not be_replied_to
   end
   
-  it "should mark messages as read" 
-
-
+  it "should mark messages as read" do
+    @message.mark_as_read
+    @message.should be_read
+  end
 
   private
 
@@ -84,7 +85,6 @@ describe Message do
       Message.new({ :content   => "Lorem ipsum" }.merge(options))
     end
   
-    # TODO: remove this (?)
     def create_message(options = { :sender => @sender,
                                    :recipient => @recipient })   
       Message.create({ :content   => "Lorem ipsum" }.merge(options))

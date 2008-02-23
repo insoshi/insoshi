@@ -61,8 +61,8 @@ class Message < Communication
     !replied_at.nil?
   end
   
-  # Possibly mark a message as read.
-  def read(time=Time.now)
+  # Mark a message as read.
+  def mark_as_read(time=Time.now)
     unless read?
       self.recipient_read_at = time
       save!
