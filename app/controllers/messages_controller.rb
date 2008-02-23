@@ -45,11 +45,9 @@ class MessagesController < ApplicationController
 
   def reply
     # TODO: refactor this mess
-    @message = Message.new
     original_message = Message.find(params[:id])
-    @message.parent_id = original_message.id
-    sender = original_message.sender
-    @recipient = sender == current_person ? original_message.recipient : sender
+    @message = Message.new(:parent => original_message)
+    @recipient = not_current_person(original_message)
     respond_to do |format|
       format.html { render :action => "new" }
     end    
@@ -65,8 +63,8 @@ class MessagesController < ApplicationController
     end
     redirect_to '/' and return if reply? and not valid_reply?
     
-    @data = params[:message].merge(:sender    => current_person,
-                                   :recipient => @recipient)
+    @data = params[:message_id].merge(:sender    => current_person,
+                                      :recipient => @recipient)
     @message = Message.new(@data)
     
     respond_to do |format|
@@ -123,5 +121,12 @@ class MessagesController < ApplicationController
     def valid_reply?
       original = Message.find(params[:parent_id])
       original.recipient == current_person and original.sender == @recipient
+    end
+    
+    # Return the proper recipient for a message.
+    # This should not be the current person in order to allow multiple replies
+    # to the same message.
+    def not_current_person(message)
+      message.sender == current_person ? message.recipient : message.sender
     end
 end

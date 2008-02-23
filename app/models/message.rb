@@ -20,6 +20,10 @@ class Message < Communication
   def parent
     @parent ||= Message.find(parent_id)
   end
+  
+  def parent=(message)
+    @parent = message
+  end
 
   # Put the message in the trash for the given person.
   def trash(person, time=Time.now)
