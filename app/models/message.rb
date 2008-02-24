@@ -103,6 +103,6 @@ class Message < Communication
     end
     
     def send_receipt_reminder
-      MessageReceiptMailer.deliver_reminder(self) unless @skip_send_mail
+      PersonMailer.deliver_message_notification(self) unless @skip_send_mail
     end
 end
