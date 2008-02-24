@@ -27,4 +27,11 @@ describe ConnectionsController do
     put :update, :person_id => @contact
     response.should redirect_to(home_url)
   end
+  
+  it "should end a connection" do
+    Connection.should_receive(:breakup).with(@person, @contact).
+      and_return(true)
+    delete :destroy, :person_id => @contact
+    response.should redirect_to(home_url)
+  end
 end

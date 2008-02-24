@@ -29,13 +29,13 @@ class ConnectionsController < ApplicationController
   end
 
 
-  # def destroy
-  #   @connection = Connection.find(params[:id])
-  #   @connection.destroy
-  # 
-  #   respond_to do |format|
-  #     format.html { redirect_to(connections_url) }
-  #     format.xml  { head :ok }
-  #   end
-  # end
+  def destroy
+    @contact = Person.find(params[:person_id])
+    Connection.breakup(current_person, @contact)
+    
+    respond_to do |format|
+      flash[:success] = "Ended connection with #{@contact.name}"
+      format.html { redirect_to(home_url) }
+    end
+  end
 end
