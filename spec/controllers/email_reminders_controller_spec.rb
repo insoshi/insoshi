@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe EmailRemindersController do
   
   before(:each) do
-    ActionMailer::Base.delivery_method = :test
     @emails = ActionMailer::Base.deliveries
     @emails.clear    
     @person = people(:quentin)

@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Message do
   
   before(:each) do
-    ActionMailer::Base.delivery_method = :test
     @sender    = people(:quentin)
     @recipient = people(:aaron)
     @message   = new_message

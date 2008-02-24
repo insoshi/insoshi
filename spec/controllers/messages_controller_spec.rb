@@ -3,6 +3,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe MessagesController do
 
   before(:each) do
+    @emails = ActionMailer::Base.deliveries
+    @emails.clear    
+
     @person = login_as(:quentin)
     @other_person = people(:aaron)
     @message = @person.received_messages.first
@@ -60,6 +63,13 @@ describe MessagesController do
         post :create, :message => { :content => "Hey there!" },
                       :person_id => @other_person
       end.should change(Message, :count).by(1)
+    end
+    
+    it "should send a message receipt email" do
+      lambda do
+        post :create, :message => { :content => "Hey there!" },
+                      :person_id => @other_person
+      end.should change(@emails, :length).by(1)
     end
     
     it "should handle replies as recipient" do
