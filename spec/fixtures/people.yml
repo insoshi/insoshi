@@ -2,19 +2,19 @@ quentin:
   email: quentin@example.com
   name: Quentin
   description: I'm Quentin
-  crypted_password: JdoXqX9FKe9zeGEArrs796+NtoqYBT3DYSRe/1CyHMyNorHPvUImHPJfx1mM\nsz7hEFypKH7p/jRAnwQLVbcJTdjL8+Wet4/bJOT55NN2eWMRb/wZKGdljOy9\nbTEAenLKKEQNQtpE7QQiiSQ7a1DACJxhPYqWAn1lOQ9K8Rv77MA=\n
+  crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
   created_at: <%= 5.days.ago.to_s :db %>
 
 aaron:
   email: aaron@example.com
   name: Aaron
   description: I'm Aaron
-  crypted_password: JdoXqX9FKe9zeGEArrs796+NtoqYBT3DYSRe/1CyHMyNorHPvUImHPJfx1mM\nsz7hEFypKH7p/jRAnwQLVbcJTdjL8+Wet4/bJOT55NN2eWMRb/wZKGdljOy9\nbTEAenLKKEQNQtpE7QQiiSQ7a1DACJxhPYqWAn1lOQ9K8Rv77MA=\n
+  crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
   created_at: <%= 1.day.ago.to_s :db %>
 
 kelly:
   email: kelly@example.com
   name: Kelly
   description: I'm Kelly
-  crypted_password: JdoXqX9FKe9zeGEArrs796+NtoqYBT3DYSRe/1CyHMyNorHPvUImHPJfx1mM\nsz7hEFypKH7p/jRAnwQLVbcJTdjL8+Wet4/bJOT55NN2eWMRb/wZKGdljOy9\nbTEAenLKKEQNQtpE7QQiiSQ7a1DACJxhPYqWAn1lOQ9K8Rv77MA=\n
+  crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
   created_at: <%= 1.day.ago.to_s :db %>
