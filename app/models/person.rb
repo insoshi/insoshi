@@ -17,17 +17,13 @@ class Person < ActiveRecord::Base
   NUM_RECENTLY_VIEWED = 4
   
   has_many :photos, :dependent => :destroy, :order => 'created_at'
-  # TODO: use with_options here
-  has_many :_sent_messages,     :foreign_key => "sender_id",
-                                :class_name => "Message",
-                                :dependent => :destroy,
-                                :conditions => "sender_deleted_at IS NULL",
-                                :order => 'created_at DESC'
-  has_many :_received_messages, :foreign_key => "recipient_id",
-                                :class_name => "Message",
-                                :dependent => :destroy,
-                                :conditions => "recipient_deleted_at IS NULL",
-                                :order => 'created_at DESC'
+  with_options :class_name => "Message", :dependent => :destroy,
+               :order => 'created_at DESC' do |person|
+    person.has_many :_sent_messages, :foreign_key => "sender_id",
+                    :conditions => "sender_deleted_at IS NULL"
+    person.has_many :_received_messages, :foreign_key => "recipient_id",
+                    :conditions => "recipient_deleted_at IS NULL"                  
+  end
   attr_accessor :password, :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description
