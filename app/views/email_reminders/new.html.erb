@@ -1,0 +1,14 @@
+<% set_main_title "Email reminder" %>
+
+<% form_for :person, :url => email_reminders_path do |form| %>
+  <div class="field_row">
+    <label for="username">Enter your email address:</label>
+    <br />
+    <%= form.text_field :email, :maxlength => Person::MAX_EMAIL %>
+    <%= set_focus_to_id "person_email" %>
+  </div>
+  
+  <div class="field_row">
+    <%= submit_tag "Send reminder", :class => "submit" %>
+  </div>
+<% end %>
