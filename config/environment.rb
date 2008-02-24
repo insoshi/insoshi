@@ -56,15 +56,4 @@ Rails::Initializer.run do |config|
 
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
-  
-  # Put local gems on load path.
-  config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
-    File.directory?(lib = "#{dir}/lib") ? lib : dir
-  end
-  # Load the local gems.
-  Dir[File.dirname(__FILE__) + "/../vendor/*"].each do |path|
-    gem_name = File.basename(path.gsub(/-\d+.\d+.\d+$/, ''))
-    gem_path = path + "/lib/" + gem_name + ".rb"
-    require gem_path if File.exist? gem_path
-  end
 end

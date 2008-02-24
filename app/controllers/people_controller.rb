@@ -17,6 +17,14 @@ class PeopleController < ApplicationController
     end
   end
   
+  def search
+    @people = Person.search(params[:q], :page => params[:page])
+
+    respond_to do |format|
+      format.html { render :action => "index" }
+    end
+  end
+  
   def new
     @person = Person.new
 

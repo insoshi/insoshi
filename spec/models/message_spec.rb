@@ -82,11 +82,11 @@ describe Message do
   private
 
     def new_message(options = { :sender => @sender, :recipient => @recipient })   
-      Message.new({ :content   => "Lorem ipsum" }.merge(options))
+      Message.new({ :content => "Lorem ipsum" }.merge(options))
     end
   
     def create_message(options = { :sender => @sender,
                                    :recipient => @recipient })   
-      Message.create({ :content   => "Lorem ipsum" }.merge(options))
+      Message.create({ :content => "Lorem ipsum" }.merge(options))
     end
 end

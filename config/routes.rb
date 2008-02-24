@@ -1,14 +1,14 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :photos
-  map.resources :people
   map.resource :session
   map.resources :messages, :collection => { :sent => :get, :trash => :get },
                            :member => { :reply => :get, :undestroy => :put }
+  map.resources :people, :collection => { :search => :get }
   map.resources :people do |person|
      person.resources :messages
      person.resources :photos
   end
-  
+                         
   map.signup '/signup', :controller => 'people', :action => 'new'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

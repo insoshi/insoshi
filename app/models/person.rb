@@ -1,6 +1,6 @@
-require 'digest/sha1'
-# TODO: move ^ this ^ to a global include place.
 class Person < ActiveRecord::Base
+
+  acts_as_ferret :fields => [ :name, :description ]
   
   MAX_EMAIL = MAX_PASSWORD = 40
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
@@ -43,6 +43,17 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of   :email
   
   before_save :downcase_email, :encrypt_password
+  
+  ## Class methods
+  
+  # People search using Ferret
+  def self.search(query, options = {})
+    return [].paginate if query.blank?
+    limit = [total_hits(query), SEARCH_LIMIT].min
+    paginate_by_contents(query, :page => options[:page],
+                                :per_page => SEARCH_PER_PAGE,
+                                :total_entries => limit)
+  end
   
   ## Message methods
 
