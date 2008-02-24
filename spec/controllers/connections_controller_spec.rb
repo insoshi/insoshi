@@ -20,4 +20,11 @@ describe ConnectionsController do
     post :create, :person_id => @contact
     response.should redirect_to(home_url)
   end
+  
+  it "should accept the connection" do
+    Connection.should_receive(:accept).with(@person, @contact).
+      and_return(true)
+    put :update, :person_id => @contact
+    response.should redirect_to(home_url)
+  end
 end
