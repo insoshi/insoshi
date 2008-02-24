@@ -1,6 +1,8 @@
 class Person < ActiveRecord::Base
 
-  acts_as_ferret :fields => [ :name, :description ]
+  if !test? or (test? and FERRET_IN_TESTS)
+    acts_as_ferret :fields => [ :name, :description ]
+  end
   
   MAX_EMAIL = MAX_PASSWORD = 40
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
