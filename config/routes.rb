@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :connections
 
-  map.resources :email_reminders
+  map.resources :password_reminders
   map.resources :photos
   map.resource :session
   map.resources :messages, :collection => { :sent => :get, :trash => :get },
