@@ -3,6 +3,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Connection do
   
   before(:each) do
+    @emails = ActionMailer::Base.deliveries
+    @emails.clear    
+
     @person = people(:quentin)
     @connection = people(:aaron)
   end
@@ -13,6 +16,12 @@ describe Connection do
     status(@connection, @person).should == 'requested'
   end
   
+  it "should send a request notification" do
+    lambda do
+      Connection.request(@person, @connection)
+    end.should change(@emails, :length).by(1)
+  end
+    
   it "should accept a request" do
     Connection.request(@person, @connection)
     Connection.accept(@person,  @connection)

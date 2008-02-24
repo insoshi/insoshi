@@ -11,7 +11,14 @@ class PersonMailer < ActionMailer::Base
   def message_notification(message)
     from         "Message notification <message@example.com>"
     recipients   message.recipient.email
-    subject      "New message!"
+    subject      "New message"
     body         "message" => message
+  end
+  
+  def connection_request(person, contact)
+    from         "Connection request <connection@example.com>"
+    recipients   person.email
+    subject      "New contact request"
+    body         "contact" => contact
   end
 end

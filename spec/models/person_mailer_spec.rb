@@ -35,4 +35,22 @@ describe PersonMailer do
       @reminder.to.first.should == @message.recipient.email
     end
   end
+  
+  describe "connection request" do
+    
+    before(:each) do
+      @person = people(:quentin)
+      @contact = people(:aaron)
+      @request = PersonMailer.create_connection_request(@person, @contact)
+    end
+    
+    it "should have the right recipient" do
+      @request.to.first.should == @person.email
+    end
+    
+    it "should have a URL to the contact" do
+      url = "/contacts/show/#{@contact.id}"
+      @request.body.should =~ /#{url}/
+    end
+  end
 end

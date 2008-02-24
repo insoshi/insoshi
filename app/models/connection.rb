@@ -11,16 +11,17 @@ class Connection < ActiveRecord::Base
   
   # Make a pending connection request.
   def self.request(person, contact)
-    unless person == contact or Connection.exists?(person, contact) 
+    if person == contact or Connection.exists?(person, contact)
+      false
+    else
       transaction do
-        create(:person => person, :contact => contact, 
+        create(:person => person, :contact => contact,
                :status => 'pending')
-        create(:person => contact, :contact => person, 
+        create(:person => contact, :contact => person,
                :status => 'requested')
       end
+      PersonMailer.deliver_connection_request(person, contact)
       true
-    else
-      false
     end
   end
   
