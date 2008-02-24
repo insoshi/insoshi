@@ -1,6 +1,12 @@
 <h3 style="clear">About <%= @person.name %></h3>
 
-<%= email_link @person %>
+<%- if logged_in? and @person != current_person -%>
+  <%= email_link @person %>
+  <%- unless Connection.exists?(@person, current_person) -%>
+    | 
+    <%= button_to "Connection request", person_connections_path(@person) %>
+  <%- end -%>
+<%- end -%>
 
 <div>
   <%= image_tag @person.main_photo %>

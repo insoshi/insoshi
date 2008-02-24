@@ -27,6 +27,6 @@ describe Connection do
   end
   
   def status(person, conn)
-    Connection.find_by_person_id_and_connection_id(person, conn).status
+    Connection.find_by_person_id_and_contact_id(person, conn).status
   end
 end

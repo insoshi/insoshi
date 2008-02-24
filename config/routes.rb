@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :people do |person|
      person.resources :messages
      person.resources :photos
+     person.resources :connections
   end
                          
   map.signup '/signup', :controller => 'people', :action => 'new'

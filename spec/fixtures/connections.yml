@@ -2,10 +2,10 @@
 
 one:
   person_id: 1
-  connection_id: 1
+  contact_id: 1
   status: MyString
 
 two:
   person_id: 1
-  connection_id: 1
+  contact_id: 1
   status: MyString

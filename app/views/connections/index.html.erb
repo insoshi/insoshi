@@ -10,7 +10,7 @@
 <% for connection in @connections %>
   <tr>
     <td><%=h connection.person_id %></td>
-    <td><%=h connection.connection_id %></td>
+    <td><%=h connection.contact_id %></td>
     <td><%=h connection.status %></td>
     <td><%= link_to 'Show', connection %></td>
     <td><%= link_to 'Edit', edit_connection_path(connection) %></td>
