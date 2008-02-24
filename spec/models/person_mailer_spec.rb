@@ -4,7 +4,7 @@ describe PersonMailer do
   
   before(:each) do
     @person = people(:quentin)
-    @reminder = PersonMailer.create_reminder(@person)    
+    @reminder = PersonMailer.create_password_reminder(@person)    
   end
   
   it "should have the right sender" do

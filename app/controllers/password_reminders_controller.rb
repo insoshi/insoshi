@@ -1,4 +1,4 @@
-class EmailRemindersController < ApplicationController
+class PasswordRemindersController < ApplicationController
   
   def new
   end
@@ -8,7 +8,7 @@ class EmailRemindersController < ApplicationController
     respond_to do |format|
       format.html do
         unless person.nil?
-          PersonMailer.deliver_reminder(person)
+          PersonMailer.deliver_password_reminder(person)
           flash[:success] = "Your password has been sent"
           redirect_to login_url
         else
