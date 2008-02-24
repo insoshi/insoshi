@@ -3,7 +3,11 @@ class Person < ActiveRecord::Base
   if !test? or (test? and FERRET_IN_TESTS)
     acts_as_ferret :fields => [ :name, :description ]
   end
-  
+
+  attr_accessor :password, :sorted_photos
+  attr_accessible :email, :password, :password_confirmation, :name,
+                  :description
+
   MAX_EMAIL = MAX_PASSWORD = 40
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
   TEXT_LENGTH = 120 # truncation parameter for people listings
@@ -24,9 +28,12 @@ class Person < ActiveRecord::Base
     person.has_many :_received_messages, :foreign_key => "recipient_id",
                     :conditions => "recipient_deleted_at IS NULL"                  
   end
-  attr_accessor :password, :sorted_photos
-  attr_accessible :email, :password, :password_confirmation, :name,
-                  :description
+  has_many :connections
+  has_many :contacts, :through => :connections,
+                      :conditions => "status = 'accepted'"
+  has_many :requested_contacts, :through => :connections,
+                              :source => :contact,
+                              :conditions => "status = 'requested'"
   
   validates_presence_of     :email
   validates_presence_of     :password,              :if => :password_required?

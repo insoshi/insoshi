@@ -88,6 +88,27 @@ describe Person do
     end
   end
   
+  describe "description" do
+    
+    before(:each) do
+      @contact = people(:aaron)
+    end
+    
+    # TODO: make custom matchers to get
+    # @contact.should have_requested_contacts
+    it "should have requested contacts" do
+      Connection.request(@person, @contact)
+      @contact.requested_contacts.should_not be_empty
+    end
+    
+    it "should have contacts" do
+      Connection.request(@person, @contact)
+      Connection.accept(@person, @contact)      
+      @person.contacts.should == [@contact]
+      @contact.contacts.should == [@person]
+    end
+  end
+  
   describe "authentication" do
     it 'resets password' do
       @person.update_attributes(:password => 'newp',
