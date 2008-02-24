@@ -1,0 +1,24 @@
+<h1>Listing connections</h1>
+
+<table>
+  <tr>
+    <th>Person</th>
+    <th>Connection</th>
+    <th>Status</th>
+  </tr>
+
+<% for connection in @connections %>
+  <tr>
+    <td><%=h connection.person_id %></td>
+    <td><%=h connection.connection_id %></td>
+    <td><%=h connection.status %></td>
+    <td><%= link_to 'Show', connection %></td>
+    <td><%= link_to 'Edit', edit_connection_path(connection) %></td>
+    <td><%= link_to 'Destroy', connection, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New connection', new_connection_path %>

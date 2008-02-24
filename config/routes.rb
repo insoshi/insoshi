@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :connections
+
   map.resources :email_reminders
   map.resources :photos
   map.resource :session

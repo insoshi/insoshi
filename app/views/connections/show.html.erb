@@ -1,0 +1,18 @@
+<p>
+  <b>Person:</b>
+  <%=h @connection.person_id %>
+</p>
+
+<p>
+  <b>Connection:</b>
+  <%=h @connection.connection_id %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @connection.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_connection_path(@connection) %> |
+<%= link_to 'Back', connections_path %>
