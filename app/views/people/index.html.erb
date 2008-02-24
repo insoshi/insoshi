@@ -2,7 +2,10 @@
   <%= will_paginate %>
   <ul>
     <%- @people.each do |person| -%>
-     <li><%= link_to person.name, person %></li>
+     <li>
+       <%= link_to image_tag(person.thumbnail), person %>
+       <%= link_to person.name, person %>
+     </li>
     <%- end -%>
   </ul>
   <%= will_paginate %>
