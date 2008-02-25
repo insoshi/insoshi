@@ -13,6 +13,8 @@ class CreatePhotos < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :photos, :person_id
+    add_index :photos, :parent_id
   end
 
   def self.down

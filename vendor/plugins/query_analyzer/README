@@ -1,0 +1,94 @@
+= Query Analyzer Plugin for MySQL on Rails
+
+The Query Analyzer plugin will expand the usability of your log files
+by providing query analysis using the MySQL query execution plan. Each SQL
+select query will be 'EXPLAIN'ed and added to the log files right below
+the original query.
+
+Using this plugin and a good understanding of the results, you will be 
+able to analyze and optimize the queries your application is making.
+
+Refer to http://www.mysql.org/doc/refman/5.0/en/explain.html for more
+information on understanding the results. 
+
+= Installation
+
+script/plugin install http://svn.nfectio.us/plugins/query_analyzer
+
+= Example Use
+
+Here is a real life usage of the plugin that detected the omission of indexes on
+a table. In this case, it was a join table and the keys didn't have indexes (silly me!).
+Names have been changed to protect the innocent (and make it fit 80 columns)
+
+# development.log
+
+P Load (0.008669)
+ => SELECT p.* FROM p INNER JOIN d ON p.id = d.p_id WHERE (d.p_id = 2 AND ((d.type = 'P'))) 
+
+Analyzing P Load
+   
+select_type | key_len | type   | Extra       | id | possible_keys | rows | table  | ref    | key    
+----------------------------------------------------------------------------------------------------
+SIMPLE      |         | ALL    | Using where | 1  |               | 74   |    d   |        |        
+SIMPLE      | 4       | eq_ref | Using where | 1  | PRIMARY       | 1    |    p   | d.p_id | PRIMARY
+
+
+= Analyze the results
+
+Looking at the results of the execution plan, we can see that the lookup in
+the d table is missing an index (possible_keys=null) and performed a full 
+table scan (type=ALL) to satisfy the WHERE condition. In this case, there was only one 
+row that matched the condition in the table, but MySQL still had to search all 74 rows 
+in the table to find it, a key indicator of a missing
+or malformed index(es). Once it has pulled all the records to satisfy the WHERE, it then
+starts the p table join. This time, it was able to match d.p_id to p.id using
+the PRIMARY key on the p table. The type=eq_ref indicates a 1 to 1 match against a primary 
+or unique column.
+
+Lets add some indexes to the join table and see if we can cut that full table scan down in the
+number of rows it needs to search.
+
+#> script/generate Migration AddIndexesToD
+
+# file: 005_add_indexes_to_d
+class AddIndexesToD < ActiveRecord::Migration
+  def self.up
+    add_index :d, [ :p_id, :type ]
+    add_index :d, :type
+  end
+
+  def self.remove
+    remove_index :d, [ :p_id, :type ]
+    remove_index :d, :type  
+  end
+end
+
+
+Now that we have an index on the foreign_key column and type, lets re-run the query and
+see if we got rid of that full table scan.
+
+# development.log
+
+P Load (0.009011)   
+ => SELECT p.* FROM p INNER JOIN d ON p.id = d.p_id WHERE (d.p_id = 2 AND ((d.type = 'P'))) 
+
+Analyzing P Load
+   
+select_type | key_len | type   | Extra       | id | possible_keys                  | rows | table | ref    | key                             
+------------------------------------------------------------------------------------------------------------------------------
+SIMPLE      | 255     | ref    | Using where | 1  | d_p_id_type_index,d_type_index | 1    |   d   | const  | d_p_id_type_index
+SIMPLE      | 4       | eq_ref | Using where | 1  | PRIMARY                        | 1    |   p   | d.p_id | PRIMARY                         
+
+Okay. Now MySQL is using an index satisfy the WHERE condition. Using the index, it was able to
+find the single row that matched, preventing the full table scan.
+
+
+Credits:
+The extension of the Array class for printing the columnized records was originally
+written by Peter Cooper who adapted it from Courtenay from #caboose.
+
+http://www.rubyinside.com/columnized-text-datasets-in-rails-71.html
+http://habtm.com/articles/2006/06/10/pretty-tables-for-ruby-objects
+
+Released under the MIT license (download your own if you need it)

@@ -8,6 +8,7 @@ class CreateConnections < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :connections, [:person_id, :contact_id]
   end
 
   def self.down
