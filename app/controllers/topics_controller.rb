@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
   
+  before_filter :login_required
   before_filter :get_forum
   
   def index
