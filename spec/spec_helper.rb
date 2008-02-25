@@ -7,13 +7,22 @@ require 'spec/rails'
 include AuthenticatedTestHelper
 
 Spec::Runner.configure do |config|
-  # If you're not using ActiveRecord you should remove these
-  # lines, delete config/database.yml and disable :active_record
-  # in your config/boot.rb
+  
+  # Active Record configuration
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
-
+  
+  # Load the custom matchers in spec/matchers
+  matchers_path = File.dirname(__FILE__) + "/matchers"
+  matchers_files = Dir.entries(matchers_path).select {|x| /\.rb\z/ =~ x}
+  matchers_files.each do |path|
+    require File.join(matchers_path, path)
+  end
+  
+  # Custom matchers includes
+  config.include(CustomModelMatchers)
+  
   # == Fixtures
   #
   # You can declare fixtures for each example_group like this:

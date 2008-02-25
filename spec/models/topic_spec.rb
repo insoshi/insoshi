@@ -13,7 +13,7 @@ describe Topic do
   end
 
   it "should have a max name length" do
-    Topic.new(:name => "a" * (MAX_STRING_LENGTH + 1)).should_not be_valid
+    Topic.should have_maximum(:name, MAX_STRING_LENGTH)
   end
   
   it "should have many posts" do
