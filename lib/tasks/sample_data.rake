@@ -28,6 +28,8 @@ namespace :db do
     
     desc "Reload sample data"
     task :reload => :environment do |t|
+      # Blow away the Ferret index.
+      system("rm -rf index/")
       Rake::Task["db:migrate:reset"].invoke
       Rake::Task["db:sample_data:load"].invoke
     end

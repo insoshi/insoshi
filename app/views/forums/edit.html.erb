@@ -1,0 +1,27 @@
+<h1>Editing forum</h1>
+
+<%= error_messages_for :forum %>
+
+<% form_for(@forum) do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Description</b><br />
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <b>Topics count</b><br />
+    <%= f.text_field :topics_count %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @forum %> |
+<%= link_to 'Back', forums_path %>

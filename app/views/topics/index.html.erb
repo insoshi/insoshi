@@ -1,0 +1,26 @@
+<h1>Listing topics</h1>
+
+<table>
+  <tr>
+    <th>Forum</th>
+    <th>Person</th>
+    <th>Name</th>
+    <th>Posts count</th>
+  </tr>
+
+<% for topic in @topics %>
+  <tr>
+    <td><%=h topic.forum_id %></td>
+    <td><%=h topic.person_id %></td>
+    <td><%=h topic.name %></td>
+    <td><%=h topic.posts_count %></td>
+    <td><%= link_to 'Show', forum_topic_path(@forum, topic) %></td>
+    <td><%= link_to 'Edit', edit_forum_topic_path(@forum, topic) %></td>
+    <td><%= link_to 'Destroy', forum_topic_path(@forum, topic), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New topic', new_forum_topic_path(@forum) %>

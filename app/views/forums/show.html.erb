@@ -1,0 +1,18 @@
+<p>
+  <b>Name:</b>
+  <%=h @forum.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @forum.description %>
+</p>
+
+<p>
+  <b>Topics count:</b>
+  <%=h @forum.topics_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_forum_path(@forum) %> |
+<%= link_to 'Back', forums_path %>
