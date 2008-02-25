@@ -36,7 +36,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save
-        flash[:notice] = 'Topic was successfully created.'
+        flash[:success] = 'Topic was successfully created.'
         format.html { redirect_to forum_topics_url(@forum) }
       else
         format.html { render :action => "new" }
@@ -49,7 +49,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
-        flash[:notice] = 'Topic was successfully updated.'
+        flash[:success] = 'Topic was successfully updated.'
         format.html { redirect_to forum_topics_url(@forum) }
       else
         format.html { render :action => "edit" }

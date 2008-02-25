@@ -1,10 +1,10 @@
-class PostsController < ApplicationController
+class ForumPostsController < ApplicationController
   
   before_filter :login_required
   before_filter :get_forum_and_topic
 
   def index
-    @posts = Post.find(:all)
+    @posts = ForumPost.find(:all)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = ForumPost.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -20,7 +20,7 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = Post.new
+    @post = ForumPost.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -28,11 +28,11 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
+    @post = ForumPost.find(params[:id])
   end
 
   def create
-    @post = Post.new(params[:post].merge(:person => current_person))
+    @post = ForumPost.new(params[:post].merge(:person => current_person))
 
     respond_to do |format|
       if @post.save
@@ -45,7 +45,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
+    @post = ForumPost.find(params[:id])
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
@@ -58,7 +58,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
+    @post = ForumPost.find(params[:id])
     @post.destroy
 
     respond_to do |format|

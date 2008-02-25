@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe PostsController do
+describe ForumPostsController do
   integrate_views
   
   it "should require login" do

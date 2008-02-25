@@ -1,13 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  blog_id: 1
   topic_id: 1
   person_id: 1
   body: MyText
+  type: ForumPost
 
 two:
   blog_id: 1
-  topic_id: 1
   person_id: 1
   body: MyText
+  type: BlogPost
