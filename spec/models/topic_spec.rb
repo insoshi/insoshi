@@ -5,7 +5,5 @@ describe Topic do
     @topic = Topic.new
   end
 
-  it "should be valid" do
-    @topic.should be_valid
-  end
+  it "should be valid"
 end

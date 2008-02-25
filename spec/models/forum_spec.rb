@@ -5,7 +5,5 @@ describe Forum do
     @forum = Forum.new
   end
 
-  it "should be valid" do
-    @forum.should be_valid
-  end
+  it "should be valid"
 end

@@ -5,7 +5,5 @@ describe Post do
     @post = Post.new
   end
 
-  it "should be valid" do
-    @post.should be_valid
-  end
+  it "should be valid"
 end
