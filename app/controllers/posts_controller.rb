@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+  
+  before_filter :get_forum_and_topic
+
   # GET /posts
   # GET /posts.xml
   def index
@@ -44,8 +47,8 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        flash[:notice] = 'Post was successfully created.'
-        format.html { redirect_to(@post) }
+        flash[:success] = 'Post was successfully created.'
+        format.html { redirect_to forum_topic_posts_path(@forum, @topic) }
         format.xml  { render :xml => @post, :status => :created, :location => @post }
       else
         format.html { render :action => "new" }
@@ -61,7 +64,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        flash[:notice] = 'Post was successfully updated.'
+        flash[:success] = 'Post was successfully updated.'
         format.html { redirect_to(@post) }
         format.xml  { head :ok }
       else
@@ -82,4 +85,11 @@ class PostsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  private
+  
+    def get_forum_and_topic
+      @forum = Forum.find(params[:forum_id])
+      @topic = Topic.find(params[:topic_id])
+    end
 end

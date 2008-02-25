@@ -89,7 +89,6 @@ class TopicsController < ApplicationController
   private
   
     def get_forum
-      # TODO: generalize this for > 1 forum.
-      @forum = Forum.find(:first)
+      @forum = Forum.find(params[:forum_id])
     end
 end
