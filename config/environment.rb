@@ -56,8 +56,4 @@ Rails::Initializer.run do |config|
 
   # Make Active Record use UTC-base instead of local time
   config.active_record.default_timezone = :utc
-  
-  # Ferret adds a significant overhead to tests, so disable it by default.
-  # Set this to true to run the tests with Ferret enabled.
-  FERRET_IN_TESTS = false
 end
