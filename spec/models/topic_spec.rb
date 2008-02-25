@@ -3,7 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Topic do
 
   it "should be valid" do
-    Topic.new(:name => "A topic").should be_valid
+    Topic.new(:name => "A topic", :forum => forums(:one),
+              :person => people(:quentin)).should be_valid
   end
   
   it "should require a name" do

@@ -4,7 +4,8 @@ describe Post do
   include CustomModelMatchers
   
   it "should be valid" do
-    Post.new(:body => "Hey there").should be_valid
+    Post.new(:body => "Hey there", :topic => topics(:one),
+             :person => people(:quentin)).should be_valid
   end
   
   it "should require a body" do

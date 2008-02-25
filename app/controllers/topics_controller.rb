@@ -32,7 +32,7 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = Topic.new(params[:topic])
+    @topic = Topic.new(params[:topic].merge(:person => current_person))
 
     respond_to do |format|
       if @topic.save

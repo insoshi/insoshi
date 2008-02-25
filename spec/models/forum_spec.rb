@@ -1,9 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Forum do
-  before(:each) do
-    @forum = Forum.new
+  it "should be valid" do
+    Forum.new.should be_valid
   end
-
-  it "should be valid"
 end

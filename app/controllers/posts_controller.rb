@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   
+  before_filter :login_required
   before_filter :get_forum_and_topic
 
   def index
@@ -31,7 +32,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(params[:post])
+    @post = Post.new(params[:post].merge(:person => current_person))
 
     respond_to do |format|
       if @post.save
