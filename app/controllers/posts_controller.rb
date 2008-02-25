@@ -48,7 +48,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         flash[:success] = 'Post was successfully created.'
-        format.html { redirect_to forum_topic_posts_path(@forum, @topic) }
+        format.html { redirect_to forum_topic_posts_url(@forum, @topic) }
         format.xml  { render :xml => @post, :status => :created, :location => @post }
       else
         format.html { render :action => "new" }
@@ -65,7 +65,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.update_attributes(params[:post])
         flash[:success] = 'Post was successfully updated.'
-        format.html { redirect_to(@post) }
+        format.html { redirect_to forum_topic_posts_url(@forum, @topic) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -81,7 +81,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to(posts_url) }
+      format.html { redirect_to forum_topic_posts_url(@forum, @topic) }
       format.xml  { head :ok }
     end
   end
