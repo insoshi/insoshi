@@ -10,10 +10,11 @@ module AuthenticatedTestHelper
     elsif person.nil?
       id = nil
     end
-    @request.session[:person_id] = id
     # Stub out the controller if it's defined.
     if defined?(controller)
       controller.stub!(:current_person).and_return(person)
+    else
+      @request.session[:person_id] = id
     end
     person
   end
