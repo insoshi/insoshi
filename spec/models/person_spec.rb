@@ -38,6 +38,10 @@ describe Person do
       person = create_person(:save => true)
       person.blog.should_not be_nil
     end
+    
+    it "should have many wall comments" do
+      create_person.comments.should be_a_kind_of(Array)
+    end
   end
   
   describe "photo methods" do

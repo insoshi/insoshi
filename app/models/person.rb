@@ -1,8 +1,7 @@
 class Person < ActiveRecord::Base
 
-  if !test? or (test? and FERRET_IN_TESTS)
-    acts_as_ferret :fields => [ :name, :description ]
-  end
+
+  acts_as_ferret :fields => [ :name, :description ] if ferret?
 
   attr_accessor :password, :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
@@ -19,8 +18,17 @@ class Person < ActiveRecord::Base
   MESSAGES_PER_PAGE = 5
   NUM_RECENT_MESSAGES = 4
   NUM_RECENTLY_VIEWED = 4
-  
+
+  has_one :blog  
+  has_many :comments, :class_name => "WallComment"
+  has_many :connections
+  # TODO: refactor the statuses to use numerical codes/model constants.
+  has_many :contacts, :through => :connections,
+                      :conditions => "status = 'accepted'"
   has_many :photos, :dependent => :destroy, :order => 'created_at'
+  has_many :requested_contacts, :through => :connections,
+                              :source => :contact,
+                              :conditions => "status = 'requested'"
   with_options :class_name => "Message", :dependent => :destroy,
                :order => 'created_at DESC' do |person|
     person.has_many :_sent_messages, :foreign_key => "sender_id",
@@ -28,13 +36,6 @@ class Person < ActiveRecord::Base
     person.has_many :_received_messages, :foreign_key => "recipient_id",
                     :conditions => "recipient_deleted_at IS NULL"                  
   end
-  has_many :connections
-  has_many :contacts, :through => :connections,
-                      :conditions => "status = 'accepted'"
-  has_many :requested_contacts, :through => :connections,
-                              :source => :contact,
-                              :conditions => "status = 'requested'"
-  has_one :blog
   
   validates_presence_of     :email
   validates_presence_of     :password,              :if => :password_required?
