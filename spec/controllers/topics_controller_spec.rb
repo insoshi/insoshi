@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe TopicsController do
   integrate_views
+
+  before(:each) do
+    @topic = topics(:one)
+  end
   
   it "should require login for new" do
     get :new
@@ -14,10 +18,10 @@ describe TopicsController do
     with_options :forum_id => forums(:one) do |page|
       page.get    :index
       page.get    :new
-      page.get    :edit,    :id => topics(:one)
+      page.get    :edit,    :id => @topic
       page.post   :create,  :topic => { :name => "The topic" }
-      page.put    :update,  :id => topics(:one)
-      page.delete :destroy, :id => topics(:one)
+      page.put    :update,  :id => @topic
+      page.delete :destroy, :id => @topic
     end
   end  
   

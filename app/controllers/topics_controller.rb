@@ -11,15 +11,6 @@ class TopicsController < ApplicationController
     end
   end
 
-  def show
-    @topic = Topic.find(params[:id])
-    @posts = @topic.posts
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
-  end
-
   def new
     @topic = Topic.new
 
@@ -38,7 +29,7 @@ class TopicsController < ApplicationController
     respond_to do |format|
       if @topic.save
         flash[:success] = 'Topic was successfully created.'
-        format.html { redirect_to forum_topics_url(@forum) }
+        format.html { redirect_to forum_url }
       else
         format.html { render :action => "new" }
       end
@@ -51,7 +42,7 @@ class TopicsController < ApplicationController
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
         flash[:success] = 'Topic was successfully updated.'
-        format.html { redirect_to forum_topics_url(@forum) }
+        format.html { redirect_to forum_url }
       else
         format.html { render :action => "edit" }
       end
@@ -63,7 +54,7 @@ class TopicsController < ApplicationController
     @topic.destroy
 
     respond_to do |format|
-      format.html { redirect_to(forum_topics_url(@forum)) }
+      format.html { redirect_to(forum_url) }
     end
   end
 

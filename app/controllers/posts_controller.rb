@@ -88,7 +88,7 @@ class PostsController < ApplicationController
   
     def get_instance_vars
       if forum?
-        @forum = Forum.find(params[:forum_id])
+        @forum = Forum.find(:first)
         @topic = Topic.find(params[:topic_id])
       elsif blog?
         @blog = Blog.find(params[:blog_id])
@@ -114,7 +114,7 @@ class PostsController < ApplicationController
     end
     
     def forum?
-      !params[:forum_id].nil?
+      !params[:topic_id].nil?
     end
     
     def blog?

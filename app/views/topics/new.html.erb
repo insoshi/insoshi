@@ -2,7 +2,7 @@
 
 <%= error_messages_for :topic %>
 
-<% form_for :topic, :url => forum_topics_path(@forum) do |f| %>
+<% form_for :topic, :url => forum_path do |f| %>
   <p>
     <b>Forum</b><br />
     <%= f.text_field :forum_id %>
@@ -28,4 +28,4 @@
   </p>
 <% end %>
 
-<%= link_to 'Back', forum_topics_path(@forum) %>
+<%= link_to 'Back', forum_path %>
