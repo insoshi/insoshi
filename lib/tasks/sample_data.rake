@@ -13,6 +13,7 @@ namespace :db do
       create_people
       make_messages(@lipsum)
       make_forum_posts
+      make_blog_posts
     end
       
     desc "Remove sample data" 
@@ -71,6 +72,13 @@ def make_forum_posts
       topic.posts.create(:body => @lipsum, :person => people.rand,
                          :created_at => rand(10).hours.ago)
     end
+  end
+end
+
+def make_blog_posts
+  person = Person.find_by_email('michael@michaelhartl.com')
+  3.times do
+    person.blog.posts.create(:body => @lipsum)
   end
 end
 

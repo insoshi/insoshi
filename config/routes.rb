@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :blogs
+  map.resources :blogs do |blog|
+    blog.resources :posts
+  end
 
   map.resources :forums do |forum|
     forum.resources :topics do |topic|
