@@ -19,6 +19,10 @@
 
 <% form_for :post, :url => blog_post_path(@blog, @post)  do |f| %>
   <div class="form_row">
+    <%= f.text_field :title %> Title
+  </div>
+
+  <div class="form_row">
     <%= f.text_area :body %>
   </div>
 

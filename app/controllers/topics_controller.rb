@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   
-  before_filter :login_required
+  before_filter :login_required, :except => [:index, :show]
   before_filter :get_forum
   
   def index
@@ -70,6 +70,7 @@ class TopicsController < ApplicationController
   private
   
     def get_forum
-      @forum = Forum.find(params[:forum_id])
+      # There is currently only one forum.
+      @forum = Forum.find(:first)
     end
 end

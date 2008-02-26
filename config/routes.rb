@@ -25,7 +25,9 @@ ActionController::Routing::Routes.draw do |map|
      person.resources :photos
      person.resources :connections
   end
-                         
+  
+  map.forum '/forum', :controller => 'topics', :action => 'index'
+  
   map.signup '/signup', :controller => 'people', :action => 'new'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

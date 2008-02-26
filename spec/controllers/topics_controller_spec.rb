@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe TopicsController do
   integrate_views
   
-  it "should require login" do
-    get :index
+  it "should require login for new" do
+    get :new
     response.should redirect_to(login_url)
   end
   
