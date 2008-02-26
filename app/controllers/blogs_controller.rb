@@ -1,5 +1,7 @@
 class BlogsController < ApplicationController
 
+  before_filter :login_required
+
   def show
     @blog = Blog.find(params[:id])
     @posts = @blog.posts
@@ -8,5 +10,4 @@ class BlogsController < ApplicationController
       format.html
     end
   end
-
 end

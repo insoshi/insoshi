@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :comments
-
+  
+ 
   map.resources :blogs do |blog|
     blog.resources :posts
   end

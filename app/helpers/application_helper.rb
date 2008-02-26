@@ -1,17 +1,23 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def menu
+    home     = menu_element("Home",     home_path)
+    people   = menu_element("People",   people_path)
+    # TODO: rejigger the routes so that forum_path (with no arg) works.
+    forum = menu_element("Forum", forum_path(1))
     if logged_in?
-      [{ :content => "Home",   :href => home_path },
-       { :content => "My Profile" , :href => person_path(current_person) },
-       { :content => "My Photos" , :href => photos_path },
-       { :content => "People", :href => people_path },
-       { :content => "Messages", :href => messages_path },
-       { :content => "Forum", :href => forum_path(1) }]
+      profile  = menu_element("Profile",  person_path(current_person))
+      messages = menu_element("Messages", messages_path)
+      blog     = menu_element("Blog",     blog_path(current_person.blog))
+      photos   = menu_element("Photos",   photos_path)
+      [home, profile, messages, blog, photos, people, forum]
     else
-      [{ :content => "Home",   :href => home_path },
-       { :content => "People", :href => people_path }]
+      [home, people, forum]
     end
+  end
+  
+  def menu_element(content, address)
+    { :content => content,   :href => address }
   end
   
   def menu_link_to(link, options = {})

@@ -103,8 +103,7 @@ describe Person do
       @contact = people(:aaron)
     end
     
-    # TODO: make custom matchers to get
-    # @contact.should have_requested_contacts
+    # TODO: make custom matchers to get @contact.should have_requested_contacts
     it "should have requested contacts" do
       Connection.request(@person, @contact)
       @contact.requested_contacts.should_not be_empty
