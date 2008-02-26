@@ -22,7 +22,6 @@ describe PostsController do
       with_options :forum_id => @forum, :topic_id => @topic do |page|
         page.get    :index
         page.get    :new
-        page.get    :show,    :id => @post
         page.get    :edit,    :id => @post
         page.post   :create,  :post => { }
         page.put    :update,  :id => @post
@@ -34,7 +33,7 @@ describe PostsController do
       lambda do
         post :create, :forum_id => @forum, :topic_id => @topic,
                       :post => { :body => "The body" }
-        response.should redirect_to(forum_topic_url(@forum, @topic))
+        response.should redirect_to(forum_topic_posts_url(@topic))
       end.should change(ForumPost, :count).by(1)
     end
   
@@ -77,7 +76,7 @@ describe PostsController do
       lambda do
         post :create, :blog_id => @blog,
                       :post => { :title => "The post", :body => "The body" }
-        response.should redirect_to(blog_posts_url(@blog))
+        response.should redirect_to(blog_posts_url)
       end.should change(BlogPost, :count).by(1)
     end
     

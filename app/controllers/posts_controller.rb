@@ -1,63 +1,53 @@
+# NOTE: We use "posts" for both forum topic posts and blog posts,
+# There is some trickery to handle the two in a unified manner.
 class PostsController < ApplicationController
   
   before_filter :login_required
   before_filter :get_instance_vars
 
+  # Used for both forum and blog posts.
   def index
-    if forum?
-      @posts = @topic.posts
-    elsif blog?
-      @posts = @blog.posts.paginate(:page => params[:page])
-    end
+    @posts = resource_posts
 
     respond_to do |format|
-      format.html do
-        render :action => "forum_index" if forum?
-        render :action => "blog_index" if blog?
-      end
+      format.html { render :action => resource_template("index") }
     end
   end
 
+  # This is only used for blog posts.
   def show
-    @post = model.find(params[:id])
+    @post = BlogPost.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
     end
   end
 
+  # Used for both forum and blog posts.
   def new
     @post = model.new
 
     respond_to do |format|
-      format.html do
-        render :action => "forum_new" if forum?
-        render :action => "blog_new"  if blog?
-      end
+      format.html { render :action => resource_template("new") }
     end
   end
 
+  # Used for both forum and blog posts.
   def edit
     @post = model.find(params[:id])
     # TODO: Switch on forum/blog
   end
 
+  # Used for both forum and blog posts.
   def create
-    if forum?
-      @post = @topic.posts.new(params[:post].merge(:person => current_person))
-    elsif blog?
-      @post = @blog.posts.new(params[:post])
-    end
+    @post = new_resource_post
     
     respond_to do |format|
       if @post.save
         flash[:success] = 'Post was successfully created.'
         format.html { redirect_to posts_url }
       else
-        format.html do
-          render :action => "forum_new" if forum?
-          render :action => "blog_new"  if blog?
-        end
+        format.html { render :action => resource_template("new") }
       end
     end
   end
@@ -105,14 +95,45 @@ class PostsController < ApplicationController
       end
     end
     
-    def posts_url
+    def resource_posts
       if forum?
-        forum_topic_url(@forum, @topic)
+        @topic.posts
       elsif blog?
-        blog_posts_url(@blog)
+        @blog.posts.paginate(:page => params[:page])
+      end  
+    end
+    
+    def new_resource_post
+      if forum?
+        @post = @topic.posts.new(params[:post].merge(:person => current_person))
+      elsif blog?
+        @post = @blog.posts.new(params[:post])
+      end      
+    end
+
+    def resource_template(name)
+      "#{resource}_#{name}"
+    end
+
+    def resource
+      if forum?
+        "forum"
+      elsif blog?
+        "blog"
       end
     end
     
+    def posts_url
+      if forum?
+        forum_topic_posts_url(@topic)
+      elsif blog?
+        blog_posts_url
+      end
+    end
+
+    # True if on a discussion forum.
+    # We're suppressing forum_id since there's only one forum,
+    # so use topic_id to tell that it's a forum.
     def forum?
       !params[:topic_id].nil?
     end
