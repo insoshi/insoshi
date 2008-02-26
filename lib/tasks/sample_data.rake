@@ -2,12 +2,6 @@
 require 'active_record'
 require 'active_record/fixtures'
 
-class Array
-  def shuffle
-    sort_by { rand }
-  end
-end
-
 DATA_DIRECTORY = File.join(RAILS_ROOT, "lib", "tasks", "sample_data")
 
 namespace :db do
@@ -15,9 +9,10 @@ namespace :db do
   
     desc "Load sample data"
     task :load => :environment do |t|
-      lipsum = File.open(File.join(DATA_DIRECTORY, "lipsum.txt")).read
+      @lipsum = File.open(File.join(DATA_DIRECTORY, "lipsum.txt")).read
       create_people
-      make_messages(lipsum)
+      make_messages(@lipsum)
+      make_forum_posts
     end
       
     desc "Remove sample data" 
@@ -42,20 +37,13 @@ def create_people
     names = File.open(filename).readlines
     password = "foobar"
     photos = Dir.glob("lib/tasks/sample_data/#{pair[0]}_photos/*.jpg").shuffle
-    descriptions_filename = File.join(DATA_DIRECTORY, 
-                                      "#{pair[0]}_descriptions.txt")
-    descriptions = File.open(descriptions_filename).readlines.shuffle
     names.each_with_index do |name, i|
       name.strip!
       person = Person.create!(:email => "#{name.downcase}@michaelhartl.com",
                               :password => password, 
                               :password_confirmation => password,
-                              :gender => pair[1])
-      # For security, these attributes aren't attr_accessible, so they
-      # have to be assigned separately.
-      # Now make the person.
-      person.update_attributes!(:description => descriptions[i],
-                                     :name => name)
+                              :name => name,
+                              :description => @lipsum)
       Photo.create!(:uploaded_data => uploaded_file(photos[i], 'image/jpg'),
                     :person => person, :primary => true)
     end
@@ -70,6 +58,17 @@ def make_messages(text)
                     :recipient => sender, :skip_send_mail => true)
     Message.create!(:content => text, :sender => sender,
                     :recipient => michael, :skip_send_mail => true)
+  end
+end
+
+def make_forum_posts
+  forum = Forum.find(1)
+  people = Person.find(:all)
+  %w[foo bar baz].each do |name|
+    topic = forum.topics.create(:name => name, :person => people.pick)
+    10.times do
+      topic.posts.create(:body => @lipsum, :person => people.pick)
+    end
   end
 end
 
