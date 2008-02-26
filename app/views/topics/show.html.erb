@@ -1,23 +1,19 @@
-<p>
-  <b>Forum:</b>
-  <%=h @topic.forum_id %>
-</p>
+<h2><%= @topic.name %></h2>
 
-<p>
-  <b>Person:</b>
-  <%=h @topic.person_id %>
-</p>
+<%= will_paginate(@posts) %>
 
-<p>
-  <b>Name:</b>
-  <%=h @topic.name %>
-</p>
+<ul>
+  <%- @posts.each do |post| -%>
+    <li>
+        Posted <%= time_ago_in_words(post.created_at) %> ago
+        by <%= post.person.name %>
+        <br />
+        <%= sanitize post.body %>
+    </li>
+  <%- end -%>
+</ul>
 
-<p>
-  <b>Posts count:</b>
-  <%=h @topic.forum_posts_count %>
-</p>
-
+<%= will_paginate(@posts) %>
 
 <%= link_to 'Edit', edit_forum_topic_path(@forum, @topic) %> |
 <%= link_to 'Back', forum_topics_path(@forum) %>
