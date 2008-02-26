@@ -29,13 +29,6 @@ describe PostsController do
         page.delete :destroy, :id => @post
       end
     end
-  
-    it "should associate a person to a post" do
-      with_options :forum_id => @forum, :topic_id => @topic do |page|
-        page.post :create, :post => { :body => "The body" }
-        assigns(:post).person.should == @person
-      end
-    end
 
     it "should create a forum post" do
       lambda do
@@ -44,7 +37,13 @@ describe PostsController do
         response.should redirect_to(forum_topic_url(@forum, @topic))
       end.should change(ForumPost, :count).by(1)
     end
-
+  
+    it "should associate a person to a post" do
+      with_options :forum_id => @forum, :topic_id => @topic do |page|
+        page.post :create, :post => { :body => "The body" }
+        assigns(:post).person.should == @person
+      end
+    end
     it "should render the new template on creation failure" do
       post :create, :forum_id => @forum, :topic_id => @topic,
                           :post => { :body => "" }
@@ -80,6 +79,14 @@ describe PostsController do
                       :post => { :title => "The post", :body => "The body" }
         response.should redirect_to(blog_posts_url(@blog))
       end.should change(BlogPost, :count).by(1)
+    end
+    
+    it "should create the right blog post associations" do
+      lambda do
+        post :create, :blog_id => @blog,
+                      :post => { :title => "The post", :body => "The body" }
+        assigns(:post).blog.should == @blog
+      end 
     end
     
     it "should render the new template on creation failure" do

@@ -44,10 +44,9 @@ class PostsController < ApplicationController
 
   def create
     if forum?
-      data = { :topic => @topic, :person => current_person }
-      @post = ForumPost.new(params[:post].merge(data))
+      @post = @topic.posts.new(params[:post].merge(:person => current_person))
     elsif blog?
-      @post = BlogPost.new(params[:post])
+      @post = @blog.posts.new(params[:post])
     end
     
     respond_to do |format|
