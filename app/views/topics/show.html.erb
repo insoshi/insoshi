@@ -1,7 +1,5 @@
 <h2><%= @topic.name %></h2>
 
-<%= will_paginate(@posts) %>
-
 <ul>
   <%- @posts.each do |post| -%>
     <li>
@@ -12,8 +10,6 @@
     </li>
   <%- end -%>
 </ul>
-
-<%= will_paginate(@posts) %>
 
 <%= link_to 'Edit', edit_forum_topic_path(@forum, @topic) %> |
 <%= link_to 'Back', forum_topics_path(@forum) %>
