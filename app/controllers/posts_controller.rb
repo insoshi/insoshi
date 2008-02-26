@@ -32,8 +32,9 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(params[:post].merge(:person => current_person))
-
+    data = { :topic => @topic, :person => current_person }
+    @post = Post.new(params[:post].merge(data))
+    
     respond_to do |format|
       if @post.save
         flash[:success] = 'Post was successfully created.'

@@ -3,13 +3,17 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PostsController do
   integrate_views
   
+  before(:each) do
+    @person = login_as(:quentin)
+  end
+  
   it "should require login" do
+    logout
     get :index
     response.should redirect_to(login_url)
   end
   
   it "should have working pages" do
-    login_as :quentin
     
     with_options :forum_id => forums(:one), :topic_id => topics(:one) do |page|
       page.get    :index
@@ -25,7 +29,15 @@ describe PostsController do
     person = login_as(:quentin)
     with_options :forum_id => forums(:one), :topic_id => topics(:one) do |page|
       page.post :create, :post => { :body => "The body" }
-      assigns(:post).person.should == person
+      assigns(:post).person.should == @person
     end
   end
+
+  it "should create a post" do
+    lambda do
+      post :create, :forum_id => forums(:one), :topic_id => topics(:one),
+                    :post => { :body => "The body" }
+    end.should change(Post, :count).by(1)
+  end
+
 end
