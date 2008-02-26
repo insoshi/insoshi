@@ -78,7 +78,7 @@ end
 def make_blog_posts
   person = Person.find_by_email('michael@michaelhartl.com')
   3.times do
-    person.blog.posts.create(:body => @lipsum)
+    person.blog.posts.create(:title => "Foobar", :body => @lipsum)
   end
 end
 

@@ -4,11 +4,11 @@ module ApplicationHelper
     home     = menu_element("Home",     home_path)
     people   = menu_element("People",   people_path)
     # TODO: rejigger the routes so that forum_path (with no arg) works.
-    forum = menu_element("Forum", forum_path(1))
+    forum = menu_element("Forum", forum_topics_path(1))
     if logged_in?
       profile  = menu_element("Profile",  person_path(current_person))
       messages = menu_element("Messages", messages_path)
-      blog     = menu_element("Blog",     blog_path(current_person.blog))
+      blog     = menu_element("Blog",     blog_posts_path(current_person.blog))
       photos   = menu_element("Photos",   photos_path)
       [home, profile, messages, blog, photos, people, forum]
     else

@@ -1,0 +1,30 @@
+<h2>Der Blog</h2>
+
+<ul>
+  <%- @posts.each do |post| -%>
+    <li>
+        <%= post.title %>
+        <br />
+        Posted <%= time_ago_in_words(post.created_at) %> ago
+        by <%= @blog.person.name %>
+        <br />
+        <%= sanitize post.body %>
+    </li>
+  <%- end -%>
+</ul>
+
+<h3>Add new post</h3>
+
+<%= error_messages_for :post %>
+
+<% form_for :post, :url => blog_post_path(@blog, @post)  do |f| %>
+  <div class="form_row">
+    <%= f.text_area :body %>
+  </div>
+
+  <div class="form_row">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', blog_posts_path(@blog) %>

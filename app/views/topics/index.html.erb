@@ -1,26 +1,14 @@
-<h1>Listing topics</h1>
+<%= will_paginate %>
 
-<table>
-  <tr>
-    <th>Forum</th>
-    <th>Person</th>
-    <th>Name</th>
-    <th>Posts count</th>
-  </tr>
+<ul>
+  <%- @topics.each do |topic| -%>
+    <li>
+      <%= link_to topic.name, forum_topic_posts_path(@forum, topic) %>
+      | created <%= time_ago_in_words(topic.created_at) %> ago
+    </li>
+  <%- end -%>
+</ul>
 
-<% for topic in @topics %>
-  <tr>
-    <td><%=h topic.forum_id %></td>
-    <td><%=h topic.person_id %></td>
-    <td><%=h topic.name %></td>
-    <td><%=h topic.forum_posts_count %></td>
-    <td><%= link_to 'Show', forum_topic_path(@forum, topic) %></td>
-    <td><%= link_to 'Edit', edit_forum_topic_path(@forum, topic) %></td>
-    <td><%= link_to 'Destroy', forum_topic_path(@forum, topic), :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<%= will_paginate %>
 
-<br />
-
-<%= link_to 'New topic', new_forum_topic_path(@forum) %>
+<%= link_to 'Back', forum_topics_path(@forum) %>

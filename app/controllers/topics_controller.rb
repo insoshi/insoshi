@@ -4,7 +4,7 @@ class TopicsController < ApplicationController
   before_filter :get_forum
   
   def index
-    @topics = Topic.find(:all)
+    @topics = @forum.topics.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

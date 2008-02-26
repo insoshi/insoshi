@@ -4,10 +4,17 @@ class PostsController < ApplicationController
   before_filter :get_instance_vars
 
   def index
-    @posts = model.find(:all)
+    if forum?
+      @posts = @topic.posts
+    elsif blog?
+      @posts = @blog.posts.paginate(:page => params[:page])
+    end
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html do
+        render :action => "forum_index" if forum?
+        render :action => "blog_index" if blog?
+      end
     end
   end
 
