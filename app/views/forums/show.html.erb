@@ -1,18 +1,9 @@
-<p>
-  <b>Name:</b>
-  <%=h @forum.name %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%=h @forum.description %>
-</p>
-
-<p>
-  <b>Topics count:</b>
-  <%=h @forum.topics_count %>
-</p>
-
-
-<%= link_to 'Edit', edit_forum_path(@forum) %> |
+<ul>
+  <%- @forum.topics.each do |topic| -%>
+    <li>
+      <%= link_to topic.name, forum_topic_path(@forum, topic) %>
+      | created <%= time_ago_in_words(topic.created_at) %> ago
+    </li>
+  <%- end -%>
+</ul>
 <%= link_to 'Back', forums_path %>

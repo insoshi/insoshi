@@ -64,10 +64,12 @@ end
 def make_forum_posts
   forum = Forum.find(1)
   people = Person.find(:all)
-  %w[foo bar baz].each do |name|
-    topic = forum.topics.create(:name => name, :person => people.pick)
+  %w[foo bar baz].each_with_index do |name, i|
+    topic = forum.topics.create(:name => name, :person => people.rand,
+                                :created_at => (4-i).hours.ago)
     10.times do
-      topic.posts.create(:body => @lipsum, :person => people.pick)
+      topic.posts.create(:body => @lipsum, :person => people.rand,
+                         :created_at => rand(10).hours.ago)
     end
   end
 end
