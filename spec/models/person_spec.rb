@@ -33,6 +33,11 @@ describe Person do
     it "should not currently have any photos" do
       @person.photos.should be_empty
     end
+    
+    it "should have an associated blog on creation" do
+      person = create_person(:save => true)
+      person.blog.should_not be_nil
+    end
   end
   
   describe "photo methods" do
@@ -88,7 +93,7 @@ describe Person do
     end
   end
   
-  describe "description" do
+  describe "person contacts" do
     
     before(:each) do
       @contact = people(:aaron)
@@ -172,6 +177,7 @@ protected
                           :name => 'Quire',
                           :description => 'A new person' }.merge(options))
     record.valid?
+    record.save! if options[:save]
     record
   end
 end

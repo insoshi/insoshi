@@ -34,6 +34,7 @@ class Person < ActiveRecord::Base
   has_many :requested_contacts, :through => :connections,
                               :source => :contact,
                               :conditions => "status = 'requested'"
+  has_one :blog
   
   validates_presence_of     :email
   validates_presence_of     :password,              :if => :password_required?
@@ -42,11 +43,13 @@ class Person < ActiveRecord::Base
                                        :if => :password_required?
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :email,    :within => 3..MAX_EMAIL
+  # TODO: replace this with validates_as_email (?)
   validates_format_of       :email,                                    
                             :with => EMAIL_REGEX,                      
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
   
+  before_create :create_blog
   before_save :downcase_email, :encrypt_password
   
   ## Class methods
