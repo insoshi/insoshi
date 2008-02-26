@@ -23,12 +23,14 @@ class PostsController < ApplicationController
     @post = model.new
 
     respond_to do |format|
+      # TODO: Switch on forum/blog
       format.html # new.html.erb
     end
   end
 
   def edit
     @post = model.find(params[:id])
+    # TODO: Switch on forum/blog
   end
 
   def create
@@ -40,6 +42,7 @@ class PostsController < ApplicationController
         flash[:success] = 'Post was successfully created.'
         format.html { redirect_to posts_url }
       else
+        # TODO: Switch on forum/blog
         format.html { render :action => "new" }
       end
     end
@@ -88,7 +91,7 @@ class PostsController < ApplicationController
     
     def posts_url
       if forum?
-        forum_topic_posts_url(@forum, @topic)
+        forum_topic_url(@forum, @topic)
       elsif blog?
         blog_posts_url(@blog)
       end

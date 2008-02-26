@@ -38,7 +38,7 @@ describe PostsController do
     lambda do
       post :create, :forum_id => @forum, :topic_id => @topic,
                     :post => { :body => "The body" }
-      response.should redirect_to(forum_topic_posts_url(@forum, @topic))
+      response.should redirect_to(forum_topic_url(@forum, @topic))
     end.should change(Post, :count).by(1)
   end
 
