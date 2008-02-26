@@ -4,10 +4,10 @@ one:
   forum_id: 1
   person_id: 1
   name: 1
-  posts_count: 1
+  forum_posts_count: 1
 
 two:
   forum_id: 1
   person_id: 1
   name: 1
-  posts_count: 1
+  forum_posts_count: 1

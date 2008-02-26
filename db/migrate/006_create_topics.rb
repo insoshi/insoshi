@@ -4,7 +4,7 @@ class CreateTopics < ActiveRecord::Migration
       t.integer :forum_id
       t.integer :person_id
       t.string  :name
-      t.integer :posts_count, :null => false, :default => 0
+      t.integer :forum_posts_count, :null => false, :default => 0
 
       t.timestamps
     end
