@@ -11,6 +11,7 @@ class CreatePosts < ActiveRecord::Migration
     end
     add_index :posts, :blog_id
     add_index :posts, :topic_id
+    add_index :posts, :type
   end
 
   def self.down
