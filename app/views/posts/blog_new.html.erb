@@ -1,0 +1,20 @@
+<h1>New post</h1>
+
+<%= error_messages_for :post %>
+
+<% form_for :post, :url => blog_post_path(@blog, @post)  do |f| %>
+
+  <div class="form_row">
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="form_row">
+    <%= f.text_area :body %>
+  </div>
+
+  <div class="form_row">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', blog_path(@blog) %>

@@ -23,8 +23,10 @@ class PostsController < ApplicationController
     @post = model.new
 
     respond_to do |format|
-      # TODO: Switch on forum/blog
-      format.html # new.html.erb
+      format.html do
+        render :action => "forum_new" if forum?
+        render :action => "blog_new"  if blog?
+      end
     end
   end
 
@@ -34,16 +36,22 @@ class PostsController < ApplicationController
   end
 
   def create
-    data = { :topic => @topic, :person => current_person }
-    @post = model.new(params[:post].merge(data))
+    if forum?
+      data = { :topic => @topic, :person => current_person }
+      @post = ForumPost.new(params[:post].merge(data))
+    elsif blog?
+      @post = BlogPost.new(params[:post])
+    end
     
     respond_to do |format|
       if @post.save
         flash[:success] = 'Post was successfully created.'
         format.html { redirect_to posts_url }
       else
-        # TODO: Switch on forum/blog
-        format.html { render :action => "new" }
+        format.html do
+          render :action => "forum_new" if forum?
+          render :action => "blog_new"  if blog?
+        end
       end
     end
   end
@@ -76,6 +84,8 @@ class PostsController < ApplicationController
       if forum?
         @forum = Forum.find(params[:forum_id])
         @topic = Topic.find(params[:topic_id])
+      elsif blog?
+        @blog = Blog.find(params[:blog_id])
       end
     end
     

@@ -9,5 +9,5 @@ class BlogsController < ApplicationController
     respond_to do |format|
       format.html
     end
-  end
+  end  
 end
