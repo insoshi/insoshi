@@ -141,14 +141,14 @@ class PostsController < ApplicationController
       end
     end
 
-    # True if resource is a discussion forum.
+    # True if resource lives in a discussion forum.
     # We reserve the right to suppress forum_id since there's only one forum,
     # so use topic_id to tell that it's a forum.
     def forum?
       !params[:topic_id].nil?
     end
 
-    # True if resource is a blog.
+    # True if resource lives in a blog.
     def blog?
       !params[:blog_id].nil?
     end

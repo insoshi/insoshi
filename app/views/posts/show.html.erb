@@ -1,20 +1,27 @@
-<p>
-  <b>Blog:</b>
-  <%=h @post.blog_id %>
-</p>
+<%= sanitize @post.title %>
+<%- if current_person?(@blog.person) -%>
+  | <%= link_to "Edit", edit_blog_post_path(@blog, @post) %>
+<%- end -%>
+<br />
+Posted <%= time_ago_in_words(@post.created_at) %> ago
+by <%= @blog.person.name %>
+<br />
+<%= sanitize @post.body %>
 
-<p>
-  <b>Topic:</b>
-  <%=h @post.topic_id %>
-</p>
+<ul>
+<% @post.comments.each do |comment| %>
+  <li><%= sanitize comment.body %></li>
+<% end %>
+</ul>
 
-<p>
-  <b>Person:</b>
-  <%=h @post.person_id %>
-</p>
+<h3>Leave a comment</h3>
 
-<p>
-  <b>Body:</b>
-  <%=h @post.body %>
-</p>
-
+<% form_for :comment, :url => blog_post_comments_path(@blog, @post) do |f| %>
+  <div class="form_tag">
+    <%= f.text_area :body %>
+  </div>
+  
+  <div class="form_tag">
+    <%= submit_tag "Submit" %>
+  </div>
+<% end %>

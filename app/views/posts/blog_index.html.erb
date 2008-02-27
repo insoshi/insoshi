@@ -3,7 +3,7 @@
 <ul>
   <%- @posts.each do |post| -%>
     <li>
-        <%= post.title %>
+        <%= link_to sanitize(post.title), blog_post_path(@blog, post) %>
         <%- if current_person?(@blog.person) -%>
           | <%= link_to "Edit", edit_blog_post_path(@blog, post) %>
         <%- end -%>

@@ -6,6 +6,7 @@ class CreatePosts < ActiveRecord::Migration
       t.integer :person_id
       t.string  :title
       t.text    :body
+      t.integer :blog_post_comments_count, :null => false, :default => 0
       t.string  :type
 
       t.timestamps
