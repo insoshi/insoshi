@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
         data = { :commenter => current_person }
         @comment = @person.comments.new(params[:comment].merge(data))
       elsif blog?
-        data = { :person => current_person, :post => @post }
+        data = { :commenter => current_person, :post => @post }
         @comment = @post.comments.new(params[:comment].merge(data))
       end      
     end
