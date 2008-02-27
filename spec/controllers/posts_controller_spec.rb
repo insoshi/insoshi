@@ -43,10 +43,18 @@ describe PostsController do
         assigns(:post).person.should == @person
       end
     end
+    
     it "should render the new template on creation failure" do
       post :create, :forum_id => @forum, :topic_id => @topic,
-                          :post => { :body => "" }
+                    :post => { :body => "" }
       response.should render_template("forum_new")
+    end
+    
+    it "should require the right user for editing" do
+      person = login_as(:aaron)
+      @post.person.should_not == person
+      get :edit, :forum_id => @forum, :topic_id => @topic, :id => @post
+      response.should redirect_to(home_url)
     end
   end
   
@@ -90,6 +98,20 @@ describe PostsController do
     it "should render the new template on creation failure" do
       post :create, :blog_id => @blog, :post => {}
       response.should render_template("blog_new")
+    end
+    
+    it "should require the right user for editing" do
+      person = login_as(:aaron)
+      @post.blog.person.should_not == person
+      get :edit, :blog_id => @blog, :id => @post
+      response.should redirect_to(home_url)
+    end
+    
+    it "should require the post to belong to the blog" do
+      wrong_blog = blogs(:two)
+      wrong_blog.should_not == @blog
+      get :edit, :blog_id => wrong_blog, :id => @post
+      response.should redirect_to(home_url)      
     end
   end
 end

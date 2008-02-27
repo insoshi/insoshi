@@ -4,6 +4,7 @@ class PostsController < ApplicationController
   
   before_filter :login_required
   before_filter :get_instance_vars
+  before_filter :authenticate_edit, :only => [:edit, :update]
 
   # Used for both forum and blog posts.
   def index
@@ -34,8 +35,6 @@ class PostsController < ApplicationController
 
   # Used for both forum and blog posts.
   def edit
-    @post = model.find(params[:id])
-    
     respond_to do |format|
       format.html { render :action => resource_template("edit") }
     end
@@ -56,8 +55,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = model.find(params[:id])
-
     respond_to do |format|
       if @post.update_attributes(params[:post])
         flash[:success] = 'Post was successfully updated.'
@@ -79,12 +76,25 @@ class PostsController < ApplicationController
   
   private
   
+    ## Before filters
+  
     def get_instance_vars
+      @post = model.find(params[:id]) unless params[:id].nil?
       if forum?
         @forum = Forum.find(:first)
         @topic = Topic.find(params[:topic_id])
       elsif blog?
         @blog = Blog.find(params[:blog_id])
+      end
+    end
+
+    # Make sure the current user is authorized to edit this post
+    def authenticate_edit
+      if forum?
+        redirect_to home_url unless @topic.person == current_person
+      elsif blog?
+        redirect_to home_url unless (@blog.person == current_person and
+                                     @post.blog   == @blog)
       end
     end
     
