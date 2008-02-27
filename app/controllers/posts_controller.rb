@@ -137,7 +137,7 @@ class PostsController < ApplicationController
       if forum?
         forum_topic_posts_url(@forum, @topic)
       elsif blog?
-        blog_posts_url
+        blog_post_url(@blog, @post)
       end
     end
 

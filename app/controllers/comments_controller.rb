@@ -6,38 +6,11 @@ class CommentsController < ApplicationController
   before_filter :get_instance_vars
 
   # Used for both wall and blog comments.
-  def index
-    @comments = resource_comments
-
-    respond_to do |format|
-      format.html { render :action => resource_template("index") }
-    end
-  end
-
-  # This is only used for blog comments.
-  def show
-    @comment = BlogPostComment.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
-  end
-
-  # Used for both wall and blog comments.
   def new
     @comment = model.new
 
     respond_to do |format|
       format.html { render :action => resource_template("new") }
-    end
-  end
-
-  # Used for both wall and blog comments.
-  def edit
-    @comment = model.find(params[:id])
-    
-    respond_to do |format|
-      format.html { render :action => resource_template("edit") }
     end
   end
 
@@ -51,19 +24,6 @@ class CommentsController < ApplicationController
         format.html { redirect_to comments_url }
       else
         format.html { render :action => resource_template("new") }
-      end
-    end
-  end
-
-  def update
-    @comment = model.find(params[:id])
-
-    respond_to do |format|
-      if @comment.update_attributes(params[:comment])
-        flash[:success] = 'Comment was successfully updated.'
-        format.html { redirect_to comments_url }
-      else
-        format.html { render :action => resource_template("edit") }
       end
     end
   end
@@ -129,7 +89,7 @@ class CommentsController < ApplicationController
       if wall?
         "wall"
       elsif blog?
-        "post"
+        "blog_post"
       end
     end
     
