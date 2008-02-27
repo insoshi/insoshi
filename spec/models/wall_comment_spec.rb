@@ -4,7 +4,7 @@ describe WallComment do
   include CustomModelMatchers
   
   it "should be valid" do
-    WallComment.new(:body => "Hey there",
+    WallComment.new(:body => "Hey there", :person => people(:quentin),
                     :commenter => people(:aaron)).should be_valid
   end
   

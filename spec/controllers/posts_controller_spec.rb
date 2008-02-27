@@ -51,7 +51,6 @@ describe PostsController do
   end
   
   describe "blog posts" do
-
     integrate_views
   
     before(:each) do
@@ -76,7 +75,7 @@ describe PostsController do
       lambda do
         post :create, :blog_id => @blog,
                       :post => { :title => "The post", :body => "The body" }
-        response.should redirect_to(blog_posts_url)
+        response.should redirect_to(blog_post_url(@blog, assigns(:post)))
       end.should change(BlogPost, :count).by(1)
     end
     

@@ -2,10 +2,12 @@
 
 one:
   person_id: 1
+  commenter_id: 2
   body: MyText
   type: WallComment
 
 two:
-  blog_id: 1
+  blog_post_id: 2
+  commenter_id: 2
   body: MyText
-  type: BlogComment
+  type: BlogPostComment

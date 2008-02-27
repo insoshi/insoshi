@@ -1,0 +1,13 @@
+<%= error_messages_for :comment %>
+
+<h3>Leave a comment</h3>
+
+<% form_for :comment, :url => person_comments_path(@person) do |f| %>
+  <div class="form_tag">
+    <%= f.text_area :body %>
+  </div>
+  
+  <div class="form_tag">
+    <%= submit_tag "Submit" %>
+  </div>
+<% end %>
