@@ -20,7 +20,8 @@ class Person < ActiveRecord::Base
   NUM_RECENTLY_VIEWED = 4
 
   has_one :blog  
-  has_many :comments, :class_name => "WallComment"
+  has_many :comments, :class_name => "WallComment",
+                      :order => "created_at DESC"
   has_many :connections
   # TODO: refactor the statuses to use numerical codes/model constants.
   has_many :contacts, :through => :connections,

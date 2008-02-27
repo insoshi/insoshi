@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
   
     def get_instance_vars
       if wall?
-        @wall = Wall.find(params[:wall_id])
+        @person = Person.find(params[:person_id])
       elsif blog?
         @blog = Blog.find(params[:blog_id])
         @post = Post.find(params[:post_id])
@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
     # Return the comments array for the given resource.
     def resource_comments
       if wall?
-        @wall.comments
+        @person.comments
       elsif blog?
         @post.comments.paginate(:page => params[:page])
       end  
@@ -71,7 +71,8 @@ class CommentsController < ApplicationController
     # Return a new comment for the given resource.
     def new_resource_comment
       if wall?
-        @comment = @wall.comments.new(params[:comment].merge(:person => current_person))
+        data = { :commenter => current_person }
+        @comment = @person.comments.new(params[:comment].merge(data))
       elsif blog?
         data = { :person => current_person, :post => @post }
         @comment = @post.comments.new(params[:comment].merge(data))
@@ -96,7 +97,7 @@ class CommentsController < ApplicationController
     # Return the URL for the resource comments.
     def comments_url
       if wall?
-        wall_topic_comments_url(@wall, @wall)
+        @person
       elsif blog?
         blog_post_url(@blog, @post)
       end
@@ -104,7 +105,7 @@ class CommentsController < ApplicationController
 
     # True if resource lives on a wall.
     def wall?
-      !params[:wall_id].nil?
+      !params[:person_id].nil?
     end
 
     # True if resource lives in a blog.

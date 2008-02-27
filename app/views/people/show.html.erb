@@ -16,3 +16,24 @@
 <%- if logged_in? and @person == current_person -%>
   <%= link_to "Edit profile", edit_person_path(@person) %>
 <%- end -%>
+
+<h3>Leave a wall comment</h3>
+
+<ul>
+<%- @person.comments.each do |comment| -%>
+<li>
+  <%= sanitize comment.body %> left by <%= comment.commenter.name %>
+  <%= time_ago_in_words(comment.created_at) %> ago
+</li>
+<%- end -%>
+</ul>
+
+<% form_for :comment, :url => person_comments_path(@person) do |f| %>
+  <div class="form_tag">
+    <%= f.text_area :body %>
+  </div>
+  
+  <div class="form_tag">
+    <%= submit_tag "Submit" %>
+  </div>
+<% end %>

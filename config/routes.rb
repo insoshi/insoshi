@@ -1,24 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-
-
-  map.resources :walls do |wall|
-    wall.resources :comments
-  end
-   
-  map.resources :blogs do |blog|
-    blog.resources :posts do |post|
-        post.resources :comments
-    end
-  end
-
-  map.resources :forums do |forum|
-    forum.resources :topics do |topic|
-      topic.resources :posts
-    end
-  end
-
   map.resources :connections
-
   map.resources :password_reminders
   map.resources :photos
   map.resource :session
@@ -29,6 +10,18 @@ ActionController::Routing::Routes.draw do |map|
      person.resources :messages
      person.resources :photos
      person.resources :connections
+     person.resources :comments
+  end
+  map.resources :blogs do |blog|
+    blog.resources :posts do |post|
+        post.resources :comments
+    end
+  end
+
+  map.resources :forums do |forum|
+    forum.resources :topics do |topic|
+      topic.resources :posts
+    end
   end
   
   map.forum '/forum', :controller => 'topics', :action => 'index'
