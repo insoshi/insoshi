@@ -5,6 +5,10 @@
     <li>
         Posted <%= time_ago_in_words(post.created_at) %> ago
         by <%= post.person.name %>
+        <%- if current_person?(post.person) -%>
+          | <%= link_to "Edit",
+                        edit_forum_topic_post_path(@forum, @topic, post) %>
+        <%- end -%>        
         <br />
         <%= sanitize post.body %>
     </li>

@@ -4,6 +4,9 @@
   <%- @posts.each do |post| -%>
     <li>
         <%= post.title %>
+        <%- if current_person?(@blog.person) -%>
+          | <%= link_to "Edit", edit_blog_post_path(@blog, post) %>
+        <%- end -%>
         <br />
         Posted <%= time_ago_in_words(post.created_at) %> ago
         by <%= @blog.person.name %>
@@ -15,20 +18,8 @@
 
 <h3>Add new post</h3>
 
-<%= error_messages_for :post %>
-
-<% form_for :post, :url => blog_post_path(@blog, @post)  do |f| %>
-  <div class="form_row">
-    <%= f.text_field :title %> Title
-  </div>
-
-  <div class="form_row">
-    <%= f.text_area :body %>
-  </div>
-
-  <div class="form_row">
-    <%= f.submit "Submit" %>
-  </div>
-<% end %>
+<%= render :partial => 'blog_form',
+           :locals => { :url => blog_posts_path(@blog),
+                        :method => :post } %>
 
 <%= link_to 'Back', blog_posts_path(@blog) %>

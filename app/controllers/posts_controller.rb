@@ -35,7 +35,10 @@ class PostsController < ApplicationController
   # Used for both forum and blog posts.
   def edit
     @post = model.find(params[:id])
-    # TODO: Switch on forum/blog
+    
+    respond_to do |format|
+      format.html { render :action => resource_template("edit") }
+    end
   end
 
   # Used for both forum and blog posts.
@@ -60,7 +63,7 @@ class PostsController < ApplicationController
         flash[:success] = 'Post was successfully updated.'
         format.html { redirect_to posts_url }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => resource_template("edit") }
       end
     end
   end

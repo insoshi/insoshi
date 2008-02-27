@@ -1,0 +1,10 @@
+<% form_for :post, :url => url, :html => { :method => method }  do |f| %>
+
+  <div class="form_row">
+    <%= f.text_area :body %>
+  </div>
+
+  <div class="form_row">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>
