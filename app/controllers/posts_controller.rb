@@ -85,8 +85,9 @@ class PostsController < ApplicationController
       end
     end
     
-    # Handle forum and blog posts in a uniform manner.
+    ## Handle forum and blog posts in a uniform manner.
     
+    # Return the appropriate model corresponding to the type of post.
     def model
       if forum?
         ForumPost
@@ -95,6 +96,7 @@ class PostsController < ApplicationController
       end
     end
     
+    # Return the posts array for the given resource.
     def resource_posts
       if forum?
         @topic.posts
@@ -103,6 +105,7 @@ class PostsController < ApplicationController
       end  
     end
     
+    # Return a new post for the given resource.
     def new_resource_post
       if forum?
         @post = @topic.posts.new(params[:post].merge(:person => current_person))
@@ -110,11 +113,14 @@ class PostsController < ApplicationController
         @post = @blog.posts.new(params[:post])
       end      
     end
-
+    
+    # Return the template for the current resource given the name.
+    # For example, on a blog resource_template("new") gives "blog_new"
     def resource_template(name)
       "#{resource}_#{name}"
     end
 
+    # Return a string for the resource.
     def resource
       if forum?
         "forum"
@@ -123,21 +129,23 @@ class PostsController < ApplicationController
       end
     end
     
+    # Return the URL for the resource posts.
     def posts_url
       if forum?
-        forum_topic_posts_url(@topic)
+        forum_topic_posts_url(@forum, @topic)
       elsif blog?
         blog_posts_url
       end
     end
 
-    # True if on a discussion forum.
-    # We're suppressing forum_id since there's only one forum,
+    # True if resource is a discussion forum.
+    # We reserve the right to suppress forum_id since there's only one forum,
     # so use topic_id to tell that it's a forum.
     def forum?
       !params[:topic_id].nil?
     end
-    
+
+    # True if resource is a blog.
     def blog?
       !params[:blog_id].nil?
     end

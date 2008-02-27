@@ -27,9 +27,12 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.forum '/forum', :controller => 'topics', :action => 'index'
-  map.forum_topics '/forum/topics', :controller => 'topics'
-  map.forum_topic_posts '/forum/topics/:topic_id/posts',
-                        :controller => 'posts', :action => 'index'
+  # map.forum_topics '/forum/topics', :controller => 'topics'
+  # map.forum_topic_posts '/forum/topics/:topic_id/posts',
+  #                       :controller => 'posts', :action => 'index'
+  # map.new_forum_topic '/forum/topic/new',
+  #                       :controller => 'topics', :action => 'new'
+  
   
   map.signup '/signup', :controller => 'people', :action => 'new'
   map.login '/login', :controller => 'sessions', :action => 'new'

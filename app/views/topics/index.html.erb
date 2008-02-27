@@ -3,12 +3,14 @@
 <ul>
   <%- @topics.each do |topic| -%>
     <li>
-      <%= link_to topic.name, forum_topic_posts_path(topic) %>
+      <%= link_to topic.name, forum_topic_posts_path(@forum, topic) %>
       | created <%= time_ago_in_words(topic.created_at) %> ago
     </li>
   <%- end -%>
 </ul>
 
 <%= will_paginate %>
+
+<%= link_to "Add a topic", new_forum_topic_path(@forum) %>
 
 <%= link_to 'Back', forum_path %>

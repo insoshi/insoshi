@@ -3,7 +3,7 @@ module ApplicationHelper
   def menu
     home     = menu_element("Home",     home_path)
     people   = menu_element("People",   people_path)
-    forum = menu_element("Forum", forum_topics_path)
+    forum = menu_element("Forum", forum_path)
     if logged_in?
       profile  = menu_element("Profile",  person_path(current_person))
       messages = menu_element("Messages", messages_path)

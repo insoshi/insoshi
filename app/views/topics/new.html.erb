@@ -2,30 +2,14 @@
 
 <%= error_messages_for :topic %>
 
-<% form_for :topic, :url => forum_path do |f| %>
-  <p>
-    <b>Forum</b><br />
-    <%= f.text_field :forum_id %>
-  </p>
-
-  <p>
-    <b>Person</b><br />
-    <%= f.text_field :person_id %>
-  </p>
-
-  <p>
-    <b>Name</b><br />
+<% form_for :topic, :url => forum_topics_path(@forum)  do |f| %>
+  <div class="form_row">
     <%= f.text_field :name %>
-  </p>
+  </div>
 
-  <p>
-    <b>Posts count</b><br />
-    <%= f.text_field :forum_posts_count %>
-  </p>
-
-  <p>
-    <%= f.submit "Create" %>
-  </p>
+  <div class="form_row">
+    <%= f.submit "Submit" %>
+  </div>
 <% end %>
 
 <%= link_to 'Back', forum_path %>

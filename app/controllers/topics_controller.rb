@@ -24,12 +24,12 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = Topic.new(params[:topic].merge(:person => current_person))
+    @topic = @forum.topics.new(params[:topic].merge(:person => current_person))
 
     respond_to do |format|
       if @topic.save
         flash[:success] = 'Topic was successfully created.'
-        format.html { redirect_to forum_url }
+        format.html { redirect_to forum_topic_posts_path(@forum, @topic) }
       else
         format.html { render :action => "new" }
       end
@@ -54,7 +54,7 @@ class TopicsController < ApplicationController
     @topic.destroy
 
     respond_to do |format|
-      format.html { redirect_to(forum_url) }
+      format.html { redirect_to forum_url }
     end
   end
 
