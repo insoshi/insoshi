@@ -1,3 +1,28 @@
+<% set_main_title "Edit profile" %>
+
+<div id="profile_edit">
+
+<%= error_messages_for :person %>
+
+<% form_for @person do |f| %>
+
+  <h2>Name</h2>
+
+  <div class="form_row">
+    <%= f.text_field :name, :maxlength => Person::NAME_LENGTH %>
+  </div>
+  
+  <h2>Description</h2>
+
+  <div class="form_row"><%= f.text_area :description %></div>
+  <div class="form_row">
+    <%= f.submit "Update" %>
+  </div>
+
+<% end %>
+
+<br />
+
 <h2>Photos</h2>
   
   <% if @person.photos.empty? %>
@@ -31,24 +56,4 @@
   <br />
   <%= button_to "Add a photo", new_photo_path %>
 
-<br />
-
-<%= error_messages_for :person %>
-
-<% form_for @person do |f| %>
-
-  <h2>Name</h2>
-
-  <div class="form_row">
-    <%= f.text_field :name, :maxlength => Person::NAME_LENGTH %>
-  </div>
-  
-  
-  <h2>Description</h2>
-
-  <div class="form_row"><%= f.text_area :description %></div>
-  <div class="form_row">
-    <%= f.submit "Update" %>
-  </div>
-
-<% end %>
+</div>

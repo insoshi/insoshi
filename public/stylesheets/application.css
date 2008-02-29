@@ -1,6 +1,11 @@
+#profile_edit h2 {
+  margin-top: 1em;
+}
+
 
 /* Comment wall */
 
 #wall textarea {
-  height: 40px;
+  height: 5em;
 }
+

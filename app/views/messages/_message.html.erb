@@ -23,7 +23,7 @@
     <% unless message.trashed?(current_person) -%>
       <%= link_to(image_tag("delete.png"), message, :method => :delete) %>
     <% else -%>
-      <%= link_to "(undelete)", undestroy_message_path(message), 
+      <%= link_to "(untrash)", undestroy_message_path(message), 
                                 :method => :put %>
     <% end -%>
   </td>

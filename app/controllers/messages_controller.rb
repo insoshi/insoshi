@@ -71,7 +71,7 @@ class MessagesController < ApplicationController
   def destroy
     @message = Message.find(params[:id])
     if @message.trash(current_person)
-      flash[:success] = "Message deleted"
+      flash[:success] = "Message trashed"
     else
       # This should never happen...
       flash[:error] = "Invalid action"
