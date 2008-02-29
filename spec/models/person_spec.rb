@@ -25,6 +25,9 @@ describe Person do
       u = create_person(:email => nil)
       u.errors.on(:email).should_not be_nil
     end
+  end
+  
+  describe "associations" do
     
     it "should have associated photos" do
       @person.photos.should_not be_nil
@@ -40,8 +43,9 @@ describe Person do
     end
     
     it "should have many wall comments" do
-      create_person.comments.should be_a_kind_of(Array)
-    end
+      @person.comments.should be_a_kind_of(Array)
+      @person.comments.should_not be_empty
+    end    
   end
   
   describe "photo methods" do

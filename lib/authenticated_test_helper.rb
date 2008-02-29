@@ -11,6 +11,8 @@ module AuthenticatedTestHelper
       id = nil
     end
     # Stub out the controller if it's defined.
+    # This means, e.g., that if a spec defines mocked-out photos for a person,
+    # it current_person.photos will have the right assocation.
     if defined?(controller)
       controller.stub!(:current_person).and_return(person)
     else

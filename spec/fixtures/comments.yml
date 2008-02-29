@@ -1,8 +1,8 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  person_id: 1
-  commenter_id: 2
+wall:
+  person: quentin
+  commenter: aaron
   body: MyText
   type: WallComment
 

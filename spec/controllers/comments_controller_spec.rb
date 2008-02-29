@@ -55,7 +55,7 @@ describe CommentsController do
       with_options :person_id => @person do |page|
         page.get    :new
         page.post   :create,  :comment => { }
-        page.delete :destroy, :id => comments(:one)
+        page.delete :destroy, :id => comments(:wall)
       end
     end
   

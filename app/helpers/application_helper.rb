@@ -24,10 +24,6 @@ module ApplicationHelper
     link_to(link[:content], link[:href], options)
   end
   
-  def current_person?(person)
-    logged_in? and person == current_person
-  end
-  
   # Set the input focus for a specific id
   # Usage: <%= set_focus_to_id 'form_field_label' %>
   def set_focus_to_id(id)
@@ -39,7 +35,6 @@ module ApplicationHelper
       title
     end
   end
-
 
   # TODO: polish these & move them somewhere
   def linked_image(person, options = {})

@@ -12,6 +12,11 @@ class PeopleController < ApplicationController
   
   def show
     @person = Person.find(params[:id])
+    if current_person?(@person)
+      link = edit_person_path(@person)
+      flash.now[:notice] = %(You are viewing your own profile.
+                             <a href="#{link}">Click here to edit it</a>)
+    end
     respond_to do |format|
       format.html
     end

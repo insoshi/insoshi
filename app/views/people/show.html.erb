@@ -1,10 +1,11 @@
-<h3 style="clear">About <%= @person.name %></h3>
+<% set_main_title("About #{h @person.name}") %>
 
-<%- if logged_in? and @person != current_person -%>
+<%- unless current_person?(@person) -%>
   <%= email_link @person %>
   <%- unless Connection.exists?(@person, current_person) -%>
     | 
-    <%= button_to "Connection request", person_connections_path(@person) %>
+    <%= link_to "Connect with #{@person.name}!",
+                person_connections_path(@person), :method => :post %>
   <%- end -%>
 <%- end -%>
 
@@ -13,27 +14,5 @@
 </div>
 <p><%= sanitize @person.description %></p>
 
-<%- if logged_in? and @person == current_person -%>
-  <%= link_to "Edit profile", edit_person_path(@person) %>
-<%- end -%>
 
-<h3>Leave a wall comment</h3>
-
-<ul>
-<%- @person.comments.each do |comment| -%>
-<li>
-  <%= sanitize comment.body %> left by <%= comment.commenter.name %>
-  <%= time_ago_in_words(comment.created_at) %> ago
-</li>
-<%- end -%>
-</ul>
-
-<% form_for :comment, :url => person_comments_path(@person) do |f| %>
-  <div class="form_tag">
-    <%= f.text_area :body %>
-  </div>
-  
-  <div class="form_tag">
-    <%= submit_tag "Submit" %>
-  </div>
-<% end %>
+<%= render :partial => 'wall' %>

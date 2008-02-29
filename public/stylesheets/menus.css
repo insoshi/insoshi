@@ -23,8 +23,7 @@
   text-decoration: none;
 }
 
-#navlist li a:link { color: #448; }
-#navlist li a:visited { color: #667; }
+#navlist li a:link, a:visited { color: #448; }
 
 #navlist li a:hover
 {

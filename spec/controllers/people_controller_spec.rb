@@ -25,12 +25,11 @@ describe PeopleController do
     end
     
     it "should have a working show page" do
-      Person.should_receive(:find).with(@person).and_return(@person)
       get :show, :id => @person
       response.should be_success
       response.should render_template("show")
     end
-        
+    
     it "should have a working edit page" do
       login_as @person
       get :edit, :id => @person
@@ -118,33 +117,34 @@ describe PeopleController do
   end
   
   describe "show" do
-    integrate_views
+    integrate_views    
     
     it "should display the edit link for current user" do
       login_as @person
-      # The mock is needed to get @person.photos.
-      Person.should_receive(:find).with(@person).and_return(@person)
       get :show, :id => @person
-      assigns[:person].photos = @person.photos
       response.should have_tag("a[href=?]", edit_person_path(@person))
     end
     
     it "should not display the edit link for other viewers" do
       login_as(:aaron)
-      # Note: the Person mock must go *after* the login_as.
-      # The reason is subtle: login_as calls the people() fixture method,
-      # which (apparently) uses find under the hood.
-      Person.should_receive(:find).with(@person).and_return(@person)
       get :show, :id => @person
       response.should_not have_tag("a[href=?]", edit_person_path(@person))
     end
     
     it "should not display the edit link for non-logged-in viewers" do
       logout
-      Person.should_receive(:find).with(@person).and_return(@person)
       get :show, :id => @person
       response.should_not have_tag("a[href=?]", edit_person_path(@person))
     end
+    
+    it "should have a working comment wall" do
+      comment = comments(:wall)
+      get :show, :id => @person
+      response.should have_tag("ul[class=?]", "wall") do
+        with_tag("li", /#{comment.body}/)
+      end
+    end
+    
   end
   
   private
