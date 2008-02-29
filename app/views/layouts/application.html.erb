@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>InstantSocial</title>
+    <title>insoci</title>
     <%= stylesheet_link_tag "blueprint/screen.css", 
                             :media => "screen, projection" %>
     <%= stylesheet_link_tag "blueprint/print.css", :media => "print" %>
@@ -10,17 +10,31 @@
                       :media => "screen, projection" %><![endif]-->
     <%= stylesheet_link_tag "application.css" %>
     <%= stylesheet_link_tag "menus.css" %>
-    <style type="text/css">
-      .with-grid { background: url('/stylesheets/blueprint/src/grid.png'); }
-    </style>
+    <%- if development? -%>
+      <style type="text/css">
+        .with-grid { background: url('/stylesheets/blueprint/src/grid.png'); }
+      </style>
+    <%- end -%>
     <%= javascript_include_tag :defaults %>
   </head>
   <body>
     <div id="main" class="container">
-      <div class="column first last span-24">
-        <h1>InstantSocial</h1>
+      <div id="logo" class="column first last span-20">
+        <h1>insoci</h1>
+        <div class="box">
+            <%- if logged_in? -%>
+              Welcome, <%= current_person.name %>!
+              (<%= link_to "Sign out", logout_path %>)
+            <%- else -%>
+              <%= link_to "Sign in", login_path %> or
+              <%= link_to "Sign up", signup_path %>
+              <br />
+              <%= link_to "I forgot my password",
+                           new_password_reminder_path %>
+            <%- end -%>
+        </div>
       </div>
-      <div class="column first last span-24">
+      <div class="column first last span-20">
         
         <div id="navcontainer">
           <ul id="navlist">
@@ -30,39 +44,12 @@
           </ul>
         </div>
       </div>
-      <div class="column first span-6">
-        <h3>Left</h3>
-
-    <h4>Advanced search</h4>
-    <div>
-      <% form_tag search_people_path, :method => :get do %>
-          <%= text_field_tag :q, params[:q], :size => 19, :maxlength => 50,
-            :id => "leftbox_search_entry" %><br />
-          <%= submit_tag "Search!", :name => nil, :id => "leftbox_search" %>
-    <% end %>
-    </div>
-      </div>
-      <div class="column span-12">
-        <h1 class="box_title"><%= yield :main_title %></h1> 
+      <div class="column span-20 first last">
+        <%= yield :main_title %>
         <% flash.each do |key, msg| %>  
           <%= content_tag :div, msg, :class => "span-11 flash #{key}" %>
         <% end %>
         <%= yield %>
-      </div>
-      <div class="column span-6 last">
-        <h3>Right</h3>
-          <h4>
-            <%- if logged_in? -%>
-              <%= link_to "Sign out", logout_path %>
-            <%- else -%>
-              <%= link_to "Sign in", login_path %> or
-              <%= link_to "Sign up", signup_path %>
-              
-              <%= link_to "I forgot my password", new_password_reminder_path %>
-            <%- end -%>
-          </h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
       </div>
     </div>
     <%- if development? -%>

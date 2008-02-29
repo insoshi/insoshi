@@ -30,10 +30,8 @@ module ApplicationHelper
     javascript_tag("$('#{id}').focus()");
   end
   
-  def set_main_title(title = "Instant Social")
-    content_for :main_title do 
-      title
-    end
+  def set_main_title(title = nil)
+    content_for(:main_title) { content_tag(:h1, title) } unless title.nil?
   end
 
   # TODO: polish these & move them somewhere
