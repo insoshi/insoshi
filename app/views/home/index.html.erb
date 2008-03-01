@@ -22,7 +22,19 @@
       </td>
     <%- end -%>
     </tr>
-  </table>  
+  </table>
+  
+  <table>
+  <tr><th colspan="4">Network Members</th></tr>
+  <%- Person.find(:all, :limit => 8).collect_every(4) do |row| -%>
+  <tr>
+    <%- row.each do |person| -%>
+      <td><%= link_to image_tag(person.thumbnail), person %></td>
+    <%- end -%>
+  </tr>
+  <%- end -%>
+</table>
+  
 </div>
 
 <div class="module column last span-6">

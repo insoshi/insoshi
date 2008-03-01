@@ -16,12 +16,16 @@
   <tr><th colspan="2">New Messages</th></tr>
   <%- current_person.new_messages.each do |message| -%>
   <tr>
-    <td><%= link_to image_tag(message.sender.icon), message.sender %></td>
-    <td class="small">
-      <%= link_to message.subject, message %>
-      <br />
-      Sent by <%= link_to message.sender.name, message.sender %>
+    <td class="column first span-1">
+      <%= link_to image_tag(message.sender.icon), message.sender %>
+    </td>
+    <td class="column span-5 last">
+    <span class="small">
+      From <%= link_to message.sender.name, message.sender %>
       <%= time_ago_in_words message.created_at %> ago
+      <br />
+      <%= link_to message.subject, message %>
+    </span>
     </td>
   </tr>
   <%- end -%>
@@ -34,18 +38,6 @@
   <tr>
     <%- row.each do |contact| -%>
       <td><%= link_to image_tag(contact.icon), contact %></td>
-    <%- end -%>
-  </tr>
-  <%- end -%>
-</table>
-
-
-<table>
-  <tr><th colspan="4">Network Members</th></tr>
-  <%- Person.find(:all, :limit => 16).collect_every(4) do |row| -%>
-  <tr>
-    <%- row.each do |person| -%>
-      <td><%= link_to image_tag(person.icon), person %></td>
     <%- end -%>
   </tr>
   <%- end -%>
