@@ -11,6 +11,23 @@
 </table>
 <%- end -%>
 
+<%- unless current_person.new_messages.empty? -%>
+<table>
+  <tr><th colspan="2">New Messages</th></tr>
+  <%- current_person.new_messages.each do |message| -%>
+  <tr>
+    <td><%= link_to image_tag(message.sender.icon), message.sender %></td>
+    <td class="small">
+      <%= link_to message.subject, message %>
+      <br />
+      Sent by <%= link_to message.sender.name, message.sender %>
+      <%= time_ago_in_words message.created_at %> ago
+    </td>
+  </tr>
+  <%- end -%>
+</table>
+<%- end -%>
+
 <table>
   <tr><th colspan="4">My Connections</th></tr>
   <%- current_person.contacts[(0...11)].collect_every(4) do |row| -%>

@@ -1,6 +1,7 @@
 class CreateCommunications < ActiveRecord::Migration
   def self.up
     create_table :communications do |t|
+      t.string   :subject
       t.text     :content
       t.string   :parent_id
       t.integer  :sender_id

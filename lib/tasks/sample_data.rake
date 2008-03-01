@@ -56,10 +56,13 @@ def make_messages(text)
   michael = Person.find_by_email("michael@michaelhartl.com")
   senders = Person.find(:all, :limit => 10)
   senders.each do |sender|
-    Message.create!(:content => text, :sender => michael,
-                    :recipient => sender, :skip_send_mail => true)
-    Message.create!(:content => text, :sender => sender,
-                    :recipient => michael, :skip_send_mail => true)
+    subject = @lipsum.split.shuffle[0..4].join(' ')
+    Message.create!(:subject => subject, :content => text, 
+                    :sender => sender, :recipient => michael,
+                    :skip_send_mail => true)
+    Message.create!(:subject => subject, :content => text, 
+                    :sender => michael, :recipient => sender,
+                    :skip_send_mail => true)
   end
 end
 
