@@ -1,3 +1,9 @@
+/* Global overrides */
+
+body {
+  font-size: 90%;
+}
+
 #profile_edit h2 {
   margin-top: 1em;
 }

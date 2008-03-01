@@ -9,7 +9,7 @@ module ApplicationHelper
       messages = menu_element("Messages", messages_path)
       blog     = menu_element("Blog",     blog_posts_path(current_person.blog))
       photos   = menu_element("Photos",   photos_path)
-      [home, profile, messages, blog, photos, people, forum]
+      [home, profile, messages, blog, people, forum]
     else
       [home, people, forum]
     end
