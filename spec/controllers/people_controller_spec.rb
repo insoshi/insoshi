@@ -150,7 +150,7 @@ describe PeopleController do
   private
 
     def create_person(options = {})
-      post :create, :person => { :email => 'quire@example.com',
+      post :create, :person => { :name => "Quire",:email => 'quire@foo.com',
         :password => 'quux', :password_confirmation => 'quux' }.merge(options)
     end
 end

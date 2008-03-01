@@ -8,9 +8,8 @@ class Person < ActiveRecord::Base
                   :description
 
   MAX_EMAIL = MAX_PASSWORD = 40
+  MAX_NAME = 32
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
-  TEXT_LENGTH = 120 # truncation parameter for people listings
-  NAME_LENGTH = 32
   DESCRIPTION_LENGTH = 2000
   TRASH_TIME_AGO = 1.month.ago
   SEARCH_LIMIT = 20
@@ -37,13 +36,14 @@ class Person < ActiveRecord::Base
                     :conditions => "recipient_deleted_at IS NULL"                  
   end
   
-  validates_presence_of     :email
+  validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
   validates_length_of       :password, :within => 4..MAX_PASSWORD,
                                        :if => :password_required?
   validates_confirmation_of :password, :if => :password_required?
-  validates_length_of       :email,    :within => 3..MAX_EMAIL
+  validates_length_of       :email, :within => 3..MAX_EMAIL
+  # validates_length_of       :name,  :maximum => MAX_NAME
   # TODO: replace this with validates_as_email (?)
   validates_format_of       :email,                                    
                             :with => EMAIL_REGEX,                      

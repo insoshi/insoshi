@@ -25,6 +25,11 @@ describe Person do
       u = create_person(:email => nil)
       u.errors.on(:email).should_not be_nil
     end
+    
+    it "should require name" do
+      u = create_person(:name => nil)
+      u.errors.on(:name).should_not be_nil      
+    end
   end
   
   describe "associations" do
