@@ -6,14 +6,15 @@
         <%= @mary.name %> made a <a href="#">new blog post</a>.
         <a href="#">View <%= @mary.name %>'s blog</a>
         <br />
-        Ten minutes ago
+        <span class="quiet small">Ten minutes ago</span>
       </td>
   </tr>
   <tr>
     <td><%= image_tag @michael.icon %></td>
-    <td><%= @michael.name %> posted to forum <a href="#">Topic 23</a>
+    <td><%= @michael.name %> posted to forum 
+        topic <%= link_to Topic.find(10).name, forum_topic_posts_path(1, 10) %>
         <br />
-        Four hours ago
+        <span class="quiet small">Four hours ago</span>
     </td>
   </tr>
   <tr>
@@ -22,7 +23,7 @@
       <%= @linda.name %> added a new photo. <a href="#">View 
       <%= @linda.name %>'s photos</a>
       <br />
-      Two days ago
+      <span class="quiet small">Two days ago</span>
     </td>
   </tr>
   <tr>
@@ -31,14 +32,14 @@
         <%= @mary.name %> made a <a href="#">new blog post</a>.
         <a href="#">View <%= @mary.name %>'s blog</a>
         <br />
-        Ten minutes ago
+        <span class="quiet small">Ten minutes ago</span>
       </td>
   </tr>
   <tr>
     <td><%= image_tag @michael.icon %></td>
     <td><%= @michael.name %> posted to forum <a href="#">Topic 23</a>
         <br />
-        Four hours ago
+        <span class="quiet small">Four hours ago</span>
     </td>
   </tr>
   <tr>
@@ -47,7 +48,7 @@
       <%= @linda.name %> added a new photo. <a href="#">View 
       <%= @linda.name %>'s photos</a>
       <br />
-      Two days ago
+      <span class="quiet small">Two days ago</span>
     </td>
   </tr>
 </table>

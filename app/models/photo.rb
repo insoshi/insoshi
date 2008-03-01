@@ -21,7 +21,7 @@ class Photo < ActiveRecord::Base
       unless enum.nil? || enum.include?(send(:content_type))
         errors.add_to_base("You can only upload images (GIF, JPEG, or PNG)")
       end
-      # Images should be less than 5 MB
+      # Images should be less than UPLOAD_LIMIT MB.
       enum = attachment_options[:size]
       unless enum.nil? || enum.include?(send(:size))
         msg = "Images should be smaller than #{UPLOAD_LIMIT} MB"
