@@ -30,7 +30,7 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @message.read if current_person == @message.recipient
+    @message.mark_as_read if current_person?(@message.recipient)
     respond_to do |format|
       format.html
     end

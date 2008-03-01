@@ -26,6 +26,12 @@ describe MessagesController do
       working_page(:trash, :trashed_messages)
     end
     
+    it "should have a working show page" do
+      get :show, :id => @message
+      response.should be_success
+      response.should render_template("show")
+    end
+    
     it "should have a working new page" do
       get :new, :person_id => @person
       response.should be_success
