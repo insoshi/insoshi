@@ -14,6 +14,7 @@ namespace :db do
       make_messages(@lipsum)
       make_forum_posts
       make_blog_posts
+      make_connections
     end
       
     desc "Remove sample data" 
@@ -66,10 +67,10 @@ def make_forum_posts
   forum = Forum.find(1)
   people = Person.find(:all)
   (1..25).each do |n|
-    topic = forum.topics.create(:name => "Topic #{n}", :person => people.rand,
+    topic = forum.topics.create(:name => "Topic #{n}", :person => people.pick,
                                 :created_at => rand(10).hours.ago)
     25.times do
-      topic.posts.create(:body => @lipsum, :person => people.rand,
+      topic.posts.create(:body => @lipsum, :person => people.pick,
                          :created_at => rand(10).hours.ago)
     end
   end
@@ -79,6 +80,16 @@ def make_blog_posts
   person = Person.find_by_email('michael@michaelhartl.com')
   3.times do
     person.blog.posts.create(:title => "Foobar", :body => @lipsum)
+  end
+end
+
+def make_connections
+  person = Person.find_by_email('michael@michaelhartl.com')
+  people = Person.find(:all)
+  20.times do
+    conn = people.pick
+    Connection.request(person, conn)
+    Connection.accept(person, conn)
   end
 end
 
