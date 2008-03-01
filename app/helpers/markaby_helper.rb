@@ -20,7 +20,7 @@ module MarkabyHelper
           people.collect_every(columns).each do |row|
             tr do
               row.each do |person| 
-                td { image_tag person.send(image) }
+                td { link_to image_tag(person.send(image)), person }
               end
             end
           end

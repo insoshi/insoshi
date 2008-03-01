@@ -4,6 +4,11 @@ class Connection < ActiveRecord::Base
                           :foreign_key => "contact_id"
   validates_presence_of :person_id, :contact_id
   
+  # Status codes.
+  ACCEPTED  = 0
+  REQUESTED = 1
+  PENDING   = 2
+  
   # Return true if the persons are (possibly pending) connections.
   def self.exists?(person, contact)
     not find_by_person_id_and_contact_id(person, contact).nil?
@@ -15,8 +20,8 @@ class Connection < ActiveRecord::Base
       false
     else
       transaction do
-        create(:person => person, :contact => contact, :status => 'pending')
-        create(:person => contact, :contact => person, :status => 'requested')
+        create(:person => person, :contact => contact, :status => PENDING)
+        create(:person => contact, :contact => person, :status => REQUESTED)
       end
       PersonMailer.deliver_connection_request(person, contact) if mail
       true
@@ -45,7 +50,7 @@ class Connection < ActiveRecord::Base
   # Update the db with one side of an accepted connection request.
   def self.accept_one_side(person, contact, accepted_at)
     request = find_by_person_id_and_contact_id(person, contact)
-    request.status = 'accepted'
+    request.status = ACCEPTED
     request.accepted_at = accepted_at
     request.save!
   end

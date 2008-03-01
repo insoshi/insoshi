@@ -3,7 +3,7 @@ class CreateConnections < ActiveRecord::Migration
     create_table :connections do |t|
       t.integer :person_id
       t.integer :contact_id
-      t.string :status
+      t.integer :status
       t.timestamp :accepted_at
 
       t.timestamps

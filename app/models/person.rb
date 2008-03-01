@@ -23,11 +23,11 @@ class Person < ActiveRecord::Base
   has_many :connections
   # TODO: refactor the statuses to use numerical codes/model constants.
   has_many :contacts, :through => :connections,
-                      :conditions => "status = 'accepted'"
+            :conditions => "status = #{Connection::ACCEPTED}"
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
-                              :source => :contact,
-                              :conditions => "status = 'requested'"
+            :source => :contact,
+            :conditions => "status = #{Connection::REQUESTED}"
   with_options :class_name => "Message", :dependent => :destroy,
                :order => 'created_at DESC' do |person|
     person.has_many :_sent_messages, :foreign_key => "sender_id",

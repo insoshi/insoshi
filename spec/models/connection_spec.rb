@@ -12,8 +12,8 @@ describe Connection do
 
   it "should create a request" do
     Connection.request(@person, @connection)
-    status(@person, @connection).should == 'pending'
-    status(@connection, @person).should == 'requested'
+    status(@person, @connection).should == Connection::PENDING
+    status(@connection, @person).should == Connection::REQUESTED
   end
   
   it "should send a request notification" do
@@ -25,8 +25,8 @@ describe Connection do
   it "should accept a request" do
     Connection.request(@person, @connection)
     Connection.accept(@person,  @connection)
-    status(@person, @connection).should == 'accepted'
-    status(@connection, @person).should == 'accepted'    
+    status(@person, @connection).should == Connection::ACCEPTED
+    status(@connection, @person).should == Connection::ACCEPTED
   end
   
   it "should break up a connection" do
