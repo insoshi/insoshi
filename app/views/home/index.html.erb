@@ -24,6 +24,10 @@
     </tr>
   </table>
   
+  <%= raster(Person.find(:all, :limit => 8),
+             :title => "Network Members",
+             :image => :thumbnail) %>
+  
   <table>
   <tr><th colspan="4">Network Members</th></tr>
   <%- Person.find(:all, :limit => 8).collect_every(4) do |row| -%>

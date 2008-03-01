@@ -1,5 +1,8 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  
+  ## Menu helpers
+  
   def menu
     home     = menu_element("Home",     home_path)
     people   = menu_element("People",   people_path)
@@ -23,6 +26,31 @@ module ApplicationHelper
     options.merge!({ :id => "current" }) if current_page?(link[:href])
     link_to(link[:content], link[:href], options)
   end
+  
+  ## Markaby helpers
+  
+  def raster(people, options = {})
+    n = options[:num] || 4
+    title = options[:title]
+    image = options[:image] || :icon
+    Markaby::Builder.new({}, self) do
+      div.module do
+        table do
+          tr do
+            th(:colspan => n) { title }
+          end
+          people.collect_every(n).each do |row|
+            tr do
+              row.each do |person| 
+                td { image_tag person.send(image) }
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  
   
   # Set the input focus for a specific id
   # Usage: <%= set_focus_to_id 'form_field_label' %>

@@ -3,5 +3,5 @@ module SharedHelper
 
   def current_person?(person)
     logged_in? and person == current_person
-  end  
+  end
 end
