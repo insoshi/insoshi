@@ -1,0 +1,22 @@
+<table>
+  <tr><th colspan="4">My Connections</th></tr>
+  <%- current_person.contacts[(0...11)].collect_every(4) do |row| -%>
+  <tr>
+    <%- row.each do |contact| -%>
+      <td><%= link_to image_tag(contact.icon), contact %></td>
+    <%- end -%>
+  </tr>
+  <%- end -%>
+</table>
+
+
+<table>
+  <tr><th colspan="4">Members</th></tr>
+  <%- Person.find(:all, :limit => 17).collect_every(4) do |row| -%>
+  <tr>
+    <%- row.each do |person| -%>
+      <td><%= link_to image_tag(person.icon), person %></td>
+    <%- end -%>
+  </tr>
+  <%- end -%>
+</table>

@@ -67,7 +67,8 @@ def make_forum_posts
   forum = Forum.find(1)
   people = Person.find(:all)
   (1..25).each do |n|
-    topic = forum.topics.create(:name => "Topic #{n}", :person => people.pick,
+    name = @lipsum.split.shuffle[0..8].join(' ')
+    topic = forum.topics.create(:name => name, :person => people.pick,
                                 :created_at => rand(10).hours.ago)
     25.times do
       topic.posts.create(:body => @lipsum, :person => people.pick,
@@ -85,11 +86,10 @@ end
 
 def make_connections
   person = Person.find_by_email('michael@michaelhartl.com')
-  people = Person.find(:all)
-  20.times do
-    conn = people.pick
-    Connection.request(person, conn)
-    Connection.accept(person, conn)
+  people = Person.find(:all) - [person]
+  people.shuffle[0..20].each do |contact|
+    Connection.request(person, contact)
+    Connection.accept(person, contact)
   end
 end
 

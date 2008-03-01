@@ -1,60 +1,53 @@
-<div class="module column first span-10">
-  <table>
-    <tr><th colspan="3">Activity Feed</th></tr>
-    <tr>
-        <td><%= image_tag @mary.icon %></td>
-        <td>
-          <%= @mary.name %> made a <a href="#">new blog post</a>.
-          <a href="#">View <%= @mary.name %>'s blog</a>
-          <br />
-          Ten minutes ago
-        </td>
-    </tr>
-    <tr>
-      <td><%= image_tag @michael.icon %></td>
-      <td><%= @michael.name %> posted to forum <a href="#">Topic 23</a>
-          <br />
-          Four hours ago
-      </td>
-    </tr>
-    <tr>
-      <td><%= image_tag @linda.icon %></td>
+<table>
+  <tr><th colspan="3">Activity Feed</th></tr>
+  <tr>
+      <td><%= image_tag @mary.icon %></td>
       <td>
-        <%= @linda.name %> added a new photo. <a href="#">View 
-        <%= @linda.name %>'s photos</a>
+        <%= @mary.name %> made a <a href="#">new blog post</a>.
+        <a href="#">View <%= @mary.name %>'s blog</a>
         <br />
-        Two days ago
+        Ten minutes ago
       </td>
-    </tr>
-  </table>
-</div>
-<div class="module column last span-10">
-  <table>
-    <tr><th colspan="3">Activity Feed</th></tr>
-    <tr>
-        <td><%= image_tag @mary.icon %></td>
-        <td>
-          <%= @mary.name %> made a <a href="#">new blog post</a>.
-          <a href="#">View <%= @mary.name %>'s blog</a>
-          <br />
-          Ten minutes ago
-        </td>
-    </tr>
-    <tr>
-      <td><%= image_tag @michael.icon %></td>
-      <td><%= @michael.name %> posted to forum <a href="#">Topic 23</a>
-          <br />
-          Four hours ago
-      </td>
-    </tr>
-    <tr>
-      <td><%= image_tag @linda.icon %></td>
+  </tr>
+  <tr>
+    <td><%= image_tag @michael.icon %></td>
+    <td><%= @michael.name %> posted to forum <a href="#">Topic 23</a>
+        <br />
+        Four hours ago
+    </td>
+  </tr>
+  <tr>
+    <td><%= image_tag @linda.icon %></td>
+    <td>
+      <%= @linda.name %> added a new photo. <a href="#">View 
+      <%= @linda.name %>'s photos</a>
+      <br />
+      Two days ago
+    </td>
+  </tr>
+  <tr>
+      <td><%= image_tag @mary.icon %></td>
       <td>
-        <%= @linda.name %> added a new photo. <a href="#">View 
-        <%= @linda.name %>'s photos</a>
+        <%= @mary.name %> made a <a href="#">new blog post</a>.
+        <a href="#">View <%= @mary.name %>'s blog</a>
         <br />
-        Two days ago
+        Ten minutes ago
       </td>
-    </tr>
-  </table>
-</div>
+  </tr>
+  <tr>
+    <td><%= image_tag @michael.icon %></td>
+    <td><%= @michael.name %> posted to forum <a href="#">Topic 23</a>
+        <br />
+        Four hours ago
+    </td>
+  </tr>
+  <tr>
+    <td><%= image_tag @linda.icon %></td>
+    <td>
+      <%= @linda.name %> added a new photo. <a href="#">View 
+      <%= @linda.name %>'s photos</a>
+      <br />
+      Two days ago
+    </td>
+  </tr>
+</table>

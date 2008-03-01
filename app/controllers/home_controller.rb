@@ -4,5 +4,8 @@ class HomeController < ApplicationController
     @mary = Person.find_by_email("mary@michaelhartl.com")
     @michael = Person.find_by_email("michael@michaelhartl.com")
     @linda = Person.find_by_email("linda@michaelhartl.com")
+    
+    
+    
   end
 end

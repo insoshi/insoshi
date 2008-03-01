@@ -43,6 +43,7 @@
         <%- end -%>
         </div>
         <div class="column last span-6">
+          <div style="font-size: 80%">
             <%- if logged_in? -%>
               Welcome, <%= current_person.name %>!
               (<%= link_to "Sign out", logout_path %>)
@@ -53,6 +54,7 @@
               <%= link_to "I forgot my password",
                            new_password_reminder_path %>
             <%- end -%>
+          </div>
         </div>
       </div>
       <div class="column span-20 first">
