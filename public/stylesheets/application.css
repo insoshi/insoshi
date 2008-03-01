@@ -8,6 +8,17 @@ a {
   text-decoration: none;
 }
 
+/* Logo area */
+
+#logo h1 {
+  margin-bottom: 0;
+}
+
+#logo h2 {
+  font-size: 100%;
+}
+
+
 #profile_edit h2 {
   margin-top: 1em;
 }
