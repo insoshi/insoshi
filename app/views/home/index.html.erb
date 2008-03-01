@@ -3,7 +3,7 @@
 
 
   <table>
-    <tr><th colspan="2" style="border-bottom: 2px solid white;">Discussion Forum</th></tr>
+    <tr><th colspan="2">Discussion Forum</th></tr>
     <%- @topics = Topic.find(:all, :order => "created_at DESC", :limit => 5) -%>
     <%- @topics.each do |topic| -%>
     <%- last_post = topic.posts.reverse.first -%>
@@ -27,17 +27,6 @@
   <%= raster(Person.find(:all, :limit => 8),
              :title => "Network Members",
              :image => :thumbnail) %>
-  
-  <table>
-  <tr><th colspan="4">Network Members</th></tr>
-  <%- Person.find(:all, :limit => 8).collect_every(4) do |row| -%>
-  <tr>
-    <%- row.each do |person| -%>
-      <td><%= link_to image_tag(person.thumbnail), person %></td>
-    <%- end -%>
-  </tr>
-  <%- end -%>
-</table>
   
 </div>
 

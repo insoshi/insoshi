@@ -1,14 +1,6 @@
 <%- unless current_person.requested_contacts.empty? -%>
-<table>
-  <tr><th colspan="4">Requested Connections</th></tr>
-  <%- current_person.requested_contacts[(0...8)].collect_every(4) do |row| -%>
-  <tr>
-    <%- row.each do |contact| -%>
-      <td><%= link_to image_tag(contact.icon), contact %></td>
-    <%- end -%>
-  </tr>
-  <%- end -%>
-</table>
+<%= raster current_person.requested_contacts[(0...8)],
+           :title => "Requested Connections" %>
 <%- end -%>
 
 <%- unless current_person.new_messages.empty? -%>
@@ -32,13 +24,6 @@
 </table>
 <%- end -%>
 
-<table>
-  <tr><th colspan="4">My Connections</th></tr>
-  <%- current_person.contacts[(0...11)].collect_every(4) do |row| -%>
-  <tr>
-    <%- row.each do |contact| -%>
-      <td><%= link_to image_tag(contact.icon), contact %></td>
-    <%- end -%>
-  </tr>
-  <%- end -%>
-</table>
+
+<%= raster current_person.contacts[(0...11)],
+           :title => "My Connections" %>

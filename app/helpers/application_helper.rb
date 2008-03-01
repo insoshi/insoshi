@@ -27,13 +27,16 @@ module ApplicationHelper
     link_to(link[:content], link[:href], options)
   end
   
-  ## Markaby helpers
-  
+  ## Helpers written in Markaby.
+  # See http://redhanded.hobix.com/inspect/markabyForRails.html
+  # The plugin is broken in Rails 2.0.2.  Get a working plugin as follows:
+  # $ cd vendor/plugins
+  # $ git clone http://github.com/giraffesoft/markaby/tree/master
   def raster(people, options = {})
     n = options[:num] || 4
     title = options[:title]
     image = options[:image] || :icon
-    Markaby::Builder.new({}, self) do
+     markaby do
       div.module do
         table do
           tr do
@@ -50,7 +53,6 @@ module ApplicationHelper
       end
     end
   end
-  
   
   # Set the input focus for a specific id
   # Usage: <%= set_focus_to_id 'form_field_label' %>
@@ -86,5 +88,14 @@ module ApplicationHelper
     str = link_to(img, path, opts)
     str << "&nbsp;"
     str << link_to_unless_current(action, path, opts)
-  end  
+  end 
+  
+
+  
+  private
+    
+    # See http://railscasts.com/episodes/69
+    def markaby(&block)
+      Markaby::Builder.new({}, self, &block)
+    end 
 end
