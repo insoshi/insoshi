@@ -88,8 +88,8 @@ def make_connections
   person = Person.find_by_email('michael@michaelhartl.com')
   people = Person.find(:all) - [person]
   people.shuffle[0..20].each do |contact|
-    Connection.request(person, contact)
-    Connection.accept(person, contact)
+    Connection.request(contact, person)
+    sometimes(0.5) { Connection.accept(person, contact) }
   end
 end
 
@@ -104,4 +104,9 @@ def uploaded_file(filename, content_type)
     define_method(:content_type) {content_type}
   end
   return t
+end
+
+# Do something sometimes (with probability p).
+def sometimes(p, &block)
+  yield(block) if rand <= p
 end
