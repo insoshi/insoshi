@@ -1,10 +1,14 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Topic do
+  
+  before(:each) do
+    @topic = Topic.new(:name => "A topic", :forum => forums(:one),
+                       :person => people(:quentin))
+  end
 
   it "should be valid" do
-    Topic.new(:name => "A topic", :forum => forums(:one),
-              :person => people(:quentin)).should be_valid
+    @topic.should be_valid
   end
   
   it "should require a name" do
@@ -14,7 +18,7 @@ describe Topic do
   end
 
   it "should have a max name length" do
-    Topic.should have_maximum(:name, MAX_STRING_LENGTH)
+    @topic.should have_maximum(:name, Topic::MAX_NAME)
   end
   
   it "should have many posts" do

@@ -3,9 +3,13 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe ForumPost do
   include CustomModelMatchers
   
+  before(:each) do
+    @post = ForumPost.new(:body => "Hey there", :topic => topics(:one),
+                          :person => people(:quentin))
+  end
+  
   it "should be valid" do
-    ForumPost.new(:body => "Hey there", :topic => topics(:one),
-                  :person => people(:quentin)).should be_valid
+    @post.should be_valid
   end
   
   it "should require a body" do
@@ -15,6 +19,6 @@ describe ForumPost do
   end
   
   it "should have a maximum body length" do
-    ForumPost.should have_maximum(:body, MAX_TEXT_LENGTH)
+    @post.should have_maximum(:body, MAX_TEXT_LENGTH)
   end
 end

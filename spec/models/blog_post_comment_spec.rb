@@ -3,9 +3,14 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe BlogPostComment do
   include CustomModelMatchers
   
+  before(:each) do
+    @comment = BlogPostComment.new(:body => "Hey there", :post => posts(:blog),
+                                   :commenter => people(:aaron))
+    
+  end
+  
   it "should be valid" do
-    BlogPostComment.new(:body => "Hey there", :post => posts(:blog),
-                        :commenter => people(:aaron)).should be_valid
+    @comment.should be_valid
   end
   
   it "should require a body" do
@@ -15,6 +20,6 @@ describe BlogPostComment do
   end
   
   it "should have a maximum body length" do
-    BlogPostComment.should have_maximum(:body, MAX_TEXT_LENGTH)
+    @comment.should have_maximum(:body, MAX_TEXT_LENGTH)
   end
 end
