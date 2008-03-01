@@ -4,17 +4,20 @@
 # $ cd vendor/plugins
 # $ git clone http://github.com/giraffesoft/markaby/tree/master
 module MarkabyHelper
+  
+  # Return a raster of people images.
+  # TODO: refactor this a bit
   def raster(people, options = {})
-    n = options[:num] || 4
-    title = options[:title]
-    image = options[:image] || :icon
+    columns = options[:num] || 4
+    title   = options[:title] || ""
+    image   = options[:image] || :icon
      markaby do
       div.module do
         table do
           tr do
-            th(:colspan => n) { title }
-          end
-          people.collect_every(n).each do |row|
+            th(:colspan => columns) { title }
+          end unless title.blank?
+          people.collect_every(columns).each do |row|
             tr do
               row.each do |person| 
                 td { image_tag person.send(image) }
