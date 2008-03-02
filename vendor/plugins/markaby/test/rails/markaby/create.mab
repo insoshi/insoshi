@@ -1,0 +1,9 @@
+unless flash[:message].nil?
+  p { flash[:message] }
+end
+
+form_tag '/monkeys' do
+  div {
+    submit_tag 'Save'
+  }
+end

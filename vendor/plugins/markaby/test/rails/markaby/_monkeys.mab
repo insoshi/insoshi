@@ -1,0 +1,12 @@
+html {
+  head {
+    title "List 'o Monkeys"
+  }
+  body {
+    ul {
+      monkeys.each { |monkey|
+        li monkey.name
+      }
+    }
+  }
+}
