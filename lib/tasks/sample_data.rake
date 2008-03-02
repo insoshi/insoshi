@@ -34,11 +34,11 @@ namespace :db do
 end
 
 def create_people
-  [%w(female F), %w(male M)].each do |pair|
-    filename = File.join(DATA_DIRECTORY, "#{pair[0]}_names.txt")
+  %w[male female].each do |gender|
+    filename = File.join(DATA_DIRECTORY, "#{gender}_names.txt")
     names = File.open(filename).readlines
     password = "foobar"
-    photos = Dir.glob("lib/tasks/sample_data/#{pair[0]}_photos/*.jpg").shuffle
+    photos = Dir.glob("lib/tasks/sample_data/#{gender}_photos/*.jpg").shuffle
     names.each_with_index do |name, i|
       name.strip!
       person = Person.create!(:email => "#{name.downcase}@michaelhartl.com",
@@ -70,7 +70,8 @@ def make_forum_posts
   forum = Forum.find(1)
   people = Person.find(:all)
   (1..25).each do |n|
-    name = @lipsum.split.shuffle[0..8].join(' ')
+    name = @lipsum.split.shuffle[0..10].join(' ')
+    name = name[0...Topic::MAX_NAME]
     topic = forum.topics.create(:name => name, :person => people.pick,
                                 :created_at => rand(10).hours.ago)
     25.times do

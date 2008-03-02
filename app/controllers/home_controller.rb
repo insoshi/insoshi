@@ -11,7 +11,7 @@ class HomeController < ApplicationController
     
     @topics = Topic.find(:all, :order => "created_at DESC", :limit => 6)
     @members = Person.find(:all, :order => "people.created_at DESC",
-                           :limit => 8, :include => :photos)
+                           :include => :photos, :limit => 8)
     respond_to do |format|
       format.html
     end
