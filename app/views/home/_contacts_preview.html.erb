@@ -1,0 +1,7 @@
+<%- unless current_person.contacts.empty? -%>
+<%= raster current_person.contacts[(0...11)],
+           :title => "My Connections" %>
+<div class="see_all">
+  <%= link_to "All contacts &raquo;", "#" %>
+</div>
+<%- end -%>

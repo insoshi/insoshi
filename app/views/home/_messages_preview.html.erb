@@ -1,8 +1,3 @@
-<%- unless current_person.requested_contacts.empty? -%>
-<%= raster current_person.requested_contacts[(0...8)],
-           :title => "Requested Connections" %>
-<%- end -%>
-
 <%- unless current_person.new_messages.empty? -%>
 <table>
   <tr><th colspan="2">New Messages</th></tr>
@@ -22,8 +17,8 @@
   </tr>
   <%- end -%>
 </table>
+
+<div class="see_all">
+  <%= link_to "All messages &raquo;", messages_path %>
+</div>
 <%- end -%>
-
-
-<%= raster current_person.contacts[(0...11)],
-           :title => "My Connections" %>

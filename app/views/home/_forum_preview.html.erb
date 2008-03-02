@@ -1,0 +1,23 @@
+<table>
+  <tr><th colspan="2">Discussion Forum</th></tr>
+  <%- @topics.each do |topic| -%>
+  <%- last_post = topic.posts.reverse.first -%>
+  <tr class=<%= cycle("odd", "even") %>>
+    <td>
+      <%= link_to topic.name, forum_topic_posts_path(topic.forum, topic) %>
+      <br />
+      <span class="quiet small">
+      Last post
+      <%= time_ago_in_words(last_post.created_at) %> ago
+      by <%= link_to last_post.person.name, last_post.person %>
+      </span>
+    </td>
+    <td>
+    </td>
+  <%- end -%>
+  </tr>
+</table>
+
+<div class="see_all">
+<%= link_to "Go to discussion forum &raquo;", forum_path %>
+</div>

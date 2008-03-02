@@ -1,0 +1,4 @@
+<%- unless current_person.requested_contacts.empty? -%>
+<%= raster current_person.requested_contacts[(0...8)],
+           :title => "Requested Connections" %>
+<%- end -%>

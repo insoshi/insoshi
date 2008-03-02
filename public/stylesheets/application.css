@@ -18,11 +18,25 @@ a {
   font-size: 100%;
 }
 
+/* Home page */
+
+div.see_all {
+  margin-top: 0;
+  margin-bottom: 2em;
+  border-bottom: 1px solid #ccc;
+}
+
+.secondary div.see_all {
+  font-size: 80%;
+}
 
 #profile_edit h2 {
   margin-top: 1em;
 }
 
+table {
+  margin-bottom: 0.5em;
+}
 
 /* Comment wall */
 

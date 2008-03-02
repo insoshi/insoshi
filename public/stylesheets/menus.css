@@ -6,6 +6,10 @@
   font: bold 1.2em Verdana, sans-serif;
 }
 
+ul#navlist {
+  margin: 0 0 0.5em 0;
+}
+
 #navlist li
 {
   list-style: none;
