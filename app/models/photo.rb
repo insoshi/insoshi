@@ -1,3 +1,22 @@
+# == Schema Information
+# Schema version: 9
+#
+# Table name: photos
+#
+#  id           :integer(11)     not null, primary key
+#  person_id    :integer(11)     
+#  parent_id    :integer(11)     
+#  content_type :string(255)     
+#  filename     :string(255)     
+#  thumbnail    :string(255)     
+#  size         :integer(11)     
+#  width        :integer(11)     
+#  height       :integer(11)     
+#  primary      :boolean(1)      
+#  created_at   :datetime        
+#  updated_at   :datetime        
+#
+
 class Photo < ActiveRecord::Base
   UPLOAD_LIMIT = 5
   

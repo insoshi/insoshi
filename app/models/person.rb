@@ -1,3 +1,24 @@
+# == Schema Information
+# Schema version: 9
+#
+# Table name: people
+#
+#  id                        :integer(11)     not null, primary key
+#  email                     :string(255)     
+#  name                      :string(255)     
+#  remember_token            :string(255)     
+#  crypted_password          :string(255)     
+#  description               :text            
+#  remember_token_expires_at :datetime        
+#  last_contacted_at         :datetime        
+#  last_logged_in_at         :datetime        
+#  forum_posts_count         :integer(11)     default(0), not null
+#  blog_post_comments_count  :integer(11)     default(0), not null
+#  wall_comments_count       :integer(11)     default(0), not null
+#  created_at                :datetime        
+#  updated_at                :datetime        
+#
+
 class Person < ActiveRecord::Base
 
 
@@ -129,7 +150,8 @@ class Person < ActiveRecord::Base
   
   ## Authentication methods
   
-  # Authenticates a user by their email address and unencrypted password.  Returns the user or nil.
+  # Authenticates a user by their email address and unencrypted password.  
+  # Returns the user or nil.
   def self.authenticate(email, password)
     u = find_by_email(email.downcase) # need to get the salt
     u && u.authenticated?(password) ? u : nil
@@ -161,7 +183,8 @@ class Person < ActiveRecord::Base
     remember_token_expires_at && Time.now.utc < remember_token_expires_at 
   end
 
-  # These create and unset the fields required for remembering users between browser closes
+  # These create and unset the fields required for remembering users
+  # between browser closes
   def remember_me
     remember_me_for 2.years
   end

@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 9
+#
+# Table name: forums
+#
+#  id           :integer(11)     not null, primary key
+#  name         :string(255)     
+#  description  :text            
+#  topics_count :integer(11)     default(0), not null
+#  created_at   :datetime        
+#  updated_at   :datetime        
+#
+
 class Forum < ActiveRecord::Base
   has_many :topics, :order => "created_at DESC", :dependent => :destroy
   has_many :posts, :through => :topics

@@ -1,3 +1,17 @@
+# == Schema Information
+# Schema version: 9
+#
+# Table name: connections
+#
+#  id          :integer(11)     not null, primary key
+#  person_id   :integer(11)     
+#  contact_id  :integer(11)     
+#  status      :integer(11)     
+#  accepted_at :datetime        
+#  created_at  :datetime        
+#  updated_at  :datetime        
+#
+
 class Connection < ActiveRecord::Base
   belongs_to :person
   belongs_to :contact, :class_name => "Person",

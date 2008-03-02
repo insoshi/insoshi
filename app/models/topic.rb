@@ -1,3 +1,17 @@
+# == Schema Information
+# Schema version: 9
+#
+# Table name: topics
+#
+#  id                :integer(11)     not null, primary key
+#  forum_id          :integer(11)     
+#  person_id         :integer(11)     
+#  name              :string(255)     
+#  forum_posts_count :integer(11)     default(0), not null
+#  created_at        :datetime        
+#  updated_at        :datetime        
+#
+
 class Topic < ActiveRecord::Base
   
   MAX_NAME = 70
