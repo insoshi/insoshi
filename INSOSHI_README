@@ -1,0 +1,22 @@
+Here's how to start with insoshi.
+
+$ git clone git://67.207.136.60/instantsocial.git
+$ cp config/database.example config/database.yml
+$ git checkout -b <your name>
+$ rake db:migrate:both
+$ rake
+
+It might fail at this point.  If the error message indicates a problem with the Photo controller, follow these directions to install ImageScience:
+
+Download FreeImage from http://freeimage.sourceforge.net/download.html
+(no ./configure step)
+$ make
+$ sudo make install 
+$ sudo gem install image_science
+
+If working on developing the application, continue by loading the sample data.
+
+$ rake db:sample_data:load
+
+To reload the sample data later on, run
+$ rake db:sample_data:reload
