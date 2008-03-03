@@ -11,13 +11,15 @@
   <%- end -%>
 
   <div>
+    <p>
     <%= image_tag @person.main_photo %>
+    
+    <%= sanitize @person.description %></p>
   </div>
-  <p><%= sanitize @person.description %></p>
-
+  
   <%= render :partial => 'wall' %>
 </div>
 
 <div class="column last span-6">
-  something will go here
+  minifeed
 </div>

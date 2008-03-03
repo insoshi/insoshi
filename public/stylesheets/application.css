@@ -40,14 +40,33 @@ table {
 
 /* Comment wall */
 
+#wall h3 {
+  margin-bottom: 0;
+}
+
 #wall textarea {
   height: 5em;
+}
+
+#wall table {
+  margin-top: 1em;
+}
+
+#wall .header {
+  font-size: 90%;
+  background: #ddd;
+  padding: 0 0.2em;
 }
 
 #wall .body {
   font-size: 85%;
 }
 
+#wall tr {
+}
+
 #wall td {
+  padding-top: 0.5em;
+  border-bottom: 1px solid #ccc;
   vertical-align: top;
 }
