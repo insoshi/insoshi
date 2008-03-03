@@ -66,14 +66,16 @@ describe MessagesController do
     
     it "should create a message" do
       lambda do
-        post :create, :message => { :content => "Hey there!" },
+        post :create, :message => { :subject => "The subject",
+                                    :content => "Hey there!" },
                       :person_id => @other_person
       end.should change(Message, :count).by(1)
     end
     
     it "should send a message receipt email" do
       lambda do
-        post :create, :message => { :content => "Hey there!" },
+        post :create, :message => { :subject => "The subject",
+                                    :content => "Hey there!" },
                       :person_id => @other_person
       end.should change(@emails, :length).by(1)
     end
@@ -118,7 +120,8 @@ describe MessagesController do
   def handle_replies(message, recipient, sender)
     login_as(recipient)
     lambda do
-      post :create, :message => { :content   => "This is a reply",
+      post :create, :message => { :subject => "The subject",
+                                  :content   => "This is a reply",
                                   :parent_id => message },
                     :person_id => sender
       assigns(:message).should be_reply
