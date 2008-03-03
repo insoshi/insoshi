@@ -29,7 +29,8 @@ class Message < Communication
   belongs_to :sender, :class_name => 'Person', :foreign_key => 'sender_id'
   belongs_to :recipient, :class_name => 'Person',
                          :foreign_key => 'recipient_id'
-  validates_presence_of :content
+  validates_presence_of :subject, :content
+  validates_length_of :subject, :maximum => MAX_STRING_LENGTH
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
   

@@ -20,6 +20,10 @@ describe Message do
     @message.recipient.should == @recipient
   end
   
+  it "should require a subject" do
+    new_message(:subject => "").should_not be_valid
+  end
+  
   it "should require content" do
     new_message(:content => "").should_not be_valid
   end
@@ -81,11 +85,13 @@ describe Message do
   private
 
     def new_message(options = { :sender => @sender, :recipient => @recipient })   
-      Message.new({ :content => "Lorem ipsum" }.merge(options))
+      Message.new({ :subject => "The subject",
+                    :content => "Lorem ipsum" }.merge(options))
     end
   
     def create_message(options = { :sender => @sender,
                                    :recipient => @recipient })   
-      Message.create({ :content => "Lorem ipsum" }.merge(options))
+      Message.create({ :subject => "The subject",
+                       :content => "Lorem ipsum" }.merge(options))
     end
 end
