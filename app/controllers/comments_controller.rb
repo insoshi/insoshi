@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   
   before_filter :login_required
   before_filter :get_instance_vars
+  before_filter :authorize_destroy, :only => [:destroy]
 
   # Used for both wall and blog comments.
   def new
@@ -47,6 +48,10 @@ class CommentsController < ApplicationController
         @blog = Blog.find(params[:blog_id])
         @post = Post.find(params[:post_id])
       end
+    end
+    
+    def authorize_destroy
+      redirect_to home_url unless current_person?(@person)
     end
     
     ## Handle wall and blog comments in a uniform manner.

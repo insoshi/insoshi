@@ -4,7 +4,8 @@ describe WallComment do
   include CustomModelMatchers
   
   before(:each) do
-    @comment = WallComment.new(:body => "Hey there", :person => people(:quentin),
+    @comment = WallComment.new(:body => "Hey there",
+                               :person => people(:quentin),
                                :commenter => people(:aaron))
   end
   

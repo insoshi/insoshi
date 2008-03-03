@@ -59,7 +59,7 @@ describe CommentsController do
       end
     end
   
-    it "should create a wall comment" do
+    it "should allow create" do
       lambda do
         post :create, :person_id => @person,
                       :comment => { :body => "The body" }
@@ -78,6 +78,22 @@ describe CommentsController do
     it "should render the new template on creation failure" do
       post :create, :person_id => @person, :comment => { :body => "" }
       response.should render_template("wall_new")
+    end
+    
+    it "should allow destroy" do
+      login_as @person
+      comment = comments(:wall)
+      delete :destroy, :person_id => @person, :id => comment
+      lambda do
+        WallComment.find(comment)
+      end.should raise_error(ActiveRecord::RecordNotFound)
+    end
+    
+    it "should require the correct user to destroy a comment" do
+      login_as @commenter
+      comment = comments(:wall)
+      delete :destroy, :person_id => @person, :id => comment
+      response.should redirect_to(home_url)
     end
   end
 end
