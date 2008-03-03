@@ -62,11 +62,16 @@ table {
   font-size: 85%;
 }
 
-#wall tr {
+#wall table {
 }
 
 #wall td {
+  text-align: left;
   padding-top: 0.5em;
   border-bottom: 1px solid #ccc;
   vertical-align: top;
+}
+
+#wall td.content {
+  width: 100%;
 }

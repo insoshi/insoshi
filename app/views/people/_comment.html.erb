@@ -1,7 +1,7 @@
 <tr>
   <td><%= link_to image_tag(comment.commenter.thumbnail), 
                                           comment.commenter %></td>
-  <td>
+  <td class="content">
     <div class="header">
       <%= time_ago_in_words(comment.created_at) %> ago
       <%= link_to comment.commenter.name, comment.commenter %> said

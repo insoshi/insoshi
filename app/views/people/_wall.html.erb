@@ -12,7 +12,7 @@
   <% end %>
 
   <%- unless @person.comments.empty? -%>
-    <table>
+    <table cellspacing="0" cellpadding="0">
       <tr><th colspan="2">Comment Wall</th></tr>
       <%= render :partial => 'comment', :collection => @person.comments %>
     </table>
