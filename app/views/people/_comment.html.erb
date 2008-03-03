@@ -8,6 +8,11 @@
     </div>
     <div class="body">
       <%= sanitize comment.body %>
+      <%- if current_person?(comment.person) -%>
+      <br />
+      <%= link_to "delete", person_comment_path(@person, comment),
+                            :method => :delete %>
+      <%- end -%>
     </div>
   </td>
 </tr>

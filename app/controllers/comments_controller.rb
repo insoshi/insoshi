@@ -33,6 +33,7 @@ class CommentsController < ApplicationController
     @comment.destroy
 
     respond_to do |format|
+      flash[:success] = "Comment deleted"
       format.html { redirect_to comments_url }
     end
   end
