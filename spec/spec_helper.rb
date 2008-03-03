@@ -7,7 +7,6 @@ require 'spec/rails'
 include AuthenticatedTestHelper
 
 Spec::Runner.configure do |config|
-  
   # Active Record configuration
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false

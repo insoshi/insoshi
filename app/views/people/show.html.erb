@@ -1,4 +1,4 @@
-<% set_main_title("About #{h @person.name}") %>
+<% set_main_title(h("About #{@person.name}")) %>
 
 <%- unless current_person?(@person) -%>
   <%= email_link @person %>
