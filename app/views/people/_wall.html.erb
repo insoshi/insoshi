@@ -12,8 +12,11 @@
   <% end %>
 
   <%- unless @person.comments.empty? -%>
-    <ul class="wall">
-    <%= render :partial => 'comment', :collection => @person.comments %>
-    </ul>
+    <div class="wall">
+    <table>
+      <tr><th colspan="2">Comment Wall</th></tr>
+      <%= render :partial => 'comment', :collection => @person.comments %>
+    </table>
+    </div>
   <%- end -%>
 </div>

@@ -44,3 +44,10 @@ table {
   height: 5em;
 }
 
+#wall .body {
+  font-size: 85%;
+}
+
+#wall td {
+  vertical-align: top;
+}

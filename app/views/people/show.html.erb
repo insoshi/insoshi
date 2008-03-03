@@ -1,18 +1,23 @@
 <% set_main_title(h("About #{@person.name}")) %>
 
-<%- unless current_person?(@person) -%>
-  <%= email_link @person %>
-  <%- unless Connection.exists?(@person, current_person) -%>
-    | 
-    <%= link_to "Connect with #{@person.name}!",
-                person_connections_path(@person), :method => :post %>
+<div class="column first span-14">
+  <%- unless current_person?(@person) -%>
+    <%= email_link @person %>
+    <%- unless Connection.exists?(@person, current_person) -%>
+      | 
+      <%= link_to "Connect with #{@person.name}!",
+                  person_connections_path(@person), :method => :post %>
+    <%- end -%>
   <%- end -%>
-<%- end -%>
 
-<div>
-  <%= image_tag @person.main_photo %>
+  <div>
+    <%= image_tag @person.main_photo %>
+  </div>
+  <p><%= sanitize @person.description %></p>
+
+  <%= render :partial => 'wall' %>
 </div>
-<p><%= sanitize @person.description %></p>
 
-
-<%= render :partial => 'wall' %>
+<div class="column last span-6">
+  something will go here
+</div>
