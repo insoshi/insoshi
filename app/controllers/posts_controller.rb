@@ -4,7 +4,8 @@ class PostsController < ApplicationController
   
   before_filter :login_required
   before_filter :get_instance_vars
-  before_filter :authenticate_edit, :only => [:edit, :update]
+  before_filter :authorize_edit, :only => [:edit, :update]
+  before_filter :authorize_destroy, :only => [:destroy]
 
   # Used for both forum and blog posts.
   def index
@@ -47,7 +48,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.save
         flash[:success] = 'Post was successfully created.'
-        format.html { redirect_to posts_url }
+        format.html { redirect_to post_url }
       else
         format.html { render :action => resource_template("new") }
       end
@@ -58,7 +59,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.update_attributes(params[:post])
         flash[:success] = 'Post was successfully updated.'
-        format.html { redirect_to posts_url }
+        format.html { redirect_to post_url }
       else
         format.html { render :action => resource_template("edit") }
       end
@@ -89,15 +90,30 @@ class PostsController < ApplicationController
     end
 
     # Make sure the current user is authorized to edit this post
-    def authenticate_edit
+    def authorize_edit
       if forum?
-        redirect_to home_url unless @topic.person == current_person
+        redirect_to home_url unless current_person?(@post.person)
       elsif blog?
-        redirect_to home_url unless (@blog.person == current_person and
-                                     @post.blog   == @blog)
+        redirect_to home_url unless (current_person?(@blog.person) and
+                                     current_blog?(@post.blog))
       end
     end
     
+    def current_blog?(blog)
+      blog == @blog
+    end
+    
+    # Authorize post deletions.
+    # Only admin users can destroy forum posts.
+    # Only blog owners can destroy blog posts.
+    def authorize_destroy
+      if forum?
+        # TODO: implement this once admins exist
+      elsif blog?
+        authorize_edit
+      end
+    end
+
     ## Handle forum and blog posts in a uniform manner.
     
     # Return the appropriate model corresponding to the type of post.
@@ -143,12 +159,20 @@ class PostsController < ApplicationController
     end
     
     # Return the URL for the resource posts.
-    def posts_url
+    def post_url
       if forum?
         forum_topic_posts_url(@forum, @topic)
       elsif blog?
         blog_post_url(@blog, @post)
       end
+    end
+    
+    def posts_url
+      if forum?
+        forum_topic_posts_url(@forum, @topic)
+      elsif blog?
+        blog_posts_url(@blog)
+      end      
     end
 
     # True if resource lives in a discussion forum.

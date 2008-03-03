@@ -6,6 +6,8 @@
         <%= link_to sanitize(post.title), blog_post_path(@blog, post) %>
         <%- if current_person?(@blog.person) -%>
           | <%= link_to "Edit", edit_blog_post_path(@blog, post) %>
+          | <%= link_to "Delete", blog_post_path(@blog, post),
+                                  :method => :delete %>
         <%- end -%>
         <br />
         Posted <%= time_ago_in_words(post.created_at) %> ago

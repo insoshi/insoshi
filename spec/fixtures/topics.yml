@@ -1,13 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  forum_id: 1
-  person_id: 1
+  forum: one
+  person: quentin
   name: 1
   forum_posts_count: 1
 
 two:
-  forum_id: 1
-  person_id: 1
+  forum: two
+  person: quentin
   name: 1
   forum_posts_count: 1

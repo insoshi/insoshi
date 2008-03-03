@@ -107,11 +107,26 @@ describe PostsController do
       response.should redirect_to(home_url)
     end
     
-    it "should require the post to belong to the blog" do
+    it "should require the post being edited to belong to the blog" do
       wrong_blog = blogs(:two)
       wrong_blog.should_not == @blog
       get :edit, :blog_id => wrong_blog, :id => @post
       response.should redirect_to(home_url)      
+    end
+    
+    it "should destroy a post" do
+      delete :destroy, :blog_id => @blog, :id => @post
+      lambda do
+        Post.find(@post)
+      end.should raise_error(ActiveRecord::RecordNotFound)
+      response.should redirect_to(blog_posts_url(@post.blog))
+    end
+    
+    it "should require the right user for destroying" do
+      person = login_as(:aaron)
+      @post.blog.person.should_not == person
+      delete :destroy, :blog_id => @blog, :id => @post
+      response.should redirect_to(home_url)
     end
   end
 end
