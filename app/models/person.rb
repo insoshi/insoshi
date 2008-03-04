@@ -37,12 +37,12 @@ class Person < ActiveRecord::Base
   SEARCH_PER_PAGE = 5
   MESSAGES_PER_PAGE = 5
   NUM_NEW_MESSAGES = 4
+  NUM_WALL_COMMENTS = 10
 
   has_one :blog  
   has_many :comments, :class_name => "WallComment",
-                      :order => "created_at DESC"
+                      :order => "created_at DESC", :limit => NUM_WALL_COMMENTS
   has_many :connections
-  # TODO: refactor the statuses to use numerical codes/model constants.
   has_many :contacts, :through => :connections,
             :conditions => "status = #{Connection::ACCEPTED}"
   has_many :photos, :dependent => :destroy, :order => 'created_at'

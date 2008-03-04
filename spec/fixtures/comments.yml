@@ -6,8 +6,8 @@ wall:
   body: MyText
   type: WallComment
 
-two:
+blog:
   blog_post_id: 2
-  commenter_id: aaron
+  commenter: aaron
   body: MyText
   type: BlogPostComment

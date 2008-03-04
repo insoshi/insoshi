@@ -1,6 +1,6 @@
-<%= sanitize @post.title %>
+<h1><%= sanitize @post.title %></h1>
 <%- if current_person?(@blog.person) -%>
-  | <%= link_to "Edit", edit_blog_post_path(@blog, @post) %>
+  <%= link_to "Edit", edit_blog_post_path(@blog, @post) %>
   | <%= link_to "Delete", blog_post_path(@blog, @post),
                           :method => :delete %>
 <%- end -%>
@@ -10,11 +10,14 @@ by <%= @blog.person.name %>
 <br />
 <%= sanitize @post.body %>
 
-<ul>
-<% @post.comments.each do |comment| %>
-  <li><%= sanitize comment.body %></li>
-<% end %>
-</ul>
+<%- unless @post.comments.empty? -%>
+<div class="comment">
+<table>
+  <tr><th colspan="2">Comments</th></tr>
+  <%= render :partial => 'comment', :collection => @post.comments %>
+</table>
+</div>
+<%- end -%>
 
 <h3>Leave a comment</h3>
 

@@ -15,7 +15,7 @@ describe CommentsController do
       with_options :blog_id => @blog, :post_id => @post do |page|
         page.get    :new
         page.post   :create,  :comment => { }
-        page.delete :destroy, :id => comments(:two)
+        page.delete :destroy, :id => comments(:blog)
       end
     end
     
@@ -39,6 +39,28 @@ describe CommentsController do
     it "should render the new template on creation failure" do
       post :create, :blog_id => @blog, :post_id => @post, :comment => {}
       response.should render_template("blog_post_new")
+    end
+    
+    it "should associate a commenter to the comment" do
+      post :create, :blog_id => @blog, :post_id => @post,
+                    :comment => { :body => "The body" }
+      assigns(:comment).commenter.should == @commenter
+    end
+    
+    it "should allow destroy" do
+      login_as @blog.person
+      comment = comments(:blog)
+      delete :destroy, :blog_id => @blog, :post_id => @post, :id => comment
+      lambda do
+        BlogPostComment.find(comment)
+      end.should raise_error(ActiveRecord::RecordNotFound)
+    end
+    
+    it "should require the correct user to destroy a comment" do
+      login_as @commenter
+      comment = comments(:blog)
+      delete :destroy, :blog_id => @blog, :post_id => @post, :id => comment
+      response.should redirect_to(home_url)
     end
   end
 

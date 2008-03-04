@@ -51,7 +51,11 @@ class CommentsController < ApplicationController
     end
     
     def authorize_destroy
-      redirect_to home_url unless current_person?(@person)
+      if wall?
+        redirect_to home_url unless current_person?(@person)
+      else
+        redirect_to home_url unless current_person?(@blog.person)
+      end
     end
     
     ## Handle wall and blog comments in a uniform manner.
@@ -80,7 +84,7 @@ class CommentsController < ApplicationController
         data = { :commenter => current_person }
         @comment = @person.comments.new(params[:comment].merge(data))
       elsif blog?
-        data = { :commenter => current_person, :post => @post }
+        data = { :commenter => current_person }
         @comment = @post.comments.new(params[:comment].merge(data))
       end      
     end

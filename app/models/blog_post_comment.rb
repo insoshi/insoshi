@@ -14,8 +14,9 @@
 #
 
 class BlogPostComment < Comment
-  belongs_to :commenter, :class_name => "Person", :foreign_key => "commenter"
-  belongs_to :post, :counter_cache => true
-  validates_presence_of :post
+  belongs_to :commenter, :class_name => "Person",
+                         :foreign_key => "commenter_id"
+  belongs_to :post, :counter_cache => true, :foreign_key => "blog_post_id"
+  validates_presence_of :commenter
   validates_length_of :body, :maximum => MAX_TEXT_LENGTH  
 end

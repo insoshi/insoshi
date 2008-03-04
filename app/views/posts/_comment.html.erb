@@ -8,9 +8,9 @@
     </div>
     <div class="body">
       <%= sanitize comment.body %>
-      <%- if current_person?(comment.person) -%>
+      <%- if current_person?(comment.post.blog.person) -%>
       <br />
-      <%= link_to "delete", person_comment_path(@person, comment),
+      <%= link_to "delete", blog_post_comment_path(@blog, @post, comment),
                             :method => :delete %>
       <%- end -%>
     </div>
