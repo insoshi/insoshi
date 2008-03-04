@@ -20,44 +20,24 @@
 # b.collect_every(3,true,1)        #=> [[2, 3, 4], [5, 6, 7]]
 
 class Array
-  def collect_every(n,fill=false,offset=0)
-
-    if block_given?
-      while offset < size
-        ret=[]
-
-        if fill
-          n.times do |x| 
-            if offset+x > size - 1: ret << nil
-            else ret << self[offset+x] end
-          end
-        else
-          n.times { |x| ret << self[offset+x] unless offset+x > size-1 }
-        end
-
-        offset += n
-        yield ret
-        ret = nil
-      end
-
-    else
-      ret = []
-      while offset < size
-        ret << []
-
-        if fill
-          n.times do |x|
-            if offset+x > size - 1: ret.last << nil
-            else ret.last << self[offset+x] end
-          end
-        else
-          n.times { |x| ret.last << self[offset+x] unless offset+x > size-1 }
-        end
-
-        offset += n
-      end
-      return ret
+  
+  def collect_every(n, fill=false, offset=0)
+    result = [ ]
+  
+    self.slice!(0, offset)  
+  
+    result << self.slice!(0, n) until self.empty?  
+  
+    if fill && !result.empty?  
+      # ('result.last' cannot be assigned to; use array[i] access)
+      result[-1] += [nil] * (n - result[-1].size)
     end
-
-  end
-end
+  
+    if block_given? && !result.empty?
+      yield result.shift until result.empty?
+    end 
+  
+    result
+  end # collect_every
+  
+end # class 
