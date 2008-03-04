@@ -1,25 +1,28 @@
 <tr class="message <%= rowclass = cycle("odd", "even") %>">
-  <td class="span-1 nobr center">
+  <td>
     <%= image_tag("replied.png") if message.replied_to? %>
     <%= image_tag("new.png") unless message.read? %>
   </td>
-  <td style="text-align: center;" class="span-3">
+  <td>
     <% if message.sender == current_person %>
       <%= linked_image(message.recipient, :size => 'thumbnail') %>
     <% else %>
       <%= linked_image(message.sender, :size => 'thumbnail') %>
     <% end %>
   </td>
-  <td class="span-10" style="vertical-align: top;">
-      <%= render :partial => 'sender_info', 
-                 :locals => { :message => message,
-                              :rowclass => rowclass } %>
-          <% snippet = sanitize(truncate(message.content, 75))
+  <td>
+    <%= render :partial => 'sender_info', 
+               :locals => { :message => message,
+                            :rowclass => rowclass } %>
+  </td>
+  <td>
+      <%# TODO: Refactor this mess %>
+          <% snippet = sanitize(message.subject)
              link    = message.read? ? snippet : content_tag(:b, snippet)
           %>
-          <%= link_to link, message %>
+          <%= link_to message.subject, message %>
   </td>
-  <td class="span-1">
+  <td>
     <% unless message.trashed?(current_person) -%>
       <%= link_to(image_tag("delete.png"), message, :method => :delete) %>
     <% else -%>

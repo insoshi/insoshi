@@ -1,7 +1,13 @@
+<div class="column first span-14">
+
 <%= render :partial => 'message_nav' %>
 
 <%= will_paginate %>
 <table class="listing">
+  <tr><th colspan="5">Messages</th></tr>
   <%= render :partial => "message", :collection => @messages %>
 </table>
 <%= will_paginate %>
+</div>
+
+<%= render :partial => 'shared/minifeed' %>

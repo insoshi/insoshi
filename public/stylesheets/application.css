@@ -8,6 +8,11 @@ a {
   text-decoration: none;
 }
 
+.time {
+  font-size: 75%;
+  color: #333;
+}
+
 /* Logo area */
 
 #logo h1 {

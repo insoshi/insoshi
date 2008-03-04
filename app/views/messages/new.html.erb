@@ -1,30 +1,35 @@
 <% set_main_title "New message" %>
 
+<div class="column first span-14">
+
 <%= error_messages_for :message %>
 
 <table>
   <tr>
-    <th></th>
-    <th>
+    <th colspan="2">
       <label>To:</label> <%= @recipient.name %>
     </th>
   </tr>
   <tr>
-    <td class="span-3 center" style="vertical-align: top;">
-      
+    <td>
       <%= linked_image(@recipient, :size => 'thumbnail') %>
     </td>
     
-    <td class="span-9"  style="vertical-align: top;">
+    <td>
       <% form_for(:message, :url => person_messages_path(@recipient)) do |f| %>
-            <%= f.text_area :content, :style => "margin: 0;" %>
-            <%= set_focus_to_id "message_content" %>      
-        <p>
+            Subject: <%= f.text_field :subject %>
+            <%= set_focus_to_id "message_subject" %>
+            <%= f.text_area :content %>      
+        <div>
           <%= f.submit "Send!" %>
           <%= f.submit "Cancel", :id => "cancel" %>
-        </p>
+        </div>
         <%= f.hidden_field :parent_id if @message.reply? %>
 <% end %>
     </td>
   </tr>
 </table>
+
+</div>
+
+<%= render :partial => 'shared/minifeed' %>
