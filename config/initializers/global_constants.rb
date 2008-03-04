@@ -8,8 +8,7 @@ MAX_TEXT_LENGTH = 1000
 # Set this to true to run the tests with Ferret enabled.
 FERRET_IN_TESTS = false
 
-# True if Ferret should do its thing.
-# Ferret should not run unless FERRET_IN_TESTS is true.
+# ferret runs if test is not true, or (if test true) if ferret is true 
 def ferret?
-  !test? or (test? and FERRET_IN_TESTS)
+  !test? or FERRET_IN_TESTS
 end
