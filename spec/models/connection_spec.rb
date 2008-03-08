@@ -7,33 +7,54 @@ describe Connection do
     @emails.clear    
 
     @person = people(:quentin)
-    @connection = people(:aaron)
+    @contact = people(:aaron)
   end
 
-  it "should create a request" do
-    Connection.request(@person, @connection)
-    status(@person, @connection).should == Connection::PENDING
-    status(@connection, @person).should == Connection::REQUESTED
-  end
+  describe "class methods" do
+
+    it "should create a request" do
+      Connection.request(@person, @contact)
+      status(@person, @contact).should == Connection::PENDING
+      status(@contact, @person).should == Connection::REQUESTED
+    end
   
-  it "should send a request notification" do
-    lambda do
-      Connection.request(@person, @connection)
-    end.should change(@emails, :length).by(1)
-  end
+    it "should send a request notification" do
+      lambda do
+        Connection.request(@person, @contact)
+      end.should change(@emails, :length).by(1)
+    end
     
-  it "should accept a request" do
-    Connection.request(@person, @connection)
-    Connection.accept(@person,  @connection)
-    status(@person, @connection).should == Connection::ACCEPTED
-    status(@connection, @person).should == Connection::ACCEPTED
+    it "should accept a request" do
+      Connection.request(@person, @contact)
+      Connection.accept(@person,  @contact)
+      status(@person, @contact).should == Connection::ACCEPTED
+      status(@contact, @person).should == Connection::ACCEPTED
+    end
+  
+    it "should break up a connection" do
+      Connection.request(@person, @contact)
+      Connection.breakup(@person, @contact)
+      Connection.exists?(@person, @contact).should be_false
+    end
   end
   
-  it "should break up a connection" do
-    Connection.request(@person, @connection)
-    Connection.breakup(@person, @connection)
-    Connection.exists?(@person, @connection).should be_false
+  describe "instance methods" do
+    
+    before(:each) do
+      Connection.request(@person, @contact)
+      @connection = Connection.conn(@person, @contact)
+    end
+    
+    it "should accept a request" do
+      @connection.accept
+    end
+    
+    it "should break up a connection" do
+      @connection.breakup
+      Connection.exists?(@person, @contact).should be_false
+    end
   end
+  
   
   def status(person, conn)
     Connection.find_by_person_id_and_contact_id(person, conn).status

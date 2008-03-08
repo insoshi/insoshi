@@ -3,7 +3,8 @@ class ConnectionsController < ApplicationController
   before_filter :login_required
   
   def edit
-    @contact
+    @connection = Connection.find(params[:id])
+    @contact    = Person.find(params[:person_id])
   end
   
   def create

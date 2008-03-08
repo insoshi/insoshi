@@ -14,20 +14,32 @@
 
 class Connection < ActiveRecord::Base
   belongs_to :person
-  belongs_to :contact, :class_name => "Person",
-                          :foreign_key => "contact_id"
+  belongs_to :contact, :class_name => "Person", :foreign_key => "contact_id"
   validates_presence_of :person_id, :contact_id
   
   # Status codes.
   ACCEPTED  = 0
   REQUESTED = 1
   PENDING   = 2
+
+
+  
+  # Accept a connection request (instance method).
+  # Each connection is really two rows, so delegate this method
+  # to Connection.accept to wrap the whole thing in a transaction.
+  def accept
+    Connection.accept(person_id, contact_id)
+  end
+  
+  def breakup
+    Connection.breakup(person_id, contact_id)
+  end
   
   class << self
   
     # Return true if the persons are (possibly pending) connections.
     def exists?(person, contact)
-      not find_by_person_id_and_contact_id(person, contact).nil?
+      not conn(person, contact).nil?
     end
   
     # Make a pending connection request.
@@ -61,6 +73,7 @@ class Connection < ActiveRecord::Base
       end
     end
   
+    # Return a connection based on the person and contact.
     def conn(person, contact)
       find_by_person_id_and_contact_id(person, contact)
     end
@@ -70,9 +83,7 @@ class Connection < ActiveRecord::Base
   
   # Update the db with one side of an accepted connection request.
   def self.accept_one_side(person, contact, accepted_at)
-    request = find_by_person_id_and_contact_id(person, contact)
-    request.status = ACCEPTED
-    request.accepted_at = accepted_at
-    request.save!
+    conn(person, contact).update_attributes!(:status      => ACCEPTED,
+                                             :accepted_at => accepted_at)
   end
 end
