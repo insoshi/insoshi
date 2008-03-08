@@ -13,10 +13,11 @@ describe MarkabyHelper do
     @people.each do |person|
       person.stub!(:icon).and_return("image.png")
     end
-    result = raster(@people).to_s
+    list = @people.map { |person| link_to(image_tag(person.icon), person) }
+    result = raster(list).to_s
+    result.should have_tag("div")
     result.should have_tag("td") do
       with_tag("img[src=?]", "/images/image.png")
     end
-    raster(@people).to_s.should have_tag("div")
   end
 end

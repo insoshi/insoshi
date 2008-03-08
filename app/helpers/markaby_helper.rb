@@ -3,24 +3,24 @@
 # The plugin is broken in Rails 2.0.2.  Get a working plugin as follows:
 # $ cd vendor/plugins
 # $ git clone http://github.com/giraffesoft/markaby/tree/master
+# TODO: figure out how to make this not screw up the Git repository.
 module MarkabyHelper
   
-  # Return a raster of people images.
+  # Raster a list of elements.
   # TODO: refactor this a bit
-  def raster(people, options = {})
+  def raster(list, options = {})
     columns = options[:num] || 4
     title   = options[:title] || ""
-    image   = options[:image] || :icon
      markaby do
       div.module do
         table do
           tr do
             th(:colspan => columns) { title }
           end unless title.blank?
-          people.collect_every(columns).each do |row|
+          list.collect_every(columns).each do |row|
             tr do
-              row.each do |person| 
-                td { link_to image_tag(person.send(image)), person }
+              row.each do |element| 
+                td { element }
               end
             end
           end
