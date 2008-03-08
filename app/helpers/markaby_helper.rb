@@ -11,7 +11,7 @@ module MarkabyHelper
   def raster(list, options = {})
     columns = options[:num] || 4
     title   = options[:title] || ""
-     markaby do
+    markaby do
       div.module do
         table do
           tr do

@@ -23,39 +23,46 @@ class Connection < ActiveRecord::Base
   REQUESTED = 1
   PENDING   = 2
   
-  # Return true if the persons are (possibly pending) connections.
-  def self.exists?(person, contact)
-    not find_by_person_id_and_contact_id(person, contact).nil?
-  end
+  class << self
   
-  # Make a pending connection request.
-  def self.request(person, contact, mail = true)
-    if person == contact or Connection.exists?(person, contact)
-      false
-    else
-      transaction do
-        create(:person => person, :contact => contact, :status => PENDING)
-        create(:person => contact, :contact => person, :status => REQUESTED)
+    # Return true if the persons are (possibly pending) connections.
+    def exists?(person, contact)
+      not find_by_person_id_and_contact_id(person, contact).nil?
+    end
+  
+    # Make a pending connection request.
+    def request(person, contact, mail = true)
+      if person == contact or Connection.exists?(person, contact)
+        false
+      else
+        transaction do
+          create(:person => person, :contact => contact, :status => PENDING)
+          create(:person => contact, :contact => person, :status => REQUESTED)
+        end
+        PersonMailer.deliver_connection_request(person, contact) if mail
+        true
       end
-      PersonMailer.deliver_connection_request(person, contact) if mail
-      true
     end
-  end
   
-  # Accept a connection request.
-  def self.accept(person, contact)
-    transaction do
-      accepted_at = Time.now
-      accept_one_side(person, contact, accepted_at)
-      accept_one_side(contact, person, accepted_at)
+    # Accept a connection request.
+    def accept(person, contact)
+      transaction do
+        accepted_at = Time.now
+        accept_one_side(person, contact, accepted_at)
+        accept_one_side(contact, person, accepted_at)
+      end
     end
-  end
   
-  # Delete a connection or cancel a pending request.
-  def self.breakup(person, contact)
-    transaction do
-      destroy(find_by_person_id_and_contact_id(person, contact))
-      destroy(find_by_person_id_and_contact_id(contact, person))
+    # Delete a connection or cancel a pending request.
+    def breakup(person, contact)
+      transaction do
+        destroy(conn(person, contact))
+        destroy(conn(contact, person))
+      end
+    end
+  
+    def conn(person, contact)
+      find_by_person_id_and_contact_id(person, contact)
     end
   end
   

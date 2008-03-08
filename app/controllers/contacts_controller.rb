@@ -2,10 +2,6 @@ class ConnectionsController < ApplicationController
   
   before_filter :login_required
   
-  def edit
-    @contact
-  end
-  
   def create
     @contact = Person.find(params[:person_id])
 

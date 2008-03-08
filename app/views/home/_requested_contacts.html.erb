@@ -1,4 +1,5 @@
 <%- unless current_person.requested_contacts.empty? -%>
-<%= raster image_links(current_person.requested_contacts[(0...8)]),
+<%= raster image_links(@requested_contacts, 
+                       :links => @requested_contact_links),
            :title => "Requested Connections" %>
 <%- end -%>
