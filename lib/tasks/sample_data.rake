@@ -20,14 +20,15 @@ namespace :db do
     desc "Remove sample data" 
     task :remove => :environment do |t|
       Rake::Task["db:migrate:reset"].invoke
-      system("rm -rf public/images/photos/*")
+      # Blow away the Ferret index.
+      system("rm -rf index/")
+      # Remove images to avoid accumulation.
+      system("rm -rf public/photos")
     end
     
     desc "Reload sample data"
     task :reload => :environment do |t|
-      # Blow away the Ferret index.
-      system("rm -rf index/")
-      Rake::Task["db:migrate:reset"].invoke
+      Rake::Task["db:sample_data:remove"].invoke
       Rake::Task["db:sample_data:load"].invoke
     end
   end
