@@ -3,6 +3,7 @@ class ConnectionsController < ApplicationController
   before_filter :login_required
   
   def edit
+    # TODO: verify connection/contact match
     @connection = Connection.find(params[:id])
     @contact    = Person.find(params[:person_id])
   end
@@ -12,7 +13,7 @@ class ConnectionsController < ApplicationController
 
     respond_to do |format|
       if Connection.request(current_person, @contact)
-        flash[:success] = 'Connection request sent!'
+        flash[:notice] = 'Connection request sent!'
         format.html { redirect_to(home_url) }
       else
         # This should only happen when people do something funky
@@ -24,22 +25,21 @@ class ConnectionsController < ApplicationController
   end
 
   def update
-    @contact = Person.find(params[:person_id])
-    Connection.accept(current_person, @contact)
+    @connection = Connection.find(params[:id])
     
     respond_to do |format|
-      flash[:success] = "Accepted connection with #{@contact.name}"
+      @connection.accept
+      flash[:notice] = "Accepted connection with #{@connection.contact.name}"
       format.html { redirect_to(home_url) }
     end
   end
 
-
   def destroy
-    @contact = Person.find(params[:person_id])
-    Connection.breakup(current_person, @contact)
+    @connection = Connection.find(params[:id])
+    @connection.breakup
     
     respond_to do |format|
-      flash[:success] = "Ended connection with #{@contact.name}"
+      flash[:success] = "Ended connection with #{@connection.contact.name}"
       format.html { redirect_to(home_url) }
     end
   end

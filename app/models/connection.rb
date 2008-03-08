@@ -21,8 +21,6 @@ class Connection < ActiveRecord::Base
   ACCEPTED  = 0
   REQUESTED = 1
   PENDING   = 2
-
-
   
   # Accept a connection request (instance method).
   # Each connection is really two rows, so delegate this method

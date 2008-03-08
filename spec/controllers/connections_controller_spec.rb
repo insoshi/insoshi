@@ -4,7 +4,7 @@ describe ConnectionsController do
   integrate_views
   
   before(:each) do
-    @person = login_as(:quentin)
+    @person  = login_as(:quentin)
     @contact = people(:aaron)
   end
   
@@ -21,17 +21,21 @@ describe ConnectionsController do
     response.should redirect_to(home_url)
   end
   
-  it "should accept the connection" do
-    Connection.should_receive(:accept).with(@person, @contact).
-      and_return(true)
-    put :update, :person_id => @contact
-    response.should redirect_to(home_url)
-  end
+  describe "with existing connection" do
+
+    before(:each) do
+      Connection.request(@person, @contact)
+      @connection = Connection.conn(@person, @contact)
+    end
+
+    it "should accept the connection" do
+      put :update, :person_id => @contact, :id => @connection
+      response.should redirect_to(home_url)
+    end
   
-  it "should end a connection" do
-    Connection.should_receive(:breakup).with(@person, @contact).
-      and_return(true)
-    delete :destroy, :person_id => @contact
-    response.should redirect_to(home_url)
-  end
+    it "should end a connection" do
+      delete :destroy, :person_id => @contact, :id => @connection
+      response.should redirect_to(home_url)
+    end
+  end  
 end
