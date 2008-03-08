@@ -22,19 +22,31 @@ describe ConnectionsController do
   end
   
   describe "with existing connection" do
-
+    integrate_views
+    
     before(:each) do
       Connection.request(@person, @contact)
       @connection = Connection.conn(@person, @contact)
     end
+    
+    it "should get the edit page" do
+      get :edit, :id => @connection
+      response.should be_success
+    end
+    
+    it "should require the right current person" do
+      login_as :aaron
+      get :edit, :id => @connection
+      response.should redirect_to(home_url)
+    end
 
     it "should accept the connection" do
-      put :update, :person_id => @contact, :id => @connection
+      put :update, :id => @connection
       response.should redirect_to(home_url)
     end
   
     it "should end a connection" do
-      delete :destroy, :person_id => @contact, :id => @connection
+      delete :destroy, :id => @connection
       response.should redirect_to(home_url)
     end
   end  

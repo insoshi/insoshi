@@ -1,11 +1,10 @@
 class ConnectionsController < ApplicationController
   
   before_filter :login_required
+  before_filter :authorize_person, :except => :create
   
   def edit
-    # TODO: verify connection/contact match
-    @connection = Connection.find(params[:id])
-    @contact    = Person.find(params[:person_id])
+    @contact = @connection.contact
   end
   
   def create
@@ -25,7 +24,6 @@ class ConnectionsController < ApplicationController
   end
 
   def update
-    @connection = Connection.find(params[:id])
     
     respond_to do |format|
       @connection.accept
@@ -35,7 +33,6 @@ class ConnectionsController < ApplicationController
   end
 
   def destroy
-    @connection = Connection.find(params[:id])
     @connection.breakup
     
     respond_to do |format|
@@ -43,4 +40,16 @@ class ConnectionsController < ApplicationController
       format.html { redirect_to(home_url) }
     end
   end
+
+  private
+  
+    # Make sure the current person is correct for this connection.
+    def authorize_person
+      @connection = Connection.find(params[:id])
+      unless current_person?(@connection.person)
+        flash[:error] = "Invalid connection."
+        redirect_to home_url
+      end
+    end
+
 end
