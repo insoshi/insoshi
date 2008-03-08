@@ -41,7 +41,16 @@ describe ConnectionsController do
     end
 
     it "should accept the connection" do
-      put :update, :id => @connection
+      put :update, :id => @connection, :commit => "Accept"
+      Connection.find(@connection).status.should == Connection::ACCEPTED
+      response.should redirect_to(home_url)
+    end
+    
+    it "should decline the connection" do
+      put :update, :id => @connection, :commit => "Decline"
+      lambda do 
+        Connection.find(@connection)
+      end.should raise_error(ActiveRecord::RecordNotFound)
       response.should redirect_to(home_url)
     end
   

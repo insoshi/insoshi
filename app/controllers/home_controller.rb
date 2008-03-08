@@ -16,7 +16,7 @@ class HomeController < ApplicationController
     @requested_contacts = current_person.requested_contacts[(0...8)]
     @requested_contact_links = @requested_contacts.map do |p|
                                  conn = Connection.conn(current_person, p)
-                                 edit_person_connection_path(p, conn)
+                                 edit_connection_path(conn)
                                end
     respond_to do |format|
       format.html

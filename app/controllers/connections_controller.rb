@@ -26,8 +26,14 @@ class ConnectionsController < ApplicationController
   def update
     
     respond_to do |format|
-      @connection.accept
-      flash[:notice] = "Accepted connection with #{@connection.contact.name}"
+      case params[:commit]
+      when "Accept"
+        @connection.accept
+        flash[:notice] = "Accepted connection with #{@connection.contact.name}"
+      when "Decline"
+        @connection.breakup
+        flash[:notice] = "Declined connection with #{@connection.contact.name}"
+      end
       format.html { redirect_to(home_url) }
     end
   end
@@ -45,7 +51,8 @@ class ConnectionsController < ApplicationController
   
     # Make sure the current person is correct for this connection.
     def authorize_person
-      @connection = Connection.find(params[:id])
+      @connection = Connection.find(params[:id],
+                                    :include => [:person, :contact])
       unless current_person?(@connection.person)
         flash[:error] = "Invalid connection."
         redirect_to home_url
