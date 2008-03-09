@@ -116,9 +116,7 @@ describe PostsController do
     
     it "should destroy a post" do
       delete :destroy, :blog_id => @blog, :id => @post
-      lambda do
-        Post.find(@post)
-      end.should raise_error(ActiveRecord::RecordNotFound)
+      @post.should_not exist_in_database
       response.should redirect_to(blog_posts_url(@post.blog))
     end
     

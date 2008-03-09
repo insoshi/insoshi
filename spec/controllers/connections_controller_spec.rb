@@ -48,9 +48,7 @@ describe ConnectionsController do
     
     it "should decline the connection" do
       put :update, :id => @connection, :commit => "Decline"
-      lambda do 
-        Connection.find(@connection)
-      end.should raise_error(ActiveRecord::RecordNotFound)
+      @connection.should_not exist_in_database
       response.should redirect_to(home_url)
     end
   

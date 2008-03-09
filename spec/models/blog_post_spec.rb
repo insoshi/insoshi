@@ -44,14 +44,8 @@ describe BlogPost do
       comments = @post.comments
       @post.destroy
       comments.each do |comment|
-        lambda do
-          BlogPostComment.find(comment)
-        end.should raise_error(ActiveRecord::RecordNotFound)
+        comment.should_not exist_in_database
       end
-    end
-    
-    it "should log a blog post event" do
-      Event.find_by_instance_id(@post).should_not be_nil
     end
     
     it "should have an event" do
@@ -61,12 +55,7 @@ describe BlogPost do
     it "should destroy associated events" do
       event = @post.event
       @post.destroy
-      lambda do
-        BlogPostEvent.find(event)
-      end.should raise_error(ActiveRecord::RecordNotFound)
+      event.should_not exist_in_database
     end
-    
-    
-    
   end
 end

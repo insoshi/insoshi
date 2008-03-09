@@ -51,9 +51,7 @@ describe CommentsController do
       login_as @blog.person
       comment = comments(:blog)
       delete :destroy, :blog_id => @blog, :post_id => @post, :id => comment
-      lambda do
-        BlogPostComment.find(comment)
-      end.should raise_error(ActiveRecord::RecordNotFound)
+      comment.should_not exist_in_database
     end
     
     it "should require the correct user to destroy a comment" do
@@ -106,9 +104,7 @@ describe CommentsController do
       login_as @person
       comment = comments(:wall)
       delete :destroy, :person_id => @person, :id => comment
-      lambda do
-        WallComment.find(comment)
-      end.should raise_error(ActiveRecord::RecordNotFound)
+      comment.should_not exist_in_database
     end
     
     it "should require the correct user to destroy a comment" do

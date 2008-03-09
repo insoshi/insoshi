@@ -24,4 +24,30 @@ module CustomModelMatchers
   def have_maximum(attribute, maxlength)
     MaximumLength.new(attribute, maxlength)
   end
+  
+  class ExistInDb
+    def initialize
+    end
+    
+    def matches?(model)
+      model.class.find(model)
+      true
+    rescue
+      ActiveRecord::RecordNotFound
+      false
+    end
+
+    def failure_message
+      "Object should exist in the database but doesn't"
+    end
+    
+    def negative_failure_message
+      "Object shouldn't exist in the database but does"      
+    end
+  end
+  
+  def exist_in_database
+    ExistInDb.new
+  end
+  
 end
