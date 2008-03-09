@@ -20,7 +20,7 @@ class BlogPostComment < Comment
   has_one :event, :foreign_key => "instance_id", :dependent => :destroy
     
   validates_presence_of :commenter
-  validates_length_of :body, :maximum => MAX_TEXT_LENGTH  
+  validates_length_of :body, :maximum => MAX_TEXT_LENGTH
   
   after_create :log_event
   
