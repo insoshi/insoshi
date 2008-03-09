@@ -41,21 +41,15 @@ describe BlogPost do
     end
     
     it "should destroy associated comments" do
-      comments = @post.comments
-      @post.destroy
-      comments.each do |comment|
-        comment.should_not exist_in_database
-      end
+      @post.should destroy_associated(:comments)
     end
     
     it "should have an event" do
       @post.event.should_not be_nil
     end
     
-    it "should destroy associated events" do
-      event = @post.event
-      @post.destroy
-      event.should_not exist_in_database
+    it "should destroy associated event" do
+      @post.should destroy_associated(:event)
     end
   end
 end

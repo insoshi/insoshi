@@ -25,10 +25,7 @@ module CustomModelMatchers
     MaximumLength.new(attribute, maxlength)
   end
   
-  class ExistInDb
-    def initialize
-    end
-    
+  class ExistInDb    
     def matches?(model)
       model.class.find(model)
       true
@@ -48,6 +45,44 @@ module CustomModelMatchers
   
   def exist_in_database
     ExistInDb.new
+  end
+  
+  class DestroyAssociated
+
+    def initialize(attribute)
+      @attribute = attribute
+    end
+
+    def matches?(model)
+      objects = model.send(@attribute)
+      model.destroy
+      if objects.is_a?(Array)
+        # has_many
+        objects.each do |object|
+          object.class.find(object)
+        end
+      else
+        # has_one
+        object = objects
+        object.class.find(object)
+      end
+      false
+    rescue
+      ActiveRecord::RecordNotFound
+      true
+    end
+    
+    def failure_message
+      "Expected destruction of associated #{@attribute}"
+    end
+    
+    def negative_failure_message
+      "Expected destruction of associated #{@attribute}"
+    end
+  end
+  
+  def destroy_associated(attribute)
+    DestroyAssociated.new(attribute)
   end
   
 end
