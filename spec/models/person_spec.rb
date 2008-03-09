@@ -50,7 +50,15 @@ describe Person do
     it "should have many wall comments" do
       @person.comments.should be_a_kind_of(Array)
       @person.comments.should_not be_empty
-    end    
+    end
+
+    it "should have an event" do
+      create_person(:save => true).event.should be_a(PersonEvent)
+    end
+  
+    it "should destroy the associated event" do
+      create_person(:save => true).should destroy_associated(:event)
+    end
   end
   
   describe "photo methods" do

@@ -56,6 +56,7 @@ class Person < ActiveRecord::Base
     person.has_many :_received_messages, :foreign_key => "recipient_id",
                     :conditions => "recipient_deleted_at IS NULL"                  
   end
+  has_one :event, :foreign_key => "instance_id", :dependent => :destroy
   
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
@@ -73,6 +74,7 @@ class Person < ActiveRecord::Base
   
   before_create :create_blog
   before_save :downcase_email, :encrypt_password
+  after_create :log_event
   
   ## Class methods
   
@@ -215,6 +217,10 @@ class Person < ActiveRecord::Base
     def encrypt_password
       return if password.blank?
       self.crypted_password = encrypt(password)
+    end
+  
+    def log_event
+      PersonEvent.create!(:person => self, :instance => self)
     end
       
     def password_required?
