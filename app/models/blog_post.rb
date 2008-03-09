@@ -30,6 +30,6 @@ class BlogPost < Post
   private
   
     def log_event
-      BlogPostEvent.create!(:person => blog.person, :instance_id => id)
+      BlogPostEvent.create!(:person => blog.person, :instance => self)
     end
 end

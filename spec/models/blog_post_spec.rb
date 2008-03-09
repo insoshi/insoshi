@@ -48,7 +48,7 @@ describe BlogPost do
       @post.event.should_not be_nil
     end
     
-    it "should destroy associated event" do
+    it "should destroy the associated event" do
       @post.should destroy_associated(:event)
     end
   end

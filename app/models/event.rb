@@ -13,4 +13,9 @@
 
 class Event < ActiveRecord::Base
   belongs_to :person
+  attr_accessor :instance
+  
+  def instance=(obj)
+    self.instance_id = obj.id
+  end
 end
