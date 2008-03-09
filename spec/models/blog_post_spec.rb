@@ -32,7 +32,8 @@ describe BlogPost do
   describe "associations" do
     
     before(:each) do
-      @post = posts(:blog)
+      @post.comments.build(:body => "The body", :commenter => people(:aaron))
+      @post.save!
     end
     
     it "should have associated comments" do
@@ -48,6 +49,24 @@ describe BlogPost do
         end.should raise_error(ActiveRecord::RecordNotFound)
       end
     end
+    
+    it "should log a blog post event" do
+      Event.find_by_instance_id(@post).should_not be_nil
+    end
+    
+    it "should have an event" do
+      @post.event.should_not be_nil
+    end
+    
+    it "should destroy associated events" do
+      event = @post.event
+      @post.destroy
+      lambda do
+        BlogPostEvent.find(event)
+      end.should raise_error(ActiveRecord::RecordNotFound)
+    end
+    
+    
+    
   end
-  
 end

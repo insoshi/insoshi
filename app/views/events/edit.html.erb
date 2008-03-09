@@ -1,0 +1,27 @@
+<h1>Editing event</h1>
+
+<%= error_messages_for :event %>
+
+<% form_for(@event) do |f| %>
+  <p>
+    <b>Person</b><br />
+    <%= f.text_field :person_id %>
+  </p>
+
+  <p>
+    <b>Instance</b><br />
+    <%= f.text_field :instance_id %>
+  </p>
+
+  <p>
+    <b>Type</b><br />
+    <%= f.text_field :type %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @event %> |
+<%= link_to 'Back', events_path %>
