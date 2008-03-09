@@ -1,3 +1,3 @@
 class TopicEvent < Event
-  belongs_to :topic, :class_name => "Topic", :foreign_key => "instance_id"
+  belongs_to :topic, :foreign_key => "instance_id"
 end

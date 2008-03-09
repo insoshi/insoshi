@@ -15,6 +15,8 @@
 class Connection < ActiveRecord::Base
   belongs_to :person
   belongs_to :contact, :class_name => "Person", :foreign_key => "contact_id"
+  has_one :event, :foreign_key => "instance_id", :dependent => :destroy
+  
   validates_presence_of :person_id, :contact_id
   
   # Status codes.
@@ -60,6 +62,10 @@ class Connection < ActiveRecord::Base
         accepted_at = Time.now
         accept_one_side(person, contact, accepted_at)
         accept_one_side(contact, person, accepted_at)
+        # Log a connection event.
+        pid = person.is_a?(Person) ? person.id : person
+        cid = conn(person, contact).id
+        ConnectionEvent.create!(:person_id => pid, :instance_id => cid)
       end
     end
   

@@ -32,7 +32,7 @@ describe Person do
     end
   end
   
-  describe "associations" do
+  describe "contact associations" do
     
     it "should have associated photos" do
       @person.photos.should_not be_nil
@@ -114,7 +114,7 @@ describe Person do
     end
   end
   
-  describe "person contacts" do
+  describe "associations" do
     
     before(:each) do
       @contact = people(:aaron)
