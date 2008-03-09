@@ -20,7 +20,16 @@ class Topic < ActiveRecord::Base
   belongs_to :person
   has_many :posts, :order => :created_at, :dependent => :destroy,
                    :class_name => "ForumPost"
+  has_one :event, :foreign_key => "instance_id", :dependent => :destroy
   
   validates_presence_of :name, :forum, :person
   validates_length_of :name, :maximum => MAX_NAME
+  
+  after_create :log_event
+  
+  private
+  
+    def log_event
+      TopicEvent.create!(:person => person, :instance => self)
+    end
 end

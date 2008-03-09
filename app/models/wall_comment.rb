@@ -27,6 +27,6 @@ class WallComment < Comment
   private
   
     def log_event
-      BlogPostCommentEvent.create!(:person => person, :instance => self)
+      WallCommentEvent.create!(:person => person, :instance => self)
     end
 end
