@@ -1,5 +1,12 @@
 <table>
   <tr><th colspan="3">Activity Feed</th></tr>
+  
+  <%- @feed.each do |event| -%>
+  <tr>
+    <td><%= feed_message event %></td>
+  </tr>
+  <%- end -%>
+  
   <tr>
       <td><%= image_tag @mary.icon %></td>
       <td>

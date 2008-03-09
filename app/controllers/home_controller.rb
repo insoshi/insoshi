@@ -3,6 +3,9 @@ class HomeController < ApplicationController
   before_filter :login_required
   
   def index
+    
+    @feed = Event.find(:all, :limit => 5, :order => "created_at DESC")
+    
     # This is a stub for the real feed.
     # TODO: make a real feed :-)
     @mary = Person.find_by_email("mary@michaelhartl.com")

@@ -1,10 +1,4 @@
-# Helpers written in Markaby.
-# See http://redhanded.hobix.com/inspect/markabyForRails.html
-# The plugin is broken in Rails 2.0.2.  Get a working plugin as follows:
-# $ cd vendor/plugins
-# $ git clone http://github.com/giraffesoft/markaby/tree/master
-# TODO: figure out how to make this not screw up the Git repository.
-module MarkabyHelper
+module DisplayHelper
   
   # Raster a list of elements.
   # TODO: refactor this a bit
@@ -28,12 +22,5 @@ module MarkabyHelper
       end
     end
   end
-  
-  private
-    
-    # See http://railscasts.com/episodes/69
-    def markaby(&block)
-      Markaby::Builder.new({}, self, &block)
-    end
 end
     

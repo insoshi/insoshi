@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe MarkabyHelper do
+describe DisplayHelper do
   
   # This is needed to get RSpec to understand link_to(..., person).
   def polymorphic_path(args)
