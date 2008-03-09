@@ -13,9 +13,6 @@ class CreateEvents < ActiveRecord::Migration
   end
 
   def self.down
-    remove_index :events, :person_id
-    add_index :events, :instance_id
-    add_index :events, :type
     drop_table :events
   end
 end

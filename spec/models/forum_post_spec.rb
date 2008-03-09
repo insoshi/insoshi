@@ -21,4 +21,19 @@ describe ForumPost do
   it "should have a maximum body length" do
     @post.should have_maximum(:body, MAX_TEXT_LENGTH)
   end
+  
+  describe "associations" do
+    
+    before(:each) do
+      @post.save!
+    end
+
+    it "should have an event" do
+      @post.event.should be_a(ForumPostEvent)
+    end
+  
+    it "should destroy the associated event" do
+      @post.should destroy_associated(:event)
+    end
+  end
 end

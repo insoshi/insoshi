@@ -68,6 +68,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post = model.find(params[:id])
+    # raise @post.inspect
     @post.destroy
 
     respond_to do |format|
