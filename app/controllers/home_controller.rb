@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   
   def index
     
-    @feed = Event.find(:all, :limit => 5, :order => "created_at DESC")
+    @feed = BlogPostEvent.find(:all).shuffle[(0...5)]
     
     # This is a stub for the real feed.
     # TODO: make a real feed :-)
