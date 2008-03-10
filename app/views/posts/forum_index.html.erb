@@ -1,19 +1,20 @@
-<h2><%= @topic.name %></h2>
-
-<ul>
-  <%- @posts.each do |post| -%>
-    <li>
-        Posted <%= time_ago_in_words(post.created_at) %> ago
-        by <%= post.person.name %>
-        <%- if current_person?(post.person) -%>
-          | <%= link_to "Edit",
-                        edit_forum_topic_post_path(@forum, @topic, post) %>
-        <%- end -%>        
-        <br />
-        <%= sanitize post.body %>
-    </li>
-  <%- end -%>
-</ul>
+<div class="column first span-14">
+  <table>
+    <tr><th><%= @topic.name %></th></tr>
+    <%- @posts.each do |post| -%>
+      <tr>
+        <td class="time">
+          Posted <%= time_ago_in_words(post.created_at) %> ago
+          by <%= link_to post.person.name, post.person %>
+          <%- if current_person?(post.person) -%>
+            | <%= link_to "Edit",
+                          edit_forum_topic_post_path(@forum, @topic, post) %>
+          <%- end -%>   
+        </td>
+      </tr>
+      <tr><td><%= sanitize post.body %></td></tr>
+    <%- end -%>
+  </table>
 
 <h3>Add new post</h3>
 
@@ -30,4 +31,6 @@
   </div>
 <% end %>
 
-<%= link_to 'Back', forum_path %>
+</div>
+
+<%= render :partial => 'shared/minifeed' %>
