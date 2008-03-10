@@ -1,6 +1,14 @@
 <table>
   <tr><th colspan="2">Activity Feed</th></tr>
   <%- @feed.each do |event| -%>
-    <%= feed_message event %>
+  <tr>
+    <td><%= image_link event.person %></td>
+    <td>
+      <%= feed_message event %>
+      <span class="time">
+        <%= time_ago_in_words(event.created_at).capitalize %> ago
+      </span>
+    </td>
   <%- end -%>
+  </tr>
 </table>

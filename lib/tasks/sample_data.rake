@@ -15,6 +15,7 @@ namespace :db do
       make_forum_posts
       make_blog_posts
       make_connections
+      make_feed
     end
       
     desc "Remove sample data" 
@@ -57,7 +58,7 @@ def make_messages(text)
   michael = Person.find_by_email("michael@michaelhartl.com")
   senders = Person.find(:all, :limit => 10)
   senders.each do |sender|
-    subject = @lipsum.split.shuffle[0..4].join(' ')
+    subject = @lipsum.split.shuffle[0..4].join(' ')[0...SMALL_STRING_LENGTH]
     Message.create!(:subject => subject, :content => text, 
                     :sender => sender, :recipient => michael,
                     :skip_send_mail => true)
@@ -71,8 +72,7 @@ def make_forum_posts
   forum = Forum.find(1)
   people = Person.find(:all)
   (1..10).each do |n|
-    name = @lipsum.split.shuffle[0..10].join(' ')
-    name = name[0...Topic::MAX_NAME]
+    name = @lipsum.split.shuffle[0..10].join(' ')[0...Topic::MAX_NAME].strip
     topic = forum.topics.create(:name => name, :person => people.pick,
                                 :created_at => rand(10).hours.ago)
     10.times do
@@ -93,9 +93,22 @@ def make_connections
   person = Person.find_by_email('michael@michaelhartl.com')
   people = Person.find(:all) - [person]
   people.shuffle[0..20].each do |contact|
-    Connection.request(contact, person)
+    Connection.request(contact, person, mail = false)
     sometimes(0.5) { Connection.accept(person, contact) }
   end
+end
+
+# Make a non-boring sample feed.
+def make_feed
+  models = [BlogPostEvent, BlogPostCommentEvent, ConnectionEvent,
+            ForumPostEvent, TopicEvent, PersonEvent, WallCommentEvent]
+  events = models.map { |model| model.find(:all, :limit => 2) }.flatten
+  sleep(1) # To make *sure* the new time is really new
+  events.each do |event|
+    event.created_at = Time.now
+    event.save!
+  end
+  events.shuffle
 end
 
 def uploaded_file(filename, content_type)

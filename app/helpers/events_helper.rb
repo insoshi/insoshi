@@ -34,7 +34,6 @@ module EventsHelper
     else
       raise "Invalid event type"
     end
-    message_row(event, msg)
   end
   
   def minifeed_message(event)
@@ -70,7 +69,6 @@ module EventsHelper
     else
       raise "Invalid event type"
     end
-    message_row(event, msg)
   end
 
   def someones(person)
@@ -89,16 +87,4 @@ module EventsHelper
   def topic_link(topic)
     link_to(topic.name, forum_topic_posts_path(topic.forum, topic))
   end
-  
-  private  
-    # Return a standard row element for a feed message.
-    def message_row(event, message)
-      markaby do
-        tr do
-          person = event.person
-          td { link_to(image_tag(person.icon), person) }
-          td { message }
-        end
-      end      
-    end
 end

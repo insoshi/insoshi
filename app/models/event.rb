@@ -15,13 +15,15 @@ class Event < ActiveRecord::Base
   belongs_to :person
   attr_accessor :instance
   
+  FEED_SIZE = 10
+  
   def instance=(obj)
     self.instance_id = obj.id
   end
 
   class << self
     def feed
-      find(:all).shuffle[0...10]
+      find(:all, :order => "created_at DESC", :limit => FEED_SIZE)
     end
   end
 end
