@@ -20,7 +20,7 @@ describe WallComment do
   end
   
   it "should have a maximum body length" do
-    @comment.should have_maximum(:body, MAX_TEXT_LENGTH)
+    @comment.should have_maximum(:body, SMALL_TEXT_LENGTH)
   end
   
   describe "associations" do

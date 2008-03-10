@@ -1,9 +1,9 @@
 # Database strings typically can't be longer than 255.
 MAX_STRING_LENGTH = 255
-
+# This is arbitrary, but "small".
+SMALL_STRING_LENGTH = 40
 # This is arbitrary, but "big".
 MAX_TEXT_LENGTH = 1000
-
 # Some text fields should allow less
 SMALL_TEXT_LENGTH = 300
 
@@ -11,7 +11,7 @@ SMALL_TEXT_LENGTH = 300
 # Set this to true to run the tests with Ferret enabled.
 FERRET_IN_TESTS = false
 
-# ferret runs if test is not true, or (if test true) if ferret is true 
+# Ferret runs if test is not true, or (if test true) if ferret is true.
 def ferret?
   !test? or FERRET_IN_TESTS
 end

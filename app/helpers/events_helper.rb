@@ -14,19 +14,32 @@ module EventsHelper
     when "BlogPostCommentEvent"
       post = event.comment.post
       blog = post.blog
-      someones = current_person?(blog.person) ? 
-                 "their own" :
-                 "#{person_link(blog.person)}'s"
       msg = %(#{person_link(person)} made a comment to
-              #{someones} blog post #{post_link(blog, post)})
+              #{someones(blog.person)} blog post #{post_link(blog, post)}.)
     when "ConnectionEvent"
-      contact_link = link_to(event.conn.contact.name, event.conn.contact)
       msg = %(#{person_link(person)} and #{person_link(event.conn.contact)}
-              have connected)
+              have connected.)
+    when "ForumPostEvent"
+      msg = %(#{person_link(person)} made a post on the forum topic
+              #{topic_link(event.post.topic)}.)
+    when "PersonEvent"
+      msg = %(#{person_link(person)} joined the network!)
+    when "TopicEvent"
+      msg = %(#{person_link(person)} created the new discussion topic
+              #{topic_link(event.topic)}.)
+    when "WallCommentEvent"
+      # TODO: link this to the wall with a #wall or something.
+      a_wall = link_to("#{someones(person)} wall", person)
+      msg = %(#{person_link(event.comment.commenter)} commented on #{a_wall})
     else
-      "bar"
+      raise "Invalid event type"
     end
     message_row(event, msg)
+  end
+
+  def someones(person)
+    current_person?(person) ? "their own" :
+                              "#{person_link(person)}'s"
   end
 
   def person_link(person)
@@ -35,6 +48,10 @@ module EventsHelper
   
   def post_link(blog, post)
     link_to(post.title, blog_post_path(blog, post))
+  end
+  
+  def topic_link(topic)
+    link_to(topic.name, forum_topic_posts_path(topic.forum, topic))
   end
   
   private  

@@ -4,13 +4,7 @@ class HomeController < ApplicationController
   
   def index
     
-    @feed = BlogPostEvent.find(:all).shuffle[(0...5)]
-    
-    # This is a stub for the real feed.
-    # TODO: make a real feed :-)
-    @mary = Person.find_by_email("mary@michaelhartl.com")
-    @michael = Person.find_by_email("michael@michaelhartl.com")
-    @linda = Person.find_by_email("linda@michaelhartl.com")
+    @feed = Event.find(:all).shuffle[(0...5)]
     
     @topics = Topic.find(:all, :order => "created_at DESC", :limit => 6)
     @members = Person.find(:all, :order => "people.created_at DESC",

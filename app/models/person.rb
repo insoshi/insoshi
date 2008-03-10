@@ -20,15 +20,12 @@
 #
 
 class Person < ActiveRecord::Base
-
-
-  acts_as_ferret :fields => [ :name, :description ] if ferret?
-
   attr_accessor :password, :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description
+  acts_as_ferret :fields => [ :name, :description ] if ferret?
 
-  MAX_EMAIL = MAX_PASSWORD = 40
+  MAX_EMAIL = MAX_PASSWORD = SMALL_STRING_LENGTH
   MAX_NAME = 32
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
   DESCRIPTION_LENGTH = 2000

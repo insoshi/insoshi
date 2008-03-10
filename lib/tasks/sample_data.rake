@@ -70,12 +70,12 @@ end
 def make_forum_posts
   forum = Forum.find(1)
   people = Person.find(:all)
-  (1..25).each do |n|
+  (1..10).each do |n|
     name = @lipsum.split.shuffle[0..10].join(' ')
     name = name[0...Topic::MAX_NAME]
     topic = forum.topics.create(:name => name, :person => people.pick,
                                 :created_at => rand(10).hours.ago)
-    25.times do
+    10.times do
       topic.posts.create(:body => @lipsum, :person => people.pick,
                          :created_at => rand(10).hours.ago)
     end
