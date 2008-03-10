@@ -3,8 +3,8 @@
   <tr><th colspan="2">Minifeed</th></tr>
   <%- Event.feed.each do |event| -%>
   <tr>
-    <td><%= image_link event.person %></td>
     <td><%= minifeed_message event %></td>
+    <td><%= image_link event.person %></td>
   </tr>
   <%- end -%>
   </table>

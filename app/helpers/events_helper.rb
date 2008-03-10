@@ -48,7 +48,7 @@ module EventsHelper
       blog = post.blog
       msg = %(#{person_link(person)} made a comment on
               #{someones(blog.person)} 
-              #{link_to "blog post", blog_post_path(blog, event.post)})
+              #{link_to "blog post", blog_post_path(blog, post)})
     when "ConnectionEvent"
       msg = %(#{person_link(person)} and #{person_link(event.conn.contact)}
               have connected.)
@@ -72,8 +72,7 @@ module EventsHelper
   end
 
   def someones(person)
-    current_person?(person) ? "their own" :
-                              "#{person_link(person)}'s"
+    current_person?(person) ? "their own" : "#{person_link(person)}'s"
   end
 
   def person_link(person)

@@ -1,14 +1,20 @@
+<div class="column first span-14">
+
 <h1><%= sanitize @post.title %></h1>
-<%- if current_person?(@blog.person) -%>
+<%- if current_person?(@blog.person) and false -%>
   <%= link_to "Edit", edit_blog_post_path(@blog, @post) %>
   | <%= link_to "Delete", blog_post_path(@blog, @post),
                           :method => :delete %>
 <%- end -%>
-<br />
+
+<div class="time">
 Posted <%= time_ago_in_words(@post.created_at) %> ago
-by <%= @blog.person.name %>
-<br />
+by <%= link_to @blog.person.name, @blog.person %>
+</div>
+
+<div class="blog_post">
 <%= sanitize @post.body %>
+</div>
 
 <%- unless @post.comments.empty? -%>
 <div class="comment">
@@ -30,3 +36,7 @@ by <%= @blog.person.name %>
     <%= submit_tag "Submit" %>
   </div>
 <% end %>
+
+</div>
+
+<%= render :partial => 'shared/minifeed' %>

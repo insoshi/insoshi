@@ -1,22 +1,26 @@
-<h2>Der Blog</h2>
-
-<ul>
-  <%- @posts.each do |post| -%>
-    <li>
+<div class="column first span-14">
+  <table>
+    <tr><th>Blog posts</th></tr>
+    <%- @posts.each do |post| -%>
+      <tr>
+        <td>
         <%= link_to sanitize(post.title), blog_post_path(@blog, post) %>
         <%- if current_person?(@blog.person) -%>
           | <%= link_to "Edit", edit_blog_post_path(@blog, post) %>
           | <%= link_to "Delete", blog_post_path(@blog, post),
                                   :method => :delete %>
         <%- end -%>
-        <br />
-        Posted <%= time_ago_in_words(post.created_at) %> ago
-        by <%= @blog.person.name %>
-        <br />
-        <%= sanitize post.body %>
-    </li>
-  <%- end -%>
-</ul>
+        </td>
+      </tr>
+      <tr>
+        <td class="time">
+          Posted <%= time_ago_in_words(post.created_at) %> ago
+          by <%= link_to @blog.person.name, @blog.person %>
+        </td>
+      </tr>
+      <tr><td><%= sanitize post.body %></td></tr>
+    <%- end -%>
+  </table>
 
 <h3>Add new post</h3>
 
@@ -25,3 +29,7 @@
                         :method => :post } %>
 
 <%= link_to 'Back', blog_posts_path(@blog) %>
+
+</div>
+
+<%= render :partial => 'shared/minifeed' %>
