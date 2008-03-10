@@ -43,6 +43,14 @@ table {
   margin-bottom: 0.5em;
 }
 
+/* Feed */
+
+/* Minifeed */
+
+.minifeed {
+  font-size: smaller;
+}
+
 /* Comment wall */
 
 #wall h3 {

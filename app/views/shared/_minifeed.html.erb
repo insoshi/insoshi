@@ -1,7 +1,10 @@
 <div class="column last span-6">
-  <table>
+  <table class="minifeed">
   <%- Event.feed.each do |event| -%>
-    <%= minifeed_message event %>     
+  <tr>
+    <td><%= image_link event.person %></td>
+    <td><%= minifeed_message event %></td>
+  </tr>
   <%- end -%>
   </table>
 </div>
