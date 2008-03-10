@@ -7,6 +7,8 @@ module PeopleHelper
     images = people.zip(links).map do |person, link|
                link_to(image_tag(person.send(image)), link)
              end
+    # Link the captions.
+    captions = captions.zip(links).map { |c, l| link_to(c, l) }
     captions.nil? ? images : captioned(images, captions)
   end
   
