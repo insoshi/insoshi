@@ -22,8 +22,8 @@ class BlogPost < Post
   has_one :event, :foreign_key => "instance_id", :dependent => :destroy
   
   validates_presence_of :title, :body
-  validates_length_of :title, :maximum => MAX_STRING_LENGTH
-  validates_length_of :body, :maximum => MAX_TEXT_LENGTH
+  validates_length_of :title, :maximum => SMALL_STRING_LENGTH
+  validates_length_of :body, :maximum => SMALL_TEXT_LENGTH
   
   after_create :log_event
   

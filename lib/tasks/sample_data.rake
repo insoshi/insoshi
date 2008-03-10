@@ -58,7 +58,7 @@ def make_messages(text)
   michael = Person.find_by_email("michael@michaelhartl.com")
   senders = Person.find(:all, :limit => 10)
   senders.each do |sender|
-    subject = @lipsum.split.shuffle[0..4].join(' ')[0...SMALL_STRING_LENGTH]
+    subject = some_text(SMALL_STRING_LENGTH)
     Message.create!(:subject => subject, :content => text, 
                     :sender => sender, :recipient => michael,
                     :skip_send_mail => true)
@@ -71,11 +71,11 @@ end
 def make_forum_posts
   forum = Forum.find(1)
   people = Person.find(:all)
-  (1..10).each do |n|
-    name = @lipsum.split.shuffle[0..10].join(' ')[0...Topic::MAX_NAME].strip
+  (1..11).each do |n|
+    name = some_text(Topic::MAX_NAME)
     topic = forum.topics.create(:name => name, :person => people.pick,
                                 :created_at => rand(10).hours.ago)
-    10.times do
+    11.times do
       topic.posts.create(:body => @lipsum, :person => people.pick,
                          :created_at => rand(10).hours.ago)
     end
@@ -85,7 +85,7 @@ end
 def make_blog_posts
   person = Person.find_by_email('michael@michaelhartl.com')
   3.times do
-    person.blog.posts.create(:title => "Foobar", :body => @lipsum)
+    person.blog.posts.create(:title => some_text(rand(25)), :body => @lipsum)
   end
 end
 
@@ -122,6 +122,11 @@ def uploaded_file(filename, content_type)
     define_method(:content_type) {content_type}
   end
   return t
+end
+
+# Return some random text.
+def some_text(n)
+  @lipsum.split.shuffle.join(' ')[0...n].strip.capitalize
 end
 
 # Do something sometimes (with probability p).
