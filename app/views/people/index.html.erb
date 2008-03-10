@@ -1,16 +1,14 @@
+<div class="column first span-14">
+
 <% unless @people.empty? -%>
   <%= will_paginate %>
-  <ul>
-    <%- @people.each do |person| -%>
-     <li>
-       <%= link_to image_tag(person.thumbnail), person %>
-       <%= link_to person.name, person %>
-     </li>
-    <%- end -%>
-  </ul>
+  <%= raster image_links(@people, :image => :thumbnail,
+                                  :captions => @people.map(&:name)) %>
   <%= will_paginate %>
 <% else %>
   <h2>No results to show.</h2>
 <% end -%>
 
-<div class="clear"></div>
+</div>
+
+<%= render :partial => 'shared/minifeed' %>
