@@ -26,7 +26,7 @@ describe BlogPost do
   end
   
   it "should have a maximum body length" do
-    @post.should have_maximum(:body, MAX_TEXT_LENGTH)
+    @post.should have_maximum(:body, BlogPost::MAX_BODY)
   end
   
   describe "associations" do

@@ -1,10 +1,10 @@
 # Database strings typically can't be longer than 255.
 MAX_STRING_LENGTH = 255
-# This is arbitrary, but "small".
+MEDIUM_STRING_LENGTH = 70
 SMALL_STRING_LENGTH = 40
-# This is arbitrary, but "big".
+
 MAX_TEXT_LENGTH = 1000
-# Some text fields should allow less
+MEDIUM_TEXT_LENGTH = 500
 SMALL_TEXT_LENGTH = 300
 
 # Ferret adds a significant overhead to tests, so disable it by default.

@@ -14,7 +14,7 @@
 
 class Topic < ActiveRecord::Base
   
-  MAX_NAME = SMALL_STRING_LENGTH
+  MAX_NAME = MEDIUM_STRING_LENGTH
   
   belongs_to :forum, :counter_cache => true
   belongs_to :person

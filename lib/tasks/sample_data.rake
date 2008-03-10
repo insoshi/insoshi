@@ -72,7 +72,7 @@ def make_forum_posts
   forum = Forum.find(1)
   people = Person.find(:all)
   (1..11).each do |n|
-    name = some_text(Topic::MAX_NAME)
+    name = some_text(rand(Topic::MAX_NAME))
     topic = forum.topics.create(:name => name, :person => people.pick,
                                 :created_at => rand(10).hours.ago)
     11.times do
@@ -85,7 +85,8 @@ end
 def make_blog_posts
   person = Person.find_by_email('michael@michaelhartl.com')
   3.times do
-    person.blog.posts.create(:title => some_text(rand(25)), :body => @lipsum)
+    person.blog.posts.create!(:title => some_text(rand(25)),
+                              :body => some_text(rand(MEDIUM_TEXT_LENGTH)))
   end
 end
 
