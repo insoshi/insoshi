@@ -20,24 +20,20 @@
 #
 
 class Message < Communication
-  include ApplicationHelper
-
-  attr_accessor :skip_send_mail
+  attr_accessor :reply, :parent, :skip_send_mail
   
-  MAX_CONTENT_LENGTH = 1600  # A reasonable limit on content length
+  MAX_CONTENT_LENGTH = MAX_TEXT_LENGTH
   
   belongs_to :sender, :class_name => 'Person', :foreign_key => 'sender_id'
   belongs_to :recipient, :class_name => 'Person',
                          :foreign_key => 'recipient_id'
   validates_presence_of :subject, :content
-  validates_length_of :subject, :maximum => MAX_STRING_LENGTH
+  validates_length_of :subject, :maximum => SMALL_STRING_LENGTH
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
   
   after_create :update_recipient_last_contacted_at,
                :save_recipient, :set_replied_to, :send_receipt_reminder
-
-  attr_accessor :reply, :parent
   
   def parent
     @parent ||= Message.find(parent_id)

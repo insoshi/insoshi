@@ -5,13 +5,15 @@ class SessionsController < ApplicationController
   end
 
   def create
-    self.current_person = Person.authenticate(params[:email], params[:password])
+    self.current_person = Person.authenticate(params[:email],params[:password])
     if logged_in?
       current_person.last_logged_in_at = Time.now
       current_person.save!
       if params[:remember_me] == "1"
         self.current_person.remember_me
-        cookies[:auth_token] = { :value => self.current_person.remember_token , :expires => self.current_person.remember_token_expires_at }
+        cookies[:auth_token] = { 
+          :value => self.current_person.remember_token, 
+          :expires => self.current_person.remember_token_expires_at }
       end
       redirect_back_or_default('/')
       flash[:success] = "Logged in successfully"
