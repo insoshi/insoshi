@@ -32,10 +32,6 @@ module ApplicationHelper
   def set_focus_to_id(id)
     javascript_tag("$('#{id}').focus()");
   end
-  
-  def set_main_title(title = nil)
-    content_for(:main_title) { content_tag(:h1, title) } unless title.nil?
-  end
 
   # TODO: polish these & move them somewhere
   def linked_image(person, options = {})

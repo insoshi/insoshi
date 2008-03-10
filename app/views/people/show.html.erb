@@ -1,5 +1,3 @@
-<% set_main_title(h("About #{@person.name}")) %>
-
 <div class="column first span-14">
   <%- unless current_person?(@person) -%>
     <%= email_link @person %>

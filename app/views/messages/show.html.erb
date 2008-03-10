@@ -1,11 +1,13 @@
 <div class="column first span-14">
   <% if @message.sender == @current_person %>
-      <% set_main_title "Message sent to #{@message.recipient.name}" %>
+      <% heading = "Message sent to #{@message.recipient.name}" %>
   <% elsif @message.recipient == @current_person %>
-      <% set_main_title "Message from #{@message.sender.name}" %>
+      <% heading = "Message from #{@message.sender.name}" %>
   <% else %>
-      <% set_main_title "Message" %>
+      <% heading = "Message" %>
   <% end %>
+  
+  <h1><%= heading %></h1>
 
   <%= render :partial => 'message_nav' %>
 

@@ -18,4 +18,10 @@ class Event < ActiveRecord::Base
   def instance=(obj)
     self.instance_id = obj.id
   end
+
+  class << self
+    def feed
+      find(:all).shuffle[0...10]
+    end
+  end
 end
