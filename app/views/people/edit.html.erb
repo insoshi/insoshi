@@ -29,7 +29,7 @@
     <%= image_tag @person.thumbnail %>
   <% else %>
   <table>
-    <% @person.sorted_photos.collect_every(4) do |row| %>
+    <% @person.sorted_photos.collect_every(N_COLUMNS) do |row| %>
     <tr>
     <% row.each do |photo| %>
       <td><%= image_tag photo.public_filename(:thumbnail) %></td>

@@ -1,7 +1,13 @@
 class ConnectionsController < ApplicationController
   
   before_filter :login_required
-  before_filter :authorize_person, :except => :create
+  before_filter :authorize_person, :only => [:edit, :update, :destroy]
+  
+  # Show all the contacts for the current person.
+  def index
+    @contacts = current_person.contacts.paginate(:page => params[:page],
+                                                 :per_page => RASTER_PER_PAGE)
+  end
   
   def edit
     @contact = @connection.contact
@@ -26,13 +32,14 @@ class ConnectionsController < ApplicationController
   def update
     
     respond_to do |format|
+      name = @connection.contact.name
       case params[:commit]
       when "Accept"
         @connection.accept
-        flash[:notice] = "Accepted connection with #{@connection.contact.name}"
+        flash[:notice] = "Accepted connection with #{name}"
       when "Decline"
         @connection.breakup
-        flash[:notice] = "Declined connection with #{@connection.contact.name}"
+        flash[:notice] = "Declined connection with #{name}"
       end
       format.html { redirect_to(home_url) }
     end

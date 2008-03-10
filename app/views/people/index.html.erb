@@ -2,8 +2,8 @@
 
 <% unless @people.empty? -%>
   <%= will_paginate %>
-  <%= raster image_links(@people, :image => :thumbnail,
-                                  :captions => @people.map(&:name)) %>
+  <%= raster image_links(@people, :captions => @people.map(&:name),
+                                  :image => :thumbnail) %>
   <%= will_paginate %>
 <% else %>
   <h2>No results to show.</h2>

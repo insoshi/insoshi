@@ -1,24 +1,16 @@
-<h1>Listing connections</h1>
+<h1>Contacts for <%= current_person.name %></h1>
 
-<table>
-  <tr>
-    <th>Person</th>
-    <th>Connection</th>
-    <th>Status</th>
-  </tr>
+<div class="column first span-14">
 
-<% for connection in @connections %>
-  <tr>
-    <td><%=h connection.person_id %></td>
-    <td><%=h connection.contact_id %></td>
-    <td><%=h connection.status %></td>
-    <td><%= link_to 'Show', connection %></td>
-    <td><%= link_to 'Edit', edit_connection_path(connection) %></td>
-    <td><%= link_to 'Destroy', connection, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<% unless @contacts.empty? -%>
+  <%= will_paginate(@contacts) %>
+  <%= raster image_links(@contacts, :captions => @contacts.map(&:name),
+                                    :image => :thumbnail) %>
+  <%= will_paginate(@contacts) %>
+<% else %>
+  <h2>You have no contacts (yet).</h2>
+<% end -%>
 
-<br />
+</div>
 
-<%= link_to 'New connection', new_connection_path %>
+<%= render :partial => 'shared/minifeed' %>

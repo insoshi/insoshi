@@ -3,7 +3,8 @@ class PeopleController < ApplicationController
   before_filter :correct_user_required, :only => [ :edit, :update ]
   
   def index
-    @people = Person.paginate(:all, :page => params[:page])
+    @people = Person.paginate(:all, :page => params[:page],
+                              :per_page => RASTER_PER_PAGE)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -15,3 +15,8 @@ FERRET_IN_TESTS = false
 def ferret?
   !test? or FERRET_IN_TESTS
 end
+
+# The number of raster colums.
+N_COLUMNS = 4
+# The number of raster results per page.
+RASTER_PER_PAGE = 3 * N_COLUMNS
