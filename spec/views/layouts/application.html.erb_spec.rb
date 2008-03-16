@@ -10,7 +10,7 @@ describe "layout when not logged in" do
   end
   
   it "should have the right CSS includes" do
-    %w(screen print lib/ie).each do |filename|
+    %w(screen print ie).each do |filename|
       response.body.should match(/\/stylesheets\/blueprint\/#{filename}.css/)
     end
   end
