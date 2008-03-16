@@ -1,5 +1,5 @@
 <table>
-  <tr><th colspan="2">Discussion Forum</th></tr>
+  <tr><th>Discussion Forum</th></tr>
   <%- @topics.each do |topic| -%>
   <%- last_post = topic.posts.reverse.first -%>
   <tr class=<%= cycle("odd", "even") %>>
@@ -12,10 +12,8 @@
       by <%= link_to last_post.person.name, last_post.person %>
       </span>
     </td>
-    <td>
-    </td>
-  <%- end -%>
   </tr>
+  <%- end -%>
 </table>
 
 <div class="see_all">

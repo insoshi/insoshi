@@ -33,6 +33,15 @@ module ApplicationHelper
     javascript_tag("$('#{id}').focus()");
   end
 
+  def column_div(width, options = {}, &block)
+    content = <<-END
+      <div class="column span-#{width}">
+        #{capture(&block)}
+      </div>  
+    END
+    concat(content, block.binding)
+  end
+
   # TODO: polish these & move them somewhere
   def linked_image(person, options = {})
     href = options[:href] || person

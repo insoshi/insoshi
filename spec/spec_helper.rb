@@ -67,4 +67,10 @@ Spec::Runner.configure do |config|
     photo.stub!(:primary?).and_return(photo.primary)
     photo
   end
+  
+  # Write response body to output file.
+  # This can be very helpful when debugging specs that test HTML.
+  def output_body(response)
+    File.open("tmp/index.html", "w") { |f| f.write(response.body) }
+  end
 end

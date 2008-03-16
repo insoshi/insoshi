@@ -1,3 +1,8 @@
+# Column sizes
+FULL = 20
+LEFT = 14
+RIGHT = 6
+
 # Database strings typically can't be longer than 255.
 MAX_STRING_LENGTH = 255
 MEDIUM_STRING_LENGTH = 70

@@ -7,6 +7,13 @@ forum:
   body: MyText
   type: ForumPost
 
+forum_2:
+  id: 3
+  topic: two
+  person: aaron
+  body: FooBar
+  type: ForumPost
+
 blog:
   id: 2
   blog: one
