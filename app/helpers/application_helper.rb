@@ -60,7 +60,7 @@ module ApplicationHelper
       klass = "column #{order} span-#{width}"
     end
     # Allow callers to pass in additional classes.
-    options[:class] = klass + " " + options[:class].to_s
+    options[:class] = "#{klass} #{options[:class]}".strip
     content = content_tag(:div, capture(&block), options)
     concat(content, block.binding)
   end

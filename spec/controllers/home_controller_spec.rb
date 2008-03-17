@@ -18,16 +18,16 @@ describe HomeController do
   
   it "should have a main column" do
     response.should have_tag("div[class=?]",
-                             "main column first last span-#{FULL}")
+                             "column first last span-#{FULL}")
   end
   
   it "should have a primary div" do
     response.should have_tag("div[class=?]",
-                             "primary column first span-#{LEFT}")
+                             "column first span-#{LEFT}")
   end
   
   it "should have a secondary div" do
     response.should have_tag("div[class=?]",
-                             "secondary column last span-#{RIGHT}")
+                             "column last span-#{RIGHT}")
   end
 end
