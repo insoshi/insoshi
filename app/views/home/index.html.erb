@@ -1,11 +1,11 @@
-<div class="primary column first span-14">
+<%- column_div :type => :primary do -%>
   <%= render :partial => 'feed' %>
   <%= render :partial => 'forum_preview' %>
   <%= render :partial => 'members_preview' %>
-</div>
+<%- end -%>
 
-<div class="secondary column last span-6">
+<%- column_div :type => :secondary do -%>
   <%= render :partial => 'requested_contacts' %>
   <%= render :partial => 'messages_preview' %>
   <%= render :partial => 'contacts_preview' %>
-</div>
+<%- end -%>

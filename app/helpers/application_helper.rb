@@ -32,13 +32,22 @@ module ApplicationHelper
   def set_focus_to_id(id)
     javascript_tag("$('#{id}').focus()");
   end
-
-  def column_div(width, options = {}, &block)
-    content = <<-END
-      <div class="column span-#{width}">
-        #{capture(&block)}
-      </div>  
-    END
+  
+  # Output a column div.
+  # The current two-column layout has primary & secondary columns.
+  def column_div(options = {}, &block)
+    t = options[:type]
+    if t.nil?
+      width = options[:width]
+      order = options[:order]
+      klass = "column #{order} span-#{width}"
+    else
+      raise ArgumentError unless [:primary, :secondary].include?(t)
+      width = t == :primary ? LEFT : RIGHT
+      order = t == :primary ? "first" : "last"
+      klass = "#{t} column #{order} span-#{width}"
+    end
+    content = content_tag(:div, capture(&block), :class => klass)
     concat(content, block.binding)
   end
 
