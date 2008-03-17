@@ -8,28 +8,27 @@ module EventsHelper
     when "BlogPostEvent"
       blog = event.post.blog
       view_blog = link_to("View #{person.name}'s blog", blog)
-      msg = %(#{person_link(person)} made a blog post titled
+      %(#{person_link(person)} made a blog post titled
               #{post_link(blog, event.post)}.
               <br /> #{view_blog})
     when "BlogPostCommentEvent"
       post = event.comment.post
       blog = post.blog
-      msg = %(#{person_link(person)} made a comment to
+      %(#{person_link(person)} made a comment to
               #{someones(blog.person)} blog post #{post_link(blog, post)}.)
     when "ConnectionEvent"
-      msg = %(#{person_link(person)} and #{person_link(event.conn.contact)}
+      %(#{person_link(person)} and #{person_link(event.conn.contact)}
               have connected.)
     when "ForumPostEvent"
-      msg = %(#{person_link(person)} made a post on the forum topic
-              #{topic_link(event.post.topic)}.)
+      %(#{person_link(person)} made a post on the forum topic
+        #{topic_link(event.post.topic)}.)
     when "PersonEvent"
-      msg = %(#{person_link(person)} joined the network!)
+      %(#{person_link(person)} joined the network!)
     when "TopicEvent"
-      msg = %(#{person_link(person)} created the new discussion topic
+      %(#{person_link(person)} created the new discussion topic
               #{topic_link(event.topic)}.)
     when "WallCommentEvent"
-      # TODO: link this to the wall with a #wall or something.
-      msg = %(#{person_link(event.comment.commenter)} commented on #{wall(person)})
+      %(#{person_link(event.comment.commenter)} commented on #{wall(person)})
     else
       raise "Invalid event type"
     end
@@ -40,29 +39,25 @@ module EventsHelper
     case event.class.to_s
     when "BlogPostEvent"
       blog = event.post.blog
-      msg = %(#{person_link(person)} made a 
-              #{link_to "new blog post", blog_post_path(blog, event.post)})
+      %(#{person_link(person)} made a #{post_link("new blog post", post)})
     when "BlogPostCommentEvent"
       post = event.comment.post
-      blog = post.blog
-      msg = %(#{person_link(person)} made a comment on
-              #{someones(blog.person)} 
-              #{link_to "blog post", blog_post_path(blog, post)})
+      %(#{person_link(person)} made a comment on #{someones(post.blog.person)} 
+        #{post_link("blog post", post)})
     when "ConnectionEvent"
-      msg = %(#{person_link(person)} and #{person_link(event.conn.contact)}
-              have connected.)
+      %(#{person_link(person)} and #{person_link(event.conn.contact)}
+        have connected.)
     when "ForumPostEvent"
       topic = event.post.topic
-      msg = %(#{person_link(person)} made a 
-              #{link_to "forum post", forum_topic_posts_path(topic.forum, topic)}.)
+      # TODO: deep link this to the post
+      %(#{person_link(person)} made a #{topic_link("forum post", topic)}.)
     when "PersonEvent"
-      msg = %(#{person_link(person)} joined the network!)
+      %(#{person_link(person)} joined the network!)
     when "TopicEvent"
-      topic = event.topic
-      msg = %(#{person_link(person)} created a 
-              #{link_to "new discussion topic", forum_topic_posts_path(topic.forum, topic)}.)
+      %(#{person_link(person)} created a 
+        #{topic_link("new discussion topic", event.topic)}.)
     when "WallCommentEvent"
-      msg = %(#{person_link(event.comment.commenter)} commented on #{wall(person)})
+      %(#{person_link(event.comment.commenter)} commented on #{wall(person)})
     else
       raise "Invalid event type"
     end
@@ -76,15 +71,28 @@ module EventsHelper
     end
   end
 
-  def person_link(person)
-    link_to(person.name, person)
+  def person_link(text, person = nil)
+    if person.nil?
+      person = text
+      text = person.name
+    end
+    link_to(text, person)
   end
   
-  def post_link(blog, post)
-    link_to(post.title, blog_post_path(blog, post))
+  def post_link(text, blog, post = nil)
+    if post.nil?
+      post = blog
+      blog = text
+      text = post.title
+    end
+    link_to(text, blog_post_path(blog, post))
   end
   
-  def topic_link(topic)
+  def topic_link(text, topic = nil)
+    if topic.nil?
+      topic = text
+      text = topic.name
+    end
     link_to(topic.name, forum_topic_posts_path(topic.forum, topic))
   end
 
