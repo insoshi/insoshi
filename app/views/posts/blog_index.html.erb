@@ -19,6 +19,11 @@
         </td>
       </tr>
       <tr><td><%= sanitize post.body %></td></tr>
+      <tr><td>
+      <%- n = post.comments.count -%>
+      <%= link_to pluralize(n, "comment"),
+                  blog_post_path(@blog, post, :comments => n) %>
+      </td></tr>
     <%- end -%>
   </table>
 
