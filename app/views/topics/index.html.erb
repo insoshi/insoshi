@@ -4,6 +4,7 @@
     <%- @topics.each do |topic| -%>
     <tr>
       <td>
+        <a name="topic_<%= topic.id %>"></a>
         <%= link_to topic.name, 
                     forum_topic_posts_path(@forum, topic, 
                                            :posts => topic.posts.count) %>

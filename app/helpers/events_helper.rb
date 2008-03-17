@@ -9,19 +9,19 @@ module EventsHelper
       blog = event.post.blog
       view_blog = link_to("View #{person.name}'s blog", blog)
       %(#{person_link(person)} made a blog post titled
-              #{post_link(blog, event.post)}.
-              <br /> #{view_blog})
+        #{post_link(blog, event.post)}.<br /> #{view_blog})
     when "BlogPostCommentEvent"
       post = event.comment.post
       blog = post.blog
       %(#{person_link(person)} made a comment to
-              #{someones(blog.person)} blog post #{post_link(blog, post)}.)
+         #{someones(blog.person)} blog post #{post_link(blog, post)}.)
     when "ConnectionEvent"
       %(#{person_link(person)} and #{person_link(event.conn.contact)}
-              have connected.)
+        have connected.)
     when "ForumPostEvent"
+      post = event.post
       %(#{person_link(person)} made a post on the forum topic
-        #{topic_link(event.post.topic)}.)
+        #{topic_link(post.topic)}.)
     when "PersonEvent"
       %(#{person_link(person)} joined the network!)
     when "TopicEvent"
@@ -96,10 +96,9 @@ module EventsHelper
     link_to(topic.name, forum_topic_posts_path(topic.forum, topic))
   end
 
-  # Return a link to the wall
+  # Return a link to the wall.
   def wall(person)
     link_to("#{someones(person, false)} wall",
-            :controller => "people", :action => "show", :id => person,
-            :anchor => "wall")    
+            person_path(person, :anchor => "wall"))
   end
 end

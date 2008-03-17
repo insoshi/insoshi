@@ -3,7 +3,7 @@
     <tr><th>Blog posts</th></tr>
     <%- @posts.each do |post| -%>
       <tr>
-        <td>
+        <td><a name="post_<%= post.id %>"></a>
         <%= link_to sanitize(post.title), blog_post_path(@blog, post) %>
         <%- if current_person?(@blog.person) -%>
           | <%= link_to "Edit", edit_blog_post_path(@blog, post) %>

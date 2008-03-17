@@ -140,7 +140,7 @@ describe PeopleController do
     it "should have a working comment wall" do
       comment = comments(:wall)
       get :show, :id => @person
-      response.should have_tag("div[id=?]", "wall") do
+      response.should have_tag("div[class=?]", "wall clear") do
         with_tag("td", /#{comment.body}/)
       end
     end

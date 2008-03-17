@@ -4,6 +4,7 @@
     <%- @posts.each do |post| -%>
       <tr>
         <td class="time">
+          <a name="post_<%= post.id %>"></a>
           Posted <%= time_ago_in_words(post.created_at) %> ago
           by <%= link_to post.person.name, post.person %>
           <%- if current_person?(post.person) -%>
