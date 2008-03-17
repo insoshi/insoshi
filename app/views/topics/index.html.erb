@@ -4,7 +4,9 @@
     <%- @topics.each do |topic| -%>
     <tr>
       <td>
-        <%= link_to topic.name, forum_topic_posts_path(@forum, topic) %>
+        <%= link_to topic.name, 
+                    forum_topic_posts_path(@forum, topic, 
+                                           :posts => topic.posts.count) %>
         <div class="time">
           Created by <%= link_to topic.person.name, topic.person %>
           <%= time_ago_in_words(topic.created_at) %> ago
