@@ -44,12 +44,23 @@ module ApplicationHelper
       order = options.delete(:order)
       klass = "column #{order} span-#{width}"
     else
-      raise ArgumentError unless [:primary, :secondary].include?(t)
-      width = t == :primary ? LEFT : RIGHT
-      order = t == :primary ? "first" : "last"
-      klass = "#{t} column #{order} span-#{width}"
+      case t
+      when :primary
+        width = LEFT
+        order = "first"
+      when :secondary
+        width = RIGHT
+        order = "last"
+      when :full
+        width = FULL
+        order = "first last"
+      else
+        raise ArgumentError
+      end
+      klass = "column #{order} span-#{width}"
     end
-    options[:class] ||= klass
+    # Allow callers to pass in additional classes.
+    options[:class] = klass + " " + options[:class].to_s
     content = content_tag(:div, capture(&block), options)
     concat(content, block.binding)
   end

@@ -24,8 +24,7 @@
         <h1>insoshi</h1>
         <h2>instant social network</h2>
       <%- end -%>
-      <div class="column first last span-20">
-        
+      <%- column_div :type => :full do -%>        
         <div id="navcontainer">
           <ul id="navlist">
           <%- menu.each do |link| -%>
@@ -33,8 +32,8 @@
           <%- end -%>
           </ul>
         </div>
-      </div>
-      <div class="main column first last span-20">
+      <%- end -%>
+      <%- column_div :type => :full do -%>        
         <div class="column first span-13 append-1">
         <%- if flash.empty? -%>
           &nbsp;
@@ -44,7 +43,7 @@
           <% end %>
         <%- end -%>
         </div>
-        <div class="column last span-6">
+        <%- column_div :type => :secondary do -%>
           <div style="font-size: 90%; margin: 0 0 0.5em 0;">
             <%- if logged_in? -%>
               Welcome, <%= current_person.name %>!
@@ -57,12 +56,12 @@
                            new_password_reminder_path %>
             <%- end -%>
           </div>
-        </div>
-      </div>
-      <div class="column first last span-20">
+        <%- end -%>
+      <%- end -%>
+      <%- column_div :type => :full do -%>
         <%= yield %>
         powered by insoshi
-      </div>
+      <%- end -%>
     </div>
     <%- if development? -%>
     <div>
