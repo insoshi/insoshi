@@ -32,11 +32,13 @@ class ConnectionsController < ApplicationController
   def update
     
     respond_to do |format|
-      name = @connection.contact.name
+      contact = @connection.contact
+      name = contact.name
       case params[:commit]
       when "Accept"
         @connection.accept
-        flash[:notice] = "Accepted connection with #{name}"
+        flash[:notice] = %(Accepted connection with
+                           <a href="#{person_url(contact)}">#{name}</a>)
       when "Decline"
         @connection.breakup
         flash[:notice] = "Declined connection with #{name}"

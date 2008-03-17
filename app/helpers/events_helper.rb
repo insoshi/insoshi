@@ -29,8 +29,7 @@ module EventsHelper
               #{topic_link(event.topic)}.)
     when "WallCommentEvent"
       # TODO: link this to the wall with a #wall or something.
-      a_wall = link_to("#{someones(person)} wall", person)
-      msg = %(#{person_link(event.comment.commenter)} commented on #{a_wall})
+      msg = %(#{person_link(event.comment.commenter)} commented on #{wall(person)})
     else
       raise "Invalid event type"
     end
@@ -63,16 +62,18 @@ module EventsHelper
       msg = %(#{person_link(person)} created a 
               #{link_to "new discussion topic", forum_topic_posts_path(topic.forum, topic)}.)
     when "WallCommentEvent"
-      # TODO: link this to the wall with a #wall or something.
-      a_wall = link_to("#{someones(person)} wall", person)
-      msg = %(#{person_link(event.comment.commenter)} commented on #{a_wall})
+      msg = %(#{person_link(event.comment.commenter)} commented on #{wall(person)})
     else
       raise "Invalid event type"
     end
   end
 
-  def someones(person)
-    current_person?(person) ? "their own" : "#{person_link(person)}'s"
+  def someones(person, link = true)
+    if link
+      current_person?(person) ? "their own" : "#{person_link(person)}'s"
+    else
+      current_person?(person) ? "their own" : "#{person.name}'s"
+    end
   end
 
   def person_link(person)
@@ -85,5 +86,12 @@ module EventsHelper
   
   def topic_link(topic)
     link_to(topic.name, forum_topic_posts_path(topic.forum, topic))
+  end
+
+  # Return a link to the wall
+  def wall(person)
+    link_to("#{someones(person, false)} wall",
+            :controller => "people", :action => "show", :id => person,
+            :anchor => "wall")    
   end
 end

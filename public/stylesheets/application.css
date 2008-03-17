@@ -48,6 +48,10 @@ table {
   margin-bottom: 0.5em;
 }
 
+.name {
+  color: black;
+}
+
 /* Feed */
 
 /* Minifeed */
@@ -58,11 +62,11 @@ table {
 
 /* Comment wall */
 
-#wall h3 {
+.wall h3 {
   margin-bottom: 0;
 }
 
-#wall textarea {
+.wall textarea {
   height: 5em;
 }
 

@@ -1,4 +1,4 @@
-<div id="wall" class="clear">
+<div class="wall clear">
   <h3>Leave a wall comment</h3>
 
   <% form_for :comment, :url => person_comments_path(@person) do |f| %>
@@ -14,7 +14,9 @@
   <%- unless @person.comments.empty? -%>
   <div class="comment">
     <table>
-      <tr><th colspan="2">Comment Wall</th></tr>
+      <tr>
+        <th colspan="2"><a name="wall" class="name">Comment Wall</a></th>
+      </tr>
       <%= render :partial => 'comment', :collection => @person.comments %>
     </table>
   </div>

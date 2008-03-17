@@ -1,7 +1,7 @@
-<%- unless current_person.new_messages.empty? -%>
+<%- unless current_person.recent_messages.empty? -%>
 <table>
-  <tr><th colspan="2">New Messages</th></tr>
-  <%- current_person.new_messages.each do |message| -%>
+  <tr><th colspan="2">Messages</th></tr>
+  <%- current_person.recent_messages.each do |message| -%>
   <tr>
     <td class="column first span-1">
       <%= link_to image_tag(message.sender.icon), message.sender %>

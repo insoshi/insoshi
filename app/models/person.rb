@@ -33,7 +33,7 @@ class Person < ActiveRecord::Base
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 5
   MESSAGES_PER_PAGE = 5
-  NUM_NEW_MESSAGES = 4
+  NUM_RECENT_MESSAGES = 4
   NUM_WALL_COMMENTS = 10
 
   has_one :blog  
@@ -105,13 +105,12 @@ class Person < ActiveRecord::Base
                                      :per_page => MESSAGES_PER_PAGE)
   end
   
-  def new_messages
+  def recent_messages
     Message.find(:all,
-                 :conditions => [%(recipient_id = ? AND
-                                   recipient_read_at IS NULL AND 
+                 :conditions => [%(recipient_id = ? AND 
                                    recipient_deleted_at IS NULL), id],
                  :order => "created_at DESC",
-                 :limit => NUM_NEW_MESSAGES)
+                 :limit => NUM_RECENT_MESSAGES)
   end
   
   ## Photo helpers

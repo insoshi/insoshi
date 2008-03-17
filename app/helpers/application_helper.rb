@@ -6,7 +6,7 @@ module ApplicationHelper
   def menu
     home     = menu_element("Home",     home_path)
     people   = menu_element("People",   people_path)
-    forum = menu_element("Forum", forum_path)
+    forum    = menu_element("Forum",    forum_path)
     if logged_in?
       profile  = menu_element("Profile",  person_path(current_person))
       messages = menu_element("Messages", messages_path)
@@ -14,12 +14,12 @@ module ApplicationHelper
       photos   = menu_element("Photos",   photos_path)
       [home, profile, messages, blog, people, forum]
     else
-      [home, people, forum]
+      [home]
     end
   end
   
   def menu_element(content, address)
-    { :content => content,   :href => address }
+    { :content => content, :href => address }
   end
   
   def menu_link_to(link, options = {})
