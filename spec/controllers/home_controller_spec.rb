@@ -12,6 +12,10 @@ describe HomeController do
     response.should have_tag("th", /feed/i)
   end
   
+  it "should have a logo div" do
+    response.should have_tag("div[id=?]", "logo")
+  end
+  
   it "should have a main column" do
     response.should have_tag("div[class=?]",
                              "main column first last span-#{FULL}")

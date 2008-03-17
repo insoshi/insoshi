@@ -35,11 +35,13 @@ module ApplicationHelper
   
   # Output a column div.
   # The current two-column layout has primary & secondary columns.
+  # The options hash is handled so that the caller can pass options to 
+  # content_tag.
   def column_div(options = {}, &block)
-    t = options[:type]
+    t = options.delete(:type)
     if t.nil?
-      width = options[:width]
-      order = options[:order]
+      width = options.delete(:width)
+      order = options.delete(:order)
       klass = "column #{order} span-#{width}"
     else
       raise ArgumentError unless [:primary, :secondary].include?(t)
@@ -47,7 +49,8 @@ module ApplicationHelper
       order = t == :primary ? "first" : "last"
       klass = "#{t} column #{order} span-#{width}"
     end
-    content = content_tag(:div, capture(&block), :class => klass)
+    options[:class] ||= klass
+    content = content_tag(:div, capture(&block), options)
     concat(content, block.binding)
   end
 
