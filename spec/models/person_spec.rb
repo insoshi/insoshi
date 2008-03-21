@@ -186,7 +186,47 @@ describe Person do
       @person.remember_token.should_not be_nil
       @person.remember_token_expires_at.should_not be_nil
       @person.remember_token_expires_at.between?(before, after).should be_true
-    end    
+    end
+  end
+  
+  describe "password edit" do
+    
+    before(:each) do
+      @password = @person.unencrypted_password
+      @newpass  = "foobar"
+    end
+    
+    it "should change the password" do
+      @person.change_password?(:verify_password       => @password,
+                               :new_password          => @newpass,
+                               :password_confirmation => @newpass)
+      @person.unencrypted_password.should == @newpass
+    end
+    
+    it "should not change password on failed verification" do
+      @person.change_password?(:verify_password       => @password + "not!",
+                               :new_password          => @newpass,
+                               :password_confirmation => @newpass)
+      @person.unencrypted_password.should_not == @newpass
+      @person.errors.on(:password).should =~ /incorrect/
+    end
+    
+    it "should not change password on failed agreement" do
+      @person.change_password?(:verify_password       => @password,
+                               :new_password          => @newpass + "not!",
+                               :password_confirmation => @newpass)
+      @person.unencrypted_password.should_not == @newpass
+      @person.errors.on(:password).should =~ /match/
+    end
+    
+    it "should not allow invalid new password" do
+      @newpass = ""
+      @person.change_password?(:verify_password       => @password,
+                               :new_password          => @newpass,
+                               :password_confirmation => @newpass)
+      @person.unencrypted_password.should_not == @newpass
+      @person.errors.on(:password).should_not be_nil
+    end
   end
 
 protected
