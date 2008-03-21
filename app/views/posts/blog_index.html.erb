@@ -1,4 +1,4 @@
-<div class="column first span-14">
+<%- column_div :type => :primary do -%>
   <table>
     <tr><th>Blog posts</th></tr>
     <%- @posts.each do |post| -%>
@@ -35,7 +35,7 @@
 
 <%= link_to 'Back', blog_posts_path(@blog) %>
 
-</div>
+<%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>

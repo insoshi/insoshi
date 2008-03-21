@@ -1,4 +1,4 @@
-<div class="column first span-14">
+<%- column_div :type => :primary do -%>
 
 <h1><%= sanitize @post.title %></h1>
 <%- if current_person?(@blog.person) and false -%>
@@ -37,7 +37,7 @@ by <%= link_to @blog.person.name, @blog.person %>
   </div>
 <% end %>
 
-</div>
+<%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>

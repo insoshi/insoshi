@@ -1,6 +1,6 @@
 <h1>New message</h1>
 
-<div class="column first span-14">
+<%- column_div :type => :primary do -%>
 
 <%= error_messages_for :message %>
 
@@ -30,7 +30,7 @@
   </tr>
 </table>
 
-</div>
+<%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>

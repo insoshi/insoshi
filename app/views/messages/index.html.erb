@@ -1,4 +1,4 @@
-<div class="column first span-14">
+<%- column_div :type => :primary do -%>
 
 <%= render :partial => 'message_nav' %>
 
@@ -8,7 +8,8 @@
   <%= render :partial => "message", :collection => @messages %>
 </table>
 <%= will_paginate %>
-</div>
+
+<%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>

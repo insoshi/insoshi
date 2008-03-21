@@ -1,6 +1,6 @@
 <h1>Contacts for <%= current_person.name %></h1>
 
-<div class="column first span-14">
+<%- column_div :type => :primary do -%>
 
 <% unless @contacts.empty? -%>
   <%= will_paginate(@contacts) %>
@@ -11,7 +11,7 @@
   <h2>You have no contacts (yet).</h2>
 <% end -%>
 
-</div>
+<%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>

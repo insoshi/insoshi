@@ -1,4 +1,4 @@
-<div class="column first span-14">
+<%- column_div :type => :primary do -%>
   <table>
     <tr><th><%= @topic.name %></th></tr>
     <%- @posts.each do |post| -%>
@@ -32,7 +32,7 @@
   </div>
 <% end %>
 
-</div>
+<%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>

@@ -1,4 +1,4 @@
-<div class="column first span-14">
+<%- column_div :type => :primary do -%>
   <% if @message.sender == @current_person %>
       <% heading = "Message sent to #{@message.recipient.name}" %>
   <% elsif @message.recipient == @current_person %>
@@ -26,7 +26,7 @@
       </td>
     </tr>
   </table>
-</div>
+<%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>

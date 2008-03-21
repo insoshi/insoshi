@@ -1,4 +1,4 @@
-<div class="column first span-14">
+<%- column_div :type => :primary do -%>
   <%- unless current_person?(@person) -%>
     <%= email_link @person %>
     <%- unless Connection.exists?(@person, current_person) -%>
@@ -16,7 +16,7 @@
   </div>
   
   <%= render :partial => 'wall' %>
-</div>
+<%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>

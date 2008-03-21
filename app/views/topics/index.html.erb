@@ -1,4 +1,4 @@
-<div class="column first span-14">
+<%- column_div :type => :primary do -%>
   <table>
     <tr><th colspan="2">Discussion topics</th></tr>
     <%- @topics.each do |topic| -%>
@@ -19,7 +19,7 @@
   </table>
 
 <%= will_paginate %>
-</div>
+<%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>
