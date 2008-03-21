@@ -52,6 +52,11 @@ table {
   color: black;
 }
 
+/* Search */
+div#search {
+  margin-bottom: 1em;
+}
+
 /* Feed */
 
 /* Minifeed */

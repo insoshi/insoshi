@@ -1,5 +1,6 @@
+<div id="search">
 <% form_tag search_people_path, :method => :get do %>
-    <%= text_field_tag :q, params[:q], :size => 19, :maxlength => 50,
-                                       :id => "leftbox_search_entry" %>
-    <%= submit_tag "Search!", :name => nil, :id => "leftbox_search" %>
+    <%= text_field_tag :q, params[:q], :size => 18, :maxlength => 50 %>
+    <%= submit_tag "Search", :name => nil %>
 <% end %>
+</div>
