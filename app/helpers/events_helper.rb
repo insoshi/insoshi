@@ -39,7 +39,9 @@ module EventsHelper
     case event.class.to_s
     when "BlogPostEvent"
       blog = event.post.blog
-      %(#{person_link(person)} made a #{post_link("new blog post", post)})
+      post = event.post
+      %(#{person_link(person)} made a
+        #{post_link("new blog post", blog, post)})
     when "BlogPostCommentEvent"
       post = event.comment.post
       %(#{person_link(person)} made a comment on #{someones(post.blog.person)} 
