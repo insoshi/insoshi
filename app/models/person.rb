@@ -64,8 +64,8 @@ class Person < ActiveRecord::Base
   validates_length_of       :email, :within => 3..MAX_EMAIL
   # validates_length_of       :name,  :maximum => MAX_NAME
   # TODO: replace this with validates_as_email (?)
-  validates_format_of       :email,                                    
-                            :with => EMAIL_REGEX,                      
+  validates_format_of       :email,
+                            :with => EMAIL_REGEX,
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
   

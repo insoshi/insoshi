@@ -43,7 +43,7 @@ module EventsHelper
     when "BlogPostCommentEvent"
       post = event.comment.post
       %(#{person_link(person)} made a comment on #{someones(post.blog.person)} 
-        #{post_link("blog post", post)})
+        #{post_link("blog post", post.blog, post)})
     when "ConnectionEvent"
       %(#{person_link(person)} and #{person_link(event.conn.contact)}
         have connected.)
@@ -93,7 +93,7 @@ module EventsHelper
       topic = text
       text = topic.name
     end
-    link_to(topic.name, forum_topic_posts_path(topic.forum, topic))
+    link_to(text, forum_topic_posts_path(topic.forum, topic))
   end
 
   # Return a link to the wall.
