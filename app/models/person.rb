@@ -27,12 +27,12 @@ class Person < ActiveRecord::Base
   acts_as_ferret :fields => [ :name, :description ] if ferret?
 
   MAX_EMAIL = MAX_PASSWORD = SMALL_STRING_LENGTH
-  MAX_NAME = 32
+  MAX_NAME = SMALL_STRING_LENGTH
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
   DESCRIPTION_LENGTH = 2000
   TRASH_TIME_AGO = 1.month.ago
   SEARCH_LIMIT = 20
-  SEARCH_PER_PAGE = 5
+  SEARCH_PER_PAGE = 8
   MESSAGES_PER_PAGE = 5
   NUM_RECENT_MESSAGES = 4
   NUM_WALL_COMMENTS = 10
@@ -63,8 +63,7 @@ class Person < ActiveRecord::Base
                                        :if => :password_required?
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :email, :within => 3..MAX_EMAIL
-  # validates_length_of       :name,  :maximum => MAX_NAME
-  # TODO: replace this with validates_as_email (?)
+  validates_length_of       :name,  :maximum => MAX_NAME
   validates_format_of       :email,
                             :with => EMAIL_REGEX,
                             :message => "must be a valid email address"
