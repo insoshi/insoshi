@@ -1,10 +1,12 @@
 <%- column_div :type => :primary do -%>
+  <%= link_to "foo", admin_people_url %>
   <%= render :partial => 'feed' %>
   <%= render :partial => 'forum_preview' %>
   <%= render :partial => 'members_preview' %>
 <%- end -%>
 
 <%- column_div :type => :secondary, :id => "secondary" do -%>
+  <%= render :partial => "search/people" %>
   <%= render :partial => 'requested_contacts' %>
   <%= render :partial => 'messages_preview' %>
   <%= render :partial => 'contacts_preview' %>

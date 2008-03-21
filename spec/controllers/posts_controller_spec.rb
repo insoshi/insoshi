@@ -56,6 +56,9 @@ describe PostsController do
       get :edit, :forum_id => @forum, :topic_id => @topic, :id => @post
       response.should redirect_to(home_url)
     end
+    
+    it "should allow admins to destroy posts" 
+    it "should not allow non-admins to destroy posts" 
   end
   
   describe "blog posts" do
