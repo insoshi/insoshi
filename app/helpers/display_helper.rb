@@ -1,7 +1,6 @@
 module DisplayHelper
   
   # Raster a list of elements.
-  # TODO: refactor this a bit
   def raster(list, options = {})
     columns = options[:num] || N_COLUMNS
     title   = options[:title] || ""

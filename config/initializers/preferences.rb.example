@@ -1,0 +1,19 @@
+# Return domain for emails
+EMAIL_DOMAIN = "example.com"
+
+# Address for SMTP server
+SMTP_SERVER = "smtp.example.com"
+
+# Allow delivery of email notifications for messages and contact requests?
+# Always true in test mode.
+# Set second value to true to enable notifications.
+EMAIL_NOTIFICATIONS = test? ? true : false
+
+unless test?
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    :address    => SMTP_SERVER,
+    :port       => 25,
+    :domain     => EMAIL_DOMAIN
+  }
+end

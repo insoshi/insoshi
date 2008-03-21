@@ -20,7 +20,7 @@ describe Connection do
   
     it "should send a request notification" do
       lambda do
-        Connection.request(@person, @contact)
+        Connection.request(@person, @contact, mail = true)
       end.should change(@emails, :length).by(1)
     end
     

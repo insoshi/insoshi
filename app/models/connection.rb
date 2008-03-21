@@ -43,7 +43,7 @@ class Connection < ActiveRecord::Base
     end
   
     # Make a pending connection request.
-    def request(person, contact, mail = true)
+    def request(person, contact, mail = EMAIL_NOTIFICATIONS)
       if person == contact or Connection.exists?(person, contact)
         false
       else

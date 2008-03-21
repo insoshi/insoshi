@@ -7,13 +7,13 @@ class PasswordRemindersController < ApplicationController
     person = Person.find_by_email(params[:person][:email])
     respond_to do |format|
       format.html do
-        unless person.nil?
+        if person.nil?
+          flash.now[:error] = "Invalid email address"
+          render :action => "new"
+        else
           PersonMailer.deliver_password_reminder(person)
           flash[:success] = "Your password has been sent"
           redirect_to login_url
-        else
-          flash.now[:error] = "Invalid email address"
-          render :action => "new"
         end
       end
     end
