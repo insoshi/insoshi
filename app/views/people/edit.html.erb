@@ -15,9 +15,18 @@
   <h2>Description</h2>
 
   <div class="form_row"><%= f.text_area :description %></div>
+  
+  <h2>Email</h2>
+
+  <div class="form_row">
+    <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
+  </div>
+  
   <div class="form_row">
     <%= f.submit "Update" %>
   </div>
+  <input type="hidden" name="type" value="info" />
+
 
 <% end %>
 
@@ -55,5 +64,39 @@
   <% end %>
   <br />
   <%= button_to "Add a photo", new_photo_path %>
-
 </div>
+
+<br />
+
+<% form_for @person, :html => { :id => "change_password" } do |f| %>
+
+  <h2>Change Password</h2>
+
+  <div class="form_row">
+    <label for="password">Current Password</label>
+    <br />
+    <%= f.password_field :verify_password,
+                         :maxlength => Person::MAX_PASSWORD %>
+  </div>
+
+  <div class="form_row">
+    <label for="password">New Password</label>
+    <br />
+    <%= f.password_field :new_password,
+                         :maxlength => Person::MAX_PASSWORD %>
+  </div>
+
+  <div class="form_row">
+    <label for="password_confirmation">Confirm Password</label>
+    <br />
+    <%= f.password_field :password_confirmation, 
+                         :maxlength => Person::MAX_PASSWORD,
+                         :value => "" %>
+  </div>
+  <div class="form_row">
+    <%= submit_tag 'Change password' %>
+  </div>
+  <input type="hidden" name="type" value="password" />
+
+
+<% end %>

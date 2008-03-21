@@ -92,19 +92,22 @@ describe PeopleController do
     end
     
     it "should allow mass assignment to name" do
-      put :update, :id => @person, :person => { :name => "Foo Bar" }
+      put :update, :id => @person, :person => { :name => "Foo Bar" },
+                   :type => "info"
       assigns(:person).name.should == "Foo Bar"
       response.should redirect_to(person_url(assigns(:person)))
     end
       
     it "should allow mass assignment to description" do
-      put :update, :id => @person, :person => { :description => "Me!" }
+      put :update, :id => @person, :person => { :description => "Me!" },
+                   :type => "info"
       assigns(:person).description.should == "Me!"
       response.should redirect_to(person_url(assigns(:person)))
     end
     
     it "should render edit page on invalid update" do
-      put :update, :id => @person, :person => { :email => "foo" }
+      put :update, :id => @person, :person => { :email => "foo" },
+                   :type => "info"
       response.should be_success
       response.should render_template("edit")
     end
