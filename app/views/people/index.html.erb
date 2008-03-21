@@ -1,14 +1,15 @@
-<div class="column first span-14">
+<%- column_div :type => :primary do -%>
 
-<% unless @people.empty? -%>
-  <%= will_paginate %>
-  <%= raster image_links(@people, :captions => @people.map(&:name),
-                                  :image => :thumbnail) %>
-  <%= will_paginate %>
-<% else %>
-  <h2>No results to show.</h2>
-<% end -%>
+  <% unless @people.empty? -%>
+    <%= will_paginate %>
+    <%= raster image_links(@people, :captions => @people.map(&:name),
+                                    :image => :thumbnail) %>
+    <%= will_paginate %>
+  <% else %>
+    <h2>No results to show.</h2>
+  <% end -%>
+<%- end -%>
 
-</div>
-
-<%= render :partial => 'shared/minifeed' %>
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>
