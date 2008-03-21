@@ -25,7 +25,7 @@
   <div class="form_row">
     <%= f.submit "Update" %>
   </div>
-  <input type="hidden" name="type" value="info" />
+  <input type="hidden" name="type" value="info_edit" />
 
 
 <% end %>
@@ -70,6 +70,8 @@
 
 <% form_for @person, :html => { :id => "change_password" } do |f| %>
 
+  <%= @person.unencrypted_password %>
+
   <h2>Change Password</h2>
 
   <div class="form_row">
@@ -96,7 +98,7 @@
   <div class="form_row">
     <%= submit_tag 'Change password' %>
   </div>
-  <input type="hidden" name="type" value="password" />
+  <input type="hidden" name="type" value="password_edit" />
 
 
 <% end %>

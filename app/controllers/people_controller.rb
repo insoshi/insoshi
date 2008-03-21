@@ -66,14 +66,14 @@ class PeopleController < ApplicationController
     @person = current_person
     respond_to do |format|
       case params[:type]
-      when 'info'
+      when 'info_edit'
         if @person.update_attributes(params[:person])
           flash[:success] = 'Profile updated!'
           format.html { redirect_to(@person) }
         else
           format.html { render :action => "edit" }
         end
-      when 'password'
+      when 'password_edit'
         if @person.change_password?(params[:person])
           flash[:success] = 'Password changed.'
           format.html { redirect_to(@person) }

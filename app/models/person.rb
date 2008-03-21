@@ -208,32 +208,18 @@ class Person < ActiveRecord::Base
 
   def change_password?(passwords)
     self.password_confirmation = passwords[:password_confirmation]
-    if (passwords[:verify_password] == unencrypted_password and
-        passwords[:new_password] == password_confirmation)
-      self.password = passwords[:new_password]
-      encrypt_password
-      save!
-      return true
-    else
-      errors.add(:password, "wrong")
+    self.verify_password = passwords[:verify_password]
+    unless verify_password == unencrypted_password
+      errors.add(:password, "is incorrect")
       return false
     end
-    
-    # (current_password, new_password, confirm_password)
-    # sp = User.encrypt(current_password, self.salt)
-    # errors.add( :password, "The password you supplied is not the correct password.") and
-    #   return false unless sp == self.crypted_password
-    # errors.add( :password, "The new password does not match the confirmation password.") and
-    #   return false unless new_password == confirm_password
-    # errors.add( :password, "The new password may not be blank.") and
-    #   return false if new_password.blank?
-    # 
-    # self.password = new_password
-    # self.password_confirmation = confirm_password
-    # self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") 
-    # self.crypted_password = encrypt(new_password)
-    # save
-  end  
+    unless passwords[:new_password] == password_confirmation
+      errors.add(:password, "does not match confirmation")
+      return false
+    end
+    self.password = passwords[:new_password]
+    save
+  end
 
   protected
 
@@ -251,6 +237,6 @@ class Person < ActiveRecord::Base
     end
       
     def password_required?
-      crypted_password.blank? || !password.blank?
+      crypted_password.blank? || !password.blank? || !verify_password.nil?
     end
 end

@@ -93,21 +93,21 @@ describe PeopleController do
     
     it "should allow mass assignment to name" do
       put :update, :id => @person, :person => { :name => "Foo Bar" },
-                   :type => "info"
+                   :type => "info_edit"
       assigns(:person).name.should == "Foo Bar"
       response.should redirect_to(person_url(assigns(:person)))
     end
       
     it "should allow mass assignment to description" do
       put :update, :id => @person, :person => { :description => "Me!" },
-                   :type => "info"
+                   :type => "info_edit"
       assigns(:person).description.should == "Me!"
       response.should redirect_to(person_url(assigns(:person)))
     end
     
     it "should render edit page on invalid update" do
       put :update, :id => @person, :person => { :email => "foo" },
-                   :type => "info"
+                   :type => "info_edit"
       response.should be_success
       response.should render_template("edit")
     end
@@ -116,6 +116,17 @@ describe PeopleController do
       login_as(:aaron)
       put :update, :id => @person
       response.should redirect_to(home_url)
+    end
+    
+    it "should change the password" do
+      current_password = @person.unencrypted_password
+      newpass = "dude"
+      put :update, :id => @person,
+                   :person => { :verify_password => current_password,
+                                :new_password => newpass,
+                                :password_confirmation => newpass },
+                   :type => "password_edit"
+      response.should redirect_to(person_url(@person))
     end
   end
   
