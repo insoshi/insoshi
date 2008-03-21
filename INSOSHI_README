@@ -1,7 +1,9 @@
-Here's how to start with insoshi.
+Here's how to start with Insoshi.
 
 $ git clone git://67.207.136.60/instantsocial.git
 $ cp config/database.example config/database.yml
+$ cp config/initializers/preferences.rb.example \
+     config/initializers/preferences.rb
 $ git checkout -b <your name>
 $ rake db:migrate:both
 $ rake
