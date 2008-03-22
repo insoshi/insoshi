@@ -61,6 +61,26 @@ describe Person do
     end
   end
   
+  describe "associations" do
+    
+    before(:each) do
+      @contact = people(:aaron)
+    end
+    
+    # TODO: make custom matchers to get @contact.should have_requested_contacts
+    it "should have requested contacts" do
+      Connection.request(@person, @contact)
+      @contact.requested_contacts.should_not be_empty
+    end
+    
+    it "should have contacts" do
+      Connection.request(@person, @contact)
+      Connection.accept(@person, @contact)      
+      @person.contacts.should == [@contact]
+      @contact.contacts.should == [@person]
+    end
+  end
+  
   describe "photo methods" do
     
     before(:each) do
@@ -111,26 +131,6 @@ describe Person do
     
     it "should have received messages" do
       @person.received_messages.should_not be_nil
-    end
-  end
-  
-  describe "associations" do
-    
-    before(:each) do
-      @contact = people(:aaron)
-    end
-    
-    # TODO: make custom matchers to get @contact.should have_requested_contacts
-    it "should have requested contacts" do
-      Connection.request(@person, @contact)
-      @contact.requested_contacts.should_not be_empty
-    end
-    
-    it "should have contacts" do
-      Connection.request(@person, @contact)
-      Connection.accept(@person, @contact)      
-      @person.contacts.should == [@contact]
-      @contact.contacts.should == [@person]
     end
   end
   

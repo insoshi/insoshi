@@ -1,0 +1,11 @@
+<tr>
+  <td><%= image_link person %></td>
+  <td><%= person_link person %></td>
+  <td>
+    <%- activity = person.deactivated? ? "activate" : "deactivate" -%>
+    <%= link_to activity, 
+                admin_person_path(person, :task => "deactivate"),
+                :method => :put %>
+    <%# make/unmake admin %>
+  </td>
+</tr>
