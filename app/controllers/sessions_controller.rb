@@ -31,12 +31,12 @@ class SessionsController < ApplicationController
     cookies.delete :auth_token
     if logged_in? and current_person.deactivated?
       reset_session
-      flash[:error] = "Your account has been deactivated"
+      flash[:error] = "Your account has been deactivated."
       redirect_to login_url
     else
       reset_session
       flash[:success] = "You have been logged out."
-      redirect_back_or_default('/')
+      redirect_back_or_default(login_url)
     end
   end
 end

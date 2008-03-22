@@ -34,11 +34,18 @@
         </div>
       <%- end -%>
       <%- column_div :type => :full do -%>        
+        <div class="notice">
+          Welcome to the Insoshi developer release.
+          We'd appreciate help with the code and (especially!) 
+           the design.  Click here to start contributing!
+        </div>
+      <%- end -%>
+      <%- column_div :type => :full do -%>        
         <div class="column first span-13 append-1">
         <%- if flash.empty? -%>
           &nbsp;
         <%- else -%>
-          <% flash.each do |key, msg| %>  
+          <% flash.each do |key, msg| %>
             <%= content_tag :div, msg, :class => "flash #{key}" %>
           <% end %>
         <%- end -%>
