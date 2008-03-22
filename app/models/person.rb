@@ -56,7 +56,8 @@ class Person < ActiveRecord::Base
     person.has_many :_received_messages, :foreign_key => "recipient_id",
                     :conditions => "recipient_deleted_at IS NULL"                  
   end
-  has_one :event, :foreign_key => "instance_id", :dependent => :destroy
+  has_many :feeds
+  has_many :events, :through => :feeds, :order => 'created_at DESC'
   
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
@@ -241,7 +242,9 @@ class Person < ActiveRecord::Base
     end
   
     def log_event
-      PersonEvent.create!(:person => self, :instance => self)
+      event = Event.create!(:item => self)
+      self.events << event
+      self.contacts.each { |c| c.events << event}
     end
       
     def password_required?

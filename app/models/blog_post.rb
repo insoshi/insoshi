@@ -23,7 +23,6 @@ class BlogPost < Post
   belongs_to :blog
   has_many :comments, :class_name => "BlogPostComment",
                       :order => :created_at, :dependent => :destroy
-  has_one :event, :foreign_key => "instance_id", :dependent => :destroy
   
   validates_presence_of :title, :body
   validates_length_of :title, :maximum => MAX_TITLE
@@ -34,6 +33,9 @@ class BlogPost < Post
   private
   
     def log_event
-      BlogPostEvent.create!(:person => blog.person, :instance => self)
+      raise self.class.inspect
+      event = Event.create!(:item => self)
+      blog.person.events << event
+      blog.person.contacts.each { |c| c.events << event}
     end
 end
