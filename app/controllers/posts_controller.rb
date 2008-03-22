@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   before_filter :login_required
   before_filter :get_instance_vars
   before_filter :authorize_edit, :only => [:edit, :update]
-  before_filter :authorize_destroy, :only => [:destroy]
+  before_filter :authorize_destroy, :only => :destroy
 
   # Used for both forum and blog posts.
   def index
