@@ -146,6 +146,13 @@ class Person < ActiveRecord::Base
     @sorted_photos ||= photos.partition(&:primary).flatten
   end
   
+  ## Activation methods
+  
+  def toggle_activation!
+    self.deactivated = deactivated? ? nil : true
+    save!
+  end
+  
   ## Authentication methods
   
   # Authenticates a user by their email address and unencrypted password.  

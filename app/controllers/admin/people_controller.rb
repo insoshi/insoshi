@@ -14,8 +14,7 @@ class Admin::PeopleController < ApplicationController
       if current_person?(@person)
         flash[:error] = "You can't deactivate yourself"
       else
-        @person.deactivated = @person.deactivated? ? nil : true
-        @person.save!
+        @person.toggle_activation!
         flash[:success] = "#{@person.name} updated."
       end
       redirect_to admin_people_url

@@ -228,6 +228,22 @@ describe Person do
       @person.errors.on(:password).should_not be_nil
     end
   end
+  
+  describe "activation" do
+        
+    it "should deactivate a person" do
+      @person.should_not be_deactivated
+      @person.toggle_activation!
+      @person.should be_deactivated
+    end
+    
+    it "should reactivate a person" do
+      @person.toggle_activation!
+      @person.should be_deactivated
+      @person.toggle_activation!
+      @person.should_not be_deactivated
+    end
+  end
 
 protected
   def create_person(options = {})

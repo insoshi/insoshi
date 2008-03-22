@@ -18,4 +18,25 @@ describe Admin::PeopleController do
     get :index
     response.should be_success
   end
+  
+  describe "person modifications" do
+    
+    before(:each) do
+      @admin = login_as(:quentin)
+      @person = people(:aaron)
+    end
+    
+    it "should deactivate a person" do
+      @person.should_not be_deactivated
+      put :update, :id => @person, :task => "deactivate"
+      assigns(:person).should be_deactivated
+    end
+    
+    it "should reactivate a person" do
+      @person.toggle_activation!
+      put :update, :id => @person, :task => "deactivate"
+      assigns(:person).should_not be_deactivated
+    end
+  end
+  
 end
