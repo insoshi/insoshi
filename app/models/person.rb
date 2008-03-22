@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 10
+# Schema version: 12
 #
 # Table name: people
 #
@@ -17,6 +17,8 @@
 #  wall_comments_count       :integer(11)     default(0), not null
 #  created_at                :datetime        
 #  updated_at                :datetime        
+#  admin                     :boolean(1)      
+#  deactivated               :string(255)     
 #
 
 class Person < ActiveRecord::Base
