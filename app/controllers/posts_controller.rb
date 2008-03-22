@@ -47,7 +47,7 @@ class PostsController < ApplicationController
     
     respond_to do |format|
       if @post.save
-        flash[:success] = 'Post was successfully created.'
+        flash[:success] = 'Post created'
         format.html { redirect_to post_url }
       else
         format.html { render :action => resource_template("new") }
@@ -58,7 +58,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        flash[:success] = 'Post was successfully updated.'
+        flash[:success] = 'Post updated'
         format.html { redirect_to post_url }
       else
         format.html { render :action => resource_template("edit") }
@@ -68,8 +68,8 @@ class PostsController < ApplicationController
 
   def destroy
     @post = model.find(params[:id])
-    # raise @post.inspect
     @post.destroy
+    flash[:success] = "Post destroyed"
 
     respond_to do |format|
       format.html { redirect_to posts_url }
@@ -109,7 +109,7 @@ class PostsController < ApplicationController
     # Only blog owners can destroy blog posts.
     def authorize_destroy
       if forum?
-        # TODO: implement this once admins exist
+        redirect_to home_url unless current_person.admin?
       elsif blog?
         authorize_edit
       end

@@ -10,7 +10,12 @@
           <%- if current_person?(post.person) -%>
             | <%= link_to "Edit",
                           edit_forum_topic_post_path(@forum, @topic, post) %>
-          <%- end -%>   
+          <%- end -%>
+          <%- if logged_in? and current_person.admin? -%>
+            | <%= link_to "Destroy",
+                          forum_topic_post_path(@forum, @topic, post),
+                          :method => :delete %>
+          <%- end -%>
         </td>
       </tr>
       <tr><td><%= sanitize post.body %></td></tr>

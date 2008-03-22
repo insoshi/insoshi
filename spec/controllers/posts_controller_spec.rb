@@ -57,8 +57,21 @@ describe PostsController do
       response.should redirect_to(home_url)
     end
     
-    it "should allow admins to destroy posts" 
-    it "should not allow non-admins to destroy posts" 
+    it "should allow admins to destroy posts" do
+      @person.should be_admin
+      lambda do
+        delete :destroy, :forum_id => @forum, :topic_id => @topic,
+                         :id => @post
+        response.should redirect_to(forum_topic_posts_url(@topic))
+      end.should change(ForumPost, :count).by(-1)
+    end
+    
+    it "should not allow non-admins to destroy posts" do
+      login_as :aaron
+      delete :destroy, :forum_id => @forum, :topic_id => @topic,
+                       :id => @post
+      response.should redirect_to(home_url)
+    end
   end
   
   describe "blog posts" do
