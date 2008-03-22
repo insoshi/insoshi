@@ -1,5 +1,8 @@
 <%- column_div :type => :primary do -%>
 
+  <%- if logged_in? and current_person.admin? -%>
+    <%= link_to("People administration", admin_people_path) %>
+  <%- end -%>
   <% unless @people.empty? -%>
     <%= will_paginate %>
     <%= raster image_links(@people, :captions => @people.map(&:name),

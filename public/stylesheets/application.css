@@ -24,6 +24,10 @@ h1 {
   font-size: 3em;
 }
 
+#logo a {
+  color: black;
+}
+
 #logo h2 {
   font-size: 100%;
 }

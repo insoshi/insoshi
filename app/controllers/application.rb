@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include SharedHelper
   
-  before_filter :create_page_view
+  before_filter :create_page_view, :require_activation
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -23,5 +23,11 @@ class ApplicationController < ActionController::Base
                       :ip_address => request.remote_ip,
                       :referer => request.env["HTTP_REFERER"],
                       :user_agent => request.env["HTTP_USER_AGENT"])
+    end
+  
+    def require_activation
+      if logged_in? and current_person.deactivated? and !current_person.admin?
+        redirect_to logout_url
+      end
     end
 end

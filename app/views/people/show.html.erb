@@ -1,4 +1,5 @@
 <%- column_div :type => :primary do -%>
+
   <%- unless current_person?(@person) -%>
     <%= email_link @person %>
     <%- unless Connection.exists?(@person, current_person) -%>

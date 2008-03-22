@@ -1,5 +1,7 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
+  
+  skip_before_filter :require_activation, :only => [:new, :destroy]
 
   def new
   end
@@ -27,8 +29,14 @@ class SessionsController < ApplicationController
   def destroy
     self.current_person.forget_me if logged_in?
     cookies.delete :auth_token
-    reset_session
-    flash[:success] = "You have been logged out."
-    redirect_back_or_default('/')
+    if logged_in? and current_person.deactivated?
+      reset_session
+      flash[:error] = "Your account has been deactivated"
+      redirect_to login_url
+    else
+      reset_session
+      flash[:success] = "You have been logged out."
+      redirect_back_or_default('/')
+    end
   end
 end

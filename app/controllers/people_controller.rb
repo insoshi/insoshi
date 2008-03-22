@@ -3,6 +3,7 @@ class PeopleController < ApplicationController
   before_filter :correct_user_required, :only => [ :edit, :update ]
   
   def index
+    # TODO: Make this Person.active.
     @people = Person.paginate(:all, :page => params[:page],
                               :per_page => RASTER_PER_PAGE)
 
@@ -13,6 +14,10 @@ class PeopleController < ApplicationController
   
   def show
     @person = Person.find(params[:id])
+    if @person.deactivated
+      flash[:error] = "That person has been deactivated"
+      redirect_to home_url and return
+    end
     if current_person?(@person)
       link = edit_person_path(@person)
       flash.now[:notice] = %(You are viewing your own profile.
