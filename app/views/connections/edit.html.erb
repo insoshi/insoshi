@@ -1,10 +1,11 @@
 <h1>Contact request</h1>
 
+<p><%= image_link @contact, :image => :thumbnail %></p>
 <p>You have a contact request from <%= @contact.name %></p>
 
 <% form_for(@connection) do |f| %>
   <p>
     <%= f.submit "Accept" %>
-    <%= f.submit "Decline" %>
+    <%= f.submit "Decline", :id => nil %>
   </p>
 <% end %>
