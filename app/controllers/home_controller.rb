@@ -6,15 +6,11 @@ class HomeController < ApplicationController
     
     @feed = current_person.feed
     
-    @topics = Topic.find(:all, :order => "created_at DESC", :limit => 6)
-    @members = Person.find(:all, :order => "people.created_at DESC",
-                           :include => :photos, :limit => 8)
-    @contacts = current_person.contacts[(0...11)]
-    @requested_contacts = current_person.requested_contacts[(0...8)]
-    @requested_contact_links = @requested_contacts.map do |p|
-                                 conn = Connection.conn(current_person, p)
-                                 edit_connection_path(conn)
-                               end
+    @topics = Topic.find_recent
+    @members = Person.find_recent
+    @contacts = current_person.some_contacts
+    @requested_contacts = current_person.requested_contacts
+    
     respond_to do |format|
       format.html
     end

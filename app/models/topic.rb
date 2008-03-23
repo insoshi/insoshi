@@ -15,6 +15,7 @@
 class Topic < ActiveRecord::Base
   
   MAX_NAME = MEDIUM_STRING_LENGTH
+  NUM_RECENT = 6
   
   belongs_to :forum, :counter_cache => true
   belongs_to :person
@@ -25,6 +26,10 @@ class Topic < ActiveRecord::Base
   validates_length_of :name, :maximum => MAX_NAME
   
   after_create :log_event
+  
+  def self.find_recent
+    find(:all, :order => "created_at DESC", :limit => NUM_RECENT)
+  end
   
   private
   

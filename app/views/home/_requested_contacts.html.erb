@@ -1,5 +1,5 @@
 <%- unless current_person.requested_contacts.empty? -%>
 <%= raster image_links(@requested_contacts, 
-                       :links => @requested_contact_links),
+                       :links => contact_links(@requested_contacts)),
            :title => "Requested Connections" %>
 <%- end -%>

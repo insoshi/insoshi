@@ -38,6 +38,7 @@ class Person < ActiveRecord::Base
   MESSAGES_PER_PAGE = 5
   NUM_RECENT_MESSAGES = 4
   NUM_WALL_COMMENTS = 10
+  NUM_RECENT = 8
   FEED_SIZE = 10
 
   has_one :blog  
@@ -45,11 +46,11 @@ class Person < ActiveRecord::Base
                       :order => "created_at DESC", :limit => NUM_WALL_COMMENTS
   has_many :connections
   has_many :contacts, :through => :connections,
-            :conditions => "status = #{Connection::ACCEPTED}"
+                      :conditions => "status = #{Connection::ACCEPTED}"
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
-            :source => :contact,
-            :conditions => "status = #{Connection::REQUESTED}"
+           :source => :contact,
+           :conditions => "status = #{Connection::REQUESTED}"
   with_options :class_name => "Message", :dependent => :destroy,
                :order => 'created_at DESC' do |person|
     person.has_many :_sent_messages, :foreign_key => "sender_id",
@@ -79,16 +80,24 @@ class Person < ActiveRecord::Base
   
   ## Class methods
   
-  # People search using Ferret
-  def self.search(query, options = {})
-    return [].paginate if query.blank?
-    limit = [total_hits(query), SEARCH_LIMIT].min
-    paginate_by_contents(query, :page => options[:page],
-                                :per_page => SEARCH_PER_PAGE,
-                                :total_entries => limit)
+  class << self
+    # People search using Ferret
+    def search(query, options = {})
+      return [].paginate if query.blank?
+      limit = [total_hits(query), SEARCH_LIMIT].min
+      paginate_by_contents(query, :page => options[:page],
+                                  :per_page => SEARCH_PER_PAGE,
+                                  :total_entries => limit)
+    end
+    
+    def find_recent
+      find(:all, :order => "people.created_at DESC",
+                 :include => :photos, :limit => NUM_RECENT)
+    end
   end
   
-  ## Feed
+  
+  ## Feeds
   
   def feed
     events
@@ -97,6 +106,20 @@ class Person < ActiveRecord::Base
   def recent_activity
     Event.find_all_by_person_id(self, :order => 'created_at DESC',
                                       :limit => FEED_SIZE)
+  end
+  
+  ## For the home page...
+  
+  # Return some contacts for the home page.
+  def some_contacts
+    contacts.shuffle[(0...12)]
+  end
+  
+  def requested_contact_links
+    requested_contacts.map do |p|
+      conn = Connection.conn(self, p)
+      edit_connection_path(conn)
+    end
   end
   
   ## Message methods
