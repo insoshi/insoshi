@@ -14,6 +14,7 @@ class PeopleController < ApplicationController
   
   def show
     @person = Person.find(params[:id])
+    @contacts = @person.some_contacts
     if @person.deactivated
       flash[:error] = "That person has been deactivated"
       redirect_to home_url and return
