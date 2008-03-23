@@ -94,6 +94,11 @@ class Person < ActiveRecord::Base
     events
   end
   
+  def recent_activity
+    Event.find_all_by_person_id(self, :order => 'created_at DESC',
+                                      :limit => FEED_SIZE)
+  end
+  
   ## Message methods
 
   def received_messages(page = 1)
