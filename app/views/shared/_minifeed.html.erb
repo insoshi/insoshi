@@ -1,9 +1,11 @@
-<table class="minifeed">
-<tr><th colspan="2">Minifeed</th></tr>
-<%- Event.feed.each do |event| -%>
-<tr>
-  <td><%= minifeed_message event %></td>
-  <td><%= image_link event.person %></td>
-</tr>
+<%- if logged_in? -%>
+  <table class="minifeed">
+  <tr><th colspan="2">Minifeed</th></tr>
+  <%- current_person.feed.each do |event| -%>
+  <tr>
+    <td><%= minifeed_message event %></td>
+    <td><%= image_link event.person %></td>
+  </tr>
+  <%- end -%>
+  </table>
 <%- end -%>
-</table>

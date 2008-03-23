@@ -38,6 +38,7 @@ class Person < ActiveRecord::Base
   MESSAGES_PER_PAGE = 5
   NUM_RECENT_MESSAGES = 4
   NUM_WALL_COMMENTS = 10
+  FEED_SIZE = 10
 
   has_one :blog  
   has_many :comments, :class_name => "WallComment",
@@ -57,7 +58,8 @@ class Person < ActiveRecord::Base
                     :conditions => "recipient_deleted_at IS NULL"                  
   end
   has_many :feeds
-  has_many :events, :through => :feeds, :order => 'created_at DESC'
+  has_many :events, :through => :feeds,
+                    :order => 'created_at DESC', :limit => FEED_SIZE
   
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
@@ -84,6 +86,12 @@ class Person < ActiveRecord::Base
     paginate_by_contents(query, :page => options[:page],
                                 :per_page => SEARCH_PER_PAGE,
                                 :total_entries => limit)
+  end
+  
+  ## Feed
+  
+  def feed
+    events
   end
   
   ## Message methods
