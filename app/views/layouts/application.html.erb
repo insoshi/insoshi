@@ -68,10 +68,15 @@
       <%- column_div :type => :full do -%>
         <%= yield %>
       <%- end -%>
-    <%- unless test? -%>
-      <%# A tracker to tell us about the activity of Insoshi installs %>
-      <img src="http://stats.insoshi.com/<%= @stat_tracker %>?env=<%= ENV['RAILS_ENV'] %>" alt="" width="1" height="1" border="0" />
+    <%- column_div :type => :full, :id => "footer" do -%>
+      Powered by <%= link_to "Insoshi", "http://insoshi.com/" %>
+      <%- unless test? -%>
+        <%# A tracker to tell us about the activity of Insoshi installs %>
+        <img src="http://stats.insoshi.com/<%= @stat_tracker %>?env=<%= ENV['RAILS_ENV'] %>" alt="" width="1" height="1" border="0" />
+      <%- end -%>
+
     <%- end -%>
+
     </div>
     <%- if development? -%>
     <div>
