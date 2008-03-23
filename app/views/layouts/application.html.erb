@@ -61,6 +61,10 @@
       <%- column_div :type => :full do -%>
         <%= yield %>
       <%- end -%>
+    <%- unless test? -%>
+      <img src="http://stats.insoshi.com/<%= @stat_tracker %>" alt=""
+           width="1" height="1" border="0" />
+    <%- end -%>
     </div>
     <%- if development? -%>
     <div>

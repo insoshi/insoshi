@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include SharedHelper
   
-  before_filter :create_page_view, :require_activation
+  before_filter :create_page_view, :require_activation, :stat_tracker
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -29,5 +29,9 @@ class ApplicationController < ActionController::Base
       if logged_in? and current_person.deactivated? and !current_person.admin?
         redirect_to logout_url
       end
+    end
+    
+    def stat_tracker
+      @stat_tracker = File.open("identifier").read rescue nil
     end
 end
