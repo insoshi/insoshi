@@ -11,10 +11,10 @@ namespace :db do
     task :load => :environment do |t|
       @lipsum = File.open(File.join(DATA_DIRECTORY, "lipsum.txt")).read
       create_people
+      make_connections
       make_messages(@lipsum)
       make_forum_posts
       make_blog_posts
-      make_connections
       make_feed
     end
       
@@ -54,8 +54,17 @@ def create_people
   end
 end
 
+def make_connections
+  person = default_person
+  people = Person.find(:all) - [person]
+  people.shuffle[0..20].each do |contact|
+    Connection.request(contact, person, mail = false)
+    sometimes(0.5) { Connection.accept(person, contact) }
+  end
+end
+
 def make_messages(text)
-  michael = Person.find_by_email("michael@example.com")
+  michael = default_person
   senders = Person.find(:all, :limit => 10)
   senders.each do |sender|
     subject = some_text(SMALL_STRING_LENGTH)
@@ -70,7 +79,7 @@ end
 
 def make_forum_posts
   forum = Forum.find(1)
-  people = Person.find(:all)
+  people = [default_person] + default_person.contacts
   (1..11).each do |n|
     name = some_text(rand(Topic::MAX_NAME))
     topic = forum.topics.create(:name => name, :person => people.pick,
@@ -83,25 +92,20 @@ def make_forum_posts
 end
 
 def make_blog_posts
-  person = Person.find_by_email('michael@example.com')
   3.times do
-    person.blog.posts.create!(:title => some_text(rand(25)),
-                              :body => some_text(rand(MEDIUM_TEXT_LENGTH)))
+    default_person.blog.posts.create!(:title => some_text(rand(25)),
+      :body => some_text(rand(MEDIUM_TEXT_LENGTH)))
   end
-end
-
-def make_connections
-  person = Person.find_by_email('michael@example.com')
-  people = Person.find(:all) - [person]
-  people.shuffle[0..20].each do |contact|
-    Connection.request(contact, person, mail = false)
-    sometimes(0.5) { Connection.accept(person, contact) }
+  default_person.contacts.each do |contact|
+    contact.blog.posts.create!(:title => some_text(rand(25)),
+      :body => some_text(rand(MEDIUM_TEXT_LENGTH)))
   end
 end
 
 # Make a less-boring sample feed.
 def make_feed
-  Event.find(:all).each do |event|
+  # Mix up events for variety.
+  default_person.events.each do |event|
     event.created_at = rand(20).hours.ago
     event.save!
   end
@@ -118,6 +122,10 @@ def uploaded_file(filename, content_type)
     define_method(:content_type) {content_type}
   end
   return t
+end
+
+def default_person
+  Person.find_by_email('michael@example.com')  
 end
 
 # Return some random text.
