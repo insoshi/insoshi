@@ -14,4 +14,22 @@
 class Event < ActiveRecord::Base
   belongs_to :item, :polymorphic => true
   has_many :feeds
+  
+  # Return the proper person associated to an event.
+  def person
+    case item.class.to_s
+    when "BlogPost"
+      item.blog.person
+    when "BlogPostComment"
+      item.commenter
+    when "Connection"
+      item.person
+    when "ForumPost"
+      item.person
+    when "Topic"
+      item.person
+    when "WallComment"
+      item.person
+    end
+  end
 end

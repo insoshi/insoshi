@@ -101,15 +101,15 @@ end
 
 # Make a non-boring sample feed.
 def make_feed
-  models = [BlogPostEvent, BlogPostCommentEvent, ConnectionEvent,
-            ForumPostEvent, TopicEvent, PersonEvent, WallCommentEvent]
-  events = models.map { |model| model.find(:all, :limit => 2) }.flatten
-  sleep(1) # To make *sure* the new time is really new
-  events.each do |event|
-    event.created_at = Time.now
-    event.save!
-  end
-  events.shuffle
+  # models = [BlogPostEvent, BlogPostCommentEvent, ConnectionEvent,
+  #           ForumPostEvent, TopicEvent, PersonEvent, WallCommentEvent]
+  # events = models.map { |model| model.find(:all, :limit => 2) }.flatten
+  # sleep(1) # To make *sure* the new time is really new
+  # events.each do |event|
+  #   event.created_at = Time.now
+  #   event.save!
+  # end
+  # events.shuffle
 end
 
 def uploaded_file(filename, content_type)
@@ -126,8 +126,9 @@ def uploaded_file(filename, content_type)
 end
 
 # Return some random text.
-def some_text(n)
-  @lipsum.split.shuffle.join(' ')[0...n].strip.capitalize
+def some_text(n, default = "foobar")
+  text = @lipsum.split.shuffle.join(' ')[0...n].strip.capitalize
+  text.blank? ? default : text
 end
 
 # Do something sometimes (with probability p).

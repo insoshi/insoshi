@@ -2,33 +2,37 @@ module EventsHelper
 
   # Given an event, return a message for the feed for the event's class.
   def feed_message(event)
-    person = event.person
     # Switch on the class.to_s.  (The class itself is long & complicated.)
     case event.item.class.to_s
-    when "BlogPostEvent"
-      blog = event.post.blog
+    when "BlogPost"
+      post = event.item
+      blog = post.blog
+      person = blog.person
       view_blog = link_to("View #{person.name}'s blog", blog)
       %(#{person_link(person)} made a blog post titled
-        #{post_link(blog, event.post)}.<br /> #{view_blog})
-    when "BlogPostCommentEvent"
-      post = event.comment.post
+        #{post_link(blog, post)}.<br /> #{view_blog})
+    when "BlogPostComment"
+      person = event.item.commenter
+      post = event.item.post
       blog = post.blog
       %(#{person_link(person)} made a comment to
          #{someones(blog.person)} blog post #{post_link(blog, post)}.)
-    when "ConnectionEvent"
-      %(#{person_link(person)} and #{person_link(event.conn.contact)}
+    when "Connection"
+      %(#{person_link(event.item.person)} and
+        #{person_link(event.item.contact)}
         have connected.)
-    when "ForumPostEvent"
-      post = event.post
+    when "ForumPost"
+      post = event.item
+      person = post.person
       %(#{person_link(person)} made a post on the forum topic
         #{topic_link(post.topic)}.)
-    when "PersonEvent"
-      %(#{person_link(person)} joined the network!)
-    when "TopicEvent"
+    when "Topic"
+      person = event.item.person
       %(#{person_link(person)} created the new discussion topic
-              #{topic_link(event.topic)}.)
-    when "WallCommentEvent"
-      %(#{person_link(event.comment.commenter)} commented on #{wall(person)})
+        #{topic_link(event.item)}.)
+    when "WallComment"
+      person = event.item.person
+      %(#{person_link(event.item.commenter)} commented on #{wall(person)})
     else
       raise "Invalid event type"
     end
@@ -37,28 +41,28 @@ module EventsHelper
   def minifeed_message(event)
     person = event.person
     case event.class.to_s
-    when "BlogPostEvent"
+    when "BlogPost"
       blog = event.post.blog
       post = event.post
       %(#{person_link(person)} made a
         #{post_link("new blog post", blog, post)})
-    when "BlogPostCommentEvent"
+    when "BlogPostComment"
       post = event.comment.post
       %(#{person_link(person)} made a comment on #{someones(post.blog.person)} 
         #{post_link("blog post", post.blog, post)})
-    when "ConnectionEvent"
+    when "Connection"
       %(#{person_link(person)} and #{person_link(event.conn.contact)}
         have connected.)
-    when "ForumPostEvent"
+    when "ForumPost"
       topic = event.post.topic
       # TODO: deep link this to the post
       %(#{person_link(person)} made a #{topic_link("forum post", topic)}.)
-    when "PersonEvent"
+    when "Person"
       %(#{person_link(person)} joined the network!)
-    when "TopicEvent"
+    when "Topic"
       %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", event.topic)}.)
-    when "WallCommentEvent"
+    when "WallComment"
       %(#{person_link(event.comment.commenter)} commented on #{wall(person)})
     else
       raise "Invalid event type"
