@@ -50,7 +50,7 @@ module CustomModelMatchers
     MaximumLength.new(attribute, maxlength)
   end
   
-  class ExistInDb    
+  class ExistInDatabase
     def matches?(model)
       model.class.find(model)
       true
@@ -69,7 +69,7 @@ module CustomModelMatchers
   end
   
   def exist_in_database
-    ExistInDb.new
+    ExistInDatabase.new
   end
   
   class DestroyAssociated

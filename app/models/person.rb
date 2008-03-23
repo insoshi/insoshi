@@ -74,7 +74,6 @@ class Person < ActiveRecord::Base
   
   before_create :create_blog
   before_save :downcase_email, :encrypt_password
-  after_create :log_event
   
   ## Class methods
   
@@ -240,13 +239,7 @@ class Person < ActiveRecord::Base
       return if password.blank?
       self.crypted_password = encrypt(password)
     end
-  
-    def log_event
-      event = Event.create!(:item => self)
-      self.events << event
-      self.contacts.each { |c| c.events << event}
-    end
-      
+    
     def password_required?
       crypted_password.blank? || !password.blank? || !verify_password.nil?
     end

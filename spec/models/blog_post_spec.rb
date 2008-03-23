@@ -28,11 +28,31 @@ describe BlogPost do
   it "should have a maximum body length" do
     @post.should have_maximum(:body, BlogPost::MAX_BODY)
   end
-  
-  describe "associations" do
+    
+  describe "post event associations" do
     
     before(:each) do
-      @post.comments.build(:body => "The body", :commenter => people(:aaron))
+      @post.save!
+      @event = Event.find_by_item_id(@post)
+    end
+    
+    it "should have an event" do
+      @event.should_not be_nil
+    end
+    
+    it "should add an event to the poster" do
+      @post.blog.person.events.include?(@event).should == true
+    end
+    
+    it "should destroy the associated event" do
+      @post.should destroy_associated(:event)
+    end
+  end
+  
+  describe "comment associations" do
+    
+    before(:each) do
+      @post.comments.build(:body => "The body", :commenter => people(:aaron))      
       @post.save!
     end
     
@@ -40,16 +60,15 @@ describe BlogPost do
       @post.comments.should_not be_empty
     end
     
+    it "should add events to the poster" do
+      @post.comments.each do |comment|
+        event = Event.find_by_item_id(comment)
+        @post.blog.person.events.include?(event).should == true
+      end
+    end
+    
     it "should destroy associated comments" do
       @post.should destroy_associated(:comments)
-    end
-    
-    it "should have an event" do
-      @post.event.should be_a(BlogPostEvent)
-    end
-    
-    it "should destroy the associated event" do
-      @post.should destroy_associated(:event)
     end
   end
 end

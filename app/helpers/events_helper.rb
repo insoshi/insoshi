@@ -4,7 +4,7 @@ module EventsHelper
   def feed_message(event)
     person = event.person
     # Switch on the class.to_s.  (The class itself is long & complicated.)
-    case event.class.to_s
+    case event.item.class.to_s
     when "BlogPostEvent"
       blog = event.post.blog
       view_blog = link_to("View #{person.name}'s blog", blog)

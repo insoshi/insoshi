@@ -26,10 +26,15 @@ describe ForumPost do
     
     before(:each) do
       @post.save!
+      @event = Event.find_by_item_id(@post)
     end
 
     it "should have an event" do
-      @post.event.should be_a(ForumPostEvent)
+      @event.should_not be_nil
+    end
+    
+    it "should add an event to the poster" do
+      @post.person.events.include?(@event).should == true      
     end
   
     it "should destroy the associated event" do

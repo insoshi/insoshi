@@ -30,6 +30,12 @@ class Topic < ActiveRecord::Base
   private
   
     def log_event
-      TopicEvent.create!(:person => person, :instance => self)
+      event = Event.create!(:item => self)
+      add_events(person, event)
+    end
+    
+    def add_events(person, event)
+      person.events << event
+      person.contacts.each { |c| c.events << event }
     end
 end

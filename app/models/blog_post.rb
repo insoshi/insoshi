@@ -33,9 +33,13 @@ class BlogPost < Post
   private
   
     def log_event
-      raise self.class.inspect
       event = Event.create!(:item => self)
-      blog.person.events << event
-      blog.person.contacts.each { |c| c.events << event}
+      add_events(blog.person, event)
     end
+    
+    def add_events(person, event)
+      person.events << event
+      person.contacts.each { |c| c.events << event }
+    end
+    
 end
