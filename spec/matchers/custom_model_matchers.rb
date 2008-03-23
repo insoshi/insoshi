@@ -80,7 +80,21 @@ module CustomModelMatchers
 
     def matches?(model)
       objects = model.send(@attribute)
+      # Objects must exist in the first place.
+      raise ArgumentError, "Invalid initial association" unless found?(objects)
       model.destroy
+      not found?(objects)
+    end
+    
+    def failure_message
+      "Expected destruction of associated #{@attribute}"
+    end
+    
+    def negative_failure_message
+      "Expected destruction of associated #{@attribute}"
+    end
+    
+    def found?(objects)
       if objects.is_a?(Array)
         # has_many
         objects.each do |object|
@@ -91,18 +105,10 @@ module CustomModelMatchers
         object = objects
         object.class.find(object)
       end
-      false
+      true
     rescue
       ActiveRecord::RecordNotFound
-      true
-    end
-    
-    def failure_message
-      "Expected destruction of associated #{@attribute}"
-    end
-    
-    def negative_failure_message
-      "Expected destruction of associated #{@attribute}"
+      false
     end
   end
   
