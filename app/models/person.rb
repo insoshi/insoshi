@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 12
+# Schema version: 13
 #
 # Table name: people
 #
@@ -17,7 +17,7 @@
 #  wall_comments_count       :integer(11)     default(0), not null
 #  created_at                :datetime        
 #  updated_at                :datetime        
-#  admin                     :boolean(1)      
+#  admin                     :boolean(1)      not null
 #  deactivated               :string(255)     
 #
 
@@ -25,7 +25,7 @@ class Person < ActiveRecord::Base
   attr_accessor :password, :verify_password, :new_password,
                 :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
-                  :description
+                  :description, :deactivated
   acts_as_ferret :fields => [ :name, :description ] if ferret?
 
   MAX_EMAIL = MAX_PASSWORD = SMALL_STRING_LENGTH
@@ -154,13 +154,6 @@ class Person < ActiveRecord::Base
     # photos.partition(&:primary) => [[primary], [other one, another one]]
     # flatten yields [primary, other one, another one]
     @sorted_photos ||= photos.partition(&:primary).flatten
-  end
-  
-  ## Activation methods
-  
-  def toggle_activation!
-    self.deactivated = deactivated? ? nil : true
-    save!
   end
   
   ## Authentication methods

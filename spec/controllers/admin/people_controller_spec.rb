@@ -29,13 +29,15 @@ describe Admin::PeopleController do
     it "should deactivate a person" do
       @person.should_not be_deactivated
       put :update, :id => @person, :task => "deactivate"
-      assigns(:person).should be_deactivated
+      Person.find(@person).should be_deactivated
     end
     
     it "should reactivate a person" do
-      @person.toggle_activation!
+      @person.toggle(:deactivated)
+      @person.save!
+      @person.should be_deactivated
       put :update, :id => @person, :task => "deactivate"
-      assigns(:person).should_not be_deactivated
+      Person.find(@person).should_not be_deactivated
     end
   end
   

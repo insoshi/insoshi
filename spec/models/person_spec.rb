@@ -225,14 +225,14 @@ describe Person do
         
     it "should deactivate a person" do
       @person.should_not be_deactivated
-      @person.toggle_activation!
+      @person.toggle(:deactivated)
       @person.should be_deactivated
     end
     
     it "should reactivate a person" do
-      @person.toggle_activation!
+      @person.toggle(:deactivated)
       @person.should be_deactivated
-      @person.toggle_activation!
+      @person.toggle(:deactivated)
       @person.should_not be_deactivated
     end
   end
