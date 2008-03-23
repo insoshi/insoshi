@@ -13,3 +13,4 @@ uuid.state
 nbproject*
 index/*
 config/initializers/preferences.rb
+identifier
