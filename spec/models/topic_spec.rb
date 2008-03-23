@@ -40,9 +40,5 @@ describe Topic do
     it "should have an event" do
       @topic.event.should be_a(TopicEvent)
     end
-  
-    it "should destroy the associated event" do
-      @topic.should destroy_associated(:event)
-    end
   end
 end

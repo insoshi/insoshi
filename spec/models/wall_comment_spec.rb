@@ -32,10 +32,6 @@ describe WallComment do
     it "should have an event" do
       @comment.event.should be_a(WallCommentEvent)
     end
-  
-    it "should destroy the associated event" do
-      @comment.should destroy_associated(:event)
-    end
   end
 end
 

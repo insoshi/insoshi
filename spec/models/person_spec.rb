@@ -55,10 +55,6 @@ describe Person do
     it "should have an event" do
       create_person(:save => true).event.should be_a(PersonEvent)
     end
-  
-    it "should destroy the associated event" do
-      create_person(:save => true).should destroy_associated(:event)
-    end
   end
   
   describe "associations" do

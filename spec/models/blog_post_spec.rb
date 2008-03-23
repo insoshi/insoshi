@@ -43,10 +43,6 @@ describe BlogPost do
     it "should add an event to the poster" do
       @post.blog.person.events.include?(@event).should == true
     end
-    
-    it "should destroy the associated event" do
-      @post.should destroy_associated(:event)
-    end
   end
   
   describe "comment associations" do
@@ -65,10 +61,6 @@ describe BlogPost do
         event = Event.find_by_item_id(comment)
         @post.blog.person.events.include?(event).should == true
       end
-    end
-    
-    it "should destroy associated comments" do
-      @post.should destroy_associated(:comments)
     end
   end
 end

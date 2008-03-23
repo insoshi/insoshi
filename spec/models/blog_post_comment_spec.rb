@@ -41,9 +41,5 @@ describe BlogPostComment do
     it "should add an event to the commenter" do
       @comment.commenter.events.include?(@event).should == true      
     end
-  
-    it "should destroy the associated event" do
-      @comment.should destroy_associated(:event)
-    end
   end
 end

@@ -67,10 +67,6 @@ describe Connection do
   #   it "should have an event" do
   #     @event.should_not be_nil
   #   end
-  # 
-  #   it "should destroy the associated event" do
-  #     @connection.should destroy_associated(:event)
-  #   end
   # end
 
   

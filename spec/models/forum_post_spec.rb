@@ -36,9 +36,5 @@ describe ForumPost do
     it "should add an event to the poster" do
       @post.person.events.include?(@event).should == true      
     end
-  
-    it "should destroy the associated event" do
-      @post.should destroy_associated(:event)
-    end
   end
 end
