@@ -1,4 +1,6 @@
 <%- column_div :type => :primary do -%>
+  
+  <h2>Profile for <%= @person.name %></h2>
 
   <%- unless current_person?(@person) -%>
     <%= email_link @person %>
