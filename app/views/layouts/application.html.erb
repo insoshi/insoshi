@@ -62,8 +62,8 @@
         <%= yield %>
       <%- end -%>
     <%- unless test? -%>
-      <img src="http://stats.insoshi.com/<%= @stat_tracker %>" alt=""
-           width="1" height="1" border="0" />
+      <%# A tracker to tell us about the activity of Insoshi installs %>
+      <img src="http://stats.insoshi.com/<%= @stat_tracker %>?env=<%= ENV['RAILS_ENV'] %>" alt="" width="1" height="1" border="0" />
     <%- end -%>
     </div>
     <%- if development? -%>

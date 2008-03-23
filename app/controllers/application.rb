@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
       end
     end
     
+    # A tracker to tell us about the activity of Insoshi installs.
     def stat_tracker
       @stat_tracker = File.open("identifier").read rescue nil
     end
