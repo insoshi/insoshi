@@ -30,7 +30,7 @@ describe WallComment do
     end
 
     it "should have an event" do
-      @comment.event.should be_a(WallCommentEvent)
+      Event.find_by_item_id(@comment).should_not be_nil
     end
   end
 end

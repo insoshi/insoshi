@@ -51,10 +51,6 @@ describe Person do
       @person.comments.should be_a_kind_of(Array)
       @person.comments.should_not be_empty
     end
-
-    it "should have an event" do
-      create_person(:save => true).event.should be_a(PersonEvent)
-    end
   end
   
   describe "associations" do
