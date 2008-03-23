@@ -29,6 +29,7 @@ class BlogPostComment < Comment
     def log_event
       event = Event.create!(:item => self)
       add_events(post.blog.person, event)
+      add_events(commenter, event)
     end
     
     def add_events(person, event)

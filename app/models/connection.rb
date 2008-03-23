@@ -63,9 +63,9 @@ class Connection < ActiveRecord::Base
         accept_one_side(person, contact, accepted_at)
         accept_one_side(contact, person, accepted_at)
         # Log a connection event.
-        pid = person.is_a?(Person) ? person.id : person
-        cid = conn(person, contact).id
-        ConnectionEvent.create!(:person_id => pid, :instance_id => cid)
+        # pid = person.is_a?(Person) ? person.id : person
+        # cid = conn(person, contact).id
+        # Event.create!(:item => conn(person, contact))
       end
     end
   

@@ -112,6 +112,10 @@ module CustomModelMatchers
     end
   end
   
+  def find_objects
+    
+  end
+  
   def destroy_associated(attribute)
     DestroyAssociated.new(attribute)
   end

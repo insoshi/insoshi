@@ -27,10 +27,19 @@ describe BlogPostComment do
     
     before(:each) do
       @comment.save!
+      @event = Event.find_by_item_id(@comment)      
     end
 
     it "should have an event" do
-      @comment.event.should be_a(BlogPostCommentEvent)
+      @event.should_not be_nil
+    end
+    
+    it "should add an event to the poster" do
+      @comment.post.blog.person.events.include?(@event).should == true
+    end
+
+    it "should add an event to the commenter" do
+      @comment.commenter.events.include?(@event).should == true      
     end
   
     it "should destroy the associated event" do
