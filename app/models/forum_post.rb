@@ -27,7 +27,7 @@ class ForumPost < Post
   private
   
     def log_event
-      event = Event.create!(:item => self)
+      event = Event.create!(:item => self, :person => person)
       add_events(person, event)
     end
     

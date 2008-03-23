@@ -33,7 +33,7 @@ class BlogPost < Post
   private
   
     def log_event
-      event = Event.create!(:item => self)
+      event = Event.create!(:item => self, :person => blog.person)
       add_events(blog.person, event)
     end
     

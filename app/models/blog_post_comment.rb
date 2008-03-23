@@ -26,7 +26,7 @@ class BlogPostComment < Comment
   private
   
     def log_event
-      event = Event.create!(:item => self)
+      event = Event.create!(:item => self, :person => commenter)
       add_events(post.blog.person, event)
       add_events(commenter, event)
     end

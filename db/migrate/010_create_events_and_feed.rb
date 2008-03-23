@@ -1,8 +1,9 @@
-class CreateFeed < ActiveRecord::Migration
+class CreateEventsAndFeed < ActiveRecord::Migration
   def self.up
     create_table :events do |t|
       t.boolean :public
       t.integer :item_id
+      t.integer :person_id
       t.string :item_type
 
       t.timestamps
