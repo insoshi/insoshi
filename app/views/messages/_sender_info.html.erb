@@ -7,7 +7,7 @@
 <% end %>
 <br />
 <span class="time"><%= time_ago_in_words message.created_at %> ago</span>
-      <div class="status-mail">
-        <%= email_link other_person, :replying_to => message,
-                                          :rowclass => rowclass %>
-      </div>
+<div class="status-mail">
+  <%= email_link other_person, :replying_to => message,
+                               :rowclass => rowclass %>
+</div>

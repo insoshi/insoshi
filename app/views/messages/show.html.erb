@@ -20,9 +20,10 @@
       </td>
       <td>
         <%= render :partial => 'sender_info', 
-                   :locals => { :message => @message,
-                                :rowclass => nil } %>
-        <p><%=h @message.content %></p>
+                   :locals => { :message => @message, :rowclass => nil } %>
+        <br />
+        <p>Subject: <%= sanitize @message.subject %></p>
+        <p><%= sanitize @message.content %></p>
       </td>
     </tr>
   </table>

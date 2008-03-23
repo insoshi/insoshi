@@ -16,15 +16,20 @@
     </td>
     
     <td>
-      <% form_for(:message, :url => person_messages_path(@recipient)) do |f| %>
+      <% form_for(:message,
+                  :url => person_messages_path(@recipient)) do |f| %>
             Subject: <%= f.text_field :subject %>
-            <%= set_focus_to_id "message_subject" %>
-            <%= f.text_area :content %>      
+            <%= f.text_area :content %>
+            <%- if @message.reply? -%>
+              <%= f.hidden_field :parent_id %>
+              <%= set_focus_to_id "message_content" %>
+            <%- else -%>
+              <%= set_focus_to_id "message_subject" %>
+            <%- end -%>
         <div>
           <%= f.submit "Send!" %>
           <%= f.submit "Cancel", :id => "cancel" %>
         </div>
-        <%= f.hidden_field :parent_id if @message.reply? %>
 <% end %>
     </td>
   </tr>

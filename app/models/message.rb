@@ -36,7 +36,8 @@ class Message < Communication
                :save_recipient, :set_replied_to, :send_receipt_reminder
   
   def parent
-    @parent ||= Message.find(parent_id)
+    return @parent unless @parent.nil?
+    return Message.find(parent_id) unless parent_id.nil?
   end
   
   def parent=(message)
@@ -75,7 +76,7 @@ class Message < Communication
   
   # Return true if the message is a reply to a previous message.
   def reply?
-    !parent_id.nil? and correct_sender_recipient_pair?
+    !parent.nil? and correct_sender_recipient_pair?
   end
   
   # Return true if the sender/recipient pair is valid for a given parent.
