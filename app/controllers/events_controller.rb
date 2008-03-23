@@ -1,4 +1,7 @@
 class EventsController < ApplicationController
+  
+  before_filter :not_implemented
+  
   # GET /events
   # GET /events.xml
   def index
@@ -81,5 +84,10 @@ class EventsController < ApplicationController
       format.html { redirect_to(events_url) }
       format.xml  { head :ok }
     end
+  end
+
+  def not_implemented
+    flash[:error] = "Not implemented"
+    redirect_to home_url
   end
 end
