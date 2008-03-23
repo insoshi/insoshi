@@ -40,6 +40,8 @@ class Connection < ActiveRecord::Base
     def exists?(person, contact)
       not conn(person, contact).nil?
     end
+    
+    alias exist? exists?
   
     # Make a pending connection request.
     def request(person, contact, mail = EMAIL_NOTIFICATIONS)
@@ -79,6 +81,14 @@ class Connection < ActiveRecord::Base
     # Return a connection based on the person and contact.
     def conn(person, contact)
       find_by_person_id_and_contact_id(person, contact)
+    end
+    
+    def accepted?(person, contact)
+      conn(person, contact).status == ACCEPTED
+    end
+    
+    def connected?(person, contact)
+      exist?(person, contact) and accepted?(person, contact)
     end
   end
   

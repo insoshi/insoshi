@@ -64,6 +64,7 @@ module AuthenticatedSystem
       respond_to do |format|
         format.html do
           store_location
+          flash[:error] = "You must log in to access this page."
           redirect_to login_url
         end
         format.any do

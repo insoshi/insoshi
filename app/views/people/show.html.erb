@@ -9,6 +9,9 @@
       <%= link_to "Connect with #{@person.name}!",
                   person_connections_path(@person), :method => :post %>
     <%- end -%>
+    <%- if logged_in? and Connection.connected?(@person, current_person) -%>
+      | <%= @person.name %> is one of your contacts
+    <%- end -%>
   <%- end -%>
 
   <div>
