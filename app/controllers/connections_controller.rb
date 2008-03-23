@@ -1,11 +1,11 @@
 class ConnectionsController < ApplicationController
   
   before_filter :login_required
+  before_filter :authorize_view, :only => :index
   before_filter :authorize_person, :only => [:edit, :update, :destroy]
   
-  # Show all the contacts for the current person.
+  # Show all the contacts for the a person.
   def index
-    @person = Person.find(params[:person_id])
     @contacts = @person.contacts.paginate(:page => params[:page],
                                           :per_page => RASTER_PER_PAGE)
   end
@@ -58,6 +58,14 @@ class ConnectionsController < ApplicationController
   end
 
   private
+  
+    def authorize_view
+      @person = Person.find(params[:person_id])
+      unless (current_person?(@person) or
+              Connection.connected?(@person, current_person))
+        redirect_to home_url
+      end
+    end
   
     # Make sure the current person is correct for this connection.
     def authorize_person

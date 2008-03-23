@@ -12,7 +12,8 @@ module ApplicationHelper
       messages = menu_element("Messages", messages_path)
       blog     = menu_element("Blog",     blog_posts_path(current_person.blog))
       photos   = menu_element("Photos",   photos_path)
-      contacts = menu_element("Contacts", connections_path)
+      contacts = menu_element("Contacts",
+                              person_connections_path(current_person))
       [home, profile, contacts, messages, blog, people, forum]
     else
       [home, people, forum]
