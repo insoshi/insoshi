@@ -112,3 +112,17 @@ div#search {
 .comment td.content {
   width: 100%;
 }
+
+/* Flash styles */
+
+.notice a {
+  text-decoration: underline;
+}
+
+.success a {
+  text-decoration: underline;
+}
+
+.error a {
+  text-decoration: underline;
+}

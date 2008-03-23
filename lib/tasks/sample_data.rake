@@ -43,7 +43,7 @@ def create_people
     photos = Dir.glob("lib/tasks/sample_data/#{gender}_photos/*.jpg").shuffle
     names.each_with_index do |name, i|
       name.strip!
-      person = Person.create!(:email => "#{name.downcase}@michaelhartl.com",
+      person = Person.create!(:email => "#{name.downcase}@example.com",
                               :password => password, 
                               :password_confirmation => password,
                               :name => name,
@@ -55,7 +55,7 @@ def create_people
 end
 
 def make_messages(text)
-  michael = Person.find_by_email("michael@michaelhartl.com")
+  michael = Person.find_by_email("michael@example.com")
   senders = Person.find(:all, :limit => 10)
   senders.each do |sender|
     subject = some_text(SMALL_STRING_LENGTH)
@@ -83,7 +83,7 @@ def make_forum_posts
 end
 
 def make_blog_posts
-  person = Person.find_by_email('michael@michaelhartl.com')
+  person = Person.find_by_email('michael@example.com')
   3.times do
     person.blog.posts.create!(:title => some_text(rand(25)),
                               :body => some_text(rand(MEDIUM_TEXT_LENGTH)))
@@ -91,7 +91,7 @@ def make_blog_posts
 end
 
 def make_connections
-  person = Person.find_by_email('michael@michaelhartl.com')
+  person = Person.find_by_email('michael@example.com')
   people = Person.find(:all) - [person]
   people.shuffle[0..20].each do |contact|
     Connection.request(contact, person, mail = false)
@@ -102,7 +102,7 @@ end
 # Make a less-boring sample feed.
 def make_feed
   Event.find(:all).each do |event|
-    event.created_at = rand(20).minutes.ago
+    event.created_at = rand(20).hours.ago
     event.save!
   end
 end
