@@ -27,4 +27,6 @@
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>
+  <%= render :partial => 'shared/contacts_preview',
+             :locals => { :person => @person } %>  
 <%- end -%>

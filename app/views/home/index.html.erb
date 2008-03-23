@@ -8,5 +8,6 @@
   <%= render :partial => "search/people" %>
   <%= render :partial => 'requested_contacts' %>
   <%= render :partial => 'messages_preview' %>
-  <%= render :partial => 'contacts_preview' %>
+  <%= render :partial => 'shared/contacts_preview',
+             :locals => { :person => current_person } %>
 <%- end -%>

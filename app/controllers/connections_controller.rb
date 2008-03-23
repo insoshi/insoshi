@@ -5,8 +5,9 @@ class ConnectionsController < ApplicationController
   
   # Show all the contacts for the current person.
   def index
-    @contacts = current_person.contacts.paginate(:page => params[:page],
-                                                 :per_page => RASTER_PER_PAGE)
+    @person = Person.find(params[:person_id])
+    @contacts = @person.contacts.paginate(:page => params[:page],
+                                          :per_page => RASTER_PER_PAGE)
   end
   
   def edit
