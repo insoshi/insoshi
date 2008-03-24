@@ -1,8 +1,8 @@
-Here's how to get started with Insoshi.
+Here's how to get started with Insoshi.  If you encounter problems, be sure to refer to the Trac wiki at http://trac.insoshi.com/, which expands on some of the points here.
 
 # Get Git
 
-The source code to Insoshi is hosted by Git, so install it first from
+The source code to Insoshi is hosted by Git, a version control system developed by Linus Torvalds to host the Linux kernel.  The first step is to install it from here:
 
 http://git.or.cz/
 
@@ -12,7 +12,7 @@ Linux and Mac users should have no problems; Windows users might have to install
 
 ## Libraries
 
-You'll need to install FreeImage, SQLite, and MySQL.  Install instructions for all three are trivial to find on Google.
+You'll need to install FreeImage, SQLite, and (optionally) MySQL.  Install instructions for all three are trivial to find on Google.
 
 ## Gems
 
@@ -26,16 +26,21 @@ $ sudo gem install sqlite3-ruby
 
 # Installing the app
 
-Here are the step to get up and running with the Rails app
+Here are the steps to get up and running with the Insoshi Rails app.
 
 ## Git steps
 
+The repository is large enough (mainly due to the frozen Rails gems) that it may take a while to finish the first step, which is to clone the repository:
+
 $ git clone git://git.insoshi.com/insoshi.git
+
+Then make a Git branch for yourself:
+
 $ git checkout -b <firstname_lastname>
 
-where you should replace <firstname_lastname> with your name (without angle brackets!)
+where you should replace <firstname_lastname> with your name (without angle brackets!).  
 
-At some later point, follow the steps at 
+At some later point, follow the steps at
 
 http://trac.insoshi.com/insoshi/wiki/ContributingBack
 
@@ -69,7 +74,12 @@ $ script/server
 
 The rake task loads sample data to make developing easier.  All the sample users have email logins <name>@example.com, with password foobar.  
 
-Go to http://localhost:3000 and log in as michael@example.com (password foobar) to get started.
+Go to http://localhost:3000 and log in as follows:
+
+email: michael@example.com
+password: foobar
+
+Now open the source code with your favorite editor and start hacking!
 
 # Stat tracker
 
