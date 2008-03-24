@@ -24,3 +24,7 @@ To reload the sample data later on, run
 $ rake db:sample_data:reload
 
 Go to http://localhost:3000 and log in as (say) michael@example.com (password foobar).
+
+Note: there is a minimalist stat tracker that lets us keep track of how many different installs of Isoshi are out there.  We don't collect any personal information, but if you don't want to be tracked just comment out the line after 
+<%# A tracker to tell us about the activity of Insoshi installs %>
+in application.html.erb.

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include SharedHelper
   
-  before_filter :create_page_view, :require_activation, :stat_tracker
+  before_filter :create_page_view, :require_activation, :tracker_vars
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -32,7 +32,8 @@ class ApplicationController < ActionController::Base
     end
     
     # A tracker to tell us about the activity of Insoshi installs.
-    def stat_tracker
+    def tracker_vars
       @stat_tracker = File.open("identifier").read rescue nil
+      @env = ENV['RAILS_ENV']
     end
 end
