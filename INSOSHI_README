@@ -1,30 +1,78 @@
-Here's how to start with Insoshi.
+Here's how to get started with Insoshi.
 
-$ git clone git://67.207.136.60/instantsocial.git
+# Get Git
+
+The source code to Insoshi is hosted by Git, so install it first from
+
+http://git.or.cz/
+
+Linux and Mac users should have no problems; Windows users might have to install Cygwin (http://cygwin.com/) first.
+
+# Install libraries and gems
+
+## Libraries
+
+You'll need to install FreeImage, SQLite, and MySQL.  Install instructions for all three are trivial to find on Google.
+
+## Gems
+
+You probably have Rails already, but might not have the others.
+
+$ sudo gem install rails
+$ sudo gem install image_science
+$ sudo gem install ferret
+$ sudo gem install mysql
+$ sudo gem install sqlite3-ruby
+
+# Installing the app
+
+Here are the step to get up and running with the Rails app
+
+## Git steps
+
+$ git clone git://git.insoshi.com/insoshi.git
+$ git checkout -b <firstname_lastname>
+
+where you should replace <firstname_lastname> with your name (without angle brackets!)
+
+At some later point, follow the steps at 
+
+http://trac.insoshi.com/insoshi/wiki/ContributingBack
+
+Also be sure to get in the habit of syncing with the main repository:
+
+$ git add .
+$ git commit -v
+$ git checkout master
+$ git pull
+$ git checkout <firstname_lastname>
+$ git rebase master
+
+## Config files and tests
+
+Now create the config files and run the tests (which are actually RSpec examples in the spec/ directory):
+
 $ cp config/database.example config/database.yml
 $ cp config/initializers/preferences.rb.example \
      config/initializers/preferences.rb
-$ git checkout -b <your name>
 $ rake db:migrate:both
-$ rake
+$ rake spec
 
-It might fail at this point.  If the error message indicates a problem with the Photo controller, follow these directions to install ImageScience:
+(If the tests fail in the Photos controller test, double-check that FreeImage and ImageScience are installed.)
 
-Download FreeImage from http://freeimage.sourceforge.net/download.html
-(no ./configure step)
-$ make
-$ sudo make install 
-$ sudo gem install image_science
+## Loading sample data
 
-If working on developing the application, continue by loading the sample data.
+Now load the sample data and start the server:
 
-$ rake db:sample_data:load
-
-To reload the sample data later on, run
 $ rake db:sample_data:reload
+$ script/server
 
-Go to http://localhost:3000 and log in as (say) michael@example.com (password foobar).
+The rake task loads sample data to make developing easier.  All the sample users have email logins <name>@example.com, with password foobar.  
 
-Note: there is a minimalist stat tracker that lets us keep track of how many different installs of Isoshi are out there.  We don't collect any personal information, but if you don't want to be tracked just comment out the line after 
+Go to http://localhost:3000 and log in as michael@example.com (password foobar) to get started.
+
+# Stat tracker
+
+Note that there is a minimalist stat tracker that lets us keep track of how many different installs of Isoshi are out there.  We don't collect any personal information, but if you don't want to be tracked just open application.html.erb and comment out the line after this one:
+
 <%# A tracker to tell us about the activity of Insoshi installs %>
-in application.html.erb.
