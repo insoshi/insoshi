@@ -22,3 +22,5 @@ $ rake db:sample_data:load
 
 To reload the sample data later on, run
 $ rake db:sample_data:reload
+
+Go to http://localhost:3000 and log in as (say) michael@example.com (password foobar).
