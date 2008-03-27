@@ -26,15 +26,15 @@ describe ForumPost do
     
     before(:each) do
       @post.save!
-      @event = Event.find_by_item_id(@post)
+      @activity = Activity.find_by_item_id(@post)
     end
 
-    it "should have an event" do
-      @event.should_not be_nil
+    it "should have an activity" do
+      @activity.should_not be_nil
     end
     
-    it "should add an event to the poster" do
-      @post.person.events.include?(@event).should == true      
+    it "should add an activity to the poster" do
+      @post.person.activities.include?(@activity).should == true      
     end
   end
 end

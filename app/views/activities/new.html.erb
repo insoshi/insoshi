@@ -1,8 +1,8 @@
-<h1>New event</h1>
+<h1>New activity</h1>
 
-<%= error_messages_for :event %>
+<%= error_messages_for :activity %>
 
-<% form_for(@event) do |f| %>
+<% form_for(@activity) do |f| %>
   <p>
     <b>Person</b><br />
     <%= f.text_field :person_id %>
@@ -23,4 +23,4 @@
   </p>
 <% end %>
 
-<%= link_to 'Back', events_path %>
+<%= link_to 'Back', activities_path %>

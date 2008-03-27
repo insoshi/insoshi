@@ -12,7 +12,7 @@
 #  updated_at :datetime        
 #
 
-class Event < ActiveRecord::Base
+class Activity < ActiveRecord::Base
   belongs_to :person
   belongs_to :item, :polymorphic => true
   has_many :feeds

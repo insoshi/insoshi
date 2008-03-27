@@ -21,18 +21,18 @@ class BlogPostComment < Comment
   validates_presence_of :commenter
   validates_length_of :body, :maximum => MAX_TEXT_LENGTH
   
-  after_create :log_event
+  after_create :log_activity
   
   private
   
-    def log_event
-      event = Event.create!(:item => self, :person => commenter)
-      add_events(post.blog.person, event)
-      add_events(commenter, event)
+    def log_activity
+      activity = Activity.create!(:item => self, :person => commenter)
+      add_activities(post.blog.person, activity)
+      add_activities(commenter, activity)
     end
     
-    def add_events(person, event)
-      person.events << event
-      person.contacts.each { |c| c.events << event }
+    def add_activities(person, activity)
+      person.activities << activity
+      person.contacts.each { |c| c.activities << activity }
     end
 end

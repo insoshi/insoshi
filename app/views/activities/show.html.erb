@@ -1,0 +1,18 @@
+<p>
+  <b>Person:</b>
+  <%=h @activity.person_id %>
+</p>
+
+<p>
+  <b>Instance:</b>
+  <%=h @activity.instance_id %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%=h @activity.type %>
+</p>
+
+
+<%= link_to 'Edit', edit_activity_path(@activity) %> |
+<%= link_to 'Back', activities_path %>

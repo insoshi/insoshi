@@ -27,19 +27,19 @@ describe BlogPostComment do
     
     before(:each) do
       @comment.save!
-      @event = Event.find_by_item_id(@comment)      
+      @activity = Activity.find_by_item_id(@comment)      
     end
 
-    it "should have an event" do
-      @event.should_not be_nil
+    it "should have an activity" do
+      @activity.should_not be_nil
     end
     
-    it "should add an event to the poster" do
-      @comment.post.blog.person.events.include?(@event).should == true
+    it "should add an activity to the poster" do
+      @comment.post.blog.person.activities.include?(@activity).should == true
     end
 
-    it "should add an event to the commenter" do
-      @comment.commenter.events.include?(@event).should == true      
+    it "should add an activity to the commenter" do
+      @comment.commenter.activities.include?(@activity).should == true      
     end
   end
 end

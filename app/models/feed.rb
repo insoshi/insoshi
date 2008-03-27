@@ -9,6 +9,6 @@
 #
 
 class Feed < ActiveRecord::Base
-  belongs_to :event
+  belongs_to :activity
   belongs_to :person
 end

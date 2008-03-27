@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :events
+  map.resources :activities
   map.resources :connections
   map.resources :password_reminders
   map.resources :photos

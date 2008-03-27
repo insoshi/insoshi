@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Event do
+describe Activity do
   before(:each) do
-    @event = Event.new
+    @activity = Activity.new
   end
 
   it "should be valid" do
-    @event.should be_valid
+    @activity.should be_valid
   end
 end

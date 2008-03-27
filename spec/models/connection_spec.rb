@@ -55,17 +55,17 @@ describe Connection do
     end
   end
   
-  # describe "event associations" do
+  # describe "activity associations" do
   #   
   #   before(:each) do
   #     Connection.request(@person, @contact)
   #     @connection = Connection.conn(@person, @contact)
   #     @connection.accept
-  #     Event.find_by_item_id(@connection)
+  #     Activity.find_by_item_id(@connection)
   #   end
   # 
-  #   it "should have an event" do
-  #     @event.should_not be_nil
+  #   it "should have an activity" do
+  #     activity.should_not be_nil
   #   end
   # end
 

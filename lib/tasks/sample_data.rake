@@ -104,10 +104,10 @@ end
 
 # Make a less-boring sample feed.
 def make_feed
-  # Mix up events for variety.
-  default_person.events.each do |event|
-    event.created_at = rand(20).hours.ago
-    event.save!
+  # Mix up activities for variety.
+  default_person.activities.each do |activity|
+    activity.created_at = rand(20).hours.ago
+    activity.save!
   end
 end
 

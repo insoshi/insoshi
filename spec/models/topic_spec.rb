@@ -37,8 +37,8 @@ describe Topic do
       @topic.save!
     end
 
-    it "should have an event" do
-      Event.find_by_item_id(@topic).should_not be_nil
+    it "should have an activity" do
+      Activity.find_by_item_id(@topic).should_not be_nil
     end
   end
 end

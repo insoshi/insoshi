@@ -1,67 +1,67 @@
-module EventsHelper
+module ActivitiesHelper
 
-  # Given an event, return a message for the feed for the event's class.
-  def feed_message(event)
+  # Given an activity, return a message for the feed for the activity's class.
+  def feed_message(activity)
     # Switch on the class.to_s.  (The class itself is long & complicated.)
-    person = event.person
-    case event.item.class.to_s
+    person = activity.person
+    case activity.item.class.to_s
     when "BlogPost"
-      post = event.item
+      post = activity.item
       blog = post.blog
       view_blog = link_to("View #{person.name}'s blog", blog)
       %(#{person_link(person)} made a blog post titled
         #{post_link(blog, post)}.<br /> #{view_blog})
     when "BlogPostComment"
-      post = event.item.post
+      post = activity.item.post
       blog = post.blog
       %(#{person_link(person)} made a comment to
          #{someones(blog.person)} blog post #{post_link(blog, post)}.)
     when "Connection"
-      %(#{person_link(event.item.person)} and
-        #{person_link(event.item.contact)}
+      %(#{person_link(activity.item.person)} and
+        #{person_link(activity.item.contact)}
         have connected.)
     when "ForumPost"
-      post = event.item
+      post = activity.item
       %(#{person_link(person)} made a post on the forum topic
         #{topic_link(post.topic)}.)
     when "Topic"
       %(#{person_link(person)} created the new discussion topic
-        #{topic_link(event.item)}.)
+        #{topic_link(activity.item)}.)
     when "WallComment"
-      %(#{person_link(event.item.commenter)} commented on #{wall(person)})
+      %(#{person_link(activity.item.commenter)} commented on #{wall(person)})
     else
-      raise "Invalid event type"
+      raise "Invalid activity type"
     end
   end
   
-  def minifeed_message(event)
-    person = event.person
-    case event.item.class.to_s
+  def minifeed_message(activity)
+    person = activity.person
+    case activity.item.class.to_s
     when "BlogPost"
-      post = event.item
+      post = activity.item
       blog = post.blog
       %(#{person_link(person)} made a
         #{post_link("new blog post", blog, post)})
     when "BlogPostComment"
-      post = event.item.post
+      post = activity.item.post
       %(#{person_link(person)} made a comment on #{someones(post.blog.person)} 
         #{post_link("blog post", post.blog, post)})
     when "Connection"
-      %(#{person_link(person)} and #{person_link(event.item.contact)}
+      %(#{person_link(person)} and #{person_link(activity.item.contact)}
         have connected.)
     when "ForumPost"
-      topic = event.item.topic
+      topic = activity.item.topic
       # TODO: deep link this to the post
       %(#{person_link(person)} made a #{topic_link("forum post", topic)}.)
     when "Person"
       %(#{person_link(person)} joined the network!)
     when "Topic"
       %(#{person_link(person)} created a 
-        #{topic_link("new discussion topic", event.item)}.)
+        #{topic_link("new discussion topic", activity.item)}.)
     when "WallComment"
-      %(#{person_link(event.item.commenter)} commented on #{wall(person)})
+      %(#{person_link(activity.item.commenter)} commented on #{wall(person)})
     else
-      raise "Invalid event type"
+      raise "Invalid activity type"
     end
   end
 

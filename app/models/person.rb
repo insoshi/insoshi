@@ -59,8 +59,8 @@ class Person < ActiveRecord::Base
                     :conditions => "recipient_deleted_at IS NULL"                  
   end
   has_many :feeds
-  has_many :events, :through => :feeds,
-                    :order => 'created_at DESC', :limit => FEED_SIZE
+  has_many :activities, :through => :feeds,
+                        :order => 'created_at DESC', :limit => FEED_SIZE
   
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
@@ -100,11 +100,11 @@ class Person < ActiveRecord::Base
   ## Feeds
   
   def feed
-    events
+    activities
   end
   
   def recent_activity
-    Event.find_all_by_person_id(self, :order => 'created_at DESC',
+    Activity.find_all_by_person_id(self, :order => 'created_at DESC',
                                       :limit => FEED_SIZE)
   end
   

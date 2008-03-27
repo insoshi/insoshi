@@ -22,17 +22,17 @@ class ForumPost < Post
   validates_presence_of :body, :topic, :person
   validates_length_of :body, :maximum => MAX_TEXT_LENGTH
   
-  after_create :log_event
+  after_create :log_activity
   
   private
   
-    def log_event
-      event = Event.create!(:item => self, :person => person)
-      add_events(person, event)
+    def log_activity
+      activity = Activity.create!(:item => self, :person => person)
+      add_activities(person, activity)
     end
     
-    def add_events(person, event)
-      person.events << event
-      person.contacts.each { |c| c.events << event }
+    def add_activities(person, activity)
+      person.activities << activity
+      person.contacts.each { |c| c.activities << activity }
     end
 end

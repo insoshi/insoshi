@@ -29,19 +29,19 @@ describe BlogPost do
     @post.should have_maximum(:body, BlogPost::MAX_BODY)
   end
     
-  describe "post event associations" do
+  describe "post activity associations" do
     
     before(:each) do
       @post.save!
-      @event = Event.find_by_item_id(@post)
+      @activity = Activity.find_by_item_id(@post)
     end
     
-    it "should have an event" do
-      @event.should_not be_nil
+    it "should have an activity" do
+      @activity.should_not be_nil
     end
     
-    it "should add an event to the poster" do
-      @post.blog.person.events.include?(@event).should == true
+    it "should add an activity to the poster" do
+      @post.blog.person.activities.include?(@activity).should == true
     end
   end
   
@@ -56,10 +56,10 @@ describe BlogPost do
       @post.comments.should_not be_empty
     end
     
-    it "should add events to the poster" do
+    it "should add activities to the poster" do
       @post.comments.each do |comment|
-        event = Event.find_by_item_id(comment)
-        @post.blog.person.events.include?(event).should == true
+        activity = Activity.find_by_item_id(comment)
+        @post.blog.person.activities.include?(activity).should == true
       end
     end
   end

@@ -25,7 +25,7 @@ class Topic < ActiveRecord::Base
   validates_presence_of :name, :forum, :person
   validates_length_of :name, :maximum => MAX_NAME
   
-  after_create :log_event
+  after_create :log_activity
   
   def self.find_recent
     find(:all, :order => "created_at DESC", :limit => NUM_RECENT)
@@ -33,13 +33,13 @@ class Topic < ActiveRecord::Base
   
   private
   
-    def log_event
-      event = Event.create!(:item => self, :person => person)
-      add_events(person, event)
+    def log_activity
+      activity = Activity.create!(:item => self, :person => person)
+      add_activities(person, activity)
     end
     
-    def add_events(person, event)
-      person.events << event
-      person.contacts.each { |c| c.events << event }
+    def add_activities(person, activity)
+      person.activities << activity
+      person.contacts.each { |c| c.activities << activity }
     end
 end
