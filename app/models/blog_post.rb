@@ -16,6 +16,7 @@
 #
 
 class BlogPost < Post
+  include EventLogger
   
   MAX_TITLE = SMALL_STRING_LENGTH
   MAX_BODY  = MEDIUM_TEXT_LENGTH
