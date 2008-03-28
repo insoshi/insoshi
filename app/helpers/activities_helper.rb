@@ -8,7 +8,7 @@ module ActivitiesHelper
     when "BlogPost"
       post = activity.item
       blog = post.blog
-      view_blog = link_to("View #{person.name}'s blog", blog)
+      view_blog = blog_link("View #{person.name}'s blog", blog)
       %(#{person_link(person)} made a blog post titled
         #{post_link(blog, post)}.<br /> #{view_blog})
     when "BlogPostComment"
@@ -79,6 +79,10 @@ module ActivitiesHelper
       text = person.name
     end
     link_to(text, person)
+  end
+  
+  def blog_link(text, blog)
+    link_to(text, blog_posts_path(blog))
   end
   
   def post_link(text, blog, post = nil)
