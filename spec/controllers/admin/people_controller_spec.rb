@@ -29,7 +29,7 @@ describe Admin::PeopleController do
     it "should deactivate a person" do
       @person.should_not be_deactivated
       put :update, :id => @person, :task => "deactivate"
-      Person.find(@person).should be_deactivated
+      @person.reload.should be_deactivated
     end
     
     it "should reactivate a person" do
@@ -37,7 +37,7 @@ describe Admin::PeopleController do
       @person.save!
       @person.should be_deactivated
       put :update, :id => @person, :task => "deactivate"
-      Person.find(@person).should_not be_deactivated
+      @person.reload.should_not be_deactivated
     end
   end
   
