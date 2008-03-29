@@ -26,12 +26,6 @@ class WallComment < Comment
   private
   
     def log_activity
-      activity = Activity.create!(:item => self, :person => person)
-      add_activities(person, activity)
-    end
-    
-    def add_activities(person, activity)
-      person.activities << activity
-      person.contacts.each { |c| c.activities << activity }
+      add_activities(:item => self, :person => person)
     end
 end
