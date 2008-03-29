@@ -14,5 +14,6 @@
 #
 
 class Comment < ActiveRecord::Base
+  include ActivityLogger
   validates_presence_of :body
 end

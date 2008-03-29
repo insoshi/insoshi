@@ -16,7 +16,6 @@
 #
 
 class ForumPost < Post
-  include ActivityLogger
   
   belongs_to :topic,  :counter_cache => true
   belongs_to :person, :counter_cache => true
@@ -29,6 +28,6 @@ class ForumPost < Post
   private
   
     def log_activity
-      add_activities(self, person)
+      add_activities(:item => self, :person => person)
     end
 end

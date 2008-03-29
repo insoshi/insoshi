@@ -13,7 +13,7 @@
 #  updated_at   :datetime        
 #
 
-class BlogPostComment < Comment
+class BlogPostComment < Comment  
   belongs_to :commenter, :class_name => "Person",
                          :foreign_key => "commenter_id"
   belongs_to :post, :counter_cache => true, :foreign_key => "blog_post_id"
@@ -27,12 +27,7 @@ class BlogPostComment < Comment
   
     def log_activity
       activity = Activity.create!(:item => self, :person => commenter)
-      add_activities(post.blog.person, activity)
-      add_activities(commenter, activity)
-    end
-    
-    def add_activities(person, activity)
-      person.activities << activity
-      person.contacts.each { |c| c.activities << activity }
+      add_activities(:activity => activity, :person => post.blog.person)
+      add_activities(:activity => activity, :person => commenter)
     end
 end

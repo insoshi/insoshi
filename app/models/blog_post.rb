@@ -16,7 +16,6 @@
 #
 
 class BlogPost < Post
-  include ActivityLogger
   
   MAX_TITLE = SMALL_STRING_LENGTH
   MAX_BODY  = MEDIUM_TEXT_LENGTH
@@ -34,6 +33,6 @@ class BlogPost < Post
   private
   
     def log_activity
-      add_activities(self, blog.person)
+      add_activities(:item => self, :person => blog.person)
     end
 end

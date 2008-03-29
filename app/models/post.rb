@@ -16,4 +16,5 @@
 #
 
 class Post < ActiveRecord::Base
+  include ActivityLogger
 end
