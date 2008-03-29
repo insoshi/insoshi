@@ -13,6 +13,7 @@
 #
 
 class Topic < ActiveRecord::Base
+  include ActivityLogger
   
   MAX_NAME = MEDIUM_STRING_LENGTH
   NUM_RECENT = 6
@@ -34,12 +35,6 @@ class Topic < ActiveRecord::Base
   private
   
     def log_activity
-      activity = Activity.create!(:item => self, :person => person)
-      add_activities(person, activity)
-    end
-    
-    def add_activities(person, activity)
-      person.activities << activity
-      person.contacts.each { |c| c.activities << activity }
+      add_activities(:item => self, :person => person)
     end
 end
