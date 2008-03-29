@@ -16,7 +16,7 @@
 #
 
 class BlogPost < Post
-  include EventLogger
+  include ActivityLogger
   
   MAX_TITLE = SMALL_STRING_LENGTH
   MAX_BODY  = MEDIUM_TEXT_LENGTH
@@ -34,13 +34,6 @@ class BlogPost < Post
   private
   
     def log_activity
-      add_activities(blog.person, self)
+      add_activities(self, blog.person)
     end
-    
-    def add_activities(person, item)
-      activity = Activity.create!(:item => item, :person => person)
-      person.activities << activity
-      person.contacts.each { |c| c.activities << activity }
-    end
-    
 end
