@@ -33,11 +33,11 @@ class BlogPost < Post
   private
   
     def log_activity
-      activity = Activity.create!(:item => self, :person => blog.person)
-      add_activities(blog.person, activity)
+      add_activities(blog.person, self)
     end
     
-    def add_activities(person, activity)
+    def add_activities(person, item)
+      activity = Activity.create!(:item => item, :person => person)
       person.activities << activity
       person.contacts.each { |c| c.activities << activity }
     end
