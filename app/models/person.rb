@@ -105,7 +105,7 @@ class Person < ActiveRecord::Base
   
   def recent_activity
     Activity.find_all_by_person_id(self, :order => 'created_at DESC',
-                                      :limit => FEED_SIZE)
+                                         :limit => FEED_SIZE)
   end
   
   ## For the home page...
@@ -115,6 +115,7 @@ class Person < ActiveRecord::Base
     contacts.shuffle[(0...12)]
   end
   
+  # Contact links for the contact image raster.
   def requested_contact_links
     requested_contacts.map do |p|
       conn = Connection.conn(self, p)
