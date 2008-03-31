@@ -259,6 +259,10 @@ class Person < ActiveRecord::Base
     save
   end
 
+  def last_admin?
+    admin? and Person.count(:conditions => ["admin = ?", true]) == 1
+  end
+
   protected
 
     def downcase_email

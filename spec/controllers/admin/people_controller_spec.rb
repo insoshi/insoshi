@@ -39,6 +39,12 @@ describe Admin::PeopleController do
       put :update, :id => @person, :task => "deactivate"
       @person.reload.should_not be_deactivated
     end
+    
+    
+    it "should allow an admin to deactivate himself" 
+    it "should not allow last admin to deactivate himself" 
+    it "should allow an admin to un-admin himself" 
+    it "should not allow the last admin to un-admin himself"     
   end
   
 end
