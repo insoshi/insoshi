@@ -3,6 +3,10 @@ module ApplicationHelper
   
   ## Menu helpers
   
+  def admin?
+    params[:controller] =~ /admin/
+  end
+  
   def menu
     home     = menu_element("Home",   home_path)
     people   = menu_element("People", people_path)
