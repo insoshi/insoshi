@@ -1,7 +1,7 @@
 <%- column_div :type => :primary do -%>
 
 <h1><%= sanitize @post.title %></h1>
-<%- if current_person?(@blog.person) and false -%>
+<%- if current_person?(@blog.person) -%>
   <%= link_to "Edit", edit_blog_post_path(@blog, @post) %>
   | <%= link_to "Delete", blog_post_path(@blog, @post),
                           :method => :delete %>
