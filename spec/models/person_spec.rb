@@ -236,6 +236,20 @@ describe Person do
       @person.should_not be_deactivated
     end
   end
+  
+  describe "admin" do
+    it "should un-admin a person" do
+      @person.should be_admin
+      @person.toggle(:admin)
+      @person.should_not be_admin
+    end
+    
+    it "should have a working last_admin? method" do
+      @person.should be_last_admin
+      people(:aaron).toggle!(:admin)
+      @person.should_not be_last_admin
+    end
+  end
 
 protected
   def create_person(options = {})

@@ -16,14 +16,22 @@ class Admin::PeopleController < ApplicationController
       else
         @person.toggle(:deactivated)
         if @person.save
-          @person = Person.find(@person)
           flash[:success] = "#{@person.name} updated"
         else
           flash[:error] = "Error updating #{@person.name}"
         end
       end
     when "admin"
-      # TODO: add admin toggling
+      if current_person?(@person)
+        flash[:error] = "You can't unadmin yourself"
+      else
+        @person.toggle(:admin)
+        if @person.save
+          flash[:success] = "#{@person.name} updated"
+        else
+          flash[:error] = "Error updating #{@person.name}"
+        end
+      end
     end
     redirect_to admin_people_url
   end
