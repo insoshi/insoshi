@@ -4,7 +4,7 @@ class ConnectionsController < ApplicationController
   before_filter :authorize_view, :only => :index
   before_filter :authorize_person, :only => [:edit, :update, :destroy]
   
-  # Show all the contacts for the a person.
+  # Show all the contacts for a person.
   def index
     @contacts = @person.contacts.paginate(:page => params[:page],
                                           :per_page => RASTER_PER_PAGE)
