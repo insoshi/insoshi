@@ -16,4 +16,5 @@
 class Comment < ActiveRecord::Base
   include ActivityLogger
   validates_presence_of :body
+  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
 end

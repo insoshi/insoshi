@@ -11,9 +11,10 @@
             | <%= link_to "Edit",
                           edit_forum_topic_post_path(@forum, @topic, post) %>
           <%- end -%>
-          <%- if logged_in? and admin_view? and current_person.admin? -%>
+          <%- if admin_view? -%>
             | <%= link_to "Destroy",
                           forum_topic_post_path(@forum, @topic, post),
+                          :confirm => 'Are you sure?',
                           :method => :delete %>
           <%- end -%>
         </td>

@@ -72,6 +72,8 @@ module CustomModelMatchers
     ExistInDatabase.new
   end
   
+  
+  # Verify that an action destroys an associated attribute.
   class DestroyAssociated
 
     def initialize(attribute)
@@ -110,10 +112,6 @@ module CustomModelMatchers
       ActiveRecord::RecordNotFound
       false
     end
-  end
-  
-  def find_objects
-    
   end
   
   def destroy_associated(attribute)
