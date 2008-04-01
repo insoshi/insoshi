@@ -18,5 +18,4 @@ describe ForumsController do
     get :index
     response.should be_success
   end
-  it "should only allow admins to create, edit, or destroy forums" 
 end
