@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ForumPost do
-  include CustomModelMatchers
   
   before(:each) do
     @post = ForumPost.new(:body => "Hey there", :topic => topics(:one),

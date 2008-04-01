@@ -1,9 +1,12 @@
-<tr>
-  <td><%= image_link activity.person %></td>
-  <td>
-    <%= feed_message activity %>
-    <span class="time">
-      <%= time_ago_in_words(activity.created_at).capitalize %> ago
-    </span>
-  </td>
-</tr>
+<%# This should never happen, but we're wearing a belt and suspenders. %>
+<%- unless activity.item.nil? -%>
+  <tr>
+    <td><%= image_link activity.person %></td>
+    <td>
+      <%= feed_message activity %>
+      <span class="time">
+        <%= time_ago_in_words(activity.created_at).capitalize %> ago
+      </span>
+    </td>
+  </tr>
+<%- end -%>

@@ -15,6 +15,7 @@
 class Connection < ActiveRecord::Base
   belongs_to :person
   belongs_to :contact, :class_name => "Person", :foreign_key => "contact_id"
+  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
   
   validates_presence_of :person_id, :contact_id
   
@@ -64,9 +65,7 @@ class Connection < ActiveRecord::Base
         accept_one_side(person, contact, accepted_at)
         accept_one_side(contact, person, accepted_at)
         # Log a connection activity.
-        # pid = person.is_a?(Person) ? person.id : person
-        # cid = conn(person, contact).id
-        # Activity.create!(:item => conn(person, contact))
+        Activity.create!(:item => conn(person, contact))
       end
     end
   

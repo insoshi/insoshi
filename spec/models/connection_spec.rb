@@ -55,19 +55,19 @@ describe Connection do
     end
   end
   
-  # describe "activity associations" do
-  #   
-  #   before(:each) do
-  #     Connection.request(@person, @contact)
-  #     @connection = Connection.conn(@person, @contact)
-  #     @connection.accept
-  #     Activity.find_by_item_id(@connection)
-  #   end
-  # 
-  #   it "should have an activity" do
-  #     activity.should_not be_nil
-  #   end
-  # end
+  describe "activity associations" do
+    
+    before(:each) do
+      Connection.request(@person, @contact)
+      @connection = Connection.conn(@person, @contact)
+      @connection.accept
+      @activity = Activity.find_by_item_id(@connection)
+    end
+  
+    it "should have an activity" do
+      @activity.should_not be_nil
+    end
+  end
 
   
   

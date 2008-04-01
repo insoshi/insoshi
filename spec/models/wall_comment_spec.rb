@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe WallComment do
-  include CustomModelMatchers
   
   before(:each) do
     @comment = WallComment.new(:body => "Hey there",
