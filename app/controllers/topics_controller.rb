@@ -2,6 +2,7 @@ class TopicsController < ApplicationController
   
   before_filter :login_required, :except => [:index, :show]
   before_filter :get_forum
+  before_filter :admin_required, :expect => [:index, :show]
   
   def index
     @topics = @forum.topics.paginate(:page => params[:page])
@@ -42,7 +43,7 @@ class TopicsController < ApplicationController
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
         flash[:success] = 'Topic was successfully updated.'
-        format.html { redirect_to forum_url }
+        format.html { redirect_to admin_forum_topics_url(@forum) }
       else
         format.html { render :action => "edit" }
       end
@@ -54,7 +55,8 @@ class TopicsController < ApplicationController
     @topic.destroy
 
     respond_to do |format|
-      format.html { redirect_to forum_url }
+      flash[:success] = 'Topic was successfully destroyed.'
+      format.html { redirect_to admin_forum_topics_url(@forum) }
     end
   end
 
