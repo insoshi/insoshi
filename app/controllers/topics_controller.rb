@@ -61,7 +61,6 @@ class TopicsController < ApplicationController
   private
   
     def get_forum
-      # There is currently only one forum.
-      @forum = Forum.find(:first)
+      @forum = Forum.find(params[:forum_id])
     end
 end

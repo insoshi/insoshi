@@ -1,11 +1,11 @@
 class ForumsController < ApplicationController
 
+  before_filter :login_required
 
   def index
     @forums = Forum.find(:all)
     if @forums.length == 1
-      forum = @forums.first
-      redirect_to forum_topics_url(forum) and return
+      redirect_to forum_topics_url(@forums.first) and return
     end
 
     respond_to do |format|
@@ -42,11 +42,9 @@ class ForumsController < ApplicationController
     respond_to do |format|
       if @forum.save
         flash[:notice] = 'Forum was successfully created.'
-        format.html { redirect_to(@forum) }
-        format.xml  { render :xml => @forum, :status => :created, :location => @forum }
+        format.html { redirect_to(forums_url) }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @forum.errors, :status => :unprocessable_entity }
       end
     end
   end

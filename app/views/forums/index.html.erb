@@ -12,7 +12,7 @@
     <td><%= forum_name(forum) %></td>
     <td><%=h forum.description %></td>
     <td><%=h forum.topics_count %></td>
-    <td><%= link_to 'Show', forum %></td>
+    <td><%= link_to 'Show', forum_topics_path(forum) %></td>
     <td><%= link_to 'Edit', edit_forum_path(forum) %></td>
     <td><%= link_to 'Destroy', forum, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
