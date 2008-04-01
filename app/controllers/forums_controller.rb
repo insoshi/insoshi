@@ -1,45 +1,38 @@
 class ForumsController < ApplicationController
-  # GET /forums
-  # GET /forums.xml
+
+
   def index
     @forums = Forum.find(:all)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.xml  { render :xml => @forums }
     end
   end
 
-  # GET /forums/1
-  # GET /forums/1.xml
   def show
     @forum = Forum.find(params[:id])
     @topics = @forum.topics.paginate(:page => params[:page])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.xml  { render :xml => @forum }
     end
   end
 
-  # GET /forums/new
-  # GET /forums/new.xml
   def new
     @forum = Forum.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.xml  { render :xml => @forum }
     end
   end
 
-  # GET /forums/1/edit
   def edit
     @forum = Forum.find(params[:id])
   end
 
-  # POST /forums
-  # POST /forums.xml
   def create
     @forum = Forum.new(params[:forum])
 
@@ -55,8 +48,6 @@ class ForumsController < ApplicationController
     end
   end
 
-  # PUT /forums/1
-  # PUT /forums/1.xml
   def update
     @forum = Forum.find(params[:id])
 
@@ -72,8 +63,6 @@ class ForumsController < ApplicationController
     end
   end
 
-  # DELETE /forums/1
-  # DELETE /forums/1.xml
   def destroy
     @forum = Forum.find(params[:id])
     @forum.destroy

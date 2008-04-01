@@ -12,6 +12,8 @@ describe PeopleController do
   describe "people pages" do
     integrate_views
     
+    it "should require login" 
+    
     it "should have a working index" do
       get :index
       response.should be_success
@@ -158,7 +160,6 @@ describe PeopleController do
         with_tag("td", /#{comment.body}/)
       end
     end
-    
   end
   
   private
