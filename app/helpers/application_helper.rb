@@ -6,7 +6,7 @@ module ApplicationHelper
   def menu
     home     = menu_element("Home",   home_path)
     people   = menu_element("People", people_path)
-    forum    = menu_element("Forum",  forums_path)
+    forum    = menu_element(inflect("Forum", Forum.count),  forums_path)
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
       messages = menu_element("Messages", messages_path)
@@ -17,7 +17,8 @@ module ApplicationHelper
       [home, profile, contacts, messages, blog, people, forum]
     elsif logged_in? and admin_view?
       people = menu_element("People", admin_people_path)
-      forums =  menu_element("Forum", admin_topics_path)
+      forums =  menu_element(inflect("Forum", Forum.count),
+                             admin_forums_path)
       [home, people, forums]
     else
       [home, people, forum]
@@ -101,4 +102,11 @@ module ApplicationHelper
     str << "&nbsp;"
     str << link_to_unless_current(action, path, opts)
   end
+
+private
+  
+  def inflect(word, number)
+    number > 1 ? word.pluralize : word
+  end
+
 end

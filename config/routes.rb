@@ -14,7 +14,12 @@ ActionController::Routing::Routes.draw do |map|
      person.resources :comments
   end
   map.namespace :admin do |admin|
-    admin.resources :people, :topics
+    admin.resources :people
+    admin.resources :forums do |forums|
+      forums.resources :topics do |topic|
+        topic.resources :posts
+      end
+    end    
   end
   map.resources :blogs do |blog|
     blog.resources :posts do |post|
@@ -27,8 +32,6 @@ ActionController::Routing::Routes.draw do |map|
       topic.resources :posts
     end
   end
-  
-  #map.forum '/forum', :controller => 'topics', :action => 'index'
   
   map.signup '/signup', :controller => 'people', :action => 'new'
   map.login '/login', :controller => 'sessions', :action => 'new'
