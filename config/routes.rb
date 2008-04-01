@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
      person.resources :comments
   end
   map.namespace :admin do |admin|
-    admin.resources :people
+    admin.resources :home, :people
     admin.resources :forums do |forums|
       forums.resources :topics do |topic|
         topic.resources :posts
@@ -37,6 +37,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.home '/', :controller => 'home'
+  map.admin_home '/admin/home', :controller => 'home'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
