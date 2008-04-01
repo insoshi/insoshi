@@ -3,10 +3,13 @@ class ForumsController < ApplicationController
 
   def index
     @forums = Forum.find(:all)
+    if @forums.length == 1
+      forum = @forums.first
+      redirect_to forum_topics_url(forum) and return
+    end
 
     respond_to do |format|
       format.html
-      format.xml  { render :xml => @forums }
     end
   end
 
