@@ -35,10 +35,4 @@ class Admin::PeopleController < ApplicationController
     end
     redirect_to admin_people_url
   end
-
-  private
-
-    def admin_required
-      redirect_to home_url unless current_person.admin?
-    end
 end

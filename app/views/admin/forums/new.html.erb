@@ -2,7 +2,7 @@
 
 <%= error_messages_for :forum %>
 
-<% form_for(@forum) do |f| %>
+<% form_for :forum, :url => admin_forums_path do |f| %>
   <p>
     <b>Name</b><br />
     <%= f.text_field :name %>
@@ -11,11 +11,6 @@
   <p>
     <b>Description</b><br />
     <%= f.text_area :description %>
-  </p>
-
-  <p>
-    <b>Topics count</b><br />
-    <%= f.text_field :topics_count %>
   </p>
 
   <p>
