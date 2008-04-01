@@ -1,6 +1,7 @@
 # NOTE: We use "posts" for both forum topic posts and blog posts,
 # There is some trickery to handle the two in a unified manner.
 class PostsController < ApplicationController
+  include ApplicationHelper
   
   before_filter :login_required
   before_filter :get_instance_vars
@@ -170,7 +171,8 @@ class PostsController < ApplicationController
     
     def posts_url
       if forum?
-        forum_topic_posts_url(@forum, @topic)
+        current_person.admin? ? admin_forum_topic_posts_url(@forum, @topic) :
+                                forum_topic_posts_url(@forum, @topic)
       elsif blog?
         blog_posts_url(@blog)
       end      

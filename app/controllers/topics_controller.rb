@@ -7,7 +7,7 @@ class TopicsController < ApplicationController
     @topics = @forum.topics.paginate(:page => params[:page])
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
     end
   end
 
@@ -15,7 +15,7 @@ class TopicsController < ApplicationController
     @topic = Topic.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
     end
   end
 

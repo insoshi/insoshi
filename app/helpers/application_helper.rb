@@ -37,7 +37,7 @@ module ApplicationHelper
   
   # Return true if the user is viewing the site in admin view.
   def admin_view?
-    params[:controller] =~ /admin/
+    params[:controller] =~ /admin/ and logged_in? and current_person.admin?
   end
   
   # Set the input focus for a specific id

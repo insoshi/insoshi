@@ -7,11 +7,11 @@
           <a name="post_<%= post.id %>"></a>
           Posted <%= time_ago_in_words(post.created_at) %> ago
           by <%= link_to post.person.name, post.person %>
-          <%- if current_person?(post.person) -%>
+          <%- if current_person?(post.person) or admin_view? -%>
             | <%= link_to "Edit",
                           edit_forum_topic_post_path(@forum, @topic, post) %>
           <%- end -%>
-          <%- if logged_in? and current_person.admin? -%>
+          <%- if logged_in? and admin_view? and current_person.admin? -%>
             | <%= link_to "Destroy",
                           forum_topic_post_path(@forum, @topic, post),
                           :method => :delete %>

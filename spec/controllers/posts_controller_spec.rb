@@ -62,7 +62,7 @@ describe PostsController do
       lambda do
         delete :destroy, :forum_id => @forum, :topic_id => @topic,
                          :id => @post
-        response.should redirect_to(forum_topic_posts_url(@topic))
+        response.should redirect_to(admin_forum_topic_posts_url(@topic))
       end.should change(ForumPost, :count).by(-1)
     end
     
