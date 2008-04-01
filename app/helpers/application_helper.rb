@@ -6,7 +6,7 @@ module ApplicationHelper
   def menu
     home     = menu_element("Home",   home_path)
     people   = menu_element("People", people_path)
-    forum    = menu_element("Forum",  forum_path)
+    forum    = menu_element("Forum",  forums_path)
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
       messages = menu_element("Messages", messages_path)
