@@ -63,10 +63,8 @@ class Connection < ActiveRecord::Base
         accepted_at = Time.now
         accept_one_side(person, contact, accepted_at)
         accept_one_side(contact, person, accepted_at)
-        # Log a connection activity.
-        # pid = person.is_a?(Person) ? person.id : person
-        # cid = conn(person, contact).id
-        # Activity.create!(:item => conn(person, contact))
+        # Log a connection activit
+        Activity.create!(:item => conn(person, contact))
       end
     end
   
