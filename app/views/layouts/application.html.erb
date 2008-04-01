@@ -15,7 +15,7 @@
         .with-grid { background: url('/stylesheets/blueprint/src/grid.png'); }
       </style>
     <%- end -%>
-    <%- if admin? -%>
+    <%- if admin_view? -%>
       <style type="text/css">
         body { background: #9cf; }
       </style>
@@ -64,7 +64,11 @@
               (<%= link_to "Sign out", logout_path %>)
               <%- if current_person.admin? -%>
                 <br />
-                <%= link_to("Admin view", admin_people_path) %>
+                <%- if admin_view? -%>
+                  <%= link_to("Standard view", home_path) %>
+                <%- else -%>
+                  <%= link_to("Admin view", admin_people_path) %>
+                <%- end -%>
               <%- end -%>
             <%- else -%>
               <%= link_to "Sign in", login_path %> or

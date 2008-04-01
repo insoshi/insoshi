@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
      person.resources :comments
   end
   map.namespace :admin do |admin|
-    admin.resources :people
+    admin.resources :people, :topics
   end
   map.resources :blogs do |blog|
     blog.resources :posts do |post|
