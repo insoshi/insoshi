@@ -7,7 +7,7 @@ one:
   forum_posts_count: 1
 
 two:
-  forum: two
+  forum: one
   person: quentin
   name: 1
   forum_posts_count: 1

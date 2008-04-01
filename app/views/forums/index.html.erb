@@ -9,7 +9,7 @@
 
 <% for forum in @forums %>
   <tr>
-    <td><%=h forum.name %></td>
+    <td><%= forum_name(forum) %></td>
     <td><%=h forum.description %></td>
     <td><%=h forum.topics_count %></td>
     <td><%= link_to 'Show', forum %></td>

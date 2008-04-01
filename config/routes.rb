@@ -22,13 +22,13 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
-  map.resources :forums do |forum|
-    forum.resources :topics do |topic|
+  map.resources :forums do |forums|
+    forums.resources :topics do |topic|
       topic.resources :posts
     end
   end
   
-  map.forum '/forum', :controller => 'topics', :action => 'index'
+  #map.forum '/forum', :controller => 'topics', :action => 'index'
   
   map.signup '/signup', :controller => 'people', :action => 'new'
   map.login '/login', :controller => 'sessions', :action => 'new'
