@@ -3,6 +3,10 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe ForumsController do
   integrate_views
   
+  before(:each) do
+    @person = login_as(:quentin)
+  end
+  
   it "should redirect to the topics if there is only one forum" do
     Forum.count.should == 1
     get :index
@@ -14,6 +18,5 @@ describe ForumsController do
     get :index
     response.should be_success
   end
-  it "should require login to view forums" 
   it "should only allow admins to create, edit, or destroy forums" 
 end
