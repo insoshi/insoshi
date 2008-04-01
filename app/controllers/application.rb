@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # :secret => '71a8c82e6d248750397d166001c5e308'
 
   private
+
+    def admin_required
+      redirect_to home_url unless current_person.admin?
+    end
   
     # Create a Scribd-style PageView.
     # See http://www.scribd.com/doc/49575/Scaling-Rails-Presentation

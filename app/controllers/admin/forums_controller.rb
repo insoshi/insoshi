@@ -1,6 +1,6 @@
 class Admin::ForumsController < ApplicationController
 
-  before_filter :login_required
+  before_filter :login_required, :admin_required
 
   def index
     @forums = Forum.find(:all)
@@ -19,7 +19,6 @@ class Admin::ForumsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml  { render :xml => @forum }
     end
   end
 
@@ -47,10 +46,8 @@ class Admin::ForumsController < ApplicationController
       if @forum.update_attributes(params[:forum])
         flash[:notice] = 'Forum was successfully updated.'
         format.html { redirect_to(@forum) }
-        format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @forum.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -60,8 +57,8 @@ class Admin::ForumsController < ApplicationController
     @forum.destroy
 
     respond_to do |format|
+      flash[:success] = 'Forum was successfully destroyed.'
       format.html { redirect_to(admin_forums_url) }
-      format.xml  { head :ok }
     end
   end
 end

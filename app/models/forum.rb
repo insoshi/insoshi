@@ -12,6 +12,8 @@
 #
 
 class Forum < ActiveRecord::Base
+  attr_accessible :name, :description
+
   has_many :topics, :order => "created_at DESC", :dependent => :destroy
   has_many :posts, :through => :topics
 
