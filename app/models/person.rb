@@ -81,7 +81,15 @@ class Person < ActiveRecord::Base
   ## Class methods
   
   class << self
-    # People search using Ferret
+    
+    # Return the active users.
+    def active(page = 1)
+      paginate(:all, :page => page,
+                     :per_page => RASTER_PER_PAGE,
+                     :conditions => ["deactivated = ?", false])
+    end
+    
+    # People search.
     def search(query, options = {})
       return [].paginate if query.blank?
       limit = [total_hits(query), SEARCH_LIMIT].min

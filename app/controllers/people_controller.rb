@@ -5,8 +5,7 @@ class PeopleController < ApplicationController
   
   def index
     # TODO: Make this Person.active.
-    @people = Person.paginate(:all, :page => params[:page],
-                              :per_page => RASTER_PER_PAGE)
+    @people = Person.active(params[:page])
 
     respond_to do |format|
       format.html

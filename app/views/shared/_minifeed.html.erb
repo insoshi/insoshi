@@ -2,10 +2,12 @@
   <table class="minifeed">
   <tr><th colspan="2">Minifeed</th></tr>
   <%- current_person.feed.each do |activity| -%>
-  <tr>
-    <td><%= minifeed_message activity %></td>
-    <td><%= image_link activity.person %></td>
-  </tr>
+    <%- unless activity.item.nil? -%>
+    <tr>
+      <td><%= minifeed_message activity %></td>
+      <td><%= image_link activity.person %></td>
+    </tr>
+    <%- end -%>
   <%- end -%>
   </table>
 <%- end -%>
