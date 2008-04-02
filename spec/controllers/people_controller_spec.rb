@@ -7,12 +7,17 @@ describe PeopleController do
     photos = [mock_photo(:primary => true), mock_photo]
     photos.stub!(:find_all_by_primary).and_return(photos.select(&:primary?))
     @person.stub!(:photos).and_return(photos)
+    login_as(:aaron)
   end
   
   describe "people pages" do
     integrate_views
     
-    it "should require login" 
+    it "should require login" do
+      logout
+      get :index
+      response.should redirect_to(login_url)
+    end
     
     it "should have a working index" do
       get :index

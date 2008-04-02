@@ -1,5 +1,6 @@
 class PeopleController < ApplicationController
   
+  before_filter :login_required
   before_filter :correct_user_required, :only => [ :edit, :update ]
   
   def index
