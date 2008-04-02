@@ -260,7 +260,9 @@ class Person < ActiveRecord::Base
   end
 
   def last_admin?
-    admin? and Person.count(:conditions => ["admin = ?", true]) == 1
+    num_admins = Person.count(:conditions => ["admin = ? AND deactivated = ?",
+                                              true, false])
+    admin? and num_admins == 1
   end
 
   protected

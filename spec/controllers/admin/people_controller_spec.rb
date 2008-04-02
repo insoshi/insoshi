@@ -28,7 +28,7 @@ describe Admin::PeopleController do
     
     it "should deactivate a person" do
       @person.should_not be_deactivated
-      put :update, :id => @person, :task => "deactivate"
+      put :update, :id => @person, :task => "deactivated"
       @person.reload.should be_deactivated
     end
     
@@ -36,15 +36,39 @@ describe Admin::PeopleController do
       @person.toggle(:deactivated)
       @person.save!
       @person.should be_deactivated
-      put :update, :id => @person, :task => "deactivate"
+      put :update, :id => @person, :task => "deactivated"
       @person.reload.should_not be_deactivated
     end
     
     
-    it "should allow an admin to deactivate himself" 
-    it "should not allow last admin to deactivate himself" 
-    it "should allow an admin to un-admin himself" 
-    it "should not allow the last admin to un-admin himself"     
+    it "should allow an admin to deactivate himself" do
+      @person.toggle!(:admin)
+      put :update, :id => @admin, :task => "deactivated"
+      @admin.reload.should be_deactivated
+    end
+
+    it "should not deactivation if no other admins are active" do
+      # Add an admin, but deactivate him.
+      @person.toggle!(:admin)
+      @person.toggle!(:deactivated)
+      put :update, :id => @admin, :task => "deactivated"
+      @admin.reload.should_not be_deactivated
+    end    
+    
+    it "should not allow last admin to deactivate himself" do
+      put :update, :id => @admin, :task => "deactivated"
+      @admin.should_not be_deactivated
+    end
+    
+    it "should allow an admin to un-admin himself" do
+      @person.toggle!(:admin)
+      put :update, :id => @admin, :task => "admin"
+      @admin.reload.should_not be_admin
+    end
+    it "should not allow the last admin to un-admin himself" do
+      put :update, :id => @admin, :task => "admin"
+      @admin.reload.should be_admin
+    end
   end
   
 end
