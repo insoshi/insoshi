@@ -14,7 +14,7 @@ SMALL_TEXT_LENGTH = 300
 
 # Ferret adds a significant overhead to tests, so disable it by default.
 # Set this to true to run the tests with Ferret enabled.
-FERRET_IN_TESTS = false
+FERRET_IN_TESTS = true
 
 # Ferret runs if test is not true, or (if test true) if ferret is true.
 def ferret?

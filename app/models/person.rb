@@ -95,7 +95,8 @@ class Person < ActiveRecord::Base
       limit = [total_hits(query), SEARCH_LIMIT].min
       paginate_by_contents(query, :page => options[:page],
                                   :per_page => SEARCH_PER_PAGE,
-                                  :total_entries => limit)
+                                  :total_entries => limit,
+                                  :conditions => ["deactivated = ?", false])
     end
     
     def find_recent

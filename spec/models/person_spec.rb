@@ -250,16 +250,17 @@ describe Person do
       @person.should_not be_last_admin
     end
   end
+  
+  protected
 
-protected
-  def create_person(options = {})
-    record = Person.new({ :email => 'quire@example.com',
-                          :password => 'quire',
-                          :password_confirmation => 'quire',
-                          :name => 'Quire',
-                          :description => 'A new person' }.merge(options))
-    record.valid?
-    record.save! if options[:save]
-    record
-  end
+    def create_person(options = {})
+      record = Person.new({ :email => 'quire@example.com',
+                            :password => 'quire',
+                            :password_confirmation => 'quire',
+                            :name => 'Quire',
+                            :description => 'A new person' }.merge(options))
+      record.valid?
+      record.save! if options[:save]
+      record
+    end
 end

@@ -4,7 +4,6 @@ class PeopleController < ApplicationController
   before_filter :correct_user_required, :only => [ :edit, :update ]
   
   def index
-    # TODO: Make this Person.active.
     @people = Person.active(params[:page])
 
     respond_to do |format|
