@@ -1,30 +1,5 @@
 module CustomModelMatchers
   
-  class BeA
-    def initialize(klass)
-      @klass = klass
-    end
-    
-    def matches?(model)
-      @model = model
-      @model.is_a?(@klass)
-    end
-    
-    def failure_message
-      "#{@model.to_s} should be a #{@klass.to_s}"
-    end
-
-    def negative_failure_message
-      "#{@model.to_s} should not be a #{@klass.to_s}"
-    end
-  end
-  
-  def be_a(klass)
-    BeA.new(klass)
-  end
-  
-  alias be_an be_a
-  
   # Verify that a model instance has a maximum length on the given attribute.
   class MaximumLength
     def initialize(attribute, maxlength)
