@@ -1,21 +1,8 @@
   <div id="debug">
-    <a href="#" onclick="Element.toggle('params_debug_info');return false">
-    params</a> |
-    <a href="#" onclick="Element.toggle('session_debug_info');return false">
-    session</a> |
     <a href="#" onclick="Element.toggle('env_debug_info');return false">
     env</a> |
     <a href="#" onclick="Element.toggle('request_debug_info');return false">
     request</a>
-    <fieldset id="params_debug_info" class="debug_info" style="display: none">
-      <legend>params</legend>
-      <%= debug(params) %>
-    </fieldset>
-    <fieldset id="session_debug_info" class="debug_info" 
-              style="display: none">
-      <legend>session</legend>
-      <%= debug(session) %>
-    </fieldset>
     <fieldset id="env_debug_info" class="debug_info" style="display: none">
       <legend>env</legend>
       <%= debug(request.env) %>

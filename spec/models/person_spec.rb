@@ -251,6 +251,12 @@ describe Person do
     end
   end
   
+  describe "search" do    
+    it "should have a working search page" do
+      Person.search("Quentin").should == [people(:quentin)].paginate
+    end
+  end if SEARCH_IN_TESTS
+  
   protected
 
     def create_person(options = {})

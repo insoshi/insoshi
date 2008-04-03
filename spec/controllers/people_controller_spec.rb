@@ -43,12 +43,6 @@ describe PeopleController do
       response.should be_success
       response.should render_template("edit")
     end
-    
-    
-    it "should have a working search page" do
-      get :search, :q => "Quentin"
-      assigns(:people).should == [people(:quentin)].paginate
-    end if FERRET_IN_TESTS
   end
   
   describe "signup" do

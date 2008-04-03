@@ -1,0 +1,9 @@
+<%= will_paginate(@results) %>
+
+<ul>
+  <%- @results.each do |result| -%>
+    <li><%= result.name %></li>
+  <%- end -%>
+</ul>
+    
+<%= will_paginate(@results) %>

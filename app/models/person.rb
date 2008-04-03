@@ -26,7 +26,7 @@ class Person < ActiveRecord::Base
                 :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :deactivated
-  acts_as_ferret :fields => [ :name, :description ] if ferret?
+  acts_as_ferret :fields => [ :name, :description ] if search?
 
   MAX_EMAIL = MAX_PASSWORD = SMALL_STRING_LENGTH
   MAX_NAME = SMALL_STRING_LENGTH

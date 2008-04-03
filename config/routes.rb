@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :searches
   map.resources :activities
   map.resources :connections
   map.resources :password_reminders
@@ -6,7 +7,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
   map.resources :messages, :collection => { :sent => :get, :trash => :get },
                            :member => { :reply => :get, :undestroy => :put }
-  map.resources :people, :collection => { :search => :get }
   map.resources :people do |person|
      person.resources :messages
      person.resources :photos

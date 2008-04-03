@@ -1,6 +1,7 @@
 <div id="search">
-<% form_tag search_people_path, :method => :get do %>
+<% form_tag searches_path, :method => :get do %>
     <%= text_field_tag :q, params[:q], :size => 18, :maxlength => 50 %>
     <%= submit_tag "Search", :name => nil %>
+    <%= hidden_field_tag "model", params[:controller].classify %>
 <% end %>
 </div>
