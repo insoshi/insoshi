@@ -1,12 +1,12 @@
 # == Schema Information
-# Schema version: 13
+# Schema version: 15
 #
 # Table name: comments
 #
-#  id           :integer(11)     not null, primary key
-#  person_id    :integer(11)     
-#  commenter_id :integer(11)     
-#  blog_post_id :integer(11)     
+#  id           :integer         not null, primary key
+#  person_id    :integer         
+#  commenter_id :integer         
+#  blog_post_id :integer         
 #  body         :text            
 #  type         :string(255)     
 #  created_at   :datetime        

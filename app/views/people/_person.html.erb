@@ -1,0 +1,11 @@
+<li>
+  <span class="icon">
+    <%= image_link person %>
+  </span>
+  <span class="name">
+    <%= person_link person %>
+  </span>
+  <span class="description">
+    <%= sanitize(truncate(person.description), 20) %>
+  </span>
+</li>

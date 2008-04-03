@@ -1,10 +1,10 @@
 # == Schema Information
-# Schema version: 13
+# Schema version: 15
 #
 # Table name: blogs
 #
-#  id         :integer(11)     not null, primary key
-#  person_id  :integer(11)     
+#  id         :integer         not null, primary key
+#  person_id  :integer         
 #  created_at :datetime        
 #  updated_at :datetime        
 #

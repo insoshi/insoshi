@@ -259,7 +259,7 @@ describe Person do
   
   describe "search" do    
     it "should have a working search page" do
-      Person.search("Quentin").should == [people(:quentin)].paginate
+      Person.search(:q => "Quentin").should == [people(:quentin)].paginate
     end
   end if SEARCH_IN_TESTS
   

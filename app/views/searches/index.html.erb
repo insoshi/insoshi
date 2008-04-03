@@ -3,13 +3,7 @@
   <%= will_paginate(@results) %>
 
   <ul class="search">
-    <%- @results.each do |result| -%>
-      <li>
-        <span><%= image_link result %></span>
-        <span><%= person_link result %></span>
-        <span><%= link_to sanitize(truncate(result.description, 20)), result %></span>
-      </li>
-    <%- end -%>
+    <%= render :partial => partial(@results), :collection => @results %>
   </ul>
     
   <%= will_paginate(@results) %>

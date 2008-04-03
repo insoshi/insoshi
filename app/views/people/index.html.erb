@@ -1,8 +1,9 @@
 <%- column_div :type => :primary do -%>
   <% unless @people.empty? -%>
     <%= will_paginate %>
-    <%= raster image_links(@people, :captions => @people.map(&:name),
-                                    :image => :thumbnail) %>
+    <ul class="results">
+      <%= render :partial => @people %>
+    <ul>
     <%= will_paginate %>
   <% else %>
     <h2>No results to show.</h2>

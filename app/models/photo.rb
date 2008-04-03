@@ -1,18 +1,18 @@
 # == Schema Information
-# Schema version: 13
+# Schema version: 15
 #
 # Table name: photos
 #
-#  id           :integer(11)     not null, primary key
-#  person_id    :integer(11)     
-#  parent_id    :integer(11)     
+#  id           :integer         not null, primary key
+#  person_id    :integer         
+#  parent_id    :integer         
 #  content_type :string(255)     
 #  filename     :string(255)     
 #  thumbnail    :string(255)     
-#  size         :integer(11)     
-#  width        :integer(11)     
-#  height       :integer(11)     
-#  primary      :boolean(1)      
+#  size         :integer         
+#  width        :integer         
+#  height       :integer         
+#  primary      :boolean         
 #  created_at   :datetime        
 #  updated_at   :datetime        
 #

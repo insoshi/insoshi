@@ -1,9 +1,9 @@
 # == Schema Information
-# Schema version: 13
+# Schema version: 15
 #
 # Table name: people
 #
-#  id                        :integer(11)     not null, primary key
+#  id                        :integer         not null, primary key
 #  email                     :string(255)     
 #  name                      :string(255)     
 #  remember_token            :string(255)     
@@ -12,13 +12,13 @@
 #  remember_token_expires_at :datetime        
 #  last_contacted_at         :datetime        
 #  last_logged_in_at         :datetime        
-#  forum_posts_count         :integer(11)     default(0), not null
-#  blog_post_comments_count  :integer(11)     default(0), not null
-#  wall_comments_count       :integer(11)     default(0), not null
+#  forum_posts_count         :integer         default(0), not null
+#  blog_post_comments_count  :integer         default(0), not null
+#  wall_comments_count       :integer         default(0), not null
 #  created_at                :datetime        
 #  updated_at                :datetime        
-#  admin                     :boolean(1)      not null
-#  deactivated               :string(255)     
+#  admin                     :boolean         not null
+#  deactivated               :boolean         not null
 #
 
 class Person < ActiveRecord::Base
@@ -90,7 +90,8 @@ class Person < ActiveRecord::Base
     end
     
     # People search.
-    def search(query, options = {})
+    def search(options = {})
+      query = options[:q]
       return [].paginate if query.blank?
       limit = [total_hits(query), SEARCH_LIMIT].min
       paginate_by_contents(query, :page => options[:page],
