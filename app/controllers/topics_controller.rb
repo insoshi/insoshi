@@ -12,6 +12,10 @@ class TopicsController < ApplicationController
     end
   end
 
+  def show
+    redirect_to forum_topic_posts_url(params[:forum_id], params[:id])
+  end
+
   def new
     @topic = Topic.new
 
