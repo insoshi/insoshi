@@ -15,8 +15,10 @@ class ApplicationController < ActionController::Base
   private
 
     def admin_required
-      flash[:error] = "Admin access required"
-      redirect_to home_url unless current_person.admin?
+      unless current_person.admin?
+        flash[:error] = "Admin access required"
+        redirect_to home_url
+      end
     end
   
     # Create a Scribd-style PageView.

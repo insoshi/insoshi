@@ -12,11 +12,8 @@ module SearchesHelper
   def partial(object)
     object = object.first if object.is_a?(Array)
     klass = object.class.to_s
-    case klass
-    when "Person"
-      'people/person'
-    when "Topic"
-      'topics/topic'
-    end
+    dir  = klass.tableize  # E.g., 'Person' becomes 'people'
+    part = dir.singularize # E.g., 'people' becomes 'person'
+    "#{dir}/#{part}"
   end
 end

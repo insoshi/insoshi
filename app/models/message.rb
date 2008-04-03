@@ -21,8 +21,11 @@
 
 class Message < Communication
   attr_accessor :reply, :parent, :skip_send_mail
+  acts_as_ferret :fields => [ :subject, :content ] if search?
   
   MAX_CONTENT_LENGTH = MAX_TEXT_LENGTH
+  SEARCH_LIMIT = 20
+  SEARCH_PER_PAGE = 8
   
   belongs_to :sender, :class_name => 'Person', :foreign_key => 'sender_id'
   belongs_to :recipient, :class_name => 'Person',
@@ -34,6 +37,26 @@ class Message < Communication
   
   after_create :update_recipient_last_contacted_at,
                :save_recipient, :set_replied_to, :send_receipt_reminder
+  
+  class << self
+    def search(options = {})
+      query = options[:q]
+      return [].paginate if query.blank?
+      limit = [total_hits(query), SEARCH_LIMIT].min
+      conditions = ["recipient_id = ? AND recipient_deleted_at IS NULL",
+                    options[:recipient]]
+      paginate_by_contents(query, { :total_entries => limit },
+                                  { :page => options[:page],
+                                    :per_page => SEARCH_PER_PAGE,
+                                    :conditions => conditions })
+    rescue RuntimeError
+      # Weird behavior: if paginate_by_contents is nonempty before
+      # the conditions are applied, but empty *after*, Ferret raises a
+      # RuntimeError.  We will definitely switch to Sphinx at some point.
+      return [].paginate
+    end
+    
+  end
   
   def parent
     return @parent unless @parent.nil?

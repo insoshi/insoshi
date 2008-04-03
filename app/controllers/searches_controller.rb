@@ -2,7 +2,12 @@ class SearchesController < ApplicationController
 
   def index
     model = params[:model]
-    @results = model.constantize.search(params)
+    if model == "Message"
+      options = params.merge(:recipient => current_person)
+    else
+      options = params
+    end
+    @results = model.constantize.search(options)
     if model == "ForumPost" and @results
       # Cosolidate the topics, eliminating duplicates.
       # TODO: do this in the Topic model.  This will probably require some
