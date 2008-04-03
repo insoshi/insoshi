@@ -1,9 +1,20 @@
-<%= will_paginate(@results) %>
+<% column_div :type => :primary do %>
 
-<ul>
-  <%- @results.each do |result| -%>
-    <li><%= result.name %></li>
-  <%- end -%>
-</ul>
+  <%= will_paginate(@results) %>
+
+  <ul class="search">
+    <%- @results.each do |result| -%>
+      <li>
+        <span><%= image_link result %></span>
+        <span><%= person_link result %></span>
+        <span><%= link_to sanitize(truncate(result.description, 20)), result %></span>
+      </li>
+    <%- end -%>
+  </ul>
     
-<%= will_paginate(@results) %>
+  <%= will_paginate(@results) %>
+<%- end -%>
+
+<% column_div :type => :secondary do %>
+  <%= render :partial => 'searches/box' %>
+<%- end -%>

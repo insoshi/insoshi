@@ -8,7 +8,7 @@ describe Admin::ForumsController do
   end
   
   it "should allow admin to access a modification page" do
-    admin = login_as(:quentin)
+    admin = admin!(login_as(:quentin))
     get :new
     response.should be_success    
   end

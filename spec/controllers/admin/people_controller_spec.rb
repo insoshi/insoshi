@@ -14,6 +14,7 @@ describe Admin::PeopleController do
   end
 
   it "should render successfully for an admin user" do
+    @admin = people(:quentin); @admin.admin = true; @admin.save!
     login_as :quentin
     get :index
     response.should be_success
@@ -23,6 +24,7 @@ describe Admin::PeopleController do
     
     before(:each) do
       @admin = login_as(:quentin)
+      @admin.admin = true; @admin.save!
       @person = people(:aaron)
     end
     

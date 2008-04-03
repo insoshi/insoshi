@@ -73,4 +73,12 @@ Spec::Runner.configure do |config|
   def output_body(response)
     File.open("tmp/index.html", "w") { |f| f.write(response.body) }
   end
+  
+  # Make a user an admin.
+  # All fixture people are not admins by default, to protect against mistakes.
+  def admin!(person)
+    person.admin = true
+    person.save!
+    person
+  end
 end

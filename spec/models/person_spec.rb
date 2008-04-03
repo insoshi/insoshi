@@ -238,6 +238,12 @@ describe Person do
   end
   
   describe "admin" do
+    
+    before(:each) do
+      @person.admin = true
+      @person.save!
+    end
+    
     it "should un-admin a person" do
       @person.should be_admin
       @person.toggle(:admin)

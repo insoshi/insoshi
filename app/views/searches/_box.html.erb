@@ -2,6 +2,6 @@
 <% form_tag searches_path, :method => :get do %>
     <%= text_field_tag :q, params[:q], :size => 18, :maxlength => 50 %>
     <%= submit_tag "Search", :name => nil %>
-    <%= hidden_field_tag "model", params[:controller].classify %>
+    <%= hidden_field_tag "model", search_model %>
 <% end %>
 </div>

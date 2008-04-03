@@ -58,6 +58,7 @@ describe PostsController do
     end
     
     it "should allow admins to destroy posts" do
+      admin!(@person)
       @person.should be_admin
       lambda do
         delete :destroy, :forum_id => @forum, :topic_id => @topic,
