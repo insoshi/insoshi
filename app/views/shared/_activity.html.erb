@@ -1,11 +1,11 @@
 <%# The activity shouldn't be nil, but we're wearing a belt and suspenders. %>
 <%- unless activity.item.nil? -%>
-  <div class="activity container">
-    <div class="feed_icon first span-1">
+  <div class="activity container section">
+    <div class="feed_icon column first span-1">
       <%# This will probably be a feed icon instead of a person icon %>
       <%= image_link activity.person %>
     </div>
-    <div class="activity_wrapper span-<%= LARGER_COLUMN-1 %>">
+    <div class="activity_wrapper column span-<%= LARGER_COLUMN-1 %>">
       <div class="activity_body">
         
         <%= feed_message activity %>

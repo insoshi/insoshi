@@ -1,15 +1,13 @@
 module DisplayHelper
   
-  # Raster a list of elements.
+  # Raster an array of elements.
   def raster(list, options = {})
     columns = options[:num] || N_COLUMNS
     title   = options[:title] || ""
     markaby do
-      div.module do
+      div.section do
+        h2 { title } unless title.blank?
         table do
-          tr do
-            th(:colspan => columns) { title }
-          end unless title.blank?
           list.collect_every(columns).each do |row|
             tr do
               row.each do |element| 
