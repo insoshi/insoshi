@@ -1,7 +1,7 @@
 # Column sizes
 FULL = 20
-LEFT = 14
-RIGHT = 6
+LEFT = LARGER_COLUMN = 14
+RIGHT = SMALLER_COLUMN = 6
 
 # Database strings typically can't be longer than 255.
 MAX_STRING_LENGTH = 255

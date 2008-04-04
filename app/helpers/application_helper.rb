@@ -50,6 +50,8 @@ module ApplicationHelper
   # The current two-column layout has primary & secondary columns.
   # The options hash is handled so that the caller can pass options to 
   # content_tag.
+  # The LEFT, RIGHT, and FULL constants are defined in 
+  # config/initializers/global_constants.rb
   def column_div(options = {}, &block)
     t = options.delete(:type)
     if t.nil?

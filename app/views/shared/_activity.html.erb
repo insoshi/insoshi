@@ -1,12 +1,18 @@
-<%# This should never happen, but we're wearing a belt and suspenders. %>
+<%# The activity shouldn't be nil, but we're wearing a belt and suspenders. %>
 <%- unless activity.item.nil? -%>
-  <tr>
-    <td><%= image_link activity.person %></td>
-    <td>
-      <%= feed_message activity %>
-      <span class="time">
-        <%= time_ago_in_words(activity.created_at).capitalize %> ago
-      </span>
-    </td>
-  </tr>
+  <div class="activity container">
+    <div class="feed_icon first span-1">
+      <%# This will probably be a feed icon instead of a person icon %>
+      <%= image_link activity.person %>
+    </div>
+    <div class="activity_wrapper span-<%= LARGER_COLUMN-1 %>">
+      <div class="activity_body">
+        
+        <%= feed_message activity %>
+        <span class="time">
+          <%= time_ago_in_words(activity.created_at).capitalize %> ago
+        </span>
+      </div>
+    </div>
+  </div>
 <%- end -%>
