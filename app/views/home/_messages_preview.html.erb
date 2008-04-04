@@ -1,22 +1,21 @@
 <%- unless current_person.recent_messages.empty? -%>
-<table>
-  <tr><th colspan="2">Messages</th></tr>
+  <h2>Messages</h2>
   <%- current_person.recent_messages.each do |message| -%>
-  <tr>
-    <td class="column first span-1">
-      <%= link_to image_tag(message.sender.icon), message.sender %>
-    </td>
-    <td class="column span-5 last">
-    <span class="small">
-      From <%= link_to message.sender.name, message.sender %>
+  <div class="message_preview container">
+    <div class="column first span-1">
+      <%= image_link message.sender %>
+    </div>
+    <div class="column span-<%= SMALLER_COLUMN-1 %> last">
+    <div class="from">
+      From <%= person_link message.sender %>
       <%= time_ago_in_words message.created_at %> ago
-      <br />
-      <%= link_to message.subject, message %>
-    </span>
-    </td>
-  </tr>
-  <%- end -%>
-</table>
+    </div>
+    <div class="subject">
+      <%= link_to sanitize(truncate(message.subject, 30)), message %>
+    </div>
+    </div>
+  </div>
+<%- end -%>
 
 <div class="see_all">
   <%= link_to "All messages &raquo;", messages_path %>
