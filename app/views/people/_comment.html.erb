@@ -1,10 +1,11 @@
-<tr>
-  <td><%= link_to image_tag(comment.commenter.thumbnail), 
-                            comment.commenter %></td>
-  <td class="content">
+<div class="clear">
+  <div class="column span-3 first">
+    <%= image_link(comment.commenter, :image => :thumbnail) %>
+  </div>
+  <div class="content column span-<%= LARGER_COLUMN-3 %> last">
     <div class="header">
       <%= time_ago_in_words(comment.created_at) %> ago
-      <%= link_to comment.commenter.name, comment.commenter %> said
+      <%= person_link comment.commenter %> said
     </div>
     <div class="body">
       <%= sanitize comment.body %>
@@ -14,5 +15,5 @@
                             :method => :delete %>
       <%- end -%>
     </div>
-  </td>
-</tr>
+  </div>
+</div>

@@ -1,13 +1,7 @@
 <div class="activity clear">
   <%- unless @person.recent_activity.empty? -%>
-  <div class="comment">
-    <table>
-      <tr>
-        <th colspan="2">Recent Activity</th>
-      </tr>
-      <%= render :partial => 'shared/activity',
-                 :collection => @person.recent_activity %>
-    </table>
-  </div>
+  <h2>Recent Activity</h2>
+     <%= render :partial => 'shared/activity',
+                :collection => @person.recent_activity %>
   <%- end -%>
 </div>
