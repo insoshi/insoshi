@@ -1,41 +1,41 @@
 <%- column_div :type => :primary do -%>
   
   <h1>Blog</h1>
-  <table>
-    <tr><th>Blog posts</th></tr>
+  <div class="blog section clear">
+    <div class="element">
     <%- @posts.each do |post| -%>
-      <tr>
-        <td><a name="post_<%= post.id %>"></a>
+      <div class="title"> 
+        <a name="post_<%= post.id %>"></a>
         <%= link_to sanitize(post.title), blog_post_path(@blog, post) %>
         <%- if current_person?(@blog.person) -%>
           | <%= link_to "Edit", edit_blog_post_path(@blog, post) %>
           | <%= link_to "Delete", blog_post_path(@blog, post),
                                   :method => :delete %>
         <%- end -%>
-        </td>
-      </tr>
-      <tr>
-        <td class="time">
+        </div>
+      <div class="time">
           Posted <%= time_ago_in_words(post.created_at) %> ago
           by <%= link_to @blog.person.name, @blog.person %>
-        </td>
-      </tr>
-      <tr><td><%= sanitize post.body %></td></tr>
-      <tr><td>
+      </div>
+      <div class="body">
+        <%= sanitize post.body %>
+      </div>
+      <div class="comments">
       <%- n = post.comments.count -%>
       <%= link_to pluralize(n, "comment"),
                   blog_post_path(@blog, post, :comments => n) %>
-      </td></tr>
+      </div>
     <%- end -%>
-  </table>
+    </div>
+  </div>
 
-<h3>Add new post</h3>
+  <h3>Add new post</h3>
 
-<%= render :partial => 'blog_form',
-           :locals => { :url => blog_posts_path(@blog),
-                        :method => :post } %>
+  <%= render :partial => 'blog_form',
+             :locals => { :url => blog_posts_path(@blog),
+                          :method => :post } %>
 
-<%= link_to 'Back', blog_posts_path(@blog) %>
+  <%= link_to 'Back', blog_posts_path(@blog) %>
 
 <%- end -%>
 
