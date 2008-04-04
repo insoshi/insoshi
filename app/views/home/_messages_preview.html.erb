@@ -1,23 +1,10 @@
 <%- unless current_person.recent_messages.empty? -%>
-  <h2>Messages</h2>
-  <%- current_person.recent_messages.each do |message| -%>
-  <div class="message_preview container">
-    <div class="column first span-1">
-      <%= image_link message.sender %>
-    </div>
-    <div class="column span-<%= SMALLER_COLUMN-1 %> last">
-    <div class="from">
-      From <%= person_link message.sender %>
-      <%= time_ago_in_words message.created_at %> ago
-    </div>
-    <div class="subject">
-      <%= link_to sanitize(truncate(message.subject, 30)), message %>
-    </div>
-    </div>
+  <div class="section">
+    <h2>Messages</h2>
+    <%= render :partial => 'message',
+               :collection => current_person.recent_messages %>
   </div>
-<%- end -%>
-
-<div class="see_all">
-  <%= link_to "All messages &raquo;", messages_path %>
-</div>
+  <div class="see_all">
+    <%= link_to "All messages &raquo;", messages_path %>
+  </div>
 <%- end -%>
