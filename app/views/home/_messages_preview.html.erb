@@ -1,6 +1,6 @@
 <%- unless current_person.recent_messages.empty? -%>
   <div class="section">
-    <h2>Messages</h2>
+    <h1>Messages</h1>
     <%= render :partial => 'message',
                :collection => current_person.recent_messages %>
   </div>

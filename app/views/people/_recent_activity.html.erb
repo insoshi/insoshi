@@ -1,6 +1,6 @@
 <div class="activity clear">
   <%- unless @person.recent_activity.empty? -%>
-  <h2>Recent Activity</h2>
+  <h1>Recent Activity</h1>
      <%= render :partial => 'shared/activity',
                 :collection => @person.recent_activity %>
   <%- end -%>

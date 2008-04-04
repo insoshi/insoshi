@@ -6,7 +6,7 @@ module DisplayHelper
     title   = options[:title] || ""
     markaby do
       div.section do
-        h2 { title } unless title.blank?
+        h1 { title } unless title.blank?
         table do
           list.collect_every(columns).each do |row|
             tr do

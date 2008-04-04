@@ -6,17 +6,17 @@
 
 <% form_for @person do |f| %>
 
-  <h2>Name</h2>
+  <h1>Name</h1>
 
   <div class="form_row">
     <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
   </div>
   
-  <h2>Description</h2>
+  <h1>Description</h1>
 
   <div class="form_row"><%= f.text_area :description %></div>
   
-  <h2>Email</h2>
+  <h1>Email</h1>
 
   <div class="form_row">
     <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
@@ -32,7 +32,7 @@
 
 <br />
 
-<h2>Photos</h2>
+<h1>Photos</h1>
   
   <% if @person.photos.empty? %>
     <%= image_tag @person.thumbnail %>
@@ -72,7 +72,7 @@
 
   <%= @person.unencrypted_password %>
 
-  <h2>Change Password</h2>
+  <h1>Change Password</h1>
 
   <div class="form_row">
     <label for="password">Current Password</label>
