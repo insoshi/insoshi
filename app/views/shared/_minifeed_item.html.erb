@@ -1,0 +1,10 @@
+<%- unless minifeed_item.item.nil? -%>
+<div class="minifeed_item container">
+  <div class="minifeed_body span-<%= SMALLER_COLUMN-1 %>">
+    <%= minifeed_message minifeed_item %>
+  </div>
+  <div class="feed_icon span-1 last">
+    <%= image_link minifeed_item.person %>
+  </div>
+</div>
+<%- end -%>

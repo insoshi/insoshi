@@ -1,13 +1,7 @@
 <%- if logged_in? -%>
-  <table class="minifeed">
-  <tr><th colspan="2">Minifeed</th></tr>
-  <%- current_person.feed.each do |activity| -%>
-    <%- unless activity.item.nil? -%>
-    <tr>
-      <td><%= minifeed_message activity %></td>
-      <td><%= image_link activity.person %></td>
-    </tr>
-    <%- end -%>
-  <%- end -%>
+  <div class="section">
+  <h2>Minifeed</h2>
+  <%= render :partial => 'shared/minifeed_item',
+             :collection => current_person.feed %>
   </table>
 <%- end -%>
