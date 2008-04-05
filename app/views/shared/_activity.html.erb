@@ -1,13 +1,12 @@
 <%# The activity shouldn't be nil, but we're wearing a belt and suspenders. %>
 <%- unless activity.item.nil? -%>
   <div class="activity element clear">
-    <div class="feed_icon column first span-1">
+    <div class="icon column first span-1">
       <%# This will probably be a feed icon instead of a person icon %>
       <%= image_link activity.person %>
     </div>
-    <div class="activity_wrapper column span-<%= LARGER_COLUMN-1 %> last">
+    <div class="wrapper column span-<%= LARGER_COLUMN-1 %> last">
       <div class="activity_body">
-        
         <%= feed_message activity %>
         <span class="time">
           <%= time_ago_in_words(activity.created_at).capitalize %> ago

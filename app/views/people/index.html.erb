@@ -1,12 +1,11 @@
 <%- column_div :type => :primary do -%>
   <% unless @people.empty? -%>
+    <h1>People</h1>
     <%= will_paginate %>
-    <ul class="results">
+    <div class="section">
       <%= render :partial => @people %>
-    <ul>
+    </div>
     <%= will_paginate %>
-  <% else %>
-    <h1>No results to show.</h1>
   <% end -%>
 <%- end -%>
 

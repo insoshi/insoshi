@@ -1,11 +1,15 @@
-<li>
-  <span class="icon">
+<div class="person element clear">
+  <div class="icon column first span-1">
     <%= image_link person %>
-  </span>
-  <span class="name">
-    <%= person_link person %>
-  </span>
-  <span class="description">
-    <%= sanitize(truncate(person.description), 20) %>
-  </span>
-</li>
+  </div>
+  <div class="wrapper column span-<%= LARGER_COLUMN-1 %> last">
+    <div class="name">
+      <%= person_link person %>
+    </div>
+    <%- unless person.description.blank? -%>
+      <div class="description">
+        <%= sanitize(truncate(person.description, 100)) %>
+      </div>
+    <%- end -%>
+  </div>
+</div>
