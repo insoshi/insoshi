@@ -5,7 +5,7 @@
   <% other_person = message.sender %>
   <h2>Sent by <%= name_link other_person %></h2>
 <% end %>
-<div><%= image_link @message.sender, :image => :thumbnail %></div>
+<div><%= image_link message.sender, :image => :thumbnail %></div>
 <span class="time"><%= time_ago_in_words message.created_at %> ago</span>
 <div class="status-mail">
   <%= email_link other_person, :replying_to => message,

@@ -151,14 +151,6 @@ describe PeopleController do
       get :show, :id => @person
       response.should_not have_tag("a[href=?]", edit_person_path(@person))
     end
-    
-    it "should have a working comment wall" do
-      comment = comments(:wall)
-      get :show, :id => @person
-      response.should have_tag("div[class=?]", "wall clear") do
-        with_tag("td", /#{comment.body}/)
-      end
-    end
   end
   
   private
