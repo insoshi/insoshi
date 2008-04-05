@@ -12,21 +12,15 @@
   <%= render :partial => 'message_nav' %>
 
   <%= link_to "&laquo; Back", :back %>
-
-  <table class="userlayout">
-    <tr>
-      <td class="sender" style="text-align: center;">
-        <%= image_link @message.sender, :image => :thumbnail %>
-      </td>
-      <td>
+  
+  <div>
         <%= render :partial => 'sender_info', 
                    :locals => { :message => @message, :rowclass => nil } %>
         <br />
         <p>Subject: <%= sanitize @message.subject %></p>
         <p><%= sanitize @message.content %></p>
-      </td>
-    </tr>
-  </table>
+  </div>
+
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
