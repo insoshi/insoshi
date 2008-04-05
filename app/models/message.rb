@@ -41,19 +41,14 @@ class Message < Communication
   class << self
     def search(options = {})
       query = options[:q]
-      return [].paginate if query.blank?
-      limit = [total_hits(query), SEARCH_LIMIT].min
+      query = options[:q]
+      return [].paginate if query.blank? or query == "*"
+      # This is ineffecient.  We'll fix it when we move to Sphinx.
       conditions = ["recipient_id = ? AND recipient_deleted_at IS NULL",
                     options[:recipient]]
-      paginate_by_contents(query, { :total_entries => limit },
-                                  { :page => options[:page],
-                                    :per_page => SEARCH_PER_PAGE,
-                                    :conditions => conditions })
-    rescue RuntimeError
-      # Weird behavior: if paginate_by_contents is nonempty before
-      # the conditions are applied, but empty *after*, Ferret raises a
-      # RuntimeError.  We will definitely switch to Sphinx at some point.
-      return [].paginate
+      results = find_by_contents(query, :conditions => conditions)
+      results[0...SEARCH_LIMIT].paginate(:page => options[:page],
+                                         :per_page => SEARCH_PER_PAGE)
     end
     
   end

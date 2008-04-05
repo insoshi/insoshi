@@ -1,11 +1,13 @@
 <% column_div :type => :primary do %>
-
+  <h1>Search results</h1>
   <%= will_paginate(@results) %>
-
-  <ul class="search">
-    <%= render :partial => partial(@results), :collection => @results %>
-  </ul>
-    
+  <div class="search section clear">
+    <%- if @results.empty? -%>
+      <h1>No results</h1>
+    <%- else -%>
+      <%= render :partial => partial(@results), :collection => @results %>
+    <%- end -%>
+  </div>
   <%= will_paginate(@results) %>
 <%- end -%>
 

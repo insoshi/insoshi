@@ -92,19 +92,12 @@ class Person < ActiveRecord::Base
     # People search.
     def search(options = {})
       query = options[:q]
-      return [].paginate if query.blank?
-      limit = [total_hits(query), SEARCH_LIMIT].min
-      return [].paginate if limit.zero?
-      paginate_by_contents(query, { :total_entries => limit },
-                                  { :page => options[:page],
-                                    :per_page => SEARCH_PER_PAGE,
-                                    :conditions => ["deactivated = ?",
-                                                    false] })
-    rescue RuntimeError
-      # Weird behavior: if paginate_by_contents is nonempty before
-      # the conditions are applied, but empty *after*, Ferret raises a
-      # RuntimeError.  We will definitely switch to Sphinx at some point.
-      return [].paginate
+      return [].paginate if query.blank? or query == "*"
+      # This is ineffecient.  We'll fix it when we move to Sphinx.
+      conditions = ["deactivated = ?", false]
+      results = find_by_contents(query, :conditions => conditions)
+      results[0...SEARCH_LIMIT].paginate(:page => options[:page],
+                                         :per_page => SEARCH_PER_PAGE)
     end
     
     def find_recent
