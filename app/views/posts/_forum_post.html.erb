@@ -1,0 +1,18 @@
+<div class="element">
+  <div class="time">
+      <a name="post_<%= forum_post.id %>"></a>
+      Posted <%= time_ago_in_words(forum_post.created_at) %> ago
+      by <%= person_link forum_post.person %>
+      <%- if current_person?(forum_post.person) or admin_view? -%>
+        | <%= link_to "Edit",
+                edit_forum_topic_post_path(@forum, @topic, forum_post) %>
+      <%- end -%>
+      <%- if admin_view? -%>
+        | <%= link_to "Destroy",
+                      forum_topic_post_path(@forum, @topic, forum_post),
+                      :confirm => 'Are you sure?',
+                      :method => :delete %>
+      <%- end -%>
+  </div>
+  <div class="body"><%= sanitize forum_post.body %></div>
+</div>

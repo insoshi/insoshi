@@ -1,42 +1,24 @@
 <%- column_div :type => :primary do -%>
-  <table>
-    <tr><th><%= @topic.name %></th></tr>
-    <%- @posts.each do |post| -%>
-      <tr>
-        <td class="time">
-          <a name="post_<%= post.id %>"></a>
-          Posted <%= time_ago_in_words(post.created_at) %> ago
-          by <%= link_to post.person.name, post.person %>
-          <%- if current_person?(post.person) or admin_view? -%>
-            | <%= link_to "Edit",
-                          edit_forum_topic_post_path(@forum, @topic, post) %>
-          <%- end -%>
-          <%- if admin_view? -%>
-            | <%= link_to "Destroy",
-                          forum_topic_post_path(@forum, @topic, post),
-                          :confirm => 'Are you sure?',
-                          :method => :delete %>
-          <%- end -%>
-        </td>
-      </tr>
-      <tr><td><%= sanitize post.body %></td></tr>
-    <%- end -%>
-  </table>
-
-<h3>Add new post</h3>
-
-<%= error_messages_for :post %>
-
-<% form_for :post,
-            :url => forum_topic_post_path(@forum, @topic, @post)  do |f| %>
-  <div class="form_row">
-    <%= f.text_area :body %>
+  <h1><%= @topic.name %></h1>
+  <div class="forum section clear">
+    <%= render :partial => 'forum_post', :collection => @posts %>
   </div>
 
-  <div class="form_row">
-    <%= f.submit "Submit" %>
-  </div>
-<% end %>
+
+  <h3>Add new post</h3>
+
+  <%= error_messages_for :post %>
+
+  <% form_for :post,
+              :url => forum_topic_post_path(@forum, @topic, @post)  do |f| %>
+    <div class="form_row">
+      <%= f.text_area :body %>
+    </div>
+
+    <div class="form_row">
+      <%= f.submit "Submit" %>
+    </div>
+  <% end %>
 
 <%- end -%>
 
