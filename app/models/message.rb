@@ -46,7 +46,8 @@ class Message < Communication
       # This is ineffecient.  We'll fix it when we move to Sphinx.
       conditions = ["recipient_id = ? AND recipient_deleted_at IS NULL",
                     options[:recipient]]
-      results = find_by_contents(query, :conditions => conditions)
+      # raise conditions.inspect
+      results = find_by_contents(query, {}, :conditions => conditions)
       results[0...SEARCH_LIMIT].paginate(:page => options[:page],
                                          :per_page => SEARCH_PER_PAGE)
     end

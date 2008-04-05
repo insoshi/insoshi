@@ -1,33 +1,38 @@
-<tr class="message <%= rowclass = cycle("odd", "even") %>">
-  <td>
-    <%= image_tag("replied.png") if message.replied_to? %>
-    <%= image_tag("new.png") unless message.read? %>
-  </td>
-  <td>
+<div class="message element clear <%= rowclass = cycle("odd", "even") %>">
+  <div class="column first span-1">
+    <%- if !message.read? -%>
+      <%= image_tag("new.png") %>
+    <%- elsif message.replied_to? -%>
+      <%= image_tag("replied.png")  %>
+    <%- else -%>
+      &nbsp;
+    <%- end -%>
+  </div>
+  <div class="column span-1">
     <% if message.sender == current_person %>
-      <%= linked_image(message.recipient, :size => 'thumbnail') %>
+      <%= image_link message.recipient %>
     <% else %>
-      <%= linked_image(message.sender, :size => 'thumbnail') %>
+      <%= image_link message.sender %>
     <% end %>
-  </td>
-  <td>
+  </div>
+  <div class="column span-4">
     <%= render :partial => 'messages/sender_info', 
                :locals => { :message => message,
                             :rowclass => rowclass } %>
-  </td>
-  <td>
+  </div>
+  <div class="column span-7">
       <%# TODO: Refactor this mess %>
           <% snippet = sanitize(message.subject)
              link    = message.read? ? snippet : content_tag(:b, snippet)
           %>
           <%= link_to message.subject, message %>
-  </td>
-  <td>
+  </div>
+  <div class="column span-1 last">
     <% unless message.trashed?(current_person) -%>
       <%= link_to(image_tag("delete.png"), message, :method => :delete) %>
     <% else -%>
       <%= link_to "(untrash)", undestroy_message_path(message), 
                                 :method => :put %>
     <% end -%>
-  </td>
-</tr>
+  </div>
+</div>

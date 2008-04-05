@@ -81,12 +81,6 @@ module ApplicationHelper
   end
 
   # TODO: polish these & move them somewhere
-  def linked_image(person, options = {})
-    href = options[:href] || person
-    o = { :size => 'thumbnail' }.merge(options)    
-    link_to image_tag(person.send(o[:size])), href 
-  end
-
   def name_link(person, options = {})
      link_to h(person.name), person, options
   end

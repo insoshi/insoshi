@@ -1,6 +1,6 @@
 <%- column_div :type => :primary do -%>
   <h1><%= @topic.name %></h1>
-  <div class="forum section clear">
+  <div class="forum section">
     <%= render :partial => 'forum_post', :collection => @posts %>
   </div>
 

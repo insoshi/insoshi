@@ -95,7 +95,7 @@ class Person < ActiveRecord::Base
       return [].paginate if query.blank? or query == "*"
       # This is ineffecient.  We'll fix it when we move to Sphinx.
       conditions = ["deactivated = ?", false]
-      results = find_by_contents(query, :conditions => conditions)
+      results = find_by_contents(query, {}, :conditions => conditions)
       results[0...SEARCH_LIMIT].paginate(:page => options[:page],
                                          :per_page => SEARCH_PER_PAGE)
     end

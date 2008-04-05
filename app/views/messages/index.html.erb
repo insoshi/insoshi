@@ -1,13 +1,13 @@
 <%- column_div :type => :primary do -%>
+  <h1>Messages</h1>
 
-<%= render :partial => 'message_nav' %>
+  <%= render :partial => 'message_nav' %>
 
-<%= will_paginate %>
-<table class="listing">
-  <tr><th colspan="5">Messages</th></tr>
-  <%= render :partial => "message", :collection => @messages %>
-</table>
-<%= will_paginate %>
+  <%= will_paginate %>
+  <div class="section">
+    <%= render :partial => "message", :collection => @messages %>
+  </div>
+  <%= will_paginate %>
 
 <%- end -%>
 

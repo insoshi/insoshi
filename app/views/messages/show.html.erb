@@ -16,7 +16,7 @@
   <table class="userlayout">
     <tr>
       <td class="sender" style="text-align: center;">
-        <%= linked_image @message.sender, :size => 'thumbnail' %>
+        <%= image_link @message.sender, :image => :thumbnail %>
       </td>
       <td>
         <%= render :partial => 'sender_info', 
