@@ -13,6 +13,7 @@ class TopicsController < ApplicationController
   end
 
   def show
+    raise "fix me"
     redirect_to forum_topic_posts_url(params[:forum_id], params[:id])
   end
 

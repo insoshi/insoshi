@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   
   before_filter :login_required
   before_filter :get_instance_vars
-  before_filter :authorize_edit, :only => [:edit, :update]
+  before_filter :authorize_change, :only => [:edit, :update]
   before_filter :authorize_destroy, :only => :destroy
 
   def index
@@ -40,6 +40,7 @@ class PostsController < ApplicationController
   end
 
   # Used for both forum and blog posts.
+  # TODO: check permissions on this
   def create
     @post = new_resource_post
     
@@ -89,7 +90,7 @@ class PostsController < ApplicationController
     end
 
     # Make sure the current user is authorized to edit this post
-    def authorize_edit
+    def authorize_change
       if forum?
         redirect_to home_url unless current_person?(@post.person)
       elsif blog?
@@ -109,7 +110,7 @@ class PostsController < ApplicationController
       if forum?
         redirect_to home_url unless current_person.admin?
       elsif blog?
-        authorize_edit
+        authorize_change
       end
     end
 
@@ -157,21 +158,22 @@ class PostsController < ApplicationController
       end
     end
     
-    # Return the URL for the resource posts.
+    # Return URL to redirect to after post creation.
     def post_url
       if forum?
-        forum_topic_posts_url(@forum, @topic)
+        forum_topic_url(@forum, @topic)
       elsif blog?
         blog_post_url(@blog, @post)
       end
     end
-    
+
+    # Return the URL for the resource posts (forum topic or blog).
     def posts_url
       if forum?
-        current_person.admin? ? admin_forum_topic_posts_url(@forum, @topic) :
-                                forum_topic_posts_url(@forum, @topic)
+        current_person.admin? ? admin_forum_topic_url(@forum, @topic) :
+                                forum_topic_url(@forum, @topic)
       elsif blog?
-        blog_posts_url(@blog)
+        blog_url(@blog)
       end      
     end
 

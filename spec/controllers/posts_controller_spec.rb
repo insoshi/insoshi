@@ -33,7 +33,7 @@ describe PostsController do
       lambda do
         post :create, :forum_id => @forum, :topic_id => @topic,
                       :post => { :body => "The body" }
-        response.should redirect_to(forum_topic_posts_url(@topic))
+        response.should redirect_to(forum_topic_url(@forum, @topic))
       end.should change(ForumPost, :count).by(1)
     end
   
@@ -63,7 +63,7 @@ describe PostsController do
       lambda do
         delete :destroy, :forum_id => @forum, :topic_id => @topic,
                          :id => @post
-        response.should redirect_to(admin_forum_topic_posts_url(@topic))
+        response.should redirect_to(admin_forum_topic_url(@forum, @topic))
       end.should change(ForumPost, :count).by(-1)
     end
     
@@ -134,7 +134,7 @@ describe PostsController do
     it "should destroy a post" do
       delete :destroy, :blog_id => @blog, :id => @post
       @post.should_not exist_in_database
-      response.should redirect_to(blog_posts_url(@post.blog))
+      response.should redirect_to(blog_url(@blog))
     end
     
     it "should require the right user for destroying" do
