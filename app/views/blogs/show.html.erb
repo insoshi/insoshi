@@ -1,0 +1,22 @@
+<%- column_div :type => :primary do -%>
+  
+  <h1>Blog for <%= @blog.person.name %></h1>
+  <div class="blog section">
+    <%= render :partial => 'posts/blog_post', :collection => @posts %>
+  </div>
+
+  <%- if current_person?(@blog.person) -%>
+  <h2>Add new post</h2>
+
+  <%= render :partial => 'posts/blog_form',
+             :locals => { :url => blog_posts_path(@blog),
+                          :method => :post } %>
+
+  <%= link_to 'Back', blog_posts_path(@blog) %>
+  <%- end -%>
+
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

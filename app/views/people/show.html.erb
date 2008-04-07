@@ -4,6 +4,7 @@
 
   <%- unless current_person?(@person) -%>
     <%= email_link @person %>
+    | <%= link_to "#{@person.name}'s blog", blog_path(@person.blog) %>
     <%- unless Connection.exists?(@person, current_person) -%>
       | 
       <%= link_to "Connect with #{@person.name}!",
