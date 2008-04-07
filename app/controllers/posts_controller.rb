@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   
   before_filter :login_required
   before_filter :get_instance_vars
+  before_filter :authorize_new, :only => [:create, :new]
   before_filter :authorize_change, :only => [:edit, :update]
   before_filter :authorize_destroy, :only => :destroy
 
@@ -89,18 +90,28 @@ class PostsController < ApplicationController
       end
     end
 
-    # Make sure the current user is authorized to edit this post
+    # Verify the person is authorized to create a post.
+    def authorize_new
+      if forum?
+        true  # This will change once there are groups
+      elsif blog?
+        redirect_to home_url unless current_person?(@blog.person)
+      end
+    end
+
+    # Make sure the current user is authorized to edit a post.
     def authorize_change
       if forum?
         redirect_to home_url unless current_person?(@post.person)
       elsif blog?
         redirect_to home_url unless (current_person?(@blog.person) and
-                                     current_blog?(@post.blog))
+                                     valid_post?)
       end
     end
     
-    def current_blog?(blog)
-      blog == @blog
+    # A post is valid if its blog is the current blog.
+    def valid_post?
+      @post.blog == @blog
     end
     
     # Authorize post deletions.

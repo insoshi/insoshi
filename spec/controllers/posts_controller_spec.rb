@@ -104,6 +104,13 @@ describe PostsController do
       end.should change(BlogPost, :count).by(1)
     end
     
+    it "should require the right user to create a blog post" do
+      login_as :aaron
+      post :create, :blog_id => @blog,
+                    :post => { :title => "The post", :body => "The body" }
+      response.should redirect_to(home_url)
+    end
+    
     it "should create the right blog post associations" do
       lambda do
         post :create, :blog_id => @blog,
