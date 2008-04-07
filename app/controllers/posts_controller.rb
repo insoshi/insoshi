@@ -8,16 +8,13 @@ class PostsController < ApplicationController
   before_filter :authorize_edit, :only => [:edit, :update]
   before_filter :authorize_destroy, :only => :destroy
 
-  # Used for both forum and blog posts.
   def index
-    @posts = resource_posts
-
-    respond_to do |format|
-      format.html { render :action => resource_template("index") }
-    end
+    redirect_to blog_url(@blog) if blog?
+    redirect_to forum_topic_url(@forum, @topic) if forum?
   end
 
-  # This is only used for blog posts.
+  # Show a blog post.
+  # Forum posts don't get shown individually.
   def show
     @post = BlogPost.find(params[:id])
 

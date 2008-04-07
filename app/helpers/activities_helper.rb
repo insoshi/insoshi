@@ -84,7 +84,7 @@ module ActivitiesHelper
   end
   
   def blog_link(text, blog)
-    link_to(text, blog_posts_path(blog))
+    link_to(text, blog_path(blog))
   end
   
   def post_link(text, blog, post = nil)
