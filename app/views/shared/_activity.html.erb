@@ -8,9 +8,9 @@
     <div class="wrapper column span-<%= LARGER_COLUMN-1 %> last">
       <div class="activity_body">
         <%= feed_message activity %>
-        <span class="time">
+      <div class="time">
           <%= time_ago_in_words(activity.created_at).capitalize %> ago
-        </span>
+      </div>
       </div>
     </div>
   </div>

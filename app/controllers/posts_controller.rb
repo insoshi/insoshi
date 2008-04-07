@@ -41,7 +41,6 @@ class PostsController < ApplicationController
   end
 
   # Used for both forum and blog posts.
-  # TODO: check permissions on this
   def create
     @post = new_resource_post
     
