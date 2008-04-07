@@ -1,6 +1,6 @@
 <%# The activity shouldn't be nil, but we're wearing a belt and suspenders. %>
 <%- unless activity.item.nil? -%>
-  <div class="activity element clear">
+  <div class="activity element clearfix">
     <div class="icon column first span-1">
       <%# This will probably be a feed icon instead of a person icon %>
       <%= image_link activity.person %>

@@ -1,4 +1,4 @@
-<div class="message element clear <%= rowclass = cycle("odd", "even") %>">
+<div class="message element clearfix <%= rowclass = cycle("odd", "even") %>">
   <div class="column first span-1">
     <%- if !message.read? -%>
       <%= image_tag("new.png") %>

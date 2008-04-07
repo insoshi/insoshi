@@ -17,11 +17,8 @@ by <%= link_to @blog.person.name, @blog.person %>
 </div>
 
 <%- unless @post.comments.empty? -%>
-<div class="comment">
-<table>
-  <tr><th colspan="2">Comments</th></tr>
+<div class="section">
   <%= render :partial => 'comment', :collection => @post.comments %>
-</table>
 </div>
 <%- end -%>
 
