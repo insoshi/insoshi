@@ -17,7 +17,8 @@ class CommentsController < ApplicationController
 
   # Used for both wall and blog comments.
   def create
-    @comment = new_resource_comment
+    @comment = parent.comments.new(params[:comment].
+                                   merge(:commenter => current_person))
     
     respond_to do |format|
       if @comment.save
@@ -78,15 +79,13 @@ class CommentsController < ApplicationController
       end  
     end
     
-    # Return a new comment for the given resource.
-    def new_resource_comment
+    # Return a the parent (person or blog post) of the comment.
+    def parent
       if wall?
-        data = { :commenter => current_person }
-        @comment = @person.comments.new(params[:comment].merge(data))
+        @person
       elsif blog?
-        data = { :commenter => current_person }
-        @comment = @post.comments.new(params[:comment].merge(data))
-      end      
+        @post
+      end
     end
     
     # Return the template for the current resource given the name.
