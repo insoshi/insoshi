@@ -3,12 +3,12 @@
 #
 # Table name: communications
 #
-#  id                   :integer         not null, primary key
+#  id                   :integer(11)     not null, primary key
 #  subject              :string(255)     
 #  content              :text            
 #  parent_id            :string(255)     
-#  sender_id            :integer         
-#  recipient_id         :integer         
+#  sender_id            :integer(11)     
+#  recipient_id         :integer(11)     
 #  sender_deleted_at    :datetime        
 #  sender_read_at       :datetime        
 #  recipient_deleted_at :datetime        

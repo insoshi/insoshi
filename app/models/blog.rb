@@ -3,8 +3,8 @@
 #
 # Table name: blogs
 #
-#  id         :integer         not null, primary key
-#  person_id  :integer         
+#  id         :integer(11)     not null, primary key
+#  person_id  :integer(11)     
 #  created_at :datetime        
 #  updated_at :datetime        
 #
