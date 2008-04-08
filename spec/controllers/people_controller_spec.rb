@@ -31,6 +31,12 @@ describe PeopleController do
       response.should render_template("new")
     end
     
+    it "should allow non-logged-in users to view new page" do
+      logout
+      get :new
+      response.should be_success
+    end
+    
     it "should have a working show page" do
       get :show, :id => @person
       response.should be_success
@@ -46,6 +52,9 @@ describe PeopleController do
   end
   
   describe "signup" do
+    before(:each) do
+      logout
+    end
 
     it 'allows signup' do
       lambda do

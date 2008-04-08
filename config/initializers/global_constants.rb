@@ -14,7 +14,7 @@ SMALL_TEXT_LENGTH = 300
 
 # Search adds a significant overhead to tests, so disable it by default.
 # Set this to true to run the tests with search enabled.
-SEARCH_IN_TESTS = true
+SEARCH_IN_TESTS = false
 
 # Search runs if test is not true, or (if test true) if search is true.
 def search?
