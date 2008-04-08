@@ -14,21 +14,36 @@
 
 class Comment < ActiveRecord::Base
   include ActivityLogger
-  validates_presence_of :body, :commenter
+  
   belongs_to :commentable, :polymorphic => true
   belongs_to :commenter, :class_name => "Person",
                          :foreign_key => "commenter_id"
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
 
+  validates_presence_of :body, :commenter
   validates_length_of :body, :maximum => MAX_TEXT_LENGTH
   
   after_create :log_activity
   
   private
+    
+    # Return the person for the thing commented on.
+    # For example, for blog post comments it's the blog's person
+    # For wall comments, it's the person himself.
+    def commented_person
+      case commentable.class.to_s
+      when "Person"
+        commentable
+      when "BlogPost"
+        commentable.blog.person
+      end
+    end
   
     def log_activity
       activity = Activity.create!(:item => self, :person => commenter)
       add_activities(:activity => activity, :person => commenter)
-      add_activities(:activity => activity, :person => commentable)
+      unless commented_person.nil?
+        add_activities(:activity => activity, :person => commented_person)
+      end
     end
 end

@@ -3,7 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe BlogPostComment do
     
   before(:each) do
-    @comment = BlogPostComment.new(:body => "Hey there", :post => posts(:blog),
+    @comment = BlogPostComment.new(:body => "Hey there",
+                                   :commentable => posts(:blog),
                                    :commenter => people(:aaron))
     
   end
@@ -34,7 +35,8 @@ describe BlogPostComment do
     end
     
     it "should add an activity to the poster" do
-      @comment.post.blog.person.activities.include?(@activity).should == true
+      @comment.commentable.blog.person.activities.include?(@activity).
+        should == true
     end
 
     it "should add an activity to the commenter" do
