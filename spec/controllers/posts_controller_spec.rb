@@ -81,7 +81,7 @@ describe PostsController do
     before(:each) do
       @person = login_as(:quentin)
       @blog   = @person.blog
-      @post   = posts(:blog)
+      @post   = posts(:blog_post)
     end
   
     it "should have working pages" do

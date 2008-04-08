@@ -8,14 +8,14 @@ describe CommentsController do
     before(:each) do
       @commenter = login_as(:aaron)
       @blog   = people(:quentin).blog
-      @post   = posts(:blog)
+      @post   = posts(:blog_post)
     end
   
     it "should have working pages" do
       with_options :blog_id => @blog, :post_id => @post do |page|
         page.get    :new
         page.post   :create,  :comment => { }
-        page.delete :destroy, :id => comments(:blog)
+        page.delete :destroy, :id => comments(:blog_comment)
       end
     end
     
@@ -49,14 +49,14 @@ describe CommentsController do
     
     it "should allow destroy" do
       login_as @blog.person
-      comment = comments(:blog)
+      comment = comments(:blog_comment)
       delete :destroy, :blog_id => @blog, :post_id => @post, :id => comment
       comment.should_not exist_in_database
     end
     
     it "should require the correct user to destroy a comment" do
       login_as @commenter
-      comment = comments(:blog)
+      comment = comments(:blog_comment)
       delete :destroy, :blog_id => @blog, :post_id => @post, :id => comment
       response.should redirect_to(home_url)
     end

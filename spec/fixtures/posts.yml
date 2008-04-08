@@ -14,8 +14,7 @@ forum_2:
   body: FooBar
   type: ForumPost
 
-blog:
-  id: 2
+blog_post:
   blog: one
   person_id: quentin
   body: MyText

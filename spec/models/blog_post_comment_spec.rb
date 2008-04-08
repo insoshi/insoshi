@@ -4,7 +4,7 @@ describe BlogPostComment do
     
   before(:each) do
     @comment = BlogPostComment.new(:body => "Hey there",
-                                   :commentable => posts(:blog),
+                                   :commentable => posts(:blog_post),
                                    :commenter => people(:aaron))
     
   end
