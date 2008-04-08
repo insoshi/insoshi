@@ -19,4 +19,16 @@ class Comment < ActiveRecord::Base
   belongs_to :commenter, :class_name => "Person",
                          :foreign_key => "commenter_id"
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
+
+  validates_length_of :body, :maximum => MAX_TEXT_LENGTH
+  
+  after_create :log_activity
+  
+  private
+  
+    def log_activity
+      activity = Activity.create!(:item => self, :person => commenter)
+      add_activities(:activity => activity, :person => commenter)
+      add_activities(:activity => activity, :person => commentable)
+    end
 end

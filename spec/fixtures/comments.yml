@@ -1,13 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 wall:
-  person: quentin
+  commentable_id: 1
   commenter: aaron
   body: MyText
-  type: WallComment
+  commentable_type: Person
 
 blog:
-  blog_post_id: 2
+  commentable_id: 2
   commenter: aaron
   body: MyText
-  type: BlogPostComment
+  commentable_type: BlogPost

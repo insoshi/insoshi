@@ -4,7 +4,7 @@ describe WallComment do
   
   before(:each) do
     @comment = WallComment.new(:body => "Hey there",
-                               :person => people(:quentin),
+                               :commentable => people(:quentin),
                                :commenter => people(:aaron))
   end
   
@@ -20,6 +20,12 @@ describe WallComment do
   
   it "should have a maximum body length" do
     @comment.should have_maximum(:body, SMALL_TEXT_LENGTH)
+  end
+  
+  it "should increase the comment count" do
+    lambda do
+      @comment.save!
+    end.should change(WallComment, :count).by(1)
   end
   
   describe "associations" do
