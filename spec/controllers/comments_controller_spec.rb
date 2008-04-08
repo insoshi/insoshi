@@ -91,7 +91,7 @@ describe CommentsController do
       with_options :person_id => @person do |page|
         page.post :create, :comment => { :body => "The body" }
         assigns(:comment).commenter.should == @commenter
-        assigns(:comment).person.should == @person
+        assigns(:comment).commentable.should == @person
       end
     end
     
