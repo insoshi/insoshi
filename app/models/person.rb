@@ -296,8 +296,7 @@ class Person < ActiveRecord::Base
       tom = Person.find(:first, :conditions => ["admin = ?", true],
                                 :order => :created_at)
       unless tom.nil? or tom == self
-        Connection.request(self, tom)
-        Connection.accept(self, tom)
+        Connection.connect(self, tom)
       end
     end
     

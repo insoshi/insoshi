@@ -21,8 +21,7 @@ describe Activity do
   it "should delete an associated connection" do
     @person = people(:quentin)
     @contact = people(:aaron)
-    Connection.request(@person, @contact)
-    Connection.accept(@person, @contact)
+    Connection.connect(@person, @contact)
     @connection = Connection.conn(@person, @contact)
     destroy_should_remove_activity(@connection, :breakup)
   end

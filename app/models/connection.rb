@@ -68,6 +68,13 @@ class Connection < ActiveRecord::Base
         Activity.create!(:item => conn(person, contact))
       end
     end
+    
+    def connect(person, contact, mail = EMAIL_NOTIFICATIONS)
+      transaction do
+        request(person, contact, mail)
+        accept(person, contact)
+      end
+    end
   
     # Delete a connection or cancel a pending request.
     def breakup(person, contact)
