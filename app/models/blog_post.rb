@@ -21,8 +21,7 @@ class BlogPost < Post
   MAX_BODY  = MEDIUM_TEXT_LENGTH
   
   belongs_to :blog
-  has_many :comments, :class_name => "BlogPostComment",
-                      :order => :created_at, :dependent => :destroy
+  has_many :comments, :as => :commentable, :order => :created_at
   
   validates_presence_of :title, :body
   validates_length_of :title, :maximum => MAX_TITLE
