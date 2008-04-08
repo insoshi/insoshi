@@ -41,9 +41,9 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
 
-  has_one :blog  
-  has_many :comments, :class_name => "WallComment",
-                      :order => "created_at DESC", :limit => NUM_WALL_COMMENTS
+  has_one :blog
+  has_many :comments, :as => :commentable, :order => 'created_at DESC',
+                      :limit => NUM_WALL_COMMENTS
   has_many :connections
   has_many :contacts, :through => :connections,
                       :conditions => "status = #{Connection::ACCEPTED}"

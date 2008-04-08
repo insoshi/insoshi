@@ -15,6 +15,9 @@
 
 class Comment < ActiveRecord::Base
   include ActivityLogger
-  validates_presence_of :body
+  validates_presence_of :body, :commenter
+  belongs_to :commentable, :polymorphic => true
+  belongs_to :commenter, :class_name => "Person",
+                         :foreign_key => "commenter_id"
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
 end
