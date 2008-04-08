@@ -59,8 +59,8 @@ class Person < ActiveRecord::Base
                     :conditions => "recipient_deleted_at IS NULL"                  
   end
   has_many :feeds
-  has_many :activities, :through => :feeds,
-                        :order => 'created_at DESC', :limit => FEED_SIZE
+  has_many :activities, :through => :feeds, :order => 'created_at DESC',
+                                            :limit => FEED_SIZE
   
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
@@ -77,6 +77,7 @@ class Person < ActiveRecord::Base
   
   before_create :create_blog
   before_save :downcase_email, :encrypt_password
+  after_create :connect_to_admin
   
   ## Class methods
   
@@ -277,6 +278,8 @@ class Person < ActiveRecord::Base
 
   protected
 
+    ## Callbacks
+
     def downcase_email
       self.email = email.downcase
     end
@@ -285,6 +288,20 @@ class Person < ActiveRecord::Base
       return if password.blank?
       self.crypted_password = encrypt(password)
     end
+    
+    # Connect new users to "Tom".
+    def connect_to_admin
+      # Find the first admin created.
+      # The ununitiated should Google "tom myspace".
+      tom = Person.find(:first, :conditions => ["admin = ?", true],
+                                :order => :created_at)
+      unless tom.nil? or tom == self
+        Connection.request(self, tom)
+        Connection.accept(self, tom)
+      end
+    end
+    
+    ## Other private method(s)
     
     def password_required?
       crypted_password.blank? || !password.blank? || !verify_password.nil?

@@ -18,3 +18,11 @@ kelly:
   description: I'm Kelly
   crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
   created_at: <%= 1.day.ago.to_s :db %>
+  
+admin:
+  email: admin@example.com
+  name: admin
+  description: I'm the admin, bitch!
+  admin: true
+  crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
+  created_at: <%= 5.days.ago.to_s :db %>

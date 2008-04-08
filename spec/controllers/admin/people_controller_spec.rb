@@ -23,8 +23,7 @@ describe Admin::PeopleController do
   describe "person modifications" do
     
     before(:each) do
-      @admin = login_as(:quentin)
-      @admin.admin = true; @admin.save!
+      @admin = login_as(:admin)
       @person = people(:aaron)
     end
     

@@ -51,6 +51,12 @@ describe Person do
       @person.comments.should be_a_kind_of(Array)
       @person.comments.should_not be_empty
     end
+    
+    it "should be connected to the admin" do
+      person = create_person(:save => true)
+      admin = people(:admin)
+      person.contacts.first.should == admin
+    end
   end
   
   describe "associations" do
@@ -240,8 +246,7 @@ describe Person do
   describe "admin" do
     
     before(:each) do
-      @person.admin = true
-      @person.save!
+      @person = people(:admin)
     end
     
     it "should un-admin a person" do
