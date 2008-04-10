@@ -57,3 +57,10 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
 end
+
+# Set INLINEDIR to override default location for ruby_inline directory
+# The home directory may not be correctly set in an "su"/"sudo" situation
+# and will lead to runtime errors with image_science
+#
+# The directory /tmp/ruby.[USER] is used instead
+ENV['INLINEDIR']="/tmp/ruby.#{ENV['USER']}"
