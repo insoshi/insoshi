@@ -67,6 +67,8 @@ $ rake spec
 
 (If the tests fail in the Photos controller test, double-check that FreeImage and ImageScience are installed.)
 
+The migration creates an admin user with password "admin".
+
 ### Loading sample data
 
 Now load the sample data and start the server:
