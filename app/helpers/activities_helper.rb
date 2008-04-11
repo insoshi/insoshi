@@ -101,7 +101,7 @@ module ActivitiesHelper
       topic = text
       text = topic.name
     end
-    link_to(text, forum_topic_posts_path(topic.forum, topic))
+    link_to(text, forum_topic_path(topic.forum, topic))
   end
 
   # Return a link to the wall.

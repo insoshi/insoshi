@@ -10,7 +10,7 @@
   <%= error_messages_for :post %>
 
   <% form_for :post,
-              :url => forum_topic_post_path(@forum, @topic, @post)  do |f| %>
+              :url => forum_topic_posts_path(@forum, @topic)  do |f| %>
     <div class="form_row">
       <%= f.text_area :body %>
     </div>

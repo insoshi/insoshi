@@ -4,7 +4,7 @@
   <%- last_post = topic.posts.reverse.first -%>
   <tr class=<%= cycle("odd", "even") %>>
     <td>
-      <%= link_to topic.name, forum_topic_posts_path(topic.forum, topic) %>
+      <%= topic_link topic %>
       <br />
       <span class="quiet small">
       Last post

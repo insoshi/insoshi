@@ -2,13 +2,11 @@
       <a name="topic_<%= topic.id %>"></a>
       <%- if admin_view? -%>
       <%= link_to topic.name, 
-                  admin_forum_topic_posts_path(@forum, topic, 
-                    :posts => topic.posts.count) %>
+                  admin_forum_topic_path(@forum, topic) %>
       
       <%- else -%>
       <%= link_to topic.name, 
-                  forum_topic_posts_path(@forum, topic, 
-                                         :posts => topic.posts.count) %>
+                  forum_topic_posts_path(@forum, topic) %>
       <%- end -%>
       <div class="time">
         Created by <%= link_to topic.person.name, topic.person %>
