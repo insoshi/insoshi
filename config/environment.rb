@@ -63,4 +63,4 @@ end
 # and will lead to runtime errors with image_science
 #
 # The directory /tmp/ruby.[USER] is used instead
-ENV['INLINEDIR']="/tmp/ruby.#{ENV['USER']}"
+ENV['INLINEDIR']="/tmp/ruby.#{ENV['USER']}" unless ENV['OS'] =~ /Windows/
