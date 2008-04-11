@@ -6,7 +6,7 @@
       
       <%- else -%>
       <%= link_to topic.name, 
-                  forum_topic_posts_path(@forum, topic) %>
+                  forum_topic_path(@forum, topic) %>
       <%- end -%>
       <div class="time">
         Created by <%= link_to topic.person.name, topic.person %>
