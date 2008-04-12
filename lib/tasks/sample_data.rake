@@ -41,12 +41,14 @@ def create_people
     names = File.open(filename).readlines
     password = "foobar"
     photos = Dir.glob("lib/tasks/sample_data/#{gender}_photos/*.jpg").shuffle
+    last_names = @lipsum.split
     names.each_with_index do |name, i|
       name.strip!
+      full_name = "#{name} #{last_names.pick}"
       person = Person.create!(:email => "#{name.downcase}@example.com",
                               :password => password, 
                               :password_confirmation => password,
-                              :name => name,
+                              :name => full_name,
                               :description => @lipsum)
       Photo.create!(:uploaded_data => uploaded_file(photos[i], 'image/jpg'),
                     :person => person, :primary => true)
