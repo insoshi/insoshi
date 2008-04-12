@@ -1,0 +1,62 @@
+<h1>Insoshi site map</h1>
+
+<% michael = Person.find_by_email("michael@example.com") %>
+
+<p>These are all the pages that need styling.</p>
+
+<ul>
+  <li>Profiles
+    <ul>
+      <li>
+        <%= link_to "Profile for other person", michael %>
+        <br />
+        list of links/actions (mail, blog, contact link
+        or contact status&mdash;should be extensible), image, description,
+        activity feed
+      </li>
+      <li>
+        <%= link_to "Profile for current person", current_person %>
+        <br />
+        notice of "own profile"
+      </li>
+    </ul>
+  </li>
+  <li>
+    <%= link_to "Contacts", person_connections_path(current_person) %>
+    <br />
+    people links, pagination
+  </li>
+  <li>
+    <%= link_to "Messages", messages_path %>
+    <br />
+    small menu (Inbox | Sent | Trash); for each message: space for an icon (new/returned), person image, sent by &lt;name&gt;, time ago, reply link, subject, delete/trash icon
+  </li>
+  <li>
+    Blog
+    <ul>
+      <li>
+        <%= link_to "Other blog", michael.blog %>
+        <br />
+        Title link, posted time ago by name, body, comments link
+      </li>
+      <li>
+        <%= link_to "Own blog", current_person.blog %>
+        <br />
+        edit &amp; delete links, add a new post
+      </li>
+    </ul>
+  </li>
+  <li>
+    <%= link_to "People", people_path %>
+    <br />
+   linked person icon, linked name, description preview
+  </li>
+  <li>
+    <%= link_to "Forum", forum_path(1) %>
+    <br />
+    linked topic titles, created by &lt;name&gt; at &lt;time ago&gt;
+  </li>
+</ul>  
+
+
+global: logo, top links (about | help | sign in/out), navigation, headings (h1), pagination links, search box, minifeed
