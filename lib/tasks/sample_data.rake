@@ -44,7 +44,7 @@ def create_people
     last_names = @lipsum.split
     names.each_with_index do |name, i|
       name.strip!
-      full_name = "#{name} #{last_names.pick}"
+      full_name = "#{name} #{last_names.pick.capitalize}"
       person = Person.create!(:email => "#{name.downcase}@example.com",
                               :password => password, 
                               :password_confirmation => password,
