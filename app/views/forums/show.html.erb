@@ -4,7 +4,7 @@
     <%= render :partial => @topics %>
   </div>
   
-  <%= will_paginate %>
+  <%= will_paginate(@topics) %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>

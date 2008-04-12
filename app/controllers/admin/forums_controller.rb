@@ -11,6 +11,7 @@ class Admin::ForumsController < ApplicationController
   end
 
   def show
+    raise "fix me"
     redirect_to admin_forum_topics_url(params[:id])
   end
 

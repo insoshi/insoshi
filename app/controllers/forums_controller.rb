@@ -5,7 +5,7 @@ class ForumsController < ApplicationController
   def index
     @forums = Forum.find(:all)
     if @forums.length == 1
-      redirect_to forum_topics_url(@forums.first) and return
+      redirect_to forum_url(@forums.first) and return
     end
 
     respond_to do |format|
@@ -14,6 +14,7 @@ class ForumsController < ApplicationController
   end
 
   def show
-    redirect_to admin_forum_topics_url(params[:id])
+    @forum = Forum.find(params[:id])
+    @topics = @forum.topics.paginate(:page => params[:page])
   end
 end

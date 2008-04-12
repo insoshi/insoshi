@@ -16,7 +16,6 @@ describe TopicsController do
     login_as :quentin
     
     with_options :forum_id => forums(:one) do |page|
-      page.get    :index
       page.get    :new
       page.get    :edit,    :id => @topic
       page.post   :create,  :topic => { :name => "The topic" }

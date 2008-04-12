@@ -10,7 +10,7 @@ describe ForumsController do
   it "should redirect to the topics if there is only one forum" do
     Forum.count.should == 1
     get :index
-    response.should redirect_to(forum_topics_url(Forum.find(:first)))
+    response.should redirect_to(forum_url(Forum.find(:first)))
   end
   
   it "should show the forums if there are more than one forum" do

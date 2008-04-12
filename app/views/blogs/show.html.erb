@@ -2,8 +2,10 @@
   
   <h1>Blog for <%= @blog.person.name %></h1>
   <div class="blog section">
-    <%= render :partial => 'blog_post', :collection => @posts %>
+    <%= render :partial => 'posts/blog_post', :collection => @posts %>
   </div>
+  
+  <%= will_paginate(@posts) %>
 
   <%- if current_person?(@blog.person) -%>
   <h2>Add new post</h2>
