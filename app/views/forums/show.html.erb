@@ -5,6 +5,19 @@
   </div>
   
   <%= will_paginate(@topics) %>
+  
+  <h2>Add new topic</h2>
+  
+  <% form_for :topic, :url => forum_topics_path(@forum) do |f| %>
+    <div class="form_tag">
+      <%= f.text_field :name %>
+    </div>
+  
+    <div class="form_tag">
+      <%= submit_tag "Submit" %>
+    </div>
+  <% end %>
+
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
