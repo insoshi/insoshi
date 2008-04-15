@@ -22,6 +22,8 @@
 #
 
 class Person < ActiveRecord::Base
+  extend PreferencesHelper
+  
   attr_accessor :password, :verify_password, :new_password,
                 :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
