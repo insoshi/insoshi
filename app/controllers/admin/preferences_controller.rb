@@ -18,9 +18,9 @@ class Admin::PreferencesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @preferences.update_attributes(params[:preference])
+      if @preferences.update_attributes(params[:preferences])
         flash[:notice] = 'Preferences successfully updated.'
-        format.html { redirect_to(@preferences) }
+        format.html { redirect_to admin_preferences_url }
       else
         format.html { render :action => "edit" }
       end

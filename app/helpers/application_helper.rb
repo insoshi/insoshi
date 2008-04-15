@@ -20,7 +20,8 @@ module ApplicationHelper
       people =  menu_element("People", admin_people_path)
       forums =  menu_element(inflect("Forum", Forum.count),
                              admin_forums_path)
-      [home, people, forums]
+      preferences = menu_element("Preferences", admin_preferences_path)
+      [home, people, forums, preferences]
     else
       [home, people, forum]
     end

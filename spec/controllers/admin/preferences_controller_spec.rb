@@ -25,16 +25,16 @@ describe Admin::PreferencesController do
     end
     
     it "should render messages for email notification error" do
-      put :update, :preference => { :smtp_server => "", :email_domain => "", 
-                                    :email_notifications => "1" }
+      put :update, :preferences => { :smtp_server => "", :email_domain => "", 
+                                     :email_notifications => "1" }
       response.body.should =~ /errorExplanation/
     end
     
     it "should update email notifications" do
       @preferences.should_not be_email_notifications
-      put :update, :preference => { :smtp_server => "smtp.server",
-                                    :email_domain => "example.com", 
-                                    :email_notifications => "1" }
+      put :update, :preferences => { :smtp_server => "smtp.server",
+                                     :email_domain => "example.com", 
+                                     :email_notifications => "1" }
       @preferences.reload.should be_email_notifications
     end
   end
