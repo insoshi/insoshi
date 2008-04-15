@@ -12,6 +12,8 @@
 #
 
 class Preference < ActiveRecord::Base
+  attr_accessible :email_domain, :smtp_server, :email_notifications
+
   validates_presence_of :email_domain, :if => :email_notifications
   validates_presence_of :smtp_server,  :if => :email_notifications  
   
