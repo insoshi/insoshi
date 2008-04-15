@@ -1,0 +1,24 @@
+<h1>Listing preferences</h1>
+
+<table>
+  <tr>
+    <th>Email domain</th>
+    <th>Smtp server</th>
+    <th>Email notifications</th>
+  </tr>
+
+<% for preference in @preferences %>
+  <tr>
+    <td><%=h preference.email_domain %></td>
+    <td><%=h preference.smtp_server %></td>
+    <td><%=h preference.email_notifications %></td>
+    <td><%= link_to 'Show', preference %></td>
+    <td><%= link_to 'Edit', edit_preference_path(preference) %></td>
+    <td><%= link_to 'Destroy', preference, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New preference', new_preference_path %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  email_domain: MyString
+  smtp_server: MyString
+  email_notifications: false
+
+two:
+  email_domain: MyString
+  smtp_server: MyString
+  email_notifications: false
