@@ -1,0 +1,27 @@
+<h1>Editing preference</h1>
+
+<%= error_messages_for :preference %>
+
+<% form_for(@preference) do |f| %>
+  <p>
+    <b>Email domain</b><br />
+    <%= f.text_field :email_domain %>
+  </p>
+
+  <p>
+    <b>Smtp server</b><br />
+    <%= f.text_field :smtp_server %>
+  </p>
+
+  <p>
+    <b>Email notifications</b><br />
+    <%= f.check_box :email_notifications %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @preference %> |
+<%= link_to 'Back', preferences_path %>
