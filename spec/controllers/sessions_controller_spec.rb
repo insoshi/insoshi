@@ -14,7 +14,12 @@ describe SessionsController do
     response.should be_redirect
   end
   
-  it "should update person's last_logged_in_at attribute" 
+  it "should update person's last_logged_in_at attribute" do
+    person = people(:quentin)
+    last_logged_in_at = person.last_logged_in_at
+    post :create, :email => person.email, :password => 'test'
+    person.reload.last_logged_in_at.should_not == last_logged_in_at
+  end
   
   it 'fails login and does not redirect' do
     post :create, :email => 'quentin@example.com', :password => 'bad password'
