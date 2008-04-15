@@ -2,7 +2,9 @@
 
 <%= error_messages_for :preferences %>
 
-<% form_for(@preferences) do |f| %>
+<% form_for :preferences,
+            :url => admin_preference_path(@preferences),
+            :html => { :method => :put } do |f| %>
   <p>
     <b>Email domain</b><br />
     <%= f.text_field :email_domain %>
