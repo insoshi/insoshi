@@ -1,18 +1,17 @@
 <p>
   <b>Email domain:</b>
-  <%=h @preference.email_domain %>
+  <%=h @preferences.email_domain %>
 </p>
 
 <p>
   <b>Smtp server:</b>
-  <%=h @preference.smtp_server %>
+  <%=h @preferences.smtp_server %>
 </p>
 
 <p>
   <b>Email notifications:</b>
-  <%=h @preference.email_notifications %>
+  <%=h @preferences.email_notifications %>
 </p>
 
 
-<%= link_to 'Edit', edit_preference_path(@preference) %> |
-<%= link_to 'Back', preferences_path %>
+<%= link_to 'Edit', edit_preference_path(@preferences) %>
