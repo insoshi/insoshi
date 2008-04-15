@@ -14,6 +14,8 @@ describe SessionsController do
     response.should be_redirect
   end
   
+  it "should update person's last_logged_in_at attribute" 
+  
   it 'fails login and does not redirect' do
     post :create, :email => 'quentin@example.com', :password => 'bad password'
     session[:person_id].should be_nil
