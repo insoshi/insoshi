@@ -1,5 +1,6 @@
-class PreferencesController < ApplicationController
+class Admin::PreferencesController < ApplicationController
   
+  before_filter :login_required, :admin_required
   before_filter :setup
   
   def index
@@ -18,7 +19,7 @@ class PreferencesController < ApplicationController
   def update
     respond_to do |format|
       if @preferences.update_attributes(params[:preference])
-        flash[:notice] = 'Preference was successfully updated.'
+        flash[:notice] = 'Preferences successfully updated.'
         format.html { redirect_to(@preferences) }
       else
         format.html { render :action => "edit" }
