@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   include AuthenticatedSystem
   include SharedHelper
+  include PreferencesHelper
   
   before_filter :create_page_view, :require_activation, :tracker_vars
 
