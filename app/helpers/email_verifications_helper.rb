@@ -1,0 +1,2 @@
+module EmailVerificationsHelper
+end
