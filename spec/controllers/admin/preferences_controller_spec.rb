@@ -31,11 +31,16 @@ describe Admin::PreferencesController do
     end
     
     it "should update email notifications" do
-      @preferences.should_not be_email_notifications
+      @preferences.email_notifications = false
+      @preferences.save!
+      @preferences.email_notifications.should be_false
       put :update, :preferences => { :smtp_server => "smtp.server",
                                      :email_domain => "example.com", 
                                      :email_notifications => "1" }
-      @preferences.reload.should be_email_notifications
+      @preferences.reload.email_notifications.should be_true
     end
+    
+    it "should have a flash warning if the SMTP server changes" 
+    it "should have a flash warning if the email domain changes" 
   end
 end

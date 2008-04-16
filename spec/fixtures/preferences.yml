@@ -3,4 +3,4 @@
 one:
   email_domain: example.com
   smtp_server: smtp.example.com
-  email_notifications: false
+  email_notifications: true

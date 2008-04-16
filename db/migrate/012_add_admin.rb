@@ -3,7 +3,7 @@ class AddAdmin < ActiveRecord::Migration
     add_column :people, :admin, :boolean, :default => false, :null => false
     add_column :people, :deactivated, :boolean, 
                         :default => false, :null => false
-    person = Person.new(:email => "admin@#{EMAIL_DOMAIN}",
+    person = Person.new(:email => "admin@example.com",
                         :name => "admin",
                         :password => "admin",
                         :password_confirmation => "admin")

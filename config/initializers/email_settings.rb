@@ -1,5 +1,4 @@
 prefs = Preference.find(:first)
-EMAIL_DOMAIN = prefs.email_domain
 if prefs.email_notifications? and not test?
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
