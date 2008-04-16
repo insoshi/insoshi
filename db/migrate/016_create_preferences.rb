@@ -1,12 +1,13 @@
 class CreatePreferences < ActiveRecord::Migration
   def self.up
     create_table :preferences do |t|
-      t.string :email_domain
-      t.string :smtp_server
-      t.boolean :email_notifications
+      t.string :email_domain, :null => false, :default => ""
+      t.string :smtp_server, :null => false, :default => ""
+      t.boolean :email_notifications, :null => false, :default => false
 
       t.timestamps
     end
+    Preference.create!
   end
 
   def self.down
