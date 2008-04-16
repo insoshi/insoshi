@@ -44,6 +44,7 @@ class Person < ActiveRecord::Base
   FEED_SIZE = 10
 
   has_one :blog
+  has_one :email_verification
   has_many :comments, :as => :commentable, :order => 'created_at DESC',
                       :limit => NUM_WALL_COMMENTS
   has_many :connections
