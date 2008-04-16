@@ -24,7 +24,7 @@ describe EmailVerification do
 
   it "should allow creation through a person" do
     lambda do
-      ev = @person.create_email_verification 
+      ev = @person.email_verifications.create!
       ev.person.should == @person
     end.should_not raise_error
   end
