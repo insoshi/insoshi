@@ -1,10 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :email_verifications
-
   map.resources :preferences
-
-  map.resources :preferences
-
   map.resources :searches
   map.resources :activities
   map.resources :connections
