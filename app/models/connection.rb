@@ -13,6 +13,8 @@
 #
 
 class Connection < ActiveRecord::Base
+  extend PreferencesHelper
+  
   belongs_to :person
   belongs_to :contact, :class_name => "Person", :foreign_key => "contact_id"
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
@@ -45,7 +47,7 @@ class Connection < ActiveRecord::Base
     alias exist? exists?
   
     # Make a pending connection request.
-    def request(person, contact, mail = EMAIL_NOTIFICATIONS)
+    def request(person, contact, mail = preferences.email_notifications)
       if person == contact or Connection.exists?(person, contact)
         false
       else
@@ -69,7 +71,7 @@ class Connection < ActiveRecord::Base
       end
     end
     
-    def connect(person, contact, mail = EMAIL_NOTIFICATIONS)
+    def connect(person, contact, mail = preferences.email_notifications)
       transaction do
         request(person, contact, mail)
         accept(person, contact)

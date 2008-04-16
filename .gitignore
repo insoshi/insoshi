@@ -12,6 +12,5 @@ public/photos/*
 uuid.state
 nbproject*
 index/*
-config/initializers/preferences.rb
 identifier
 .project
