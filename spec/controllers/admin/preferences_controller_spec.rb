@@ -20,7 +20,7 @@ describe Admin::PreferencesController do
     integrate_views
     
     before(:each) do
-      @preferences = Preference.find(:first)
+      @prefs = Preference.find(:first)
       login_as :admin
     end
     
@@ -31,16 +31,26 @@ describe Admin::PreferencesController do
     end
     
     it "should update email notifications" do
-      @preferences.email_notifications = false
-      @preferences.save!
-      @preferences.email_notifications.should be_false
-      put :update, :preferences => { :smtp_server => "smtp.server",
-                                     :email_domain => "example.com", 
+      @prefs.email_notifications = false
+      @prefs.save!
+      @prefs.email_notifications.should be_false
+      put :update, :preferences => { :smtp_server => @prefs.smtp_server,
+                                     :email_domain => @prefs.email_domain, 
                                      :email_notifications => "1" }
-      @preferences.reload.email_notifications.should be_true
+      @prefs.reload.email_notifications.should be_true
     end
     
-    it "should have a flash warning if the SMTP server changes" 
-    it "should have a flash warning if the email domain changes" 
+    it "should have a flash warning if the SMTP server changes" do
+      put :update, :preferences => { :smtp_server => "new-smtp.server",
+                                     :email_domain => @prefs.email_domain, 
+                                     :email_notifications => "1" }
+      flash[:error].should_not be_nil
+    end
+    it "should have a flash warning if the email domain changes" do
+      put :update, :preferences => { :smtp_server => @prefs.smtp_server,
+                                     :email_domain => "new-example.com", 
+                                     :email_notifications => "1" }
+      flash[:error].should_not be_nil
+    end
   end
 end
