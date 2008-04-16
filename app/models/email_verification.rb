@@ -1,3 +1,15 @@
+# == Schema Information
+# Schema version: 17
+#
+# Table name: email_verifications
+#
+#  id         :integer(11)     not null, primary key
+#  person_id  :integer(11)     
+#  code       :string(255)     
+#  created_at :datetime        
+#  updated_at :datetime        
+#
+
 class EmailVerification < ActiveRecord::Base
   belongs_to :person
   validates_presence_of :person_id, :code

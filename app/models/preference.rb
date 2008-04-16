@@ -1,12 +1,12 @@
 # == Schema Information
-# Schema version: 16
+# Schema version: 17
 #
 # Table name: preferences
 #
 #  id                  :integer(11)     not null, primary key
-#  email_domain        :string(255)     
-#  smtp_server         :string(255)     
-#  email_notifications :boolean(1)      
+#  email_domain        :string(255)     default(""), not null
+#  smtp_server         :string(255)     default(""), not null
+#  email_notifications :boolean(1)      not null
 #  created_at          :datetime        
 #  updated_at          :datetime        
 #
