@@ -20,6 +20,8 @@
 #
 
 class Message < Communication
+  extend PreferencesHelper
+  
   attr_accessor :reply, :parent, :skip_send_mail
   acts_as_ferret :fields => [ :subject, :content ] if search?
   
@@ -89,7 +91,8 @@ class Message < Communication
     when sender
       !sender_deleted_at.nil? and sender_deleted_at > Person::TRASH_TIME_AGO
     when recipient
-      !recipient_deleted_at.nil? and recipient_deleted_at > Person::TRASH_TIME_AGO
+      !recipient_deleted_at.nil? and 
+       recipient_deleted_at > Person::TRASH_TIME_AGO
     end
   end
   
@@ -113,7 +116,7 @@ class Message < Communication
   end
   
   # Mark a message as read.
-  def mark_as_read(time=Time.now)
+  def mark_as_read(time = Time.now)
     unless read?
       self.recipient_read_at = time
       save!
@@ -141,7 +144,7 @@ class Message < Communication
     end
     
     def send_receipt_reminder
-      @skip_send_mail ||= !EMAIL_NOTIFICATIONS
+      @skip_send_mail ||= !Message.preferences.email_notifications
       PersonMailer.deliver_message_notification(self) unless @skip_send_mail
     end
 end

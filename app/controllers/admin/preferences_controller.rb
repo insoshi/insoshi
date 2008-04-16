@@ -18,8 +18,12 @@ class Admin::PreferencesController < ApplicationController
 
   def update
     respond_to do |format|
+      old_preferences = @preferences
       if @preferences.update_attributes(params[:preferences])
-        flash[:notice] = 'Preferences successfully updated.'
+        flash[:success] = 'Preferences successfully updated.'
+        if server_restart?(old_preferences)
+          flash[:error] = 'Restart the server to activate the changes'
+        end
         format.html { redirect_to admin_preferences_url }
       else
         format.html { render :action => "edit" }
@@ -32,4 +36,10 @@ class Admin::PreferencesController < ApplicationController
     def setup
       @preferences = Preference.find(:first)
     end
+    
+    # The server needs to be restarted if the email settings change.
+    def server_restart?(preferences)
+      false
+    end
+
 end
