@@ -5,6 +5,7 @@ quentin:
   crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
   created_at: <%= 5.days.ago.to_s :db %>
   last_logged_in_at: <%= 1.day.ago.to_s :db %>
+  deactivated: false
 
 aaron:
   email: aaron@example.com
@@ -12,6 +13,7 @@ aaron:
   description: I'm Aaron
   crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
   created_at: <%= 1.day.ago.to_s :db %>
+  deactivated: false
 
 kelly:
   email: kelly@example.com
@@ -19,11 +21,13 @@ kelly:
   description: I'm Kelly
   crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
   created_at: <%= 1.day.ago.to_s :db %>
+  deactivated: false
   
 admin:
   email: admin@example.com
   name: admin
-  description: I'm the admin, bitch!
+  description: I'm the admin!
   admin: true
   crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
   created_at: <%= 5.days.ago.to_s :db %>
+  deactivated: false

@@ -160,6 +160,12 @@ describe PeopleController do
       get :show, :id => @person
       response.should_not have_tag("a[href=?]", edit_person_path(@person))
     end
+    
+    it "should not display a deactivated person" do
+      @person.toggle!(:deactivated)
+      get :show, :id => @person
+      @response.should redirect_to(home_url)
+    end
   end
   
   private
