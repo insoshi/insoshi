@@ -26,8 +26,8 @@ class Photo < ActiveRecord::Base
                  :max_size => UPLOAD_LIMIT.megabytes,
                  :min_size => 1,
                  :resize_to => '350x390>',
-                 :thumbnails => { :thumbnail => 'x72>',
-                                  :icon      => 'x36>' },
+                 :thumbnails => { :thumbnail => '72x72>',
+                                  :icon      => '36x36>' },
                  :processor => 'ImageScience'
                  
   # Override the crappy default AttachmentFu error messages.
