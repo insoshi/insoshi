@@ -3,13 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>insoshi</title>
-    <%= stylesheet_link_tag "blueprint/screen.css", 
-                            :media => "screen, projection" %>
-    <%= stylesheet_link_tag "blueprint/print.css", :media => "print" %>
-    <!--[if IE]><%= stylesheet_link_tag "blueprint/ie.css", 
-                      :media => "screen, projection" %><![endif]-->
-    <%= stylesheet_link_tag "application.css" %>
-    <%= stylesheet_link_tag "menus.css" %>
+    <%= stylesheet_link_tag "default" %>
     <%- if development? -%>
       <style type="text/css">
         .with-grid { background: url('/stylesheets/blueprint/src/grid.png'); }

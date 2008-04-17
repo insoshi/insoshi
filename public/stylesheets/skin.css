@@ -1,0 +1,317 @@
+/* Main layout */
+
+body{
+	text-align: center;
+}
+#header-wrap{
+	background: #333;
+	float: left;
+	width: 100%;
+}
+#header, #wrap, #footer{
+	margin: 0 auto;
+	text-align: left;
+	width: 996px;
+}
+#content{
+	width: 996px;
+	float: left;
+}
+.col1{
+	float: left;
+	width: 658px;
+}
+.col2{
+	float: right;
+	width: 324px;
+}
+
+body.single-col .col1{
+	margin: 0 336px;
+	width: 324px;
+}
+
+/* Header */
+#header{
+	position: relative;
+}
+
+#header h1{
+	float: left;
+	margin-top: 12px;
+	width: 156px;
+}
+
+
+/* Header-nav */
+#nav{
+	float: left;
+	height: 80px;
+	margin: 0 0 0 12px;
+	width: 828px;
+}
+#nav li{
+	background: #333 url(../images/grey-grad.jpg) bottom repeat-x;
+	float: left;
+	height: 36px;
+	line-height: 36px;
+	list-style-type: none;
+	margin: 44px 0 0 0;
+	text-align: center;
+	width: 84px;
+}
+#nav li a{
+	color: #fff;
+	display: block;
+	height: 36px;
+	font-size: .85em;
+}
+#nav li a:hover{
+	background: url(../images/grey-grad-inv.jpg) top repeat-x;
+}
+#nav li.active a, #nav li.active a:hover{
+	background: #fff;
+	color: #333;
+}
+#nav li.n-home{
+	margin-left: 0;
+}
+
+/* Search */
+#nav li#search{
+	background: #333;
+	width: 240px;
+}
+#nav li#search fieldset{
+	margin-top: 6px;
+}
+
+form#frmSearch{
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+#search input.txt{
+	border: 0;
+	float: left;	
+	height: 24px;
+	margin: 0 8px;
+	padding: 0;
+	width: 152px;
+}
+#search #btnSearch{
+	background: #e5e5e5;
+	border: 1px solid #ccc;
+	border: 0;
+	float: left;
+	height: 24px;
+	margin: 0;
+	padding: 0;
+	width: 72px;
+	
+}
+
+#footer{
+	border-top: 1px solid #ccc;
+	clear: both;
+	margin-top: 48px;
+	padding: 24px 0;
+	width: 100%;
+	
+}
+
+/* Welcome message */
+p.welcome{
+	position: absolute;
+	right: 0;
+	text-align: right;
+	top: 12px;
+}
+
+
+
+/* Site elements */
+
+/* List */
+.list{
+	margin-right: 6px;
+}
+.list li{
+	border-bottom: 1px solid #eee;
+	clear: both;
+	float: left;
+	list-style-type: none;
+	margin: 0 0 12px 6px;
+	padding: 0 0 6px 0;
+	width: 100%;
+}
+.list .profile-image{
+	clear: left;
+	float: left;
+}
+.list.full .profile-image{
+	float: left;
+	height: 72px;
+	overflow: hidden;
+	position: relative;
+	width: 72px;
+}
+.list.small .profile-image{
+	width: 36px;
+}
+.list p{
+	margin-bottom: 0;
+	margin-left: 82px;
+}
+.list.small p{
+	font-size: .85em;
+	margin-left: 48px;
+}
+.list.full .profile-image img{
+	right: 0;
+	position: absolute;
+	top: 0;
+	border: 1px solid #fff;
+}
+
+.list.blog p{
+	margin-left: 0;
+	margin-bottom: 1em;
+}
+.list.blog li.post ul{margin-bottom: 2em;}
+.list.blog li.post ul li{
+	list-style-type: disc;
+	border: 0;
+	margin: 0 0 0 1em;
+}
+
+.list li li.reply{
+	border-top: 1px solid #eee;
+	border-bottom: 0;
+	margin-left: 84px;
+	margin-top: 12px;
+	padding: 12px 0 0;
+	width: 568px;
+}
+
+
+/* Grid */
+.grid{
+	clear: both;
+	float: left;
+	width: 100%;
+}
+.grid li{
+	float: left;
+	list-style-type: none;
+}
+.grid.small li{
+	height: 36px;
+	margin: 0 0 6px 6px;
+	overflow: hidden;
+	width: 36px;
+}
+.grid.medium li{
+	background: url(../images/blue-grad.jpg) bottom repeat-x;
+	border: 1px solid #ccc;
+	height: 48px;
+	margin: 0 0 12px 6px;
+	width: 154px;
+}
+.grid.medium li, .grid.medium p{
+	font-size: .72em;
+}
+.grid.medium img{
+	float: left;
+	/*clip: rect(36px, 36px, 36px, 36px);*/
+	width: 36px;
+	margin: 0 6px 6px 0;
+}
+.grid.medium a{
+	display: block;
+	height: 100%;
+	margin: 6px;
+}
+
+
+/* Profile */
+
+.profile .toolbox{
+	clear: left;
+	float: left;
+	margin: 0 12px 12px 0;
+	width: 240px;
+}
+.profile img.photo{
+	margin-bottom: 12px;
+}
+.profile .note{
+	margin-left: 252px;
+}
+.profile .toolbox ul{
+	background: url(../images/blue-grad.jpg) bottom repeat-x;
+	border: 1px solid #ccc;
+	width: 238px;
+}
+.profile ul.tools li{
+	font-size: .72em;
+	margin: 6px 6px 6px 2em;
+}
+form#blogpost #post_title, form#blogpost #post_body{
+	width: 312px;
+}
+
+
+/* Messages */
+
+#message-nav{
+	background: url(../images/silver-grad.jpg) bottom repeat-x;
+	border-bottom: 1px solid #ccc;
+	float: left;
+	height: 24px;
+	margin-top: -24px;
+	position: relative;
+	width: 100%;
+}
+#message-nav li{
+	float: left;
+	font-size: .72em;
+	line-height: 24px;
+	list-style-type: none;
+	margin: 0;
+	text-align:center;
+	width: 78px;
+}
+#message-nav li.active a, #message-nav li a:hover{
+	background: url(../images/silver-grad-inv.jpg) bottom repeat-x;
+}
+#message-nav li.compose{
+	background: url(../images/compose-t.png) top no-repeat;
+	float: right;
+	height: 12px;
+	line-height: 6px;
+	padding-top: 3px;
+	margin: 3px 3px 0;
+	width: 154px;
+}
+#message-nav li.compose a{
+	background: url(../images/compose-b.png) bottom no-repeat;
+	color: #fff;
+	margin-top: 3px;
+}
+#message-nav li a{
+	color: #333;
+	display: block;
+	font-weight: normal;
+	height: 100%;
+}
+.message .tools{
+	margin-right: 6px;
+	text-align: right;
+}
+
+
+
+
+
