@@ -2,10 +2,8 @@ module ActivitiesHelper
 
   # Given an activity, return a message for the feed for the activity's class.
   def feed_message(activity)
-    # Switch on the class.to_s.  (The class itself is long & complicated.)
     person = activity.person
-    activity_type = activity.item.class.to_s
-    case activity_type
+    case activity_type(activity)
     when "BlogPost"
       post = activity.item
       blog = post.blog
@@ -36,14 +34,14 @@ module ActivitiesHelper
       %(#{person_link(person)} created the new discussion topic
         #{topic_link(activity.item)}.)
     else
-      raise "Invalid activity type #{activity_type.inspect}"
+      # TODO: make this a more graceful falure (?).
+      raise "Invalid activity type #{activity_type(activity).inspect}"
     end
   end
   
   def minifeed_message(activity)
     person = activity.person
-    activity_type = activity.item.class.to_s
-    case activity_type
+    case activity_type(activity)
     when "BlogPost"
       post = activity.item
       blog = post.blog
@@ -74,10 +72,32 @@ module ActivitiesHelper
       %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", activity.item)}.)
     else
-      raise "Invalid activity type #{activity_type.inspect}"
+      raise "Invalid activity type #{activity_type(activity).inspect}"
     end
   end
-
+  
+  # Given an activity, return the right icon.
+  def feed_icon(activity)
+    img = case activity_type(activity)
+            when "BlogPost"
+              "blog.gif"
+            when "BlogPostComment"
+              "comment.gif" 
+            when "Connection"
+              "switch.gif"
+            when "ForumPost"
+              "new.gif"
+            when "Topic"
+              "add.gif"
+            when "WallComment"
+              "signal.gif"
+            else
+              # TODO: make this a more graceful falure (?).
+              raise "Invalid activity type #{activity_type(activity).inspect}"
+            end
+    image_tag("icons/#{img}")
+  end
+  
   def someones(person, link = true)
     if link
       current_person?(person) ? "their own" : "#{person_link(person)}'s"
@@ -122,4 +142,13 @@ module ActivitiesHelper
     link_to("#{someones(person, false)} wall",
             person_path(person, :anchor => "wall"))
   end
+  
+  private
+  
+    # Return the type of activity.
+    # We switch on the class.to_s because the class itself is quite long
+    # (due to ActiveRecord).
+    def activity_type(activity)
+      activity.item.class.to_s      
+    end
 end
