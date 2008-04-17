@@ -4,3 +4,4 @@ one:
   email_domain: example.com
   smtp_server: smtp.example.com
   email_notifications: true
+  email_verifications: false

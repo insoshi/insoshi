@@ -15,4 +15,20 @@ describe Preference do
   it "should have a working email_verifications boolean" do
     @preferences.should respond_to(:email_verifications?) 
   end
+  
+  describe "booleans from fixtures" do
+    
+    before(:each) do
+      @preferences = preferences(:one)
+    end
+    
+    it "should have true email notifications" do
+      @preferences.email_notifications?.should be_true
+    end
+    
+    it "should have false email verifications" do
+      @preferences.email_verifications?.should be_false
+    end
+  end
+  
 end

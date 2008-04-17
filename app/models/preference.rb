@@ -16,11 +16,4 @@ class Preference < ActiveRecord::Base
 
   validates_presence_of :email_domain, :if => :email_notifications
   validates_presence_of :smtp_server,  :if => :email_notifications  
-
-  # Return true if we want the system to send out email verifications.
-  # This is a stub for now; it's true if email_notifications is true.
-  # TODO: add finer-grained preferences
-  def email_verifications?
-    email_notifications
-  end
 end

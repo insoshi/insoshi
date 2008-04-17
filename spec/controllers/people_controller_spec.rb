@@ -51,7 +51,7 @@ describe PeopleController do
     end
   end
   
-  describe "signup" do
+  describe "create" do
     before(:each) do
       logout
     end
@@ -85,6 +85,25 @@ describe PeopleController do
         assigns[:person].errors.on(:email).should_not be_nil
         response.should be_success
       end.should_not change(Person, :count)
+    end
+    
+    describe "email validations" do
+      
+      before(:each) do
+        @preferences = preferences(:one)
+      end
+      
+      it "should create an active user if not verifying email" do
+        create_person
+        assigns(:person).should_not be_deactivated
+      end
+    
+      it "should create a deactivated person if verifying email" do
+        @preferences.email_verifications?.should be_false
+        @preferences.toggle!(:email_verifications)
+        create_person
+        assigns(:person).should be_deactivated
+      end
     end
   end
   

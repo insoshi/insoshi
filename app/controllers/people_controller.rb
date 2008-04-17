@@ -45,6 +45,7 @@ class PeopleController < ApplicationController
         if global_prefs.email_verifications?
           flash[:notice] = %(Thanks for signing up! A verification email has 
                              been sent to #{@person.email}.)
+          @person.toggle!(:deactivated)
         else
           flash[:notice] = "Thanks for signing up!"
         end

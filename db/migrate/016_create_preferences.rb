@@ -4,6 +4,7 @@ class CreatePreferences < ActiveRecord::Migration
       t.string :email_domain, :null => false, :default => ""
       t.string :smtp_server, :null => false, :default => ""
       t.boolean :email_notifications, :null => false, :default => false
+      t.boolean :email_verifications, :null => false, :default => false
 
       t.timestamps
     end
