@@ -68,8 +68,6 @@ describe Connection do
       @activity.should_not be_nil
     end
   end
-
-  
   
   def status(person, conn)
     Connection.conn(person, conn).status

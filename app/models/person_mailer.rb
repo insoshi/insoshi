@@ -19,11 +19,12 @@ class PersonMailer < ActionMailer::Base
     body         "domain" => domain, "message" => message
   end
   
-  def connection_request(person, contact)
+  def connection_request(connection)
+    # raise connection.person_id.inspect
     from         "Contact request <connection@#{domain}>"
-    recipients   person.email
+    recipients   connection.person.email
     subject      "New contact request"
-    body         "domain" => domain, "contact" => contact
+    body         "domain" => domain, "connection" => connection
   end
   
   def email_verification(ev)

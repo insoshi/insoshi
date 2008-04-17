@@ -49,14 +49,15 @@ class Connection < ActiveRecord::Base
     # Make a pending connection request.
     def request(person, contact, mail = global_prefs.email_notifications)
       if person == contact or Connection.exists?(person, contact)
-        false
+        nil
       else
         transaction do
           create(:person => person, :contact => contact, :status => PENDING)
           create(:person => contact, :contact => person, :status => REQUESTED)
         end
-        PersonMailer.deliver_connection_request(person, contact) if mail
-        true
+        connection = conn(person, contact)
+        PersonMailer.deliver_connection_request(connection) if mail
+        connection
       end
     end
   
