@@ -47,7 +47,7 @@ class Connection < ActiveRecord::Base
     alias exist? exists?
   
     # Make a pending connection request.
-    def request(person, contact, mail = preferences.email_notifications)
+    def request(person, contact, mail = global_prefs.email_notifications)
       if person == contact or Connection.exists?(person, contact)
         false
       else
@@ -71,7 +71,7 @@ class Connection < ActiveRecord::Base
       end
     end
     
-    def connect(person, contact, mail = preferences.email_notifications)
+    def connect(person, contact, mail = global_prefs.email_notifications)
       transaction do
         request(person, contact, mail)
         accept(person, contact)

@@ -1,7 +1,7 @@
 module PreferencesHelper
 
   # Return the global preferences.
-  def preferences
-    @preferences ||= Preference.find(:first)
+  def global_prefs
+    @global_prefs ||= Preference.find(:first)
   end
 end

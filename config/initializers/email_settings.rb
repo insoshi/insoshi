@@ -1,13 +1,13 @@
 # Rescue from the error raised upon first migrating.
 begin
   unless test?
-    prefs = Preference.find(:first)
-    if prefs.email_notifications?
+    global_prefs = Preference.find(:first)
+    if global_prefs.email_notifications?
       ActionMailer::Base.delivery_method = :smtp
       ActionMailer::Base.smtp_settings = {
-        :address    => prefs.smtp_server,
+        :address    => global_prefs.smtp_server,
         :port       => 25,
-        :domain     => prefs.email_domain
+        :domain     => global_prefs.email_domain
       }
     end
   end

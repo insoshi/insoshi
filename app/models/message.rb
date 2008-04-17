@@ -144,7 +144,7 @@ class Message < Communication
     end
     
     def send_receipt_reminder
-      @skip_send_mail ||= !Message.preferences.email_notifications
+      @skip_send_mail ||= !Message.global_prefs.email_notifications
       PersonMailer.deliver_message_notification(self) unless @skip_send_mail
     end
 end
