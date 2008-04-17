@@ -46,6 +46,7 @@ class PeopleController < ApplicationController
           flash[:notice] = %(Thanks for signing up! A verification email has 
                              been sent to #{@person.email}.)
           @person.toggle!(:deactivated)
+          @person.email_verifications.create!
         else
           flash[:notice] = "Thanks for signing up!"
         end

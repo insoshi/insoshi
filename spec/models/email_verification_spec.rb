@@ -3,6 +3,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe EmailVerification do
   
   before(:each) do
+    @emails = ActionMailer::Base.deliveries
+    @emails.clear    
+    
     @ev = email_verifications(:one)
     @person = people(:quentin)
   end

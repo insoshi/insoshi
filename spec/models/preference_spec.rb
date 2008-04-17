@@ -8,7 +8,7 @@ describe Preference do
   it "should require email settings for email notifications" do
     @preferences.email_notifications = true
     @preferences.save.should be_false
-    @preferences.errors_on(:email_domain).should_not be_empty
+    @preferences.errors_on(:domain).should_not be_empty
     @preferences.errors_on(:smtp_server).should_not be_empty
   end
   

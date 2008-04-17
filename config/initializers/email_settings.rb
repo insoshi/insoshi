@@ -7,7 +7,7 @@ begin
       ActionMailer::Base.smtp_settings = {
         :address    => global_prefs.smtp_server,
         :port       => 25,
-        :domain     => global_prefs.email_domain
+        :domain     => global_prefs.domain
       }
     end
   end
