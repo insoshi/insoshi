@@ -5,9 +5,11 @@ wall:
   body: MyText
   commentable: quentin
   commentable_type: Person
+  type: WallComment
 
 blog_comment:
   commenter: aaron
   body: MyText
   commentable: blog
   commentable_type: BlogPost
+  type: BlogPostComment

@@ -43,7 +43,7 @@ class Person < ActiveRecord::Base
 
   has_one :blog
   has_many :comments, :as => :commentable, :order => 'created_at DESC',
-                      :limit => NUM_WALL_COMMENTS
+                      :limit => NUM_WALL_COMMENTS, :class_name => 'WallComment'
   has_many :connections
   has_many :contacts, :through => :connections,
                       :conditions => "status = #{Connection::ACCEPTED}"
@@ -60,7 +60,7 @@ class Person < ActiveRecord::Base
   end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE
+                                            :limit => FEED_SIZE, :group => 'activities.id'
   
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?

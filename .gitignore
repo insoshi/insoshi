@@ -15,3 +15,5 @@ index/*
 config/initializers/preferences.rb
 identifier
 .project
+.#*
+tmp/.*

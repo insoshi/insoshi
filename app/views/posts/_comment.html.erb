@@ -9,7 +9,7 @@
     </div>
     <div class="content">
       <%= sanitize comment.body %>
-      <%- if current_person?(comment.post.blog.person) -%>
+      <%- if current_person?(comment.commentable.blog.person) -%>
       <br />
       <%= link_to "delete", blog_post_comment_path(@blog, @post, comment),
                             :method => :delete %>
