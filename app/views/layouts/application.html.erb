@@ -16,7 +16,319 @@
     <%- end -%>
     <%= javascript_include_tag :defaults %>
   </head>
-  <body>
+  <body class="home">
+    <div id="header-wrap">
+
+      <div id="header">
+        <h1>
+          <a href="index.html" title="Return to Insoshi homepage">
+            <img src="assets/images/logo-insoshi.png" alt="Insoshi - Social Software" />
+          </a>
+        </h1>
+        <ul id="nav">
+          <li class="n-home active"><a href="index.html">Home</a></li>
+
+          <li class="n-profile"><a href="profile.html">Profile</a></li>
+          <li class="n-contacts"><a href="contacts.html">Contacts</a></li>
+          <li class="n-messages"><a href="messages.html">Messages</a></li>
+          <li class="n-blog"><a href="blog.html">Blog</a></li>
+          <li class="n-people"><a href="people.html">People</a></li>
+          <li class="n-forum"><a href="forum.html">Forum</a></li>
+
+          <li class="n-search" id="search">
+            <form id="frmSearch" action="search.html">
+              <fieldset title="Search Insoshi">
+                <input type="text" id="txtSearch" class="txt" />
+                <input id="btnSearch" type="submit" value="Search" />
+              </fieldset>
+            </form>
+          </li>
+        </ul>
+
+        <p class="welcome">Welcome, Pete Lambert (<a href="signin.html">Sign out</a>)</p>
+      </div>
+    </div>
+    <div id="wrap">
+      <div id="content">
+        <div class="col1">
+          <h2>Recent Activity</h2>
+
+          <ul class="list activity full">
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/m/simon-hunt.jpg" alt="Simon Hunt" />
+                <img src="assets/images/icons/blog.gif" alt="Blog post" />
+              </div>
+              <p><a href="profile.html">Simon Hunt</a> posted a new item on his <a href="blog.html">blog</a> with the title &#8220;This is how it is when things are going well</a>&#8221;</p>
+
+              <p class="meta published">6 minutes ago</p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/m/default-profile-image.png" alt="Simon Hunt" />
+                <img src="assets/images/icons/comment.gif" alt="Blog post" />
+              </div>
+              <p><a href="profile.html">Simon Hunt</a> posted a new item on his <a href="blog.html">blog</a> with the title &#8220;This is how it is when things are going well</a>&#8221;</p>
+
+              <p class="meta published">6 minutes ago</p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/m/simon-hunt.jpg" alt="Simon Hunt" />
+                <img src="assets/images/icons/blog.gif" alt="Blog post" />
+              </div>
+              <p><a href="profile.html">Simon Hunt</a> posted a new item on his <a href="blog.html">blog</a> with the title &#8220;This is how it is when things are going well</a>&#8221;</p>
+
+              <p class="meta published">6 minutes ago</p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/m/simon-hunt.jpg" alt="Simon Hunt" />
+                <img src="assets/images/icons/comment.gif" alt="Blog post" />
+              </div>
+              <p><a href="profile.html">Simon Hunt</a> posted a comment on the topic <a href="blog.html">blog</a> with the title &#8220;This is how it is when things are going well</a>&#8221;</p>
+
+              <p class="meta published">6 minutes ago</p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/m/default-profile-image.png" alt="Simon Hunt" />
+                <img src="assets/images/icons/blog.gif" alt="Blog post" />
+              </div>
+              <p><a href="profile.html">Simon Hunt</a> posted a new item on his <a href="blog.html">blog</a> with the title &#8220;This is how it is when things are going well</a>&#8221;</p>
+
+              <p class="meta published">6 minutes ago</p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/m/simon-hunt.jpg" alt="Simon Hunt" />
+                <img src="assets/images/icons/comment.gif" alt="Blog post" />
+              </div>
+              <p><a href="profile.html">Simon Hunt</a> posted a comment on the topic <a href="blog.html">blog</a> with the title &#8220;This is how it is when things are going well</a>&#8221;</p>
+
+              <p class="meta published">6 minutes ago</p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/m/simon-hunt.jpg" alt="Simon Hunt" />
+                <img src="assets/images/icons/blog.gif" alt="Blog post" />
+              </div>
+              <p><a href="profile.html">Simon Hunt</a> posted a new item on his <a href="blog.html">blog</a> with the title &#8220;This is how it is when things are going well</a>&#8221;</p>
+
+              <p class="meta published">6 minutes ago</p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/m/default-profile-image.png" alt="Simon Hunt" />
+                <img src="assets/images/icons/blog.gif" alt="Blog post" />
+              </div>
+              <p><a href="profile.html">Simon Hunt</a> posted a new item on his <a href="blog.html">blog</a> with the title &#8220;This is how it is when things are going well</a>&#8221;</p>
+
+              <p class="meta published">6 minutes ago</p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/m/simon-hunt.jpg" alt="Simon Hunt" />
+                <img src="assets/images/icons/blog.gif" alt="Blog post" />
+              </div>
+              <p><a href="profile.html">Simon Hunt</a> posted a new item on his <a href="blog.html">blog</a> with the title &#8220;This is how it is when things are going well</a>&#8221;</p>
+
+              <p class="meta published">6 minutes ago</p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/m/simon-hunt.jpg" alt="Simon Hunt" />
+                <img src="assets/images/icons/blog.gif" alt="Blog post" />
+              </div>
+              <p><a href="profile.html">Simon Hunt</a> posted a new item on his <a href="blog.html">blog</a> with the title &#8220;This is how it is when things are going well</a>&#8221;</p>
+
+              <p class="meta published">6 minutes ago</p>
+            </li>                                                                      
+          </ul>
+          <h2>Network Members</h2>
+          <ul class="grid contacts medium">
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
+
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
+                <span class="fn">George Palmer</span>
+              </a>
+
+            </li>
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/default-profile-image.png" alt="Simon Hunt" class="photo" />
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+            <li class="vcard contact">
+
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
+
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/default-profile-image.png" alt="Simon Hunt" class="photo" />
+                <span class="fn">George Palmer</span>
+              </a>
+
+            </li>
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+            <li class="vcard contact">
+
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
+
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+            <li class="more"><a href="people.html">See all network members...</a></li>                                                                                                            
+          </ul>
+        </div>
+        <div class="col2">
+          <h2>Requested Connections</h2>
+
+          <ul class="grid contacts medium">
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+            <li class="vcard contact">
+
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/default-profile-image.png" alt="Simon Hunt" class="photo" />
+
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/default-profile-image.png" alt="Simon Hunt" class="photo" />
+                <span class="fn">George Palmer</span>
+              </a>
+
+            </li>
+            <li class="vcard contact">
+              <a href="profile.html" class="url">
+                <img src="assets/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
+                <span class="fn">George Palmer</span>
+              </a>
+            </li>
+          </ul>
+
+          
+          <h2>Messages</h2>
+          <ul class="list messages small">
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/s/leanne-scott.jpg" alt="Leanne Scott" />
+              </div>
+              <p><span class="field">From:</span><a href="profile.html">Simon Hunt</a></p>
+
+              <p class="meta published">about 1 hour ago</p>
+              <p title="Subject"><a href="message.html">I had a thought about the project</a></p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/s/default-profile-image.png" alt="Simon Hunt" class="photo" />
+              </div>
+              <p><span class="field">From:</span><a href="profile.html">Simon Hunt</a></p>
+
+              <p class="meta published">about 1 hour ago</p>
+              <p title="Subject"><a href="message.html">I had a thought about the project</a></p>
+            </li>
+            <li>
+              <div class="profile-image">
+                <img src="assets/images/profile-images/s/leanne-scott.jpg" alt="Leanne Scott" />
+              </div>
+              <p><span class="field">From:</span><a href="profile.html">Simon Hunt</a></p>
+
+              <p class="meta published">about 1 hour ago</p>
+              <p title="Subject"><a href="message.html">I had a thought about the project</a></p>
+            </li>
+            <li class="more"><a href="messages.html">Go to my inbox...</a></li>                            
+          </ul>
+          
+          <h2>Contacts</h2>
+          <ul class="grid contacts small">
+
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/default-profile-image.png" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/default-profile-image.png" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/default-profile-image.png" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
+            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="assets/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
+
+            <li class="more"><a href="contacts.html">All my contacts...</a></li>
+          </ul>
+        </div>
+        <div id="footer">
+          <p id="footer-nav">
+            <a href="index.html">Home</a> | <a href="profile.html">Profile</a> | <a href="messages.html">Messages</a> | <a href="blog.html">Blog</a> | <a href="people.html">People</a> | <a href="forum.html">Forum</a>
+
+          </p>
+          <p>Powered by <a href="index.html">Inoshi</a></p>
+        </div>
+      </div>
+    </div>
+  </body>
+    
+    
+    
+    
+    
+    
+    
     <div id="main" class="container">
       <%- column_div :id => "logo", :order => "first last", 
                      :width => FULL do -%>
