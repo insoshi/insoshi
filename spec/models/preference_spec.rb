@@ -12,7 +12,7 @@ describe Preference do
     @preferences.errors_on(:smtp_server).should_not be_empty
   end
   
-  it "should have a working email_validation boolean" do
-    @preferences.should respond_to(:email_validation?) 
+  it "should have a working email_verifications boolean" do
+    @preferences.should respond_to(:email_verifications?) 
   end
 end

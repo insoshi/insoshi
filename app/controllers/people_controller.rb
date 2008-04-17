@@ -42,7 +42,12 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @person.save
         self.current_person = @person
-        flash[:notice] = "Thanks for signing up!"
+        if global_prefs.email_verifications?
+          flash[:notice] = %(Thanks for signing up! A verification email has 
+                             been sent to #{@person.email}.)
+        else
+          flash[:notice] = "Thanks for signing up!"
+        end
         format.html { redirect_back_or_default(home_url) }
       else
         format.html { render :action => 'new' }
