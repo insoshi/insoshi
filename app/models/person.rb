@@ -113,6 +113,8 @@ class Person < ActiveRecord::Base
   
   ## Feeds
   
+  # Return a person-specific activity feed.
+  # TODO: put some algorithms in here to improve feed quality.
   def feed
     activities
   end
