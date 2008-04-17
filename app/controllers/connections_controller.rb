@@ -75,6 +75,9 @@ class ConnectionsController < ApplicationController
         flash[:error] = "Invalid connection."
         redirect_to home_url
       end
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "Invalid or expired connection request"
+      redirect_to home_url
     end
 
 end
