@@ -97,7 +97,7 @@ class Person < ActiveRecord::Base
     def search(options = {})
       query = options[:q]
       return [].paginate if query.blank? or query == "*"
-      # This is ineffecient.  We'll fix it when we move to Sphinx.
+      # This is inefficient.  We'll fix it when we move to Sphinx.
       conditions = ["deactivated = ?", false]
       results = find_by_contents(query, {}, :conditions => conditions)
       results[0...SEARCH_LIMIT].paginate(:page => options[:page],
@@ -110,6 +110,14 @@ class Person < ActiveRecord::Base
     end
   end
   
+  # Params for use in urls.
+  # Profile urls have the form '/people/1-michael-hartl'.
+  # This works automagically because Person.find(params[:id]) implicitly
+  # converts params[:id] into an int, and in Ruby
+  # '1-michael-hartl'.to_i == 1
+  def to_param
+    "#{id}-#{name.downcase.split.join('-')}"
+  end
   
   ## Feeds
   

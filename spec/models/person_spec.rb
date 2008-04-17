@@ -12,23 +12,31 @@ describe Person do
     end
   
     it 'requires password' do
-      u = create_person(:password => nil)
-      u.errors.on(:password).should_not be_nil
+      p = create_person(:password => nil)
+      p.errors.on(:password).should_not be_nil
     end
-
+      
     it 'requires password confirmation' do
-      u = create_person(:password_confirmation => nil)
-      u.errors.on(:password_confirmation).should_not be_nil
+      p = create_person(:password_confirmation => nil)
+      p.errors.on(:password_confirmation).should_not be_nil
     end
-
+      
     it 'requires email' do
-      u = create_person(:email => nil)
-      u.errors.on(:email).should_not be_nil
+      p = create_person(:email => nil)
+      p.errors.on(:email).should_not be_nil
     end
-    
+      
     it "should require name" do
-      u = create_person(:name => nil)
-      u.errors.on(:name).should_not be_nil      
+      p = create_person(:name => nil)
+      p.errors.on(:name).should_not be_nil      
+    end
+  end
+  
+  describe "utility methods" do  
+    it "should have the right to_param method" do
+      # Person params should have the form '1-michael-hartl'.
+      param = "#{@person.id}-#{@person.name.downcase.split.join('-')}"
+      @person.to_param.should == param
     end
   end
   
