@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   include PreferencesHelper
   
   before_filter :create_page_view, :require_activation, :tracker_vars,
-                :admin_email_warning
+                :admin_warning
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -46,14 +46,20 @@ class ApplicationController < ActionController::Base
       @env = ENV['RAILS_ENV']
     end
     
-    # Warn the admin if his email address is still the default.
-    def admin_email_warning
+    # Warn the admin if his email address or password is still the default.
+    def admin_warning
       default_domain = "example.com"
-      if logged_in? and current_person.admin? and
-         current_person.email =~ /@#{default_domain}$/
-        flash[:notice] = %(Warning: your email address is still at 
-          #{default_domain}.
-          <a href="#{edit_person_path(current_person)}">Change it here</a>.)
+      default_password = "admin"
+      if logged_in? and current_person.admin? 
+        if current_person.email =~ /@#{default_domain}$/
+          flash[:notice] = %(Warning: your email address is still at 
+            #{default_domain}.
+            <a href="#{edit_person_path(current_person)}">Change it here</a>.)
+        end
+        if current_person.unencrypted_password == default_password
+          flash[:error] = %(Warning: your password is still the default.
+            <a href="#{edit_person_path(current_person)}">Change it here</a>.)          
+        end
       end
     end
 end
