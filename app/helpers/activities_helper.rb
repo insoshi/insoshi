@@ -12,6 +12,18 @@ module ActivitiesHelper
       view_blog = blog_link("View #{person.name}'s blog", blog)
       %(#{person_link(person)} made a blog post titled
         #{post_link(blog, post)}.<br /> #{view_blog})
+    when "Comment"
+      parent = activity.item.commentable
+      parent_type = parent.class.to_s
+      case parent_type
+      when "BlogPost"
+        post = activity.item.commentable
+        blog = post.blog
+        %(#{person_link(person)} made a comment to
+           #{someones(blog.person)} blog post #{post_link(blog, post)}.)
+      when "Person"
+        %(#{person_link(activity.item.commenter)} commented on #{wall(person)})
+      end      
     when "BlogPostComment"
       post = activity.item.commentable
       blog = post.blog
