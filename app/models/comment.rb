@@ -26,18 +26,19 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :body, :commenter
   validates_length_of :body, :maximum => MAX_TEXT_LENGTH
-  validates_length_of :body, :maximum => SMALL_TEXT_LENGTH, :if => :wall_comment?
+  validates_length_of :body, :maximum => SMALL_TEXT_LENGTH,
+                             :if => :wall_comment?
   
   after_create :log_activity
   
-  protected
-  
-    def blog_post_comment?
-      commentable.class.to_s == "BlogPost"
-    end
+  private
     
     def wall_comment?
       commentable.class.to_s == "Person"
+    end
+  
+    def blog_post_comment?
+      commentable.class.to_s == "BlogPost"
     end
     
     # Return the person for the thing commented on.
