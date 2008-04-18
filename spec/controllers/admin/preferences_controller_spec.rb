@@ -40,12 +40,20 @@ describe Admin::PreferencesController do
       @prefs.reload.email_notifications.should be_true
     end
     
+    it "should update email verifications" do
+      @prefs.email_verifications = false
+      @prefs.save!
+      put :update, :preferences => { :email_verifications => "1" }
+      @prefs.reload.email_verifications.should be_true
+    end
+    
     it "should have a flash warning if the SMTP server changes" do
       put :update, :preferences => { :smtp_server => "new-smtp.server",
                                      :domain => @prefs.domain, 
                                      :email_notifications => "1" }
       flash[:error].should_not be_nil
     end
+    
     it "should have a flash warning if the email domain changes" do
       put :update, :preferences => { :smtp_server => @prefs.smtp_server,
                                      :domain => "new-example.com", 
