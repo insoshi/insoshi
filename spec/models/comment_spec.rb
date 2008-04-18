@@ -23,6 +23,12 @@ describe Comment do
       @comment.should have_maximum(:body, MAX_TEXT_LENGTH)
     end
   
+    it "should increase the comment count" do
+      old_count = @post.comments.count
+      @comment.save!
+      @post.comments.count.should == old_count + 1
+    end
+  
     describe "associations" do
     
       before(:each) do
@@ -67,11 +73,11 @@ describe Comment do
       @comment.should have_maximum(:body, SMALL_TEXT_LENGTH)
     end
   
-    it "should increase the comment count" # do
-    #       lambda do
-    #         @comment.save!
-    #       end.should change(WallComment, :count).by(1)
-    #     end
+    it "should increase the comment count" do
+      old_count = @person.comments.count
+      @comment.save!
+      @person.comments.count.should == old_count + 1
+    end
   
     describe "associations" do
     
