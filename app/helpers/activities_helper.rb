@@ -29,7 +29,7 @@ module ActivitiesHelper
       %(#{person_link(person)} created the new discussion topic
         #{topic_link(activity.item)}.)
     when "WallComment"
-      %(#{person_link(activity.item.commenter)} made a comment on #{wall(activity.item.commentable)})
+      %(#{person_link(activity.item.commenter)} commented on #{wall(person)})
     else
       raise "Invalid activity type #{activity_type.inspect}"
     end
@@ -45,7 +45,7 @@ module ActivitiesHelper
       %(#{person_link(person)} made a
         #{post_link("new blog post", blog, post)})
     when "BlogPostComment"
-      post = activity.item.commentable
+      post = activity.item.post
       %(#{person_link(person)} made a comment on #{someones(post.blog.person)} 
         #{post_link("blog post", post.blog, post)})
     when "Connection"
@@ -61,7 +61,7 @@ module ActivitiesHelper
       %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", activity.item)}.)
     when "WallComment"
-      %(#{person_link(activity.item.commenter)} made a comment on #{wall(activity.item.commentable)})
+      %(#{person_link(activity.item.commenter)} commented on #{wall(person)})
     else
       raise "Invalid activity type #{activity_type.inspect}"
     end
@@ -80,7 +80,9 @@ module ActivitiesHelper
       person = text
       text = person.name
     end
-    link_to(text, person)
+    # We normally write link_to(..., person) for brevity, but that breaks
+    # activities_helper_spec due to an RSpec bug.
+    link_to(text, person_path(person))
   end
   
   def blog_link(text, blog)
