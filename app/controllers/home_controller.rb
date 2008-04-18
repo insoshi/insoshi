@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  
+  skip_before_filter :require_activation
   
   def index
     @topics = Topic.find_recent
