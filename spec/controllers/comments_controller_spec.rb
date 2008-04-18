@@ -37,11 +37,12 @@ describe CommentsController do
     end
     
     it "should create an activity with item type 'BlogPostComment'" do
-        post :create, :person_id => @person,
+        post :create, :blog_id => @blog, :post_id => @post,
+                      :person_id => @person,
                       :comment => { :body => "The body" }
         comment = assigns(:comment)
         activity = Activity.find_by_item_id(comment)
-        activity.class.to_s.should == 'BlogPostComment'
+        activity.item.class.to_s.should == 'BlogPostComment'
     end
     
     it "should render the new template on creation failure" do
@@ -104,11 +105,11 @@ describe CommentsController do
     end
     
     it "should create an activity with item type 'WallComment'" do
-        post :create, :person_id => @person,
-                      :comment => { :body => "The body" }
-        comment = assigns(:comment)
-        activity = Activity.find_by_item_id(comment)
-        activity.class.to_s.should == 'WallComment'
+      post :create, :person_id => @person,
+                    :comment => { :body => "The body" }
+      comment = assigns(:comment)
+      activity = Activity.find_by_item_id(comment)
+      activity.item.class.to_s.should == 'WallComment'
     end
     
     it "should render the new template on creation failure" do
