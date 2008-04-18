@@ -35,7 +35,13 @@ describe Person do
   describe "utility methods" do  
     it "should have the right to_param method" do
       # Person params should have the form '1-michael-hartl'.
-      param = "#{@person.id}-#{@person.name.downcase.split.join('-')}"
+      param = "#{@person.id}-quentin"
+      @person.to_param.should == param
+    end
+    
+    it "should have a safe uri" do
+      @person.name = "Michael & Hartl"
+      param = "#{@person.id}-michael-and-hartl"
       @person.to_param.should == param
     end
   end

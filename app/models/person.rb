@@ -117,6 +117,7 @@ class Person < ActiveRecord::Base
   # '1-michael-hartl'.to_i == 1
   def to_param
     "#{id}-#{name.downcase.split.join('-')}"
+    "#{id}-#{name.to_safe_uri}"
   end
   
   ## Feeds
