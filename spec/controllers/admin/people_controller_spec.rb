@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Admin::PeopleController do
+  integrate_views
   
   it "should redirect a non-logged-in user" do
     get :index
@@ -14,10 +15,15 @@ describe Admin::PeopleController do
   end
 
   it "should render successfully for an admin user" do
-    @admin = people(:quentin); @admin.admin = true; @admin.save!
-    login_as :quentin
+    login_as :admin
     get :index
     response.should be_success
+  end
+  
+  it "should have a warning for an example.com email address" do
+    login_as(:admin)
+    get :index
+    response.should have_tag("div[class=?]", "flash notice", /Warning/)
   end
   
   describe "person modifications" do

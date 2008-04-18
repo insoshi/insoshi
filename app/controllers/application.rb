@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
   include SharedHelper
   include PreferencesHelper
   
-  before_filter :create_page_view, :require_activation, :tracker_vars
+  before_filter :create_page_view, :require_activation, :tracker_vars,
+                :admin_email_warning
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
@@ -43,5 +44,16 @@ class ApplicationController < ActionController::Base
     def tracker_vars
       @tracker_id = File.open("identifier").read rescue nil
       @env = ENV['RAILS_ENV']
+    end
+    
+    # Warn the admin if his email address is still the default.
+    def admin_email_warning
+      default_domain = "example.com"
+      if logged_in? and current_person.admin? and
+         current_person.email =~ /@#{default_domain}$/
+        flash[:notice] = %(Warning: your email address is still at 
+          #{default_domain}.
+          <a href="#{edit_person_path(current_person)}">Change it here</a>.)
+      end
     end
 end
