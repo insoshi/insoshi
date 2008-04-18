@@ -19,7 +19,7 @@
     <p>
     <%= image_tag @person.main_photo %>
     
-    <%= sanitize @person.description %></p>
+    <%= display @person.description %></p>
   </div>
   
   <%= render :partial => 'recent_activity' %>

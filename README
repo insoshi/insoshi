@@ -31,6 +31,7 @@ $ sudo gem install image_science
 $ sudo gem install ferret
 $ sudo gem install mysql
 $ sudo gem install sqlite3-ruby
+$ sudo gem install BlueCloth
 
 ## Installing the app
 

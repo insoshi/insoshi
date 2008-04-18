@@ -47,6 +47,11 @@ module ApplicationHelper
     javascript_tag("$('#{id}').focus()");
   end
   
+  # Display text by sanitizing and formatting.
+  def display(text)
+    markdown(sanitize(text))
+  end
+  
   # Output a column div.
   # The current two-column layout has primary & secondary columns.
   # The options hash is handled so that the caller can pass options to 
