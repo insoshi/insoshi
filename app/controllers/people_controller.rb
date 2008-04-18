@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
   
-  before_filter :login_required, :except => [:new, :create, :verify]
+  before_filter :login_required, :only => [ :edit, :update ]
   before_filter :correct_user_required, :only => [ :edit, :update ]
   
   def index

@@ -1,7 +1,5 @@
 class ForumsController < ApplicationController
 
-  before_filter :login_required
-
   def index
     @forums = Forum.find(:all)
     if @forums.length == 1

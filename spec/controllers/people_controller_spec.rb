@@ -12,13 +12,7 @@ describe PeopleController do
   
   describe "people pages" do
     integrate_views
-    
-    it "should require login" do
-      logout
-      get :index
-      response.should redirect_to(login_url)
-    end
-    
+        
     it "should have a working index" do
       get :index
       response.should be_success

@@ -1,7 +1,5 @@
 class BlogsController < ApplicationController
 
-  before_filter :login_required
-
   def show
     @blog = Blog.find(params[:id])
     @posts = @blog.posts.paginate(:page => params[:page])

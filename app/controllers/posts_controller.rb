@@ -3,7 +3,7 @@
 class PostsController < ApplicationController
   include ApplicationHelper
   
-  before_filter :login_required
+  before_filter :login_required, :except => [ :index, :show ]
   before_filter :get_instance_vars
   before_filter :authorize_new, :only => [:create, :new]
   before_filter :authorize_change, :only => [:edit, :update]

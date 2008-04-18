@@ -11,7 +11,7 @@ class HomeController < ApplicationController
     else
       # TODO: make a helper for this
       @feed = Activity.find(:all, :order => 'created_at DESC',
-                                  :limit => 10 )
+                                  :limit => 10)
     end    
     respond_to do |format|
       format.html
