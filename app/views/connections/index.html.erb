@@ -5,6 +5,7 @@
 <% unless @contacts.empty? -%>
   <%= will_paginate(@contacts) %>
   <%= raster image_links(@contacts, :captions => @contacts.map(&:name),
+                                    :destroy => true,
                                     :image => :thumbnail) %>
   <%= will_paginate(@contacts) %>
 <% else %>
