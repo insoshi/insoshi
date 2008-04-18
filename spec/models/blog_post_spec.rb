@@ -47,8 +47,9 @@ describe BlogPost do
   describe "comment associations" do
     
     before(:each) do
-      @post.comments.build(:body => "The body", :commenter => people(:aaron))      
-      @post.save!
+      @post.save
+      @post.comments.create(:body => "The body",
+                            :commenter => people(:aaron))
     end
     
     it "should have associated comments" do

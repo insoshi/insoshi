@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
 
   # Used for both wall and blog comments.
   def new
-    @comment = model.new
+    @comment = parent.comments.new
 
     respond_to do |format|
       format.html { render :action => resource_template("new") }
@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = model.find(params[:id])
+    @comment = Comment.find(params[:id])
     @comment.destroy
 
     respond_to do |format|
@@ -60,15 +60,6 @@ class CommentsController < ApplicationController
     end
     
     ## Handle wall and blog comments in a uniform manner.
-    
-    # Return the appropriate model corresponding to the type of comment.
-    def model
-      if wall?
-        WallComment
-      elsif blog?
-        BlogPostComment
-      end
-    end
     
     # Return the comments array for the given resource.
     def resource_comments
