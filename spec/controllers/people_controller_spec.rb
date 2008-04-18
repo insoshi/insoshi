@@ -113,6 +113,12 @@ describe PeopleController do
           person.email_verifications.should_not be_empty
         end
         
+        it "should have the right notice" do
+          person = create_person
+          flash[:notice].should =~ /verification email/
+          response.should redirect_to(home_url)
+        end
+        
         it "should verify a person" do
           person = create_person
           verification = assigns(:verification)

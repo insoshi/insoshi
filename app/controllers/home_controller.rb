@@ -1,18 +1,20 @@
 class HomeController < ApplicationController
   
-  before_filter :login_required
   
   def index
-    
-    @feed = current_person.feed
-    
     @topics = Topic.find_recent
     @members = Person.find_recent
-    @contacts = current_person.some_contacts
-    @requested_contacts = current_person.requested_contacts
-    
+    if logged_in?
+      @feed = current_person.feed
+      @contacts = current_person.some_contacts
+      @requested_contacts = current_person.requested_contacts
+    else
+      # TODO: make a helper for this
+      @feed = Activity.find(:all, :order => 'created_at DESC',
+                                  :limit => 10 )
+    end    
     respond_to do |format|
       format.html
-    end
+    end  
   end
 end
