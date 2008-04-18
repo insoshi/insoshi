@@ -115,6 +115,16 @@ describe PeopleController do
         
         it "should verify a person" do
           person = create_person
+          person.should be_deactivated
+          verification = assigns(:verification)
+          get :verify, :id => verification.code
+          person.reload.should be_active
+          response.should redirect_to(person_path(person))
+        end
+        
+        it "should verify a person even if they're logged in" do
+          person = create_person
+          login_as(person)
           verification = assigns(:verification)
           get :verify, :id => verification.code
           person.reload.should be_active

@@ -6,6 +6,7 @@ class CreateEmailVerifications < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :email_verifications, :code
   end
 
   def self.down

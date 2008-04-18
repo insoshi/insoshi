@@ -44,11 +44,12 @@ class PeopleController < ApplicationController
       if @person.save
         self.current_person = @person
         if global_prefs.email_verifications?
-          flash[:notice] = %(Thanks for signing up! A verification email has 
-                             been sent to #{@person.email}.)
-          @person.toggle!(:deactivated)
+          # TODO: move some of this into models.
+          @person.deactivated = true; @person.save!
           @verification = EmailVerification.create(:person => @person)
           @person.email_verifications << @verification
+          flash[:notice] = %(Thanks for signing up! A verification email has 
+                             been sent to #{@person.email}.)
           format.html { redirect_to(home_url) }
         else
           flash[:notice] = "Thanks for signing up!"
@@ -66,7 +67,7 @@ class PeopleController < ApplicationController
       flash[:error] = "Invalid email verification code"
       redirect_to home_url
     else
-      verification.person.toggle!(:deactivated)
+      verification.person.deactivated = false; verification.person.save!
       flash[:success] = "Email verified.  Your profile is active!"
       redirect_to verification.person
     end
