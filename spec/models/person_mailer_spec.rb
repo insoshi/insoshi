@@ -53,7 +53,7 @@ describe PersonMailer do
      end
      
      it "should have the right recipient" do
-       @email.to.first.should == @person.email
+       @email.to.first.should == @connection.contact.email
      end
      
      it "should have a URL to the contact" do

@@ -22,7 +22,7 @@ class PersonMailer < ActionMailer::Base
   def connection_request(connection)
     # raise connection.person_id.inspect
     from         "Contact request <connection@#{domain}>"
-    recipients   connection.person.email
+    recipients   connection.contact.email
     subject      "New contact request"
     body         "domain" => domain, "connection" => connection
   end
