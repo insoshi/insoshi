@@ -3,16 +3,19 @@
 <% form_for @person do |f| -%>
 
 <div class="form_row">
+  <label for="email">
+    Email address (never made
+    public<%= , "will be verified" if global_prefs.email_verifications? %>)  
+  </label>
+  <br />
+  <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
+</div>
+
+<div class="form_row">
   <label for="name">Name (will be displayed)</label>
   <br />
   <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
   <%= set_focus_to_id "person_name" %>  
-</div>
-
-<div class="form_row">
-  <label for="email">Email address (never made public)</label>
-  <br />
-  <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
 </div>
 
 <div class="form_row">
