@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
   
-  before_filter :login_required, :except => [:new, :create]
+  before_filter :login_required, :except => [:new, :create, :verify]
   before_filter :correct_user_required, :only => [ :edit, :update ]
   
   def index
@@ -46,7 +46,8 @@ class PeopleController < ApplicationController
           flash[:notice] = %(Thanks for signing up! A verification email has 
                              been sent to #{@person.email}.)
           @person.toggle!(:deactivated)
-          @person.email_verifications.create!
+          @verification = EmailVerification.create(:person => @person)
+          @person.email_verifications << @verification
         else
           flash[:notice] = "Thanks for signing up!"
         end
@@ -57,6 +58,17 @@ class PeopleController < ApplicationController
     end
   end
 
+  def verify
+    verification = EmailVerification.find_by_code(params[:id])
+    if verification.nil?
+      flash[:error] = "Invalid email verification code"
+      redirect_to home_url
+    else
+      verification.person.toggle!(:deactivated)
+      flash[:success] = "Email verified.  Your profile is active!"
+      redirect_to verification.person
+    end
+  end
 
   def edit
     @person = Person.find(params[:id])

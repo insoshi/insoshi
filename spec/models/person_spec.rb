@@ -44,15 +44,6 @@ describe Person do
       param = "#{@person.id}-michael-and-hartl"
       @person.to_param.should == param
     end
-    
-    it "should have a true email_verified by default" do
-      @person.email_verified?.should be_true
-    end
-    
-    it "should toggle email_verified" do
-      @person.toggle!(:email_verified)
-      @person.reload.email_verified?.should be_false
-    end
   end
   
   describe "contact associations" do
@@ -263,6 +254,10 @@ describe Person do
       @person.should be_deactivated
       @person.toggle(:deactivated)
       @person.should_not be_deactivated
+    end
+    
+    it "should have an active? helper boolean" do
+      @person.should be_active
     end
   end
   

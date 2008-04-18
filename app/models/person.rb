@@ -284,10 +284,15 @@ class Person < ActiveRecord::Base
     save
   end
 
+  # Return true if the person is the last remaining active admin.
   def last_admin?
     num_admins = Person.count(:conditions => ["admin = ? AND deactivated = ?",
                                               true, false])
     admin? and num_admins == 1
+  end
+  
+  def active?
+    not deactivated?
   end
 
   protected

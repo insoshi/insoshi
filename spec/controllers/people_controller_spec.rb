@@ -90,6 +90,7 @@ describe PeopleController do
     describe "email validations" do
       
       before(:each) do
+        logout
         @preferences = preferences(:one)
       end
       
@@ -107,8 +108,22 @@ describe PeopleController do
         end
     
         it "should create a deactivated person" do
-          create_person
-          assigns(:person).should be_deactivated
+          person = create_person
+          person.should be_deactivated
+          person.email_verifications.should_not be_empty
+        end
+        
+        it "should verify a person" do
+          person = create_person
+          verification = assigns(:verification)
+          get :verify, :id => verification.code
+          person.reload.should be_active
+          response.should redirect_to(person_path(person))
+        end
+        
+        it "should redirect home on failed verification" do
+          get :verify, :id => "invalid"
+          response.should redirect_to(home_url)
         end
       end
     end
@@ -199,5 +214,6 @@ describe PeopleController do
     def create_person(options = {})
       post :create, :person => { :name => "Quire",:email => 'quire@foo.com',
         :password => 'quux', :password_confirmation => 'quux' }.merge(options)
+      assigns(:person)
     end
 end
