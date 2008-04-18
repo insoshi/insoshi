@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
     cookies.delete :auth_token
     if logged_in? and current_person.deactivated?
       reset_session
-      flash[:error] = "Your account has been deactivated."
+      flash[:error] = "Your account is inactive."
       redirect_to login_url
     else
       reset_session

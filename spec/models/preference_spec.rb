@@ -11,9 +11,12 @@ describe Preference do
     @preferences.errors_on(:domain).should_not be_empty
     @preferences.errors_on(:smtp_server).should_not be_empty
   end
-  
-  it "should have a working email_verifications boolean" do
-    @preferences.should respond_to(:email_verifications?) 
+
+  it "should require email settings for email verifications" do
+    @preferences.email_verifications = true
+    @preferences.save.should be_false
+    @preferences.errors_on(:domain).should_not be_empty
+    @preferences.errors_on(:smtp_server).should_not be_empty
   end
   
   describe "booleans from fixtures" do

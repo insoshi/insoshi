@@ -48,10 +48,11 @@ class PeopleController < ApplicationController
           @person.toggle!(:deactivated)
           @verification = EmailVerification.create(:person => @person)
           @person.email_verifications << @verification
+          format.html { redirect_to(home_url) }
         else
           flash[:notice] = "Thanks for signing up!"
+          format.html { redirect_back_or_default(home_url) }
         end
-        format.html { redirect_back_or_default(home_url) }
       else
         format.html { render :action => 'new' }
       end
