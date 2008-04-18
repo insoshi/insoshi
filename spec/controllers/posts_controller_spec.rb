@@ -11,13 +11,7 @@ describe PostsController do
       @topic  = topics(:one)
       @post   = posts(:forum)
     end
-  
-    it "should require login" do
-      logout
-      get :index
-      response.should redirect_to(login_url)
-    end
-  
+    
     it "should have working pages" do
       with_options :forum_id => @forum, :topic_id => @topic do |page|
         page.get    :index
