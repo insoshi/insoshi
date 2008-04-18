@@ -10,8 +10,8 @@
 <% for activity in @activities %>
   <tr>
     <td><%=h activity.person_id %></td>
-    <td><%=h activity.instance_id %></td>
-    <td><%=h activity.type %></td>
+    <td><%=h activity.item_id %></td>
+    <td><%=h activity.item_type %></td>
     <td><%= link_to 'Show', activity %></td>
     <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
     <td><%= link_to 'Destroy', activity, :confirm => 'Are you sure?', :method => :delete %></td>

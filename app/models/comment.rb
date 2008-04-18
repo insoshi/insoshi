@@ -9,7 +9,8 @@
 #  commentable_type :string(255)     default(""), not null
 #  body             :text            
 #  created_at       :datetime        
-#  updated_at       :datetime        
+#  updated_at       :datetime      
+#  type             :string
 #
 
 class Comment < ActiveRecord::Base
@@ -40,7 +41,7 @@ class Comment < ActiveRecord::Base
     end
   
     def log_activity
-      activity = Activity.create!(:item => self, :person => commenter)
+      activity = Activity.create!(:item_id => self.id, :item_type => self.class.to_s, :person => commenter)
       add_activities(:activity => activity, :person => commenter)
       unless commented_person.nil?
         add_activities(:activity => activity, :person => commented_person)
