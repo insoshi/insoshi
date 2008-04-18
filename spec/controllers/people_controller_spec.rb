@@ -93,16 +93,23 @@ describe PeopleController do
         @preferences = preferences(:one)
       end
       
-      it "should create an active user if not verifying email" do
-        create_person
-        assigns(:person).should_not be_deactivated
+      describe "when not verifying email" do
+        it "should create an active user" do
+          create_person
+          assigns(:person).should_not be_deactivated
+        end
       end
+      
+      describe "when verifying email" do
+        
+        before(:each) do
+          @preferences.toggle!(:email_verifications)
+        end
     
-      it "should create a deactivated person if verifying email" do
-        @preferences.email_verifications?.should be_false
-        @preferences.toggle!(:email_verifications)
-        create_person
-        assigns(:person).should be_deactivated
+        it "should create a deactivated person" do
+          create_person
+          assigns(:person).should be_deactivated
+        end
       end
     end
   end
