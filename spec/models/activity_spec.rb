@@ -12,9 +12,8 @@ describe Activity do
   end
   
   it "should delete a comment activity along with its parent item" do
-    @comment = WallComment.create(:body => "Hey there",
-                                  :commentable => people(:quentin),
-                                  :commenter => people(:aaron))
+    @comment = @person.comments.create(:body => "Hey there",
+                                       :commenter => people(:aaron))
     destroy_should_remove_activity(@comment)
   end
   

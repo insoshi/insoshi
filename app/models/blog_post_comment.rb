@@ -12,6 +12,6 @@
 #  updated_at       :datetime        
 #
 
-class BlogPostComment < Comment
-  belongs_to :post, :counter_cache => true, :foreign_key => "blog_post_id"
-end
+# class BlogPostComment < Comment
+#   belongs_to :post, :counter_cache => true, :foreign_key => "blog_post_id"
+# end

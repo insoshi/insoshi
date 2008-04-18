@@ -64,7 +64,7 @@ describe Comment do
     end
   
     it "should require a body" do
-      comment = WallComment.new
+      comment = @person.comments.new
       comment.should_not be_valid
       comment.errors.on(:body).should_not be_empty
     end

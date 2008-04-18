@@ -12,7 +12,7 @@
 #  updated_at       :datetime        
 #
 
-class WallComment < Comment
-  # belongs_to :person, :counter_cache => true
-#  validates_length_of :body, :maximum => SMALL_TEXT_LENGTH
-end
+# class WallComment < Comment
+#   # belongs_to :person, :counter_cache => true
+# #  validates_length_of :body, :maximum => SMALL_TEXT_LENGTH
+# end

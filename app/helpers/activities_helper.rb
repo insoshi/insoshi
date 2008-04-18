@@ -4,8 +4,7 @@ module ActivitiesHelper
   def feed_message(activity)
     # Switch on the class.to_s.  (The class itself is long & complicated.)
     person = activity.person
-    activity_type = activity.item.class.to_s
-    case activity_type
+    case activity.item_type
     when "BlogPost"
       post = activity.item
       blog = post.blog
@@ -23,12 +22,7 @@ module ActivitiesHelper
            #{someones(blog.person)} blog post #{post_link(blog, post)}.)
       when "Person"
         %(#{person_link(activity.item.commenter)} commented on #{wall(person)})
-      end      
-    when "BlogPostComment"
-      post = activity.item.commentable
-      blog = post.blog
-      %(#{person_link(person)} made a comment to
-         #{someones(blog.person)} blog post #{post_link(blog, post)}.)
+      end
     when "Connection"
       %(#{person_link(activity.item.person)} and
         #{person_link(activity.item.contact)}
@@ -40,26 +34,31 @@ module ActivitiesHelper
     when "Topic"
       %(#{person_link(person)} created the new discussion topic
         #{topic_link(activity.item)}.)
-    when "WallComment"
-      %(#{person_link(activity.item.commenter)} commented on #{wall(person)})
     else
-      raise "Invalid activity type #{activity_type.inspect}"
+      raise "Invalid activity type #{activity.item_type.inspect}"
     end
   end
   
   def minifeed_message(activity)
     person = activity.person
-    activity_type = activity.item.class.to_s
-    case activity_type
+    case activity.item_type
     when "BlogPost"
       post = activity.item
       blog = post.blog
       %(#{person_link(person)} made a
         #{post_link("new blog post", blog, post)})
-    when "BlogPostComment"
-      post = activity.item.post
-      %(#{person_link(person)} made a comment on #{someones(post.blog.person)} 
-        #{post_link("blog post", post.blog, post)})
+    when "Comment"
+      parent = activity.item.commentable
+      parent_type = parent.class.to_s
+      case parent_type
+      when "BlogPost"
+        post = activity.item.commentable
+        blog = post.blog
+        %(#{person_link(person)} made a comment on #{someones(post.blog.person)} 
+          #{post_link("blog post", post.blog, post)})
+      when "Person"
+        %(#{person_link(activity.item.commenter)} commented on #{wall(person)})
+      end
     when "Connection"
       %(#{person_link(person)} and #{person_link(activity.item.contact)}
         have connected.)
@@ -72,10 +71,8 @@ module ActivitiesHelper
     when "Topic"
       %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", activity.item)}.)
-    when "WallComment"
-      %(#{person_link(activity.item.commenter)} commented on #{wall(person)})
     else
-      raise "Invalid activity type #{activity_type.inspect}"
+      raise "Invalid activity type #{activity.item_type.inspect}"
     end
   end
 
