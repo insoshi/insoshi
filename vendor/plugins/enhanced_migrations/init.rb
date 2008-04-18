@@ -1,1 +1,0 @@
-require 'enhanced_migrations'
