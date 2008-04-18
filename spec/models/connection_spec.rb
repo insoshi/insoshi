@@ -66,6 +66,7 @@ describe Connection do
   
     it "should have an activity" do
       @activity.should_not be_nil
+      @activity.person.should_not be_nil
     end
   end
   

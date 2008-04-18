@@ -68,7 +68,8 @@ class Connection < ActiveRecord::Base
         accept_one_side(person, contact, accepted_at)
         accept_one_side(contact, person, accepted_at)
         # Log a connection activity.
-        Activity.create!(:item => conn(person, contact))
+        person = Person.find(person) unless person.is_a?(Person)
+        Activity.create!(:item => conn(person, contact), :person => person)
       end
     end
     
