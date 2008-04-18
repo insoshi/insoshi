@@ -9,7 +9,8 @@
 #  commentable_type :string(255)     default(""), not null
 #  body             :text            
 #  created_at       :datetime        
-#  updated_at       :datetime        
+#  updated_at       :datetime      
+#  type             :string
 #
 
 class Comment < ActiveRecord::Base
