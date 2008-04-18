@@ -4,7 +4,8 @@ module ActivitiesHelper
   def feed_message(activity)
     # Switch on the class.to_s.  (The class itself is long & complicated.)
     person = activity.person
-    case activity.item_type
+    activity_type = activity.item.class.to_s
+    case activity_type
     when "BlogPost"
       post = activity.item
       blog = post.blog
@@ -35,13 +36,14 @@ module ActivitiesHelper
       %(#{person_link(person)} created the new discussion topic
         #{topic_link(activity.item)}.)
     else
-      raise "Invalid activity type #{activity.item_type.inspect}"
+      raise "Invalid activity type #{activity_type.inspect}"
     end
   end
   
   def minifeed_message(activity)
     person = activity.person
-    case activity.item_type
+    activity_type = activity.item.class.to_s
+    case activity_type
     when "BlogPost"
       post = activity.item
       blog = post.blog
@@ -72,7 +74,7 @@ module ActivitiesHelper
       %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", activity.item)}.)
     else
-      raise "Invalid activity type #{activity.item_type.inspect}"
+      raise "Invalid activity type #{activity_type.inspect}"
     end
   end
 
