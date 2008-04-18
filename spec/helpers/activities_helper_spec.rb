@@ -14,7 +14,7 @@ describe ActivitiesHelper do
     comment = person.comments.create(:body => "The body",
                                      :commenter => @current_person)
     activity = Activity.find_by_item_id(comment)
-    feed_message(activity).should =~ /wall/
+    feed_message(activity).should =~ /#{person.name}'s wall/
   end
   
   it "should have the right message for a blog comment" do
