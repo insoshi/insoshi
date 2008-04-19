@@ -18,6 +18,7 @@
 #
 
 class Photo < ActiveRecord::Base
+  include ActivityLogger
   UPLOAD_LIMIT = 5
   
   belongs_to :person
@@ -29,6 +30,10 @@ class Photo < ActiveRecord::Base
                  :thumbnails => { :thumbnail => '110x110>',
                                   :icon      => '30x40>' },
                  :processor => 'ImageScience'
+  
+  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
+    
+  after_create :log_activity
                  
   # Override the crappy default AttachmentFu error messages.
   def validate
@@ -48,4 +53,12 @@ class Photo < ActiveRecord::Base
       end
     end
   end
+  
+  def log_activity
+    unless self.person.nil? || !self.primary?
+      activity = Activity.create!(:item => self, :person => self.person)
+      add_activities(:activity => activity, :person => self.person)
+    end
+  end
+
 end

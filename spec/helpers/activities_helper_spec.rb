@@ -24,4 +24,10 @@ describe ActivitiesHelper do
     activity = Activity.find_by_item_id(comment)
     feed_message(activity).should =~ /blog post/
   end
+  
+  it "should have the right message for a photo" do
+    activity = Activity.new(:item => mock_photo, :person => @current_person)
+    feed_message(activity).should =~ /new photo/
+  end
+
 end
