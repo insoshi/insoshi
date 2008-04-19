@@ -27,7 +27,7 @@ module PeopleHelper
     image = options[:image] || :icon
     link_to(image_tag(person.send(image)), link)
   end
-  
+    
   private
     
     # Make captioned images.
