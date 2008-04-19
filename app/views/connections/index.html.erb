@@ -6,7 +6,7 @@
   <%= will_paginate(@contacts) %>
   <%= raster image_links(@contacts, :captions => @contacts.map(&:name),
                                     :destroy => (current_person? @person), #destroy if in own profile
-			            :send_message => true,
+			            :send_message => (current_person? (@person)),
                                     :image => :thumbnail) %>
   <%= will_paginate(@contacts) %>
 <% else %>
