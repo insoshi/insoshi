@@ -31,5 +31,6 @@
   <%- if Connection.connected?(@person, current_person) -%>
     <%= render :partial => 'shared/contacts_preview',
                :locals => { :person => @person } %>  
+    <%= render :partial => 'common_friends' %>
   <%- end -%>
 <%- end -%>

@@ -107,7 +107,7 @@ class Person < ActiveRecord::Base
     def find_recent
       find(:all, :order => "people.created_at DESC",
                  :include => :photos, :limit => NUM_RECENT)
-    end
+    end    
   end
   
   # Params for use in urls.
@@ -288,7 +288,11 @@ class Person < ActiveRecord::Base
                                               true, false])
     admin? and num_admins == 1
   end
-
+  
+  def common_friends_with(person)
+    @common_friends ||= Connection.find(:all, :select => "connections.*, count(contact_id) friends_count", :conditions => ["(person_id = ? or person_id = ?) and contact_id != ?",self,person,1], :group => "contact_id having friends_count = 2").map(&:contact)
+  end
+  
   protected
 
     ## Callbacks

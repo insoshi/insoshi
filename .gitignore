@@ -16,3 +16,6 @@ identifier
 .project
 .#*
 tmp/.*
+\#*
+*~
+
