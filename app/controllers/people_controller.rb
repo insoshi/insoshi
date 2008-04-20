@@ -12,10 +12,9 @@ class PeopleController < ApplicationController
   end
   
   def show
-    @person = Person.find(params[:id])
+    @person = Person.find(params[:id], :include => :activities)
     @contacts = @person.some_contacts
-    @common_friends = current_person.common_friends_with(@person).paginate(:page => params[:page],
-                                                                           :per_page => RASTER_PER_PAGE)
+    @common_connections = current_person.common_connections_with(@person)
     if @person.deactivated?
       flash[:error] = "That person has been deactivated"
       redirect_to home_url and return
@@ -90,10 +89,9 @@ class PeopleController < ApplicationController
     end
   end
   
-  def common_friends
+  def common_contacts
     @person = Person.find(params[:id])
-    @common_friends = @person.common_friends_with(current_person).paginate(:page => params[:page],
-                                                                           :per_page => RASTER_PER_PAGE)
+    @common_connections = @person.common_connections_with(current_person,params[:page])
     respond_to do |format|
       format.html
     end

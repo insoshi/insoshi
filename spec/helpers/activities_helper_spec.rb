@@ -27,7 +27,7 @@ describe ActivitiesHelper do
   
   it "should have the right message for a photo" do
     activity = Activity.new(:item => mock_photo, :person => @current_person)
-    feed_message(activity).should =~ /new photo/
+    feed_message(activity).should =~ /profile picture/
   end
 
 end

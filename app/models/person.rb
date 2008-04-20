@@ -289,8 +289,8 @@ class Person < ActiveRecord::Base
     admin? and num_admins == 1
   end
   
-  def common_friends_with(person)
-    @common_friends ||= Connection.find(:all, :select => "connections.*, count(contact_id) friends_count", :conditions => ["(person_id = ? or person_id = ?) and contact_id != ?",self,person,1], :group => "contact_id having friends_count = 2").map(&:contact)
+  def common_connections_with(person,page=1)
+    Connection.paginate_by_sql(["SELECT connections.*, count(contact_id) FROM `connections` WHERE ((person_id = ? or person_id = ?) and contact_id != 1) GROUP BY contact_id HAVING count(contact_id) = 2",self[:id],person[:id]], :page => page, :per_page => RASTER_PER_PAGE)
   end
   
   protected

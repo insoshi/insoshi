@@ -33,7 +33,7 @@ class Photo < ActiveRecord::Base
   
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
     
-  after_create :log_activity
+  after_save :log_activity
                  
   # Override the crappy default AttachmentFu error messages.
   def validate
@@ -55,7 +55,7 @@ class Photo < ActiveRecord::Base
   end
   
   def log_activity
-    unless self.person.nil? || !self.primary?
+    if self.primary?
       activity = Activity.create!(:item => self, :person => self.person)
       add_activities(:activity => activity, :person => self.person)
     end

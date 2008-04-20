@@ -67,9 +67,9 @@ describe Person do
     end
     
     it "could have coommon connections with someone" do
-      people(:admin).common_friends_with(people(:aaron)).size.should > 0
-      people(:admin).common_friends_with(people(:kelly)).size.should == 0
-      people(:aaron).common_friends_with(people(:kelly)).size.should == 0
+      people(:admin).common_connections_with(people(:aaron)).size.should > 0
+      people(:admin).common_connections_with(people(:kelly)).size.should == 0
+      people(:aaron).common_connections_with(people(:kelly)).size.should == 0
     end
   end
   
