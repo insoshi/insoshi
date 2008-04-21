@@ -19,7 +19,15 @@ module PeopleHelper
   def image_link(person, options = {})
     link = options[:link] || person
     image = options[:image] || :icon
-    link_to(image_tag(person.send(image)), link)
+    image_options = { :title => person.name, :alt => person.name }
+    unless options[:image_options].nil?
+      image_options.merge!(options[:image_options]) 
+    end
+    link_options =  { :title => person.name, :alt => person.name }
+    unless options[:link_options].nil?                    
+      link_options.merge!(options[:link_options])
+    end
+    link_to(image_tag(person.send(image), image_options), link, link_options)
   end
   
   private
