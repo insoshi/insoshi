@@ -1,12 +1,13 @@
 <%- column_div :type => :primary do -%>
-  
   <h2>Blog for <%= person_link @blog.person %></h2>
   <ul class="list blog full">
     <%= render :partial => 'posts/blog_post', :collection => @posts %>
   </ul>
   
   <%= will_paginate(@posts) %>
+<%- end -%>
 
+<%- column_div :type => :secondary do -%>
   <%- if current_person?(@blog.person) -%>
   <h2>Add new post</h2>
 
@@ -14,9 +15,5 @@
              :locals => { :url => blog_posts_path(@blog),
                           :method => :post } %>
   <%- end -%>
-
-<%- end -%>
-
-<%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>
