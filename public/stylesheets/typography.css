@@ -1,4 +1,4 @@
-body{
+body {
   font-family: Helvetica, Arial, Univers, Tahoma, sans-serif;
   font-size: 1em;
   line-height:  1.05em;  
@@ -6,11 +6,11 @@ body{
 p,
 li, 
 th, 
-td{
+td {
   font-size:  14px;
   line-height:  1.4em;
 }
-li li, li p{
+li li, li p {
   font-size: 100%;
 }
 p, 
@@ -21,11 +21,11 @@ h2,
 h3, 
 h4, 
 h5, 
-h6{
+h6 {
   display:  block;
   margin-bottom: 1em;
 }
-h2{
+h2 {
   background: url(/images/yellow-grad.jpg) 30px 10px repeat-x;
   border-bottom: 1px solid #ccc;
   color: #069;
@@ -37,20 +37,20 @@ h2{
   margin-top: 24px;
   padding-left: 6px;
 }
-li h2{font-size: 1em;}
-h2 a, h3 a{
+li h2 {font-size: 1em;}
+h2 a, h3 a {
   font-weight: normal;
 }
-h3{
+h3 {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 20px;
   font-weight: normal;
   margin-left: 6px;
 }
-h3.page-title{
+h3.page-title {
   display: none;
 }
-h4{
+h4 {
   border-bottom: 1px solid #eee;
   clear: both;
   font-family: Georgia, "Times New Roman", Times, serif;
@@ -59,30 +59,30 @@ h4{
   line-height: 1.4em;
   width: 100%;
 }
-h5{
+h5 {
   font-size: 12px;
   font-weight: bold;
 }
-h6{
+h6 {
   font-size: 12px;
   font-weight: bold;
   font-style: italic;
 }
-ul li{
+ul li {
   list-style-type: disc;
   margin-left: 2.2em;
 }
-ol li{
+ol li {
   list-style: decimal;
   margin-left: 1.5em;
 }
 
-a{
+a {
   color: #069;
   font-weight: bold;
   text-decoration: none;
 }
-blockquote{
+blockquote {
   font-family: Georgia, "Times New Roman", Times, serif;
   color: #666666;
   background: #ececec;
@@ -91,11 +91,11 @@ blockquote{
   margin: 1em;
   font-style: italic;
 }
-code{
+code {
   font-family: "Courier New", Courier, monospace;
   font-size: 1em;
 }
-pre{
+pre {
   border: 1px solid #ccc;
   background: #efefef;
   margin: 1em 0;
@@ -103,20 +103,20 @@ pre{
 }
 
 /* Specific elements */
-p.welcome{
+p.welcome {
   color: #fff;
   font-size: 12px
 }
-p.welcome a{
+p.welcome a {
   color: #fff;
   text-decoration: underline;
 }
-#footer p{
+#footer p {
   font-size: 12px;
   text-align: center;
 }
 
-#content div li.more{
+#content div li.more {
   background: none;
   border: none;
   clear: both;
@@ -126,42 +126,65 @@ p.welcome a{
   width: 100%;
 }
 
-.meta{
+.meta {
   color: #aaa;
   font-size: 12px;
   line-height: 1.8em;
 }
-p .meta, li p.meta{
+p .meta, li p.meta {
   font-size: 12px;
 }
-.label{
+.label {
   font-weight: normal;
 }
-body.blog .comments p, body.forum .reply p{
+body.blog .comments p, body.forum .reply p {
   font-size: 12px;
 }
 
-/* Alerty and notifications */
-.notify{
+/* Alerts and notifications */
+.success {
   border: 1px solid #FFCC66;
   background-color: #FFFFCC;
   font-size: 12px;
   padding: 6px;
 }
-.errorExplanation{
+.notice {
+  border: 1px solid #FFCC66;
+  background-color: #FFFFCC;
+  font-size: 12px;
+  padding: 6px;
+}
+.error {
+  border: 1px solid #FFCC66;
+  background-color: #FFFFCC;
+  font-size: 12px;
+  padding: 6px;
+}
+
+.error,
+.notice, 
+.success    { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd;
+              margin-top: 1em; }
+
+.error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
+.notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }
+.success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
+
+
+.errorExplanation {
   border: 1px solid #FFCC66;
   background-color: #FFFFCC;
   margin-bottom: 1em;
   padding: 1em;
 }
-.errorExplanation h2{
+.errorExplanation h2 {
   background: 0;
   border: 0;
   font-size: 1.2em;
   margin-top: 0;
   padding: 0;
 }
-.paging{
+.paging {
   border-bottom: 1px solid #eee;
   font-size: 12px;
   padding-bottom: 12px;
@@ -173,29 +196,29 @@ body.blog .comments p, body.forum .reply p{
 
 
 /* Forms */
-form{
+form {
   border-bottom: 1px solid #ccc;
   padding-bottom: 1em;
   margin-bottom: 2em;
 }
-input, textarea{
+input, textarea {
   font-family: Helvetica, Arial, Univers, sans-serif;
   font-size: 12px;
   padding: 6px 3px
 }
-textarea{
+textarea {
   line-height: 1.4em;
 }
-label {
+label  {
   display: block;
   font-size: 14px;
   font-weight: bold;
   margin-bottom: .5em;
 }
-input, textarea, select{
+input, textarea, select {
   margin-bottom: 1em;
 }
-input.button, button, input[submit], input[button]{
+input.button, button, input[submit], input[button] {
   background: #e5e5e5;
   border: 1px solid #ccc;
   clear: both;
@@ -206,26 +229,26 @@ input.button, button, input[submit], input[button]{
   height: 32px;
   padding: 3px 12px;
 }
-.col1 textarea{
+.col1 textarea {
   width: 478px;
 }
-body.single-col .col1 form input{
+body.single-col .col1 form input {
   width: 312px;
 }
-label.checkbox{display: inline; float: left;margin-right: 12px;}
-body.single-col .col1 form input.checkbox{
+label.checkbox {display: inline; float: left;margin-right: 12px;}
+body.single-col .col1 form input.checkbox {
   display: inline;
   float: left;
   width: auto;
 }
-.form_row{
+.form_row {
   position: relative;
 }
-.form_row.full input{
+.form_row.full input {
   width: 478px;
 }
 
-#frmSearch{
+#frmSearch {
   border: 0;
   margin: 0 0 0 6px;
   padding: 0;
@@ -233,21 +256,21 @@ body.single-col .col1 form input.checkbox{
   zoom: 1;
 }
 
-#frmSearch input.txt{
+#frmSearch input.txt {
   display: inline;
   float: left;
   margin-right: 6px;
   vertical-align: middle;
   width: 138px;
 }
-#frmSearch #btnSearch.button{
+#frmSearch #btnSearch.button {
   display: inline;
   clear: none;
   margin: 0;
   width: 72px;
 }
 
-form a.add-recipient{
+form a.add-recipient {
   position: absolute;
   right: 12px;
   top: 30px;

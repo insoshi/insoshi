@@ -42,21 +42,12 @@
           </p>
       </div>
     </div>
-      
-             
-        <!-- <div class="column first span-13 append-1">
-        <%- if flash.empty? -%>
-          &nbsp;
-        <%- else -%>
-          <% flash.each do |key, msg| %>
-            <%= content_tag :div, msg, :class => "flash #{key}" %>
-          <% end %>
-        <%- end -%>
-        </div> -->
-
     
     <div id="wrap">
       <div id="content">
+        <% flash.each do |key, msg| %>
+          <%= content_tag :p, msg, :class => "flash #{key}" %>
+        <% end %>     
         <%= yield %>
       <div id="footer">
         <p id="footer-nav">
