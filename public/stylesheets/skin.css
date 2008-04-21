@@ -1,43 +1,43 @@
 /* Main layout */
 
-body{
+body {
   text-align: center;
 }
-#header-wrap{
+#header-wrap {
   background: #069;
   float: left;
   width: 100%;
 }
-#header, #wrap, #footer{
+#header, #wrap, #footer {
   margin: 0 auto;
   text-align: left;
   width: 744px;
 }
-#content{
+#content {
   width: 744px;
   float: left;
 }
-.col1{
+.col1 {
   float: left;
   width: 490px;
 }
-.col2{
+.col2 {
   float: right;
   width: 240px;
 }
 
-body.single-col .col1{
+body.single-col .col1 {
   margin: 0 210px;
   width: 324px;
 }
 
 /* Header */
-#header{
+#header {
   position: relative;
   height: 80px;
 }
 
-#header h1{
+#header h1 {
   float: left;
   margin-top: 12px;
   margin-bottom: 12px;
@@ -46,7 +46,7 @@ body.single-col .col1{
 
 
 /* Header-nav */
-#nav{
+#nav {
   margin: 44px 0 0 0;
   width: 560px;
   float: right;
@@ -54,7 +54,7 @@ body.single-col .col1{
   right: 0;
   bottom: 0;  */
 }
-#nav li{
+#nav li {
   background: #069 url(/images/header-grad.jpg) bottom repeat-x;
   float: left;
   height: 36px;
@@ -64,25 +64,25 @@ body.single-col .col1{
   text-align: center;
   width: 80px;
 }
-#nav li a{
+#nav li a {
   color: #fff;
   display: block;
   height: 36px;
   font-size: 12px;
 }
-#nav li a:hover{
+#nav li a:hover {
   background: url(/images/header-grad-inv.jpg) top repeat-x;
 }
-#nav li.active a, #nav li.active a:hover{
+#nav li.active a, #nav li.active a:hover {
   background: #fff;
   color: #069;
 }
-#nav li.n-home{
+#nav li.n-home {
   margin-left: 0;
 }
 
 
-#footer{
+#footer {
   border-top: 1px solid #ccc;
   clear: both;
   margin-top: 48px;
@@ -92,7 +92,7 @@ body.single-col .col1{
 }
 
 /* Welcome message */
-p.welcome{
+p.welcome {
   position: absolute;
   right: 0;
   text-align: right;
@@ -104,10 +104,10 @@ p.welcome{
 /* Site elements */
 
 /* List */
-.list{
+.list {
   margin-right: 6px;
 }
-.list li{
+.list li {
   border-bottom: 1px solid #eee;
   clear: both;
   display: inline;
@@ -117,56 +117,56 @@ p.welcome{
   padding: 0 0 6px 0;
   width: 100%;
 }
-.list .profile-image{
+.list .profile-image {
   clear: left;
   float: left;
   display: inline;
 }
-.list.full .profile-image{
+.list.full .profile-image {
   float: left;
-  height: 72px;
+  width: 72px;
   overflow: hidden;
   position: relative;
   width: 102px;
 }
-.list.small .profile-image{
+.list.small .profile-image {
   width: 36px;
 }
-.list.small li{
+.list.small li {
   display: block;
 }
-.list p{
+.list p {
   margin-bottom: 0;
   margin-left: 102px;
 }
-.list.small p{
+.list.small p {
   font-size: 12px;
   margin-left: 48px;
 }
-.list.full .profile-image img{
+.list.full .profile-image img {
   border: 1px solid #fff;
 }
-.list.full .profile-image img.icon{
+.list.full .profile-image img.icon {
   position: absolute;
   right: 6px;
   top: 0;
 }
 
-.list.blog p{
+.list.blog p {
   margin-left: 0;
   margin-bottom: 1em;
 }
-.list.blog li.post ul{
+.list.blog li.post ul {
   margin-bottom: 2em; 
   list-style-type: disc;
 }
-.list.blog li.post ul li{
+.list.blog li.post ul li {
   list-style-type: disc;
   border: 0;
   margin: 0 0 .5em 1em;
 }
 
-.list li li.reply{
+.list li li.reply {
   border-top: 1px solid #eee;
   border-bottom: 0;
   margin-left: 84px;
@@ -176,39 +176,39 @@ p.welcome{
 }
 
 /* Grid */
-.grid{
+.grid {
   clear: both;
   float: left;
   width: 100%;
 }
-.grid li{
+.grid li {
   display: inline;
   float: left;
   list-style-type: none;
 }
-.col2 .contacts.grid li{
+.col2 .contacts.grid li {
   height: 36px;
   margin: 0 0 6px 6px;
   overflow: hidden;
   width: 36px;
 }
-.grid.medium li{
+.grid.medium li {
   background: url(/images/blue-grad.jpg) bottom repeat-x;
   border: 1px solid #ccc;
   height: 48px;
   margin: 0 0 12px 6px;
   width: 154px;
 }
-.grid.medium li, .grid.medium p{
+.grid.medium li, .grid.medium p {
   font-size: 12px;
 }
-.grid.medium img{
+.grid.medium img {
   float: left;
   /*clip: rect(36px, 36px, 36px, 36px);*/
   width: 36px;
   margin: 0 6px 6px 0;
 }
-.grid.medium a{
+.grid.medium a {
   display: block;
   height: 100%;
   margin: 6px;
@@ -217,35 +217,35 @@ p.welcome{
 
 /* Profile */
 
-.profile .toolbox{
+.profile .toolbox {
   clear: left;
   float: left;
   margin: 0 12px 12px 0;
   width: 240px;
 }
-.profile img.photo{
+.profile img.photo {
   margin-bottom: 12px;
 }
-.profile .note{
+.profile .note {
   margin-left: 252px;
 }
-.profile .toolbox ul{
+.profile .toolbox ul {
   background: url(/images/blue-grad.jpg) bottom repeat-x;
   border: 1px solid #ccc;
   width: 238px;
 }
-.profile ul.tools li{
+.profile ul.tools li {
   font-size: 12px;
   margin: 6px 6px 6px 2em;
 }
-form#blogpost #post_title, form#blogpost #post_body{
+form#blogpost #post_title, form#blogpost #post_body {
   width: 312px;
 }
 
 
 /* Messages */
 
-#message-nav{
+#message-nav {
   background: url(/images/silver-grad.jpg) bottom repeat-x;
   border-bottom: 1px solid #ccc;
   float: left;
@@ -254,7 +254,7 @@ form#blogpost #post_title, form#blogpost #post_body{
   position: relative;
   width: 100%;
 }
-#message-nav li{
+#message-nav li {
   float: left;
   font-size: 12px;
   line-height: 24px;
@@ -263,45 +263,45 @@ form#blogpost #post_title, form#blogpost #post_body{
   text-align:center;
   width: 78px;
 }
-#message-nav li.active a, #message-nav li a:hover{
+#message-nav li.active a, #message-nav li a:hover {
   background: url(/images/silver-grad-inv.jpg) bottom repeat-x;
 }
-#message-nav li.compose{
+#message-nav li.compose {
   background: url(/images/compose-t.png) top no-repeat;
   float: right;
   line-height: 10px;
   margin: 3px 3px 0;
   width: 154px;
 }
-#message-nav li.compose a, #message-nav li.compose a:hover{
+#message-nav li.compose a, #message-nav li.compose a:hover {
   background: url(/images/compose-b.png) bottom no-repeat;
   color: #fff;
   margin-top: 4px;
   padding-bottom: 4px;
 }
-#message-nav li a{
+#message-nav li a {
   color: #333;
   display: block;
   font-weight: normal;
   height: 100%;
 }
-.message .tools{
+.message .tools {
   margin-right: 6px;
   text-align: right;
 }
 
 
 /* Bug fixes */
-form, div, h2, ul, li{zoom: 1;}
-* html .col2{width: 234px;}
-* html .list li li.reply{
+form, div, h2, ul, li {zoom: 1;}
+* html .col2 {width: 234px;}
+* html .list li li.reply {
   display: inline;
   margin-left: 84px;
   margin-top: 12px;
   padding: 12px 0 0 0;
   width: 398px;
 }
-* html .list.blog li.post{
+* html .list.blog li.post {
   display: inline;
   width: 440px;
 }
