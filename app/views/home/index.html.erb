@@ -3,7 +3,7 @@
   <%= render :partial => 'members_preview' %>
 <%- end -%>
 
-<%- column_div :type => :secondary, :id => "secondary" do -%>
+<%- column_div :type => :secondary do -%>
   <%= render :partial => "searches/box" %>
   <%- if logged_in? -%>
     <%= render :partial => 'requested_contacts' %>

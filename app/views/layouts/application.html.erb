@@ -19,7 +19,27 @@
             <li><%= menu_link_to link %></li>
           <%- end -%>
         </ul>
-        <p class="welcome">Welcome, Pete Lambert (<a href="signin.html">Sign out</a>)</p>
+        
+          <p class="welcome">
+            <%- if logged_in? -%>
+              Welcome, <%= current_person.name %>!
+              (<%= link_to "Sign out", logout_path %>)
+              <%- if current_person.admin? -%>
+                <br />
+                <%- if admin_view? -%>
+                  <%= link_to("Standard view", home_path) %>
+                <%- else -%>
+                  <%= link_to("Admin view", admin_home_path) %>
+                <%- end -%>
+              <%- end -%>
+            <%- else -%>
+              <%= link_to "Sign in", login_path %> or
+              <%= link_to "Sign up", signup_path %>
+              <br />
+              <%= link_to "I forgot my password",
+                           new_password_reminder_path %>
+            <%- end -%>
+          </p>
       </div>
     </div>
       
@@ -37,186 +57,14 @@
     
     <div id="wrap">
       <div id="content">
-        <div class="col1">
-          <%= render :partial => 'feed' %>
+        <%= yield %>
+      <div id="footer">
+        <p id="footer-nav">
+          <a href="index.html">Home</a> | <a href="profile.html">Profile</a> | <a href="messages.html">Messages</a> | <a href="blog.html">Blog</a> | <a href="people.html">People</a> | <a href="forum.html">Forum</a>
 
-
-
-                                 
-          <h2>Network Members</h2>
-          <ul class="grid contacts medium">
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
-
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
-                <span class="fn">George Palmer</span>
-              </a>
-
-            </li>
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/default-profile-image.png" alt="Simon Hunt" class="photo" />
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-            <li class="vcard contact">
-
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
-
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/default-profile-image.png" alt="Simon Hunt" class="photo" />
-                <span class="fn">George Palmer</span>
-              </a>
-
-            </li>
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-            <li class="vcard contact">
-
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
-
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-            <li class="more"><a href="people.html">See all network members...</a></li>                                                                                                            
-          </ul>
-        </div>
-        <div class="col2">
-          <h2>Requested Connections</h2>
-
-          <ul class="grid contacts medium">
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-            <li class="vcard contact">
-
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/default-profile-image.png" alt="Simon Hunt" class="photo" />
-
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/default-profile-image.png" alt="Simon Hunt" class="photo" />
-                <span class="fn">George Palmer</span>
-              </a>
-
-            </li>
-            <li class="vcard contact">
-              <a href="profile.html" class="url">
-                <img src="/images/profile-images/s/george-palmer.jpg" alt="George Palmer" class="photo" />
-                <span class="fn">George Palmer</span>
-              </a>
-            </li>
-          </ul>
-
-          
-          <h2>Messages</h2>
-          <ul class="list messages small">
-            <li>
-              <div class="profile-image">
-                <img src="/images/profile-images/s/leanne-scott.jpg" alt="Leanne Scott" />
-              </div>
-              <p><span class="field">From:</span><a href="profile.html">Simon Hunt</a></p>
-
-              <p class="meta published">about 1 hour ago</p>
-              <p title="Subject"><a href="message.html">I had a thought about the project</a></p>
-            </li>
-            <li>
-              <div class="profile-image">
-                <img src="/images/profile-images/s/default-profile-image.png" alt="Simon Hunt" class="photo" />
-              </div>
-              <p><span class="field">From:</span><a href="profile.html">Simon Hunt</a></p>
-
-              <p class="meta published">about 1 hour ago</p>
-              <p title="Subject"><a href="message.html">I had a thought about the project</a></p>
-            </li>
-            <li>
-              <div class="profile-image">
-                <img src="/images/profile-images/s/leanne-scott.jpg" alt="Leanne Scott" />
-              </div>
-              <p><span class="field">From:</span><a href="profile.html">Simon Hunt</a></p>
-
-              <p class="meta published">about 1 hour ago</p>
-              <p title="Subject"><a href="message.html">I had a thought about the project</a></p>
-            </li>
-            <li class="more"><a href="messages.html">Go to my inbox...</a></li>                            
-          </ul>
-          
-          <h2>Contacts</h2>
-          <ul class="grid contacts small">
-
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/default-profile-image.png" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/default-profile-image.png" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/default-profile-image.png" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>              
-            <li class="vcard"><a href="profile.html" title="Garth Crooks" class="url"><img src="/images/profile-images/s/garth-crooks.jpg" title="Garth Crooks" alt="Garth Crooks" class="photo fn" /></a></li>
-
-            <li class="more"><a href="contacts.html">All my contacts...</a></li>
-          </ul>
-        </div>
-        <div id="footer">
-          <p id="footer-nav">
-            <a href="index.html">Home</a> | <a href="profile.html">Profile</a> | <a href="messages.html">Messages</a> | <a href="blog.html">Blog</a> | <a href="people.html">People</a> | <a href="forum.html">Forum</a>
-
-          </p>
-          <p>Powered by <a href="index.html">Inoshi</a></p>
-        </div>
+        </p>
+        <p>Powered by <a href="index.html">Inoshi</a></p>
+      </div>
       </div>
     </div>
   </body>
