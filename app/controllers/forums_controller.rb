@@ -1,4 +1,6 @@
 class ForumsController < ApplicationController
+  
+  before_filter :setup
 
   def index
     @forums = Forum.find(:all)
@@ -15,4 +17,11 @@ class ForumsController < ApplicationController
     @forum = Forum.find(params[:id])
     @topics = @forum.topics.paginate(:page => params[:page])
   end
+  
+  private
+  
+    def setup
+      @body = "forum"
+    end
+
 end

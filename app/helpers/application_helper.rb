@@ -6,7 +6,11 @@ module ApplicationHelper
   def menu
     home     = menu_element("Home",   home_path)
     people   = menu_element("People", people_path)
-    forum    = menu_element(inflect("Forum", Forum.count),  forums_path)
+    if Forum.count == 1
+      forum = menu_element("Forum", forum_path(Forum.find(:first)))
+    else
+      forum = menu_element("Forums", forums_path)
+    end
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
       messages = menu_element("Messages", messages_path)

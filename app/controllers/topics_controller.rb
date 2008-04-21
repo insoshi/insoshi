@@ -1,8 +1,8 @@
 class TopicsController < ApplicationController
   
   before_filter :login_required, :except => [:index, :show]
-  before_filter :get_forum
   before_filter :admin_required, :only => :destroy
+  before_filter :setup
   
   def index
     @topics = @forum.topics.paginate(:page => params[:page])
@@ -67,7 +67,8 @@ class TopicsController < ApplicationController
 
   private
   
-    def get_forum
+    def setup
       @forum = Forum.find(params[:forum_id])
+      @body = "forum"
     end
 end

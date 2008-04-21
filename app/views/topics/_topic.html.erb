@@ -1,21 +1,27 @@
-    <div class="title">
-      <a name="topic_<%= topic.id %>"></a>
-      <%- if admin_view? -%>
-      <%= link_to topic.name, 
-                  admin_forum_topic_path(@forum, topic) %>
-      
-      <%- else -%>
-      <%= link_to topic.name, 
-                  forum_topic_path(@forum, topic) %>
-      <%- end -%>
-      <div class="time">
-        Created by <%= person_link topic.person %>
-        <%= time_ago_in_words(topic.created_at) %> ago
-        <%- if admin_view? -%>
-          | <%= link_to "Destroy",
-                   forum_topic_path(@forum, topic),
-                   :confirm => 'Are you sure?',
-                   :method  => :delete %>
-        <%- end -%>
-      </div>
-    </div>
+<li class="topic">
+  <a name="topic_<%= topic.id %>"></a>
+  <div class="profile-image">
+    <%= image_link topic.person, :image => :thumbnail %>
+    <%= image_tag "icons/new.gif", :class => "icon", :alt => "Topic" %>
+  </div>
+  <p>
+  <%- if admin_view? -%>
+  <%= link_to h(topic.name), 
+              admin_forum_topic_path(@forum, topic) %>
+  
+  <%- else -%>
+  <%= link_to h(topic.name), 
+              forum_topic_path(@forum, topic) %>
+  <%- end -%>
+  </p>
+  <p class="meta">
+    Created by <%= person_link topic.person %>
+    <%= time_ago_in_words(topic.created_at) %> ago
+    <%- if admin_view? -%>
+      | <%= link_to "Destroy",
+               forum_topic_path(@forum, topic),
+               :confirm => 'Are you sure?',
+               :method  => :delete %>
+    <%- end -%>
+  </p>
+</li>

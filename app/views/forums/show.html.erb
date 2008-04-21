@@ -1,9 +1,9 @@
 <%- column_div :type => :primary do -%>
-  <h1>Discussion topics</h1>
-  <div class="section">
-    <%= render :partial => @topics %>
-  </div>
+  <h2>Discussion topics</h2>
   
+  <ol class="list forum full">
+    <%= render :partial => @topics %>
+  </ol>
   <%= will_paginate(@topics) %>
   
   <h2>Add new topic</h2>
@@ -11,10 +11,7 @@
   <% form_for :topic, :url => forum_topics_path(@forum) do |f| %>
     <div class="form_row">
       <%= f.text_field :name %>
-    </div>
-  
-    <div class="form_row">
-      <%= submit_tag "Submit" %>
+      <%= submit_tag "Submit", :class => "button" %>
     </div>
   <% end %>
 

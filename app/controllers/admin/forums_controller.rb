@@ -1,6 +1,6 @@
 class Admin::ForumsController < ApplicationController
 
-  before_filter :login_required, :admin_required
+  before_filter :login_required, :admin_required, :setup
 
   def index
     @forums = Forum.find(:all)
@@ -62,4 +62,10 @@ class Admin::ForumsController < ApplicationController
       format.html { redirect_to(admin_forums_url) }
     end
   end
+
+  private
+
+    def setup
+      @body = "forums"
+    end
 end
