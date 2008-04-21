@@ -1,5 +1,22 @@
-<%- unless current_person.requested_contacts.empty? -%>
-<%= raster image_links(@requested_contacts, 
-                       :links => contact_links(@requested_contacts)),
-           :title => "Requested Connections" %>
+<%- unless @requested_contacts.empty? -%>
+  <h2>Contact Requests</h2>
+  <ul class="list requests small">
+    <%- @requested_contacts.each do |contact| -%>
+      <%- conn = Connection.conn(current_person, contact) -%>
+      <li>
+        <div class="profile-image">
+          <%= image_link contact %>
+        </div>
+        <p><%= person_link contact %></p>
+        <p class="meta published">
+          <%= time_ago_in_words(conn.created_at) %> 
+          ago
+        </p>
+        <p>
+          <%= link_to "Respond", edit_connection_path(conn) %> |
+          <%= link_to "View profile", contact %>
+        </p>
+      </li>
+    <%- end -%>
+  </ul>
 <%- end -%>
