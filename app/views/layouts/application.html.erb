@@ -22,7 +22,7 @@
         
           <p class="welcome">
             <%- if logged_in? -%>
-              Welcome, <%= current_person.name %>!
+              Welcome, <%= h current_person.name %>!
               (<%= link_to "Sign out", logout_path %>)
               <%- if current_person.admin? -%>
                 <br />

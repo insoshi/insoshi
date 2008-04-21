@@ -9,7 +9,7 @@
       <span class="quiet small">
       Last post
       <%= time_ago_in_words(last_post.created_at) %> ago
-      by <%= link_to last_post.person.name, last_post.person %>
+      by <%= person_link last_post.person %>
       </span>
     </td>
   </tr>

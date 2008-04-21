@@ -7,7 +7,7 @@ module ActivitiesHelper
     when "BlogPost"
       post = activity.item
       blog = post.blog
-      view_blog = blog_link("View #{person.name}'s blog", blog)
+      view_blog = blog_link("View #{h person.name}'s blog", blog)
       %(#{person_link(person)} made a blog post titled
         #{post_link(blog, post)}.<br /> #{view_blog})
     when "Comment"
@@ -106,7 +106,7 @@ module ActivitiesHelper
     if link
       current_person?(person) ? "their own" : "#{person_link(person)}'s"
     else
-      current_person?(person) ? "their own" : "#{person.name}'s"
+      current_person?(person) ? "their own" : "#{h person.name}'s"
     end
   end
   

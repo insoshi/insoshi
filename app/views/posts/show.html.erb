@@ -1,6 +1,6 @@
 <%- column_div :type => :primary do -%>
 
-<h2><%= link_to "Blog for #{@blog.person.name}", @blog %></h2>
+<h2><%= link_to "Blog for #{h @blog.person.name}", @blog %></h2>
 
 <h3>
 <%= sanitize @post.title %>
@@ -15,7 +15,7 @@
 
 <p class="meta">
 Posted <%= time_ago_in_words(@post.created_at) %> ago
-by <%= link_to @blog.person.name, @blog.person %>
+by <%= person_link @blog.person %>
 </p>
 
 

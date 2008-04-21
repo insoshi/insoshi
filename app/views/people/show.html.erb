@@ -1,17 +1,17 @@
 <%- column_div :type => :primary do -%>
   
-  <h1>Profile for <%= @person.name %></h1>
+  <h1>Profile for <%= h @person.name %></h1>
 
   <%- unless current_person?(@person) -%>
     <%= email_link @person %>
-    | <%= link_to "#{@person.name}'s blog", blog_path(@person.blog) %>
+    | <%= link_to "#{h @person.name}'s blog", blog_path(@person.blog) %>
     <%- unless Connection.exists?(@person, current_person) -%>
       | 
-      <%= link_to "Connect with #{@person.name}!",
+      <%= link_to "Connect with #{h @person.name}!",
                   person_connections_path(@person), :method => :post %>
     <%- end -%>
     <%- if logged_in? and Connection.connected?(@person, current_person) -%>
-      | <%= @person.name %> is one of your contacts
+      | <%= h @person.name %> is one of your contacts
     <%- end -%>
   <%- end -%>
 

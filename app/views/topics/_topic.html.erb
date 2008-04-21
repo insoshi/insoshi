@@ -9,7 +9,7 @@
                   forum_topic_path(@forum, topic) %>
       <%- end -%>
       <div class="time">
-        Created by <%= link_to topic.person.name, topic.person %>
+        Created by <%= person_link topic.person %>
         <%= time_ago_in_words(topic.created_at) %> ago
         <%- if admin_view? -%>
           | <%= link_to "Destroy",

@@ -1,5 +1,5 @@
 <%- column_div :type => :primary do -%>
-  <h2>Blog for <%= person_link @blog.person %></h2>
+  <h2>Blog for <%= h @blog.person.name %></h2>
   <ul class="list blog full">
     <%= render :partial => 'posts/blog_post', :collection => @posts %>
   </ul>

@@ -19,11 +19,11 @@ module PeopleHelper
   def image_link(person, options = {})
     link = options[:link] || person
     image = options[:image] || :icon
-    image_options = { :title => person.name, :alt => person.name }
+    image_options = { :title => h(person.name), :alt => h(person.name) }
     unless options[:image_options].nil?
       image_options.merge!(options[:image_options]) 
     end
-    link_options =  { :title => person.name }
+    link_options =  { :title => h(person.name) }
     unless options[:link_options].nil?                    
       link_options.merge!(options[:link_options])
     end

@@ -13,7 +13,7 @@ class Admin::PeopleController < ApplicationController
       flash[:error] = "Action failed&mdash;you're the last admin."
     else
       @person.toggle!(params[:task])
-      flash[:success] = "#{@person.name} updated"
+      flash[:success] = "#{h @person.name} updated"
     end
     respond_to do |format|
       format.html { redirect_to admin_people_url }
