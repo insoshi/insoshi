@@ -1,10 +1,10 @@
 <%- unless minifeed_item.item.nil? -%>
-<div class="minifeed_item element clearfix">
-  <div class="minifeed_body span-<%= SMALLER_COLUMN-1 %>">
-    <%= minifeed_message minifeed_item %>
-  </div>
-  <div class="feed_icon span-1 last">
+  <li>
+    <div class="profile-image">
     <%= image_link minifeed_item.person %>
   </div>
-</div>
+  <p><%= minifeed_message minifeed_item %></p>
+  <p class="meta published">
+    <%= time_ago_in_words minifeed_item.created_at %> ago
+  </p>
 <%- end -%>

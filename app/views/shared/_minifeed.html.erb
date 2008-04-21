@@ -1,7 +1,7 @@
 <%- if logged_in? -%>
-  <div class="section">
-  <h1>Minifeed</h1>
-  <%= render :partial => 'shared/minifeed_item',
-             :collection => current_person.feed %>
-  </div>
+  <h2>Minifeed</h2>
+  <ul class="list activity small">
+    <%= render :partial => 'shared/minifeed_item',
+               :collection => current_person.feed %>
+  </ul>
 <%- end -%>
