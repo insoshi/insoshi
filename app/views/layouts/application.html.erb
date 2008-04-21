@@ -1,20 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>insoshi</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Insoshi - Social Software: Home</title>
     <%= stylesheet_link_tag "default" %>
-    <%- if development? -%>
-      <style type="text/css">
-        .with-grid { background: url('/stylesheets/blueprint/src/grid.png'); }
-      </style>
-    <%- end -%>
-    <%- if admin_view? -%>
-      <style type="text/css">
-        body { background: #9cf; }
-      </style>
-    <%- end -%>
-    <%= javascript_include_tag :defaults %>
   </head>
   <body class="home">
     <div id="header-wrap">
@@ -26,24 +16,13 @@
         </h1>
         <ul id="nav">
           <li class="n-home active"><a href="index.html">Home</a></li>
-
           <li class="n-profile"><a href="profile.html">Profile</a></li>
           <li class="n-contacts"><a href="contacts.html">Contacts</a></li>
           <li class="n-messages"><a href="messages.html">Messages</a></li>
           <li class="n-blog"><a href="blog.html">Blog</a></li>
           <li class="n-people"><a href="people.html">People</a></li>
           <li class="n-forum"><a href="forum.html">Forum</a></li>
-
-          <li class="n-search" id="search">
-            <form id="frmSearch" action="search.html">
-              <fieldset title="Search Insoshi">
-                <input type="text" id="txtSearch" class="txt" />
-                <input id="btnSearch" type="submit" value="Search" />
-              </fieldset>
-            </form>
-          </li>
         </ul>
-
         <p class="welcome">Welcome, Pete Lambert (<a href="signin.html">Sign out</a>)</p>
       </div>
     </div>

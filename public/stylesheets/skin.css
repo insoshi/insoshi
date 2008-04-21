@@ -1,132 +1,102 @@
 /* Main layout */
 
 body{
-	text-align: center;
+  text-align: center;
 }
 #header-wrap{
-	background: #333;
-	float: left;
-	width: 100%;
+  background: #069;
+  float: left;
+  width: 100%;
 }
 #header, #wrap, #footer{
-	margin: 0 auto;
-	text-align: left;
-	width: 996px;
+  margin: 0 auto;
+  text-align: left;
+  width: 744px;
 }
 #content{
-	width: 996px;
-	float: left;
+  width: 744px;
+  float: left;
 }
 .col1{
-	float: left;
-	width: 658px;
+  float: left;
+  width: 490px;
 }
 .col2{
-	float: right;
-	width: 324px;
+  float: right;
+  width: 240px;
 }
 
 body.single-col .col1{
-	margin: 0 336px;
-	width: 324px;
+  margin: 0 210px;
+  width: 324px;
 }
 
 /* Header */
 #header{
-	position: relative;
+  position: relative;
+  height: 80px;
 }
 
 #header h1{
-	float: left;
-	margin-top: 12px;
-	width: 156px;
+  float: left;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  width: 144px;
 }
 
 
 /* Header-nav */
 #nav{
-	float: left;
-	height: 80px;
-	margin: 0 0 0 12px;
-	width: 828px;
+  margin: 44px 0 0 0;
+  width: 560px;
+  float: right;
+  /*position: absolute;
+  right: 0;
+  bottom: 0;  */
 }
 #nav li{
-	background: #333 url(../images/grey-grad.jpg) bottom repeat-x;
-	float: left;
-	height: 36px;
-	line-height: 36px;
-	list-style-type: none;
-	margin: 44px 0 0 0;
-	text-align: center;
-	width: 84px;
+  background: #069 url(/images/header-grad.jpg) bottom repeat-x;
+  float: left;
+  height: 36px;
+  line-height: 36px;
+  list-style-type: none;
+  margin: 0 0 0 0;
+  text-align: center;
+  width: 80px;
 }
 #nav li a{
-	color: #fff;
-	display: block;
-	height: 36px;
-	font-size: .85em;
+  color: #fff;
+  display: block;
+  height: 36px;
+  font-size: 12px;
 }
 #nav li a:hover{
-	background: url(../images/grey-grad-inv.jpg) top repeat-x;
+  background: url(/images/header-grad-inv.jpg) top repeat-x;
 }
 #nav li.active a, #nav li.active a:hover{
-	background: #fff;
-	color: #333;
+  background: #fff;
+  color: #069;
 }
 #nav li.n-home{
-	margin-left: 0;
+  margin-left: 0;
 }
 
-/* Search */
-#nav li#search{
-	background: #333;
-	width: 240px;
-}
-#nav li#search fieldset{
-	margin-top: 6px;
-}
-
-form#frmSearch{
-	border: 0;
-	margin: 0;
-	padding: 0;
-}
-
-#search input.txt{
-	border: 0;
-	float: left;	
-	height: 24px;
-	margin: 0 8px;
-	padding: 0;
-	width: 152px;
-}
-#search #btnSearch{
-	background: #e5e5e5;
-	border: 1px solid #ccc;
-	border: 0;
-	float: left;
-	height: 24px;
-	margin: 0;
-	padding: 0;
-	width: 72px;
-	
-}
 
 #footer{
-	border-top: 1px solid #ccc;
-	clear: both;
-	margin-top: 48px;
-	padding: 24px 0;
-	width: 100%;
-	
+  border-top: 1px solid #ccc;
+  clear: both;
+  margin-top: 48px;
+  padding: 24px 0;
+  width: 100%;
+  
 }
 
 /* Welcome message */
 p.welcome{
-	position: absolute;
-	right: 0;
-	text-align: right;
-	top: 12px;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top: 12px;
 }
 
 
@@ -135,183 +105,205 @@ p.welcome{
 
 /* List */
 .list{
-	margin-right: 6px;
+  margin-right: 6px;
 }
 .list li{
-	border-bottom: 1px solid #eee;
-	clear: both;
-	float: left;
-	list-style-type: none;
-	margin: 0 0 12px 6px;
-	padding: 0 0 6px 0;
-	width: 100%;
+  border-bottom: 1px solid #eee;
+  clear: both;
+  display: inline;
+  float: left;
+  list-style-type: none;
+  margin: 0 0 12px 6px;
+  padding: 0 0 6px 0;
+  width: 100%;
 }
 .list .profile-image{
-	clear: left;
-	float: left;
+  clear: left;
+  float: left;
+  display: inline;
 }
 .list.full .profile-image{
-	float: left;
-	height: 72px;
-	overflow: hidden;
-	position: relative;
-	width: 72px;
+  float: left;
+  height: 72px;
+  overflow: hidden;
+  position: relative;
+  width: 102px;
 }
 .list.small .profile-image{
-	width: 36px;
+  width: 36px;
+}
+.list.small li{
+  display: block;
 }
 .list p{
-	margin-bottom: 0;
-	margin-left: 82px;
+  margin-bottom: 0;
+  margin-left: 102px;
 }
 .list.small p{
-	font-size: .85em;
-	margin-left: 48px;
+  font-size: 12px;
+  margin-left: 48px;
 }
 .list.full .profile-image img{
-	right: 0;
-	position: absolute;
-	top: 0;
-	border: 1px solid #fff;
+  border: 1px solid #fff;
+}
+.list.full .profile-image img.icon{
+  position: absolute;
+  right: 6px;
+  top: 0;
 }
 
 .list.blog p{
-	margin-left: 0;
-	margin-bottom: 1em;
+  margin-left: 0;
+  margin-bottom: 1em;
 }
-.list.blog li.post ul{margin-bottom: 2em;}
+.list.blog li.post ul{
+  margin-bottom: 2em; 
+  list-style-type: disc;
+}
 .list.blog li.post ul li{
-	list-style-type: disc;
-	border: 0;
-	margin: 0 0 0 1em;
+  list-style-type: disc;
+  border: 0;
+  margin: 0 0 .5em 1em;
 }
 
 .list li li.reply{
-	border-top: 1px solid #eee;
-	border-bottom: 0;
-	margin-left: 84px;
-	margin-top: 12px;
-	padding: 12px 0 0;
-	width: 568px;
+  border-top: 1px solid #eee;
+  border-bottom: 0;
+  margin-left: 84px;
+  margin-top: 12px;
+  padding: 12px 0 0;
+  width: 398px;
 }
-
 
 /* Grid */
 .grid{
-	clear: both;
-	float: left;
-	width: 100%;
+  clear: both;
+  float: left;
+  width: 100%;
 }
 .grid li{
-	float: left;
-	list-style-type: none;
+  display: inline;
+  float: left;
+  list-style-type: none;
 }
-.grid.small li{
-	height: 36px;
-	margin: 0 0 6px 6px;
-	overflow: hidden;
-	width: 36px;
+.col2 .contacts.grid li{
+  height: 36px;
+  margin: 0 0 6px 6px;
+  overflow: hidden;
+  width: 36px;
 }
 .grid.medium li{
-	background: url(../images/blue-grad.jpg) bottom repeat-x;
-	border: 1px solid #ccc;
-	height: 48px;
-	margin: 0 0 12px 6px;
-	width: 154px;
+  background: url(/images/blue-grad.jpg) bottom repeat-x;
+  border: 1px solid #ccc;
+  height: 48px;
+  margin: 0 0 12px 6px;
+  width: 154px;
 }
 .grid.medium li, .grid.medium p{
-	font-size: .72em;
+  font-size: 12px;
 }
 .grid.medium img{
-	float: left;
-	/*clip: rect(36px, 36px, 36px, 36px);*/
-	width: 36px;
-	margin: 0 6px 6px 0;
+  float: left;
+  /*clip: rect(36px, 36px, 36px, 36px);*/
+  width: 36px;
+  margin: 0 6px 6px 0;
 }
 .grid.medium a{
-	display: block;
-	height: 100%;
-	margin: 6px;
+  display: block;
+  height: 100%;
+  margin: 6px;
 }
 
 
 /* Profile */
 
 .profile .toolbox{
-	clear: left;
-	float: left;
-	margin: 0 12px 12px 0;
-	width: 240px;
+  clear: left;
+  float: left;
+  margin: 0 12px 12px 0;
+  width: 240px;
 }
 .profile img.photo{
-	margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 .profile .note{
-	margin-left: 252px;
+  margin-left: 252px;
 }
 .profile .toolbox ul{
-	background: url(../images/blue-grad.jpg) bottom repeat-x;
-	border: 1px solid #ccc;
-	width: 238px;
+  background: url(/images/blue-grad.jpg) bottom repeat-x;
+  border: 1px solid #ccc;
+  width: 238px;
 }
 .profile ul.tools li{
-	font-size: .72em;
-	margin: 6px 6px 6px 2em;
+  font-size: 12px;
+  margin: 6px 6px 6px 2em;
 }
 form#blogpost #post_title, form#blogpost #post_body{
-	width: 312px;
+  width: 312px;
 }
 
 
 /* Messages */
 
 #message-nav{
-	background: url(../images/silver-grad.jpg) bottom repeat-x;
-	border-bottom: 1px solid #ccc;
-	float: left;
-	height: 24px;
-	margin-top: -24px;
-	position: relative;
-	width: 100%;
+  background: url(/images/silver-grad.jpg) bottom repeat-x;
+  border-bottom: 1px solid #ccc;
+  float: left;
+  height: 24px;
+  margin-top: -24px;
+  position: relative;
+  width: 100%;
 }
 #message-nav li{
-	float: left;
-	font-size: .72em;
-	line-height: 24px;
-	list-style-type: none;
-	margin: 0;
-	text-align:center;
-	width: 78px;
+  float: left;
+  font-size: 12px;
+  line-height: 24px;
+  list-style-type: none;
+  margin: 0;
+  text-align:center;
+  width: 78px;
 }
 #message-nav li.active a, #message-nav li a:hover{
-	background: url(../images/silver-grad-inv.jpg) bottom repeat-x;
+  background: url(/images/silver-grad-inv.jpg) bottom repeat-x;
 }
 #message-nav li.compose{
-	background: url(../images/compose-t.png) top no-repeat;
-	float: right;
-	height: 12px;
-	line-height: 6px;
-	padding-top: 3px;
-	margin: 3px 3px 0;
-	width: 154px;
+  background: url(/images/compose-t.png) top no-repeat;
+  float: right;
+  line-height: 10px;
+  margin: 3px 3px 0;
+  width: 154px;
 }
-#message-nav li.compose a{
-	background: url(../images/compose-b.png) bottom no-repeat;
-	color: #fff;
-	margin-top: 3px;
+#message-nav li.compose a, #message-nav li.compose a:hover{
+  background: url(/images/compose-b.png) bottom no-repeat;
+  color: #fff;
+  margin-top: 4px;
+  padding-bottom: 4px;
 }
 #message-nav li a{
-	color: #333;
-	display: block;
-	font-weight: normal;
-	height: 100%;
+  color: #333;
+  display: block;
+  font-weight: normal;
+  height: 100%;
 }
 .message .tools{
-	margin-right: 6px;
-	text-align: right;
+  margin-right: 6px;
+  text-align: right;
 }
 
 
-
+/* Bug fixes */
+form, div, h2, ul, li{zoom: 1;}
+* html .col2{width: 234px;}
+* html .list li li.reply{
+  display: inline;
+  margin-left: 84px;
+  margin-top: 12px;
+  padding: 12px 0 0 0;
+  width: 398px;
+}
+* html .list.blog li.post{
+  display: inline;
+  width: 440px;
+}
 
 
