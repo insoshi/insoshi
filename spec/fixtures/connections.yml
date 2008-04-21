@@ -1,0 +1,16 @@
+admin_kelly:
+  person: :admin
+  contact: :kelly
+
+kelly_admin:
+  person: :kelly
+  contact: :admin
+
+aaron_kelly:
+  person: :aaron
+  contact: :kelly
+
+kelly_aaron:
+  person: :kelly
+  contact: :aaron
+

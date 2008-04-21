@@ -1,0 +1,8 @@
+<%- unless @common_connections.empty? -%>
+<% common_contacts = @common_connections.map(&:contact) -%>
+<%= raster image_links(common_contacts, :links => common_contacts),
+           :title => "Common Contacts" %>
+<div class="see_all">
+  <%= link_to "See all &raquo;", common_contacts_person_path(@person) %>
+</div>
+<%- end -%>

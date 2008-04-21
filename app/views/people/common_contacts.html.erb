@@ -1,0 +1,20 @@
+<h1>Common contacts with <%= @person.name %></h1>
+  
+<%- column_div :type => :primary do -%>
+<% unless @common_connections.empty? -%>
+  <%- common_contacts = @common_connections.map(&:contact) -%>
+  <%= will_paginate(@common_connections) %>
+  <%= raster image_links(common_contacts, :captions => common_contacts.map(&:name),
+                                    :destroy => (current_person? @person), #destroy if in own profile
+			            :send_message => (current_person? (@person)),
+                                    :image => :thumbnail) %>
+  <%= will_paginate(@common_connections) %>
+<% else %>
+  <h1>No friends in common</h1>
+<% end -%>
+
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>
