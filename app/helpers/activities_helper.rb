@@ -95,7 +95,7 @@ module ActivitiesHelper
               # TODO: make this a more graceful falure (?).
               raise "Invalid activity type #{activity_type(activity).inspect}"
             end
-    image_tag("icons/#{img}")
+    image_tag("icons/#{img}", :class => "icon")
   end
   
   def someones(person, link = true)
