@@ -8,9 +8,11 @@
     <div class="wrapper column span-<%= LARGER_COLUMN-1 %> last">
       <div class="activity_body">
         <%= feed_message activity %>
-      <div class="time">
+        <div class="time">
           <%= time_ago_in_words(activity.created_at).capitalize %> ago
-      </div>
+          <% destroy ||= nil #This makes this parameter optional -%>
+          <%= link_to("destroy", activity_path(activity), :method => :delete, :confirm => "Are you sure you want to delete this activity from your profile?") if destroy %>
+        </div>
       </div>
     </div>
   </div>
