@@ -23,7 +23,7 @@ module PeopleHelper
     unless options[:image_options].nil?
       image_options.merge!(options[:image_options]) 
     end
-    link_options =  { :title => person.name, :alt => person.name }
+    link_options =  { :title => person.name }
     unless options[:link_options].nil?                    
       link_options.merge!(options[:link_options])
     end

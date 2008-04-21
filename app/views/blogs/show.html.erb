@@ -1,9 +1,9 @@
 <%- column_div :type => :primary do -%>
   
-  <h1>Blog for <%= @blog.person.name %></h1>
-  <div class="blog section">
+  <h2>Blog for <%= person_link @blog.person %></h2>
+  <ul class="list blog full">
     <%= render :partial => 'posts/blog_post', :collection => @posts %>
-  </div>
+  </ul>
   
   <%= will_paginate(@posts) %>
 

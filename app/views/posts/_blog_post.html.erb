@@ -1,5 +1,5 @@
-<div class="element">
-  <div class="title"> 
+<li class="post">
+  <h3> 
     <a name="post_<%= blog_post.id %>"></a>
     <%= link_to sanitize(blog_post.title), blog_post_path(@blog, blog_post) %>
     <%- if current_person?(@blog.person) -%>
@@ -7,17 +7,12 @@
       | <%= link_to "Delete", blog_post_path(@blog, blog_post),
                               :method => :delete %>
     <%- end -%>
-    </div>
-  <div class="time">
-      Posted <%= time_ago_in_words(blog_post.created_at) %> ago
-      by <%= link_to @blog.person.name, @blog.person %>
-  </div>
-  <div class="body">
-    <%= sanitize blog_post.body %>
-  </div>
-  <div class="comments">
-  <%- n = blog_post.comments.count -%>
-  <%= link_to pluralize(n, "comment"),
-              blog_post_path(@blog, blog_post, :comments => n) %>
-  </div>
-</div>
+  </h3>
+  <%= display blog_post.body %>
+  <p class="meta">
+    Posted <%= time_ago_in_words(blog_post.created_at) %> ago
+    by <%= link_to @blog.person.name, @blog.person %> | 
+    <%- n = blog_post.comments.count -%>
+    <%= link_to pluralize(n, "comment"),
+                blog_post_path(@blog, blog_post, :comments => n) %>    
+  </p>

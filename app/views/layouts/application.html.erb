@@ -60,81 +60,8 @@
       </div>
       </div>
     </div>
-  </body>
-</html>
-    
-    
-    
-    
-    
-    <!-- <div id="main" class="container">
-      <%- column_div :id => "logo", :order => "first last", 
-                     :width => FULL do -%>
-        <h1><%= link_to "insoshi", '/' %></h1>
-        <h2>insoshi social software</h2>
-      <%- end -%>
-      <%- column_div :type => :full do -%>        
-        <div id="navcontainer">
-          <ul id="navlist">
-          <%- menu.each do |link| -%>
-            <li><%= menu_link_to link %></li>
-          <%- end -%>
-          </ul>
-        </div>
-      <%- end -%>
-      <%- column_div :type => :full do -%>        
-        <div class="column first span-13 append-1">
-        <%- if flash.empty? -%>
-          &nbsp;
-        <%- else -%>
-          <% flash.each do |key, msg| %>
-            <%= content_tag :div, msg, :class => "flash #{key}" %>
-          <% end %>
-        <%- end -%>
-        </div>
-        <%- column_div :type => :secondary do -%>
-          <div style="font-size: 90%; margin: 0 0 0.5em 0;">
-            <%- if logged_in? -%>
-              Welcome, <%= current_person.name %>!
-              (<%= link_to "Sign out", logout_path %>)
-              <%- if current_person.admin? -%>
-                <br />
-                <%- if admin_view? -%>
-                  <%= link_to("Standard view", home_path) %>
-                <%- else -%>
-                  <%= link_to("Admin view", admin_home_path) %>
-                <%- end -%>
-              <%- end -%>
-            <%- else -%>
-              <%= link_to "Sign in", login_path %> or
-              <%= link_to "Sign up", signup_path %>
-              <br />
-              <%= link_to "I forgot my password",
-                           new_password_reminder_path %>
-            <%- end -%>
-          </div>
-        <%- end -%>
-      <%- end -%>
-      <%- column_div :type => :full do -%>
-        <%= yield %>
-      <%- end -%>
-    <%- column_div :type => :full, :id => "footer" do -%>
-      Powered by <%= link_to "Insoshi", "http://insoshi.com/" %>
-      <%- unless test? -%>
-        <%# A tracker to tell us about the activity of Insoshi installs %>
-        <img src="http://stats.insoshi.com/<%= @tracker_id %>?env=<%= @env %>" 
-             alt="" width="1" height="1" border="0" />
-      <%- end -%>
-
-    <%- end -%>
-
-    </div>
     <%- if development? -%>
-    <div>
-      <%= link_to 'Show Grid', '#',
-                  :onclick => "$('main').className+=' with-grid'; "%>
-      <%= render :partial => 'shared/debug' %>
-    </div>
+      <div><%= render :partial => 'shared/debug' %></div>
     <%- end -%> 
   </body>
-</html>-->
+</html>
