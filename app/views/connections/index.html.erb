@@ -1,14 +1,22 @@
-<h1>Contacts for <%= h @person.name %></h1>
-
 <%- column_div :type => :primary do -%>
+<h2>Contacts for <%= h @person.name %></h2>
 
 <% unless @contacts.empty? -%>
   <%= will_paginate(@contacts) %>
-  <%= raster image_links(@contacts, :captions => @contacts.map(&:name),
-                                    :image => :thumbnail) %>
+  <ul class="grid contacts medium">
+    <%- @contacts.each do |contact| -%>
+      <li class="vcard contact">
+        <%= image_link contact, :image_options => { :class => "photo" },
+                                :link_options => { :class => "url" },
+                                :vcard => true,
+                                :image => :bounded_icon %>
+      </li>
+    <%- end -%>
+      
+  </ul>
   <%= will_paginate(@contacts) %>
 <% else %>
-  <h1>No contacts (yet)</h1>
+  <h3>No contacts (yet)</h3>
 <% end -%>
 
 <%- end -%>

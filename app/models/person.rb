@@ -199,7 +199,12 @@ class Person < ActiveRecord::Base
 
   def icon
     photo.nil? ? "default_icon.png" : photo.public_filename(:icon)
-  end  
+  end
+  
+  def bounded_icon
+    photo.nil? ? "default_icon.png" : photo.public_filename(:bounded_icon)
+  end
+  
   
   # Return the photos ordered by primary first, then by created_at.
   # They are already ordered by created_at as per the has_many association.

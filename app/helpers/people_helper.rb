@@ -27,7 +27,14 @@ module PeopleHelper
     unless options[:link_options].nil?                    
       link_options.merge!(options[:link_options])
     end
-    link_to(image_tag(person.send(image), image_options), link, link_options)
+    content = image_tag(person.send(image), image_options)
+    # This is a hack needed for the way the designer handled rastered images
+    # ('vcard' class).
+    if options[:vcard]
+      content = %(#{content}#{content_tag(:span, h(person.name), 
+                                                 :class => "fn" )})
+    end
+    link_to(content, link, link_options)
   end
 
   def person_link(text, person = nil)

@@ -205,7 +205,6 @@ p.welcome {
 .grid.medium img {
   float: left;
   /*clip: rect(36px, 36px, 36px, 36px);*/
-  width: 36px;
   margin: 0 6px 6px 0;
 }
 .grid.medium a {

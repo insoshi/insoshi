@@ -1,6 +1,6 @@
 class ConnectionsController < ApplicationController
   
-  before_filter :login_required
+  before_filter :login_required, :setup
   before_filter :authorize_view, :only => :index
   before_filter :authorize_person, :only => [:edit, :update, :destroy]
   
@@ -58,7 +58,12 @@ class ConnectionsController < ApplicationController
   end
 
   private
-  
+
+    def setup
+      # Connections have same body class as profiles.
+      @body = "profile"
+    end
+
     def authorize_view
       @person = Person.find(params[:person_id])
       unless (current_person?(@person) or
