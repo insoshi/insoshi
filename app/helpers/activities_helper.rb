@@ -109,16 +109,6 @@ module ActivitiesHelper
       current_person?(person) ? "their own" : "#{person.name}'s"
     end
   end
-
-  def person_link(text, person = nil)
-    if person.nil?
-      person = text
-      text = person.name
-    end
-    # We normally write link_to(..., person) for brevity, but that breaks
-    # activities_helper_spec due to an RSpec bug.
-    link_to(text, person_path(person))
-  end
   
   def blog_link(text, blog)
     link_to(text, blog_path(blog))

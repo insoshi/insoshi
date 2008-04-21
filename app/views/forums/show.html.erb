@@ -9,11 +9,11 @@
   <h2>Add new topic</h2>
   
   <% form_for :topic, :url => forum_topics_path(@forum) do |f| %>
-    <div class="form_tag">
+    <div class="form_row">
       <%= f.text_field :name %>
     </div>
   
-    <div class="form_tag">
+    <div class="form_row">
       <%= submit_tag "Submit" %>
     </div>
   <% end %>

@@ -84,8 +84,10 @@ class PostsController < ApplicationController
       if forum?
         @forum = Forum.find(:first)
         @topic = Topic.find(params[:topic_id])
+        @body = "forum"
       elsif blog?
         @blog = Blog.find(params[:blog_id])
+        @body = "blog"
       end
     end
 

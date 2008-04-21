@@ -29,6 +29,16 @@ module PeopleHelper
     end
     link_to(image_tag(person.send(image), image_options), link, link_options)
   end
+
+  def person_link(text, person = nil)
+    if person.nil?
+      person = text
+      text = person.name
+    end
+    # We normally write link_to(..., person) for brevity, but that breaks
+    # activities_helper_spec due to an RSpec bug.
+    link_to(h(text), person_path(person))
+  end
   
   private
     

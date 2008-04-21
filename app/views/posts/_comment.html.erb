@@ -1,19 +1,18 @@
-<div class="comment element clearfix">
-  <div class="column first span-3">
+<li>
+  <div class="profile-image">
     <%= image_link comment.commenter, :image => :thumbnail %>
+    <img class="icon" src="/images/icons/comment.gif" alt="Comment" />
   </div>
-  <div class="wrapper column span-<%= LARGER_COLUMN-3 %> last">
-    <div class="header">
-      <%= time_ago_in_words(comment.created_at) %> ago
-      <%= person_link comment.commenter %> said
-    </div>
-    <div class="content">
-      <%= sanitize comment.body %>
-      <%- if current_person?(comment.commentable.blog.person) -%>
-      <br />
-      <%= link_to "delete", blog_post_comment_path(@blog, @post, comment),
-                            :method => :delete %>
-      <%- end -%>
-    </div>
+  <p class="meta">
+    <%= person_link comment.commenter %> posted a comment
+    <%= time_ago_in_words(comment.created_at) %> ago:
+  </p>
+  <%= display comment.body %>
+  <div>
+    <%- if current_person?(comment.commentable.blog.person) -%>
+    <br />
+    <%= link_to "delete", blog_post_comment_path(@blog, @post, comment),
+                          :method => :delete %>
+    <%- end -%>
   </div>
-</div>
+</li>

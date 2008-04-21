@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   skip_before_filter :require_activation
   
   def index
+    @body = "home"
     @topics = Topic.find_recent
     @members = Person.find_recent
     if logged_in?
