@@ -81,16 +81,20 @@ module ActivitiesHelper
     img = case activity_type(activity)
             when "BlogPost"
               "blog.gif"
-            when "BlogPostComment"
-              "comment.gif" 
+            when "Comment"
+              parent_type = activity.item.commentable.class.to_s
+              case parent_type
+              when "BlogPost"
+                "comment.gif"
+              when "Person"
+                "signal.gif"
+              end
             when "Connection"
               "switch.gif"
             when "ForumPost"
               "new.gif"
             when "Topic"
               "add.gif"
-            when "WallComment"
-              "signal.gif"
             else
               # TODO: make this a more graceful falure (?).
               raise "Invalid activity type #{activity_type(activity).inspect}"
