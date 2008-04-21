@@ -1,7 +1,10 @@
-<div id="search">
-<% form_tag searches_path, :method => :get do %>
-    <%= text_field_tag :q, params[:q], :size => 18, :maxlength => 50 %>
-    <%= submit_tag "Search", :name => nil %>
+<h2>Search people</h2>
+<% form_tag searches_path, :method => :get, :id => "frmSearch" do %>
+  <fieldset title="Search Insoshi">
+    <%= text_field_tag :q, params[:q], :id => "txtSearch", :class => "txt",
+                                       :maxlength => 50 %>
+    <%= submit_tag "Search", :name => nil, :id => "btnSearch",
+                             :class => "button"  %>
     <%= hidden_field_tag "model", search_model %>
+  </fieldset>
 <% end %>
-</div>
