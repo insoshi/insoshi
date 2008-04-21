@@ -4,26 +4,26 @@
 # Table name: people
 #
 #  id                        :integer(11)     not null, primary key
-#  email                     :string(255)     
-#  name                      :string(255)     
-#  remember_token            :string(255)     
-#  crypted_password          :string(255)     
-#  description               :text            
-#  remember_token_expires_at :datetime        
-#  last_contacted_at         :datetime        
-#  last_logged_in_at         :datetime        
+#  email                     :string(255)
+#  name                      :string(255)
+#  remember_token            :string(255)
+#  crypted_password          :string(255)
+#  description               :text
+#  remember_token_expires_at :datetime
+#  last_contacted_at         :datetime
+#  last_logged_in_at         :datetime
 #  forum_posts_count         :integer(11)     default(0), not null
 #  blog_post_comments_count  :integer(11)     default(0), not null
 #  wall_comments_count       :integer(11)     default(0), not null
-#  created_at                :datetime        
-#  updated_at                :datetime        
+#  created_at                :datetime
+#  updated_at                :datetime
 #  admin                     :boolean(1)      not null
 #  deactivated               :boolean(1)      not null
 #
 
 class Person < ActiveRecord::Base
   extend PreferencesHelper
-  
+
   attr_accessor :password, :verify_password, :new_password,
                 :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
@@ -59,12 +59,12 @@ class Person < ActiveRecord::Base
     person.has_many :_sent_messages, :foreign_key => "sender_id",
                     :conditions => "sender_deleted_at IS NULL"
     person.has_many :_received_messages, :foreign_key => "recipient_id",
-                    :conditions => "recipient_deleted_at IS NULL"                  
+                    :conditions => "recipient_deleted_at IS NULL"
   end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
                                             :limit => FEED_SIZE, :group => 'activities.id'
-  
+
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
@@ -77,22 +77,22 @@ class Person < ActiveRecord::Base
                             :with => EMAIL_REGEX,
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
-  
+
   before_create :create_blog
   before_save :downcase_email, :encrypt_password
   after_create :connect_to_admin
-  
+
   ## Class methods
-  
+
   class << self
-    
+
     # Return the active users.
     def active(page = 1)
       paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
                      :conditions => ["deactivated = ?", false])
     end
-    
+
     # People search.
     def search(options = {})
       query = options[:q]
@@ -103,13 +103,13 @@ class Person < ActiveRecord::Base
       results[0...SEARCH_LIMIT].paginate(:page => options[:page],
                                          :per_page => SEARCH_PER_PAGE)
     end
-    
+
     def find_recent
       find(:all, :order => "people.created_at DESC",
                  :include => :photos, :limit => NUM_RECENT)
-    end    
+    end
   end
-  
+
   # Params for use in urls.
   # Profile urls have the form '/people/1-michael-hartl'.
   # This works automagically because Person.find(params[:id]) implicitly
@@ -118,27 +118,27 @@ class Person < ActiveRecord::Base
   def to_param
     "#{id}-#{name.downcase.split.join('-')}"
   end
-  
+
   ## Feeds
-  
+
   # Return a person-specific activity feed.
   # TODO: put some algorithms in here to improve feed quality.
   def feed
     activities
   end
-  
+
   def recent_activity
     Activity.find_all_by_person_id(self, :order => 'created_at DESC',
                                          :limit => FEED_SIZE)
   end
-  
+
   ## For the home page...
-  
+
   # Return some contacts for the home page.
   def some_contacts
     contacts.shuffle[(0...12)]
   end
-  
+
   # Contact links for the contact image raster.
   def requested_contact_links
     requested_contacts.map do |p|
@@ -146,17 +146,17 @@ class Person < ActiveRecord::Base
       edit_connection_path(conn)
     end
   end
-  
+
   ## Message methods
 
   def received_messages(page = 1)
     _received_messages.paginate(:page => page, :per_page => MESSAGES_PER_PAGE)
-  end  
-  
+  end
+
   def sent_messages(page = 1)
     _sent_messages.paginate(:page => page, :per_page => MESSAGES_PER_PAGE)
   end
-  
+
   def trashed_messages(page = 1)
     conditions = [%((sender_id = :person AND sender_deleted_at > :t) OR
                     (recipient_id = :person AND recipient_deleted_at > :t)),
@@ -167,22 +167,22 @@ class Person < ActiveRecord::Base
                                      :page => page,
                                      :per_page => MESSAGES_PER_PAGE)
   end
-  
+
   def recent_messages
     Message.find(:all,
-                 :conditions => [%(recipient_id = ? AND 
+                 :conditions => [%(recipient_id = ? AND
                                    recipient_deleted_at IS NULL), id],
                  :order => "created_at DESC",
                  :limit => NUM_RECENT_MESSAGES)
   end
-  
+
   ## Photo helpers
-  
+
   def photo
     # This should only have one entry, but be paranoid.
     photos.find_all_by_primary(true).first
   end
-  
+
   # Return all the photos other than the primary one
   def other_photos
     photos.length > 1 ? photos - [photo] : []
@@ -194,12 +194,12 @@ class Person < ActiveRecord::Base
 
   def thumbnail
     photo.nil? ? "default_thumbnail.png" : photo.public_filename(:thumbnail)
-  end  
+  end
 
   def icon
     photo.nil? ? "default_icon.png" : photo.public_filename(:icon)
-  end  
-  
+  end
+
   # Return the photos ordered by primary first, then by created_at.
   # They are already ordered by created_at as per the has_many association.
   def sorted_photos
@@ -208,16 +208,16 @@ class Person < ActiveRecord::Base
     # flatten yields [primary, other one, another one]
     @sorted_photos ||= photos.partition(&:primary).flatten
   end
-  
+
   ## Authentication methods
-  
-  # Authenticates a user by their email address and unencrypted password.  
+
+  # Authenticates a user by their email address and unencrypted password.
   # Returns the user or nil.
   def self.authenticate(email, password)
     u = find_by_email(email.downcase) # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
-  
+
   def self.encrypt(password)
     Crypto::Key.from_file('rsa_key.pub').encrypt(password)
   end
@@ -234,14 +234,14 @@ class Person < ActiveRecord::Base
   def authenticated?(password)
     unencrypted_password == password
   end
-  
+
   def unencrypted_password
     # The gsub trickery is to unescape the key from the DB.
     decrypt(crypted_password.gsub(/\\n/, "\n"))
   end
 
   def remember_token?
-    remember_token_expires_at && Time.now.utc < remember_token_expires_at 
+    remember_token_expires_at && Time.now.utc < remember_token_expires_at
   end
 
   # These create and unset the fields required for remembering users
@@ -288,11 +288,11 @@ class Person < ActiveRecord::Base
                                               true, false])
     admin? and num_admins == 1
   end
-  
+
   def common_connections_with(person,page=1)
-    Connection.paginate_by_sql(["SELECT connections.*, count(contact_id) FROM `connections` WHERE ((person_id = ? or person_id = ?) and contact_id != 1) GROUP BY contact_id HAVING count(contact_id) = 2",self[:id],person[:id]], :page => page, :per_page => RASTER_PER_PAGE)
+    @common_connections ||= Connection.paginate_by_sql(["SELECT connections.*, count(contact_id) FROM `connections` WHERE ((person_id = ? or person_id = ?) and contact_id != 1 and status= ?) GROUP BY contact_id HAVING count(contact_id) = 2",self[:id],person[:id], Connection::ACCEPTED], :page => page, :per_page => RASTER_PER_PAGE)
   end
-  
+
   protected
 
     ## Callbacks
@@ -305,7 +305,7 @@ class Person < ActiveRecord::Base
       return if password.blank?
       self.crypted_password = encrypt(password)
     end
-    
+
     # Connect new users to "Tom".
     def connect_to_admin
       # Find the first admin created.
@@ -316,9 +316,9 @@ class Person < ActiveRecord::Base
         Connection.connect(self, tom)
       end
     end
-    
+
     ## Other private method(s)
-    
+
     def password_required?
       crypted_password.blank? || !password.blank? || !verify_password.nil?
     end
