@@ -32,8 +32,9 @@ module ApplicationHelper
   end
   
   def menu_link_to(link, options = {})
-    options.merge!({ :id => "current" }) if current_page?(link[:href])
-    link_to(link[:content], link[:href], options)
+    klass = "n-#{link[:content].downcase}"
+    klass += " active" if current_page?(link[:href])
+    link_to(link[:content], link[:href], options.merge(:class => klass))
   end
   
   # Return true if the user is viewing the site in admin view.

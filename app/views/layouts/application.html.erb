@@ -15,17 +15,26 @@
           </a>
         </h1>
         <ul id="nav">
-          <li class="n-home active"><a href="index.html">Home</a></li>
-          <li class="n-profile"><a href="profile.html">Profile</a></li>
-          <li class="n-contacts"><a href="contacts.html">Contacts</a></li>
-          <li class="n-messages"><a href="messages.html">Messages</a></li>
-          <li class="n-blog"><a href="blog.html">Blog</a></li>
-          <li class="n-people"><a href="people.html">People</a></li>
-          <li class="n-forum"><a href="forum.html">Forum</a></li>
+          <%- menu.each do |link| -%>
+            <li><%= menu_link_to link %></li>
+          <%- end -%>
         </ul>
         <p class="welcome">Welcome, Pete Lambert (<a href="signin.html">Sign out</a>)</p>
       </div>
     </div>
+      
+             
+        <!-- <div class="column first span-13 append-1">
+        <%- if flash.empty? -%>
+          &nbsp;
+        <%- else -%>
+          <% flash.each do |key, msg| %>
+            <%= content_tag :div, msg, :class => "flash #{key}" %>
+          <% end %>
+        <%- end -%>
+        </div> -->
+
+    
     <div id="wrap">
       <div id="content">
         <div class="col1">
