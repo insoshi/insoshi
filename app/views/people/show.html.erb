@@ -1,12 +1,12 @@
 <%- column_div :type => :primary do -%>
-  
+
   <h1>Profile for <%= @person.name %></h1>
 
   <%- unless current_person?(@person) -%>
     <%= email_link @person %>
     | <%= link_to "#{@person.name}'s blog", blog_path(@person.blog) %>
     <%- unless Connection.exists?(@person, current_person) -%>
-      | 
+      |
       <%= link_to "Connect with #{@person.name}!",
                   person_connections_path(@person), :method => :post %>
     <%- end -%>
@@ -18,10 +18,10 @@
   <div class="clearfix">
     <p>
     <%= image_tag @person.main_photo %>
-    
+
     <%= sanitize @person.description %></p>
   </div>
-  
+
   <%= render :partial => 'recent_activity' %>
   <%= render :partial => 'wall' %>
 <%- end -%>
@@ -30,7 +30,7 @@
   <%= render :partial => 'shared/minifeed' %>
   <%- if Connection.connected?(@person, current_person) -%>
     <%= render :partial => 'shared/contacts_preview',
-               :locals => { :person => @person } %>  
+               :locals => { :person => @person } %>
     <%= render :partial => 'common_contacts' %>
   <%- end -%>
 <%- end -%>
