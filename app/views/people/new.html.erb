@@ -1,37 +1,37 @@
-<%= error_messages_for :person %>
+<%- column_div :type => :primary do -%>
+  <h2>Sign up</h2>
 
-<% form_for @person do |f| -%>
+  <%= error_messages_for :person %>
 
-<div class="form_row">
-  <label for="email">
-    Email address (never made
-    public<%= ", will be verified" if global_prefs.email_verifications? %>)  
-  </label>
-  <br />
-  <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
-</div>
+  <% form_for @person do |f| -%>
 
-<div class="form_row">
-  <label for="name">Name (will be displayed)</label>
-  <br />
-  <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
-  <%= set_focus_to_id "person_name" %>  
-</div>
+  <div class="form_row">
+    <label for="email">
+      Email address (never made
+      public<%= ", will be verified" if global_prefs.email_verifications? %>)  
+    </label>
+    <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
+    <%= set_focus_to_id "person_email" %>  
+  </div>
 
-<div class="form_row">
-  <label for="password">Password</label>
-  <br />
-  <%= f.password_field :password, :maxlength => Person::MAX_PASSWORD %>
-</div>
+  <div class="form_row">
+    <label for="name">Name (will be displayed)</label>
+    <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
+  </div>
 
-<div class="form_row">
-  <label for="password_confirmation">Confirm Password</label>
-  <br />
-  <%= f.password_field :password_confirmation, 
-                       :maxlength => Person::MAX_PASSWORD,
-                       :value => "" %>
-</div>
-<div class="form_row">
-  <%= submit_tag 'Sign up' %>
-</div>
-<% end %>
+  <div class="form_row">
+    <label for="password">Password</label>
+    <%= f.password_field :password, :maxlength => Person::MAX_PASSWORD %>
+  </div>
+
+  <div class="form_row">
+    <label for="password_confirmation">Confirm Password</label>
+    <%= f.password_field :password_confirmation, 
+                         :maxlength => Person::MAX_PASSWORD,
+                         :value => "" %>
+  </div>
+  <div class="form_row">
+    <%= submit_tag 'Sign up', :class => "button" %>
+  </div>
+  <% end %>
+<%- end -%>

@@ -31,6 +31,7 @@ class PeopleController < ApplicationController
   end
   
   def new
+    @body = "register single-col"
     @person = Person.new
 
     respond_to do |format|
@@ -57,6 +58,7 @@ class PeopleController < ApplicationController
           format.html { redirect_back_or_default(home_url) }
         end
       else
+        @body = "register single-col"
         format.html { render :action => 'new' }
       end
     end
