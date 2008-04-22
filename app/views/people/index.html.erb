@@ -3,7 +3,29 @@
     <h2>People</h2>
     <%= will_paginate %>
     <ul class="list people">
-      <%= render :partial => @people %>
+      <%# render :partial => @people %>
+                  <li class="vcard person">
+
+              <div class="profile-image"><img src="/images/profile-images/m/simon-hunt.jpg" alt="George Palmer" class="photo" /></div>
+              <p><a href="profile.html" class="url fn">George Palmer</a></p>
+              <p class="note">My hobbies include disco dancing, fishing, dancing fish, electrolosys and handwringing. I went to school at the first...</p>
+            </li>
+      <li class="vcard person">
+  <div class="profile-image">
+    <a href="/people/1-admin" title="admin"><img alt="admin" src="/images/default_icon.png?1208796608" title="admin" /></a>
+  </div>
+
+  <p><a href="/people/1-admin" class="url fn">admin</a></p>
+  <p class="note"></p>
+</li>
+<li class="vcard person">
+  <div class="profile-image">
+    <a href="/people/2-james-mollit" title="James Mollit"><img alt="James Mollit" src="/photos/0000/0001/147212_300_icon.jpg?1208834944" title="James Mollit" /></a>
+  </div>
+  <p><a href="/people/2-james-mollit" class="url fn">James Mollit</a></p>
+  <p class="note">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut lab...</p>
+
+</li>
     </ul>
     <%= will_paginate %>
   <% end -%>
