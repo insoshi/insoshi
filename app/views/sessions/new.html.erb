@@ -1,32 +1,32 @@
-<div class="col1">
-<h2>Sign in</h2>
+<%= column_div, :type => :primary %>
+  <h2>Sign in</h2>
 
-<% form_tag session_path do -%>
-<div class="form_row">
-  <label for="username">Email address</label>
-  <%= text_field_tag 'email', params[:email],
-                              :maxlength => Person::MAX_EMAIL  %>
-</div>
-<%= set_focus_to_id "email" %>
+  <% form_tag session_path do -%>
+    <div class="form_row">
+      <label for="username">Email address</label>
+      <%= text_field_tag 'email', params[:email],
+                                  :maxlength => Person::MAX_EMAIL  %>
+    </div>
+    <%= set_focus_to_id "email" %>
 
-<div class="form_row">
-  <label for="password">Password</label>
-  <%= password_field_tag 'password', params[:password],
-                                     :maxlength => Person::MAX_PASSWORD %>
-</div>
+    <div class="form_row">
+      <label for="password">Password</label>
+      <%= password_field_tag 'password', params[:password],
+                                         :maxlength => Person::MAX_PASSWORD %>
+    </div>
 
-<div class="form_row">
-  <label for="remember_me" class="checkbox">Remember me:</label>
-  <%= check_box_tag 'remember_me', '1', true, :class => "checkbox" %>
-</div>
+    <div class="form_row">
+      <label for="remember_me" class="checkbox">Remember me:</label>
+      <%= check_box_tag 'remember_me', '1', true, :class => "checkbox" %>
+    </div>
 
-<div class="form_row">
-  <%= submit_tag 'Sign in', :class => "button" %>
-  <p>or <%= link_to "Sign up", signup_path %></p>
-</div>
+    <div class="form_row">
+      <%= submit_tag 'Sign in', :class => "button" %>
+      <p>or <%= link_to "Sign up", signup_path %></p>
+    </div>
 
-<p class="form_row">
-  <%= link_to "I forgot my password!", new_password_reminder_path %>
-</p>
-<% end -%>
-</div>
+    <p class="form_row">
+      <%= link_to "I forgot my password!", new_password_reminder_path %>
+    </p>
+  <% end -%>
+<%- end -%>
