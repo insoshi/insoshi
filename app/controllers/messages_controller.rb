@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
 
-  before_filter :login_required
+  before_filter :login_required, :setup
   before_filter :authenticate_person, :only => [:show]
   before_filter :handle_cancel, :only => [:create]
   before_filter :validate_reply, :only => [:create]
@@ -99,6 +99,10 @@ class MessagesController < ApplicationController
   end
 
   private
+  
+    def setup
+      @body = "messages"
+    end
   
     def authenticate_person
       @message = Message.find(params[:id])

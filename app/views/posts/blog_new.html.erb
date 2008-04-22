@@ -1,9 +1,7 @@
-<h1>New post</h1>
+<h2>New post</h2>
 
 <%= error_messages_for :post %>
 
 <%= render :partial => 'blog_form',
            :locals => { :url => blog_posts_path(@blog),
                         :method => :post } %>
-
-<%= link_to 'Back', blog_path(@blog) %>

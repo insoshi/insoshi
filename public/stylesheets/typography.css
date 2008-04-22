@@ -223,7 +223,7 @@ input.button, button, input[submit], input[button] {
   border: 1px solid #ccc;
   clear: both;
   cursor: pointer;
-  display: block;
+/*  display: block;*/
   font-family: Helvetica, Arial, Univers, sans-serif;
   font-size: 12px;
   height: 32px;

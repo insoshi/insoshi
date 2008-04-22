@@ -1,40 +1,40 @@
-<h1>New message</h1>
+<h2>New message</h2>
 
 <%- column_div :type => :primary do -%>
 
-<%= error_messages_for :message %>
+  <%= error_messages_for :message %>
+  
+  <%= image_link @recipient, :image => :thumbnail %>
 
-<table>
-  <tr>
-    <th colspan="2">
-      <label>To:</label> <%= @recipient.name %>
-    </th>
-  </tr>
-  <tr>
-    <td>
-      <%= image_link @recipient, :image => :thumbnail %>
-    </td>
-    
-    <td>
-      <% form_for(:message,
-                  :url => person_messages_path(@recipient)) do |f| %>
-            Subject: <%= f.text_field :subject %>
-            <%= f.text_area :content %>
-            <%- if @message.reply? -%>
-              <%= f.hidden_field :parent_id %>
-              <%= set_focus_to_id "message_content" %>
-            <%- else -%>
-              <%= set_focus_to_id "message_subject" %>
-            <%- end -%>
-        <div>
-          <%= f.submit "Send!" %>
-          <%= f.submit "Cancel", :id => "cancel" %>
-        </div>
-<% end %>
-    </td>
-  </tr>
-</table>
-
+  <% form_for(:message,
+              :url => person_messages_path(@recipient)) do |f| %>
+    <div class="form_row full">
+      <label for="message_to">To</label>
+      <%= text_field_tag :recipient, h(@recipient.name) %>
+      <!-- TODO: be able to change recipients with this
+      <a href="#" class="add-recipient">
+        <%= image_tag "icons/add.gif", :alt => "Add a recipient" %>
+      </a> -->
+    </div>
+    <div class="form_row full">
+      <label for="message_subject">Subject</label>
+      <%= f.text_field :subject, :id => "message_subject" %>
+    </div>
+    <div class="form_row">
+      <label for="message_body">Your message</label>
+      <%= f.text_area :content, :id => "message_body" %>
+      <%- if @message.reply? -%>
+        <%= f.hidden_field :parent_id %>
+        <%= set_focus_to_id "message_content" %>
+      <%- else -%>
+        <%= set_focus_to_id "message_subject" %>
+      <%- end -%>
+    </div>
+    <div class="form_row">
+      <%= f.submit "Send!", :class => "button", :id => "message_submit" %>
+      <%= f.submit "Cancel", :class => "button", :id => "cancel" %>
+    </div>
+  <% end %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
