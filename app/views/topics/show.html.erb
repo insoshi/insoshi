@@ -1,8 +1,8 @@
 <%- column_div :type => :primary do -%>
-  <h1><%= @topic.name %></h1>
-  <div class="forum section">
+  <h2><%= h @topic.name %></h2>
+  <ul class="list topic full">
     <%= render :partial => 'forum_post', :collection => @posts %>
-  </div>
+  </ul>
 
 
   <h3>Add new post</h3>
@@ -12,11 +12,11 @@
   <% form_for :post,
               :url => forum_topic_posts_path(@forum, @topic)  do |f| %>
     <div class="form_row">
-      <%= f.text_area :body %>
+      <%= f.text_area :body, :rows => 10 %>
     </div>
 
     <div class="form_row">
-      <%= f.submit "Submit" %>
+      <%= f.submit "Submit", :class => "button" %>
     </div>
   <% end %>
 

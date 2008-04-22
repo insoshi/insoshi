@@ -1,8 +1,11 @@
-<div class="element">
-  <div class="time">
-      <a name="post_<%= forum_post.id %>"></a>
-      Posted <%= time_ago_in_words(forum_post.created_at) %> ago
-      by <%= person_link forum_post.person %>
+<li>
+  <a name="post_<%= forum_post.id %>"></a>
+  <div class="profile-image">
+    <%= image_link forum_post.person, :image => :thumbnail %>
+    <%= image_tag "icons/comment.gif", :class => "icon" %>
+  </div>
+  <p class="meta"><%= person_link forum_post.person %> posted
+      <%= time_ago_in_words(forum_post.created_at) %> ago
       <%- if current_person?(forum_post.person) or admin_view? -%>
         | <%= link_to "Edit",
                 edit_forum_topic_post_path(@forum, @topic, forum_post) %>
@@ -13,6 +16,6 @@
                       :confirm => 'Are you sure?',
                       :method => :delete %>
       <%- end -%>
-  </div>
-  <div class="body"><%= sanitize forum_post.body %></div>
-</div>
+  </p>
+  <%= display forum_post.body %>
+</li>

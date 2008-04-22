@@ -3,5 +3,5 @@
     <%= image_link person, :class => "photo", :image => :thumbnail %>
   </div>
   <p><%= person_link person, :class => "url fn" %></p>
-  <p class="note"><%= truncate(person.description, 100) %></p>
+  <div class="note"><%= display(truncate(person.description, 100)) %></div>
 </li>
