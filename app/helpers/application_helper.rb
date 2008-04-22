@@ -116,10 +116,9 @@ module ApplicationHelper
     str << link_to_unless_current(action, path, opts)
   end
 
-private
+  private
   
-  def inflect(word, number)
-    number > 1 ? word.pluralize : word
-  end
-
+    def inflect(word, number)
+      number > 1 ? word.pluralize : word
+    end
 end

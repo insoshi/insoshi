@@ -1,5 +1,6 @@
-<div style="text-align: center; margin-bottom: 10px;">
-<%= link_to_unless_current "Inbox", messages_path %> |
-<%= link_to_unless_current "Sent", sent_messages_path %> |
-<%= link_to_unless_current "Trash", trash_messages_path %>
-</div>
+<ul id="message-nav">
+  <%= list_link_with_active "Inbox", messages_path %>
+  <%= list_link_with_active "Sent", sent_messages_path %>
+  <%= list_link_with_active "Trash", trash_messages_path %>
+  <li class="compose"><%= link_to "New message", new_message_path %></li>
+</ul>
