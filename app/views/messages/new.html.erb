@@ -25,7 +25,7 @@
       <%= f.text_area :content, :id => "message_body" %>
       <%- if @message.reply? -%>
         <%= f.hidden_field :parent_id %>
-        <%= set_focus_to_id "message_content" %>
+        <%= set_focus_to_id "message_body" %>
       <%- else -%>
         <%= set_focus_to_id "message_subject" %>
       <%- end -%>

@@ -4,9 +4,9 @@
   <%= render :partial => 'message_nav' %>
 
   <%= will_paginate %>
-  <div class="section">
+  <ul class="list messages full">
     <%= render :partial => "message", :collection => @messages %>
-  </div>
+  </ul>
   <%= will_paginate %>
 
 <%- end -%>

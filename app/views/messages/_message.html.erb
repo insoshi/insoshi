@@ -1,38 +1,38 @@
-<div class="message element clearfix <%= rowclass = cycle("odd", "even") %>">
-  <div class="column first span-1">
-    <%- if !message.read? -%>
-      <%= image_tag("new.png") %>
+<li class="message">
+  <div class="profile-image">
+    <% other_person = current_person?(message.sender) ?
+                      message.recipient : message.sender %>
+    <%= image_link other_person, :image => :thumbnail,
+                   :image_options => { :class => "photo" } %>
+
+    <%- if not message.read? and not current_person?(message.sender) -%>
+      <%= image_tag("icons/email.gif", :class => "icon") %>
     <%- elsif message.replied_to? -%>
-      <%= image_tag("replied.png")  %>
+      <%= image_tag("icons/reply.gif", :class => "icon" )  %>
+    <%- end -%>    
+  </div>
+  <p>
+    <%- if current_person?(message.sender) -%>
+      <span class="label">To:</span>
+      <%= person_link message.recipient, :class => "url fn" %>
     <%- else -%>
-      &nbsp;
+      <span class="label">From:</span>
+      <%= person_link message.sender, :class => "url fn" %>
     <%- end -%>
-  </div>
-  <div class="column span-1">
-    <% if message.sender == current_person %>
-      <%= image_link message.recipient %>
-    <% else %>
-      <%= image_link message.sender %>
-    <% end %>
-  </div>
-  <div class="column span-4">
-    <%= render :partial => 'messages/sender_info', 
-               :locals => { :message => message,
-                            :rowclass => rowclass } %>
-  </div>
-  <div class="column span-7">
-      <%# TODO: Refactor this mess %>
-          <% snippet = sanitize(message.subject)
-             link    = message.read? ? snippet : content_tag(:b, snippet)
-          %>
-          <%= link_to message.subject, message %>
-  </div>
-  <div class="column span-1 last">
+    <span class="meta"><%= time_ago_in_words message.created_at %> ago</span>
+  </p>
+  <p>
+    <span class="label">Subject:</span>
+    <%= link_to sanitize(message.subject), message %>    
+  </p>
+  <p class="tools meta">
+    <%= link_to "Read", message %> |
+    <%= link_to "Reply", reply_message_path(message) %> |
     <% unless message.trashed?(current_person) -%>
-      <%= link_to(image_tag("delete.png"), message, :method => :delete) %>
+      <%= link_to("Trash", message, :method => :delete) %>
     <% else -%>
-      <%= link_to "(untrash)", undestroy_message_path(message), 
-                               :method => :put %>
-    <% end -%>
-  </div>
-</div>
+      <%= link_to "Untrash", undestroy_message_path(message), 
+                             :method => :put %>
+    <% end -%>    
+  </p>
+</li>

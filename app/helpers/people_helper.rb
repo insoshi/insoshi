@@ -37,14 +37,19 @@ module PeopleHelper
     link_to(content, link, link_options)
   end
 
-  def person_link(text, person = nil)
+  # Link to a person (default is by name).
+  # TODO: refactor this thing.
+  def person_link(text, person = nil, html_options = nil)
     if person.nil?
+      person = text
+      text = person.name
+    elsif person.is_a?(Hash)
       person = text
       text = person.name
     end
     # We normally write link_to(..., person) for brevity, but that breaks
     # activities_helper_spec due to an RSpec bug.
-    link_to(h(text), person_path(person))
+    link_to(h(text), person_path(person), html_options)
   end
   
   private
