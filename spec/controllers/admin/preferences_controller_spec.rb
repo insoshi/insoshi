@@ -61,4 +61,9 @@ describe Admin::PreferencesController do
       flash[:error].should_not be_nil
     end
   end
+  
+  it "should update the analytics attribute" do
+    put :update, :preferences => { :analytics => "Google analytics" }
+    @prefs.reload.analytics.should == "Google analytics"
+  end
 end
