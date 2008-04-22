@@ -23,7 +23,7 @@ describe Admin::PeopleController do
   it "should have a warning for an example.com email address" do
     login_as(:admin)
     get :index
-    response.should have_tag("div[class=?]", "flash notice", /Warning/)
+    response.should have_tag("p[class=?]", "flash notice", /Warning/)
   end
   
   describe "person modifications" do
