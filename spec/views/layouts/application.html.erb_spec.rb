@@ -9,18 +9,6 @@ describe "layout when not logged in" do
     response.body.should match(/XHTML 1.0 Strict/)
   end
   
-  it "should have the right CSS includes" do
-    %w(screen print ie).each do |filename|
-      response.body.should match(/\/stylesheets\/blueprint\/#{filename}.css/)
-    end
-  end
-  
-  it "should have a stylesheets with the correct media types" do
-    response.should have_tag("link[type=?][media=?]", "text/css", 
-                                                      "screen, projection")
-    response.should have_tag("link[type=?][media=?]", "text/css", "print")
-  end
-  
   it "should have a login link" do
     response.should have_tag("a[href=?]", login_path)
   end

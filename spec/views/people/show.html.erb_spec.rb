@@ -10,7 +10,7 @@ describe "/people/show.html.erb" do
   end
 
   it "should have the right title" do
-    response.should have_tag("h1", /#{@person.name}/)
+    response.should have_tag("h2", /#{@person.name}/)
   end
   
   it "should have a description rendered by Markdown" do
