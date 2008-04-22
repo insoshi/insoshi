@@ -60,10 +60,10 @@ describe Admin::PreferencesController do
                                      :email_notifications => "1" }
       flash[:error].should_not be_nil
     end
-  end
   
-  it "should update the analytics attribute" do
-    put :update, :preferences => { :analytics => "Google analytics" }
-    @prefs.reload.analytics.should == "Google analytics"
+    it "should update the analytics attribute" do
+      put :update, :preferences => { :analytics => "Google analytics" }
+      @prefs.reload.analytics.should == "Google analytics"
+    end
   end
 end

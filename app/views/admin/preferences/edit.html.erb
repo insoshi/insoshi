@@ -1,39 +1,39 @@
-<h1>Editing preferences</h1>
+<h2>Editing preferences</h2>
 
 <%= error_messages_for :preferences %>
 
 <% form_for :preferences,
             :url => admin_preference_path(@preferences),
             :html => { :method => :put } do |f| %>
-  <p>
+  <div class="form_row">
     <b>Email domain</b><br />
     <%= f.text_field :domain %>
-  </p>
+  </div>
 
-  <p>
+  <div class="form_row">
     <b>Smtp server</b><br />
     <%= f.text_field :smtp_server %>
-  </p>
+  </div>
 
-  <p>
+  <div class="form_row">
     <b>Email notifications</b><br />
     <%= f.check_box :email_notifications %>
-  </p>
+  </div>
 
-  <p>
+  <div class="form_row">
     <b>Email verifications</b><br />
     <%= f.check_box :email_verifications %>
-  </p>
+  </div>
 
-  <p>
+  <div class="form_row">
     <b>Analytics (will be inserted 
-       just before <%= h("</body>") %> tag)</b><br />
+       just before the <%= h("</body>") %> tag)</b><br />
     <%= f.text_area :analytics, :rows => 10 %>
-  </p>
+  </div>
 
-  <p>
+  <div class="form_row">
     <%= f.submit "Update", :class => "button" %>
-  </p>
+  </div>
 <% end %>
 
 <%= link_to 'Back', admin_preferences_path %>
