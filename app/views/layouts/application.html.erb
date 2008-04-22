@@ -50,19 +50,19 @@
           <%= content_tag :p, msg, :class => "flash #{key}" %>
         <% end %>     
         <%= yield %>
-      <div id="footer">
-        <p id="footer-nav">
-          <a href="index.html">Home</a> | <a href="profile.html">Profile</a> | <a href="messages.html">Messages</a> | <a href="blog.html">Blog</a> | <a href="people.html">People</a> | <a href="forum.html">Forum</a>
+        <div id="footer">
+          <p id="footer-nav">
+            <a href="index.html">Home</a> | <a href="profile.html">Profile</a> | <a href="messages.html">Messages</a> | <a href="blog.html">Blog</a> | <a href="people.html">People</a> | <a href="forum.html">Forum</a>
 
-        </p>
-        <p>Powered by
-          <a href="http://insoshi.com/">Inoshi Social Software</a>
-        </p>
+          </p>
+          <p>Powered by
+            <a href="http://insoshi.com/">Inoshi Social Software</a>
+          </p>
+        </div>
       </div>
-      </div>
+      <%- if development? -%>
+        <div><%= render :partial => 'shared/debug' %></div>
+      <%- end -%> 
     </div>
-    <%- if false and development? -%>
-      <div><%# render :partial => 'shared/debug' %></div>
-    <%- end -%> 
   </body>
 </html>
