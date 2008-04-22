@@ -44,6 +44,7 @@ module PeopleHelper
       person = text
       text = person.name
     elsif person.is_a?(Hash)
+      html_options = person
       person = text
       text = person.name
     end

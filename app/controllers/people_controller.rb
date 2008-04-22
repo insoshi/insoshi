@@ -3,6 +3,7 @@ class PeopleController < ApplicationController
   skip_before_filter :require_activation, :only => :verify
   before_filter :login_required, :only => [ :edit, :update ]
   before_filter :correct_user_required, :only => [ :edit, :update ]
+  before_filter :setup
   
   def index
     @people = Person.active(params[:page])
@@ -104,8 +105,12 @@ class PeopleController < ApplicationController
   end
   
   private
+
+    def setup
+      @body = "people"
+    end
   
-  def correct_user_required
-    redirect_to home_url unless Person.find(params[:id]) == current_person
-  end
+    def correct_user_required
+      redirect_to home_url unless Person.find(params[:id]) == current_person
+    end
 end

@@ -2,6 +2,6 @@
   <div class="profile-image">
     <%= image_link person, :class => "photo" %>
   </div>
-  <p><%= person_link person, :html_options => { :class => "url fn" }  %></p>
-  <p class="note"><%= display(truncate(person.description, 100)) %></p>
+  <p><%= person_link person, :class => "url fn" %></p>
+  <div class="note"><%= display(truncate(person.description, 100)) %></div>
 </li>
