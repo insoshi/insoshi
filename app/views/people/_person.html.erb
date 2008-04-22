@@ -1,15 +1,7 @@
-<div class="person element clearfix">
-  <div class="icon column first span-1">
-    <%= image_link person %>
+<li class="vcard person">
+  <div class="profile-image">
+    <%= image_link person, :class => "photo" %>
   </div>
-  <div class="wrapper column span-<%= LARGER_COLUMN-1 %> last">
-    <div class="name">
-      <%= person_link person %>
-    </div>
-    <%- unless person.description.blank? -%>
-      <div class="description">
-        <%= sanitize(truncate(person.description, 100)) %>
-      </div>
-    <%- end -%>
-  </div>
-</div>
+  <p><%= person_link person, :html_options => { :class => "url fn" }  %></p>
+  <p class="note"><%= display(truncate(person.description, 100)) %></p>
+</li>
