@@ -19,6 +19,11 @@ class Preference < ActiveRecord::Base
   validates_presence_of :domain,       :if => :using_email?
   validates_presence_of :smtp_server,  :if => :using_email?
   
+  # Make the text fields blank instead of nil.
+  after_initialize do
+    self.analytics = ""
+  end
+  
   private
   
     def using_email?
