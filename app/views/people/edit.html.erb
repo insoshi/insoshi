@@ -41,20 +41,22 @@
       <% @person.sorted_photos.collect_every(N_COLUMNS) do |row| %>
       <tr>
       <% row.each do |photo| %>
-        <td><%= image_tag photo.public_filename(:thumbnail) %></td>
+        <td  style="padding-left: 1em;">
+          <%= image_tag photo.public_filename(:thumbnail) %>
+        </td>
       <% end %>
       </tr>
       <tr>
         <% row.each do |photo| %>
-        <td>
+        <td style="padding-left: 1em;">
           <% if photo.primary? %>
             primary
           <% else %>
-            <%= link_to "(make primary)", photo_path(photo),
+            <%= link_to "select", photo_path(photo),
                                           :method => :put %>
           <% end %>
           |
-          <%= link_to image_tag("delete.png"), photo_path(photo),
+          <%= link_to image_tag("icons/close.gif"), photo_path(photo),
                                                :method => :delete %>
         </td>
         <% end %>

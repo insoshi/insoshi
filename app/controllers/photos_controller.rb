@@ -35,6 +35,8 @@ class PhotosController < ApplicationController
     person_data = { :person => current_person,
                     :primary => current_person.photos.empty? }
     @photo = Photo.new(params[:photo].merge(person_data))
+    
+    flash[:success] = "Photo successfully uploaded"
   
     respond_to do |format|
       if @photo.save
@@ -76,7 +78,7 @@ class PhotosController < ApplicationController
       end
     end
     @photo.destroy
-  
+    flash[:success] = "Photo deleted"
     respond_to do |format|
       format.html { redirect_to edit_person_url(current_person) }
     end
