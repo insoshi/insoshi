@@ -1,4 +1,4 @@
-<h1>Password reminder</h1>
+<h2>Password reminder</h2>
 
 <% form_for :person, :url => password_reminders_path do |form| %>
   <div class="field_row">
@@ -9,6 +9,6 @@
   </div>
   
   <div class="field_row">
-    <%= submit_tag "Send reminder", :class => "submit" %>
+    <%= submit_tag "Send reminder", :class => "submit button" %>
   </div>
 <% end %>

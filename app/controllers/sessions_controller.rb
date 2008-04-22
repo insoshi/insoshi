@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
   skip_before_filter :require_activation, :only => [:new, :destroy]
 
   def new
+    @body = "login single-col"
   end
 
   def create
@@ -21,7 +22,8 @@ class SessionsController < ApplicationController
       redirect_back_or_default('/')
       flash[:success] = "Logged in successfully"
     else
-      flash[:error] = "Invalid email/password combination"
+      @body = "login single-col"
+      flash.now[:error] = "Invalid email/password combination"
       params[:password] = nil      
       render :action => 'new'
     end
