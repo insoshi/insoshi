@@ -1,104 +1,102 @@
-<h1>Edit profile</h1>
+<%- column_div :type => :primary do -%>
+  <h2>Edit profile</h2>
 
-<div id="profile_edit">
+  <div id="profile_edit">
 
-<%= error_messages_for :person %>
+  <h3>Personal details</h3>
 
-<% form_for @person do |f| %>
+    <%= error_messages_for :person %>
 
-  <h1>Name</h1>
+    <% form_for @person do |f| %>
 
-  <div class="form_row">
-    <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
-  </div>
+      <div class="form_row">
+        <label for="person_name">Name</label>
+        <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
+      </div>
   
-  <h1>Description</h1>
+      <div class="form_row">
+        <label for="person_description">Description</label>
+        <%= f.text_area :description %>
+      </div>
 
-  <div class="form_row"><%= f.text_area :description %></div>
+      <div class="form_row">
+        <label for="person_email">Email</label>
+        <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
+      </div>
   
-  <h1>Email</h1>
-
-  <div class="form_row">
-    <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
-  </div>
-  
-  <div class="form_row">
-    <%= f.submit "Update" %>
-  </div>
-  <input type="hidden" name="type" value="info_edit" />
-
-
-<% end %>
-
-<br />
-
-<h1>Photos</h1>
-  
-  <% if @person.photos.empty? %>
-    <%= image_tag @person.thumbnail %>
-  <% else %>
-  <table>
-    <% @person.sorted_photos.collect_every(N_COLUMNS) do |row| %>
-    <tr>
-    <% row.each do |photo| %>
-      <td><%= image_tag photo.public_filename(:thumbnail) %></td>
-    <% end %>
-    </tr>
-    <tr>
-      <% row.each do |photo| %>
-      <td>
-        <% if photo.primary? %>
-          primary
-        <% else %>
-          <%= link_to "(make primary)", photo_path(photo),
-                                        :method => :put %>
-        <% end %>
-        |
-        <%= link_to image_tag("delete.png"), photo_path(photo),
-                                             :method => :delete %>
-      </td>
-      <% end %>
-    </tr>
-    <% end %>
-  </table>
+      <div class="form_row">
+        <%= f.submit "Update", :class => "button" %>
+      </div>
+      <input type="hidden" name="type" value="info_edit" />
   <% end %>
+
   <br />
-  <%= button_to "Add a photo", new_photo_path %>
-</div>
 
-<br />
-
-<% form_for @person, :html => { :id => "change_password" } do |f| %>
-
-  <%= @person.unencrypted_password %>
-
-  <h1>Change Password</h1>
-
-  <div class="form_row">
-    <label for="password">Current Password</label>
+  <h3>Photos</h3>
+  
+    <% if @person.photos.empty? %>
+      <%= image_tag @person.thumbnail %>
+    <% else %>
+    <table>
+      <% @person.sorted_photos.collect_every(N_COLUMNS) do |row| %>
+      <tr>
+      <% row.each do |photo| %>
+        <td><%= image_tag photo.public_filename(:thumbnail) %></td>
+      <% end %>
+      </tr>
+      <tr>
+        <% row.each do |photo| %>
+        <td>
+          <% if photo.primary? %>
+            primary
+          <% else %>
+            <%= link_to "(make primary)", photo_path(photo),
+                                          :method => :put %>
+          <% end %>
+          |
+          <%= link_to image_tag("delete.png"), photo_path(photo),
+                                               :method => :delete %>
+        </td>
+        <% end %>
+      </tr>
+      <% end %>
+    </table>
+    <% end %>
     <br />
-    <%= f.password_field :verify_password,
-                         :maxlength => Person::MAX_PASSWORD %>
+    <%= button_to "Add a photo", new_photo_path, :class => "button" %>
   </div>
 
-  <div class="form_row">
-    <label for="password">New Password</label>
-    <br />
-    <%= f.password_field :new_password,
-                         :maxlength => Person::MAX_PASSWORD %>
-  </div>
+  <br />
 
-  <div class="form_row">
-    <label for="password_confirmation">Confirm Password</label>
-    <br />
-    <%= f.password_field :password_confirmation, 
-                         :maxlength => Person::MAX_PASSWORD,
-                         :value => "" %>
-  </div>
-  <div class="form_row">
-    <%= submit_tag 'Change password' %>
-  </div>
-  <input type="hidden" name="type" value="password_edit" />
+  <% form_for @person, :html => { :id => "change_password" } do |f| %>
 
+    <h3>Change Password</h3>
 
-<% end %>
+    <div class="form_row">
+      <label for="password">Current Password</label>
+      <%= f.password_field :verify_password,
+                           :maxlength => Person::MAX_PASSWORD %>
+    </div>
+
+    <div class="form_row">
+      <label for="password">New Password</label>
+      <%= f.password_field :new_password,
+                           :maxlength => Person::MAX_PASSWORD %>
+    </div>
+
+    <div class="form_row">
+      <label for="password_confirmation">Confirm Password</label>
+      <%= f.password_field :password_confirmation, 
+                           :maxlength => Person::MAX_PASSWORD,
+                           :value => "" %>
+    </div>
+    <div class="form_row">
+      <%= submit_tag 'Change password', :class => "button" %>
+    </div>
+    <input type="hidden" name="type" value="password_edit" />
+  <% end %>
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'searches/box' %>
+<%- end -%>
