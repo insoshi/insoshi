@@ -8,11 +8,11 @@
     <%= time_ago_in_words(comment.created_at) %> ago:
   </p>
   <%= display comment.body %>
+  <%- if current_person?(comment.commentable.blog.person) -%>
   <div>
-    <%- if current_person?(comment.commentable.blog.person) -%>
     <br />
     <%= link_to "delete", blog_post_comment_path(@blog, @post, comment),
                           :method => :delete %>
-    <%- end -%>
   </div>
+  <%- end -%>
 </li>
