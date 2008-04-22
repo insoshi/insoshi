@@ -2,7 +2,6 @@ class Admin::PeopleController < ApplicationController
 
   before_filter :login_required, :admin_required
 
-
   def index
     @people = Person.paginate(:all, :page => params[:page], :order => :name)
   end

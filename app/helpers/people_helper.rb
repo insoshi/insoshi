@@ -16,6 +16,7 @@ module PeopleHelper
   end
 
   # Return a person's image link.
+  # The default is to display the person's icon linked to the profile.
   def image_link(person, options = {})
     link = options[:link] || person
     image = options[:image] || :icon
@@ -29,7 +30,7 @@ module PeopleHelper
     end
     content = image_tag(person.send(image), image_options)
     # This is a hack needed for the way the designer handled rastered images
-    # ('vcard' class).
+    # (with a 'vcard' class).
     if options[:vcard]
       content = %(#{content}#{content_tag(:span, h(person.name), 
                                                  :class => "fn" )})
