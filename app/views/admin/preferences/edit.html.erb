@@ -28,11 +28,11 @@
   <p>
     <b>Analytics (will be inserted 
        just before <%= h("</body>") %> tag)</b><br />
-    <%= f.text_area :analytics %>
+    <%= f.text_area :analytics, :rows => 10 %>
   </p>
 
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit "Update", :class => "button" %>
   </p>
 <% end %>
 
