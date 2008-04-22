@@ -5,4 +5,4 @@ one:
   smtp_server: smtp.example.com
   email_notifications: true
   email_verifications: false
-  analytics: foobar
+  analytics: <script>Google analytics</script>

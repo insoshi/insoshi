@@ -20,6 +20,10 @@ describe "layout when not logged in" do
   it "should not have a sign out link" do
     response.should_not have_tag("a[href=?]", logout_path)
   end
+  
+  it "should have the right analytics" do
+    response.should have_tag("script", "Google analytics")
+  end
 end
 
 describe "layout when logged in" do
