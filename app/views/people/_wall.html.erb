@@ -1,17 +1,20 @@
 <div class="wall">
-  <h1>Comment Wall</h1>
+  <h2>Comment Wall</h2>
+  <a name="wall"></a>
 
   <% form_for :comment, :url => person_comments_path(@person) do |f| %>
     <div class="form_row">
-      <%= f.text_area :body %>
+      <%= f.text_area :body, :rows => 2 %>
     </div>
   
     <div class="form_row">
-      <%= submit_tag "Submit" %>
+      <%= submit_tag "Submit", :class => "button" %>
     </div>
   <% end %>
 
   <%- unless @person.comments.empty? -%>
-    <%= render :partial => 'comment', :collection => @person.comments %>
+    <ul class="list comments full">
+      <%= render :partial => 'comment', :collection => @person.comments %>
+    </ul>
   <%- end -%>
 </div>

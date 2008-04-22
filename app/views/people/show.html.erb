@@ -3,14 +3,27 @@
   <div class="profile vcard">
     <h2>Profile: <span class="fn n"><%= h @person.name %></span></h2>
 
-
-
     <div class="toolbox">
       <%= image_link @person, :class => "profile-image photo",
                               :image => "main_photo" %>
-      <ul class="tools">
-        <li>foo</li>
-      </ul>
+
+      <%- unless current_person?(@person) -%>
+        <ul class="tools">
+          <li><%= email_link @person %></li>
+          <li><%= link_to "#{h @person.name}'s blog",
+                  blog_path(@person.blog) %></li>
+          <%- unless Connection.exists?(@person, current_person) -%>
+            <li>
+            <%= link_to "Connect with #{h @person.name}!",
+                        person_connections_path(@person), :method => :post %>
+            </li>
+          <%- end -%>
+          <%- if logged_in? and 
+                 Connection.connected?(@person, current_person) -%>
+            <li><%= h @person.name %> is one of your contacts</li>
+          <%- end -%>
+        </ul>
+      <%- end -%>
     </div>
 
     <div class="note"><%= display @person.description %></div>
