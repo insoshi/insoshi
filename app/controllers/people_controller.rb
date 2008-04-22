@@ -107,7 +107,7 @@ class PeopleController < ApplicationController
   private
 
     def setup
-      @body = "people"
+      @body = "person"
     end
   
     def correct_user_required

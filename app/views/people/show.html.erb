@@ -1,27 +1,20 @@
 <%- column_div :type => :primary do -%>
   
-  <h1>Profile for <%= h @person.name %></h1>
+  <div class="profile vcard">
+    <h2>Profile: <span class="fn n"><%= h @person.name %></span></h2>
 
-  <%- unless current_person?(@person) -%>
-    <%= email_link @person %>
-    | <%= link_to "#{h @person.name}'s blog", blog_path(@person.blog) %>
-    <%- unless Connection.exists?(@person, current_person) -%>
-      | 
-      <%= link_to "Connect with #{h @person.name}!",
-                  person_connections_path(@person), :method => :post %>
-    <%- end -%>
-    <%- if logged_in? and Connection.connected?(@person, current_person) -%>
-      | <%= h @person.name %> is one of your contacts
-    <%- end -%>
-  <%- end -%>
 
-  <div class="clearfix">
-    <p>
-    <%= image_tag @person.main_photo %>
-    
-    <%= display @person.description %></p>
+
+    <div class="toolbox">
+      <%= image_link @person, :class => "profile-image photo",
+                              :image => "main_photo" %>
+      <ul class="tools">
+        <li>foo</li>
+      </ul>
+    </div>
+
+    <div class="note"><%= display @person.description %></div>
   </div>
-  
   <%= render :partial => 'recent_activity' %>
   <%= render :partial => 'wall' %>
 <%- end -%>
@@ -33,3 +26,4 @@
                :locals => { :person => @person } %>  
   <%- end -%>
 <%- end -%>
+

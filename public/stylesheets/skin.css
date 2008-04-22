@@ -216,24 +216,24 @@ p.welcome {
 
 /* Profile */
 
-.profile .toolbox {
+.person .toolbox {
   clear: left;
   float: left;
   margin: 0 12px 12px 0;
   width: 240px;
 }
-.profile img.photo {
+.person img.photo {
   margin-bottom: 12px;
 }
-.profile .note {
+.person .note {
   margin-left: 252px;
 }
-.profile .toolbox ul {
+.person .toolbox ul {
   background: url(/images/blue-grad.jpg) bottom repeat-x;
   border: 1px solid #ccc;
   width: 238px;
 }
-.profile ul.tools li {
+.person ul.tools li {
   font-size: 12px;
   margin: 6px 6px 6px 2em;
 }
