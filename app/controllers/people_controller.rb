@@ -1,6 +1,7 @@
 class PeopleController < ApplicationController
   
   skip_before_filter :require_activation, :only => :verify
+  skip_before_filter :admin_warning, :only => :show
   before_filter :login_required, :only => [ :edit, :update ]
   before_filter :correct_user_required, :only => [ :edit, :update ]
   before_filter :setup
@@ -74,7 +75,7 @@ class PeopleController < ApplicationController
       redirect_to home_url
     else
       verification.person.deactivated = false; verification.person.save!
-      flash[:success] = "Email verified.  Your profile is active!"
+      flash[:success] = "Email verified. Your profile is active!"
       redirect_to verification.person
     end
   end
@@ -111,7 +112,8 @@ class PeopleController < ApplicationController
   
   def common_contacts
     @person = Person.find(params[:id])
-    @common_connections = @person.common_connections_with(current_person,params[:page])
+    @common_connections = @person.common_connections_with(current_person,
+                                                          params[:page])
     respond_to do |format|
       format.html
     end

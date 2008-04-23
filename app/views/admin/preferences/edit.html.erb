@@ -1,39 +1,50 @@
-<h2>Editing preferences</h2>
+<%- column_div :type => :primary do -%>
+  <h2>Editing preferences</h2>
 
-<%= error_messages_for :preferences %>
+  <%= error_messages_for :preferences %>
 
-<% form_for :preferences,
-            :url => admin_preference_path(@preferences),
-            :html => { :method => :put } do |f| %>
-  <div class="form_row">
-    <b>Email domain</b><br />
-    <%= f.text_field :domain %>
-  </div>
+  <% form_for :preferences,
+              :url => admin_preference_path(@preferences),
+              :html => { :method => :put } do |f| %>
+    <div class="form_row">
+      <label for="domain">Email domain</label>
+      <%= f.text_field :domain %>
+    </div>
 
-  <div class="form_row">
-    <b>Smtp server</b><br />
-    <%= f.text_field :smtp_server %>
-  </div>
+    <div class="form_row">
+      <label for="smtp_server">Smtp server</label>
+      <%= f.text_field :smtp_server %>
+    </div>
 
-  <div class="form_row">
-    <b>Email notifications</b><br />
-    <%= f.check_box :email_notifications %>
-  </div>
+    <p>Send email when messages, connection requests, etc., are sent</p>
+    <div class="form_row">
+      <label for="email_notifications"
+             class="checkbox">Email notifications</label>
+      <%= f.check_box :email_notifications %>
+    </div>
 
-  <div class="form_row">
-    <b>Email verifications</b><br />
-    <%= f.check_box :email_verifications %>
-  </div>
+    <br />
 
-  <div class="form_row">
-    <b>Analytics (will be inserted 
-       just before the <%= h("</body>") %> tag)</b><br />
-    <%= f.text_area :analytics, :rows => 10 %>
-  </div>
+    <p>Verify email for new registrations using an activation code</p>  
+    <div class="form_row">
+      <label for="email_verifications"
+             class="checkbox">Email verifications</label>
+      <%= f.check_box :email_verifications %>
+    </div>
 
-  <div class="form_row">
-    <%= f.submit "Update", :class => "button" %>
-  </div>
-<% end %>
+    <br />
 
-<%= link_to 'Back', admin_preferences_path %>
+    <div class="form_row">
+      <label for="analytics">Analytics (will be inserted 
+         just before the <%= h("</body>") %> tag)</label>
+      <%= f.text_area :analytics, :rows => 10 %>
+    </div>
+
+    <div class="form_row">
+      <%= f.submit "Update", :class => "button" %>
+    </div>
+      or <%= link_to "Cancel", admin_preferences_path %>
+  <% end %>
+
+  <%= link_to 'Back', admin_preferences_path %>
+<%- end -%>
