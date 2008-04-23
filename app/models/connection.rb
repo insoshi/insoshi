@@ -13,6 +13,7 @@
 #
 
 class Connection < ActiveRecord::Base
+  extend ActivityLogger
   extend PreferencesHelper
   
   belongs_to :person
@@ -67,6 +68,7 @@ class Connection < ActiveRecord::Base
         accept_one_side(person, contact, accepted_at)
         accept_one_side(contact, person, accepted_at)
       end
+      log_activity(conn(person, contact))
     end
     
     def connect(person, contact, mail = global_prefs.email_notifications)
@@ -100,12 +102,18 @@ class Connection < ActiveRecord::Base
   
   private
   
-  # Update the db with one side of an accepted connection request.
-  def self.accept_one_side(person, contact, accepted_at)
-    # Sometimes person is just an ID, which fails for the Activity creation.
-    person = Person.find(person) unless person.is_a?(Person)
-    conn = conn(person, contact)
-    conn.update_attributes!(:status => ACCEPTED, :accepted_at => accepted_at)
-    Activity.create!(:item => conn, :person => person)
+  class << self
+    # Update the db with one side of an accepted connection request.
+    def accept_one_side(person, contact, accepted_at)
+      conn = conn(person, contact)
+      conn.update_attributes!(:status => ACCEPTED,
+                              :accepted_at => accepted_at)
+    end
+  
+    def log_activity(conn)
+      activity = Activity.create!(:item => conn, :person => conn.person)
+      add_activities(:activity => activity, :person => conn.person)
+      add_activities(:activity => activity, :person => conn.contact)
+    end
   end
 end

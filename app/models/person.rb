@@ -64,7 +64,7 @@ class Person < ActiveRecord::Base
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
                                             :limit => FEED_SIZE,
-                                            :group => 'activities.id'
+                                            :uniq => true
 
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
@@ -117,7 +117,6 @@ class Person < ActiveRecord::Base
   # converts params[:id] into an int, and in Ruby
   # '1-michael-hartl'.to_i == 1
   def to_param
-    "#{id}-#{name.downcase.split.join('-')}"
     "#{id}-#{name.to_safe_uri}"
   end
 
