@@ -30,6 +30,7 @@ namespace :db do
     desc "Reload sample data"
     task :reload => :environment do |t|
       Rake::Task["db:sample_data:remove"].invoke
+      Rake::Task["install"].invoke
       Rake::Task["db:sample_data:load"].invoke
     end
   end

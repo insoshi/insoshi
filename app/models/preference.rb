@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 17
+# Schema version: 18
 #
 # Table name: preferences
 #
@@ -10,6 +10,7 @@
 #  email_verifications :boolean(1)      not null
 #  created_at          :datetime        
 #  updated_at          :datetime        
+#  analytics           :text            
 #
 
 class Preference < ActiveRecord::Base
