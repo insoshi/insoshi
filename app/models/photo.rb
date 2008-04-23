@@ -19,7 +19,7 @@
 
 class Photo < ActiveRecord::Base
   include ActivityLogger
-  UPLOAD_LIMIT = 5
+  UPLOAD_LIMIT = 5 # megabytes
   
   belongs_to :person
   has_attachment :content_type => :image, 
@@ -29,8 +29,7 @@ class Photo < ActiveRecord::Base
                  :resize_to => '240>',
                  :thumbnails => { :thumbnail    => '72>',
                                   :icon         => '36>',
-                                  :bounded_icon => '36x36>' },
-                 :processor => 'ImageScience'
+                                  :bounded_icon => '36x36>' }
   
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
     
