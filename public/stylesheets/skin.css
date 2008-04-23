@@ -26,8 +26,8 @@ body {
   width: 240px;
 }
 
-body.single-col .col1 {
-/*  margin: 0 210px;*/
+.single-col .col1 {
+  margin: 0 210px;
   width: 324px;
 }
 
