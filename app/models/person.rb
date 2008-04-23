@@ -63,7 +63,8 @@ class Person < ActiveRecord::Base
   end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE, :group => 'activities.id'
+                                            :limit => FEED_SIZE,
+                                            :group => 'activities.id'
 
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
@@ -71,7 +72,7 @@ class Person < ActiveRecord::Base
   validates_length_of       :password, :within => 4..MAX_PASSWORD,
                                        :if => :password_required?
   validates_confirmation_of :password, :if => :password_required?
-  validates_length_of       :email, :within => 3..MAX_EMAIL
+  validates_length_of       :email, :within => 6..MAX_EMAIL
   validates_length_of       :name,  :maximum => MAX_NAME
   validates_format_of       :email,
                             :with => EMAIL_REGEX,
