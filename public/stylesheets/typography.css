@@ -278,3 +278,8 @@ form a.add-recipient {
   top: 30px;
 }
 
+/* Styles for when the site is (nearly) blank, as for new users. */
+
+h3.blankslate {
+  text-align: center;
+}

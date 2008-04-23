@@ -2,12 +2,16 @@
   <h2>Messages</h2>
 
   <%= render :partial => 'message_nav' %>
-
-  <%= will_paginate %>
-  <ul class="list messages full">
-    <%= render :partial => "message", :collection => @messages %>
-  </ul>
-  <%= will_paginate %>
+  
+  <%- if @messages.empty? -%>
+    <h3 class="blankslate">No messages (yet!)</h3>
+  <%- else -%>
+    <%= will_paginate %>
+    <ul class="list messages full">
+      <%= render :partial => "message", :collection => @messages %>
+    </ul>
+    <%= will_paginate %>
+  <%- end -%>
 
 <%- end -%>
 
