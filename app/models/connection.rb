@@ -68,9 +68,7 @@ class Connection < ActiveRecord::Base
         accept_one_side(contact, person, accepted_at)
         # Log a connection activity.
         person = Person.find(person) unless person.is_a?(Person)
-        conn = conn(person, contact)
-        Activity.create!(:item => conn,   :person => person)
-        Activity.create!(:item => person, :person => conn)
+        Activity.create!(:item => conn(person, contact), :person => conctact)
       end
     end
     
@@ -107,7 +105,8 @@ class Connection < ActiveRecord::Base
   
   # Update the db with one side of an accepted connection request.
   def self.accept_one_side(person, contact, accepted_at)
-    conn(person, contact).update_attributes!(:status      => ACCEPTED,
-                                             :accepted_at => accepted_at)
+    conn = conn(person, contact)
+    conn.update_attributes!(:status => ACCEPTED, :accepted_at => accepted_at)
+    Activity.create!(:item => conn, :person => person)
   end
 end
