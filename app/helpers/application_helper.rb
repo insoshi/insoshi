@@ -11,6 +11,7 @@ module ApplicationHelper
     else
       forum = menu_element("Forums", forums_path)
     end
+    resources = menu_element("Resources", "http://docs.insoshi.com/")
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
       messages = menu_element("Messages", messages_path)
@@ -18,7 +19,7 @@ module ApplicationHelper
       photos   = menu_element("Photos",   photos_path)
       contacts = menu_element("Contacts",
                               person_connections_path(current_person))
-      [home, profile, contacts, messages, blog, people, forum]
+      [home, profile, contacts, messages, blog, people, forum, resources]
     elsif logged_in? and admin_view?
       home =    menu_element("Home", admin_home_path)
       people =  menu_element("People", admin_people_path)
@@ -27,7 +28,7 @@ module ApplicationHelper
       preferences = menu_element("Preferences", admin_preferences_path)
       [home, people, forums, preferences]
     else
-      [home, people, forum]
+      [home, people, forum, resources]
     end
   end
   
