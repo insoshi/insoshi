@@ -45,7 +45,6 @@ h3 {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 20px;
   font-weight: normal;
-  margin-left: 6px;
 }
 h3.page-title {
   display: none;
@@ -69,8 +68,10 @@ h6 {
   font-style: italic;
 }
 ul li {
-  list-style-type: disc;
-  margin-left: 2.2em;
+  background: url(/images/bullet.png) top left no-repeat;
+  border: 0;
+  margin: 0 0 .5em 0;
+  padding-left: 24px;
 }
 ol li {
   list-style: decimal;

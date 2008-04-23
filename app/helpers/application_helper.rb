@@ -57,8 +57,18 @@ module ApplicationHelper
   end
   
   # Display text by sanitizing and formatting.
-  def display(text)
-    markdown(sanitize(text))
+  # The formatting is done by Markdown via the BlueCloth gem.
+  # The html_options, if present, allow the syntax
+  #  display("foo", :class => "bar")
+  #  => '<p class="bar">foo</p>'
+  def display(text, html_options = nil)
+    if html_options
+      html_options = html_options.stringify_keys
+      tag_options = tag_options(html_options)
+    else
+      tag_options = nil
+    end
+    markdown(sanitize(text)).gsub("<p>", "<p#{tag_options}>")
   end
   
   # Output a column div.
