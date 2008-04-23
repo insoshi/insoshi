@@ -99,6 +99,8 @@ module ActivitiesHelper
               "new.gif"
             when "Topic"
               "add.gif"
+            when "Photo"
+              "camera.gif"
             else
               # TODO: make this a more graceful falure (?).
               raise "Invalid activity type #{activity_type(activity).inspect}"
