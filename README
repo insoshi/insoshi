@@ -64,12 +64,19 @@ $ git rebase master
 
 ### Config files and tests
 
-Now create the config files and run the tests (which are actually RSpec examples in the spec/ directory):
+Now create the config files:
 
 $ cp config/database.example config/database.yml
 $ cp config/initializers/preferences.rb.example \
      config/initializers/preferences.rb
-$ rake db:migrate:both
+
+Installation itself is handled by a custom Rake task:     
+
+$ rake install
+
+Then run the tests (which are actually RSpec examples in the spec/ directory):
+
+$ rake db:test:prepare
 $ rake spec
 
 (If the tests fail in the Photos controller test, double-check that FreeImage and ImageScience are installed.)
