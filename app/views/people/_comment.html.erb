@@ -5,7 +5,7 @@
   </div>
   <p class="meta published">
     <%= person_link comment.commenter %> said
-    <%= time_ago_in_words(comment.created_at).capitalize %> ago
+    <%= time_ago_in_words(comment.created_at) %> ago
   </p>
   <%= display comment.body %>
 

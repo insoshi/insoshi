@@ -61,6 +61,7 @@ body.single-col .col1 {
   line-height: 36px;
   list-style-type: none;
   margin: 0 0 0 0;
+  padding: 0;
   text-align: center;
   width: 80px;
 }
@@ -109,10 +110,11 @@ p.welcome {
 }
 .list li {
   border-bottom: 1px solid #eee;
+  background: none;
   clear: both;
   display: inline;
   float: left;
-  list-style-type: none;
+  list-style: none;
   margin: 0 0 12px 6px;
   padding: 0 0 6px 0;
   width: 100%;
@@ -130,7 +132,8 @@ p.welcome {
   width: 102px;
 }
 .list.small .profile-image {
-  width: 36px;
+  position: relative;
+  width: 60px;
 }
 .list.small li {
   display: block;
@@ -141,29 +144,29 @@ p.welcome {
 }
 .list.small p {
   font-size: 12px;
-  margin-left: 48px;
+  margin-left: 60px;
 }
 .list.full .profile-image img {
   border: 1px solid #fff;
 }
-.list.full .profile-image img.icon {
+.list .profile-image img.icon {
   position: absolute;
-  right: 6px;
+  right: 3px;
   top: 0;
 }
 
-.list.blog p {
+.blog p {
   margin-left: 0;
   margin-bottom: 1em;
 }
-.list.blog li.post ul {
-  margin-bottom: 2em; 
-  list-style-type: disc;
+.list li ul {
+  margin-bottom: 2em;
 }
-.list.blog li.post ul li {
-  list-style-type: disc;
+.list li ul li {
+  background: url(/images/bullet.png) top left no-repeat;
   border: 0;
-  margin: 0 0 .5em 1em;
+  margin: 0 0 .5em 0;
+  padding-left: 24px;
 }
 
 .list li li.reply {
@@ -182,9 +185,11 @@ p.welcome {
   width: 100%;
 }
 .grid li {
+  background: none;
   display: inline;
   float: left;
   list-style-type: none;
+  padding: 0;
 }
 .col2 .contacts.grid li {
   height: 36px;
@@ -234,8 +239,11 @@ p.welcome {
   width: 238px;
 }
 .profile ul.tools li {
+  background: none;
   font-size: 12px;
+  list-style-type: disc;
   margin: 6px 6px 6px 2em;
+  padding: 0;
 }
 form#blogpost #post_title, form#blogpost #post_body {
   width: 312px;
@@ -254,12 +262,14 @@ form#blogpost #post_title, form#blogpost #post_body {
   width: 100%;
 }
 #message-nav li {
+  background: none;
   float: left;
   font-size: 12px;
   line-height: 24px;
   list-style-type: none;
   margin: 0;
-  text-align:center;
+  text-align: center;
+  padding: 0;
   width: 78px;
 }
 #message-nav li.active a, #message-nav li a:hover {
@@ -303,6 +313,9 @@ form, div, h2, ul, li {zoom: 1;}
 * html .list.blog li.post {
   display: inline;
   width: 440px;
+}
+* html #frmSearch input.txt {
+  width: 130px;
 }
 
 
