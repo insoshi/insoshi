@@ -1,4 +1,3 @@
-# Rescue from the error raised upon first migrating.
 begin
   unless test?
     global_prefs = Preference.find(:first)
@@ -12,5 +11,7 @@ begin
     end
   end
 rescue
+  # Rescue from the error raised upon first migrating
+  # (needed to bootstrap the preferences).
   nil
 end
