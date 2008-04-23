@@ -5,15 +5,19 @@
     <%= image_link activity.person, :image => :thumbnail %>
     <%= feed_icon activity %>
   </div>
-  <p><%= feed_message activity %></p>
+  <p>
+    <%= feed_message activity %>
+      <%- if current_person?(activity.person) -%>
+        <%= link_to(image_tag("icons/close.gif"), 
+                          activity_path(activity), 
+                          :method => :delete, 
+                          :confirm => %(Are you sure you want to delete 
+                                        this activity from your profile?)) %>
+  <%- end -%>
+    </p>
   <p class="meta published">
     <%= time_ago_in_words(activity.created_at).capitalize %> ago
   </p>
-  <%- if current_person?(activity.person) -%>
-    <p><%= link_to(image_tag("icons/close.gif"), 
-                  activity_path(activity), 
-                  :method => :delete, :confirm => "Are you sure you want to delete this activity from your profile?") %>
-    </p>
-  <%- end -%>
+
 </li>
 <%- end -%>
