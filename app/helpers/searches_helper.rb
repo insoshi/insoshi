@@ -3,8 +3,18 @@ module SearchesHelper
   # Return the model to be searched based on params.
   def search_model
     return "Person"    if params[:controller] == "home"
-    return "ForumPost" unless params[:forum_id].nil?
+    return "ForumPost" if params[:controller] == "forums"
     params[:model] || params[:controller].classify
+  end
+  
+  def search_type
+    if params[:controller] == "forums" or params[:model] == "ForumPost"
+      "Forums" 
+    elsif params[:controller] == "messages" or params[:model] == "Message"
+      "Messages"
+    else
+      "People"
+    end
   end
   
   # Return the partial (including path) for the given object.

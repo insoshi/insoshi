@@ -1,4 +1,4 @@
-<h2>Search people</h2>
+<h2>Search <%= search_type %></h2>
 <% form_tag searches_path, :method => :get, :id => "frmSearch" do %>
   <fieldset title="Search Insoshi">
     <%= text_field_tag :q, params[:q], :id => "txtSearch", :class => "txt",
