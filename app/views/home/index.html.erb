@@ -10,5 +10,7 @@
     <%= render :partial => 'messages_preview' %>
     <%= render :partial => 'shared/contacts_preview',
                :locals => { :person => current_person } %>
+  <%- else -%>
+    <h2>About Insoshi</h2>
   <%- end -%>
 <%- end -%>

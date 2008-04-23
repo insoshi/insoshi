@@ -16,4 +16,9 @@ class Activity < ActiveRecord::Base
   belongs_to :person
   belongs_to :item, :polymorphic => true
   has_many :feeds
+
+  # Return a feed drawn from all activities.
+  def self.global_feed
+    find(:all, :order => 'created_at DESC', :limit => 10)
+  end
 end

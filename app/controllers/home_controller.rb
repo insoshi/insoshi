@@ -11,8 +11,7 @@ class HomeController < ApplicationController
       @requested_contacts = current_person.requested_contacts
     else
       # TODO: make a helper for this
-      @feed = Activity.find(:all, :order => 'created_at DESC',
-                                  :limit => 10)
+      @feed = Activity.global_feed
     end    
     respond_to do |format|
       format.html
