@@ -33,6 +33,8 @@ module ActivitiesHelper
     when "Topic"
       %(#{person_link(person)} created the new discussion topic
         #{topic_link(activity.item)}.)
+    when "Photo"
+      %(#{person_link(person)} changed their profile picture)
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -71,6 +73,8 @@ module ActivitiesHelper
     when "Topic"
       %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", activity.item)}.)
+    when "Photo"
+      %(#{person_link(person)} changed their profile picture)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end

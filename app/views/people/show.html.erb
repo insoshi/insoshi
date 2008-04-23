@@ -1,8 +1,6 @@
 <%- column_div :type => :primary do -%>
-  
   <div class="profile vcard">
     <h2>Profile: <span class="fn n"><%= h @person.name %></span></h2>
-
     <div class="toolbox">
       <%= image_link @person, :class => "profile-image photo",
                               :image => "main_photo" %>
@@ -26,9 +24,9 @@
         </ul>
       <%- end -%>
     </div>
-
-    <div class="note"><%= display @person.description %></div>
+    <%= display @person.description, :class => "note" %>
   </div>
+
   <%= render :partial => 'recent_activity' %>
   <%= render :partial => 'wall' %>
 <%- end -%>
@@ -37,7 +35,8 @@
   <%= render :partial => 'shared/minifeed' %>
   <%- if Connection.connected?(@person, current_person) -%>
     <%= render :partial => 'shared/contacts_preview',
-               :locals => { :person => @person } %>  
+               :locals => { :person => @person } %>
+    <%= render :partial => 'common_contacts' %>
   <%- end -%>
 <%- end -%>
 

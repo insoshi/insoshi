@@ -1,18 +1,7 @@
 module PeopleHelper
 
-  def image_links(people, options = {})
-    image = options[:image] || :icon
-    links = options[:links] || people
-    captions = options[:captions]
-    images = people.zip(links).map do |person, link|
-               image_link(person, :link => link, :image => image)
-             end
-    if captions.nil?
-      images
-    else
-      captions = captions.zip(links).map { |c, l| link_to(c, l) } 
-      captioned(images, captions)
-    end
+  def message_links(people)
+    people.map { |p| email_link(p)}
   end
 
   # Return a person's image link.
@@ -53,7 +42,7 @@ module PeopleHelper
     # activities_helper_spec due to an RSpec bug.
     link_to(h(text), person_path(person), html_options)
   end
-  
+    
   private
     
     # Make captioned images.

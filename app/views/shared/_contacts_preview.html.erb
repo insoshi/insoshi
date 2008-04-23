@@ -7,9 +7,8 @@
                                 :link_options =>  { :class => "url" }) %>
       </li>
     <%- end -%>
+    <li class="more">
+      <%= link_to "All contacts &raquo;", person_connections_path(person) %>
+    </li>
   </ul>
-
-<div class="see_all">
-  <%= link_to "All contacts &raquo;", person_connections_path(person) %>
-</div>
 <%- end -%>

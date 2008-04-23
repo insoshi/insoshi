@@ -71,6 +71,7 @@ describe Person do
       admin = people(:admin)
       person.contacts.first.should == admin
     end
+    
   end
   
   describe "associations" do
@@ -91,6 +92,18 @@ describe Person do
       @person.contacts.should == [@contact]
       @contact.contacts.should == [@person]
     end
+    
+    it "should have common contacts with someone" do
+      quentin = people(:quentin)
+      aaron = people(:aaron)
+      kelly = people(:kelly)
+      Connection.request(quentin, aaron)
+      Connection.accept(quentin, aaron)      
+      Connection.request(kelly, aaron)
+      Connection.accept(kelly, aaron)      
+      quentin.common_connections_with(kelly).size.should == 1
+    end
+
   end
   
   describe "photo methods" do

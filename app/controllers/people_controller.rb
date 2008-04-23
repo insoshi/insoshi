@@ -14,8 +14,11 @@ class PeopleController < ApplicationController
   end
   
   def show
-    @person = Person.find(params[:id])
+    @person = Person.find(params[:id], :include => :activities)
     @contacts = @person.some_contacts
+    if logged_in?
+      @common_connections = current_person.common_connections_with(@person)
+    end
     if @person.deactivated?
       flash[:error] = "That person has been deactivated"
       redirect_to home_url and return
@@ -103,6 +106,14 @@ class PeopleController < ApplicationController
           format.html { render :action => "edit" }
         end
       end
+    end
+  end
+  
+  def common_contacts
+    @person = Person.find(params[:id])
+    @common_connections = @person.common_connections_with(current_person,params[:page])
+    respond_to do |format|
+      format.html
     end
   end
   

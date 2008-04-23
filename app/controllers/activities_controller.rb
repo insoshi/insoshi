@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
-  
-  before_filter :not_implemented
-  
+
+  before_filter :not_implemented, :except => [:destroy]
+
   # GET /activities
   # GET /activities.xml
   def index
@@ -78,10 +78,13 @@ class ActivitiesController < ApplicationController
   # DELETE /activities/1.xml
   def destroy
     @activity = Activity.find(params[:id])
-    @activity.destroy
+    if current_person? @activity.person
+      @activity.destroy
+      flash[:success] = "Activity deleted"
+    end
 
     respond_to do |format|
-      format.html { redirect_to(activities_url) }
+      format.html { redirect_to(person_url(current_person)) }
       format.xml  { head :ok }
     end
   end

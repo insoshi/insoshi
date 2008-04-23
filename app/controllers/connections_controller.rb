@@ -53,7 +53,7 @@ class ConnectionsController < ApplicationController
     
     respond_to do |format|
       flash[:success] = "Ended connection with #{@connection.contact.name}"
-      format.html { redirect_to(home_url) }
+      format.html { redirect_to( person_connections_url(current_person)) }
     end
   end
 

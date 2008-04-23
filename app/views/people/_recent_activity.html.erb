@@ -2,6 +2,7 @@
   <h2>Recent Activity</h2>
   <ul class="list activity full">
      <%= render :partial => 'shared/activity',
-                :collection => @person.recent_activity %>
+                :collection => @person.recent_activity,
+                :locals => { :destroy => (current_person? @person) } %>
   </ul>
 <%- end -%>

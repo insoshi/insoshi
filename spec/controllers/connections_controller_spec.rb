@@ -54,7 +54,7 @@ describe ConnectionsController do
   
     it "should end a connection" do
       delete :destroy, :id => @connection
-      response.should redirect_to(home_url)
+      response.should redirect_to(person_connections_url(@person))
     end
   end  
 end
