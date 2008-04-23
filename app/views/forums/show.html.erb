@@ -6,14 +6,16 @@
   </ol>
   <%= will_paginate(@topics) %>
   
-  <h2>Add new topic</h2>
+  <%- if logged_in? -%>
+    <h2>Add new topic</h2>
   
-  <% form_for :topic, :url => forum_topics_path(@forum) do |f| %>
-    <div class="form_row">
-      <%= f.text_field :name %>
-      <%= submit_tag "Submit", :class => "button" %>
-    </div>
-  <% end %>
+    <% form_for :topic, :url => forum_topics_path(@forum) do |f| %>
+      <div class="form_row">
+        <%= f.text_field :name %>
+        <%= submit_tag "Submit", :class => "button" %>
+      </div>
+    <% end %>
+  <%- end -%>
 
 <%- end -%>
 
