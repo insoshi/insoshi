@@ -25,7 +25,6 @@ body {
   float: right;
   width: 240px;
 }
-
 .single-col .col1 {
   margin: 0 210px;
   width: 324px;
@@ -50,9 +49,6 @@ body {
   margin: 44px 0 0 0;
   width: 560px;
   float: right;
-  /*position: absolute;
-  right: 0;
-  bottom: 0;  */
 }
 #nav li {
   background: #069 url(/images/header-grad.jpg) bottom repeat-x;
@@ -88,7 +84,7 @@ body {
   clear: both;
   margin-top: 48px;
   padding: 24px 0;
-  width: 100%;
+  width: 744px;
   
 }
 
@@ -317,5 +313,7 @@ form, div, h2, ul, li {zoom: 1;}
 * html #frmSearch input.txt {
   width: 130px;
 }
-
-
+* html .single-col .col1 {
+  margin: 0 105px;
+  width: 324px;
+}
