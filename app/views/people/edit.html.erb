@@ -15,7 +15,11 @@
       </div>
   
       <div class="form_row">
-        <label for="person_description">Description</label>
+        <label for="person_description">Description
+          (<%= link_to "Markdown formatting",
+                      "http://daringfireball.net/projects/markdown/basics" %>
+           supported)
+        </label>
         <%= f.text_area :description %>
       </div>
 
