@@ -20,4 +20,4 @@ tmp/.*
 \#*
 *~
 vendor/**/**/doc/*
-
+rsa_key*
