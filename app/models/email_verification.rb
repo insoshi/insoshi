@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 18
+# Schema version: 19
 #
 # Table name: email_verifications
 #
@@ -13,7 +13,7 @@
 class EmailVerification < ActiveRecord::Base
   belongs_to :person
   validates_presence_of :person_id, :code
-  before_validation :make_code
+  before_validation_on_create :make_code
   after_create :send_verification_email
   
   private

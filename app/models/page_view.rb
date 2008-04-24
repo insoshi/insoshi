@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 18
+# Schema version: 19
 #
 # Table name: page_views
 #

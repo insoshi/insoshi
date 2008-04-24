@@ -7,15 +7,17 @@
 
   <div class="form_row">
     <label for="email">
-      Email address (never made
-      public<%= ", will be verified" if global_prefs.email_verifications? %>)  
+      Email address <span class="small">(never made
+      public<%= ", will be verified" if global_prefs.email_verifications? %>)
+      </span>
     </label>
     <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
     <%= set_focus_to_id "person_email" %>  
   </div>
 
   <div class="form_row">
-    <label for="name">Name (will be displayed)</label>
+    <label for="name">Name 
+      <span class="small">(will be displayed)</span></label>
     <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
   </div>
 
