@@ -40,6 +40,7 @@ class Admin::PreferencesController < ApplicationController
     # The server needs to be restarted if the email settings change.
     def server_restart?(old_preferences)
       old_preferences.smtp_server  != @preferences.smtp_server or 
-      old_preferences.domain != @preferences.domain
+      old_preferences.domain != @preferences.domain or
+      old_preferences.server_name != @preferences.server_name
     end
 end

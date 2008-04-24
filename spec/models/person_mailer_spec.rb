@@ -82,8 +82,8 @@ describe PersonMailer do
        @email.body.should =~ /#{url}/
      end
 
-     it "should have the right domain in the body" do
-       @email.body.should =~ /#{@preferences.domain}/
+     it "should have the right server name in the body" do
+       @email.body.should =~ /#{@preferences.server_name}/
      end
    end
 end

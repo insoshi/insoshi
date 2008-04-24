@@ -15,7 +15,8 @@ describe ForumsController do
   
   it "should show the forums if there are more than one forum" do
     Forum.create(:name => "Foo bar")
-    get :index
-    response.should be_success
+    lambda do
+      get :index
+    end.should raise_error("NotImplementedError")
   end
 end

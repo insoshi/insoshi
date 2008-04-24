@@ -31,6 +31,7 @@ class PersonMailer < ActionMailer::Base
     from         "Email verification <email@#{domain}>"
     recipients   ev.person.email
     subject      "Email verification"
-    body         "domain" => domain, "code" => ev.code
+    body         "server_name" => PersonMailer.global_prefs.server_name,
+                 "code" => ev.code
   end
 end
