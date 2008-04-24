@@ -249,7 +249,7 @@ class Person < ActiveRecord::Base
 
   def unencrypted_password
     # The gsub trickery is to unescape the key from the DB.
-    decrypt(crypted_password).gsub(/\\n/, "\n")
+    decrypt(crypted_password)#.gsub(/\\n/, "\n")
   end
 
   def remember_token?

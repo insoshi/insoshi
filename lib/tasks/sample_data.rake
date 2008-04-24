@@ -81,7 +81,7 @@ def make_messages(text)
 end
 
 def make_forum_posts
-  forum = Forum.find(1)
+  forum = Forum.find(:first)
   people = [default_person] + default_person.contacts
   (1..11).each do |n|
     name = some_text(rand(Topic::MAX_NAME))
