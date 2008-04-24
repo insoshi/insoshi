@@ -28,9 +28,11 @@ class PersonMailer < ActionMailer::Base
   end
   
   def email_verification(ev)
+    name = PersonMailer.global_prefs.app_name
+    label = name.nil? || name.blank? ? "" : "[#{name}] "
     from         "Email verification <email@#{domain}>"
     recipients   ev.person.email
-    subject      "Email verification"
+    subject      "#{label}Email verification"
     body         "server_name" => PersonMailer.global_prefs.server_name,
                  "code" => ev.code
   end

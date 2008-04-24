@@ -6,6 +6,12 @@
   <% form_for :preferences,
               :url => admin_preference_path(@preferences),
               :html => { :method => :put } do |f| %>
+              
+    <div class="form_row">
+      <label for="app_name">Application name</label>
+      <%= f.text_field :app_name %>
+    </div>
+    
     <div class="form_row">
       <label for="domain">Email domain</label>
       <%= f.text_field :domain %>
