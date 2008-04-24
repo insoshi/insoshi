@@ -1,5 +1,7 @@
 <%- column_div :type => :primary do -%>
-  <%= render :partial => 'feed' %>
+  <%- cache(:controller => "home", :action => "index", :part => "feed") do -%>
+    <%= render :partial => 'feed' %>
+  <%- end -%>
   <%# render :partial => 'members_preview' %>
 <%- end -%>
 
