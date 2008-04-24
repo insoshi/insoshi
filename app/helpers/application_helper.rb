@@ -79,37 +79,11 @@ module ApplicationHelper
   # The LEFT, RIGHT, and FULL constants are defined in 
   # config/initializers/global_constants.rb
   def column_div(options = {}, &block)
-    t = options.delete(:type)
-    # if t.nil?
-    #   width = options.delete(:width)
-    #   order = options.delete(:order)
-    #   klass = "column #{order} span-#{width}"
-    # else
-    #   case t
-    #   when :primary
-    #     width = LEFT
-    #     order = "first"
-    #   when :secondary
-    #     width = RIGHT
-    #     order = "last"
-    #   when :full
-    #     width = FULL
-    #     order = "first last"
-    #   else
-    #     raise ArgumentError
-    #   end
-    #   klass = "column #{order} span-#{width}"
-    # end
-    klass = t == :primary ? "col1" : "col2"
+    klass = options[:type] == :primary ? "col1" : "col2"
     # Allow callers to pass in additional classes.
     options[:class] = "#{klass} #{options[:class]}".strip
     content = content_tag(:div, capture(&block), options)
     concat(content, block.binding)
-  end
-
-  # TODO: polish these & move them somewhere
-  def name_link(person, options = {})
-     link_to h(person.name), person, options
   end
 
   def email_link(person, options = {})
