@@ -1,7 +1,0 @@
-div {
-  ul {
-    li 'one'
-    li 'two'
-    li supercalifragilisticexpialidocious
-  }
-}
