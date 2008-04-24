@@ -19,8 +19,12 @@ class SessionsController < ApplicationController
           :value => self.current_person.remember_token, 
           :expires => self.current_person.remember_token_expires_at }
       end
-      redirect_back_or_default('/')
-      flash[:success] = "Logged in successfully"
+      if current_person.deactivated?
+        destroy
+      else
+        flash[:success] = "Logged in successfully"
+        redirect_back_or_default('/')
+      end
     else
       @body = "login single-col"
       flash.now[:error] = "Invalid email/password combination"
