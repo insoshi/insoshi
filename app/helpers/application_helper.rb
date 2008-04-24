@@ -21,7 +21,7 @@ module ApplicationHelper
                               person_connections_path(current_person))
       [home, profile, contacts, messages, blog, people, forum, resources]
     elsif logged_in? and admin_view?
-      home =    menu_element("Home", admin_home_path)
+      home =    menu_element("Home", home_path)
       people =  menu_element("People", admin_people_path)
       forums =  menu_element(inflect("Forum", Forum.count),
                              admin_forums_path)
