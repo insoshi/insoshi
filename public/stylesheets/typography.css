@@ -283,3 +283,14 @@ form a.add-recipient {
 h3.blankslate {
   text-align: center;
 }
+
+
+/* Tables
+-------------------------------------------------------------- */
+
+table       { margin-bottom: 1.4em; width:100%; }
+th          { font-weight: bold; background: #C3D9FF; }
+th,td       { padding: 4px 10px 4px 5px; }
+tr.even td  { background: #E5ECF9; }
+tfoot       { font-style: italic; }
+caption     { background: #eee; }

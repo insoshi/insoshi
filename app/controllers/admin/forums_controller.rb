@@ -1,18 +1,21 @@
 class Admin::ForumsController < ApplicationController
 
   before_filter :login_required, :admin_required, :setup
+  before_filter :protect_last_forum, :only => :destroy
+  
 
   def index
     @forums = Forum.find(:all)
-
     respond_to do |format|
       format.html
     end
   end
 
   def show
-    raise "fix me"
-    redirect_to admin_forum_topics_url(params[:id])
+    @forum = Forum.find(params[:id])
+    respond_to do |format|
+      format.html { redirect_to @forum }
+    end
   end
 
   def new
@@ -66,6 +69,13 @@ class Admin::ForumsController < ApplicationController
   private
 
     def setup
-      @body = "forums"
+      @body = "forum"
+    end
+    
+    def protect_last_forum
+      if Forum.count == 1
+        flash[:error] = "There must be at least one forum."
+        redirect_to admin_forums_url
+      end
     end
 end

@@ -79,7 +79,7 @@ module ApplicationHelper
   # The LEFT, RIGHT, and FULL constants are defined in 
   # config/initializers/global_constants.rb
   def column_div(options = {}, &block)
-    klass = options[:type] == :primary ? "col1" : "col2"
+    klass = options.delete(:type) == :primary ? "col1" : "col2"
     # Allow callers to pass in additional classes.
     options[:class] = "#{klass} #{options[:class]}".strip
     content = content_tag(:div, capture(&block), options)

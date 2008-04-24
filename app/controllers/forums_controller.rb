@@ -23,5 +23,4 @@ class ForumsController < ApplicationController
     def setup
       @body = "forum"
     end
-
 end
