@@ -81,4 +81,9 @@ Spec::Runner.configure do |config|
     person.save!
     person
   end
+
+  # This is needed to get RSpec to understand link_to(..., person).
+  def polymorphic_path(args)
+    "http://a.fake.url"
+  end
 end

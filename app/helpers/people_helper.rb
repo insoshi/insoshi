@@ -40,7 +40,7 @@ module PeopleHelper
     end
     # We normally write link_to(..., person) for brevity, but that breaks
     # activities_helper_spec due to an RSpec bug.
-    link_to(h(text), person_path(person), html_options)
+    link_to(h(text), person, html_options)
   end
     
   private
