@@ -3,9 +3,9 @@
 #
 # Table name: comments
 #
-#  id               :integer(11)     not null, primary key
-#  commenter_id     :integer(11)     
-#  commentable_id   :integer(11)     
+#  id               :integer         not null, primary key
+#  commenter_id     :integer         
+#  commentable_id   :integer         
 #  commentable_type :string(255)     default(""), not null
 #  body             :text            
 #  created_at       :datetime        

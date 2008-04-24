@@ -3,7 +3,7 @@
 #
 # Table name: people
 #
-#  id                        :integer(11)     not null, primary key
+#  id                        :integer         not null, primary key
 #  email                     :string(255)     
 #  name                      :string(255)     
 #  remember_token            :string(255)     
@@ -12,13 +12,13 @@
 #  remember_token_expires_at :datetime        
 #  last_contacted_at         :datetime        
 #  last_logged_in_at         :datetime        
-#  forum_posts_count         :integer(11)     default(0), not null
-#  blog_post_comments_count  :integer(11)     default(0), not null
-#  wall_comments_count       :integer(11)     default(0), not null
+#  forum_posts_count         :integer         default(0), not null
+#  blog_post_comments_count  :integer         default(0), not null
+#  wall_comments_count       :integer         default(0), not null
 #  created_at                :datetime        
 #  updated_at                :datetime        
-#  admin                     :boolean(1)      not null
-#  deactivated               :boolean(1)      not null
+#  admin                     :boolean         not null
+#  deactivated               :boolean         not null
 #
 
 class Person < ActiveRecord::Base
@@ -249,7 +249,7 @@ class Person < ActiveRecord::Base
 
   def unencrypted_password
     # The gsub trickery is to unescape the key from the DB.
-    decrypt(crypted_password.gsub(/\\n/, "\n"))
+    decrypt(crypted_password).gsub(/\\n/, "\n")
   end
 
   def remember_token?

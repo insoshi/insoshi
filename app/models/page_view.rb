@@ -3,8 +3,8 @@
 #
 # Table name: page_views
 #
-#  id          :integer(11)     not null, primary key
-#  user_id     :integer(11)     
+#  id          :integer         not null, primary key
+#  user_id     :integer         
 #  request_url :string(200)     
 #  session     :string(32)      
 #  ip_address  :string(16)      

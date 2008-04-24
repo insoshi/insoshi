@@ -3,10 +3,10 @@
 #
 # Table name: forums
 #
-#  id           :integer(11)     not null, primary key
+#  id           :integer         not null, primary key
 #  name         :string(255)     
 #  description  :text            
-#  topics_count :integer(11)     default(0), not null
+#  topics_count :integer         default(0), not null
 #  created_at   :datetime        
 #  updated_at   :datetime        
 #

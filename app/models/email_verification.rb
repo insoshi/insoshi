@@ -3,8 +3,8 @@
 #
 # Table name: email_verifications
 #
-#  id         :integer(11)     not null, primary key
-#  person_id  :integer(11)     
+#  id         :integer         not null, primary key
+#  person_id  :integer         
 #  code       :string(255)     
 #  created_at :datetime        
 #  updated_at :datetime        

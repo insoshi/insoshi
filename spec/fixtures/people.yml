@@ -1,8 +1,11 @@
+# Amazingly, the call to 'inspect' makes the db insertion work.
+<% password = Person.encrypt('test').inspect %>
+
 quentin:
   email: quentin@example.com
   name: Quentin
   description: I'm Quentin
-  crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
+  crypted_password: <%= password %>
   created_at: <%= 5.days.ago.to_s :db %>
   last_logged_in_at: <%= 1.day.ago.to_s :db %>
   deactivated: false
@@ -11,7 +14,7 @@ aaron:
   email: aaron@example.com
   name: Aaron
   description: I'm Aaron
-  crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
+  crypted_password: <%= password %>
   created_at: <%= 1.day.ago.to_s :db %>
   deactivated: false
 
@@ -19,7 +22,7 @@ kelly:
   email: kelly@example.com
   name: Kelly
   description: I'm Kelly
-  crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
+  crypted_password: <%= password %>
   created_at: <%= 1.day.ago.to_s :db %>
   deactivated: false
   
@@ -28,6 +31,6 @@ admin:
   name: admin
   description: I'm the admin!
   admin: true
-  crypted_password: TWnnx/+SvCoLEP2kkTEAyrrg3dBRdqfWFUaqo0KEGenEIatA53w/rVgVSvKA\n09SkwWkLynTghL93GAILQzXOdXkVGr6EQEOScOMaUVDdABHkh65/+fJWkRBO\nvzIJ8NrxKAJZYZF015wnlP0vGZBqEYg+yesLZkQVeB1PzWefFrs=\n
+  crypted_password: <%= password %>
   created_at: <%= 5.days.ago.to_s :db %>
   deactivated: false

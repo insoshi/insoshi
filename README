@@ -76,7 +76,6 @@ $ rake install
 
 Then run the tests (which are actually RSpec examples in the spec/ directory):
 
-$ rake db:test:prepare
 $ rake spec
 
 (If the tests fail in the Photos controller test, double-check that FreeImage and ImageScience are installed.)
