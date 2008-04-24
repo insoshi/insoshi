@@ -1,8 +1,11 @@
 <%- column_div :type => :primary do -%>
-  <%- cache(:controller => "home", :action => "index", :part => "feed") do -%>
+  <%- if logged_in? -%>
     <%= render :partial => 'feed' %>
+  <%- else -%>
+    <%- cache(:part => "feed") do -%>
+      <%= render :partial => 'feed' %>
+    <%- end -%>
   <%- end -%>
-  <%# render :partial => 'members_preview' %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>

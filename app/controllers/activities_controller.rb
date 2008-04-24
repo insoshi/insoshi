@@ -1,6 +1,7 @@
 class ActivitiesController < ApplicationController
 
   before_filter :not_implemented, :except => [:destroy]
+  before_filter :authorize_user, :only => :destroy
 
   # GET /activities
   # GET /activities.xml
@@ -78,10 +79,8 @@ class ActivitiesController < ApplicationController
   # DELETE /activities/1.xml
   def destroy
     @activity = Activity.find(params[:id])
-    if current_person? @activity.person
-      @activity.destroy
-      flash[:success] = "Activity deleted"
-    end
+    @activity.destroy
+    flash[:success] = "Activity deleted"
 
     respond_to do |format|
       format.html { redirect_to(person_url(current_person)) }
@@ -89,8 +88,18 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  def not_implemented
-    flash[:error] = "Not implemented"
-    redirect_to home_url
-  end
+
+  private
+
+    def not_implemented
+      flash[:error] = "Not implemented"
+      redirect_to home_url
+    end
+
+    def authorize_user
+      unless current_person?(activity.person)
+        redirect_to home_url
+      end
+    end
+
 end
