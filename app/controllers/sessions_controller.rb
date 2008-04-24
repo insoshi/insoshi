@@ -11,6 +11,10 @@ class SessionsController < ApplicationController
     self.current_person = Person.authenticate(params[:email],
                                               params[:password])
     if logged_in?
+      # First admin logins should forward to preferences
+      if current_person.last_logged_in_at.nil? and current_person.admin?
+        @first_admin_login = true
+      end
       current_person.last_logged_in_at = Time.now
       current_person.save!
       if params[:remember_me] == "1"
@@ -23,7 +27,11 @@ class SessionsController < ApplicationController
         destroy
       else
         flash[:success] = "Logged in successfully"
-        redirect_back_or_default('/')
+        if @first_admin_login
+          redirect_to admin_preferences_url
+        else
+          redirect_back_or_default('/')
+        end
       end
     else
       @body = "login single-col"
