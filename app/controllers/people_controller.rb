@@ -1,7 +1,7 @@
 class PeopleController < ApplicationController
   
   skip_before_filter :require_activation, :only => :verify
-  skip_before_filter :admin_warning, :only => :show
+  skip_before_filter :admin_warning, :only => [ :show, :update ]
   before_filter :login_required, :only => [ :edit, :update ]
   before_filter :correct_user_required, :only => [ :edit, :update ]
   before_filter :setup
