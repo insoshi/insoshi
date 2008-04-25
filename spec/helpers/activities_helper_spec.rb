@@ -11,12 +11,33 @@ describe ActivitiesHelper do
   end
   
   it "should have the right message for a wall comment" do
-    person = people(:quentin)
+    # Quentin comments an Aaron's wall
+    person = @current_person
+    commenter = people(:quentin)
     comment = person.comments.create(:body => "The body",
-                                     :commenter => @current_person)
+                                     :commenter => commenter)
     activity = Activity.find_by_item_id(comment)
+    # The message works even if logged in as Kelly.
+    login_as(:kelly)
+    feed_message(activity).should =~ /#{commenter.name}/
+    feed_message(activity).should =~ /#{person.name}'s wall/
+    # The message works even if logged in as the commenter
+    login_as(commenter)
+    feed_message(activity).should =~ /#{commenter.name}/
     feed_message(activity).should =~ /#{person.name}'s wall/
   end
+
+  it "should have the right message for an own-comment" do
+    person = @current_person
+    commenter = person
+    comment = person.comments.create(:body => "The body",
+                                     :commenter => commenter)
+    activity = Activity.find_by_item_id(comment)
+    login_as(:kelly)
+    feed_message(activity).should =~ /#{commenter.name}/
+    feed_message(activity).should =~ /their own wall/
+  end
+  
   
   it "should have the right message for a blog comment" do
     post = posts(:blog_post)

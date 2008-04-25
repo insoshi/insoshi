@@ -58,12 +58,13 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        %(#{person_link(person)} made a comment on 
-         #{someones(blog.person, person)}
-         #{post_link("blog post", post.blog, post)})
+        %(#{person_link(person)} made a comment to
+           #{someones(blog.person, person)}
+           blog post #{post_link(blog, post)}.)
+        %(#{person_link(person)} made a comment on #{someones(pblog.person)} 
+          #{post_link("blog post", post.blog, post)})
       when "Person"
-        %(#{person_link(activity.item.commenter)} commented on 
-          #{wall(activity)})
+        %(#{person_link(activity.item.commenter)} commented on #{wall(parent)})
       end
     when "Connection"
       %(#{person_link(person)} and #{person_link(activity.item.contact)}
