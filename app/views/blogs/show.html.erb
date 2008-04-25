@@ -4,7 +4,9 @@
   <%- if @posts.empty? -%>
     <h3 class="blankslate">
       No posts yet!
-      <%= link_to "Write a post", new_blog_post_path(@blog) %>
+      <%- if current_person?(@blog.person) -%>
+        <%= link_to "Write a post", new_blog_post_path(@blog) %>
+      <%- end -%>
     </h3>
   <%- else -%>
     <ul class="list blog full">
