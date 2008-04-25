@@ -4,7 +4,8 @@ body {
   text-align: center;
 }
 #header-wrap {
-  background: #069;
+  /* background: #069; */
+  background: #069 url('/images/header_background.png');
   float: left;
   width: 100%;
 }
