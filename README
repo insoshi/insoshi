@@ -6,15 +6,19 @@ http://groups.google.com/group/insoshi/subscribe
 
 Then get started with Insoshi.  If you encounter problems, be sure to refer to the Insoshi wiki at http://docs.insoshi.com, which expands on some of the points here.
 
-NOTE: We're currently working on updating our Trac wiki to reflect the Insoshi repository (http://github.com/insoshi/insoshi) hosted on GitHub (http://github.com)
-
 ## Get Git
 
-The source code to Insoshi is hosted by Git, a version control system developed by Linus Torvalds to host the Linux kernel.  The first step is to install it from here:
+The source code to Insoshi is managed via Git, a version control system developed by Linus Torvalds to host the Linux kernel.  
+
+The first step is to install it from here:
 
 http://git.or.cz/
 
 Linux and Mac users should have no problems; Windows users might have to install Cygwin (http://cygwin.com/) first.
+
+For more detailed information, check out our guide for Installing Git under Git Guides at
+
+http://docs.insoshi.com
 
 ## Install libraries and gems
 
@@ -29,8 +33,9 @@ You probably have Rails already, but might not have the others.
 $ sudo gem install rails
 $ sudo gem install image_science
 $ sudo gem install ferret
-$ sudo gem install mysql
+$ sudo gem install BlueCloth
 $ sudo gem install sqlite3-ruby
+$ sudo gem install mysql
 
 ## Installing the app
 
@@ -38,49 +43,50 @@ Here are the steps to get up and running with the Insoshi Rails app.
 
 ### Git steps
 
-The repository is large enough (mainly due to the frozen Rails gems) that it may take a while to finish the first step, which is to clone the repository:
+Our public Git repository is hosted on GitHub and can be viewed at
 
-$ git clone git://git.insoshi.com/insoshi.git
+http://github.com/insoshi/insoshi
 
-Then make a Git branch for yourself:
+You can clone the the repository with the command
 
-$ git checkout -b <firstname_lastname>
+$ git clone git://github.com/insoshi/insoshi.git
 
-where you should replace <firstname_lastname> with your name (without angle brackets!).  
+The clone make take a moment to complete (mainly due to the frozen Rails gems).
 
-At some later point, follow the steps at
+Then make a local Git branch for yourself:
 
-http://trac.insoshi.com/insoshi/wiki/ContributingBack
+$ git checkout -b <local_branch>
 
-Also be sure to get in the habit of syncing with the main repository:
+where you should replace <local_branch> with the name of your choice (without angle brackets!).  
 
-$ git add .
-$ git commit -v
-$ git checkout master
-$ git pull
-$ git checkout <firstname_lastname>
-$ git rebase master
+For more information on configuring your local clone of our repository, check out our Git Guides at
+
+http://docs.insoshi.com
+
+which also includes a scripted Quick Local Repository Setup.
 
 ### Config files and tests
 
-Now create the config files:
+You will to set up your database configuration.  If you're using SQLite, you can just copy the example file
 
 $ cp config/database.example config/database.yml
-$ cp config/initializers/preferences.rb.example \
-     config/initializers/preferences.rb
 
-Installation itself is handled by a custom Rake task:     
+If you're using MySQL, you'll need to create a configure the database.yml manually.  The easiest way is to copy and modify one from an existing Rails application or from a new Rails project that explicitly uses MySQL (rails -d mysql <mysql project>).
+
+Run the following custom rake task
 
 $ rake install
 
-Then run the tests (which are actually RSpec examples in the spec/ directory):
+The install rake task runs the database migration and performs some additional setup tasks (generate an encryption keypair for password management, creating an admin account, etc.)
+
+If the install step fails, you may not have properly set up the configuration files.
+
+Then prepare the test database and run the tests (which are actually RSpec examples in the spec/ directory):
 
 $ rake db:test:prepare
 $ rake spec
 
-(If the tests fail in the Photos controller test, double-check that FreeImage and ImageScience are installed.)
-
-The migration creates an admin user with password "admin".
+If the tests fail in the Photos controller test, double-check that FreeImage and the image_science gem are installed.
 
 ### Loading sample data
 
@@ -96,7 +102,22 @@ Go to http://localhost:3000 and log in as follows:
 email: michael@example.com
 password: foobar
 
+### Admin user
+
+To sign in as the pre-configured admin user, use
+
+email: admin@example.com
+password: admin
+
+You should update the email address and password.  Insoshi will display warning messages to remind you to do that.
+
+### Start hacking
+
 Now open the source code with your favorite editor and start hacking!
+
+Check out our Git Guides for information on how to manage your local development and how you can contribute your updates back to us:
+
+http://docs.insoshi.com
 
 ## Stat tracker
 
