@@ -78,7 +78,6 @@ class ActivitiesController < ApplicationController
   # DELETE /activities/1
   # DELETE /activities/1.xml
   def destroy
-    @activity = Activity.find(params[:id])
     @activity.destroy
     flash[:success] = "Activity deleted"
 
@@ -97,7 +96,8 @@ class ActivitiesController < ApplicationController
     end
 
     def authorize_user
-      unless current_person?(activity.person)
+      @activity = Activity.find(params[:id])
+      unless current_person?(@activity.person)
         redirect_to home_url
       end
     end

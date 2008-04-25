@@ -18,9 +18,11 @@ module ActivitiesHelper
         post = activity.item.commentable
         blog = post.blog
         %(#{person_link(person)} made a comment to
-           #{someones(blog.person)} blog post #{post_link(blog, post)}.)
+           #{someones(blog.person, person)}
+           blog post #{post_link(blog, post)}.)
       when "Person"
-        %(#{person_link(activity.item.commenter)} commented on #{wall(parent)})
+        %(#{person_link(activity.item.commenter)} commented on 
+          #{wall(activity)})
       end
     when "Connection"
       %(#{person_link(activity.item.person)} and
@@ -56,10 +58,12 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        %(#{person_link(person)} made a comment on #{someones(post.blog.person)} 
-          #{post_link("blog post", post.blog, post)})
+        %(#{person_link(person)} made a comment on 
+         #{someones(blog.person, person)}
+         #{post_link("blog post", post.blog, post)})
       when "Person"
-        %(#{person_link(activity.item.commenter)} commented on #{wall(parent)})
+        %(#{person_link(activity.item.commenter)} commented on 
+          #{wall(activity)})
       end
     when "Connection"
       %(#{person_link(person)} and #{person_link(activity.item.contact)}
@@ -108,11 +112,12 @@ module ActivitiesHelper
     image_tag("icons/#{img}", :class => "icon")
   end
   
-  def someones(person, link = true)
+  def someones(person, commenter, link = true)
+    # raise commenter.inspect
     if link
-      current_person?(person) ? "their own" : "#{person_link(person)}'s"
+      person == commenter ? "their own" : "#{person_link(person)}'s"
     else
-      current_person?(person) ? "their own" : "#{h person.name}'s"
+      person == commenter ? "their own" : "#{h person.name}'s"
     end
   end
   
@@ -138,8 +143,10 @@ module ActivitiesHelper
   end
 
   # Return a link to the wall.
-  def wall(person)
-    link_to("#{someones(person, false)} wall",
+  def wall(activity)
+    commenter = activity.person
+    person = activity.item.commentable
+    link_to("#{someones(person, commenter, false)} wall",
             person_path(person, :anchor => "wall"))
   end
   
