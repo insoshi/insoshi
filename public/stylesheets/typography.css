@@ -78,7 +78,7 @@ ol li {
   margin-left: 1.5em;
 }
 
-a {
+a:link,a:visited {
   color: #069;
   font-weight: bold;
   text-decoration: none;
@@ -140,6 +140,12 @@ p .meta, li p.meta {
 }
 body.blog .comments p, body.forum .reply p {
   font-size: 12px;
+}
+
+/* Have followed links change color (e.g., in forums). */
+a.show-follow:visited {
+  color: #309;
+  text-decoration: none;
 }
 
 /* Alerts and notifications */
