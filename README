@@ -33,7 +33,6 @@ You probably have Rails already, but might not have the others.
 $ sudo gem install rails
 $ sudo gem install image_science
 $ sudo gem install ferret
-$ sudo gem install BlueCloth
 $ sudo gem install sqlite3-ruby
 $ sudo gem install mysql
 
