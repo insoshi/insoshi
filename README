@@ -1,10 +1,19 @@
 # Insoshi social software
 
-First, join the Insoshi Google group at
+NOTE: Insoshif you downloaded a zipped archive of Insoshi, we strongly encourage you to clone the Insoshi Git repository instead.  See the instructions below, and also see
+
+http://sites.google.com/a/insoshi.com/insoshi-guides/Installation
+
+for more details.
+
+To follow our progress, join the Insoshi developer community site at 
+
+http://dogfood.insoshi.com/signup
+
+and join the Insoshi Google group at
 
 http://groups.google.com/group/insoshi/subscribe
 
-Then get started with Insoshi.  If you encounter problems, be sure to refer to the Insoshi wiki at http://docs.insoshi.com, which expands on some of the points here.
 
 ## Get Git
 
