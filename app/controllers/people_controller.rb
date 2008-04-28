@@ -16,13 +16,12 @@ class PeopleController < ApplicationController
   
   def show
     @person = Person.find(params[:id], :include => :activities)
-    @contacts = @person.some_contacts
-    if logged_in?
-      @common_connections = current_person.common_connections_with(@person)
-    end
     if @person.deactivated?
       flash[:error] = "That person has been deactivated"
       redirect_to home_url and return
+    end
+    if logged_in?
+      @common_connections = current_person.common_connections_with(@person)
     end
     if current_person?(@person)
       link = edit_person_path(@person)
@@ -89,7 +88,7 @@ class PeopleController < ApplicationController
   end
 
   def update
-    @person = current_person
+    @person = Person.find(params[:id])
     respond_to do |format|
       case params[:type]
       when 'info_edit'
