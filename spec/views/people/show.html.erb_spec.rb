@@ -18,5 +18,5 @@ describe "/people/show.html.erb" do
   it "should have a description rendered by Markdown" do
     response.should have_tag("em", "bar")
   end
+ 
 end
-

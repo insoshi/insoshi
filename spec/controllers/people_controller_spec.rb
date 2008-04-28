@@ -215,7 +215,24 @@ describe PeopleController do
     it "should not display a deactivated person" do
       @person.toggle!(:deactivated)
       get :show, :id => @person
-      @response.should redirect_to(home_url)
+      response.should redirect_to(home_url)
+    end
+    
+    it "should display break up link if connected" do
+      login_as(@person)
+      @contact = people(:aaron)
+      conn = Connection.request(@person,@contact)
+      conn.accept
+      get :show, :id => @contact.reload
+      response.should have_tag("a", :text => "break up")
+      response.should have_tag("a[href=?]", connection_path(conn))
+    end
+    
+    it "should not display break up link if not connected" do
+      login_as(@person)
+      @contact = people(:aaron)
+      get :show, :id => @contact.reload
+      response.should_not have_tag("a", :text => "break up")
     end
   end
   
