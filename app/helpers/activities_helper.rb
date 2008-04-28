@@ -9,7 +9,7 @@ module ActivitiesHelper
       blog = post.blog
       view_blog = blog_link("View #{h person.name}'s blog", blog)
       %(#{person_link(person)} made a blog post titled
-        #{post_link(blog, post)}.<br /> #{view_blog})
+        #{post_link(blog, post)}.<br /> #{view_blog}.)
     when "Comment"
       parent = activity.item.commentable
       parent_type = parent.class.to_s
@@ -22,7 +22,7 @@ module ActivitiesHelper
            blog post #{post_link(blog, post)}.)
       when "Person"
         %(#{person_link(activity.item.commenter)} commented on 
-          #{wall(activity)})
+          #{wall(activity)}.)
       end
     when "Connection"
       %(#{person_link(activity.item.person)} and
@@ -36,7 +36,7 @@ module ActivitiesHelper
       %(#{person_link(person)} created the new discussion topic
         #{topic_link(activity.item)}.)
     when "Photo"
-      %(#{person_link(person)} changed their profile picture)
+      %(#{person_link(person)} changed their profile picture.)
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -50,7 +50,7 @@ module ActivitiesHelper
       post = activity.item
       blog = post.blog
       %(#{person_link(person)} made a
-        #{post_link("new blog post", blog, post)})
+        #{post_link("new blog post", blog, post)}.)
     when "Comment"
       parent = activity.item.commentable
       parent_type = parent.class.to_s
@@ -63,10 +63,10 @@ module ActivitiesHelper
            blog post #{post_link(blog, post)}.)
         %(#{person_link(person)} made a comment on
           #{someones(blog.person, person)} 
-          #{post_link("blog post", post.blog, post)})
+          #{post_link("blog post", post.blog, post)}.)
       when "Person"
         %(#{person_link(activity.item.commenter)} commented on 
-          #{wall(activity)})
+          #{wall(activity)}.)
       end
     when "Connection"
       %(#{person_link(person)} and #{person_link(activity.item.contact)}
@@ -81,7 +81,7 @@ module ActivitiesHelper
       %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", activity.item)}.)
     when "Photo"
-      %(#{person_link(person)} changed their profile picture)
+      %(#{person_link(person)} changed their profile picture.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
