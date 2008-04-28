@@ -37,6 +37,8 @@ module ActivitiesHelper
         #{topic_link(activity.item)}.)
     when "Photo"
       %(#{person_link(person)} changed their profile picture.)
+    when "Person"
+      %(#{person_link(person)} changed their description)
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -82,6 +84,8 @@ module ActivitiesHelper
         #{topic_link("new discussion topic", activity.item)}.)
     when "Photo"
       %(#{person_link(person)} changed their profile picture.)
+    when "Person"
+      %(#{person_link(person)} changed their description)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -108,6 +112,8 @@ module ActivitiesHelper
               "add.gif"
             when "Photo"
               "camera.gif"
+            when "Person"
+                "edit.gif"
             else
               # TODO: make this a more graceful falure (?).
               raise "Invalid activity type #{activity_type(activity).inspect}"

@@ -32,6 +32,22 @@ describe Person do
     end
   end
   
+  describe "person activity associations" do
+    
+    it "should log an activity if description changed" do
+      @person.update_attributes(:description => "New Description")
+      activity = Activity.find_by_item_id(@person)
+      @person.activities.include?(activity).should == true
+    end
+    
+    it "should not log an activity if description didn't change" do
+      @person.save!
+      activity = Activity.find_by_item_id(@person)
+      @person.activities.include?(activity).should == false
+    end
+    
+  end
+  
   describe "utility methods" do  
     it "should have the right to_param method" do
       # Person params should have the form '1-michael-hartl'.

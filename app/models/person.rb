@@ -22,6 +22,7 @@
 #
 
 class Person < ActiveRecord::Base
+  include ActivityLogger
   extend PreferencesHelper
 
   attr_accessor :password, :verify_password, :new_password,
@@ -82,6 +83,9 @@ class Person < ActiveRecord::Base
   before_create :create_blog
   before_save :downcase_email, :encrypt_password
   after_create :connect_to_admin
+  
+  before_update :set_old_description
+  after_update :log_activity_description_changed
 
   ## Class methods
 
@@ -335,6 +339,16 @@ class Person < ActiveRecord::Base
     def encrypt_password
       return if password.blank?
       self.crypted_password = encrypt(password)
+    end
+    
+    def set_old_description
+      @old_description = Person.find(self).description
+    end
+    
+    def log_activity_description_changed
+      if @old_description != self.description
+        add_activities(:item => self, :person => self)
+      end
     end
 
     # Connect new users to "Tom".
