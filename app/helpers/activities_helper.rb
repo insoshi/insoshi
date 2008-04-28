@@ -38,7 +38,7 @@ module ActivitiesHelper
     when "Photo"
       %(#{person_link(person)} changed their profile picture.)
     when "Person"
-      %(#{person_link(person)} changed their description)
+      %(#{person_link(person)} changed their description.)
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
