@@ -46,7 +46,7 @@ describe Comment do
       end
 
       it "should add an activity to the commenter" do
-        @comment.commenter.activities.include?(@activity).should == true      
+        @comment.commenter.recent_activity.include?(@activity).should == true      
       end
     end
   end

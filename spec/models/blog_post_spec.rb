@@ -40,7 +40,7 @@ describe BlogPost do
     end
     
     it "should add an activity to the poster" do
-      @post.blog.person.activities.include?(@activity).should == true
+      @post.blog.person.recent_activity.include?(@activity).should == true
     end
   end
   
