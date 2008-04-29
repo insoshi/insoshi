@@ -23,11 +23,6 @@ class PeopleController < ApplicationController
     if logged_in?
       @common_connections = current_person.common_connections_with(@person)
     end
-    if current_person?(@person)
-      link = edit_person_path(@person)
-      flash.now[:notice] = %(You are viewing your own profile.
-                             <a href="#{link}">Click here to edit it</a>)
-    end
     respond_to do |format|
       format.html
     end
