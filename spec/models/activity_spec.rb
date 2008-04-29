@@ -3,17 +3,18 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Activity do
   before(:each) do
     @person = people(:quentin)
+    @commenter = people(:aaron)
   end
 
   it "should delete a post activity along with its parent item" do
     @post = ForumPost.create(:body => "Hey there", :topic => topics(:one),
-                             :person => people(:quentin))
+                             :person => @person)
     destroy_should_remove_activity(@post)
   end
   
   it "should delete a comment activity along with its parent item" do
     @comment = @person.comments.create(:body => "Hey there",
-                                       :commenter => people(:aaron))
+                                       :commenter => @commenter)
     destroy_should_remove_activity(@comment)
   end
   
@@ -23,6 +24,22 @@ describe Activity do
     Connection.connect(@person, @contact)
     @connection = Connection.conn(@person, @contact)
     destroy_should_remove_activity(@connection, :breakup)
+  end
+  
+  before(:each) do
+    # Create an activity.
+    @person.comments.create(:body => "Hey there",
+                            :commenter => @commenter)    
+  end
+  
+  it "should have a nonempty global feed" do
+    Activity.global_feed.should_not be_empty
+  end
+  
+  it "should not show activities for users who are inactive" do
+    @commenter.toggle!(:deactivated)
+    @commenter.should be_deactivated
+    Activity.global_feed.should be_empty
   end
   
   private

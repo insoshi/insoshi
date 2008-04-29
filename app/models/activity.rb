@@ -20,7 +20,17 @@ class Activity < ActiveRecord::Base
   GLOBAL_FEED_SIZE = 10
 
   # Return a feed drawn from all activities.
+  # The fancy SQL is to keep inactive people out of feeds.
+  # It's hard to do that entirely, but this way deactivated users 
+  # won't be the person in "<person> has <done something>".
+  #
+  # This is especially useful for sites that require email verifications.
+  # Their 'connected with admin' item won't show up until they verify.
   def self.global_feed
-    find(:all, :order => 'created_at DESC', :limit => GLOBAL_FEED_SIZE)
+    find(:all, 
+         :joins => "INNER JOIN people p ON activities.person_id = p.id",
+         :conditions => ["p.deactivated = ?", false], 
+         :order => 'activities.created_at DESC',
+         :limit => GLOBAL_FEED_SIZE)
   end
 end
