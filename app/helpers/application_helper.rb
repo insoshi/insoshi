@@ -70,6 +70,9 @@ module ApplicationHelper
       tag_options = nil
     end
     markdown(sanitize(text)).gsub("<p>", "<p#{tag_options}>")
+  rescue
+    # Sometimes Markdown throws exceptions, so rescue gracefully.
+    content_tag(:p, sanitize(text))
   end
   
   # Output a column div.
