@@ -18,7 +18,7 @@
 class BlogPost < Post
   
   MAX_TITLE = SMALL_STRING_LENGTH
-  MAX_BODY  = MEDIUM_TEXT_LENGTH
+  MAX_BODY  = MAX_TEXT_LENGTH
   
   belongs_to :blog
   has_many :comments, :as => :commentable, :order => :created_at
