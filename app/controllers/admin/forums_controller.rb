@@ -13,8 +13,9 @@ class Admin::ForumsController < ApplicationController
 
   def show
     @forum = Forum.find(params[:id])
+    @topics = @forum.topics.paginate(:page => params[:page])
     respond_to do |format|
-      format.html { redirect_to @forum }
+      format.html { render :template => "forums/show"}
     end
   end
 
