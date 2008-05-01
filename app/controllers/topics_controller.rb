@@ -5,11 +5,7 @@ class TopicsController < ApplicationController
   before_filter :setup
   
   def index
-    @topics = @forum.topics.paginate(:page => params[:page])
-
-    respond_to do |format|
-      format.html
-    end
+    redirect_to forum_url(params[:forum_id])
   end
 
   def show
