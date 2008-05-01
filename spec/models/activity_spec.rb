@@ -18,6 +18,12 @@ describe Activity do
     destroy_should_remove_activity(@comment)
   end
   
+  it "should delete a topic activity along with its parent item" do
+    @topic = Topic.create(:name => "A topic", :forum => forums(:one),
+                          :person => @person)
+    destroy_should_remove_activity(@topic)
+  end
+  
   it "should delete an associated connection" do
     @person = people(:quentin)
     @contact = people(:aaron)
