@@ -49,7 +49,8 @@ class Person < ActiveRecord::Base
                       :limit => NUM_WALL_COMMENTS
   has_many :connections
   has_many :contacts, :through => :connections,
-                      :conditions => "status = #{Connection::ACCEPTED}"
+                      :conditions => "status = #{Connection::ACCEPTED}",
+                      :order => 'people.created_at DESC'
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
            :source => :contact,
@@ -144,7 +145,7 @@ class Person < ActiveRecord::Base
 
   # Return some contacts for the home page.
   def some_contacts
-    contacts.shuffle[(0...12)]
+    contacts[(0...12)]
   end
 
   # Contact links for the contact image raster.
