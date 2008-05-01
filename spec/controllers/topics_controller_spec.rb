@@ -31,4 +31,12 @@ describe TopicsController do
       assigns(:topic).person.should == person
     end
   end
+  
+  it "should redirect to topic list on deletion" do
+    person = login_as(:admin)
+    @forum = Forum.find(@topic.forum)
+    delete :destroy, :id => @topic, :forum_id => @forum
+    response.should redirect_to(admin_forum_url(@forum))
+  end
+  
 end
