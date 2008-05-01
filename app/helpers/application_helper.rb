@@ -48,6 +48,10 @@ module ApplicationHelper
   
   # Return true if the user is viewing the site in admin view.
   def admin_view?
+    params[:controller] =~ /admin/ and admin?
+  end
+  
+  def admin?
     logged_in? and current_person.admin?
   end
   

@@ -10,7 +10,7 @@
         | <%= link_to "Edit",
                 edit_forum_topic_post_path(@forum, @topic, forum_post) %>
       <%- end -%>
-      <%- if admin_view? -%>
+      <%- if admin? -%>
         | <%= link_to "Destroy",
                       forum_topic_post_path(@forum, @topic, forum_post),
                       :confirm => 'Are you sure?',

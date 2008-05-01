@@ -14,7 +14,7 @@
   <p class="meta">
     Created by <%= person_link topic.person %>
     <%= time_ago_in_words(topic.created_at) %> ago
-    <%- if admin_view? -%>
+    <%- if admin? -%>
       | <%= link_to "Edit",  edit_forum_topic_path(@forum, topic) %>
       | <%= link_to "Destroy",  forum_topic_path(@forum, topic),
                                 :confirm => 'Are you sure?',

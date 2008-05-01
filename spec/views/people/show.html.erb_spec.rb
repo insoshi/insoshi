@@ -6,6 +6,8 @@ describe "/people/show.html.erb" do
     @person = login_as(:quentin)
     @person.description = "Foo *bar*"
     assigns[:person] = @person
+    assigns[:some_contacts] = @person.some_contacts
+    assigns[:common_connections] = []
     render "/people/show.html.erb"
   end
 
