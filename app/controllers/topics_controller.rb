@@ -1,7 +1,7 @@
 class TopicsController < ApplicationController
   
   before_filter :login_required, :except => [:index, :show]
-  before_filter :admin_required, :only => :destroy
+  before_filter :admin_required, :only => [:edit, :update, :destroy]
   before_filter :setup
   
   def index
@@ -48,7 +48,7 @@ class TopicsController < ApplicationController
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
         flash[:success] = 'Topic was successfully updated.'
-        format.html { redirect_to admin_forum_topics_url(@forum) }
+        format.html { redirect_to admin_forum_url(@forum) }
       else
         format.html { render :action => "edit" }
       end

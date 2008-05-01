@@ -103,10 +103,11 @@ class PostsController < ApplicationController
     # Make sure the current user is authorized to edit a post.
     def authorize_change
       if forum?
-        redirect_to home_url unless current_person?(@post.person)
+        authorized = current_person?(@post.person) || current_person.admin?
+        redirect_to home_url unless authorized
       elsif blog?
-        redirect_to home_url unless (current_person?(@blog.person) and
-                                     valid_post?)
+        authorized = current_person?(@blog.person) && valid_post?
+        redirect_to home_url unless authorized
       end
     end
     
@@ -182,8 +183,7 @@ class PostsController < ApplicationController
     # Return the URL for the resource posts (forum topic or blog).
     def posts_url
       if forum?
-        current_person.admin? ? admin_forum_topic_url(@forum, @topic) :
-                                forum_topic_url(@forum, @topic)
+       forum_topic_url(@forum, @topic)
       elsif blog?
         blog_url(@blog)
       end      
