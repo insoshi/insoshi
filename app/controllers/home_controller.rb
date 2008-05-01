@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     @members = Person.find_recent
     if logged_in?
       @feed = current_person.feed
-      @contacts = current_person.some_contacts
+      @some_contacts = current_person.some_contacts
       @requested_contacts = current_person.requested_contacts
     else
       # TODO: make a helper for this

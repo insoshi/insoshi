@@ -39,7 +39,7 @@
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>
-  <%- if Connection.connected?(@person, current_person) -%>
+  <%- if logged_in? -%>
     <%= render :partial => 'shared/contacts_preview',
                :locals => { :person => @person } %>
     <%= render :partial => 'common_contacts' %>

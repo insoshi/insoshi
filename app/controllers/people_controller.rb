@@ -21,6 +21,7 @@ class PeopleController < ApplicationController
       redirect_to home_url and return
     end
     if logged_in?
+      @some_contacts = @person.some_contacts
       @common_connections = current_person.common_connections_with(@person)
     end
     respond_to do |format|
