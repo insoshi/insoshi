@@ -3,8 +3,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Topic do
   
   before(:each) do
+    @person = people(:quentin)
     @topic = Topic.new(:name => "A topic", :forum => forums(:one),
-                       :person => people(:quentin))
+                       :person => @person)
   end
 
   it "should be valid" do
@@ -22,7 +23,15 @@ describe Topic do
   end
   
   it "should have many posts" do
-    Topic.new.posts.should be_a_kind_of(Array)
+    @topic.posts.should be_a_kind_of(Array)
+  end
+  
+  it "should destroy associated posts" do
+    @topic.save!
+    @topic.posts.create(:body => "body", :person => @person)
+    # See the custom model matcher DestroyAssociated, located in
+    # spec/matchers/custom_model_matchers.rb.
+    @topic.should destroy_associated(:posts)
   end
   
   it "should belong to a person" do

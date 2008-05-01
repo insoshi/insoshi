@@ -18,9 +18,13 @@ describe Activity do
     destroy_should_remove_activity(@comment)
   end
   
-  it "should delete a topic activity along with its parent item" do
+  it "should delete topic & post activities along with the parent items" do
     @topic = Topic.create(:name => "A topic", :forum => forums(:one),
                           :person => @person)
+    @topic.posts.create(:body => "body", :person => @person)
+    @topic.posts.each do |post|
+      destroy_should_remove_activity(post)
+    end
     destroy_should_remove_activity(@topic)
   end
   
