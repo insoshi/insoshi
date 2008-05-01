@@ -61,7 +61,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       flash[:success] = 'Topic was successfully destroyed.'
-      format.html { redirect_to admin_forum_topics_url(@forum) }
+      format.html { redirect_to admin_forum_url(@forum) }
     end
   end
 
