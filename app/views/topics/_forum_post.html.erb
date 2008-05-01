@@ -6,7 +6,7 @@
   </div>
   <p class="meta"><%= person_link forum_post.person %> posted
       <%= time_ago_in_words(forum_post.created_at) %> ago
-      <%- if current_person?(forum_post.person) or admin_view? -%>
+      <%- if current_person?(forum_post.person) or admin? -%>
         | <%= link_to "Edit",
                 edit_forum_topic_post_path(@forum, @topic, forum_post) %>
       <%- end -%>
