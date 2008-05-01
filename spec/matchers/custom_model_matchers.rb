@@ -49,17 +49,20 @@ module CustomModelMatchers
   
   
   # Verify that an action destroys an associated attribute.
+  # Usage:
+  #  @topic.should destroy_associated(:posts)
+
   class DestroyAssociated
 
     def initialize(attribute)
       @attribute = attribute
     end
 
-    def matches?(model)
-      objects = model.send(@attribute)
+    def matches?(parent)
+      objects = parent.send(@attribute)
       # Objects must exist in the first place.
       raise ArgumentError, "Invalid initial association" unless found?(objects)
-      model.destroy
+      parent.destroy
       not found?(objects)
     end
     
