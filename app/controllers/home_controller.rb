@@ -10,7 +10,6 @@ class HomeController < ApplicationController
       @some_contacts = current_person.some_contacts
       @requested_contacts = current_person.requested_contacts
     else
-      # TODO: make a helper for this
       @feed = Activity.global_feed
     end    
     respond_to do |format|

@@ -3,7 +3,6 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  cache_sweeper :activity_sweeper
   include AuthenticatedSystem
   include SharedHelper
   include PreferencesHelper

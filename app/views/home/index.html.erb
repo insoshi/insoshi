@@ -1,10 +1,6 @@
 <%- column_div :type => :primary do -%>
   <%- if logged_in? -%>
     <%= render :partial => 'feed' %>
-  <%- else -%>
-    <%- cache(:part => "feed") do -%>
-      <%= render :partial => 'feed' %>
-    <%- end -%>
   <%- end -%>
 <%- end -%>
 

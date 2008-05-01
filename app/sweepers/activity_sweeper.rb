@@ -1,3 +1,4 @@
+# This is currently unused, but a nice example of how to make a cache sweeper.
 class ActivitySweeper < ActionController::Caching::Sweeper
   observe Activity
   
