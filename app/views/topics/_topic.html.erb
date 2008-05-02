@@ -9,7 +9,7 @@
   <%= link_to h(topic.name), 
               forum_topic_path(@forum, topic, :comments => n),
               :class => "show-follow" %>
-  <span class="meta">(<%= pluralize(n-1, "reply") %>)</span>
+  <span class="meta">(<%= pluralize(n, "post") %>)</span>
   </p>
   <p class="meta">
     Created by <%= person_link topic.person %>
