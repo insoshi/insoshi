@@ -16,10 +16,9 @@ module ActivityLogger
     activity = options[:activity] ||
                Activity.create!(:item => options[:item], :person => person)
     person.contacts.each do |c|
-      c.activities << activity #unless c.activities.include?(activity)
+      # Prevent duplicate entries in the feed.
+      c.activities << activity unless c.activities.include?(activity)
     end
-    if include_person
-      person.activities << activity #unless person.activities.include?(activity)
-    end
+    person.activities << activity if include_person
   end
 end

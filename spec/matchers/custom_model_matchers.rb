@@ -25,6 +25,30 @@ module CustomModelMatchers
     MaximumLength.new(attribute, maxlength)
   end
   
+  # Test an array for distict elements.
+  # If an array 'a' has distinct elements (no duplicates),
+  # a.should have_distinct_elements
+  # will pass.
+  class DistinctElements
+    
+    def matches?(ary)
+      ary == ary.uniq
+    end
+    
+    def failure_message
+      "Array should have distinct elements"
+    end
+    
+    def negative_failure_message
+      "Array should not have distinct elements"
+    end
+  end
+  
+  def have_distinct_elements
+    DistinctElements.new
+  end
+  
+  
   class ExistInDatabase
     def matches?(model)
       model.class.find(model)
@@ -39,7 +63,7 @@ module CustomModelMatchers
     end
     
     def negative_failure_message
-      "Object shouldn't exist in the database but does"      
+      "Object shouldn't exist in the database but does"
     end
   end
   
