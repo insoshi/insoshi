@@ -15,6 +15,8 @@
 class Comment < ActiveRecord::Base
   include ActivityLogger
   
+  attr_accessor :commented_person
+  
   belongs_to :commentable, :polymorphic => true
   belongs_to :commenter, :class_name => "Person",
                          :foreign_key => "commenter_id"
@@ -45,12 +47,12 @@ class Comment < ActiveRecord::Base
     # For example, for blog post comments it's the blog's person
     # For wall comments, it's the person himself.
     def commented_person
-      case commentable.class.to_s
-      when "Person"
-        commentable
-      when "BlogPost"
-        commentable.blog.person
-      end
+      @commented_person ||= case commentable.class.to_s
+                            when "Person"
+                              commentable
+                            when "BlogPost"
+                              commentable.blog.person
+                            end
     end
   
     def log_activity
