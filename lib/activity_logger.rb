@@ -16,10 +16,10 @@ module ActivityLogger
     activity = options[:activity] ||
                Activity.create!(:item => options[:item], :person => person)
     person.contacts.each do |c|
-      c.activities << activity unless c.activities.include?(activity)
+      c.activities << activity #unless c.activities.include?(activity)
     end
     if include_person
-      person.activities << activity unless person.activities.include?(activity)
+      person.activities << activity #unless person.activities.include?(activity)
     end
   end
 end

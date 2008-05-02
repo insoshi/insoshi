@@ -64,8 +64,7 @@ class Person < ActiveRecord::Base
   end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE# ,
-                                            #                                             :uniq => true
+                                            :limit => FEED_SIZE
 
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
