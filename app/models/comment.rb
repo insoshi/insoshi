@@ -56,7 +56,7 @@ class Comment < ActiveRecord::Base
     def log_activity
       activity = Activity.create!(:item => self, :person => commenter)
       add_activities(:activity => activity, :person => commenter)
-      unless commented_person.nil?
+      unless commented_person.nil? or commenter == commented_person
         add_activities(:activity => activity, :person => commented_person,
                        :include_person => true)
       end

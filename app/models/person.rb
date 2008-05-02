@@ -64,8 +64,8 @@ class Person < ActiveRecord::Base
   end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE,
-                                            :uniq => true
+                                            :limit => FEED_SIZE# ,
+                                            #                                             :uniq => true
 
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
@@ -126,11 +126,12 @@ class Person < ActiveRecord::Base
   # Return a person-specific activity feed.
   # TODO: put some algorithms in here to improve feed quality.
   def feed
+    return activities
     len = activities.length
     if len < FEED_SIZE
       # Mix in some global activities for smaller feeds.
       global = Activity.global_feed[0...(Activity::GLOBAL_FEED_SIZE-len)]
-      (activities + global).uniq
+      (activities + global).uniq#.sort_by { |a| a.created_at}
     else
       activities
     end
