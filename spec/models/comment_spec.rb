@@ -89,5 +89,31 @@ describe Comment do
         Activity.find_by_item_id(@comment).should_not be_nil
       end
     end
-  end  
+  end
+  
+  describe "for contacts" do
+
+    before(:each) do
+      @person = people(:quentin)
+      @contact = people(:aaron)
+      @second_contact = people(:kelly)
+      Connection.connect(@person, @contact)
+      Connection.connect(@person, @second_contact)
+    end
+    
+    # When one of your contacts comments on his own wall,
+    # an activity might get created for both the commenter and the commented.
+    # Here they are the same person, so only one item should be craeted.
+    it "should not have duplicate feed items when commenting on own wall" do
+      Connection.connected?(@person, @contact).should be_true
+      @contact.comments.create(:body => "Hey there", :commenter => @contact)
+      @person.activities.should have_distinct_elements
+    end
+    
+    it %(should not have duplicate feed items for Quentin
+         when Kelly comments on Aaron's wall) do
+      @contact.comments.create(:body => "bar", :commenter => @second_contact)
+      @person.activities.should have_distinct_elements
+    end
+  end
 end
