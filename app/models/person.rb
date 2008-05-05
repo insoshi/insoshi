@@ -130,7 +130,7 @@ class Person < ActiveRecord::Base
     if len < FEED_SIZE
       # Mix in some global activities for smaller feeds.
       global = Activity.global_feed[0...(Activity::GLOBAL_FEED_SIZE-len)]
-      (activities + global).uniq#.sort_by { |a| a.created_at}
+      (activities + global).uniq.sort_by { |a| a.created_at }.reverse
     else
       activities
     end
