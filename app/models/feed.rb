@@ -1,11 +1,11 @@
 # == Schema Information
-# Schema version: 19
+# Schema version: 20
 #
 # Table name: feeds
 #
-#  id          :integer         not null, primary key
-#  person_id   :integer         
-#  activity_id :integer         
+#  id          :integer(11)     not null, primary key
+#  person_id   :integer(11)     
+#  activity_id :integer(11)     
 #
 
 class Feed < ActiveRecord::Base

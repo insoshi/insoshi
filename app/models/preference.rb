@@ -1,13 +1,13 @@
 # == Schema Information
-# Schema version: 19
+# Schema version: 20
 #
 # Table name: preferences
 #
-#  id                  :integer         not null, primary key
+#  id                  :integer(11)     not null, primary key
 #  domain              :string(255)     default(""), not null
 #  smtp_server         :string(255)     default(""), not null
-#  email_notifications :boolean         not null
-#  email_verifications :boolean         not null
+#  email_notifications :boolean(1)      not null
+#  email_verifications :boolean(1)      not null
 #  created_at          :datetime        
 #  updated_at          :datetime        
 #  analytics           :text            

@@ -1,12 +1,12 @@
 # == Schema Information
-# Schema version: 19
+# Schema version: 20
 #
 # Table name: activities
 #
-#  id         :integer         not null, primary key
-#  public     :boolean         
-#  item_id    :integer         
-#  person_id  :integer         
+#  id         :integer(11)     not null, primary key
+#  public     :boolean(1)      
+#  item_id    :integer(11)     
+#  person_id  :integer(11)     
 #  item_type  :string(255)     
 #  created_at :datetime        
 #  updated_at :datetime        

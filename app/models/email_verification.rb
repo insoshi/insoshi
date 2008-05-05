@@ -1,10 +1,10 @@
 # == Schema Information
-# Schema version: 19
+# Schema version: 20
 #
 # Table name: email_verifications
 #
-#  id         :integer         not null, primary key
-#  person_id  :integer         
+#  id         :integer(11)     not null, primary key
+#  person_id  :integer(11)     
 #  code       :string(255)     
 #  created_at :datetime        
 #  updated_at :datetime        

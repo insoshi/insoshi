@@ -1,12 +1,11 @@
 # == Schema Information
-# Schema version: 19
+# Schema version: 20
 #
 # Table name: page_views
 #
-#  id          :integer         not null, primary key
-#  user_id     :integer         
+#  id          :integer(11)     not null, primary key
+#  user_id     :integer(11)     
 #  request_url :string(200)     
-#  session     :string(32)      
 #  ip_address  :string(16)      
 #  referer     :string(200)     
 #  user_agent  :string(200)     
