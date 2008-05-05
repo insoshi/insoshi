@@ -28,7 +28,6 @@ class ApplicationController < ActionController::Base
     def create_page_view
       PageView.create(:user_id => session[:user_id],
                       :request_url => request.request_uri,
-                      :session => session,
                       :ip_address => request.remote_ip,
                       :referer => request.env["HTTP_REFERER"],
                       :user_agent => request.env["HTTP_USER_AGENT"])
