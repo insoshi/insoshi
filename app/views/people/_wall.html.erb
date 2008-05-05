@@ -2,16 +2,18 @@
   <div class="wall">
     <h2>Comment Wall</h2>
     <a name="wall"></a>
-
-    <% form_for :comment, :url => person_comments_path(@person) do |f| %>
-      <div class="form_row">
-        <%= f.text_area :body, :rows => 2 %>
-      </div>
+    
+    <%- if connected_to?(@person) -%>
+      <% form_for :comment, :url => person_comments_path(@person) do |f| %>
+        <div class="form_row">
+          <%= f.text_area :body, :rows => 2 %>
+        </div>
   
-      <div class="form_row">
-        <%= submit_tag "Submit", :class => "button" %>
-      </div>
-    <% end %>
+        <div class="form_row">
+          <%= submit_tag "Submit", :class => "button" %>
+        </div>
+      <% end %>
+    <%- end -%>
 
     <%- unless @person.comments.empty? -%>
       <ul class="list comments full">

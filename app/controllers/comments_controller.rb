@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
   before_filter :login_required
   before_filter :get_instance_vars
   before_filter :authorize_destroy, :only => [:destroy]
+  before_filter :connection_required
 
   # Used for both wall and blog comments.
   def new
@@ -50,13 +51,23 @@ class CommentsController < ApplicationController
         @post = Post.find(params[:post_id])
       end
     end
+  
+    def person
+      @person || @blog.person
+    end
+    
+    # Require the users to be connected.
+    def connection_required
+      if wall?
+        unless connected_to?(person)
+          flash[:notice] = "You must be contacts to complete that action"
+          redirect_to @person
+        end
+      end
+    end
     
     def authorize_destroy
-      if wall?
-        redirect_to home_url unless current_person?(@person)
-      else
-        redirect_to home_url unless current_person?(@blog.person)
-      end
+      redirect_to home_url unless current_person?(person)
     end
     
     ## Handle wall and blog comments in a uniform manner.

@@ -69,6 +69,7 @@ describe CommentsController do
     before(:each) do
       @commenter = login_as(:aaron)
       @person    = people(:quentin)
+      Connection.connect(@person, @commenter)
     end
   
     it "should have working pages" do
