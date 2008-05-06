@@ -21,6 +21,8 @@
   <%- if current_person?(@blog.person) -%>
   <h2>Add new post</h2>
 
+  <p><%= formatting_note %></p>
+
   <%= render :partial => 'posts/blog_form',
              :locals => { :url => blog_posts_path(@blog),
                           :method => :post } %>

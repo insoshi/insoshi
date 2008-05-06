@@ -108,6 +108,13 @@ module ApplicationHelper
     str << link_to_unless_current(action, path, opts)
   end
 
+  def formatting_note
+    %(HTML and
+      #{link_to("Markdown",
+                "http://daringfireball.net/projects/markdown/basics")}
+     supported)
+  end
+
   private
   
     def inflect(word, number)

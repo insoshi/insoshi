@@ -16,10 +16,8 @@
   
       <div class="form_row">
         <label for="person_description">Description
-          (<%= link_to "Markdown formatting",
-                      "http://daringfireball.net/projects/markdown/basics" %>
-           supported)
         </label>
+        <p><%= formatting_note %></p>
         <%= f.text_area :description %>
       </div>
 
