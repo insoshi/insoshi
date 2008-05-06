@@ -19,6 +19,8 @@ module ActivityLogger
       # Prevent duplicate entries in the feed.
       c.activities << activity unless c.activities.include?(activity)
     end
-    person.activities << activity if include_person
+    if include_person
+      person.activities << activity unless person.activity.include?(activity)
+    end
   end
 end
