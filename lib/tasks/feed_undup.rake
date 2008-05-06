@@ -4,7 +4,7 @@ require 'active_record/fixtures'
 namespace :feed do
   desc "Remove duplicate feed items"
   task :undup => :environment do |t|
-    feed = Feed.find(:all, :order => 'id, person_id, activity_id')
+    feed = Feed.find(:all, :order => 'person_id, activity_id')
     dups = []
     feed.each_with_index do |item, i|
       dups.push(item) if i > 0 and same?(item, feed[i-1])
