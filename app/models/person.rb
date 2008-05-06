@@ -125,7 +125,6 @@ class Person < ActiveRecord::Base
   # Return a person-specific activity feed.
   # TODO: put some algorithms in here to improve feed quality.
   def feed
-    return activities
     len = activities.length
     if len < FEED_SIZE
       # Mix in some global activities for smaller feeds.
