@@ -9,6 +9,7 @@ namespace :feed do
     feed.each_with_index do |item, i|
       dups.push(item) if i > 0 and same?(item, feed[i-1])
     end
+    puts "Destroying #{dups.length} duplicate feed items"
     dups.each { |duplicate| duplicate.destroy }
   end
   
