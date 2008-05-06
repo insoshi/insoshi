@@ -20,7 +20,7 @@ module ActivityLogger
       c.activities << activity unless c.activities.include?(activity)
     end
     if include_person
-      person.activities << activity unless person.activity.include?(activity)
+      person.activities << activity unless person.activities.include?(activity)
     end
   end
 end
