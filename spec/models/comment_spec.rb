@@ -49,6 +49,17 @@ describe Comment do
         @comment.commenter.recent_activity.include?(@activity).should == true      
       end
     end
+    
+    describe "feed items for contacts" do
+      it %(should not have duplicate items when a contact comments
+           on a blog) do
+        @person = @post.blog.person
+        @commenter = @comment.commenter
+        Connection.connect(@person, @commenter)
+        @comment.save!
+        @person.activities.should have_distinct_elements
+      end
+    end
   end
 
   describe "wall comments" do
@@ -91,7 +102,7 @@ describe Comment do
     end
   end
   
-  describe "for contacts" do
+  describe "feed items for contacts" do
 
     before(:each) do
       @person = people(:quentin)
