@@ -113,8 +113,8 @@ class Person < ActiveRecord::Base
     # Return the first admin created.
     # We suggest using this admin as the primary administrative contact.
     def find_first_admin
-      Person.find(:first, :conditions => ["admin = ?", true],
-                          :order => :created_at)
+      find(:first, :conditions => ["admin = ?", true],
+                   :order => :created_at)
     end
   end
 
