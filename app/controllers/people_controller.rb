@@ -88,10 +88,11 @@ class PeopleController < ApplicationController
     respond_to do |format|
       case params[:type]
       when 'info_edit'
-        if @person.update_attributes(params[:person])
+        if @person.update_attributes(params[:person]) and !preview?
           flash[:success] = 'Profile updated!'
           format.html { redirect_to(@person) }
         else
+          @preview = @person.description
           format.html { render :action => "edit" }
         end
       when 'password_edit'
@@ -122,5 +123,9 @@ class PeopleController < ApplicationController
   
     def correct_user_required
       redirect_to home_url unless Person.find(params[:id]) == current_person
+    end
+    
+    def preview?
+      params["commit"] == "Preview"
     end
 end
