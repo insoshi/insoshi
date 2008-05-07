@@ -21,11 +21,16 @@
             </li>
           <%- end -%>
           <%- if Connection.connected?(@person, current_person) -%>
-          <li><%= h @person.name %> is one of your contacts </li>
-    <li><%= link_to "break up", 
-      connection_path(Connection.conn(current_person,@person)), 
-      :method => :delete,
-            :confirm => "Are you sure you want to break up with #{@person.name}" %></li>
+          <li>
+            <%= h @person.name %> is one of your contacts
+            <br />
+           (<%= link_to "end connection", 
+               connection_path(Connection.conn(current_person, @person)), 
+               :method => :delete,
+              :confirm => 
+"Are you sure you want to end connection with #{h @person.name}?" %>)
+          
+          </li>
           <%- end -%>
           <li><%= email_link @person %></li>
         <%- end -%>

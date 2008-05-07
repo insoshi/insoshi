@@ -76,6 +76,7 @@ class Connection < ActiveRecord::Base
         request(person, contact, mail)
         accept(person, contact)
       end
+      conn(person, contact)
     end
   
     # Delete a connection or cancel a pending request.

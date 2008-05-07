@@ -9,10 +9,7 @@
         <%= image_link contact, :image_options => { :class => "photo" },
                                 :link_options => { :class => "url" },
                                 :vcard => true,
-                                :image => :bounded_icon,
-                                
-                                :destroy => (current_person? @person), #destroy if in own profile
-                                :send_message => (current_person? (@person)) %>
+                                :image => :bounded_icon %>
       </li>
     <%- end -%>
       
