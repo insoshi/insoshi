@@ -109,6 +109,13 @@ class Person < ActiveRecord::Base
       find(:all, :order => "people.created_at DESC",
                  :include => :photos, :limit => NUM_RECENT)
     end
+    
+    # Return the first admin created.
+    # We suggest using this admin as the primary administrative contact.
+    def find_first_admin
+      Person.find(:first, :conditions => ["admin = ?", true],
+                          :order => :created_at)
+    end
   end
 
   # Params for use in urls.
@@ -334,8 +341,7 @@ class Person < ActiveRecord::Base
     def connect_to_admin
       # Find the first admin created.
       # The ununitiated should Google "tom myspace".
-      tom = Person.find(:first, :conditions => ["admin = ?", true],
-                                :order => :created_at)
+      tom = Person.find_first_admin
       unless tom.nil? or tom == self
         Connection.connect(self, tom)
       end
