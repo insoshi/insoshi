@@ -42,13 +42,11 @@ class PeopleController < ApplicationController
     cookies.delete :auth_token
     @person = Person.new(params[:person])
     respond_to do |format|
+      @person.deactivated = true if global_prefs.email_verifications?
       if @person.save
         self.current_person = @person
         if global_prefs.email_verifications?
-          # TODO: move some of this into models.
-          @person.deactivated = true; @person.save!
-          @verification = EmailVerification.create(:person => @person)
-          @person.email_verifications << @verification
+          @person.email_verifications.create
           flash[:notice] = %(Thanks for signing up! A verification email has 
                              been sent to #{@person.email}.)
           format.html { redirect_to(home_url) }
