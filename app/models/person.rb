@@ -330,13 +330,15 @@ class Person < ActiveRecord::Base
     not deactivated?
   end
 
+  # Return the common connections with the given person.
   def common_connections_with(person, page = 1)
     sql = %(SELECT connections.*, COUNT(contact_id) FROM `connections`
+            INNER JOIN people contact ON connections.contact_id = contact.id
             WHERE ((person_id = ? OR person_id = ?)
-            AND status=?)
+                   AND status = ? AND contact.deactivated = ?)
             GROUP BY contact_id
             HAVING count(contact_id) = 2)
-    conditions = [sql, id, person.id, Connection::ACCEPTED]
+    conditions = [sql, id, person.id, Connection::ACCEPTED, false]
     opts = { :page => page, :per_page => RASTER_PER_PAGE }
     @common_connections ||= Connection.paginate_by_sql(conditions, opts)
   end

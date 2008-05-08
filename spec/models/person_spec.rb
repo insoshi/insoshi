@@ -110,23 +110,31 @@ describe Person do
     end
     
     it "should have contacts" do
-      Connection.request(@person, @contact)
-      Connection.accept(@person, @contact)      
+      Connection.connect(@person, @contact)
       @person.contacts.should == [@contact]
       @contact.contacts.should == [@person]
     end
     
-    it "should have common contacts with someone" do
-      quentin = people(:quentin)
-      aaron = people(:aaron)
-      kelly = people(:kelly)
-      Connection.request(quentin, aaron)
-      Connection.accept(quentin, aaron)      
-      Connection.request(kelly, aaron)
-      Connection.accept(kelly, aaron)      
-      quentin.common_connections_with(kelly).size.should == 1
+    describe "common contacts" do
+      
+      before(:each) do
+        @kelly = people(:kelly)
+        Connection.connect(@person, @contact)
+        Connection.connect(@kelly, @contact)
+      end
+      
+      it "should have common contacts with someone" do
+        common_connections = @person.common_connections_with(@kelly)
+        common_connections.size.should == 1
+        common_connections.map(&:contact).should == [@contact]
+      end
+    
+      it "should exclude deactivated people from common contacts" do
+        @contact.toggle!(:deactivated)
+        common_connections = @person.common_connections_with(@kelly)
+        common_connections.should be_empty
+      end
     end
-
   end
   
   describe "photo methods" do
