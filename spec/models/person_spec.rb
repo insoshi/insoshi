@@ -63,7 +63,6 @@ describe Person do
   end
   
   describe "contact associations" do
-    
     it "should have associated photos" do
       @person.photos.should_not be_nil
     end
@@ -86,6 +85,14 @@ describe Person do
       person = create_person(:save => true)
       admin = people(:admin)
       person.contacts.first.should == admin
+    end
+    
+    it "should not include deactivated users" do
+      contact = people(:aaron)
+      Connection.connect(@person, contact)
+      @person.contacts.should include_the(contact)
+      contact.toggle!(:deactivated)
+      @person.reload.contacts.should_not include_the(contact)
     end
     
   end

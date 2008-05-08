@@ -49,8 +49,11 @@ class Person < ActiveRecord::Base
   has_many :comments, :as => :commentable, :order => 'created_at DESC',
                       :limit => NUM_WALL_COMMENTS
   has_many :connections
+  
+  
   has_many :contacts, :through => :connections,
-                      :conditions => "status = #{Connection::ACCEPTED}",
+                      :conditions => [%(status = #{Connection::ACCEPTED} AND
+                                        deactivated = ?), false],
                       :order => 'people.created_at DESC'
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
@@ -88,6 +91,16 @@ class Person < ActiveRecord::Base
   after_update :log_activity_description_changed
 
   ## Class methods
+# SELECT  people.*   FROM  people   INNER  JOIN   connections  ON   people.id  =
+# connections.contact_id WHERE ((connections.person_id =  1) AND ((status = 0)))
+# ORDER                 BY                people.created_at                 DESC
+#   def contacts
+#     find(:all, 
+#          :joins => "INNER JOIN people p ON activities.person_id = p.id",
+#          :conditions => ["p.deactivated = ?", false], 
+#          :order => 'activities.created_at DESC',
+#          :limit => GLOBAL_FEED_SIZE)
+#   end
 
   class << self
 
