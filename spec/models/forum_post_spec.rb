@@ -33,7 +33,7 @@ describe ForumPost do
     end
     
     it "should add an activity to the poster" do
-      @post.person.recent_activity.include?(@activity).should == true
+      @post.person.recent_activity.should include_the(@activity)
     end
   end
 end

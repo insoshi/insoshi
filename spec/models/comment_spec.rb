@@ -33,7 +33,7 @@ describe Comment do
     
       before(:each) do
         @comment.save!
-        @activity = Activity.find_by_item_id(@comment)      
+        @activity = Activity.find_by_item_id(@comment)
       end
 
       it "should have an activity" do
@@ -41,12 +41,12 @@ describe Comment do
       end
     
       it "should add an activity to the poster" do
-        @comment.commentable.blog.person.activities.include?(@activity).
-          should == true
+        @comment.commentable.blog.person.activities.
+          should include_the(@activity)
       end
 
       it "should add an activity to the commenter" do
-        @comment.commenter.recent_activity.include?(@activity).should == true      
+        @comment.commenter.recent_activity.should include_the(@activity)
       end
     end
     

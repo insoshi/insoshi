@@ -37,7 +37,7 @@ describe Person do
     it "should log an activity if description changed" do
       @person.update_attributes(:description => "New Description")
       activity = Activity.find_by_item_id(@person)
-      Activity.global_feed.include?(activity).should == true
+      Activity.global_feed.should include_the(activity)
     end
     
     it "should not log an activity if description didn't change" do

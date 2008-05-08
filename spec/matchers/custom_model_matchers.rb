@@ -120,4 +120,32 @@ module CustomModelMatchers
     DestroyAssociated.new(attribute)
   end
   
+  
+  # Return true if an array includes the given attribute.
+  # Usage: @person.contacts.should include_the(@contact)
+  # N.B.  We can't say 'include' instead of 'include_the' because 
+  # 'include' is a Ruby reserved word.
+  class Include
+  
+    def initialize(attribute)
+      @attribute = attribute
+    end
+    
+    def matches?(object)
+      object.include?(@attribute)
+    end
+    
+    def failure_message
+      "Expected array to include #{@attribute}"
+    end
+    
+    def negative_failure_message
+      "Expected array not to include #{@attribute}"
+    end
+  end
+  
+  # 
+  def include_the(attribute)
+    Include.new(attribute)
+  end
 end
