@@ -58,15 +58,35 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.new(params[:message].merge(:sender => current_person,
-                                                  :recipient => @recipient))
     
-    respond_to do |format|
-      if @message.save
-        flash[:success] = 'Message sent!'
-        format.html { redirect_to messages_url }
-      else
-        format.html { render :action => "new" }
+    if params["commit"] == "Send to all" and current_person.admin?
+      # Send messages to all (active) people.
+      messages = Person.active.inject([]) do |messages, person|
+        message = Message.new(params[:message].merge(:sender => current_person,
+                                                     :recipient => person))
+        messages.push(message)
+      end
+      respond_to do |format|
+        @message = messages.first
+        if @message.save
+          messages.each { |m| m.save }
+          flash[:success] = 'Message sent to everyone!'
+          format.html { redirect_to messages_url }
+        else
+          format.html { render :action => "new" }
+        end
+      end
+    else
+      @message = Message.new(params[:message].merge(:sender => current_person,
+                                                    :recipient => @recipient))
+    
+      respond_to do |format|
+        if @message.save
+          flash[:success] = 'Message sent!'
+          format.html { redirect_to messages_url }
+        else
+          format.html { render :action => "new" }
+        end
       end
     end
   end

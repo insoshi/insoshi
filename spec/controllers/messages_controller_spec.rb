@@ -72,6 +72,16 @@ describe MessagesController do
       end.should change(Message, :count).by(1)
     end
     
+    it "should sent messages to all (active) people" do
+      login_as(:admin)
+      lambda do
+        post :create, :message => { :subject => "The subject",
+                                    :content => "Hey there!" },
+                      :person_id => @other_person,
+                      :commit => "Send to all"
+      end.should change(Message, :count).by(Person.active.length)
+    end
+    
     it "should send a message receipt email" do
       lambda do
         post :create, :message => { :subject => "The subject",

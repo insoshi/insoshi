@@ -35,6 +35,9 @@
     <div class="form_row">
       <%= f.submit "Send!", :class => "button", :id => "message_submit" %>
       <%= f.submit "Cancel", :class => "button", :id => "cancel" %>
+      <%- if current_person?(@recipient) and current_person.admin? -%>
+        <%= f.submit "Send to all", :class => "button", :id => "all_people" %>
+      <%- end -%>
     </div>
   <% end %>
 <%- end -%>
