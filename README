@@ -33,17 +33,21 @@ http://docs.insoshi.com
 
 ### Libraries
 
-You'll need to install FreeImage, SQLite, and (optionally) MySQL.  Install instructions for all three are easy to find using Google.
+You'll need to install FreeImage or some other image processor (such as ImageMagick/RMagick), SQLite, and (optionally) MySQL.  Install instructions for all three are easy to find using Google.
 
 ### Gems
 
 You probably have Rails already, but might not have the others.
 
 $ sudo gem install rails
-$ sudo gem install image_science
 $ sudo gem install ferret
 $ sudo gem install sqlite3-ruby
 $ sudo gem install mysql
+
+If you're using FreeImage/ImageScience, you'll also need the image_science gem:
+
+$ sudo gem install image_science
+
 
 ## Installing the app
 
@@ -94,7 +98,7 @@ Then prepare the test database and run the tests (which are actually RSpec examp
 $ rake db:test:prepare
 $ rake spec
 
-If the tests fail in the Photos controller test, double-check that FreeImage and the image_science gem are installed.
+If the tests fail in the Photos controller test, double-check that an image processor is properly installed.
 
 ### Loading sample data
 
