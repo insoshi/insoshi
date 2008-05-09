@@ -19,16 +19,21 @@ module ApplicationHelper
       photos   = menu_element("Photos",   photos_path)
       contacts = menu_element("Contacts",
                               person_connections_path(current_person))
-      [home, profile, contacts, messages, blog, people, forum, resources]
+      links = [home, profile, contacts, messages, blog, people, forum]
     elsif logged_in? and admin_view?
       home =    menu_element("Home", home_path)
       people =  menu_element("People", admin_people_path)
       forums =  menu_element(inflect("Forum", Forum.count),
                              admin_forums_path)
       preferences = menu_element("Prefs", admin_preferences_path)
-      [home, people, forums, preferences]
+      links = [home, people, forums, preferences]
     else
-      [home, people, forum, resources]
+      links = [home, people]
+    end
+    if global_prefs.about.blank?
+      links
+    else
+      links.push(menu_element("About", about_url))
     end
   end
   
