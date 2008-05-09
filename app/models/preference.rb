@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20
+# Schema version: 21
 #
 # Table name: preferences
 #
@@ -13,6 +13,7 @@
 #  analytics           :text            
 #  server_name         :string(255)     
 #  app_name            :string(255)     
+#  about               :text            
 #
 
 class Preference < ActiveRecord::Base
