@@ -2,8 +2,8 @@ module SearchesHelper
   
   # Return the model to be searched based on params.
   def search_model
-    return "Person"    if params[:controller] == "home"
-    return "ForumPost" if params[:controller] == "forums"
+    return "Person"    if params[:controller] =~ /home/
+    return "ForumPost" if params[:controller] =~ /forums/
     params[:model] || params[:controller].classify
   end
   
