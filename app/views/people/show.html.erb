@@ -2,10 +2,18 @@
   <div class="profile vcard">
     <h2>Profile: <span class="fn n"><%= h @person.name %></span></h2>
     <%- if current_person?(@person) -%>
-      <div class="notice">
-        You are viewing your own profile.
-        <%= link_to "Click here to edit it", edit_person_path(@person) %>
-      </div>
+      <%- if current_person.description.blank? -%>
+        <div class="error">
+          Your description is blank.
+          <%= link_to "Click here to add a description",
+                      edit_person_path(@person) %>
+        </div>
+      <%- else -%>
+        <div class="notice">
+          You are viewing your own profile.
+          <%= link_to "Click here to edit it", edit_person_path(@person) %>
+        </div>
+      <%- end -%>
     <%- end -%>
     <div class="toolbox">
       <%= image_tag @person.main_photo, :class => "profile-image photo",
