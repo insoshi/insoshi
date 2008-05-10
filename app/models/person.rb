@@ -90,18 +90,6 @@ class Person < ActiveRecord::Base
   before_update :set_old_description
   after_update :log_activity_description_changed
 
-  ## Class methods
-# SELECT  people.*   FROM  people   INNER  JOIN   connections  ON   people.id  =
-# connections.contact_id WHERE ((connections.person_id =  1) AND ((status = 0)))
-# ORDER                 BY                people.created_at                 DESC
-#   def contacts
-#     find(:all, 
-#          :joins => "INNER JOIN people p ON activities.person_id = p.id",
-#          :conditions => ["p.deactivated = ?", false], 
-#          :order => 'activities.created_at DESC',
-#          :limit => GLOBAL_FEED_SIZE)
-#   end
-
   class << self
 
     # Return the active users.
