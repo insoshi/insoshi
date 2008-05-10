@@ -4,19 +4,19 @@
 # Table name: people
 #
 #  id                        :integer(11)     not null, primary key
-#  email                     :string(255)     
-#  name                      :string(255)     
-#  remember_token            :string(255)     
-#  crypted_password          :string(255)     
-#  description               :text            
-#  remember_token_expires_at :datetime        
-#  last_contacted_at         :datetime        
-#  last_logged_in_at         :datetime        
+#  email                     :string(255)
+#  name                      :string(255)
+#  remember_token            :string(255)
+#  crypted_password          :string(255)
+#  description               :text
+#  remember_token_expires_at :datetime
+#  last_contacted_at         :datetime
+#  last_logged_in_at         :datetime
 #  forum_posts_count         :integer(11)     default(0), not null
 #  blog_post_comments_count  :integer(11)     default(0), not null
 #  wall_comments_count       :integer(11)     default(0), not null
-#  created_at                :datetime        
-#  updated_at                :datetime        
+#  created_at                :datetime
+#  updated_at                :datetime
 #  admin                     :boolean(1)      not null
 #  deactivated               :boolean(1)      not null
 #
@@ -49,8 +49,8 @@ class Person < ActiveRecord::Base
   has_many :comments, :as => :commentable, :order => 'created_at DESC',
                       :limit => NUM_WALL_COMMENTS
   has_many :connections
-  
-  
+
+
   has_many :contacts, :through => :connections,
                       :conditions => [%(status = #{Connection::ACCEPTED} AND
                                         deactivated = ?), false],
@@ -84,9 +84,10 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of   :email
 
   before_create :create_blog
-  before_save :downcase_email, :encrypt_password
+  before_save :encrypt_password
+  before_validation :prepare_email
   after_create :connect_to_admin
-  
+
   before_update :set_old_description
   after_update :log_activity_description_changed
 
@@ -95,9 +96,9 @@ class Person < ActiveRecord::Base
 # connections.contact_id WHERE ((connections.person_id =  1) AND ((status = 0)))
 # ORDER                 BY                people.created_at                 DESC
 #   def contacts
-#     find(:all, 
+#     find(:all,
 #          :joins => "INNER JOIN people p ON activities.person_id = p.id",
-#          :conditions => ["p.deactivated = ?", false], 
+#          :conditions => ["p.deactivated = ?", false],
 #          :order => 'activities.created_at DESC',
 #          :limit => GLOBAL_FEED_SIZE)
 #   end
@@ -126,7 +127,7 @@ class Person < ActiveRecord::Base
       find(:all, :order => "people.created_at DESC",
                  :include => :photos, :limit => NUM_RECENT)
     end
-    
+
     # Return the first admin created.
     # We suggest using this admin as the primary administrative contact.
     def find_first_admin
@@ -231,11 +232,11 @@ class Person < ActiveRecord::Base
   def icon
     photo.nil? ? "default_icon.png" : photo.public_filename(:icon)
   end
-  
+
   def bounded_icon
     photo.nil? ? "default_icon.png" : photo.public_filename(:bounded_icon)
   end
-  
+
   # Return the photos ordered by primary first, then by created_at.
   # They are already ordered by created_at as per the has_many association.
   def sorted_photos
@@ -250,7 +251,7 @@ class Person < ActiveRecord::Base
   # Authenticates a user by their email address and unencrypted password.
   # Returns the user or nil.
   def self.authenticate(email, password)
-    u = find_by_email(email.downcase) # need to get the salt
+    u = find_by_email(email.downcase.strip) # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
 
@@ -325,7 +326,7 @@ class Person < ActiveRecord::Base
                                               true, false])
     admin? and num_admins == 1
   end
-  
+
   def active?
     not deactivated?
   end
@@ -347,19 +348,19 @@ class Person < ActiveRecord::Base
 
     ## Callbacks
 
-    def downcase_email
-      self.email = email.downcase
+    def prepare_email
+      self.email = email.downcase.strip if email
     end
 
     def encrypt_password
       return if password.blank?
       self.crypted_password = encrypt(password)
     end
-    
+
     def set_old_description
       @old_description = Person.find(self).description
     end
-    
+
     def log_activity_description_changed
       unless @old_description == description
         add_activities(:item => self, :person => self)
