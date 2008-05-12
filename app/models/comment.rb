@@ -75,9 +75,9 @@ class Comment < ActiveRecord::Base
     
     def send_receipt_reminder
       if wall_comment?
-        # @send_mail ||= Comment.global_prefs.email_notifications? &&
-        #                commented_person.wall_comment_notifications?
-        # PersonMailer.deliver_wall_comment_notification(self) if @send_mail
+        @send_mail ||= Comment.global_prefs.email_notifications? &&
+                       commented_person.wall_comment_notifications?
+        PersonMailer.deliver_wall_comment_notification(self) if @send_mail
       elsif blog_post_comment?
         @send_mail ||= Comment.global_prefs.email_notifications? &&
                        commented_person.blog_comment_notifications?
