@@ -19,14 +19,22 @@ describe Connection do
       status(@contact, @person).should == Connection::REQUESTED
     end
   
-    it "should send a request notification when notifications are on" do
+    it "should send an email when global and notifications are on" do
       @global_prefs.update_attributes(:email_notifications => true)
       lambda do
         Connection.request(@person, @contact)
       end.should change(@emails, :length).by(1)
     end
     
-    it "should not send a request notification when notifications are off" do
+    it "should not send an email when contact's notifications are off" do
+      @global_prefs.update_attributes(:email_notifications => true)
+      @contact.toggle!(:connection_notifications)
+      lambda do
+        Connection.request(@person, @contact)
+      end.should_not change(@emails, :length).by(1)      
+    end
+    
+    it "should not send an email when global notifications are off" do
       @global_prefs.update_attributes(:email_notifications => false)
       lambda do
         Connection.request(@person, @contact)
