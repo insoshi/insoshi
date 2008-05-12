@@ -1,3 +1,7 @@
-You have a new connection request from <%= @connection.contact.name %>
+You have a new connection request from <%= @connection.person.name %>:
 
 http://<%= @domain %>/connections/<%= @connection.to_param %>/edit
+
+To change your email notification preferences, visit
+
+http://<%= @domain %>/people/<%= @connection.contact.to_param %>

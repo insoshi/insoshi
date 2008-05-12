@@ -60,6 +60,37 @@ describe Comment do
         @person.activities.should have_distinct_elements
       end
     end
+    
+    # describe "email notifications" do
+    #   
+    #   before(:each) do
+    #     @emails = ActionMailer::Base.deliveries
+    #     @emails.clear
+    #     @global_prefs = Preference.find(:first)
+    #   end
+    #   
+    #   it "should send an email when global/recipient notifications are on" do
+    #     # Both notifications are on by default.
+    #     lambda do
+    #       @comment.save
+    #     end.should change(@emails, :length).by(1)
+    #   end
+    #   
+    #   it "should not send an email when recipient's notifications are off" do
+    #     @recipient.toggle!(:message_notifications)
+    #     @recipient.message_notifications.should == false
+    #     lambda do
+    #       @comment.save
+    #     end.should_not change(@emails, :length).by(1)      
+    #   end
+    #   
+    #   it "should not send an email when global notifications are off" do
+    #     @global_prefs.update_attributes(:email_notifications => false)
+    #     lambda do
+    #       @comment.save
+    #     end.should_not change(@emails, :length).by(1)      
+    #   end
+    # end
   end
 
   describe "wall comments" do

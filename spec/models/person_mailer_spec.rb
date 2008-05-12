@@ -50,19 +50,29 @@ describe PersonMailer do
        @connection = Connection.request(people(:quentin), people(:aaron))
        @email = PersonMailer.create_connection_request(@connection)
        @person = @connection.person
+       @contact = @connection.contact
      end
      
      it "should have the right recipient" do
-       @email.to.first.should == @connection.contact.email
+       @email.to.first.should == @contact.email
      end
      
-     it "should have a URL to the contact" do
+     it "should have the right requester" do
+       @email.body.should =~ /#{@person.name}/
+     end
+     
+     it "should have a URL to the connection" do
        url = "/connections/#{@connection.id}/edit"
        @email.body.should =~ /#{url}/
      end
    
      it "should have the right domain in the body" do
         @email.body.should =~ /#{@preferences.domain}/
+     end
+     
+     it "should have a link to the sender's preferences" do
+       prefs_url = "#{@preferences.domain}/people/#{@contact.to_param}"
+       @email.body.should =~ /#{prefs_url}/
      end
    end
    
