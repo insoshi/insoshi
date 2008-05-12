@@ -71,7 +71,7 @@ describe PersonMailer do
      end
      
      it "should have a link to the sender's preferences" do
-       prefs_url = "#{@preferences.domain}/people/#{@contact.to_param}"
+       prefs_url = "#{@preferences.domain}/people/#{@contact.to_param}/edit"
        @email.body.should =~ /#{prefs_url}/
      end
    end

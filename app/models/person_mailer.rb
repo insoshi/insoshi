@@ -20,11 +20,11 @@ class PersonMailer < ActionMailer::Base
   end
   
   def connection_request(connection)
-    # raise connection.person_id.inspect
     from         "Contact request <connection@#{domain}>"
     recipients   connection.contact.email
     subject      "New contact request"
-    body         "domain" => domain, "connection" => connection
+    body         "domain" => domain, "connection" => connection,
+                 "preferences_note" => preferences_note(connection.contact)
   end
   
   def email_verification(ev)
@@ -36,4 +36,12 @@ class PersonMailer < ActionMailer::Base
     body         "server_name" => PersonMailer.global_prefs.server_name,
                  "code" => ev.code
   end
+  
+  private
+  
+    def preferences_note(person)
+      %(To change your email notification preferences, visit
+      
+http://#{domain}/people/#{person.to_param}/edit)
+    end
 end
