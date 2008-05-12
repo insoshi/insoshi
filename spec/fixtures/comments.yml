@@ -1,6 +1,6 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-wall:
+wall_comment:
   commenter: aaron
   body: MyText
   commentable: quentin

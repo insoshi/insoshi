@@ -40,6 +40,16 @@ class PersonMailer < ActionMailer::Base
                     preferences_note(comment.commented_person)
   end
   
+  def wall_comment_notification(comment)
+    from         "Comment notification <comment@#{domain}>"
+    recipients   comment.commented_person.email
+    subject      "New blog comment"
+    body         "domain" => domain, "comment" => comment,
+                 "url" => person_path(comment.commentable, :anchor => "wall"),
+                 "preferences_note" => 
+                    preferences_note(comment.commented_person)
+  end
+  
   def email_verification(ev)
     name = PersonMailer.global_prefs.app_name
     label = name.nil? || name.blank? ? "" : "[#{name}] "

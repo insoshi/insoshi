@@ -106,6 +106,35 @@ describe PersonMailer do
      end
    end
    
+   describe "wall comment notification" do
+     
+     before(:each) do
+       @comment = comments(:wall_comment)
+       @email = PersonMailer.create_wall_comment_notification(@comment)
+       @recipient = @comment.commented_person
+       @commenter = @comment.commenter
+     end
+     
+     it "should have the right recipient" do
+       @email.to.first.should == @recipient.email
+     end
+     
+     it "should have the right commenter" do
+       @email.body.should =~ /#{@commenter.name}/
+     end
+     
+     it "should have a link to the comment" do
+       url = "http://#{@preferences.domain}"
+       url += "/people/#{@comment.commentable.to_param}#wall"
+       @email.body.should =~ /#{url}/
+     end
+     
+     it "should have a link to the recipient's preferences" do
+       prefs_url = "#{@preferences.domain}/people/#{@recipient.to_param}/edit"
+       @email.body.should =~ /#{prefs_url}/
+     end
+   end
+   
    describe "email verification" do
      
      before(:each) do
