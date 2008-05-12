@@ -130,7 +130,7 @@ class Message < Communication
 
   private
   
-    # Mark the parent message as replied to the current message as a reply.
+    # Mark the parent message as replied to if the current message is a reply.
     def set_replied_to
       parent.update_attributes!(:replied_at => Time.now) if reply?
     end
