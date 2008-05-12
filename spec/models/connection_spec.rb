@@ -4,8 +4,9 @@ describe Connection do
   
   before(:each) do
     @emails = ActionMailer::Base.deliveries
-    @emails.clear    
-
+    @emails.clear
+    @global_prefs = Preference.find(:first)
+    
     @person = people(:quentin)
     @contact = people(:aaron)
   end
@@ -18,10 +19,18 @@ describe Connection do
       status(@contact, @person).should == Connection::REQUESTED
     end
   
-    it "should send a request notification" do
+    it "should send a request notification when notifications are on" do
+      @global_prefs.update_attributes(:email_notifications => true)
       lambda do
-        Connection.request(@person, @contact, mail = true)
+        Connection.request(@person, @contact)
       end.should change(@emails, :length).by(1)
+    end
+    
+    it "should not send a request notification when notifications are off" do
+      @global_prefs.update_attributes(:email_notifications => false)
+      lambda do
+        Connection.request(@person, @contact)
+      end.should_not change(@emails, :length).by(1)      
     end
     
     it "should accept a request" do
