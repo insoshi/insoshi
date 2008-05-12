@@ -1,6 +1,6 @@
-# This controller handles the login/logout function of the site.  
+# This controller handles the login/logout function of the site.
 class SessionsController < ApplicationController
-  
+
   skip_before_filter :require_activation, :only => [:new, :destroy]
 
   def new
@@ -19,8 +19,8 @@ class SessionsController < ApplicationController
       current_person.save!
       if params[:remember_me] == "1"
         self.current_person.remember_me
-        cookies[:auth_token] = { 
-          :value => self.current_person.remember_token, 
+        cookies[:auth_token] = {
+          :value => self.current_person.remember_token,
           :expires => self.current_person.remember_token_expires_at }
       end
       if current_person.deactivated?
@@ -36,7 +36,7 @@ class SessionsController < ApplicationController
     else
       @body = "login single-col"
       flash.now[:error] = "Invalid email/password combination"
-      params[:password] = nil      
+      params[:password] = nil
       render :action => 'new'
     end
   end
