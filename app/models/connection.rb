@@ -47,10 +47,10 @@ class Connection < ActiveRecord::Base
     alias exist? exists?
   
     # Make a pending connection request.
-    def request(person, contact, mail = nil)
-      if mail.nil?
-        mail = global_prefs.email_notifications? &&
-               contact.connection_notifications?
+    def request(person, contact, send_mail = nil)
+      if send_mail.nil?
+        send_mail = global_prefs.email_notifications? &&
+                    contact.connection_notifications?
       end
       if person == contact or Connection.exists?(person, contact)
         nil
@@ -60,7 +60,7 @@ class Connection < ActiveRecord::Base
           create(:person => contact, :contact => person, :status => REQUESTED)
         end
         connection = conn(person, contact)
-        PersonMailer.deliver_connection_request(connection) if mail
+        PersonMailer.deliver_connection_request(connection) if send_mail
         connection
       end
     end

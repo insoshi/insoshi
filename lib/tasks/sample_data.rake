@@ -73,10 +73,10 @@ def make_messages(text)
     subject = some_text(SMALL_STRING_LENGTH)
     Message.create!(:subject => subject, :content => text, 
                     :sender => sender, :recipient => michael,
-                    :skip_send_mail => true)
+                    :send_mail => false)
     Message.create!(:subject => subject, :content => text, 
                     :sender => michael, :recipient => sender,
-                    :skip_send_mail => true)
+                    :send_mail => false)
   end
 end
 

@@ -22,7 +22,7 @@
 class Message < Communication
   extend PreferencesHelper
   
-  attr_accessor :reply, :parent, :skip_send_mail
+  attr_accessor :reply, :parent, :send_mail
   acts_as_ferret :fields => [ :subject, :content ] if search?
   
   MAX_CONTENT_LENGTH = MAX_TEXT_LENGTH
@@ -144,7 +144,7 @@ class Message < Communication
     end
     
     def send_receipt_reminder
-      @skip_send_mail ||= !Message.global_prefs.email_notifications
-      PersonMailer.deliver_message_notification(self) unless @skip_send_mail
+      @send_mail ||= Message.global_prefs.email_notifications?
+      PersonMailer.deliver_message_notification(self) if @send_mail
     end
 end
