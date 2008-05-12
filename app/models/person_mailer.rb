@@ -23,8 +23,21 @@ class PersonMailer < ActionMailer::Base
     from         "Contact request <connection@#{domain}>"
     recipients   connection.contact.email
     subject      "New contact request"
-    body         "domain" => domain, "connection" => connection,
+    body         "domain" => domain,
+                 "connection" => connection,
+                 "url" => edit_connection_path(connection),
                  "preferences_note" => preferences_note(connection.contact)
+  end
+  
+  def blog_comment_notification(comment)
+    from         "Comment notification <comment@#{domain}>"
+    recipients   comment.commented_person.email
+    subject      "New blog comment"
+    body         "domain" => domain, "comment" => comment,
+                 "url" => 
+                 blog_post_path(comment.commentable.blog, comment.commentable),
+                 "preferences_note" => 
+                    preferences_note(comment.commented_person)
   end
   
   def email_verification(ev)

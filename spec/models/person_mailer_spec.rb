@@ -62,7 +62,7 @@ describe PersonMailer do
      end
      
      it "should have a URL to the connection" do
-       url = "/connections/#{@connection.id}/edit"
+       url = "http://#{@preferences.domain}/connections/#{@connection.id}/edit"
        @email.body.should =~ /#{url}/
      end
    
@@ -70,8 +70,38 @@ describe PersonMailer do
         @email.body.should =~ /#{@preferences.domain}/
      end
      
-     it "should have a link to the sender's preferences" do
+     it "should have a link to the recipient's preferences" do
        prefs_url = "#{@preferences.domain}/people/#{@contact.to_param}/edit"
+       @email.body.should =~ /#{prefs_url}/
+     end
+   end
+   
+   describe "blog comment notification" do
+     
+     before(:each) do
+       @comment = comments(:blog_comment)
+       @email = PersonMailer.create_blog_comment_notification(@comment)
+       @recipient = @comment.commented_person
+       @commenter = @comment.commenter
+     end
+     
+     it "should have the right recipient" do
+       @email.to.first.should == @recipient.email
+     end
+     
+     it "should have the right commenter" do
+       @email.body.should =~ /#{@commenter.name}/
+     end
+     
+     it "should have a link to the comment" do
+       url = "http://#{@preferences.domain}"
+       url += "/blogs/#{@comment.commentable.blog.to_param}"
+       url += "/posts/#{@comment.commentable.to_param}"
+       @email.body.should =~ /#{url}/
+     end
+     
+     it "should have a link to the recipient's preferences" do
+       prefs_url = "#{@preferences.domain}/people/#{@recipient.to_param}/edit"
        @email.body.should =~ /#{prefs_url}/
      end
    end

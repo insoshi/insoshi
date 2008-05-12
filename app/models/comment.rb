@@ -32,6 +32,18 @@ class Comment < ActiveRecord::Base
                              :if => :wall_comment?
   
   after_create :log_activity
+    
+  # Return the person for the thing commented on.
+  # For example, for blog post comments it's the blog's person
+  # For wall comments, it's the person himself.
+  def commented_person
+    @commented_person ||= case commentable.class.to_s
+                          when "Person"
+                            commentable
+                          when "BlogPost"
+                            commentable.blog.person
+                          end
+  end
   
   private
     
@@ -41,18 +53,6 @@ class Comment < ActiveRecord::Base
   
     def blog_post_comment?
       commentable.class.to_s == "BlogPost"
-    end
-    
-    # Return the person for the thing commented on.
-    # For example, for blog post comments it's the blog's person
-    # For wall comments, it's the person himself.
-    def commented_person
-      @commented_person ||= case commentable.class.to_s
-                            when "Person"
-                              commentable
-                            when "BlogPost"
-                              commentable.blog.person
-                            end
     end
   
     def log_activity
