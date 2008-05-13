@@ -25,12 +25,12 @@ class PersonMailer < ActionMailer::Base
   
   def connection_request(connection)
     from         "Contact request <connection@#{domain}>"
-    recipients   connection.contact.email
+    recipients   connection.person.email
     subject      formatted_subject("New contact request")
     body         "domain" => server,
                  "connection" => connection,
                  "url" => edit_connection_path(connection),
-                 "preferences_note" => preferences_note(connection.contact)
+                 "preferences_note" => preferences_note(connection.person)
   end
   
   def blog_comment_notification(comment)
