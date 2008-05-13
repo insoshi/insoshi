@@ -4,6 +4,7 @@ describe PersonMailer do
   
   before(:each) do
     @preferences = preferences(:one)
+    @server = @preferences.server_name
   end
   
   describe "password reminder" do
@@ -13,7 +14,7 @@ describe PersonMailer do
      end
    
      it "should have the right sender" do
-       @email.from.first.should == "password-reminder@example.com"
+       @email.from.first.should == "password-reminder@#{@server}"
      end
    
      it "should have the right recipient" do
@@ -32,7 +33,7 @@ describe PersonMailer do
      end
    
      it "should have the right sender" do
-       @email.from.first.should == "message@example.com"
+       @email.from.first.should == "message@#{@server}"
      end
    
      it "should have the right recipient" do
@@ -40,7 +41,7 @@ describe PersonMailer do
      end
 
      it "should have the right domain in the body" do
-        @email.body.should =~ /#{@preferences.domain}/
+        @email.body.should =~ /#{@server}/
      end
    end
    
@@ -62,16 +63,17 @@ describe PersonMailer do
      end
      
      it "should have a URL to the connection" do
-       url = "http://#{@preferences.domain}/connections/#{@connection.id}/edit"
+       url = "http://#{@server}/connections/#{@connection.id}/edit"
        @email.body.should =~ /#{url}/
      end
    
      it "should have the right domain in the body" do
-        @email.body.should =~ /#{@preferences.domain}/
+        @email.body.should =~ /#{@server}/
      end
      
      it "should have a link to the recipient's preferences" do
-       prefs_url = "#{@preferences.domain}/people/#{@contact.to_param}/edit"
+       prefs_url = "http://#{@server}"
+       prefs_url += "/people/#{@contact.to_param}/edit"
        @email.body.should =~ /#{prefs_url}/
      end
    end
@@ -94,14 +96,15 @@ describe PersonMailer do
      end
      
      it "should have a link to the comment" do
-       url = "http://#{@preferences.domain}"
+       url = "http://#{@server}"
        url += "/blogs/#{@comment.commentable.blog.to_param}"
        url += "/posts/#{@comment.commentable.to_param}"
        @email.body.should =~ /#{url}/
      end
      
      it "should have a link to the recipient's preferences" do
-       prefs_url = "#{@preferences.domain}/people/#{@recipient.to_param}/edit"
+       prefs_url = "http://#{@server}/people/"
+       prefs_url += "#{@recipient.to_param}/edit"
        @email.body.should =~ /#{prefs_url}/
      end
    end
@@ -124,13 +127,13 @@ describe PersonMailer do
      end
      
      it "should have a link to the comment" do
-       url = "http://#{@preferences.domain}"
+       url = "http://#{@server}"
        url += "/people/#{@comment.commentable.to_param}#wall"
        @email.body.should =~ /#{url}/
      end
      
      it "should have a link to the recipient's preferences" do
-       prefs_url = "#{@preferences.domain}/people/#{@recipient.to_param}/edit"
+       prefs_url = "#{@server}/people/#{@recipient.to_param}/edit"
        @email.body.should =~ /#{prefs_url}/
      end
    end
@@ -147,12 +150,12 @@ describe PersonMailer do
      end
      
      it "should have a URL to the verification page" do
-       url = "/people/verify/#{@ev.code}"
+       url = "http://#{@server}/people/verify/#{@ev.code}"
        @email.body.should =~ /#{url}/
      end
 
      it "should have the right server name in the body" do
-       @email.body.should =~ /#{@preferences.server_name}/
+       @email.body.should =~ /#{@server}/
      end
    end
 end

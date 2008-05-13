@@ -2,6 +2,7 @@
 
 one:
   domain: example.com
+  server_name: server.example.net
   smtp_server: smtp.example.com
   email_notifications: true
   email_verifications: false
