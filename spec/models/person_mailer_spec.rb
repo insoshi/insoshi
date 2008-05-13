@@ -49,10 +49,11 @@ describe PersonMailer do
    describe "connection request" do
      
      before(:each) do
-       @connection = Connection.request(people(:quentin), people(:aaron))
+       @person  = people(:quentin)
+       @contact = people(:aaron)
+       Connection.request(@person, @contact)
+       @connection = Connection.conn(@contact, @person)
        @email = PersonMailer.create_connection_request(@connection)
-       @person = @connection.person
-       @contact = @connection.contact
      end
      
      it "should have the right recipient" do
