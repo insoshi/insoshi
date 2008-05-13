@@ -149,6 +149,10 @@ describe PersonMailer do
        @email.to.first.should == @ev.person.email
      end
      
+     it "should have the right subject" do
+       @email.subject.should == "[Example] Email verification"
+     end
+     
      it "should have a URL to the verification page" do
        url = "http://#{@server}/people/verify/#{@ev.code}"
        @email.body.should =~ /#{url}/
