@@ -31,39 +31,42 @@
         <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
       </div>
       
-      <br />
+      <%- if global_prefs.email_notifications? -%>
       
-      <h3>Email notification preferences</h3>
+        <br />
       
-      <p>
-        You will receive email notifications
-        for each event type whose box is checked.
-      </p>
+        <h3>Email notification preferences</h3>
+      
+        <p>
+          You will receive email notifications
+          for each event type whose box is checked.
+        </p>
         
       
-      <div class="form_row">
-        <p>
-        <label for="connection_notifications"
-               class="checkbox">Connections:</label>
-        <%= f.check_box :connection_notifications %>
-        </p>
-        <p>
-        <label for="message_notifications"
-               class="checkbox">Messages:</label>
-        <%= f.check_box :message_notifications %>
-        </p>
-        <p>
-        <label for="wall_comment_notifications"
-               class="checkbox">Wall comments:</label>
-        <%= f.check_box :wall_comment_notifications %>
-        </p>
-        <p>
-        <label for="blog_comment_notifications"
-               class="checkbox">Blog comments:</label>
-        <%= f.check_box :blog_comment_notifications %>
-        </p>
-      </div>
-    
+        <div class="form_row">
+          <p>
+          <label for="connection_notifications"
+                 class="checkbox">Connections:</label>
+          <%= f.check_box :connection_notifications %>
+          </p>
+          <p>
+          <label for="message_notifications"
+                 class="checkbox">Messages:</label>
+          <%= f.check_box :message_notifications %>
+          </p>
+          <p>
+          <label for="wall_comment_notifications"
+                 class="checkbox">Wall comments:</label>
+          <%= f.check_box :wall_comment_notifications %>
+          </p>
+          <p>
+          <label for="blog_comment_notifications"
+                 class="checkbox">Blog comments:</label>
+          <%= f.check_box :blog_comment_notifications %>
+          </p>
+        </div>
+      <%- end -%>
+      
       <br />
   
       <div class="form_row">
