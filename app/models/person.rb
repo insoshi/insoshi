@@ -32,7 +32,9 @@ class Person < ActiveRecord::Base
   attr_accessor :password, :verify_password, :new_password,
                 :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
-                  :description
+                  :description, :connection_notifications,
+                  :message_notifications, :wall_comment_notifications,
+                  :blog_comment_notifications
   acts_as_ferret :fields => [ :name, :description ] if search?
 
   MAX_EMAIL = MAX_PASSWORD = SMALL_STRING_LENGTH
