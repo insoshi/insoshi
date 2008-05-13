@@ -4,10 +4,10 @@
 
   <%= will_paginate %>
 
-  <table>
+  <ul class="list people">
     <%= render :partial => 'person', :collection => @people %>
-  </table>
-
+  </ul>
+  
   <%= will_paginate %>
 <%- end -%>
 
