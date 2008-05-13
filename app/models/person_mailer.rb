@@ -10,21 +10,21 @@ class PersonMailer < ActionMailer::Base
   end
   
   def password_reminder(person)
-    from         "Password reminder <password-reminder@#{server}>"
+    from         "Password reminder <password-reminder@#{domain}>"
     recipients   person.email
     subject      formatted_subject("Password reminder")
     body         "domain" => server, "person" => person
   end
   
   def message_notification(message)
-    from         "Message notification <message@#{server}>"
+    from         "Message notification <message@#{domain}>"
     recipients   message.recipient.email
     subject      formatted_subject("New message")
     body         "domain" => server, "message" => message
   end
   
   def connection_request(connection)
-    from         "Contact request <connection@#{server}>"
+    from         "Contact request <connection@#{domain}>"
     recipients   connection.contact.email
     subject      formatted_subject("New contact request")
     body         "domain" => server,
@@ -34,7 +34,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def blog_comment_notification(comment)
-    from         "Comment notification <comment@#{server}>"
+    from         "Comment notification <comment@#{domain}>"
     recipients   comment.commented_person.email
     subject      formatted_subject("New blog comment")
     body         "domain" => server, "comment" => comment,
@@ -45,7 +45,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def wall_comment_notification(comment)
-    from         "Comment notification <comment@#{server}>"
+    from         "Comment notification <comment@#{domain}>"
     recipients   comment.commented_person.email
     subject      formatted_subject("New wall comment")
     body         "domain" => server, "comment" => comment,
@@ -55,7 +55,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def email_verification(ev)
-    from         "Email verification <email@#{server}>"
+    from         "Email verification <email@#{domain}>"
     recipients   ev.person.email
     subject      formatted_subject("Email verification")
     body         "server_name" => server,

@@ -5,6 +5,7 @@ describe PersonMailer do
   before(:each) do
     @preferences = preferences(:one)
     @server = @preferences.server_name
+    @domain = @preferences.domain
   end
   
   describe "password reminder" do
@@ -14,7 +15,7 @@ describe PersonMailer do
      end
    
      it "should have the right sender" do
-       @email.from.first.should == "password-reminder@#{@server}"
+       @email.from.first.should == "password-reminder@#{@domain}"
      end
    
      it "should have the right recipient" do
@@ -33,7 +34,7 @@ describe PersonMailer do
      end
    
      it "should have the right sender" do
-       @email.from.first.should == "message@#{@server}"
+       @email.from.first.should == "message@#{@domain}"
      end
    
      it "should have the right recipient" do
@@ -133,7 +134,7 @@ describe PersonMailer do
      end
      
      it "should have a link to the recipient's preferences" do
-       prefs_url = "#{@server}/people/#{@recipient.to_param}/edit"
+       prefs_url = "http://#{@server}/people/#{@recipient.to_param}/edit"
        @email.body.should =~ /#{prefs_url}/
      end
    end
