@@ -250,7 +250,7 @@ class Person < ActiveRecord::Base
   end
 
   def self.encrypt(password)
-    Crypto::Key.from_file('rsa_key.pub').encrypt(password)
+    Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key.pub").encrypt(password)
   end
 
   # Encrypts the password with the user salt
@@ -259,7 +259,7 @@ class Person < ActiveRecord::Base
   end
 
   def decrypt(password)
-    Crypto::Key.from_file('rsa_key').decrypt(password)
+    Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key").decrypt(password)
   end
 
   def authenticated?(password)
