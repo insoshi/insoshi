@@ -68,11 +68,12 @@ class MessagesController < ApplicationController
       end
       respond_to do |format|
         @message = messages.first
-        if @message.save
+        if !preview? and @message.save
           messages.each { |m| m.save }
           flash[:success] = 'Message sent to everyone!'
           format.html { redirect_to messages_url }
         else
+          @preview = @message.content if preview?
           format.html { render :action => "new" }
         end
       end
@@ -81,10 +82,11 @@ class MessagesController < ApplicationController
                                                     :recipient => @recipient))
     
       respond_to do |format|
-        if @message.save
+        if !preview? and @message.save
           flash[:success] = 'Message sent!'
           format.html { redirect_to messages_url }
         else
+          @preview = @message.content if preview?
           format.html { render :action => "new" }
         end
       end
@@ -156,4 +158,9 @@ class MessagesController < ApplicationController
     def not_current_person(message)
       message.sender == current_person ? message.recipient : message.sender
     end
+
+    def preview?
+      params["commit"] == "Preview"
+    end
+
 end

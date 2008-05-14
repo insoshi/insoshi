@@ -6,6 +6,11 @@
 
   <%= error_messages_for :message %>
   
+  <%- unless @preview.nil? -%>
+    <h3>Message preview</h3>
+    <%= display @preview %>
+  <%- end -%>
+  
   <%= image_link @recipient, :image => :thumbnail %>
 
   <% form_for(:message,
@@ -34,6 +39,7 @@
     </div>
     <div class="form_row">
       <%= f.submit "Send!", :class => "button", :id => "message_submit" %>
+      <%= f.submit "Preview", :class => "button", :id => "preview" %>
       <%= f.submit "Cancel", :class => "button", :id => "cancel" %>
       <%- if current_person?(@recipient) and current_person.admin? -%>
         <%= f.submit "Send to all", :class => "button", :id => "all_people" %>
