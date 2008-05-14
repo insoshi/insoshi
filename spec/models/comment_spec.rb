@@ -82,14 +82,21 @@ describe Comment do
         @recipient.blog_comment_notifications.should == false
         lambda do
           @comment.save
-        end.should_not change(@emails, :length).by(1)      
+        end.should_not change(@emails, :length)
       end
       
       it "should not send an email when global notifications are off" do
         @global_prefs.update_attributes(:email_notifications => false)
         lambda do
           @comment.save
-        end.should_not change(@emails, :length).by(1)      
+        end.should_not change(@emails, :length)
+      end
+      
+      it "should not send an email for an own-comment" do
+        lambda do
+          @post.comments.create(:body => "Hey there",
+                                :commenter => @post.blog.person)
+        end.should_not change(@emails, :length)
       end
     end
   end
@@ -154,14 +161,21 @@ describe Comment do
         @recipient.wall_comment_notifications.should == false
         lambda do
           @comment.save
-        end.should_not change(@emails, :length).by(1)      
+        end.should_not change(@emails, :length)
       end
     
       it "should not send an email when global notifications are off" do
         @global_prefs.update_attributes(:email_notifications => false)
         lambda do
           @comment.save
-        end.should_not change(@emails, :length).by(1)      
+        end.should_not change(@emails, :length)
+      end
+      
+      it "should not send an email for an own-comment" do
+        lambda do
+          @person.comments.create(:body => "Hey there",
+                                  :commenter => @person)
+        end.should_not change(@emails, :length)
       end
     end
   end

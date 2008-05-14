@@ -31,14 +31,14 @@ describe Connection do
       @contact.connection_notifications.should == false
       lambda do
         Connection.request(@person, @contact)
-      end.should_not change(@emails, :length).by(1)      
+      end.should_not change(@emails, :length)
     end
     
     it "should not send an email when global notifications are off" do
       @global_prefs.update_attributes(:email_notifications => false)
       lambda do
         Connection.request(@person, @contact)
-      end.should_not change(@emails, :length).by(1)      
+      end.should_not change(@emails, :length)
     end
     
     it "should accept a request" do

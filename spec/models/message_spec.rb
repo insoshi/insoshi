@@ -102,15 +102,21 @@ describe Message do
       @recipient.message_notifications.should == false
       lambda do
         @message.save
-      end.should_not change(@emails, :length).by(1)      
+      end.should_not change(@emails, :length)
     end
     
     it "should not send an email when global notifications are off" do
       @global_prefs.update_attributes(:email_notifications => false)
       lambda do
         @message.save
-      end.should_not change(@emails, :length).by(1)      
+      end.should_not change(@emails, :length)
     end
+      
+      it "should not send an email for an own-message" do
+        lambda do
+          create_message(:sender => @sender, :recipient => @sender)
+        end.should_not change(@emails, :length)
+      end
   end
 
 
