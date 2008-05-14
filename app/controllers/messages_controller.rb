@@ -61,7 +61,7 @@ class MessagesController < ApplicationController
     
     if params["commit"] == "Send to all" and current_person.admin?
       # Send messages to all (active) people.
-      messages = Person.active.inject([]) do |messages, person|
+      messages = Person.all_active.inject([]) do |messages, person|
         message = Message.new(params[:message].merge(:sender => current_person,
                                                      :recipient => person))
         messages.push(message)

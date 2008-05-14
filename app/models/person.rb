@@ -99,13 +99,18 @@ class Person < ActiveRecord::Base
 
   class << self
 
-    # Return the active users.
+    # Return the paginated active users.
     def active(page = 1)
       paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
                      :conditions => ["deactivated = ?", false])
     end
-
+    
+    # Return *all* the active users.
+    def all_active
+      find(:all, :conditions => ["deactivated = ?", false])
+    end
+    
     # People search.
     def search(options = {})
       query = options[:q]
