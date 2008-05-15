@@ -1,3 +1,5 @@
-You have a new connection request from <%= @connection.contact.name %>
+You have a new connection request from <%= @connection.contact.name %>:
 
-http://<%= @domain %>/connections/<%= @connection.to_param %>/edit
+http://<%= @domain %><%= @url %>
+
+<%= @preferences_note %>

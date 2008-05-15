@@ -18,12 +18,19 @@ module SearchesHelper
   end
   
   # Return the partial (including path) for the given object.
-  # partial can also accept an array of objects.
+  # partial can also accept an array of objects (of the same type).
+  
   def partial(object)
     object = object.first if object.is_a?(Array)
     klass = object.class.to_s
     dir  = klass.tableize  # E.g., 'Person' becomes 'people'
     part = dir.singularize # E.g., 'people' becomes 'person'
-    "#{dir}/#{part}"
+    admin_search? ? "admin/#{dir}/#{part}" : "#{dir}/#{part}"
   end
+
+  private
+  
+    def admin_search?
+      params[:model] =~ /Admin/
+    end
 end

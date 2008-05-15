@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 21
+# Schema version: 22
 #
 # Table name: communications
 #
@@ -22,7 +22,7 @@
 class Message < Communication
   extend PreferencesHelper
   
-  attr_accessor :reply, :parent, :skip_send_mail
+  attr_accessor :reply, :parent, :send_mail
   acts_as_ferret :fields => [ :subject, :content ] if search?
   
   MAX_CONTENT_LENGTH = MAX_TEXT_LENGTH
@@ -130,7 +130,7 @@ class Message < Communication
 
   private
   
-    # Mark the parent message as replied to the current message as a reply.
+    # Mark the parent message as replied to if the current message is a reply.
     def set_replied_to
       parent.update_attributes!(:replied_at => Time.now) if reply?
     end
@@ -144,7 +144,9 @@ class Message < Communication
     end
     
     def send_receipt_reminder
-      @skip_send_mail ||= !Message.global_prefs.email_notifications
-      PersonMailer.deliver_message_notification(self) unless @skip_send_mail
+      return if sender == recipient
+      @send_mail ||= Message.global_prefs.email_notifications? &&
+                     recipient.message_notifications?
+      PersonMailer.deliver_message_notification(self) if @send_mail
     end
 end

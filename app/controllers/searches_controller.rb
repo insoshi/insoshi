@@ -2,7 +2,7 @@ class SearchesController < ApplicationController
 
   def index
     redirect_to home_url and return if params[:model].nil?
-    model = params[:model]
+    model = strip_admin(params[:model])
     if model == "Message"
       options = params.merge(:recipient => current_person)
     else
@@ -17,4 +17,12 @@ class SearchesController < ApplicationController
       @results = @results.map(&:topic).uniq.paginate
     end
   end
+  
+  private
+    
+    # Strip off "Admin::" from the model name.
+    # This is needed for, e.g., searches in the admin view
+    def strip_admin(model)
+      model.split("::").last
+    end
 end

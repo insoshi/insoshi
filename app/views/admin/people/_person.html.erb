@@ -1,7 +1,10 @@
-<tr>
-  <td><%= image_link person %></td>
-  <td><%= person_link person %></td>
-  <td>
+
+<li class="vcard person">
+  <div class="profile-image">
+    <%= image_link person %>
+  </div>
+  <p><%= person_link person, :class => "url fn" %></p>
+  <p>
     <%- activity = person.deactivated? ? "activate" : "deactivate" -%>
     <%= link_to activity, 
                 admin_person_path(person, :task => "deactivated"),
@@ -11,5 +14,5 @@
     <%= link_to activity, 
                 admin_person_path(person, :task => "admin"),
                 :method => :put %>
-  </td>
-</tr>
+  </p>
+</li>

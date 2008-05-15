@@ -60,6 +60,45 @@ describe Comment do
         @person.activities.should have_distinct_elements
       end
     end
+    
+    describe "email notifications" do
+      
+      before(:each) do
+        @emails = ActionMailer::Base.deliveries
+        @emails.clear
+        @global_prefs = Preference.find(:first)
+        @recipient = @comment.commented_person
+      end
+      
+      it "should send an email when global/recipient notifications are on" do
+        # Both notifications are on by default.
+        lambda do
+          @comment.save
+        end.should change(@emails, :length).by(1)
+      end
+      
+      it "should not send an email when recipient's notifications are off" do
+        @recipient.toggle!(:blog_comment_notifications)
+        @recipient.blog_comment_notifications.should == false
+        lambda do
+          @comment.save
+        end.should_not change(@emails, :length)
+      end
+      
+      it "should not send an email when global notifications are off" do
+        @global_prefs.update_attributes(:email_notifications => false)
+        lambda do
+          @comment.save
+        end.should_not change(@emails, :length)
+      end
+      
+      it "should not send an email for an own-comment" do
+        lambda do
+          @post.comments.create(:body => "Hey there",
+                                :commenter => @post.blog.person)
+        end.should_not change(@emails, :length)
+      end
+    end
   end
 
   describe "wall comments" do
@@ -98,6 +137,45 @@ describe Comment do
 
       it "should have an activity" do
         Activity.find_by_item_id(@comment).should_not be_nil
+      end
+    end
+    
+    describe "email notifications" do
+    
+      before(:each) do
+        @emails = ActionMailer::Base.deliveries
+        @emails.clear
+        @global_prefs = Preference.find(:first)
+        @recipient = @comment.commented_person
+      end
+    
+      it "should send an email when global/recipient notifications are on" do
+        # Both notifications are on by default.
+        lambda do
+          @comment.save
+        end.should change(@emails, :length).by(1)
+      end
+    
+      it "should not send an email when recipient's notifications are off" do
+        @recipient.toggle!(:wall_comment_notifications)
+        @recipient.wall_comment_notifications.should == false
+        lambda do
+          @comment.save
+        end.should_not change(@emails, :length)
+      end
+    
+      it "should not send an email when global notifications are off" do
+        @global_prefs.update_attributes(:email_notifications => false)
+        lambda do
+          @comment.save
+        end.should_not change(@emails, :length)
+      end
+      
+      it "should not send an email for an own-comment" do
+        lambda do
+          @person.comments.create(:body => "Hey there",
+                                  :commenter => @person)
+        end.should_not change(@emails, :length)
       end
     end
   end

@@ -77,15 +77,13 @@ module ActivitiesHelper
       topic = activity.item.topic
       # TODO: deep link this to the post
       %(#{person_link(person)} made a #{topic_link("forum post", topic)}.)
-    when "Person"
-      %(#{person_link(person)} joined the network!)
     when "Topic"
       %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", activity.item)}.)
     when "Photo"
       %(#{person_link(person)} changed their profile picture.)
     when "Person"
-      %(#{person_link(person)} changed their description)
+      %(#{person_link(person)} changed their description.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end

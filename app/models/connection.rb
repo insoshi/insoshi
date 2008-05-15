@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 21
+# Schema version: 22
 #
 # Table name: connections
 #
@@ -47,7 +47,11 @@ class Connection < ActiveRecord::Base
     alias exist? exists?
   
     # Make a pending connection request.
-    def request(person, contact, mail = global_prefs.email_notifications)
+    def request(person, contact, send_mail = nil)
+      if send_mail.nil?
+        send_mail = global_prefs.email_notifications? &&
+                    contact.connection_notifications?
+      end
       if person == contact or Connection.exists?(person, contact)
         nil
       else
@@ -55,9 +59,13 @@ class Connection < ActiveRecord::Base
           create(:person => person, :contact => contact, :status => PENDING)
           create(:person => contact, :contact => person, :status => REQUESTED)
         end
-        connection = conn(person, contact)
-        PersonMailer.deliver_connection_request(connection) if mail
-        connection
+        if send_mail
+          # The order here is important: the mail is sent *to* the contact,
+          # so the connection should be from the contact's point of view.
+          connection = conn(contact, person)
+          PersonMailer.deliver_connection_request(connection)
+        end
+        true
       end
     end
   

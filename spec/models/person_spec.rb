@@ -47,7 +47,7 @@ describe Person do
     it "should not log an activity if description didn't change" do
       @person.save!
       activity = Activity.find_by_item_id(@person)
-      Activity.global_feed.include?(activity).should == false
+      Activity.global_feed.should_not include_the(activity)
     end
 
   end

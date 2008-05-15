@@ -1,24 +1,28 @@
 # == Schema Information
-# Schema version: 21
+# Schema version: 22
 #
 # Table name: people
 #
-#  id                        :integer(11)     not null, primary key
-#  email                     :string(255)
-#  name                      :string(255)
-#  remember_token            :string(255)
-#  crypted_password          :string(255)
-#  description               :text
-#  remember_token_expires_at :datetime
-#  last_contacted_at         :datetime
-#  last_logged_in_at         :datetime
-#  forum_posts_count         :integer(11)     default(0), not null
-#  blog_post_comments_count  :integer(11)     default(0), not null
-#  wall_comments_count       :integer(11)     default(0), not null
-#  created_at                :datetime
-#  updated_at                :datetime
-#  admin                     :boolean(1)      not null
-#  deactivated               :boolean(1)      not null
+#  id                         :integer(11)     not null, primary key
+#  email                      :string(255)     
+#  name                       :string(255)     
+#  remember_token             :string(255)     
+#  crypted_password           :string(255)     
+#  description                :text            
+#  remember_token_expires_at  :datetime        
+#  last_contacted_at          :datetime        
+#  last_logged_in_at          :datetime        
+#  forum_posts_count          :integer(11)     default(0), not null
+#  blog_post_comments_count   :integer(11)     default(0), not null
+#  wall_comments_count        :integer(11)     default(0), not null
+#  created_at                 :datetime        
+#  updated_at                 :datetime        
+#  admin                      :boolean(1)      not null
+#  deactivated                :boolean(1)      not null
+#  connection_notifications   :boolean(1)      default(TRUE)
+#  message_notifications      :boolean(1)      default(TRUE)
+#  wall_comment_notifications :boolean(1)      default(TRUE)
+#  blog_comment_notifications :boolean(1)      default(TRUE)
 #
 
 class Person < ActiveRecord::Base
@@ -28,7 +32,9 @@ class Person < ActiveRecord::Base
   attr_accessor :password, :verify_password, :new_password,
                 :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
-                  :description
+                  :description, :connection_notifications,
+                  :message_notifications, :wall_comment_notifications,
+                  :blog_comment_notifications
   acts_as_ferret :fields => [ :name, :description ] if search?
 
   MAX_EMAIL = MAX_PASSWORD = SMALL_STRING_LENGTH
@@ -91,27 +97,20 @@ class Person < ActiveRecord::Base
   before_update :set_old_description
   after_update :log_activity_description_changed
 
-  ## Class methods
-# SELECT  people.*   FROM  people   INNER  JOIN   connections  ON   people.id  =
-# connections.contact_id WHERE ((connections.person_id =  1) AND ((status = 0)))
-# ORDER                 BY                people.created_at                 DESC
-#   def contacts
-#     find(:all,
-#          :joins => "INNER JOIN people p ON activities.person_id = p.id",
-#          :conditions => ["p.deactivated = ?", false],
-#          :order => 'activities.created_at DESC',
-#          :limit => GLOBAL_FEED_SIZE)
-#   end
-
   class << self
 
-    # Return the active users.
+    # Return the paginated active users.
     def active(page = 1)
       paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
                      :conditions => ["deactivated = ?", false])
     end
-
+    
+    # Return *all* the active users.
+    def all_active
+      find(:all, :conditions => ["deactivated = ?", false])
+    end
+    
     # People search.
     def search(options = {})
       query = options[:q]
@@ -256,7 +255,7 @@ class Person < ActiveRecord::Base
   end
 
   def self.encrypt(password)
-    Crypto::Key.from_file('rsa_key.pub').encrypt(password)
+    Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key.pub").encrypt(password)
   end
 
   # Encrypts the password with the user salt
@@ -265,7 +264,7 @@ class Person < ActiveRecord::Base
   end
 
   def decrypt(password)
-    Crypto::Key.from_file('rsa_key').decrypt(password)
+    Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key").decrypt(password)
   end
 
   def authenticated?(password)

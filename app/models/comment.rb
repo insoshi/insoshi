@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 21
+# Schema version: 22
 #
 # Table name: comments
 #
@@ -14,8 +14,9 @@
 
 class Comment < ActiveRecord::Base
   include ActivityLogger
+  extend PreferencesHelper
   
-  attr_accessor :commented_person
+  attr_accessor :commented_person, :send_mail
   
   belongs_to :commentable, :polymorphic => true
   belongs_to :commenter, :class_name => "Person",
@@ -31,7 +32,19 @@ class Comment < ActiveRecord::Base
   validates_length_of :body, :maximum => SMALL_TEXT_LENGTH,
                              :if => :wall_comment?
   
-  after_create :log_activity
+  after_create :log_activity, :send_receipt_reminder
+    
+  # Return the person for the thing commented on.
+  # For example, for blog post comments it's the blog's person
+  # For wall comments, it's the person himself.
+  def commented_person
+    @commented_person ||= case commentable.class.to_s
+                          when "Person"
+                            commentable
+                          when "BlogPost"
+                            commentable.blog.person
+                          end
+  end
   
   private
     
@@ -43,16 +56,12 @@ class Comment < ActiveRecord::Base
       commentable.class.to_s == "BlogPost"
     end
     
-    # Return the person for the thing commented on.
-    # For example, for blog post comments it's the blog's person
-    # For wall comments, it's the person himself.
-    def commented_person
-      @commented_person ||= case commentable.class.to_s
-                            when "Person"
-                              commentable
-                            when "BlogPost"
-                              commentable.blog.person
-                            end
+    def notifications?
+      if wall_comment?
+        commented_person.wall_comment_notifications?
+      elsif blog_post_comment?
+        commented_person.blog_comment_notifications?
+      end
     end
   
     def log_activity
@@ -61,6 +70,19 @@ class Comment < ActiveRecord::Base
       unless commented_person.nil? or commenter == commented_person
         add_activities(:activity => activity, :person => commented_person,
                        :include_person => true)
+      end
+    end
+    
+    def send_receipt_reminder
+      return if commenter == commented_person
+      if wall_comment?
+        @send_mail ||= Comment.global_prefs.email_notifications? &&
+                       commented_person.wall_comment_notifications?
+        PersonMailer.deliver_wall_comment_notification(self) if @send_mail
+      elsif blog_post_comment?
+        @send_mail ||= Comment.global_prefs.email_notifications? &&
+                       commented_person.blog_comment_notifications?
+        PersonMailer.deliver_blog_comment_notification(self) if @send_mail
       end
     end
 end
