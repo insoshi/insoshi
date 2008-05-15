@@ -122,6 +122,16 @@ describe PeopleController do
           response.should redirect_to(person_path(person))
         end
         
+        it "should not log the person in" do
+          person = create_person
+          controller.send(:logged_in?).should be_false
+        end
+          
+        it "should not have an auth token" do
+          create_person
+          response.cookies["auth_token"].should == []
+        end
+        
         it "should verify a person even if they're logged in" do
           person = create_person
           login_as(person)

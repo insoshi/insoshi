@@ -44,13 +44,13 @@ class PeopleController < ApplicationController
     respond_to do |format|
       @person.deactivated = true if global_prefs.email_verifications?
       if @person.save
-        self.current_person = @person
         if global_prefs.email_verifications?
           @person.email_verifications.create
           flash[:notice] = %(Thanks for signing up! A verification email has 
                              been sent to #{@person.email}.)
           format.html { redirect_to(home_url) }
         else
+          self.current_person = @person
           flash[:notice] = "Thanks for signing up!"
           format.html { redirect_back_or_default(home_url) }
         end
