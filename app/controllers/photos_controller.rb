@@ -2,8 +2,7 @@ class PhotosController < ApplicationController
 
   before_filter :login_required
   before_filter :correct_user_required, :only => [ :edit, :update, :destroy ]
-
-
+  
   def index
     @photos = current_person.photos
   
@@ -28,7 +27,9 @@ class PhotosController < ApplicationController
   end
 
   def create
-    if params[:commit] == "Cancel"
+    if params[:commit] == "Cancel" or params[:photo].nil?
+      flash[:error] = 'It\'s look like your browser ' + 
+        'doesn\'t support file uploading' if params[:commit] != "Cancel"
       redirect_to edit_person_url(current_person)
       return
     end

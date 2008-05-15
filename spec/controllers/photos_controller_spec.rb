@@ -56,9 +56,16 @@ describe PhotosController do
       end.should_not change(Photo, :count)
     end
     
-    it "should handle cancellation" do
+    it "should handle cancellation and doesn't report about problem" do
       post :create, :commit => "Cancel"
       response.should redirect_to(edit_person_url(@person))
+      flash[:error].should be_nil
+    end
+    
+    it "should handle nil photo parametr" do
+      post :create, :photo => nil
+      response.should redirect_to(edit_person_url(@person))
+      flash[:error].should_not be_nil
     end
     
     it "should mark a photo as primary" do
