@@ -116,7 +116,8 @@ module ApplicationHelper
   def formatting_note
     %(HTML and
       #{link_to("Markdown",
-                "http://daringfireball.net/projects/markdown/basics")}
+                "http://daringfireball.net/projects/markdown/basics",
+                :popup => true)}
      supported)
   end
 
