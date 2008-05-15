@@ -35,12 +35,14 @@ describe SessionsController do
   end
 
   it 'remembers me' do
-    post :create, :email => 'quentin@example.com', :password => 'test', :remember_me => "1"
+    post :create, :email => 'quentin@example.com', :password => 'test',
+                  :remember_me => "1"
     response.cookies["auth_token"].should_not be_nil
   end
   
   it 'does not remember me' do
-    post :create, :email => 'quentin@example.com', :password => 'test', :remember_me => "0"
+    post :create, :email => 'quentin@example.com', :password => 'test',
+                  :remember_me => "0"
     response.cookies["auth_token"].should be_nil
   end
 
