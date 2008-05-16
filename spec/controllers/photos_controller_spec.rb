@@ -62,7 +62,7 @@ describe PhotosController do
       flash[:error].should be_nil
     end
     
-    it "should handle nil photo parametr" do
+    it "should handle nil photo parameter" do
       post :create, :photo => nil
       response.should redirect_to(edit_person_url(@person))
       flash[:error].should_not be_nil
