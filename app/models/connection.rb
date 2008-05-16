@@ -79,9 +79,9 @@ class Connection < ActiveRecord::Base
       log_activity(conn(person, contact))
     end
     
-    def connect(person, contact, mail = global_prefs.email_notifications)
+    def connect(person, contact, send_mail = nil)
       transaction do
-        request(person, contact, mail)
+        request(person, contact, send_mail)
         accept(person, contact)
       end
       conn(person, contact)

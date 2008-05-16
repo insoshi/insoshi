@@ -41,6 +41,16 @@ describe Connection do
       end.should_not change(@emails, :length)
     end
     
+    describe "connect method" do
+      it "should not send an email when contact's notifications are off" do
+        @contact.toggle!(:connection_notifications)
+        @contact.connection_notifications.should == false
+        lambda do
+          Connection.connect(@person, @contact)
+        end.should_not change(@emails, :length)
+      end
+    end
+    
     it "should accept a request" do
       Connection.request(@person, @contact)
       Connection.accept(@person,  @contact)
