@@ -17,7 +17,7 @@
 
 class BlogPost < Post
   
-  MAX_TITLE = SMALL_STRING_LENGTH
+  MAX_TITLE = MEDIUM_STRING_LENGTH
   MAX_BODY  = MAX_TEXT_LENGTH
   
   belongs_to :blog
