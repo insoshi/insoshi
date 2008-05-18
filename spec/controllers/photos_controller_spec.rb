@@ -57,7 +57,7 @@ describe PhotosController do
     end
     
     it "should handle cancellation and doesn't report about problem" do
-      post :create, :commit => "Cancel"
+      post :create, :commit => "Cancel", :photo => { :uploaded_data => nil }
       response.should redirect_to(edit_person_url(@person))
       flash[:error].should be_nil
     end

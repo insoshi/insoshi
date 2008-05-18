@@ -28,9 +28,11 @@ class PhotosController < ApplicationController
 
   def create
     if params[:photo].nil?
-      unless params[:commit] == "Cancel"
-        flash[:error] = "Your browser doesn't appear to support file uploading"
-      end
+      # This is mainly to prevent exceptions on iPhones.
+      flash[:error] = "Your browser doesn't appear to support file uploading"
+      redirect_to edit_person_url(current_person) and return
+    end
+    if params[:commit] == "Cancel"
       redirect_to edit_person_url(current_person) and return
     end
     person_data = { :person => current_person,
