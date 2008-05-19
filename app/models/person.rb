@@ -49,6 +49,10 @@ class Person < ActiveRecord::Base
   NUM_WALL_COMMENTS = 10
   NUM_RECENT = 8
   FEED_SIZE = 10
+  ACCEPTED_AND_ACTIVE =  [%(status = #{Connection::ACCEPTED} AND
+                            deactivated = ? AND
+                            (email_verified IS NULL OR email_verified = ?)),
+                          false, true] 
 
   has_one :blog
   has_many :email_verifications
@@ -58,8 +62,7 @@ class Person < ActiveRecord::Base
 
 
   has_many :contacts, :through => :connections,
-                      :conditions => [%(status = #{Connection::ACCEPTED} AND
-                                        deactivated = ?), false],
+                      :conditions => ACCEPTED_AND_ACTIVE,
                       :order => 'people.created_at DESC'
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
@@ -339,10 +342,13 @@ class Person < ActiveRecord::Base
     sql = %(SELECT connections.*, COUNT(contact_id) FROM `connections`
             INNER JOIN people contact ON connections.contact_id = contact.id
             WHERE ((person_id = ? OR person_id = ?)
-                   AND status = ? AND contact.deactivated = ?)
+                   AND status = ? AND
+                   contact.deactivated = ? AND
+                   (contact.email_verified IS NULL
+                    OR contact.email_verified = ?))
             GROUP BY contact_id
             HAVING count(contact_id) = 2)
-    conditions = [sql, id, person.id, Connection::ACCEPTED, false]
+    conditions = [sql, id, person.id, Connection::ACCEPTED, false, true]
     opts = { :page => page, :per_page => RASTER_PER_PAGE }
     @common_connections ||= Connection.paginate_by_sql(conditions, opts)
   end

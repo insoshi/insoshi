@@ -52,6 +52,11 @@ describe Activity do
     Activity.global_feed.should be_empty
   end
   
+  it "should not show activities for users who are email unverified" do
+    @commenter.email_verified = false; @commenter.save!
+    Activity.global_feed.should be_empty
+  end
+  
   private
   
   # TODO: do this in a more RSpecky way.

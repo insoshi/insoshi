@@ -86,4 +86,8 @@ Spec::Runner.configure do |config|
   def polymorphic_path(args)
     "http://a.fake.url"
   end
+
+  def enable_email_notifications
+    Preference.find(:first).update_attributes(:email_verifications => true)      
+  end
 end

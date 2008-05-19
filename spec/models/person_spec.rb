@@ -99,6 +99,14 @@ describe Person do
       @person.reload.contacts.should_not contain(contact)
     end
 
+    it "should not include email unverified users" do
+      contact = people(:aaron)
+      Connection.connect(@person, contact)
+      @person.contacts.should contain(contact)
+      enable_email_notifications
+      contact.email_verified = false ; contact.save!
+      @person.reload.contacts.should_not contain(contact)
+    end
   end
 
   describe "associations" do
@@ -138,6 +146,13 @@ describe Person do
         common_connections = @person.common_connections_with(@kelly)
         common_connections.should be_empty
       end
+      
+      it "should exclude email unverified people from common contacts" do
+        enable_email_notifications
+        @contact.email_verified = false; @contact.save!
+        common_connections = @person.common_connections_with(@kelly)
+        common_connections.should be_empty
+      end      
     end
   end
 
@@ -315,7 +330,7 @@ describe Person do
 
     it "should have a working active? helper boolean" do
       @person.should be_active
-      Preference.find(:first).update_attributes(:email_verifications => true)
+      enable_email_notifications
       @person.email_verified = false
       @person.should_not be_active
       @person.email_verified = true
