@@ -90,7 +90,9 @@ class PeopleController < ApplicationController
           flash[:success] = 'Profile updated!'
           format.html { redirect_to(@person) }
         else
-          @preview = @person.description if preview?
+          if preview?
+            @preview = @person.description = params[:person][:description]
+          end
           format.html { render :action => "edit" }
         end
       when 'password_edit'
