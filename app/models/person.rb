@@ -327,7 +327,11 @@ class Person < ActiveRecord::Base
   end
 
   def active?
-    not deactivated?
+    if Person.global_prefs.email_verifications?
+      not deactivated? and email_verified?
+    else
+      not deactivated?
+    end
   end
 
   # Return the common connections with the given person.

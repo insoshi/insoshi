@@ -307,8 +307,18 @@ describe Person do
       @person.toggle(:deactivated)
       @person.should_not be_deactivated
     end
+    
+    it "should have nil email verification" do
+      person = create_person
+      person.email_verified.should be_nil
+    end
 
-    it "should have an active? helper boolean" do
+    it "should have a working active? helper boolean" do
+      @person.should be_active
+      Preference.find(:first).update_attributes(:email_verifications => true)
+      @person.email_verified = false
+      @person.should_not be_active
+      @person.email_verified = true
       @person.should be_active
     end
   end

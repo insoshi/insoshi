@@ -86,7 +86,15 @@ describe SessionsController do
     flash[:error].should =~ /deactivated/
   end
   
-  it "should redirect users with unverified email addresses" 
+  it "should redirect users with unverified email addresses" do
+    Preference.find(:first).update_attributes(:email_verifications => true)
+    @person.email_verified = false
+    @person.save!
+    post :create, :email => @person.email,
+                  :password => @person.unencrypted_password
+    response.should redirect_to(home_url)
+    flash[:notice].should =~ /check your email/
+  end
 
   def auth_token(token)
     CGI::Cookie.new('name' => 'auth_token', 'value' => token)

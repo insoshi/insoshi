@@ -48,7 +48,7 @@ describe PeopleController do
       @person.toggle!(:deactivated)
       get :show, :id => @person
       response.should redirect_to(home_url)
-      flash[:error].should =~ /not active/
+      flash[:error].should =~ /not activated/
     end
   end
   
@@ -108,9 +108,10 @@ describe PeopleController do
           @preferences.toggle!(:email_verifications)
         end
     
-        it "should create a deactivated person" do
+        it "should create a person with false email_verified" do
           person = create_person
-          person.should be_deactivated
+          person.should_not be_deactivated
+          person.should_not be_email_verified
           person.email_verifications.should_not be_empty
         end
         
@@ -122,10 +123,10 @@ describe PeopleController do
         
         it "should verify a person" do
           person = create_person
-          person.should be_deactivated
           verification = assigns(:person).email_verifications.last
           get :verify, :id => verification.code
-          person.reload.should be_active
+          person.reload.should_not be_deactivated
+          person.should be_email_verified
           response.should redirect_to(person_path(person))
         end
         
@@ -144,7 +145,7 @@ describe PeopleController do
           login_as(person)
           verification = person.email_verifications.last
           get :verify, :id => verification.code
-          person.reload.should be_active
+          person.reload.should_not be_deactivated
           response.should redirect_to(person_path(person))
         end
         

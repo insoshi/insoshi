@@ -42,7 +42,7 @@ class PeopleController < ApplicationController
     cookies.delete :auth_token
     @person = Person.new(params[:person])
     respond_to do |format|
-      @person.deactivated = true if global_prefs.email_verifications?
+      @person.email_verified = false if global_prefs.email_verifications?
       if @person.save
         if global_prefs.email_verifications?
           @person.email_verifications.create
@@ -67,7 +67,7 @@ class PeopleController < ApplicationController
       flash[:error] = "Invalid email verification code"
       redirect_to home_url
     else
-      verification.person.deactivated = false; verification.person.save!
+      verification.person.email_verified = true; verification.person.save!
       flash[:success] = "Email verified. Your profile is active!"
       redirect_to verification.person
     end
