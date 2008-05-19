@@ -8,14 +8,14 @@ class Admin::PeopleController < ApplicationController
 
   def update
     @person = Person.find(params[:id])
-    if @person.last_admin?
-      flash[:error] = "Action failed&mdash;you're the last admin."
+    if current_person?(@person)
+      flash[:error] = "Action failed."
     else
       @person.toggle!(params[:task])
-      flash[:success] = "#{CGI.escapeHTML @person.name} updated"
+      flash[:success] = "#{CGI.escapeHTML @person.name} updated."
     end
     respond_to do |format|
-      format.html { redirect_to admin_people_url }
+      format.html { redirect_to :back }
     end
   end
 end

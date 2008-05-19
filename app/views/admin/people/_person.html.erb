@@ -3,8 +3,9 @@
   <div class="profile-image">
     <%= image_link person %>
   </div>
-  <p><%= person_link person, :class => "url fn" %></p>
   <p>
+    <%= person_link person, :class => "url fn" %>
+    |
     <%- activity = person.deactivated? ? "activate" : "deactivate" -%>
     <%= link_to activity, 
                 admin_person_path(person, :task => "deactivated"),
@@ -13,6 +14,7 @@
     <%- activity = person.admin? ? "unadmin" : "admin" -%>
     <%= link_to activity, 
                 admin_person_path(person, :task => "admin"),
-                :method => :put %>
+                :method => :put %>    
   </p>
+  <%= display person.description %>
 </li>
