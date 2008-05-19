@@ -43,6 +43,13 @@ describe PeopleController do
       response.should be_success
       response.should render_template("edit")
     end
+    
+    it "should redirect to home for deactivated users" do
+      @person.toggle!(:deactivated)
+      get :show, :id => @person
+      response.should redirect_to(home_url)
+      flash[:error].should =~ /not active/
+    end
   end
   
   describe "create" do

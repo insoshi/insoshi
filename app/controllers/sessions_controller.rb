@@ -8,8 +8,14 @@ class SessionsController < ApplicationController
   end
 
   def create
-    self.current_person = Person.authenticate(params[:email],
-                                              params[:password])
+    person = Person.authenticate(params[:email], params[:password])
+    unless person.nil?
+      if person.deactivated?
+        flash[:error] = "Your account has been deactivated"
+        redirect_to home_url and return
+      end
+    end
+    self.current_person = person
     if logged_in?
       # First admin logins should forward to preferences
       if current_person.last_logged_in_at.nil? and current_person.admin?
@@ -23,15 +29,11 @@ class SessionsController < ApplicationController
           :value => self.current_person.remember_token,
           :expires => self.current_person.remember_token_expires_at }
       end
-      if current_person.deactivated?
-        destroy
+      flash[:success] = "Logged in successfully"
+      if @first_admin_login
+        redirect_to admin_preferences_url
       else
-        flash[:success] = "Logged in successfully"
-        if @first_admin_login
-          redirect_to admin_preferences_url
-        else
-          redirect_back_or_default('/')
-        end
+        redirect_back_or_default('/')
       end
     else
       @body = "login single-col"
