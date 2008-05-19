@@ -92,7 +92,7 @@ describe SessionsController do
     @person.save!
     post :create, :email => @person.email,
                   :password => @person.unencrypted_password
-    response.should redirect_to(home_url)
+    response.should redirect_to(login_url)
     flash[:notice].should =~ /check your email/
   end
 

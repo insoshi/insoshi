@@ -14,8 +14,9 @@ class SessionsController < ApplicationController
         flash[:error] = "Your account has been deactivated"
         redirect_to home_url and return
       elsif global_prefs.email_verifications? and not person.email_verified?
-        flash[:notice] = "Please check your email for your activation code"
-        redirect_to home_url and return        
+        flash[:notice] = %(Unverified email address. 
+                           Please check your email for your activation code.)
+        redirect_to login_url and return
       end
     end
     self.current_person = person
