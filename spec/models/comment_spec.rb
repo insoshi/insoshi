@@ -42,11 +42,11 @@ describe Comment do
     
       it "should add an activity to the poster" do
         @comment.commentable.blog.person.activities.
-          should include_the(@activity)
+          should contain(@activity)
       end
 
       it "should add an activity to the commenter" do
-        @comment.commenter.recent_activity.should include_the(@activity)
+        @comment.commenter.recent_activity.should contain(@activity)
       end
     end
     

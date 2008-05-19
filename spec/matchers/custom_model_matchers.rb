@@ -122,9 +122,7 @@ module CustomModelMatchers
   
   
   # Return true if an array includes the given attribute.
-  # Usage: @person.contacts.should include_the(@contact)
-  # N.B.  We can't say 'include' instead of 'include_the' because 
-  # 'include' is a Ruby reserved word.
+  # Usage: @person.contacts.should contain(@contact)
   class Include
   
     def initialize(attribute)
@@ -145,7 +143,7 @@ module CustomModelMatchers
   end
   
   # 
-  def include_the(attribute)
+  def contain(attribute)
     Include.new(attribute)
   end
 end

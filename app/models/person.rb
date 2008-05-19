@@ -103,12 +103,12 @@ class Person < ActiveRecord::Base
     def active(page = 1)
       paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
-                     :conditions => ["deactivated = ?", false])
+                     :conditions => conditions_for_active)
     end
     
     # Return *all* the active users.
     def all_active
-      find(:all, :conditions => ["deactivated = ?", false])
+      find(:all, :conditions => conditions_for_active)
     end
     
     # People search.
@@ -116,7 +116,7 @@ class Person < ActiveRecord::Base
       query = options[:q]
       return [].paginate if query.blank? or query == "*"
       # This is inefficient.  We'll fix it when we move to Sphinx.
-      conditions = ["deactivated = ?", false]
+      conditions = conditions_for_inactive
       results = find_by_contents(query, {}, :conditions => conditions)
       results[0...SEARCH_LIMIT].paginate(:page => options[:page],
                                          :per_page => SEARCH_PER_PAGE)
@@ -384,5 +384,12 @@ class Person < ActiveRecord::Base
 
     def password_required?
       crypted_password.blank? || !password.blank? || !verify_password.nil?
+    end
+    
+    # Return the conditions for a user to be active.
+    def self.conditions_for_active
+      [%(deactivated = ? AND 
+        (email_verified IS NULL OR email_verified = ?)),
+       false, true]
     end
 end

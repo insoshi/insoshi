@@ -40,7 +40,7 @@ describe BlogPost do
     end
     
     it "should add an activity to the poster" do
-      @post.blog.person.recent_activity.should include_the(@activity)
+      @post.blog.person.recent_activity.should contain(@activity)
     end
   end
   
@@ -59,7 +59,7 @@ describe BlogPost do
     it "should add activities to the poster" do
       @post.comments.each do |comment|
         activity = Activity.find_by_item_id(comment)
-        @post.blog.person.activities.should include_the(activity)
+        @post.blog.person.activities.should contain(activity)
       end
     end
   end

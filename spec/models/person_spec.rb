@@ -41,13 +41,13 @@ describe Person do
     it "should log an activity if description changed" do
       @person.update_attributes(:description => "New Description")
       activity = Activity.find_by_item_id(@person)
-      Activity.global_feed.should include_the(activity)
+      Activity.global_feed.should contain(activity)
     end
 
     it "should not log an activity if description didn't change" do
       @person.save!
       activity = Activity.find_by_item_id(@person)
-      Activity.global_feed.should_not include_the(activity)
+      Activity.global_feed.should_not contain(activity)
     end
 
   end
@@ -94,9 +94,9 @@ describe Person do
     it "should not include deactivated users" do
       contact = people(:aaron)
       Connection.connect(@person, contact)
-      @person.contacts.should include_the(contact)
+      @person.contacts.should contain(contact)
       contact.toggle!(:deactivated)
-      @person.reload.contacts.should_not include_the(contact)
+      @person.reload.contacts.should_not contain(contact)
     end
 
   end
@@ -347,7 +347,24 @@ describe Person do
       Person.search(:q => "Quentin").should == [people(:quentin)].paginate
     end
   end if SEARCH_IN_TESTS
-
+  
+  describe "active class methods" do
+    it "should not return deactivated people" do
+      @person.toggle!(:deactivated)
+      [:active, :all_active].each do |method|
+        Person.send(method).should_not contain(@person)
+      end
+    end
+    
+    it "should not return email unverified people" do
+      @person.email_verified = false
+      @person.save!
+      [:active, :all_active].each do |method|
+        Person.send(method).should_not contain(@person)
+      end
+    end
+  end
+    
   protected
 
     def create_person(options = {})
