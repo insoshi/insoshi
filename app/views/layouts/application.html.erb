@@ -46,6 +46,12 @@
     
     <div id="wrap">
       <div id="content">
+        <%- if global_prefs.demo? -%>
+          <p class="error" style="font-weight: bold;">
+            This is a demonstration site. 
+            Data may be modified or removed without warning.
+          </p>
+        <%- end -%>
         <% flash.each do |key, msg| %>
           <%= content_tag :p, msg, :class => "flash #{key}" %>
         <% end %>     
