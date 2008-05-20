@@ -34,8 +34,10 @@ class ApplicationController < ActionController::Base
     end
   
     def require_activation
-      if logged_in? and current_person.deactivated? and !current_person.admin?
-        redirect_to logout_url
+      if logged_in?
+        unless current_person.active? or current_person.admin?
+          redirect_to logout_url
+        end
       end
     end
     
