@@ -10,16 +10,19 @@
     <%= render :partial => 'shared/contacts_preview',
                :locals => { :person => current_person } %>
   <%- else -%>
-    <h2>About Insoshi</h2>
+    <%- unless global_prefs.app_name.blank? -%>
+      <h2>About <%= global_prefs.app_name %></h2>
     
-    <p><a href="http://insoshi.com/">Insoshi</a>
-       is an open-source project dedicated to making the best
-      social networking platform.</p>
-      
-      <p>This is the 
-      developer community site for the Insoshi project.
+      <p>
+        <%= link_to "Click here", about_path %>
+        to learn more about us.
       </p>
-      
+    <%- end -%>
+    
+    <h2>Join
+      <%= global_prefs.app_name.blank? ? "the site" : global_prefs.app_name %>
+    </h2>
+    
     <div style="text-align: center;">
       <%= link_to image_tag("button_signup.png"), signup_path %>
     </div>
