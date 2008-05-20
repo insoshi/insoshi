@@ -1,4 +1,6 @@
 class PasswordRemindersController < ApplicationController
+
+  before_filter :check_can_send_email
   
   def new
   end
@@ -18,4 +20,13 @@ class PasswordRemindersController < ApplicationController
       end
     end
   end
+
+  private
+  
+    def check_can_send_email
+      unless global_prefs.can_send_mail?
+        flash[:error] = "Invalid action"
+        redirect_to home_url
+      end
+    end
 end

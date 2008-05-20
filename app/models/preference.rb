@@ -24,6 +24,11 @@ class Preference < ActiveRecord::Base
   validates_presence_of :domain,       :if => :using_email?
   validates_presence_of :smtp_server,  :if => :using_email?
   
+  # Can we send mail with the present configuration?
+  def can_send_mail?
+    not (domain.blank? or smtp_server.blank?)
+  end
+  
   private
   
     def using_email?
