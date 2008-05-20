@@ -8,6 +8,7 @@ class SearchesController < ApplicationController
     else
       options = params
     end
+    options[:all] = true if current_person.admin?
     @results = model.constantize.search(options)
     if model == "ForumPost" and @results
       # Consolidate the topics, eliminating duplicates.

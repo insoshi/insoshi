@@ -118,9 +118,13 @@ class Person < ActiveRecord::Base
     def search(options = {})
       query = options[:q]
       return [].paginate if query.blank? or query == "*"
+      if options[:all]
+        results = find_by_contents(query)
+      else
+        conditions = conditions_for_active
+        results = find_by_contents(query, {}, :conditions => conditions)
+      end
       # This is inefficient.  We'll fix it when we move to Sphinx.
-      conditions = conditions_for_active
-      results = find_by_contents(query, {}, :conditions => conditions)
       results[0...SEARCH_LIMIT].paginate(:page => options[:page],
                                          :per_page => SEARCH_PER_PAGE)
     end
