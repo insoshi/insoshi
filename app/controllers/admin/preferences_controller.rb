@@ -20,6 +20,18 @@ class Admin::PreferencesController < ApplicationController
     respond_to do |format|
       old_preferences = @preferences.clone
       if @preferences.update_attributes(params[:preferences])
+        if (not old_preferences.email_verifications? and 
+            @preferences.email_verifications?)
+          # Email verifications have been turned on.
+          # We have to mark all the email addresses as verified for the
+          # require_activation before filter to work.
+          Person.transaction do
+            Person.find(:all).each do |person|
+              person.email_verified = true
+              person.save
+            end
+          end
+        end
         flash[:success] = 'Preferences successfully updated.'
         if server_restart?(old_preferences)
           flash[:error] = 'Restart the server to activate the changes'

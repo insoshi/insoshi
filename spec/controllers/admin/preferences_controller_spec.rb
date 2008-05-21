@@ -45,6 +45,9 @@ describe Admin::PreferencesController do
       @prefs.save!
       put :update, :preferences => { :email_verifications => "1" }
       @prefs.reload.email_verifications.should be_true
+      Person.find(:all).each do |person|
+        person.should be_email_verified
+      end
     end
     
     it "should have a flash warning if the SMTP server changes" do
