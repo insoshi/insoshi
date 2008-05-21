@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 22
+# Schema version: 24
 #
 # Table name: people
 #
@@ -23,6 +23,7 @@
 #  message_notifications      :boolean(1)      default(TRUE)
 #  wall_comment_notifications :boolean(1)      default(TRUE)
 #  blog_comment_notifications :boolean(1)      default(TRUE)
+#  email_verified             :boolean(1)      
 #
 
 class Person < ActiveRecord::Base
