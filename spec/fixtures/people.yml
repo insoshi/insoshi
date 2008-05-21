@@ -13,6 +13,7 @@ quentin:
   message_notifications: true
   wall_comment_notifications: true
   blog_comment_notifications: true
+  email_verified: true
 
 aaron:
   email: aaron@example.com
@@ -25,6 +26,7 @@ aaron:
   message_notifications: true
   wall_comment_notifications: true
   blog_comment_notifications: true
+  email_verified: true
 
 kelly:
   email: kelly@example.com
