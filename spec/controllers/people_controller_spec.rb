@@ -48,7 +48,16 @@ describe PeopleController do
       @person.toggle!(:deactivated)
       get :show, :id => @person
       response.should redirect_to(home_url)
-      flash[:error].should =~ /not activated/
+      flash[:error].should =~ /not active/
+    end
+    
+    it "should redirect to home for email unverified users" do
+      enable_email_notifications
+      @person.email_verified = false; @person.save!
+      @person.should_not be_active
+      get :show, :id => @person
+      response.should redirect_to(home_url)
+      flash[:error].should =~ /not active/
     end
   end
   

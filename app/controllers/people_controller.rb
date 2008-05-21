@@ -16,8 +16,8 @@ class PeopleController < ApplicationController
   
   def show
     @person = Person.find(params[:id], :include => :activities)
-    if @person.deactivated? and not current_person.admin?
-      flash[:error] = "That person is not activated"
+    unless @person.active? or current_person.admin?
+      flash[:error] = "That person is not active"
       redirect_to home_url and return
     end
     if logged_in?
