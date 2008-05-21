@@ -67,9 +67,11 @@ class PeopleController < ApplicationController
       flash[:error] = "Invalid email verification code"
       redirect_to home_url
     else
-      verification.person.email_verified = true; verification.person.save!
+      person = verification.person
+      person.email_verified = true; person.save!
+      self.current_person = person
       flash[:success] = "Email verified. Your profile is active!"
-      redirect_to verification.person
+      redirect_to person
     end
   end
 
