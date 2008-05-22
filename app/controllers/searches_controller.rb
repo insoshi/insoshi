@@ -1,4 +1,5 @@
 class SearchesController < ApplicationController
+  include ApplicationHelper
 
   def index
     redirect_to home_url and return if params[:model].nil?
