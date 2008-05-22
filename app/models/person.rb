@@ -385,7 +385,7 @@ class Person < ActiveRecord::Base
     end
 
     def log_activity_description_changed
-      unless @old_description == description
+      unless @old_description == description or description.blank?
         add_activities(:item => self, :person => self)
       end
     end
