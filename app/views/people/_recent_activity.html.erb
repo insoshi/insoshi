@@ -1,5 +1,14 @@
 <%- unless @person.recent_activity.empty? -%>
   <h2>Recent Activity</h2>
+  
+
+  <%- unless @person.last_logged_in_at.nil? or current_person?(@person) -%>
+    <p class="meta">
+    <%= @person.name %> last logged in 
+    <%= time_ago_in_words(@person.last_logged_in_at) %> ago
+    </p>    
+  <%- end -%>
+  
   <ul class="list activity full">
      <%= render :partial => 'shared/activity',
                 :collection => @person.recent_activity,
