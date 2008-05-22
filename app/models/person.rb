@@ -51,10 +51,10 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 1.month.ago
-  ACCEPTED_AND_ACTIVE =  [%(status = #{Connection::ACCEPTED} AND
+  ACCEPTED_AND_ACTIVE =  [%(status = ? AND
                             deactivated = ? AND
                             (email_verified IS NULL OR email_verified = ?)),
-                          false, true] 
+                          Connection::ACCEPTED, false, true]
 
   has_one :blog
   has_many :email_verifications
@@ -69,7 +69,7 @@ class Person < ActiveRecord::Base
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
            :source => :contact,
-           :conditions => "status = #{Connection::REQUESTED}"
+           :conditions => ["status = ?", Connection::REQUESTED]
   with_options :class_name => "Message", :dependent => :destroy,
                :order => 'created_at DESC' do |person|
     person.has_many :_sent_messages, :foreign_key => "sender_id",
