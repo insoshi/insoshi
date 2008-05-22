@@ -337,6 +337,34 @@ describe Person do
       @person.should be_active
     end
   end
+  
+  describe "mostly active" do
+    it "should include a recently logged-in person" do
+      Person.mostly_active.should contain(@person)
+    end
+    
+    it "should not include a deactivated person" do
+      @person.toggle!(:deactivated)
+      Person.mostly_active.should_not contain(@person)
+    end
+    
+    it "should not include an email unverified person" do
+      enable_email_notifications
+      @person.email_verified = false; @person.save!
+      Person.mostly_active.should_not contain(@person)      
+    end
+    
+    it "should not include a person who has never logged in" do
+      @person.last_logged_in_at = nil; @person.save
+      Person.mostly_active.should_not contain(@person)
+    end
+    
+    it "should not include a person who logged in too long ago" do
+      @person.last_logged_in_at = Person::TIME_AGO_FOR_MOSTLY_ACTIVE - 1
+      @person.save
+      Person.mostly_active.should_not contain(@person)
+    end
+  end
 
   describe "admin" do
 

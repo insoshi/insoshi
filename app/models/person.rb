@@ -50,6 +50,7 @@ class Person < ActiveRecord::Base
   NUM_WALL_COMMENTS = 10
   NUM_RECENT = 8
   FEED_SIZE = 10
+  TIME_AGO_FOR_MOSTLY_ACTIVE = 1.month.ago
   ACCEPTED_AND_ACTIVE =  [%(status = #{Connection::ACCEPTED} AND
                             deactivated = ? AND
                             (email_verified IS NULL OR email_verified = ?)),
@@ -108,6 +109,14 @@ class Person < ActiveRecord::Base
       paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
                      :conditions => conditions_for_active)
+    end
+    
+    # Return the people who are 'mostly' active.
+    # People are mostly active if they have logged in recently enough.
+    def mostly_active(page = 1)
+      paginate(:all, :page => page,
+                     :per_page => RASTER_PER_PAGE,
+                     :conditions => conditions_for_mostly_active)
     end
     
     # Return *all* the active users.
@@ -397,10 +406,22 @@ class Person < ActiveRecord::Base
       crypted_password.blank? || !password.blank? || !verify_password.nil?
     end
     
-    # Return the conditions for a user to be active.
-    def self.conditions_for_active
-      [%(deactivated = ? AND 
-        (email_verified IS NULL OR email_verified = ?)),
-       false, true]
+    class << self
+    
+      # Return the conditions for a user to be active.
+      def conditions_for_active
+        [%(deactivated = ? AND 
+          (email_verified IS NULL OR email_verified = ?)),
+         false, true]
+      end
+      
+      # Return the conditions for a user to be 'mostly' active.
+      def conditions_for_mostly_active
+        [%(deactivated = ? AND 
+          (email_verified IS NULL OR email_verified = ?) AND
+          (last_logged_in_at IS NOT NULL AND
+           last_logged_in_at >= ?)),
+         false, true, TIME_AGO_FOR_MOSTLY_ACTIVE]
+      end
     end
 end
