@@ -120,7 +120,7 @@ describe Comment do
     end
   
     it "should have a maximum body length" do
-      @comment.should have_maximum(:body, SMALL_TEXT_LENGTH)
+      @comment.should have_maximum(:body, MEDIUM_TEXT_LENGTH)
     end
   
     it "should increase the comment count" do
