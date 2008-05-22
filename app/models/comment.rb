@@ -29,7 +29,7 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :body, :commenter
   validates_length_of :body, :maximum => MAX_TEXT_LENGTH
-  validates_length_of :body, :maximum => SMALL_TEXT_LENGTH,
+  validates_length_of :body, :maximum => MEDIUM_TEXT_LENGTH,
                              :if => :wall_comment?
   
   after_create :log_activity, :send_receipt_reminder
