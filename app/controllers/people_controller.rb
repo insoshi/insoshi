@@ -67,6 +67,7 @@ class PeopleController < ApplicationController
       flash[:error] = "Invalid email verification code"
       redirect_to home_url
     else
+      cookies.delete :auth_token
       person = verification.person
       person.email_verified = true; person.save!
       self.current_person = person
