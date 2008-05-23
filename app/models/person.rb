@@ -50,7 +50,7 @@ class Person < ActiveRecord::Base
   NUM_WALL_COMMENTS = 10
   NUM_RECENT = 8
   FEED_SIZE = 10
-  TIME_AGO_FOR_MOSTLY_ACTIVE = 2.weeks.ago
+  TIME_AGO_FOR_MOSTLY_ACTIVE = 1.month.ago
   ACCEPTED_AND_ACTIVE =  [%(status = ? AND
                             deactivated = ? AND
                             (email_verified IS NULL OR email_verified = ?)),
