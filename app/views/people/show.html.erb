@@ -1,7 +1,7 @@
 <%- column_div :type => :primary do -%>
   <div class="profile vcard">
     <h2>Profile: <span class="fn n"><%= h @person.name %></span></h2>
-    <%- if admin? and not current_person.active? -%>
+    <%- if admin? and not @person.active? -%>
       <p class="error">This person is not active</p>
     <%- end -%>
     <%- if current_person?(@person) -%>
