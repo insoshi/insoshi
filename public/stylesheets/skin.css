@@ -139,6 +139,9 @@ p.welcome {
   margin-bottom: 0;
   margin-left: 102px;
 }
+.list .forum p {
+  margin-bottom: 1em;
+}
 .list.small p {
   font-size: 12px;
   margin-left: 60px;

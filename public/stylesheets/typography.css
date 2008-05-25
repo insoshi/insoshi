@@ -133,7 +133,7 @@ p.welcome a, p.welcome a:visited {
   font-size: 12px;
   line-height: 1.8em;
 }
-p .meta, li p.meta {
+p.meta, li p.meta {
   font-size: 12px;
 }
 .label {
