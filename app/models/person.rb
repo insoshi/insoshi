@@ -86,7 +86,8 @@ class Person < ActiveRecord::Base
                                             :limit => FEED_SIZE,
                                             :dependent => :destroy
   has_many :page_views, :order => 'created_at DESC'
-  
+  has_many :galleries
+
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?

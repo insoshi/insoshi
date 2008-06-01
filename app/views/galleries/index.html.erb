@@ -1,0 +1,12 @@
+<%- column_div :type => :primary do -%>
+	<h2> Galleries </h2>
+	<div id="gallery_list">
+		<ul>
+			<% @galleries.each do |gallery| %>
+			<li>	<%=link_to (render :partial=>"gallery", :object=>gallery), gallery_path(gallery)%>
+			<%- end -%>
+		</ul>
+	</div >	
+	<%= will_paginate(@galleries) %>
+
+<%- end -%>

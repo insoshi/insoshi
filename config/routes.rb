@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :password_reminders
   map.resources :photos
   map.resource :session
+  map.resource :galleries
   map.resources :messages, :collection => { :sent => :get, :trash => :get },
                            :member => { :reply => :get, :undestroy => :put }
 
@@ -13,9 +14,13 @@ ActionController::Routing::Routes.draw do |map|
                                       :common_contacts => :get }
   map.resources :people do |person|
      person.resources :messages
-     person.resources :photos
+     person.resources :galleries
      person.resources :connections
      person.resources :comments
+  end
+  
+  map.resources :galleries do |gallery|
+    gallery.resources :photos
   end
   map.namespace :admin do |admin|
     admin.resources :people, :preferences

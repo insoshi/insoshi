@@ -1,0 +1,108 @@
+From 1d91f63a47ce1bfe840e129cd348c12b7bc7b87c Mon Sep 17 00:00:00 2001
+From: Piotr Jakubowski <piotrj@piotr-jakubowskis-macbook.local>
+Date: Fri, 6 Jun 2008 19:22:21 +0200
+Subject: Spec tests for GalleriesController
+
+---
+ spec/controllers/galleries_controller_spec.rb |   55 +++++++++++++++++++++++++
+ spec/fixtures/galleries.yml                   |    2 +-
+ spec/helpers/galleries_helper_spec.rb         |   11 +++++
+ 3 files changed, 67 insertions(+), 1 deletions(-)
+ create mode 100644 spec/controllers/galleries_controller_spec.rb
+ create mode 100644 spec/helpers/galleries_helper_spec.rb
+
+diff --git a/spec/controllers/galleries_controller_spec.rb b/spec/controllers/galleries_controller_spec.rb
+new file mode 100644
+index 0000000000000000000000000000000000000000..35b4eac0826671f450b2b7d5fb64e8fd31fe90eb
+--- /dev/null
++++ b/spec/controllers/galleries_controller_spec.rb
+@@ -0,0 +1,55 @@
++require File.dirname(__FILE__) + '/../spec_helper'
++
++describe GalleriesController do
++  describe "when not logged in" do
++      
++    it "should protect the index page" do
++      get :index
++      response.should redirect_to(login_url)
++    end
++  end
++  
++  describe "when logged in" do
++    integrate_views
++  
++    before(:each) do
++      @gallery = galleries(:valid_gallery)
++      @person  = people(:quentin)
++      login_as(:quentin)
++    end
++    
++    it "should have working pages" do |page|
++      page.get    :index,   :person_id => @person   
++      response.should be_success
++      
++      page.get    :show,    :id => @gallery        
++      response.should be_success
++      
++      page.get    :new                              
++      response.should be_success
++      
++      page.get    :edit,    :id => @gallery
++      response.should be_success
++      
++      page.delete :destroy, :id => @gallery
++      @gallery.should_not exist_in_database
++    end
++    
++    it "should associate person to the gallery" do
++      post :create, :gallery => {:title=>"Title"}
++      assigns(:gallery).person.should == @person
++    end
++    
++    it "should require the correct user to edit" do
++      login_as(:kelly)
++      post :edit, :id => @gallery
++      response.should redirect_to(person_galleries_url(@person))
++    end
++    
++    it "should require the correct user to delete" do
++      login_as(:kelly)
++      delete :destroy, :id => @gallery
++      response.should redirect_to(person_galleries_url(@person))
++    end
++  end
++end
+diff --git a/spec/fixtures/galleries.yml b/spec/fixtures/galleries.yml
+index cf4bed8926fdf9a674182f8eedf8b65e2ff378d5..2f1094ffd4bae6a248bea0cd34effff0bb84503b 100644
+--- a/spec/fixtures/galleries.yml
++++ b/spec/fixtures/galleries.yml
+@@ -7,7 +7,7 @@
+ #   column: value
+ 
+ valid_gallery:
+-    person_id: 1
++    person: quentin
+     title: "Title"
+     description: "Some description"
+     primary_photo_id: NULL
+diff --git a/spec/helpers/galleries_helper_spec.rb b/spec/helpers/galleries_helper_spec.rb
+new file mode 100644
+index 0000000000000000000000000000000000000000..61194f21e29198f331069898d4e5ab28594782a5
+--- /dev/null
++++ b/spec/helpers/galleries_helper_spec.rb
+@@ -0,0 +1,11 @@
++require File.dirname(__FILE__) + '/../spec_helper'
++
++describe GalleriesHelper do
++  
++  #Delete this example and add some real ones or delete this file
++  it "should include the GalleriesHelper" do
++    included_modules = self.metaclass.send :included_modules
++    included_modules.should include(GalleriesHelper)
++  end
++  
++end
+-- 
+1.5.3.7
+
+
