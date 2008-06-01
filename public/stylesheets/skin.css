@@ -1,5 +1,6 @@
 /* Main layout */
 
+
 body {
   text-align: center;
 }
@@ -299,6 +300,38 @@ form#blogpost #post_title, form#blogpost #post_body {
   text-align: right;
 }
 
+/* Gallery list */
+div.gallery_list_item
+{
+	border: 1px dotted #999;
+	margin-bottom: 5px;
+}
+
+div.gallery_list_item:hover
+{
+	background-color: #ccccff;
+}
+
+
+div.gallery_list_item div.description 
+{
+	float: right;
+	text-align: right;
+	padding: 5px;
+}
+div.gallery_list_item div.description p
+{
+	color: #999;
+	font-size: 10px;
+	font-weight: normal;
+}
+
+div.gallery_list_item img
+{
+	clear: right;
+	padding: 5px;
+}
+
 
 /* Bug fixes */
 form, div, h2, ul, li {zoom: 1;}
@@ -321,3 +354,4 @@ form, div, h2, ul, li {zoom: 1;}
   margin: 0 105px;
   width: 324px;
 }
+
