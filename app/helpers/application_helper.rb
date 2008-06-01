@@ -16,10 +16,10 @@ module ApplicationHelper
       profile  = menu_element("Profile",  person_path(current_person))
       messages = menu_element("Messages", messages_path)
       blog     = menu_element("Blog",     blog_path(current_person.blog))
-      photos   = menu_element("Photos",   photos_path)
+      galleries   = menu_element("Galleries",   person_galleries_path(current_person))
       contacts = menu_element("Contacts",
                               person_connections_path(current_person))
-      links = [home, profile, contacts, messages, blog, people, forum]
+      links = [home, profile, contacts, galleries, messages, blog, people, forum]
     elsif logged_in? and admin_view?
       home =    menu_element("Home", home_path)
       people =  menu_element("People", admin_people_path)

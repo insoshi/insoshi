@@ -80,6 +80,7 @@ class Person < ActiveRecord::Base
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
                                             :limit => FEED_SIZE
+  has_many :galleries
 
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?

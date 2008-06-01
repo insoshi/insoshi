@@ -21,6 +21,7 @@ class Photo < ActiveRecord::Base
   include ActivityLogger
   UPLOAD_LIMIT = 5 # megabytes
   
+  belongs_to :gallery, :counter_cache => true
   belongs_to :person
   has_attachment :content_type => :image, 
                  :storage => :file_system, 

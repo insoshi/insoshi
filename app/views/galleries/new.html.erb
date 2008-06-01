@@ -1,0 +1,19 @@
+<%- column_div :type => :primary do -%>
+	<h2>New gallery</h2>
+
+	<%- form_for(@gallery) do |f| -%>
+	  <p>
+	    <b>Title</b><br />
+	    <%= f.text_field :title%>
+	  </p>
+
+	  <p>
+	    <b>Description</b><br />
+	    <%= f.text_area :description, :rows => 5 %>
+	  </p>
+
+	  <p>
+	    <%= f.submit "Create" %>
+	  </p>
+	<%- end -%>
+<%- end -%>
