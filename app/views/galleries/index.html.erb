@@ -2,6 +2,7 @@
 	<h2> Galleries </h2>
 	<div id="gallery_list">
 		<ul>
+
 			<% @galleries.each do |gallery| %>
 			<li>	<%=link_to (render :partial=>"gallery", :object=>gallery), gallery_path(gallery)%>
 			<%- end -%>
@@ -10,3 +11,14 @@
 	<%= will_paginate(@galleries) %>
 
 <%- end -%>
+<%- column_div :type => :secondary do -%>
+	<% if current_person?(@person)%>
+	<h2> Toolbox </h2>
+	<div class="toolbox">
+		<ul>
+			<li><%=link_to "Add new gallery", new_gallery_path()%></li>
+		</ul>
+	</div>
+	<% end %>
+	<%= render :partial => 'shared/minifeed' %>
+<%- end-%>

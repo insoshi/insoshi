@@ -1,35 +1,3 @@
-/* Gallery list */
-div.gallery_list_item
-{
-	border: 1px dotted #999;
-	margin-bottom: 5px;
-}
-
-div.gallery_list_item:hover
-{
-	background-color: #ccccff;
-}
-
-
-div.gallery_list_item div.description 
-{
-	float: right;
-	text-align: right;
-	padding: 5px;
-}
-div.gallery_list_item div.description p
-{
-	color: #999;
-	font-size: 10px;
-	font-weight: normal;
-}
-
-div.gallery_list_item img
-{
-	clear: right;
-	padding: 5px;
-}
-
 body {
   font-family: Helvetica, Arial, Univers, Tahoma, sans-serif;
   font-size: 1em;
@@ -99,12 +67,12 @@ h6 {
   font-weight: bold;
   font-style: italic;
 }
-/*ul li {
+ul li {
   background: url(/images/bullet.png) top left no-repeat;
   border: 0;
   margin: 0 0 .5em 0;
   padding-left: 24px;
-}*/
+}
 ol li {
   list-style: decimal;
   margin-left: 1.5em;
