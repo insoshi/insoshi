@@ -2,7 +2,9 @@ class Gallery < ActiveRecord::Base
   belongs_to :person
   has_many :photos, :dependent => :destroy
   
-  @@per_page = 3
+  def self.per_page
+    5
+  end
   
   # def primary_photo
   #   self.photos.find_all_by_primary(true).first

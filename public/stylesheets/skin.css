@@ -327,12 +327,30 @@ div.gallery_list_item div.description p
 	font-weight: normal;
 }
 
+div.gallery_list_item div.description div.tools
+{
+	font-size: 10px;
+}
 div.gallery_list_item img
 {
 	clear: right;
 	padding: 5px;
 }
+div.toolbox ul li
+{
+	font-size: 12px;
+	list-style: disc inside;
+	background: none;
+}
 
+#gallery_list ul li
+{
+	list-style-type: none;
+	background: none;
+	margin: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
 
 /* Bug fixes */
 form, div, h2, ul, li {zoom: 1;}
