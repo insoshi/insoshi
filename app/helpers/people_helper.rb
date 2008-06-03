@@ -42,7 +42,20 @@ module PeopleHelper
     # activities_helper_spec due to an RSpec bug.
     link_to(h(text), person, html_options)
   end
-    
+
+  # Same as person_link except sets up HTML needed for the image on hover effect
+  def person_link_with_image(text, person = nil, html_options = nil)
+    if person.nil?
+      person = text
+      text = person.name
+    elsif person.is_a?(Hash)
+      html_options = person
+      person = text
+      text = person.name
+    end
+    '<span class="imgHoverMarker"><img src="' + person.thumbnail + '" />' + person_link(text, person, html_options) + '</span>'
+  end
+  
   private
     
     # Make captioned images.

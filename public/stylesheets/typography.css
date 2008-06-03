@@ -193,11 +193,11 @@ a.show-follow:visited {
   padding: 0;
 }
 .pagination {
-  border-bottom: 1px solid #eee;
+  /*border-bottom: 1px solid #eee;*/
   font-size: 12px;
   padding-bottom: 12px;
-  text-align: center;
-  margin-bottom: 12px;
+  /* text-align: center;
+  too much whitespace margin-bottom: 12px; */
 }
 
 
@@ -288,7 +288,8 @@ form a.add-recipient {
 /* Styles for when the site is (nearly) blank, as for new users. */
 
 h3.blankslate {
-  text-align: center;
+/*  Align with title instead - Bill L
+text-align: center; */
 }
 
 
@@ -317,3 +318,7 @@ strong { font-weight: bold; }
 .highlight  { background:#ff0; }
 .added      { background:#060; color: #fff; }
 .removed    { background:#900; color: #fff; }
+
+/* Bill's additions */
+.clear      {clear: both;}
+.disabled   {color: #c0c0c0;} /* greyed out to emphasize unavailability */

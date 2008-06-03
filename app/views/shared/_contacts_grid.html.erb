@@ -1,0 +1,7 @@
+<%= will_paginate(contacts) %>
+<ul class="grid contacts medium">
+  <%- contacts.each do |contact| -%>
+    <%= render :partial => 'shared/contact_medium', :locals => {:contact => contact} %>
+  <%- end %>
+</ul>
+<%= will_paginate(contacts) %>

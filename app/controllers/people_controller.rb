@@ -20,12 +20,20 @@ class PeopleController < ApplicationController
       flash[:error] = "That person is not active"
       redirect_to home_url and return
     end
+    @people = @contacts = @person.contacts.paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
     if logged_in?
       @some_contacts = @person.some_contacts
       @common_connections = current_person.common_connections_with(@person)
+      # gives us the same max number as in basic contacts list to show on the Profile
+      @some_common_connections = @common_connections[(0...Person::MAX_DEFAULT_CONTACTS)]
     end
     respond_to do |format|
       format.html
+      format.js {
+        render :update do |page|
+          page.replace_html 'contacts_grid', :partial => 'shared/contacts_grid'
+        end
+      }
     end
   end
   

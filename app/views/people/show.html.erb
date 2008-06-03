@@ -1,6 +1,17 @@
-<%- column_div :type => :primary do -%>
-  <div class="profile vcard">
-    <h2>Profile: <span class="fn n"><%= h @person.name %></span></h2>
+<div id="tabCol">
+  <ul> <!-- this list sets up the jQuery tabs, with the content of each tab in the linked div -->
+	<li><a href="#tProfile"><span>Profile</span></a></li>
+	<li><a href="#tRecentActivity"><span>Recent Activity</span></a></li>
+	<li><a href="#tContacts"><span>Contacts</span></a></li>
+	<li><a href="#tWall"><span>Wall</span></a></li>
+  </ul>
+  <div id="tProfile" class="profile vcard">
+    <h2>
+	  Profile: <span class="fn n"><%= h @person.name %></span>
+	  <%- if current_person?(@person) -%>
+		<div class="profileEditLink"><%= link_to "Edit", edit_person_path(@person) %></div>
+	  <%- end -%>
+	</h2>
     <%- if admin? and not @person.active? -%>
       <p class="error">This person is not active</p>
     <%- end -%>
@@ -10,11 +21,6 @@
           Your description is blank.
           <%= link_to "Click here to add a description",
                       edit_person_path(@person) %>
-        </div>
-      <%- else -%>
-        <div class="notice">
-          You are viewing your own profile.
-          <%= link_to "Click here to edit it", edit_person_path(@person) %>
         </div>
       <%- end -%>
     <%- end -%>
@@ -33,17 +39,15 @@
           <%- end -%>
           <%- if Connection.connected?(@person, current_person) -%>
           <li>
-            <%= h @person.name %> is one of your contacts
-            <br />
-           (<%= link_to "end connection", 
-               connection_path(Connection.conn(current_person, @person)), 
-               :method => :delete,
-              :confirm => 
-"Are you sure you want to end connection with #{h @person.name}?" %>)
-          
+            <%= h @person.name %> is one of your contacts 
+            <%= link_to image_tag("icons/close.gif", :class => 'actioner'), 
+               		connection_path(Connection.conn(current_person, @person)), 
+               		:method => :delete,
+               		:confirm => "Are you sure you want to remove this connection?",
+ 					:title => "Are you sure you want to remove this connection?" %>
           </li>
           <%- end -%>
-          <li><%= email_link @person %></li>
+          <li><%= email_link(@person, :use_image => false) %></li>
         <%- end -%>
           <li><%= link_to "#{h @person.name}'s blog",
                   blog_path(@person.blog) %></li>
@@ -65,18 +69,30 @@
       <%- end -%>
     </div>
     <%= display @person.description %>
+	<div class="clear"></div>
   </div>
 
-  <%= render :partial => 'recent_activity' %>
-  <%= render :partial => 'wall' %>
-<%- end -%>
+  <div id="tRecentActivity">
+    <%= render :partial => 'recent_activity' %>
+  </div>
+  <div id="tWall">
+    <%= render :partial => 'wall' %>
+  </div>
 
-<%- column_div :type => :secondary do -%>
-  <%= render :partial => 'shared/minifeed' %>
-  <%- if logged_in? -%>
-    <%= render :partial => 'shared/contacts_preview',
-               :locals => { :person => @person } %>
-    <%= render :partial => 'common_contacts' %>
-  <%- end -%>
-<%- end -%>
+  <div id="tContacts">
+	  <div class="innerTabLeft">
+        <h2>Contacts for <%= @person.name %></h2>
+		<div id="contacts_grid">
+	      <%= render :partial => 'shared/contacts_grid',
+	                 :locals => { :contacts => @contacts } %>
+	    </div>
+		<%= render :partial => 'common_contacts' %>
+	  </div>
+	  <div class="innerTabRight">
+		<%= render :partial => 'searches/box' %>
+	  </div>
+	  <div class="clear">
+	  </div>
+  </div>
+</div>
 

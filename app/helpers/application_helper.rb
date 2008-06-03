@@ -1,6 +1,11 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   
+  ## Application-wide values
+  def app_name
+    'Lazar Insoshi'
+  end
+  
   ## Menu helpers
   
   def menu
@@ -11,6 +16,11 @@ module ApplicationHelper
     else
       forum = menu_element("Forums", forums_path)
     end
+    if global_prefs.about.blank?
+      about = ''
+    else
+      about = menu_element("About", about_url)
+    end
     resources = menu_element("Resources", "http://docs.insoshi.com/")
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
@@ -19,21 +29,16 @@ module ApplicationHelper
       photos   = menu_element("Photos",   photos_path)
       contacts = menu_element("Contacts",
                               person_connections_path(current_person))
-      links = [home, profile, contacts, messages, blog, people, forum]
+      links = [home, profile, contacts, messages, blog, people, forum, about]
     elsif logged_in? and admin_view?
       home =    menu_element("Home", home_path)
       people =  menu_element("People", admin_people_path)
       forums =  menu_element(inflect("Forum", Forum.count),
                              admin_forums_path)
       preferences = menu_element("Prefs", admin_preferences_path)
-      links = [home, people, forums, preferences]
+      links = [home, people, forums, preferences, resources]
     else
-      links = [home, people]
-    end
-    if global_prefs.about.blank?
-      links
-    else
-      links.push(menu_element("About", about_url))
+      links = [home, people, about]
     end
   end
   
@@ -100,6 +105,7 @@ module ApplicationHelper
 
   def email_link(person, options = {})
     reply = options[:replying_to]
+    use_image = options[:use_image].nil? || options[:use_image]
     if reply
       path = reply_message_path(reply)
     else
@@ -108,9 +114,13 @@ module ApplicationHelper
     img = image_tag("icons/email.gif")
     action = reply.nil? ? "Send a message" : "Send reply"
     opts = { :class => 'email-link' }
-    str = link_to(img, path, opts)
-    str << "&nbsp;"
-    str << link_to_unless_current(action, path, opts)
+    if use_image
+      str = link_to(img, path, opts)
+      str << "&nbsp;"
+      str << link_to_unless_current(action, path, opts)
+    else
+      str = link_to_unless_current(action, path, opts)
+    end
   end
 
   def formatting_note
