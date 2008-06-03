@@ -51,10 +51,16 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 1.month.ago
+  # These constants should be methods, but I couldn't figure out  how to use
+  # methods in the has_many associations.  I hope you can do better.
   ACCEPTED_AND_ACTIVE =  [%(status = ? AND
                             deactivated = ? AND
                             (email_verified IS NULL OR email_verified = ?)),
                           Connection::ACCEPTED, false, true]
+  REQUESTED_AND_ACTIVE =  [%(status = ? AND
+                            deactivated = ? AND
+                            (email_verified IS NULL OR email_verified = ?)),
+                          Connection::REQUESTED, false, true]
 
   has_one :blog
   has_many :email_verifications
@@ -69,7 +75,7 @@ class Person < ActiveRecord::Base
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
            :source => :contact,
-           :conditions => ["status = ?", Connection::REQUESTED]
+           :conditions => REQUESTED_AND_ACTIVE
   with_options :class_name => "Message", :dependent => :destroy,
                :order => 'created_at DESC' do |person|
     person.has_many :_sent_messages, :foreign_key => "sender_id",
