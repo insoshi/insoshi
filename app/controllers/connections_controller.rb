@@ -90,8 +90,8 @@ class ConnectionsController < ApplicationController
     # Suppose Alice sends Bob a connection request, but then the admin 
     # deactivates Alice.  We don't want Bob to be able to make the connection.
     def redirect_for_inactive
-      unless @connection.contact.active?
-        flash[:error] = "Person deactivated."
+      if @connection.contact.deactivated?
+        flash[:error] = "Invalid connection request: person deactivated"
         redirect_to home_url
       end
     end
