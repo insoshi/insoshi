@@ -36,9 +36,9 @@ module ActivitiesHelper
       %(#{person_link(person)} created the new discussion topic
         #{topic_link(activity.item)}.)
     when "Photo"
-      %(#{person_link(person)} changed their profile picture.)
+      %(#{person_link(person)}'s profile picture has changed.)
     when "Person"
-      %(#{person_link(person)} changed their description.)
+      %(#{person_link(person)}' description has changed.)
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -81,9 +81,9 @@ module ActivitiesHelper
       %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", activity.item)}.)
     when "Photo"
-      %(#{person_link(person)} changed their profile picture.)
+      %(#{person_link(person)}'s profile picture has changed.)
     when "Person"
-      %(#{person_link(person)} changed their description.)
+      %(#{person_link(person)}'s description has changed.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -120,12 +120,7 @@ module ActivitiesHelper
   end
   
   def someones(person, commenter, link = true)
-    # raise commenter.inspect
-    if link
-      person == commenter ? "their own" : "#{person_link(person)}'s"
-    else
-      person == commenter ? "their own" : "#{h person.name}'s"
-    end
+    link ? "#{person_link(person)}'s" : "#{h person.name}'s"
   end
   
   def blog_link(text, blog)
