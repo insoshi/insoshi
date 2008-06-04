@@ -71,17 +71,19 @@ module ApplicationHelper
   # The html_options, if present, allow the syntax
   #  display("foo", :class => "bar")
   #  => '<p class="bar">foo</p>'
-  def display(text, html_options = nil)
+  def display(text, html_options = nil, options = {})
     if html_options
       html_options = html_options.stringify_keys
-      tag_options = tag_options(html_options)
+      tag_opts = tag_options(html_options)
     else
-      tag_options = nil
+      tag_opts = nil
     end
-    markdown(sanitize(text)).gsub("<p>", "<p#{tag_options}>")
-  rescue
-    # Sometimes Markdown throws exceptions, so rescue gracefully.
-    content_tag(:p, sanitize(text))
+    processed_text = add_tag_options(markdown(sanitize(text)), tag_opts)
+    width = options[:width]
+    width.nil? ? processed_text : wordwrap(processed_text, width, "\n")
+  # rescue
+  #   # Sometimes Markdown throws exceptions, so rescue gracefully.
+  #   content_tag(:p, sanitize(text))
   end
   
   # Output a column div.
@@ -125,5 +127,9 @@ module ApplicationHelper
   
     def inflect(word, number)
       number > 1 ? word.pluralize : word
+    end
+    
+    def add_tag_options(text, options)
+      text.gsub("<p>", "<p#{options}>")
     end
 end
