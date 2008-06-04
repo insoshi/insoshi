@@ -174,7 +174,11 @@ class PostsController < ApplicationController
     # Return URL to redirect to after post creation.
     def post_url
       if forum?
-        forum_topic_url(@forum, @topic)
+        # By using including :posts, we ensure that the user's browser
+        # will display the link as 'followed' when he makes a post,
+        # so the link color will only change back to 'unfollowed' 
+        # if someone *else* makes a post.
+        forum_topic_url(@forum, @topic, :posts => @topic.posts.count)
       elsif blog?
         blog_post_url(@blog, @post)
       end
