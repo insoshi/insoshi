@@ -35,7 +35,7 @@ describe ActivitiesHelper do
     activity = Activity.find_by_item_id(comment)
     login_as(:kelly)
     feed_message(activity).should =~ /#{commenter.name}/
-    feed_message(activity).should =~ /their own wall/
+    feed_message(activity).should =~ /#{commenter.name}'s wall/
   end
   
   
