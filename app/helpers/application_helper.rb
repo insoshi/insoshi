@@ -72,18 +72,20 @@ module ApplicationHelper
   #  display("foo", :class => "bar")
   #  => '<p class="bar">foo</p>'
   def display(text, html_options = nil, options = {})
-    if html_options
-      html_options = html_options.stringify_keys
-      tag_opts = tag_options(html_options)
-    else
-      tag_opts = nil
+    begin
+      width = options[:width]
+      if html_options
+        html_options = html_options.stringify_keys
+        tag_opts = tag_options(html_options)
+      else
+        tag_opts = nil
+      end
+      processed_text = add_tag_options(markdown(sanitize(text)), tag_opts)
+    rescue
+      # Sometimes Markdown throws exceptions, so rescue gracefully.
+      processed_text = content_tag(:p, sanitize(text))
     end
-    processed_text = add_tag_options(markdown(sanitize(text)), tag_opts)
-    width = options[:width]
     width.nil? ? processed_text : wordwrap(processed_text, width, "\n")
-  # rescue
-  #   # Sometimes Markdown throws exceptions, so rescue gracefully.
-  #   content_tag(:p, sanitize(text))
   end
   
   # Output a column div.
