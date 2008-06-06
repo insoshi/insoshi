@@ -1,13 +1,13 @@
 <div class="gallery_list_item">
-	<%=image_tag(gallery.thumbnail_url)%>
+	<%=link_to image_tag(gallery.thumbnail_url), gallery_path(gallery)%>
 	<div class="description">
 	<p>	
-		<%=h gallery.title%> by <%=h gallery.person.name%>
-		<div class="tools">
-		<% if current_person?(gallery.person)%>
-			<%= link_to "Edit", edit_gallery_path(gallery) %> | <%= link_to "Delete", gallery_path(gallery), :method => :delete, :confirm => "Do you really want to delete #{h gallery.title} gallery"%> <br/>
-		<%-end-%>
-		</div>
+		<%= link_to h(gallery.title), gallery_path(gallery)%>
 	</p>
+	<div class="tools">
+	<% if current_person?(gallery.person)%>
+		<%= link_to "Edit", edit_gallery_path(gallery) %> | <%= link_to "Delete", gallery_path(gallery), :method => :delete, :confirm => "Do you really want to delete #{h gallery.title} gallery"%> <br/>
+	<%-end-%>
+	</div>
 </div>
 </div>

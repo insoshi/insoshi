@@ -4,7 +4,7 @@ class CreateGalleries < ActiveRecord::Migration
       t.integer :person_id
       t.string :title
       t.string :description
-      t.integer :photos_count
+      t.integer :photos_count, :null => false, :default => 0
       t.integer :primary_photo_id
       t.timestamps
     end

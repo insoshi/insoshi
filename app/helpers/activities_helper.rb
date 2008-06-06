@@ -39,6 +39,10 @@ module ActivitiesHelper
       %(#{person_link(person)} changed their profile picture.)
     when "Person"
       %(#{person_link(person)} changed their description.)
+    when "Gallery"
+      gallery_link = 
+      %(#{person_link(person)} added new gallery #{gallery_link(activity.item)}.)
+      
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -84,6 +88,9 @@ module ActivitiesHelper
       %(#{person_link(person)} changed their profile picture.)
     when "Person"
       %(#{person_link(person)} changed their description.)
+    when "Gallery"
+      %(#{person_link(person)} added new gallery #{gallery_link(activity.item)}.)
+      
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -112,6 +119,8 @@ module ActivitiesHelper
               "camera.gif"
             when "Person"
                 "edit.gif"
+            when "Gallery"
+              "camera.gif"
             else
               # TODO: make this a more graceful falure (?).
               raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -147,6 +156,14 @@ module ActivitiesHelper
       text = topic.name
     end
     link_to(text, forum_topic_path(topic.forum, topic))
+  end
+  
+  def gallery_link(text, gallery = nil)
+    if gallery.nil?
+      gallery = text
+      text = gallery.title
+    end
+    link_to(h(text), gallery_path(gallery))
   end
 
   # Return a link to the wall.
