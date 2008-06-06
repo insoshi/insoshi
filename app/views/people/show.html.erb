@@ -47,6 +47,7 @@
         <%- end -%>
           <li><%= link_to "#{h @person.name}'s blog",
                   blog_path(@person.blog) %></li>
+					<li><%= link_to "#{h @person.name}'s galleries", person_galleries_path(@person)%>
           <%- if current_person.admin? -%>
           <li>
           <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
