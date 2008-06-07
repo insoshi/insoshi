@@ -13,5 +13,6 @@
 #  updated_at  :datetime        
 #
 
-class PageView < ActiveRecord::Base  
+class PageView < ActiveRecord::Base
+  belongs_to :person
 end

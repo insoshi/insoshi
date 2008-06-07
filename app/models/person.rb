@@ -67,8 +67,6 @@ class Person < ActiveRecord::Base
   has_many :comments, :as => :commentable, :order => 'created_at DESC',
                       :limit => NUM_WALL_COMMENTS
   has_many :connections
-
-
   has_many :contacts, :through => :connections,
                       :conditions => ACCEPTED_AND_ACTIVE,
                       :order => 'people.created_at DESC'
@@ -86,7 +84,8 @@ class Person < ActiveRecord::Base
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
                                             :limit => FEED_SIZE
-
+  has_many :page_views, :order => 'created_at DESC'
+  
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
@@ -372,7 +371,7 @@ class Person < ActiveRecord::Base
     opts = { :page => page, :per_page => RASTER_PER_PAGE }
     @common_connections ||= Connection.paginate_by_sql(conditions, opts)
   end
-
+  
   protected
 
     ## Callbacks
