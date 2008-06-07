@@ -8,7 +8,7 @@ module ActivityLogger
   # should include the person as well.  This happens when
   # someone comments on a person's blog post or wall.  In that case, when
   # adding activities to the contacts of the wall's or post's owner,
-  # we should include the owner as well, so that he see's in his feed
+  # we should include the owner as well, so that he sees in his feed
   # that a comment has been made.
   def add_activities(options = {})
     person = options[:person]
