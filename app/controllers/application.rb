@@ -26,11 +26,16 @@ class ApplicationController < ActionController::Base
     # Create a Scribd-style PageView.
     # See http://www.scribd.com/doc/49575/Scaling-Rails-Presentation
     def create_page_view
-      PageView.create(:user_id => session[:user_id],
+      PageView.create(:person_id => session[:person_id],
                       :request_url => request.request_uri,
                       :ip_address => request.remote_ip,
                       :referer => request.env["HTTP_REFERER"],
                       :user_agent => request.env["HTTP_USER_AGENT"])
+      if logged_in?
+        # last_logged_in_at actually captures site activity, so update it now.
+        current_person.last_logged_in_at = Time.now
+        current_person.save
+      end
     end
   
     def require_activation
