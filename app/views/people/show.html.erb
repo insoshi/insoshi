@@ -8,10 +8,19 @@
   <div id="tProfile" class="profile vcard">
     <h2>
 	  Profile: <span class="fn n"><%= h @person.name %></span>
-	  <%- if current_person?(@person) -%>
-		<div class="profileEditLink"><%= link_to "Edit", edit_person_path(@person) %></div>
-	  <%- end -%>
 	</h2>
+    <%- if current_person?(@person) -%>
+	  <div class="button"><%= link_to "Edit", edit_person_path(@person) %></div>
+	<%- end -%>
+    <%- if current_person.admin? -%>
+      <div class="button">
+        <%- activity = activated_status(@person)  -%>
+        <%= link_to activity, admin_person_path(@person, 
+				  :task => "deactivated"),
+                  :method => :put %>
+      </div>
+	  <div class="clear"></div>
+    <%- end -%>
     <%- if admin? and not @person.active? -%>
       <p class="error">This person is not active</p>
     <%- end -%>
@@ -29,42 +38,28 @@
                                         :alt => h(@person.name) %>
 
       <%- unless current_person?(@person) -%>
+		<h3>Your <%= @person.name -%> Toolbox</h3>
         <ul class="tools">
          <%- if logged_in? -%>
           <%- unless Connection.exists?(@person, current_person) -%>
             <li>
-            <%= link_to "Connect with #{h @person.name}!",
+            <%= link_to "Request a Connection?",
                         person_connections_path(@person), :method => :post %>
             </li>
           <%- end -%>
           <%- if Connection.connected?(@person, current_person) -%>
-          <li>
-            <%= h @person.name %> is one of your contacts 
-            <%= link_to image_tag("icons/close.gif", :class => 'actioner'), 
+            <li><%= link_to "Remove this connection?", 
                		connection_path(Connection.conn(current_person, @person)), 
                		:method => :delete,
-               		:confirm => "Are you sure you want to remove this connection?",
- 					:title => "Are you sure you want to remove this connection?" %>
-          </li>
+               		:confirm => "Are you sure you want to remove this connection?" %>
+            </li>
           <%- end -%>
           <li><%= email_link(@person, :use_image => false) %></li>
         <%- end -%>
-          <li><%= link_to "#{h @person.name}'s blog",
+		<% if !@person.blog.posts.empty? %>
+          <li><%= link_to "Read blog",
                   blog_path(@person.blog) %></li>
-          <%- if current_person.admin? -%>
-          <li>
-          <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
-          <%= link_to activity, 
-                      admin_person_path(@person, :task => "deactivated"),
-                      :method => :put %>
-          </li>
-          <%- end -%>
-        </ul>
-      <%- end -%>
-      
-      <%- if current_person?(@person) and current_person.admin? -%>
-        <ul class="tools">
-          <li><%= email_link @person %> to everyone</li>
+		<% end %>
         </ul>
       <%- end -%>
     </div>
@@ -82,10 +77,11 @@
   <div id="tContacts">
 	  <div class="innerTabLeft">
         <h2>Contacts for <%= @person.name %></h2>
-		<div id="contacts_grid">
-	      <%= render :partial => 'shared/contacts_grid',
+		<% if @person.connections.count > Person::MAX_DEFAULT_CONTACTS %>
+	      <div class='button see_all_link'><%= link_to "See All Contacts", person_connections_path(@person) %></div>
+		<% end %>
+        <%= render :partial => 'shared/contacts_grid',
 	                 :locals => { :contacts => @contacts } %>
-	    </div>
 		<%= render :partial => 'common_contacts' %>
 	  </div>
 	  <div class="innerTabRight">

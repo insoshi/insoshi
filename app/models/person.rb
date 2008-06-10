@@ -230,6 +230,13 @@ class Person < ActiveRecord::Base
                  :limit => NUM_RECENT_MESSAGES)
   end
 
+  ## Forum helpers
+  def forum_posts
+    Topic.find(:all,
+               :conditions => [%(forum_id =? AND
+                                 person_id = ?), 1, id])
+  end
+
   ## Photo helpers
 
   def photo

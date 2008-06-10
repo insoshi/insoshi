@@ -1,11 +1,11 @@
 <%- column_div :type => :primary do -%>
-  <h2>Editing preferences</h2>
+  <h2>Edit Global Preferences</h2>
 
   <%= error_messages_for :preferences %>
 
   <% form_for :preferences,
               :url => admin_preference_path(@preferences),
-              :html => { :method => :put } do |f| %>
+              :html => { :method => :put, :id => 'admin_preferences' } do |f| %>
               
     <div class="form_row">
       <label for="app_name">Application name</label>
@@ -71,8 +71,8 @@
     </div>
 
     <div class="form_row">
+	  <div class="button"><%= link_to "Cancel", admin_preferences_path %></div>
       <%= f.submit "Update", :class => "button" %>
     </div>
-      or <%= link_to "Cancel", admin_preferences_path %>
   <% end %>
 <%- end -%>

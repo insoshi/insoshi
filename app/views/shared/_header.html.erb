@@ -1,4 +1,11 @@
 <div id="header-wrap">
+    <%- if logged_in? -%>
+	  <%- if current_person.admin? -%>
+        <div class="adminMsgLink">
+          <%= email_link @person, :use_image => false, :to_all => true %>
+        </div>
+      <%- end -%>
+    <%- end -%>
   <div id="header">
     <h1><a href="/" title="Homepage"><%= image_tag "logo-insoshi.png" %></a></h1>
     <ul id="nav">

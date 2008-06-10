@@ -11,6 +11,11 @@ class TopicsController < ApplicationController
   def show
     @topic = Topic.find(params[:id])
     @posts = @topic.posts
+    
+    respond_to do |format|
+      format.html
+      format.atom
+    end
   end
 
   def new

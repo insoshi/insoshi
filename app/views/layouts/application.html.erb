@@ -4,10 +4,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><%= app_name %></title>
+	<% if @forum %>
+	  <%= auto_discovery_link_tag(:atom, :action => :show, :format => :atom, :id => @forum.id ) %>
+	<% elsif @feed %>
+	  <%= auto_discovery_link_tag(:atom, :action => :index, :format => :atom ) %>
+	<% end %>
     <%= stylesheet_link_tag "default" %>
     <%= stylesheet_link_tag "jquery-flora.tabs.css", "jquery.tooltip.css" %>
     <%= javascript_include_tag "jquery.js", "jquery-ui-personalized-1.5b3.packed.js", "jquery-fx.js", "jrails.js" %>
-    <%= javascript_include_tag "jquery.dimensions.js", "jquery.bgiframe.js", "jquery.tooltip.pack.js", "jquery.livequery.js", "application.js" %>
+    <%= javascript_include_tag "jquery.collection-min.js", "jquery.bgiframe.js", "jquery.tooltip.pack.js", "jquery.livequery.js", "application.js" %>
   </head>
   <body class="<%= @body %>">
     <%= render :partial => 'shared/header' %>

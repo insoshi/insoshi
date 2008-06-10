@@ -1,0 +1,1052 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  
+  <title>Home - Chowhound</title>
+  
+  <link href="/stylesheets/dragonwell.1163017989.css" media="screen" rel="Stylesheet" type="text/css" />
+  <link href="/stylesheets/redbox.1161392969.css" media="screen" rel="Stylesheet" type="text/css" />
+
+  <script src="/javascripts/prototype.1145428694.js" type="text/javascript"></script>
+<script src="/javascripts/effects.1150692787.js" type="text/javascript"></script>
+<script src="/javascripts/dragdrop.1150692787.js" type="text/javascript"></script>
+<script src="/javascripts/controls.1150851066.js" type="text/javascript"></script>
+<script src="/javascripts/application.1161555687.js" type="text/javascript"></script>
+  
+  <script src="/javascripts/redbox.1161392909.js" type="text/javascript"></script>
+  <script src="/javascripts/spy.1158862094.js" type="text/javascript"></script>
+  
+  
+
+  <!--[if IE]>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/ie-overrides-global.css" />
+  <![endif]-->
+  
+</head>
+
+<body>
+
+<div id="container">
+
+  <!-- start _header -->
+
+<div id="banner">
+  <div class="inner">
+  
+    <h1><a href="/">Chowhound</a></h1>
+
+
+    <div id="userinfo">
+      <a href="/account/login?return_to=%2F">Log in</a> | <a href="/account/signup?return_to=%2F">Sign up</a> 
+      <br>
+      <table align=right><tr><td height=3></td></tr><tr><td><a href="/boards/show/43"><font color="#8c0000">Help</font></a></td><td></td></tr></table>
+    </div><!-- /userinfo -->
+
+    <ul id="nav">
+      <li id="forums-tab"><a style="cursor: pointer;" onclick="Effect.toggle('amazonas', 'blind',{ duration:.3})" class="active"><span>Boards</span></a></li>
+      <li id="features-tab"><a href="/features"><span>Features</span></a></li>
+      <li id="chownews-tab"><a href="/news"><span>Digest</span></a></li>
+      <li id="newposts-tab"><a href="/hot_posts"><span>Hot Posts</span></a></li>
+      <li id="doggiebag-tab"><a href="/users/dashboard"><span>My Doggie Bag</span></a></li>
+      <li id="about-tab"><a href="/home/getting_started" onclick="Board.hidePopup('started')" onmouseout="Board.hidePopup('started')" onmouseover="Board.showPopup('started')"><span>Getting Started</span></a></li>
+      <li id="chow-tab"><a href="http://www.chow.com"><span>Chow</span></a></li>
+    </ul><!-- /nav -->
+
+    
+    <div class="clearing"></div>
+    
+   
+  </div><!-- /inner -->
+
+  <div id="started" style="z-index: 9999; display:none;" onmouseout="Board.hidePopup('started')" onmouseover="Board.showPopup('started')">
+    <ul style="list-style:vertical">
+      <li><a href="/home/etiquette">Etiquette</a></li>
+      <li><a href="/home/manifesto">Manifesto</a></li>
+      <li><a href="/home/faq">FAQ</a></li>
+    </ul>
+  </div><!-- /started -->
+  
+
+  <div id="amazonas" class="amazonas" style="display:none">
+    <div align="right" class="amzclosebox"><a href="#" onclick="$('amazonas').hide(); return false;">close x</a></div>
+    <table style="margin-left: 50px; width: 900px;">
+      <tr>
+        <td style="padding-left: 10px; padding-top:15px; padding-bottom: 10px;" colspan="4">
+          <h1 style="color: #9d2117; font-size:24px;">The Boards</h1>
+        </td>
+      </tr>
+    
+      <tr valign="top" style="line-height:1.5em;">
+                  <td style="padding: 10px;">
+            <ul class="xoxo">
+                              <li class="group_header">Pacific Northwest
+                  <ul>
+                                          <li><a href="/boards/show/4" style="color:#9d2117">Pacific Northwest</a></li>
+                                      </ul>
+                </li>
+                              <li class="group_header">California
+                  <ul>
+                                          <li><a href="/boards/show/1" style="color:#9d2117">San Francisco Bay Area</a></li>
+                                          <li><a href="/boards/show/2" style="color:#9d2117">Los Angeles Area</a></li>
+                                          <li><a href="/boards/show/3" style="color:#9d2117">California</a></li>
+                                      </ul>
+                </li>
+                              <li class="group_header">Southwest
+                  <ul>
+                                          <li><a href="/boards/show/5" style="color:#9d2117">Texas</a></li>
+                                          <li><a href="/boards/show/6" style="color:#9d2117">Southwest</a></li>
+                                      </ul>
+                </li>
+                              <li class="group_header">Midwest
+                  <ul>
+                                          <li><a href="/boards/show/7" style="color:#9d2117">Chicago Area</a></li>
+                                          <li><a href="/boards/show/8" style="color:#9d2117">Midwest</a></li>
+                                      </ul>
+                </li>
+                              <li class="group_header">South
+                  <ul>
+                                          <li><a href="/boards/show/9" style="color:#9d2117">New Orleans</a></li>
+                                          <li><a href="/boards/show/10" style="color:#9d2117">Florida</a></li>
+                                          <li><a href="/boards/show/11" style="color:#9d2117">South</a></li>
+                                      </ul>
+                </li>
+                          </ul>
+          </td>
+                  <td style="padding: 10px;">
+            <ul class="xoxo">
+                              <li class="group_header">Mid-Atlantic
+                  <ul>
+                                          <li><a href="/boards/show/14" style="color:#9d2117">Washington DC & Baltimore Area</a></li>
+                                          <li><a href="/boards/show/15" style="color:#9d2117">Pennsylvania</a></li>
+                                          <li><a href="/boards/show/16" style="color:#9d2117">Mid-Atlantic</a></li>
+                                      </ul>
+                </li>
+                              <li class="group_header">NYC Metro (and north)
+                  <ul>
+                                          <li><a href="/boards/show/17" style="color:#9d2117">What's My Craving?</a></li>
+                                          <li><a href="/boards/show/18" style="color:#9d2117">Manhattan</a></li>
+                                          <li><a href="/boards/show/19" style="color:#9d2117">Outer Boroughs</a></li>
+                                          <li><a href="/boards/show/20" style="color:#9d2117">Tristate Region</a></li>
+                                          <li><a href="/boards/show/21" style="color:#9d2117">The Best...</a></li>
+                                      </ul>
+                </li>
+                              <li class="group_header">New England
+                  <ul>
+                                          <li><a href="/boards/show/12" style="color:#9d2117">Boston Area</a></li>
+                                          <li><a href="/boards/show/13" style="color:#9d2117">New England</a></li>
+                                      </ul>
+                </li>
+                          </ul>
+          </td>
+                  <td style="padding: 10px;">
+            <ul class="xoxo">
+                              <li class="group_header">Topical
+                  <ul>
+                                          <li><a href="/boards/show/27" style="color:#9d2117">General Chowhounding Topics</a></li>
+                                          <li><a href="/boards/show/29" style="color:#9d2117">Not About Food</a></li>
+                                          <li><a href="/boards/show/31" style="color:#9d2117">Home Cooking</a></li>
+                                          <li><a href="/boards/show/33" style="color:#9d2117">Food Media and News</a></li>
+                                          <li><a href="/boards/show/34" style="color:#9d2117">Wine</a></li>
+                                          <li><a href="/boards/show/35" style="color:#9d2117">Beer</a></li>
+                                          <li><a href="/boards/show/36" style="color:#9d2117">Spirits</a></li>
+                                          <li><a href="/boards/show/41" style="color:#9d2117">Cookware</a></li>
+                                          <li><a href="/boards/show/60" style="color:#9d2117">CHOWTour</a></li>
+                                      </ul>
+                </li>
+                              <li class="group_header">Site Specific
+                  <ul>
+                                          <li><a href="/boards/show/30" style="color:#9d2117">Site Talk</a></li>
+                                          <li><a href="/boards/show/40" style="color:#9d2117">Feedback: Report Problems</a></li>
+                                          <li><a href="/boards/show/43" style="color:#9d2117">User Help</a></li>
+                                          <li><a href="/boards/show/59" style="color:#9d2117">CHOW Feedback</a></li>
+                                      </ul>
+                </li>
+                              <li class="group_header">National
+                  <ul>
+                                          <li><a href="/boards/show/25" style="color:#9d2117">Elsewhere In America</a></li>
+                                          <li><a href="/boards/show/28" style="color:#9d2117">Kosher</a></li>
+                                          <li><a href="/boards/show/32" style="color:#9d2117">Chains</a></li>
+                                      </ul>
+                </li>
+                          </ul>
+          </td>
+                  <td style="padding: 10px;">
+            <ul class="xoxo">
+                              <li class="group_header">International
+                  <ul>
+                                          <li><a href="/boards/show/22" style="color:#9d2117">Quebec (including Montreal)</a></li>
+                                          <li><a href="/boards/show/23" style="color:#9d2117">Ontario (including Toronto)</a></li>
+                                          <li><a href="/boards/show/24" style="color:#9d2117">Canada</a></li>
+                                          <li><a href="/boards/show/26" style="color:#9d2117">International</a></li>
+                                          <li><a href="/boards/show/37" style="color:#9d2117">Australia/New Zealand</a></li>
+                                          <li><a href="/boards/show/42" style="color:#9d2117">U.K./Ireland</a></li>
+                                          <li><a href="/boards/show/44" style="color:#9d2117">South Asia</a></li>
+                                          <li><a href="/boards/show/45" style="color:#9d2117">Japan</a></li>
+                                          <li><a href="/boards/show/46" style="color:#9d2117">China</a></li>
+                                          <li><a href="/boards/show/47" style="color:#9d2117">Russia</a></li>
+                                          <li><a href="/boards/show/48" style="color:#9d2117">Greater Asia</a></li>
+                                          <li><a href="/boards/show/49" style="color:#9d2117">France</a></li>
+                                          <li><a href="/boards/show/50" style="color:#9d2117">Spain/Portugal</a></li>
+                                          <li><a href="/boards/show/51" style="color:#9d2117">Africa</a></li>
+                                          <li><a href="/boards/show/52" style="color:#9d2117">Turkey/Greece</a></li>
+                                          <li><a href="/boards/show/53" style="color:#9d2117">Middle East and Africa</a></li>
+                                          <li><a href="/boards/show/54" style="color:#9d2117">Caribbean</a></li>
+                                          <li><a href="/boards/show/55" style="color:#9d2117">Mexico</a></li>
+                                          <li><a href="/boards/show/56" style="color:#9d2117">South America</a></li>
+                                          <li><a href="/boards/show/57" style="color:#9d2117">Western Canada</a></li>
+                                          <li><a href="/boards/show/58" style="color:#9d2117">Italy</a></li>
+                                      </ul>
+                </li>
+                          </ul>
+          </td>
+              </tr>
+    </table>
+  </div><!-- /amazonas -->
+
+<div style="background:#ded8b9">
+
+  <form action="/search/std" method="get">
+
+  <table cellpadding="0" cellspacing="0" border="0" height="44" width="960">
+  <tr>
+    <td align=center>
+      <table bgcolor="#ded8b9" cellpadding="0" cellspacing="0" border="0" height="44">
+      <tr>
+        <td>
+          <fieldset><!-- was id "search_string -->
+            <input  id="search_query_header" name="q" type="text" size="50" value="" />
+          </fieldset>
+        </td>
+        <td>&nbsp;&nbsp;</td>
+        <td>
+          <fieldset>
+            <table cellpadding=0 cellspacing=0 border=0><tr><td><input type="image" value="Perform Search" alt="Perform Search" title="Perform Search" class="button" src="/images/search_btn.gif" /></td></tr></table>
+          </fieldset>
+        </td>
+        <td>
+          &nbsp;&nbsp;<a style="color: #8c0000; font-size: 11px;" href="/search/std?adv=1">advanced</a>
+        </td>
+      </tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+
+  
+  </form>
+
+</div>
+
+    
+</div><!--/banner-->
+
+<!-- end _header -->
+
+
+
+  <div id="content">
+  
+    <div class="inner">
+
+      <div id="maincontent">
+
+
+        
+      
+        
+<div id="home-features" class="addShadow">
+  <h3 id="home-recent-postings">
+    <div style="float:right;"><span class="hotposts-pause"><a href="#" onClick="toggleSpy()" id="toggle-link">pause</a></span></div>
+    <span>Recent Postings</span></h3>
+  <ul class="posts" id="recent-posts">
+    
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">0</span> 
+        <a href="/topics/show/341055#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/341055" rel="bookmark">Lunch at KiWe</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/20174" class="url">miranda</a></span>
+          
+                  in <a href="/boards/show/23">Ontario (including Toronto)</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/20174" class="url">miranda</a><br/>
+          <small>less than a minute ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+<script type="text/javascript"> setLastPostId(2006749); </script>
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">1</span> 
+        <a href="/topics/show/341045#comments">reply</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/341045" rel="bookmark">Dinner on the way to San Diego</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/44063" class="url">Henry2054</a></span>
+          
+                  in <a href="/boards/show/2">Los Angeles Area</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/12873" class="url">OCAnn</a><br/>
+          <small>1 minute ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">1</span> 
+        <a href="/topics/show/341050#comments">reply</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/341050" rel="bookmark">Fort Greene grub</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/26568" class="url">euroskip</a></span>
+          
+                  in <a href="/boards/show/19">Outer Boroughs</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/50477" class="url">Happygirl</a><br/>
+          <small>2 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">2</span> 
+        <a href="/topics/show/340941#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/340941" rel="bookmark">Is corkage legal in Florida?</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/12858" class="url">Covert Ops</a></span>
+          
+                  in <a href="/boards/show/10">Florida</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/11157" class="url">Bob Mervine</a><br/>
+          <small>3 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">7</span> 
+        <a href="/topics/show/340776#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/340776" rel="bookmark">Classy Casserole / Stew / Soup ???</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/12840" class="url">Mila</a></span>
+          
+                  in <a href="/boards/show/31">Home Cooking</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/12388" class="url">JalamaMama</a><br/>
+          <small>3 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">15</span> 
+        <a href="/topics/show/340492#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/340492" rel="bookmark">6th St Indian suggestions</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/45264" class="url">buzzard83</a></span>
+          
+                  in <a href="/boards/show/18">Manhattan</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/38183" class="url">AKR</a><br/>
+          <small>3 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">9</span> 
+        <a href="/topics/show/340056#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/340056" rel="bookmark">Duck's Japanese restaurant in San Gabriel</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/10786" class="url">calabasas_trafalgar</a></span>
+          
+                  in <a href="/boards/show/2">Los Angeles Area</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/10786" class="url">calabasas_trafalgar</a><br/>
+          <small>4 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">8</span> 
+        <a href="/topics/show/341026#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/341026" rel="bookmark">The history of food delivery</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/20828" class="url">foodrocks</a></span>
+          
+                  in <a href="/boards/show/29">Not About Food</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/10285" class="url">Candy</a><br/>
+          <small>4 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">10</span> 
+        <a href="/topics/show/340235#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/340235" rel="bookmark">Black Olive</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/11562" class="url">Hue</a></span>
+          
+                  in <a href="/boards/show/14">Washington DC & Baltimore Area</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/38647" class="url">Satellite</a><br/>
+          <small>4 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">19</span> 
+        <a href="/topics/show/340910#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/340910" rel="bookmark">Bittman's No-Knead Bread...Wow!</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/14139" class="url">Kagey</a></span>
+          
+                  in <a href="/boards/show/31">Home Cooking</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/14389" class="url">dchow</a><br/>
+          <small>4 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">11</span> 
+        <a href="/topics/show/322376#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/322376" rel="bookmark">Florence's: Fabulous West African in Harlem</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/10736" class="url">Peter Cherches</a></span>
+          
+                  in <a href="/boards/show/18">Manhattan</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/11394" class="url">Steve R</a><br/>
+          <small>5 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">10</span> 
+        <a href="/topics/show/340954#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/340954" rel="bookmark">good Asian eats near Moscone?</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/12335" class="url">cheryl_h</a></span>
+          
+                  in <a href="/boards/show/1">San Francisco Bay Area</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/10039" class="url">Melanie Wong</a><br/>
+          <small>5 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">3</span> 
+        <a href="/topics/show/340898#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/340898" rel="bookmark">Did the group choose a cookbook for Nov. or are we still on Braising? [moved from L.A. board]</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/12655" class="url">ZoeZ</a></span>
+          
+                  in <a href="/boards/show/31">Home Cooking</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/23603" class="url">ceeceee</a><br/>
+          <small>5 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">0</span> 
+        <a href="/topics/show/341053#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/341053" rel="bookmark">Review - Becco (355 WEST 46TH ST , 212-397-7597 , WWW.LIDIASITALY.COM)</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/38183" class="url">AKR</a></span>
+          
+                  in <a href="/boards/show/18">Manhattan</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/38183" class="url">AKR</a><br/>
+          <small>5 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">24</span> 
+        <a href="/topics/show/334140#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/334140" rel="bookmark">Old Fashioned American Brekafast in North Seattle?</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/46830" class="url">jbaum</a></span>
+          
+                  in <a href="/boards/show/4">Pacific Northwest</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/14958" class="url">MightyMac</a><br/>
+          <small>5 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">14</span> 
+        <a href="/topics/show/340902#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/340902" rel="bookmark">Tijuana dogs (bacon wrapped, street vendor hot dogs)-Where???</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/19396" class="url">upstarter</a></span>
+          
+                  in <a href="/boards/show/2">Los Angeles Area</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/17338" class="url">bo_burger</a><br/>
+          <small>6 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+
+<li class="post hentry">
+  
+  <table>
+    <tr>
+      <td class="postreplies">
+        
+        <span class="reply-number">0</span> 
+        <a href="/topics/show/341052#comments">replies</a>
+        
+      </td>
+      <td style="padding:8px 10px 10px 10px; width:310px;">
+        
+        <p class="title entry-title">
+          <a href="/topics/show/341052" rel="bookmark">Dinner with the girls?</a>         </p>
+
+        <span class="vcard author fn"><a href="/users/show/13553" class="url">LMWW</a></span>
+          
+                  in <a href="/boards/show/7">Chicago Area</a>
+              
+      </td>
+      <td style="width: 160px;">
+  
+        <div class="last-post">
+          last post by <a href="/users/show/13553" class="url">LMWW</a><br/>
+          <small>6 minutes ago</small>
+        </div>
+    
+      </td>
+    </tr>
+  </table>
+
+</li>
+
+
+  </ul>
+</div><!--/home-features-->
+
+
+
+      </div><!--/maincontent-->
+
+      <div id="sidecontent">
+        
+        
+          
+  <div class="s1">
+    <div class="s2">
+      <div class="s3">
+        <div class="advert">
+
+          <div id="ad_box">
+            <!-- MAC ad --><div style="text-align:center"><img src="http://i.i.com.com/cnwk.1d/Ads/common/advertisement.gif" width="120" height="10" alt="advertisement"><br /></div><a href="http://adlog.com.com/adlog/c/r=10409&s=670696&t=2006.11.08.21.12.49&o=12862:&h=cn&p=2&b=23&l=en_US&site=90&pt=FD&nd=&pid=&cid=&pp=100&e=&rqid=00c17-ad-e14540F3CD1C6E1EC/http://chowhound.com/" target="_blank"><img src="http://adlog.com.com/adlog/i/r=10409&s=670696&t=2006.11.08.21.12.49&o=12862:&h=cn&p=2&b=23&l=en_US&site=90&pt=FD&nd=&pid=&cid=&pp=100&e=&rqid=00c17-ad-e14540F3CD1C6E1EC/http://i.i.com.com/cnwk.1d/Ads/7883/10/Chound_ad3.jpg" height="250" width="300" alt="Click Here" border="0" /></a><!-- MAC [r20060725-jakeh-v1-13-2-bufferHandler-trigger:1.13.2] c17-ad-xw4.cnet.com::3971636144 2006.11.08.21.12.49 --><!-- MAC T 0.0.2.2 -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ieSpacer"></div>
+
+
+          <div class="sideblock addShadow" id="side-features">
+  <div class="sideinner">
+
+        <a href="http://www.chow.com/tour"><img alt="Feature_chowtour_chips" src="/images/feature_chowtour_chips.1161810835.jpg" /></a>
+  
+  </div>
+</div>
+
+<div class="ieSpacer"></div>
+
+          
+
+
+
+<div class="sideblock addShadow" id="side-features">
+
+<div class="sideinner">
+	<h3 style="background: #960807 url(/images/overheard_hd.jpg) 18px 9px no-repeat;"><span>Features</span></h3>
+	<ul>
+    <li class="post" id="jimleff"  onmouseover="this.style.backgroundColor='#f7de8e'" onmouseout="this.style.backgroundColor='#f3e6c3'">
+      <p class="title"><a href="/topics/show/340077">Cheap eats in Stockholm</a></a></p>
+      
+      <p class="jump">posted by: <a href="/users/show/12107">fatbully</a><br>
+      board: <a href="/boards/show/26">International</a></a></p>
+    </li>
+	</ul>
+</div>
+</div>
+
+
+
+                    
+        
+      </div><!--/sidecontent-->
+       
+      <div class="clearing"></div>
+       
+    </div><!--/inner-->
+    
+  </div><!--/content-->
+
+  <!-- start _footer -->
+
+<div style="background:#ded8b9">
+
+  <form action="/search/std" method="get">
+
+  <table cellpadding="0" cellspacing="0" border="0" height="44" width="960">
+  <tr>
+    <td align=center>
+      <table bgcolor="#ded8b9" cellpadding="0" cellspacing="0" border="0" height="44">
+      <tr>
+        <td>
+          <fieldset><!-- was id "search_string -->
+            <input  id="search_query_header" name="q" type="text" size="50" value="" />
+          </fieldset>
+        </td>
+        <td>&nbsp;&nbsp;</td>
+        <td>
+          <fieldset>
+            <table cellpadding=0 cellspacing=0 border=0><tr><td><input type="image" value="Perform Search" alt="Perform Search" title="Perform Search" class="button" src="/images/search_btn.gif" /></td></tr></table>
+          </fieldset>
+        </td>
+        <td>
+          &nbsp;&nbsp;<a style="color: #8c0000; font-size: 11px;" href="/search/std?adv=1">advanced</a>
+        </td>
+      </tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+
+  
+  </form>
+
+</div>
+
+
+<div id="footer">
+
+
+  <div class="inner">
+
+    <h2><a href="#"><span>Chowhound</span></a></h2>
+    
+    <div id="footer-lists">
+      <div id="footer-nav">
+        <h3>DIG IN:</h3>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/boards/list">Boards</a></li>
+          <li><a href="/features">Features</a></li>
+          <li><a href="/news">Digest</a></li>
+          <li><a href="/users/dashboard">my CHOW</a></li>
+          <li><a href="/home/about">About Chowhound</a></li>
+        </ul>
+      </div>
+      <div id="footer-features">
+        <h3>CHOWHOUND FEATURES:</h3>
+        <ul>
+          <li><a href="/features/show/10019">Jim Leff Eats His Way Across North America</a></li>
+          <li><a href="/features/show/10003">Welcome to Radio Free Chowhound</a></li>
+          <li><a href="/features/show/10004">A Tale of Two Chowhounds</a></li>
+          <li><a href="/features/show/10005">How I Learned to Stop Worrying and Love the Artificial Flavors</a></li>
+      </ul>
+      <p><a href="/features">All Features</a></p>
+
+      </div>
+      <div id="footer-news">
+        <h3>CHOWHOUND NEWS:</h3>
+        <ul>
+          <li><a href="/news/show/10982">Chapli Kebab at Darbar</a></li>
+          <li><a href="/news/show/10981">New Pupuseria in Santa Rosa</a></li>
+          <li><a href="/news/show/10980">Pushcart Derby: Midtown's Best Meat on Wheels</a></li>
+          <li><a href="/news/show/10979">La Lunetta: Italian Bites and a Cobble Hill Makeover</a></li>
+        </ul>
+        <p><a href="/news">Chowhound News</a></p>
+      </div>
+    </div><!--/footer-lists-->
+
+    <div id="legal">
+    
+<span class="legalcopy" id="legalcopy">
+<a href="http://www.bnet.com" target="_blank">BNET</a> |
+<a href="http://www.cnet.com" target="_blank">CNET.com</a> |
+<a href="http://www.cnetchannel.com/main/default.aspx">CNET Channel</a> |
+<a href="http://www.download.com" target="_blank">CNET Download.com</a> |
+<a href="http://www.news.com" target="_blank">CNET News.com</a> |
+<a href="http://reviews.cnet.com" target="_blank">CNET Reviews</a> |
+<a href="http://shopper.cnet.com" target="_blank">CNET Shopper.com</a> |
+<a href="http://www.gamespot.com" target="_blank">GameSpot</a> |
+<a href="http://www.cnetnetworks.com/advertise/properties/international.html" target="_blank">International Media</a> |
+<a href="http://www.mp3.com" target="_blank">MP3.com</a> |
+<a href="http://www.mysimon.com" target="_blank">mySimon</a> |
+<a href="http://www.release1-0.com" target="_blank">Release 1.0</a> |
+<a href="http://www.search.com" target="_blank">Search.com</a> |
+<a href="http://www.techrepublic.com" target="_blank">TechRepublic</a> |
+<a href="http://www.tv.com" target="_blank">TV.com</a> |
+<a href="http://www.webshots.com/" target="_blank">Webshots</a> |
+<a href="http://www.zdnet.com" target="_blank">ZDNet</a></font><br/>
+<br/>
+<a href="http://www.cnet.com/aboutcnet/">About CNET Networks</a> |
+<a href="http://www.cnet.com/aboutcnet/employment/index.html?tag=nav">Jobs</a> | 
+<a href="http://www.cnet.com/html/aboutcnet/editorial/privacy.html" style="font-weight: bold;">Privacy Policy</a> |
+<a href="/home/terms">Terms of Use</a> | 
+<a href="http://www.cnet.com/aboutcnet/editorial/copyright.html">Copyright</a> | 
+&copy;2006 CNET Networks, Inc. All Rights Reserved.
+<img src="http://dw.com.com/clear/c.gif?sid=90&ts=1163020369" height="1" width="1" />
+</span>
+
+    </div><!-- /legal -->
+    
+  </div><!--/inner-->
+</div><!--/footer-->
+
+<!-- end _footer -->
+
+
+</div><!--/container-->
+
+</body>
+</html>

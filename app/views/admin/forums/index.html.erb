@@ -1,26 +1,13 @@
-<h2>Listing forums</h2>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Topics count</th>
-  </tr>
+<h2>Forums</h2>
 
 <% for forum in @forums %>
-  <tr>
-    <td><%= forum_name(forum) %></td>
-    <td><%=h forum.description %></td>
-    <td><%=h forum.topics_count %></td>
-    <td><%= link_to 'Show', admin_forum_path(forum) %></td>
-    <td><%= link_to 'Edit', edit_admin_forum_path(forum) %></td>
-    <td><%= link_to 'Destroy', admin_forum_path(forum),
-                               :confirm => 'Are you sure?',
-                               :method => :delete %></td>
-  </tr>
+  <div>
+    <%= link_to forum_name(forum), edit_admin_forum_path(forum) %>
+    <%=h forum.topics_count %> Topics
+  </div>
 <% end %>
-</table>
-
+<!-- cannot make more forums yet
 <br />
 
 <%= link_to 'New forum', new_admin_forum_path %>
+-->

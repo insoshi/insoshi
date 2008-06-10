@@ -9,7 +9,7 @@ module ApplicationHelper
   ## Menu helpers
   
   def menu
-    home     = menu_element("Home",   home_path)
+    home     = menu_element("Dashboard",   home_path)
     people   = menu_element("People", people_path)
     if Forum.count == 1
       forum = menu_element("Forum", forum_path(Forum.find(:first)))
@@ -27,8 +27,7 @@ module ApplicationHelper
       messages = menu_element("Messages", messages_path)
       blog     = menu_element("Blog",     blog_path(current_person.blog))
       photos   = menu_element("Photos",   photos_path)
-      contacts = menu_element("Contacts",
-                              person_connections_path(current_person))
+      contacts = menu_element("Contacts", person_connections_path(current_person))
       links = [home, profile, contacts, messages, blog, people, forum, about]
     elsif logged_in? and admin_view?
       home =    menu_element("Home", home_path)
@@ -41,7 +40,7 @@ module ApplicationHelper
       links = [home, people, about]
     end
   end
-  
+
   def menu_element(content, address)
     { :content => content, :href => address }
   end
@@ -106,13 +105,18 @@ module ApplicationHelper
   def email_link(person, options = {})
     reply = options[:replying_to]
     use_image = options[:use_image].nil? || options[:use_image]
+    to_all = options[:to_all]
     if reply
       path = reply_message_path(reply)
     else
       path = new_person_message_path(person)
     end
     img = image_tag("icons/email.gif")
-    action = reply.nil? ? "Send a message" : "Send reply"
+    if reply.nil?
+      action = to_all.nil? ? "Send a message" : "Message to Everyone"
+    else
+      action = "Send reply"
+    end
     opts = { :class => 'email-link' }
     if use_image
       str = link_to(img, path, opts)

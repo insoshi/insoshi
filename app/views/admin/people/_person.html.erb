@@ -1,20 +1,18 @@
-
 <li class="vcard person">
-  <div class="profile-image">
-    <%= image_link person %>
-  </div>
-  <p>
-    <%= person_link person, :class => "url fn" %>
-    |
-    <%- activity = person.deactivated? ? "activate" : "deactivate" -%>
+    <%= person_link_with_image person, :class => "url fn" %> &mdash;
+    <%- activity = activated_status(person) -%>
     <%= link_to activity, 
                 admin_person_path(person, :task => "deactivated"),
                 :method => :put %>
     |
-    <%- activity = person.admin? ? "unadmin" : "admin" -%>
+    <%- activity = person.admin? ? "unadmin" : "make admin" -%>
     <%= link_to activity, 
                 admin_person_path(person, :task => "admin"),
-                :method => :put %>    
-  </p>
-  <%= display person.description %>
+                :method => :put %>
+    <p class="person_meta">
+	<strong>Forum Posts:</strong> <%= person.forum_posts_count -%> | 
+	<strong>Blog Posts:</strong> <%= link_to person.blog.posts.count.to_s, blog_path(person) -%> |
+    <strong>Connections:</strong> <%= link_to (person.connections.count-1).to_s, person_connections_path(person) -%>
+
+	</p>
 </li>

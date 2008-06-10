@@ -1,10 +1,10 @@
 <%- column_div :type => :primary do -%>
 
-  <h2>People</h2>
+  <h2>People Admin</h2>
 
   <%= will_paginate %>
 
-  <ul class="list people">
+  <ul class="list people admin">
     <%= render :partial => 'person', :collection => @people %>
   </ul>
   

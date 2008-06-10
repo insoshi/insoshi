@@ -1,0 +1,46 @@
+= 0.2.7
+  - Added Microformat.timeout = accessor for controlling how long you wanna wait.
+
+= 0.2.6
+  - Added rel-license [Mark Murphy]
+  - Performance optimization [Mark Murphy]
+  - Fix bug in hEntry rel-tag [Mark Murphy]
+
+= 0.2.5
+  - Added ability to find ALL microformats on a page using Microformat.find.  
+    Only searches using loaded microformat classes, so make sure to just require 'mofo'
+  - Added cute aliases for H* classes, e.g. hCard.find(:first => 'url') and hResume.find('resume.html')
+
+= 0.2.4
+  - Fixed mofo to not choke on broken URL attributes
+
+= 0.2.3
+  - Moved to Echoe
+  - Added feature of figuring out the base URL for relative URLs
+  - Removed vendor/, now has test/spec 0.3 gem dependency
+  - Added after_find callbacks to run arbitrary code after a uformat is found
+
+= 0.2.2
+  - Proper ISO8601 date handling and cleanup of String#coerce
+
+= 0.2.1
+  - Fixed autoloading
+
+= 0.2
+  - Minor refactoring
+  - Added Geo and Adr [Andrew Turner]
+  - Added XFN [Steve Ivy, Christian Carter]
+  - Added hResume [Grant Rodgers]
+  - Added include-pattern support
+  - occurances => occurences
+
+= 0.1.2
+  - Upgraded to test/spec 0.3
+  - Fixed so tests run as Rails plugin 
+
+= 0.1.1
+  - Moved from RSpec to test/spec (in vendor/)
+  - Built rel='tag' into the parser (no need to specify it in formats)
+
+= 0.1
+  - First release.

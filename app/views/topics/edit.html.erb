@@ -1,33 +1,27 @@
-<h2>Editing topic</h2>
+<h2>Editing topic (<%= link_to 'Show', forum_topic_path(@forum, @topic) %>)</h2>
 
 <%= error_messages_for :topic %>
 
 <% form_for :topic, :url => forum_topic_path(@forum, @topic),
             :html => { :method => :put} do |f| %>
-  <p>
-    <b>Forum</b><br />
-    <%= f.text_field :forum_id %>
-  </p>
 
-  <p>
-    <b>Person</b><br />
-    <%= f.text_field :person_id %>
-  </p>
-
-  <p>
-    <b>Name</b><br />
-    <%= f.text_field :name %>
-  </p>
-
-  <p>
-    <b>Posts count</b><br />
-    <%= f.text_field :forum_posts_count %>
-  </p>
-
-  <p>
-    <%= f.submit "Update" %>
-  </p>
+  <div class="prefItem">
+    <div class="prefLabel">Forum</div>
+    <div class="prefValue"><%= f.text_field :forum_id %></div>
+  </div>
+  <div class="prefItem">
+    <div class="prefLabel">Person</div>
+    <div class="prefValue"><%= f.text_field :person_id %></div>
+  </div>
+  <div class="prefItem">
+    <div class="prefLabel">Name</div>
+    <div class="prefValue"><%= f.text_field :name %></div>
+  </div>
+  <div class="prefItem">
+    <div class="prefLabel">Posts count</div>
+    <div class="prefValue"><%= f.text_field :forum_posts_count %></div>
+  </div>
+  <div>
+    <%= f.submit "Update", :class => "button" %> <%= f.submit 'Cancel', :class => 'button', :id => "cancel" %>
+  </div>
 <% end %>
-
-<%= link_to 'Show', forum_topic_path(@forum, @topic) %> |
-<%= link_to 'Back', forums_path %>

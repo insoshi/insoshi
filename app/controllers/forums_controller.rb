@@ -7,17 +7,18 @@ class ForumsController < ApplicationController
     if @forums.length == 1
       redirect_to forum_url(@forums.first) and return
     end
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   def show
     @forum = Forum.find(params[:id])
-    @topics = @forum.topics.paginate(:page => params[:page])
+    @topics = @forum.topics.paginate(:page => params[:page], :order => "updated_at DESC")
+
+    respond_to do |format|
+      format.html
+      format.atom
+    end
   end
-  
+
   private
   
     def setup

@@ -6,7 +6,6 @@ body {
 #header-wrap {
   /* background: #069; */
   background: #069 url('/images/header_background.png');
-  /* width: 764px;*/
   margin: 0px auto;
 }
 #header, #wrap, #footer {
@@ -35,6 +34,7 @@ body {
 #header {
   position: relative;
   height: 80px;
+  padding-bottom: 1px;
 }
 
 #header h1 {
@@ -57,7 +57,7 @@ body {
   height: 36px;
   line-height: 36px;
   list-style-type: none;
-  margin: 0 0 0 0;
+  margin: 0 0 1px 0;
   padding: 0;
   text-align: center;
   width: 70px;
@@ -74,6 +74,7 @@ body {
 #nav li.active a, #nav li.active a:hover {
   background: #fff;
   color: #069;
+  border-bottom: 1px solid #069;
 }
 #nav li.n-home {
   margin-left: 0;
@@ -121,7 +122,6 @@ p.welcome {
 }
 .list.full .profile-image {
   float: left;
-  width: 72px;
   /* overflow: hidden; this hides the activity icon when no member thumbnail */
   position: relative;
   width: 102px;
@@ -208,7 +208,7 @@ p.welcome {
 .grid.medium img {
   float: left;
   /*clip: rect(36px, 36px, 36px, 36px);*/
-  margin: 0 6px 6px 0;
+  margin: 0px 6px 6px 0;
 }
 .grid.medium a {
   display: block;
@@ -232,8 +232,6 @@ p.welcome {
   margin-left: 252px;
 }
 .profile .toolbox ul {
-  background: url(/images/blue-grad.jpg) bottom repeat-x;
-  border: 1px solid #ccc;
   width: 238px;
 }
 .profile ul.tools li {
@@ -243,10 +241,6 @@ p.welcome {
   margin: 6px 6px 6px 2em;
   padding: 0;
 }
-form#blogpost #post_title, form#blogpost #post_body {
-  width: 212px; /* width reduced by Bill L */
-}
-
 
 /* Messages */
 
@@ -332,15 +326,6 @@ h2 {
 	margin-top: 0px;
 	margin-bottom: 20px;
 }
-.profileEditLink {
-	display: inline;
-	background: #e5e5e5;
-	border: 1px solid #cccccc;
-	padding: 3px;
-	width: 30px;
-	margin-left: 25px;
-	margin-bottom: 5px;
-}
 .profileEditLink a {
 	font-size: 80%;
 }
@@ -391,12 +376,19 @@ ul.ui-tabs-nav li {
 .comments li div {border-bottom: 1px solid #ccc;}
 .imgHoverMarker {display: inline;}
 .imgHoverMarker img {display: none;}
+#tRecentActivity h2 {margin-bottom: 10px;}
+#tRecentActivity p.meta {font-variant: small-caps;}
+#tRecentActivity ul li, #tWall ul li, #tWall ul li div {display: block; border-bottom: none;}
+#tWall form, form#admin_preferences, form#admin_forums {border-bottom: none;}
 ul.activity {margin-bottom: 0px;}
 ul.activity li p.activity_detail {font-size: 126%;}
 img.actioner {vertical-align: text-bottom;}
 .contacts.grid li.vcard {
 	margin-right: 10px;
 	line-height: 2em;
+}
+.contacts.grid.medium li.vcard {
+	line-height: 1em;
 }
 .prefItem {
 	clear: both;
@@ -416,4 +408,57 @@ img.actioner {vertical-align: text-bottom;}
 	margin-top: 5px;
 	border: 1px solid #ccc;
 	padding: 5px;
+}
+.forum .topic {
+	
+}
+.forum .topic .profile-image {
+  float: left;
+  /* overflow: hidden; this hides the activity icon when no member thumbnail */
+  position: relative;
+  width: 102px;
+}
+.forum .topic .topic_body {
+  float: left;
+  width: 370px;
+}
+#blogpost .prefLabel {
+	width: 100px;
+}
+#blogpost .prefValue #post_title, #blogpost .prefValue textarea {
+  width: 400px !important; /* width reduced by Bill L */
+}
+#blogpost #post_submit {
+	text-align: right;
+}
+.col2 #blogpost .prefValue #post_title, .col2 #blogpost .prefValue textarea {
+  width: 212px !important; /* width reduced by Bill L */
+}
+.col2 #blogpost #post_submit {
+	text-align: left;
+}
+.adminMsgLink {
+	background-color: yellow;
+	color: #006699;
+	font-weight: bold;
+	width: 90px;
+	padding: 3px;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+.adminMsgLink a {
+	color: #006699;
+}
+ul.admin, ul.admin li {list-style-position: inside;}
+ul.admin li {display: list-item; list-style-image: url(/images/icons/switch.gif); border-bottom: none;}
+.person_meta {
+	margin-left: 50px;
+}
+.person_description {
+	clear: both;
+}
+.see_all_link {
+  width: 116px !important;
+  margin: -10px 0px 10px 6px;
 }

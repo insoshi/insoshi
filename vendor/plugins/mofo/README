@@ -1,0 +1,200 @@
+  mofo.          
+- a ruby microformat parser -
+                     engine
+                     dsl
+                     helper
+                     toy
+
+= Get Started Immediately
+
+  $ irb -rubygems 
+  >> require 'mofo'
+  => true
+
+  >> fireball = HCard.find 'http://flickr.com/people/gruber/'
+  => #<HCard:0x6db898 ... >
+
+  >> fireball.nickname
+  => "gruber"
+
+  >> fireball.url
+  => "http://daringfireball.net/"
+
+  >> fireball.n.family_name
+  => "Gruber"
+
+  >> fireball.title
+  => "Raconteur"
+
+  >> fireball.adr.locality
+  => "Philadelphia"
+
+  >> fireball.logo
+  => "http://static.flickr.com/9/buddyicons/44621776@N00.jpg?1117572751"
+
+= Microwhozit?
+
+  Microformats are tiny little markup definitions built on top of, usually, 
+  HTML or XHTML.  
+
+  You have a blog.  You have recent posts on your blog's index page.  You have
+  an Atom feed.  You have recent posts on your blog's Atom feed.  See where I'm
+  going with this?
+
+  The hAtom microformat (or uformat) can be embedded in your existing HTML by
+  setting CSS classes with semantic meaning inside of your posts.  A class to signify
+  a post is contained within this div, a class to signify the contents of this
+  h3 are the post's title, a class to signify the contents of this span is the
+  blog post's author, etc.
+
+  You can then use a microformat parser (like, say, mofo) to extract this information
+  as you would from an Atom feed.  Hell, you can even convert hAtom to Atom.  It's an
+  insta-feed!  No extra code required!
+
+  You're already doing the work, you see.  Microformats are everywhere.  We just need
+  to set them free.
+
+  Check it:
+
+    <div class="post">
+      <h3>Megadeth Show Last Night</h3>
+      <span class="subtitle">Posted by Chris on June 4th</span>
+      <div class="content">Went to a show last night.  Megadeth.  It was alright.</div>
+    </div>
+
+  Right?  Normal.  Here's the same post marked up with hAtom:
+
+    <div class="post hentry">
+      <h3 class="entry-title">Megadeth Show Last Night</h3>
+      <span class="subtitle">Posted by <span class="author vcard fn">Chris</span> on 
+      <abbr class="updated" title="2006-06-04T10:32:10Z">June 4th</abbr></span>
+      <div class="content entry-content">Went to a show last night.  Megadeth.  It was alright.</div>
+    </div>
+
+  All I did was add the hentry, entry-title, and entry-content classes to existing containers.  Then I
+  went ahead and wrapped the date in an <abbr> tag giving it a title in the microformat-standard way.  Finally
+  I put a div around Chris signifying it as the author field of the hEntry and making it a valid hCard by
+  including the vcard and fn classes.  It's really not all that hard.  Did I mess it up?  Maybe, but I'm sure I got
+  close.  And I didn't even use a reference.  Practice.
+
+  How'd we parse this, tho?
+
+    $ irb -rubygems
+    >> require 'mofo'
+    => true
+
+    >> post = HEntry.find 'http://milesofstyle.org/posts/351-megadeth-show-last-night.html'
+    => #<HEntry:0x6db898 ... > 
+
+    >> post.entry_title
+    => "Megadeth Show Last Night"
+
+    >> post.properties
+    => ["entry_content", "updated", "author", "entry_title"]
+
+    >> post.updated
+    => Sun Jun 04 10:32:10 UTC 2006
+
+    >> post.updated.class
+    => Time
+
+    >> post.author
+    => #<HCard:0x6e7b98 @properties=["fn"], @fn="Chris">
+
+    >> post.author.fn
+    => "Chris"
+
+    >> post.entry_content
+    => "Went to a show last night.  Megadeth.  It was alright."
+
+  That's, like, stupid easy.  If HEntry.find gets back more than one hEntry, you'll get an array.
+
+= Mofo#find
+
+  Everything revolves around the #find method.  Sound familiar?  Yeah.
+
+    >> Microformat.find "http://valid-url.com"
+    >> Microformat.find "/path/to/existing/file"
+    >> Microformat.find :text => "microformat text"
+   
+  Also, #find can be told explicitly to find all (returning an array on failure) or only find
+  the first (returning nil on failure).
+
+    >> Microformat.find :all => "/existing/file"
+    => [ array of microformat objects ] 
+
+    >> Microformat.find :first => "/existing/file"
+    => microformat object
+
+    >> Microformat.find "/existing/file"
+    => either an array of objects or just one object
+
+  :all and :first go outside of :text.
+
+    >> Microformat.find :all => { :text => 'mfin text' } 
+
+  That's it.  Some microformats take specific options.
+
+= Microformats
+
+  Here are the currently implemented microformats, along with a site you
+  can use them on today.  We want more, better, faster, stat.
+
+  formats:
+  - hCard     [ flickr profiles    ]
+  - hCalendar [ upcoming.org       ]
+  - hReview   [ cork'd reviews     ] 
+  - hEntry    [ err the blog posts ]
+  - hResume   [ linkedin.com       ]
+  - xoxo      [ chowhound.com      ]
+  - geo       [ upcoming.org       ]
+  - adr       [ upcoming.org       ]
+  - xfn       [ linkedin.com       ]
+
+  patterns:
+  - rel-tag 
+  - rel-bookmark
+  - include-pattern
+
+= Ruby on Rails
+
+mofo doubles as a Rails plugin.  Just drop it into vendor/plugins and you are good to go, with all the 
+available microformat parsers loaded into your application.
+
+mofo classes are YAML and Marshal approved.  This means you can cache them with DRb or memcached, or store
+them in a session.
+
+= More Info
+
+  >> http://microformats.org/ 
+  => "The homepage, check"
+  >> http://microformats.org/wiki/
+  => "The wiki, check"
+  >> http://blog.labnotes.org/category/microformats/
+  => "Assaf Arkin knows his MFin' stuff"
+  >> http://allinthehead.com/
+  => "Drew McClellan, Microformat wizard"
+  >> http://mofo.rubyforge.org/
+  => "mofo HQ"
+
+= Other Parsers
+
+  >> Scrapi
+  => http://rubyforge.org/projects/scrapi/
+  >> uformats
+  => http://rubyforge.org/projects/uformats
+
+= Contributors
+
+  >> Steve Ivy
+  >> Olle Jonsson
+  >> Christian Carter
+  >> Grant Rodgers
+  >> Denis Defreyne
+  >> Andrew Turner
+  >> Mark Murphy
+
+= Author
+
+  >> Chris Wanstrath
+  => chris[at]ozmm[dot]org

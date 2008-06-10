@@ -1,15 +1,18 @@
 module ActivitiesHelper
 
   # Given an activity, return a message for the feed for the activity's class.
-  def feed_message(activity)
+  def feed_message(activity, recent)
     person = activity.person
     case activity_type(activity)
     when "BlogPost"
       post = activity.item
       blog = post.blog
       view_blog = blog_link("#{h person.name}'s blog", blog)
-      %(#{person_link_with_image(person)} posted 
-        #{post_link(blog, post)} &mdash; #{view_blog})
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)} posted  #{post_link(blog, post)} &mdash; #{view_blog})
+      else
+        %(new blog post  #{post_link(blog, post)})
+      end
     when "Comment"
       parent = activity.item.commentable
       parent_type = parent.class.to_s
@@ -17,30 +20,57 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        %(#{person_link_with_image(person)} made a comment to
-           #{someones(blog.person, person)}
-           blog post #{post_link(blog, post)})
+        if recent.nil? || !recent
+          %(#{person_link_with_image(person)} made a comment to #{someones(blog.person, person)} blog post #{post_link(blog, post)})
+        else
+          %(made a comment to #{someones(blog.person, person)} blog post #{post_link(blog, post)})
+        end
       when "Person"
-        %(#{person_link_with_image(activity.item.commenter)} commented on 
-          #{wall(activity)})
+        if recent.nil? || !recent
+          %(#{person_link_with_image(activity.item.commenter)} commented on #{wall(activity)})
+        else
+          %(commented on #{wall(activity)})
+        end
       end
     when "Connection"
       if activity.item.contact.admin?
-        %(#{person_link_with_image(activity.item.person)} has joined the system)
+        if recent.nil? || !recent
+          %(#{person_link_with_image(activity.item.person)} has joined the system)
+        else
+          %(joined the system)
+        end
       else
-        %(#{person_link_with_image(activity.item.person)} and #{person_link_with_image(activity.item.contact)} have connected)
+        if recent.nil? || !recent
+          %(#{person_link_with_image(activity.item.person)} and #{person_link_with_image(activity.item.contact)} have connected)
+        else
+          %(connected with #{person_link_with_image(activity.item.contact)})
+        end
       end
     when "ForumPost"
       post = activity.item
-      %(#{person_link_with_image(person)} made a post on the forum topic
-        #{topic_link(post.topic)})
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)} made a post to forum topic #{topic_link(post.topic)})
+      else
+        %(new post to forum topic #{topic_link(post.topic)})
+      end
     when "Topic"
-      %(#{person_link_with_image(person)} created the new discussion topic
-        #{topic_link(activity.item)})
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)} created the new discussion topic #{topic_link(activity.item)})
+      else
+        %(new discussion topic #{topic_link(activity.item)})
+      end
     when "Photo"
-      %(#{person_link_with_image(person)}'s profile picture changed)
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)}'s profile picture changed)
+      else
+        %(#{person_image_hover_text('profile picture changed', person)})
+      end
     when "Person"
-      %(#{person_link_with_image(person)}'s description changed)
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)}'s description changed)
+      else
+        %(description changed)
+      end
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -150,7 +180,7 @@ module ActivitiesHelper
     commenter = activity.person
     person = activity.item.commentable
     link_to("#{someones(person, commenter, false)} wall",
-            person_path(person, :anchor => "wall"))
+            person_path(person, :anchor => "tWall"))
   end
   
   # Only show member photo for certain types of activity

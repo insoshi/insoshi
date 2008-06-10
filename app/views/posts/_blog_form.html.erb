@@ -1,17 +1,17 @@
 <% form_for :post, :url => url, :html => { :method => method,
                                            :id => "blogpost" }  do |f| %>
 
-  <div class="form_row">
-	<%= f.label :title %>
-    <%= f.text_field :title, :size => 20 %>
+  <div class="prefItem">
+    <div class="prefLabel"><%= f.label :title %></div>
+    <div class="prefValue"><%= f.text_field :title, :id => 'post_title' %></div>
   </div>
 
-  <div class="form_row">
-	<%= f.label :body, "Post" %>
-    <%= f.text_area :body, :rows => 20 %>
+  <div class="prefItem">
+	<div class="prefLabel"><%= f.label :body, "Post" %></div>
+    <div class="prefValue"><%= f.text_area :body, :rows => 20 %></div>
   </div>
 
-  <div class="form_row">
-    <%= f.submit "Submit", :id => "post_submit", :class => "button" %>
+  <div class="prefItem" id="post_submit">
+    <div class="prefValue"><%= f.submit "Save", :class => "button" %></div>
   </div>
 <% end %>

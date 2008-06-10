@@ -1,0 +1,1101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>err.the_blog</title>
+    <link href="/stylesheets/theme/milehigh.css?1162801438" media="screen" rel="Stylesheet" type="text/css" />
+<link href="/stylesheets/theme/lightbox.css?1162801438" media="screen" rel="Stylesheet" type="text/css" />
+    <script src="/javascripts/prototype.js?1162801438" type="text/javascript"></script>
+<script src="/javascripts/theme/application.js?1162801438" type="text/javascript"></script>
+<script src="/javascripts/theme/lightbox.js?1162801438" type="text/javascript"></script>
+    <script src="/javascripts/effects.js?1162801438" type="text/javascript"></script>
+    <link href="http://feeds.feedburner.com/errtheblog" rel="alternate" title="Err the Blog Atom Feed" type="application/atom+xml" />  
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      <div id="header">
+        <div class="feed">
+          <a href="http://feeds.feedburner.com/errtheblog">
+            <img src="/images/theme/feed.png" alt="Err the Blog Atom Feed Icon" />
+          </a>
+        </div>
+        <div class="logo">
+          <a href="/" class="reverse">Err the Blog</a>
+        </div>
+          <div style="float:right">
+            <a href="http://feeds.feedburner.com/errtheblog"><img src="http://feeds.feedburner.com/~fc/errtheblog?bg=ED1166&amp;fg=FFFFFF&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
+            
+          </div>
+        <div class="sub">
+          Rubyisms and Railities
+        </div>
+      </div>
+
+      <ul id="post-list">
+        
+
+
+
+  <li class="post-li hentry">
+  <div class="sidebar">
+
+    <div class="title entry-title">&ldquo;<a href="/post/13" class="reverse" rel="bookmark">A Rails Toolbox</a>&rdquo;</div>
+    <div class="secondary byline">&ndash; <span class="author vcard fn">Chris</span> on <abbr class="published" title="2006-10-17T01:45:00Z">October 17th, 2006</abbr></div>
+    
+      <br/>
+      <div class="secondary tags">
+        This post is tagged with <a href="/tag/rails" class="tag-link" rel="tag">rails</a>.<br/>
+        This post is tagged with <a href="/tag/ruby" class="tag-link" rel="tag">ruby</a>.<br/>
+        
+          
+          It has <a href="/post/13">one comment</a>
+        
+      </div>
+    
+
+  </div>
+
+  <div class="main entry-content">
+
+    <p>We&#8217;ve been finished with <a href='http://www.chow.com'>Chow</a> for about a month now, and that&#8217;s cool.  (<a href='http://www.pjhyett.com/articles/2006/09/19/chow-com-has-launched'>PJ</a> wrote about the launch back in the day.)  The site is stable and it&#8217;s our second from-scratch Rails site at <span class='caps'>CNET</span>, the first being <a href='http://www.chowhound.com/'>Chowhound</a>.  Party time, right?  <a href='http://flickr.com/photos/itsolivia/266719647/in/set-72157594322703108/'>Right</a>.</p>
+
+
+	<p>Since it seems like we did <em>something</em> correct, I&#8217;d like to share with you our toolbox.  We have no <a href='http://en.wikipedia.org/wiki/Golden_hammer'>golden hammer</a>, but we sure use some kickass open source software.  This is just a high level overview, but who knows?  Maybe a hammer or tape measure you find within will be new and useful to you.  I can only hope.</p>
+
+
+<div align='center'><img src='http://errtheblog.com/static/images/pink-toolbox.jpg' alt='tools!' /></div>
+
+	<h3>Servers</h3>
+
+
+	<p>The muscle, scar tissue, and bone running our site are nothing unusual.  Rails convention: a hardware load balancer to Apache 2.0 to Pen to a cluster of Mongrels.  Coda Hale has an infamous <a href='http://blog.codahale.com/2006/06/19/time-for-a-grown-up-server-rails-mongrel-apache-capistrano-and-you/'>tutorial</a> on setting up a similar architecture and Zed maintains a <a href='http://mongrel.rubyforge.org/docs/index.html'>stellar documentation</a> page over at the Mongrel site.  We have had very few problems with Mongrel and Pen is so quiet that I often forget it exists.</p>
+
+
+	<p>Behind the backend we run an installation of <a href='http://incubator.apache.org/solr/'>Solr</a> as our search engine.  It&#8217;s Java, but a nice <span class='caps'>XML</span>-RPC <span class='caps'>API</span> helps alleviate the pain.  A dedicated <a href='http://wiki.apache.org/solr/SolRuby'>wiki page</a> is available with Ruby help (which you probably won&#8217;t need).  A cron or two is needed to insert items into the index, mind you.</p>
+
+
+	<p>We (of course) run <a href='http://www.danga.com/memcached/'>memcached</a> and use it to cache tons of data.  This helps keep our site speedy and takes the load off our largeish database.  In case you missed it, <a href='http://errtheblog.com/post/27'>a previous Err post</a> touches on memcached.  It&#8217;s a lot easier to use than you might think.</p>
+
+
+	<p>Finally, we use MySQL for our database.  Big surprise there.</p>
+
+
+	<h3>Deployment</h3>
+
+
+	<p>Like any red blooded America, we use Capistrano for deployment.  There&#8217;s really no other option.  The <a href='http://groups.google.com/group/capistrano'>mailing list</a> is invaluable, as are the <a href='http://del.icio.us/popular/capistrano'>various tidbits</a> scattered across the internet.  There&#8217;s even a great <a href='http://cheat.errtheblog.com/s/capistrano/'>cheat sheet</a>.</p>
+
+
+	<p>We also use <a href='http://www.tildeslash.com/monit/'>monit</a> to handle our production environment.  monit is a nice program which provides a web interface for monitoring your apps.  It will restart troubled processes and e-mail you when trouble arises.  On top of that, it can also watch to make sure daemons don&#8217;t take up too much <span class='caps'>CPU</span> or memory and kill them when they do.  It uses a nice little <span class='caps'>DSL</span> for its config files and, as long as you have a pid file, is easy to get up and running with.  There&#8217;s a nice starter <a href='http://pastie.caboo.se/13355'>monit config file here</a> and plenty of resources out there.  monit can even replace <a href='http://p.caboo.se/17981'>mongrel cluster</a>.  Highly recommended.</p>
+
+
+	<h3>Plugins</h3>
+
+
+	<p>Okay, we use a lot of plugins.  I&#8217;m going to make this a bullet list.  Just pretend it&#8217;s a PowerPoint presentation and it should seem more familiar.  Er, on second though, don&#8217;t.</p>
+
+
+	<h4><a href='http://errtheblog.com/post/27'>acts_as_cached</a></h4>
+
+
+	<p>Already mentioned further up, we use memcached to cache many database queries.  This plugin supports model caching, session caching, and fragment caching out of the box.  A simply <span class='code'>memcached.yml</span> is added to our <span class='code'>config/</span> directory and we can forget about it.  The <span class='code'><span class='caps'>README</span></span> file provides a wealth of common idioms and a <a href='http://groups.google.com/group/acts_as_cached'>mailing list</a> keeps patches (and bug reports) flowing.  Essential.</p>
+
+
+	<h4><a href='http://blog.talbott.ws/articles/2006/05/17/querytrace-my-first-official-rails-plugin'>query_trace</a></h4>
+
+
+	<p>Completely essential.  This plugin attaches a short backtrace to every <span class='caps'>SQL</span> query in your log files.  The first time I heard this I thought, &#8216;so what?&#8217;  Well it&#8217;s a big deal.  Suddenly you know <em>exactly</em> what is going on with your ActiveRecord code&#8212;you know the exact line number from which queries are being spawned.  When you&#8217;re trying to cache everything using memcached, this goes a huge way in helping you lock down your database.</p>
+
+
+	<h4><a href='http://dev.rubyonrails.org/svn/rails/plugins/exception_notification/'>exception_notification</a></h4>
+
+
+	<p>Again, essential.  E-mails us whenever an exception is raised on the site.  Some days I just gather up the exceptions in my Inbox and bang away on those bugs for an hour or two.  No more e-mails.  It&#8217;s very gratifying.  Best part is, you can control whether certain exceptions show a 500 or a 404, and you can even set the prefix of the e-mails you receive.  For instance, I can set the e-mail prefixes then setup mailbox filters to have all the e-mails prefixed with <span class='code'>[CHOW]</span> go to my Inbox and all the e-mails prefixed with <span class='code'>[CHOWHOUND]</span> go into my trash can.  Very slick.</p>
+
+
+	<h4><a href='http://errtheblog.com/post/14'>acts_as_textiled</a></h4>
+
+
+	<p>The first &#8216;official&#8217; plugin extracted from our work, acts_as_textiled lets us forget about rendering <a href='http://www.textism.com/tools/textile/'>Textile</a>.  Instead of having to ask &#8216;should I render Textile?&#8217;, the question becomes &#8216;should I not render Textile?&#8217;  If a story description uses Textile, we always want it rendered&#8212;except in special circumstances.  It&#8217;s nice to not have to use the <span class='code'>textile</span> helper all over our app and instead focus on things that matter.  Like pastels.</p>
+
+
+	<h4><a href='http://acts-as-solr.rubyforge.org/'>acts_as_solr</a></h4>
+
+
+	<p>This is a bit of a white lie.  We&#8217;re currently using a plugin PJ rolled called &#8216;acts_as_indexed,&#8217; but he is in the process of transferring our stuffs over to acts_as_solr.  It&#8217;s a fine piece of work and written by people who know Lucence (and solr) inside and out.  One of those dudes even wrote a book, I hear.</p>
+
+
+	<h4><a href='http://www.realityforge.org/articles/2006/03/20/rails-plugin-to-help-debug-views'>debug_view_helpers</a></h4>
+
+
+	<p>This is a real life saver.  If you&#8217;ve ever used <a href='http://smarty.php.net'>Smarty</a>, you know how great that &#8216;debug&#8217; window is that pops up.  There&#8217;s no ambiguity for your <span class='caps'>CSS</span> people: all the available variables are shown right there in a pop-up window.  We installed this plugin and set the &#8216;debug&#8217; link to appear a) in development mode b) if you&#8217;re on the <span class='caps'>VPN</span>.  That means, even in production mode, authorized elite personnel can always see the variables available to the view.  So awesome for debugging.  (Plus it means I don&#8217;t have to talk to our <span class='caps'>CSS</span> guy, Todd, so much.  He is weird.)</p>
+
+
+	<h4><a href='http://blog.evanweaver.com/articles/2006/06/02/has_many_polymorphs'>has_many_polymorphs</a></h4>
+
+
+	<p><a href='http://1vy.org'>Evan Weaver&#8217;s</a> crazy plugin lets us forget about all the black magic we learned from <a href='http://blog.hasmanythrough.com'>Josh Susser</a>.  Little o&#8217; this:</p>
+
+
+<pre class='ruby'>
+<span class='keyword'>class </span><span class='class'>Tag</span> <span class='punct'>&lt;</span> <span class='constant'>ActiveRecord</span><span class='punct'>::</span><span class='constant'>Base</span>
+  <span class='ident'>has_many_polymorphs</span> <span class='symbol'>:tagged_things</span><span class='punct'>,</span> <span class='symbol'>:from</span> <span class='punct'>=&gt;</span> <span class='punct'>[</span><span class='symbol'>:posts</span><span class='punct'>,</span> <span class='symbol'>:files</span><span class='punct'>,</span> <span class='symbol'>:tags</span><span class='punct'>]</span>
+<span class='keyword'>end</span>
+</pre>
+
+	<p>Yup.  Very nice.  Also lets you do <span class='code'>Tag.find(:all, :include =&gt; :tagged_things)</span> and fetches the result in <strong>one</strong> query.  That is, if you&#8217;re using MySQL or Postgres.</p>
+
+
+	<h4><a href='http://svn.vivabit.net/external/rubylibs/request_routing/'>request_routing</a></h4>
+
+
+	<p>Hey, check out this code:</p>
+
+
+<pre class='ruby'>
+<span class='ident'>map</span><span class='punct'>.</span><span class='ident'>connect</span> <span class='punct'>'</span><span class='string'></span><span class='punct'>',</span> <span class='symbol'>:controller</span> <span class='punct'>=&gt;</span> <span class='punct'>'</span><span class='string'>mobile</span><span class='punct'>',</span> <span class='symbol'>:conditions</span> <span class='punct'>=&gt;</span> <span class='punct'>{</span> <span class='symbol'>:subdomain</span> <span class='punct'>=&gt;</span> <span class='punct'>'</span><span class='string'>m</span><span class='punct'>'</span> <span class='punct'>}</span>
+</pre>
+
+	<p>Can you believe that&#8217;s not in core?  It&#8217;s so great, and thanks to the request_routing plugin we&#8217;re able to use it for <a href='http://m.chow.com'>Chow&#8217;s mobile site</a>.  Plus, <a href='http://www.danwebb.net/'>Dan Webb&#8217;s blog is hot</a>.  There.  I said it.</p>
+
+
+	<h4><a href='http://blog.craigambrose.com/articles/2006/08/16/redbox-a-rails-compatible-lightbox'>redbox</a></h4>
+
+
+	<p>You just have to see it for yourself.  Real nice code which lets you pull off that whole &#8216;lightbox dialog&#8217; thing.  We&#8217;re using it for the &#8216;E-mail to a Friend&#8217; links.  Nice.</p>
+
+
+	<h4><a href='http://julik.textdriven.com/svn/tools/rails_plugins/unicode_hacks/'>unicode_hacks</a></h4>
+
+
+	<p>Right now, Unicode seems to fall down when you need to pattern match against it or do any sort of manipulation.  Lucky for us we just do input and output.  Until the new Rails hits the streets, we rely on the unicode_hacks plugin to get those crazy characters in and out of our database correctly.</p>
+
+
+	<h4><a href='http://dev.rubyonrails.org/svn/rails/plugins/browser_filters/'>browser_filters</a></h4>
+
+
+	<p>Safari crashing randomly?  We (correctly) suspected Unicode.  This Super Official Rails Plugin solved our problems and may solve yours.  Also provides a few more fixes and tweaks.</p>
+
+
+	<h4><a href='http://errtheblog.com/post/16'>composite_migrations</a></h4>
+
+
+	<p>Yes, we&#8217;re crazy enough to use composite primary keys.  That&#8217;s just the way some of us were raised.  This home rolled plugin allows us to create the dastardly fellows in a migration so that we may use the <a href='http://compositekeys.rubyforge.org'>composite primary key gem</a> freely and openly in our code.  Hey, we&#8217;ve got <a href='http://www.pjhyett.com/articles/2006/08/26/composite-primary-keys-are-good'>opinions</a>, too.</p>
+
+
+	<h3>Libraries</h3>
+
+
+	<p>First and foremost, <a href='http://code.whytheluckystiff.net/hpricot/'>hpricot</a> is an amazing invention and a huge help.  Scraping and parsing <span class='caps'>HTML</span>/XML isn&#8217;t something we think twice about anymore.  We use hpricot on more than <span class='caps'>XML</span> import feed because it&#8217;s just so damn easy.  If you&#8217;ve never given it a shot, I recommend <a href='http://errtheblog.com/post/32'>trying it</a> soon.</p>
+
+
+	<p>Both <a href='http://magicmodels.rubyforge.org/'>Dr Nic&#8217;s Magic Models</a> and <a href='http://code.whytheluckystiff.net/camping/'>Camping</a> are used by us to prototype all sorts of ideas and internal tools.  Some of our top secret monitoring tools run using a combination of the two.  Being fluent in Camping, and knowing some <a href='http://errtheblog.com/post/19'>tricks to get it working with Magic Models</a>, is a must.</p>
+
+
+	<p><a href='http://rfuzz.rubyforge.org/'>RFuzz</a>, available as a standard Ruby gem, is a library which makes it trivial to test web sites.  We run periodic RFuzz tests against our live sites to make sure they&#8217;re alive, bullet proof, and speedy.  The tests run just like unit tests and help us feel that much better about our babies.  During the big <a href='http://weblog.rubyonrails.org/2006/8/10/rails-1-1-6-backports-and-full-disclosure'>security fiasco</a> RFuzz was instrumental, and since I&#8217;ve fallen in love.</p>
+
+
+	<p>When it comes to testing, nothing gives me more pleasure than <a href='http://glu.ttono.us/articles/2006/08/22/colorize-your-tests'>color</a>.  Thanks to <a href='http://on-ruby.blogspot.com/'>Pat Eyler</a>, the <a href='http://errtheblog.com/post/15'>redgreen</a> gem makes all those little repetitive dots that much more bearable.</p>
+
+
+	<p>Use <a href='http://nubyonrails.com/articles/2006/04/19/autotest-rails'>autotest</a>.  It takes your mind off the testing and lets you focus on the tests.</p>
+
+
+	<p><a href='http://fastercsv.rubyforge.org/'>FasterCSV</a> is a gem you can get from the standard repository.  One of our data feeds is delivered as Excel, which is basically completely useless.  So we export it to <span class='caps'>CSV</span> then import it with FasterCSV, which can nail about 5000 records in 2 seconds.  Awesome.</p>
+
+
+	<p><a href='http://mocha.rubyforge.org/'>Mocha</a> is a library for stubbing and mocking tests.  Because of it, I&#8217;ve slowly been moving over to a fixture-less state of mind.  There&#8217;s all sorts of <a href='http://glu.ttono.us/articles/2006/09/01/the-flexibility-of-mocha'>information out there</a> on using Mocha, so dive right in.</p>
+
+
+	<p>First made known to me by <a href='http://weblog.techno-weenie.net/'>technoweenie</a>, <a href='http://piston.rubyforge.org/'>Piston</a> is an incredible tool for managing Rails plugins.  We had troubles when deploying with svn:externals set: our server would try to make too many connections to the external <span class='caps'>SVN</span> server too quickly.  As a result, the connections would die and the deploy would fail.  Piston solved this issue: we can keep plugins in our local repository and sync them up with their remote repository whenever we want.  So far it&#8217;s been working out wonderfully, and so easy!  If you haven&#8217;t started yet, get on the Piston bandwagon immediately.</p>
+
+
+	<h3>Editing</h3>
+
+
+	<p>Sorry, I admit it: I&#8217;m not a TextMate guy.  Sure, I&#8217;m writing this post in TextMate, but I still prefer vim for coding.  I know there&#8217;s at least one duder out there who can side with me.  For that one guy (you know who you are), here&#8217;s a few classy vim links: the <a href='http://wiki.rubygarden.org/Ruby/page/show/VimRubySupport'>wiki page</a>, <a href='http://vim-ruby.rubyforge.org/'>the gem</a>, <a href='http://www.vim.org/scripts/script.php?script_id=1567'>the Rails plugin</a>, and <a href='http://www.vim.org/scripts/script.php?script_id=164'>the html-macros plugin</a>.  All essential.</p>
+
+
+	<h3>Outliers</h3>
+
+
+	<p>Like everyone else, we use Subversion and Trac to manage our source code and tickets.  We also use <a href='http://habtm.com/articles/2006/04/14/meet-marshmallow-the-campfire-bot'>Marshmallow</a> and a polling Ruby process to notify us of changes to Subversion.  It&#8217;s helpful to see the commits in Campfire because they&#8217;re always there, whether you are or not.</p>
+
+
+	<p>We recently started using <a href='http://crazyegg.com/'>Crazy Egg</a> to check out clicks on our site and wow wow wow.  <a href='http://weblog.rubyonrails.org/2006/9/8/crazy-egg-is-crazy-cool-and-on-rails'>Everyone</a> has <a href='http://photomatt.net/2006/09/15/crazy-egg/'>already</a> talked about it, but I suggest trying it out.  So easy, and it gives you an entirely new perspective on your site.</p>
+
+
+	<h3>Hammers and Tape</h3>
+
+
+	<p>So that&#8217;s my toolbox.  Maybe I missed a few screws or rulers, sure, but you get the general idea.  Have any really great levels you want to share?  Hit me in the comments.</p>
+
+    
+      <div id="first"></div>
+    
+
+  </div>
+</li>
+<li class="post-li hentry">
+  <div class="sidebar">
+
+    <div class="title entry-title">&ldquo;<a href="/post/12" class="reverse" rel="bookmark">Cheat Again!</a>&rdquo;</div>
+    <div class="secondary byline">&ndash; <span class="entry-author">admin</span> on <span class="published" title="Sun Oct 15 21:14:00 PDT 2006">October 15th, 2006</span></div>
+    
+      <br/>
+      <div class="secondary tags">
+        This post is tagged with <a href="/tag/ruby" class="tag-link" rel="tag">ruby</a>.<br/>
+        
+          
+          It has <a href="/post/12">zero comments</a>
+        
+      </div>
+    
+
+  </div>
+
+  <div class="main entry-content">
+
+    <p>It wasn&#8217;t <a href='http://errtheblog.com/post/23'>so long ago</a> that <a href='http://cheat.errtheblog.com'>Cheat!</a> was loosed upon the world.  We started with five (5) sheets.  That&#8217;s one hand.  Hold up one hand.  We now have forty-two (42).  That&#8217;s eight hands and two fingers.  Hold up eight hands and then another hand, but only put up two fingers on the ninth hand.  Ha!  You can&#8217;t!  That&#8217;s not nearly possible.</p>
+
+
+<div align='center' style='padding-bottom:10px;'><img src='http://errtheblog.com/static/images/42.png' alt='forty two' /></div>
+
+	<p>Today marks the proud release of Cheat 1.1.0.  A few things have changed, but don&#8217;t let that get in your way.  Upgrade immediately:</p>
+
+
+	<p><span class='code'>$ sudo gem update cheat</span></p>
+
+
+	<p>or</p>
+
+
+	<p><span class='code'>$ sudo gem install cheat</span></p>
+
+
+	<h3>Command Line Editing</h3>
+
+
+	<p>This is the real big change.  It separates the men from the boys, the 1.1.0s from the 1.0.3s, etc.  You can now edit and create cheat sheets straight from the command line.</p>
+
+
+	<p>Edit the <span class='code'>rjs</span> cheat sheet:</p>
+
+
+	<p><span class='code'>$ cheat rjs --edit</span></p>
+
+
+	<p>Create the <span class='code'>nonsense</span> cheat sheet:</p>
+
+
+	<p><span class='code'>$ cheat nonsense --add</span></p>
+
+
+	<p>By default, Cheat will try to use your <span class='code'><span class='caps'>VISUAL</span></span> or <span class='code'><span class='caps'>EDITOR</span></span> environment variable to determine which editor to launch.  If it can&#8217;t find either variable, it tries to launch <span class='code'>vim</span>.</p>
+
+
+	<p>To edit using TextMate:</p>
+
+
+	<p><span class='code'>$ export <span class='caps'>VISUAL</span>=&#8217;mate -w&#8217;</span></p>
+
+
+	<p>Go ahead and stick that in <span class='code'>.bashrc</span> or whatever init script your shell uses to ensure <span class='code'>$ cheat --edit</span> and <span class='code'>$ cheat --add</span> always use TextMate.</p>
+
+
+	<p>Windows users: this new functionality could use some testing, bugfixing, and patching.  All I knows is it works on <span class='caps'>POSIX</span>.</p>
+
+
+	<p>One million thanks to the mysterious commenter known only as <em>nornagon</em> who submitted the patch.  Who is this phantom coder?</p>
+
+
+	<h3>Tabbin&#8217; Around</h3>
+
+
+	<p>King of bash <a href='http://kevinmarsh.com/'>Kevin Marsh</a>, perhaps inspired by a bit of past <a href='http://errtheblog.com/post/33'>rakery</a>, conjured some tab completion magic for Cheat.</p>
+
+
+<pre class='ruby'>
+<span class='comment'># Cache, and complete, Cheats</span>
+<span class='keyword'>if</span> <span class='punct'>[</span> <span class='punct'>!</span> <span class='punct'>-</span><span class='ident'>r</span> ~<span class='punct'>/.</span><span class='ident'>cheats</span> <span class='punct'>]</span> <span class='punct'>|</span> <span class='punct'>[[</span> <span class='punct'>!</span> <span class='punct'>&quot;</span><span class='string'></span><span class='punct'>&quot;</span> <span class='punct'>==</span> `<span class='ident'>find</span> ~ <span class='punct'>'</span><span class='string'>.cheats</span><span class='punct'>'</span> <span class='punct'>-</span><span class='ident'>ctime</span> <span class='number'>1</span> <span class='punct'>-</span><span class='ident'>maxdepth</span> <span class='number'>0`</span> <span class='punct'>]];</span> <span class='keyword'>then</span>
+  <span class='ident'>echo</span> <span class='punct'>&quot;</span><span class='string'>Rebuilding Cheat cache... </span><span class='punct'>&quot;</span> 
+  <span class='ident'>cheat</span> <span class='ident'>sheets</span> <span class='punct'>|</span> <span class='ident'>egrep</span> <span class='punct'>'</span><span class='string'>^ </span><span class='punct'>'</span> <span class='punct'>|</span> <span class='ident'>awk</span> <span class='punct'>{'</span><span class='string'>print $1</span><span class='punct'>'}</span> <span class='punct'>&gt;</span> ~<span class='punct'>/</span><span class='regex'>.cheats
+fi
+complete -W &quot;$(cat ~</span><span class='punct'>/.</span><span class='ident'>cheats</span><span class='punct'>)&quot;</span><span class='string'> cheat<span class='normal'>
+</span></span></pre>
+
+	<p>POSIXers can stick that in your <span class='code'>.bashrc</span> (or wherever) and enjoy sweet, sweet tab completion.  Go ahead and try it: restart you shell then do <span class='code'>$ cheat m&lt;TAB&gt;</span>.  You should see a glorious list of sheets.</p>
+
+
+	<p>Thanks to <a href='http://blog.evanweaver.com/'>Evan</a>, the tab completion list will refresh itself every day.</p>
+
+
+	<h3>Printing</h3>
+
+
+	<p>Once again in the news, up-and-coming all star <a href='http://kevinmarsh.com/'>Kevin Marsh</a> fandangled a print style sheet for our lovely cheat sheets.  There&#8217;s nothing to it: surf to a cheat sheet and hit &#8216;print.&#8217;  Like normal.</p>
+
+
+<div align='center' style='padding-bottom:10px;'><a href='http://static.flickr.com/115/270713374_bc55eae133_b.jpg'><img src='http://static.flickr.com/115/270713374_bc55eae133_m.jpg' alt='print' /></a></div>
+
+	<p>That totally defeats the purpose, but I don&#8217;t care.  Print away!</p>
+
+
+	<h3>Captcha</h3>
+
+
+	<p>Using Andreas Schwarz&#8217;s <a href='http://captchator.ruby-forum.com/'>Captchator</a> web service, the <a href='http://captchator.ruby-forum.com/'>Cheat wiki</a> now has a <a href='http://en.wikipedia.org/wiki/Captcha'>captcha</a>.  The damn spammers kept reverting and messing with sheets so, for now, this seems the best solution (next to the other solution I&#8217;ll talk about in a second).</p>
+
+
+<div align='center' style='padding-bottom:10px;'><img src='http://errtheblog.com/static/images/cheat-captcha.jpg' alt='captcha' /></div>
+
+	<p>It shouldn&#8217;t really get in your way all that much.  Let me know if it does.  Hats off to Andreas for the simple service.</p>
+
+
+	<h3>Remember!</h3>
+
+
+	<p>We still have TextMate and jEdit integration, among other tricks, at the original <a href='http://errtheblog.com/post/23'>Cheat post</a>.  And then there&#8217;s the <a href='http://feeds.feedburner.com/cheatsheets'><span class='caps'>RSS</span> feed</a>, too.</p>
+
+
+<div align='center' style='padding-bottom:10px;'><a href='http://feeds.feedburner.com/cheatsheets'><img src='http://errtheblog.com/static/images/cheat-rss.jpg' alt='rss' /></a></div>
+
+	<p>As always, it&#8217;s never too late to <a href='http://drnicwilliams.com/2006/09/03/100s-cheatsheets-for-ruby-and-rails/'>write about</a> or <a href='http://www.bloggingmyassoff.com/articles/2006/10/14/its-cheating-everyone'>contribute to</a> <a href='http://cheat.errtheblog.com'>Cheat</a>.  You might think this is an ego thing, but it&#8217;s not: the more cheat sheets everyone makes, the easier all our lives become.  What would you rather be doing, drinking tequila on a secluded Mexican beach or slaving away in your cubicle?  That&#8217;s what I thought.  Get to work.</p>
+
+    
+
+  </div>
+</li>
+<li class="post-li hentry">
+  <div class="sidebar">
+
+    <div class="title entry-title">&ldquo;<a href="/post/11" class="reverse" rel="bookmark">Rake Around MySQL</a>&rdquo;</div>
+    <div class="secondary byline">&ndash; <span class="entry-author">admin</span> on <span class="published" title="Sat Oct 14 18:39:00 PDT 2006">October 14th, 2006</span></div>
+    
+      <br/>
+      <div class="secondary tags">
+        This post is tagged with <a href="/tag/rails" class="tag-link" rel="tag">rails</a>.<br/>
+        
+          
+          It has <a href="/post/11">zero comments</a>
+        
+      </div>
+    
+
+  </div>
+
+  <div class="main entry-content">
+
+    <p>In the <a href='http://en.wikipedia.org/wiki/Greek_Dark_Ages'>dark ages</a> of web programming, we&#8217;d write various Perl, <span class='caps'>PHP</span>, and shell scripts to maintain our application.  Something to clean up the sessions, something to send out our newsletter every night, something to rename files en masse.  We&#8217;d scatter them throughout our directory tree, like ninja stars thrown blindly at that old hickory down by the river.  Then, one day, the brash new kid up and duplicates all of them on his own because he has no idea they exist.  How could he?!  We have no one to blame but ourselves.</p>
+
+
+	<p>Fortunately, this is the <a href='http://en.wikipedia.org/wiki/Renaissance_in_the_Netherlands'>renaissance</a>.  We have <a href='http://rake.rubyforge.org/'>Rake</a>.  Aside from <a href='http://svn.techno-weenie.net/projects/plugins/gems/README'>freezing gems</a>, <a href='http://blog.unquiet.net/archives/2005/11/06/helpful-rake-tasks-for-using-rails-with-subversion/'>managing Subversion</a>, and <a href='http://errtheblog.com/post/3'>rake remigrating</a>, we can also use Rake to help make our shellin&#8217; lives easier.</p>
+
+
+	<p>While you probably use a gooey to manhandle your database (I fancy <a href='http://yoursql.ludit.it/'>YourSQL</a>), sometimes you just need to hit the <span class='code'>mysql</span> shell and hit it hard.  For those occasions I really want to not worry about the host, port, or showing my credentials.  I just want to shell in and get on with my business.  Something like <span class='code'>$ rake production mysql</span> would be nice.</p>
+
+
+	<p>Two steps, here they are.</p>
+
+
+	<h3>environments.rake</h3>
+
+
+	<p>So, you can chain rake tasks.  Run <span class='code'>$ rake task1 task2</span> and the tasks will be executed in that order.  As a result, I want to create some environment tasks which set the <span class='code'><span class='caps'>RAILS</span>_ENV</span> for me.  That way I can <span class='code'>$ rake production migrate</span> instead of having to <span class='code'>$ rake migrate <span class='caps'>RAILS</span>_ENV=production</span>.  I switch environments so much that this little nicety is worth it.  And it has another advantage, which I&#8217;ll tell you about later.</p>
+
+
+	<p>Anyway, define a task for each of your environments and slip them into something like, say, <span class='code'><span class='caps'>RAILS</span>_ROOT/lib/tasks/environments.rake</span>.</p>
+
+
+	<p>Here&#8217;s my <span class='code'>environments.rake</span>:</p>
+
+
+<pre class='ruby'>
+<span class='ident'>desc</span> <span class='punct'>&quot;</span><span class='string'>Runs the following task in the development environment</span><span class='punct'>&quot;</span> 
+<span class='ident'>task</span> <span class='symbol'>:development</span> <span class='keyword'>do</span>
+  <span class='constant'>RAILS_ENV</span> <span class='punct'>=</span> <span class='constant'>ENV</span><span class='punct'>['</span><span class='string'>RAILS_ENV</span><span class='punct'>']</span> <span class='punct'>=</span> <span class='punct'>'</span><span class='string'>development</span><span class='punct'>'</span>
+<span class='keyword'>end</span>
+
+<span class='ident'>desc</span> <span class='punct'>&quot;</span><span class='string'>Runs the following task in the production environment</span><span class='punct'>&quot;</span> 
+<span class='ident'>task</span> <span class='symbol'>:production</span> <span class='keyword'>do</span>
+  <span class='constant'>RAILS_ENV</span> <span class='punct'>=</span> <span class='constant'>ENV</span><span class='punct'>['</span><span class='string'>RAILS_ENV</span><span class='punct'>']</span> <span class='punct'>=</span> <span class='punct'>'</span><span class='string'>production</span><span class='punct'>'</span>
+<span class='keyword'>end</span>
+
+<span class='ident'>desc</span> <span class='punct'>&quot;</span><span class='string'>Runs the following task in the staging environment</span><span class='punct'>&quot;</span> 
+<span class='ident'>task</span> <span class='symbol'>:staging</span> <span class='keyword'>do</span>
+  <span class='constant'>RAILS_ENV</span> <span class='punct'>=</span> <span class='constant'>ENV</span><span class='punct'>['</span><span class='string'>RAILS_ENV</span><span class='punct'>']</span> <span class='punct'>=</span> <span class='punct'>'</span><span class='string'>staging</span><span class='punct'>'</span>
+<span class='keyword'>end</span>
+
+<span class='ident'>desc</span> <span class='punct'>&quot;</span><span class='string'>Runs the following task in the test environment</span><span class='punct'>&quot;</span> 
+<span class='ident'>task</span> <span class='symbol'>:test</span> <span class='keyword'>do</span>
+  <span class='constant'>RAILS_ENV</span> <span class='punct'>=</span> <span class='constant'>ENV</span><span class='punct'>['</span><span class='string'>RAILS_ENV</span><span class='punct'>']</span> <span class='punct'>=</span> <span class='punct'>'</span><span class='string'>test</span><span class='punct'>'</span>
+<span class='keyword'>end</span>
+
+<span class='ident'>task</span> <span class='symbol'>:dev</span> <span class='keyword'>do</span>
+  <span class='constant'>Rake</span><span class='punct'>::</span><span class='constant'>Task</span><span class='punct'>[&quot;</span><span class='string'>development</span><span class='punct'>&quot;].</span><span class='ident'>invoke</span>
+<span class='keyword'>end</span>
+
+<span class='ident'>task</span> <span class='symbol'>:prod</span> <span class='keyword'>do</span>
+  <span class='constant'>Rake</span><span class='punct'>::</span><span class='constant'>Task</span><span class='punct'>[&quot;</span><span class='string'>production</span><span class='punct'>&quot;].</span><span class='ident'>invoke</span>
+<span class='keyword'>end</span>
+</pre>
+
+	<p>Not super-DRY, but there&#8217;s a reason for that.  I promise.</p>
+
+
+	<p>Now we can prefix any task with an environment instead of having to fumble with <span class='code'><span class='caps'>RAILS</span>_ENV</span> ourselves.  Joy.</p>
+
+
+	<h2>mysql.rake</h2>
+
+
+	<p>The second part of our <span class='code'>$ rake production mysql</span> task (which we want to launch us into a shell connected to our production MySQL server) is the actual <span class='code'>mysql</span> task.</p>
+
+
+	<p>Here&#8217;s <span class='code'><span class='caps'>RAILS</span>_ROOT/lib/tasks/mysql.rake</span>, which we use to build and execute a <span class='code'>mysql</span> shell command using the configuration options set in <span class='code'>database.yml</span>.  Using the config file ensures our <span class='code'>mysql</span> rake task is always synced up with our Rails application&#8217;s db settings.</p>
+
+
+<pre class='ruby'>
+<span class='keyword'>def </span><span class='method'>sh_mysql</span><span class='punct'>(</span><span class='ident'>config</span><span class='punct'>)</span>
+  <span class='ident'>returning</span> <span class='punct'>'</span><span class='string'></span><span class='punct'>'</span> <span class='keyword'>do</span> <span class='punct'>|</span><span class='ident'>mysql</span><span class='punct'>|</span>
+    <span class='ident'>mysql</span> <span class='punct'>&lt;&lt;</span> <span class='ident'>mysql_command</span> <span class='punct'>&lt;&lt;</span> <span class='punct'>'</span><span class='string'> </span><span class='punct'>'</span>
+    <span class='ident'>mysql</span> <span class='punct'>&lt;&lt;</span> <span class='punct'>&quot;</span><span class='string'>-u<span class='expr'>#{config['username']}</span> </span><span class='punct'>&quot;</span> <span class='keyword'>if</span> <span class='ident'>config</span><span class='punct'>['</span><span class='string'>username</span><span class='punct'>']</span>
+    <span class='ident'>mysql</span> <span class='punct'>&lt;&lt;</span> <span class='punct'>&quot;</span><span class='string'>-p<span class='expr'>#{config['password']}</span> </span><span class='punct'>&quot;</span> <span class='keyword'>if</span> <span class='ident'>config</span><span class='punct'>['</span><span class='string'>password</span><span class='punct'>']</span>
+    <span class='ident'>mysql</span> <span class='punct'>&lt;&lt;</span> <span class='punct'>&quot;</span><span class='string'>-h<span class='expr'>#{config['host']}</span> </span><span class='punct'>&quot;</span>     <span class='keyword'>if</span> <span class='ident'>config</span><span class='punct'>['</span><span class='string'>host</span><span class='punct'>']</span>
+    <span class='ident'>mysql</span> <span class='punct'>&lt;&lt;</span> <span class='punct'>&quot;</span><span class='string'>-P<span class='expr'>#{config['port']}</span> </span><span class='punct'>&quot;</span>     <span class='keyword'>if</span> <span class='ident'>config</span><span class='punct'>['</span><span class='string'>port</span><span class='punct'>']</span>
+    <span class='ident'>mysql</span> <span class='punct'>&lt;&lt;</span> <span class='ident'>config</span><span class='punct'>['</span><span class='string'>database</span><span class='punct'>']</span>         <span class='keyword'>if</span> <span class='ident'>config</span><span class='punct'>['</span><span class='string'>database</span><span class='punct'>']</span>
+  <span class='keyword'>end</span>
+<span class='keyword'>end</span>
+
+<span class='keyword'>def </span><span class='method'>mysql_command</span>
+  <span class='punct'>'</span><span class='string'>mysql</span><span class='punct'>'</span>
+<span class='keyword'>end</span>
+
+<span class='ident'>desc</span> <span class='punct'>&quot;</span><span class='string'>Launch mysql shell.  Use with an environment task (e.g. rake production mysql)</span><span class='punct'>&quot;</span> 
+<span class='ident'>task</span> <span class='symbol'>:mysql</span> <span class='keyword'>do</span>
+  <span class='ident'>system</span> <span class='ident'>sh_mysql</span><span class='punct'>(</span><span class='constant'>YAML</span><span class='punct'>.</span><span class='ident'>load</span><span class='punct'>(</span><span class='ident'>open</span><span class='punct'>(</span><span class='constant'>File</span><span class='punct'>.</span><span class='ident'>join</span><span class='punct'>('</span><span class='string'>config</span><span class='punct'>',</span> <span class='punct'>'</span><span class='string'>database.yml</span><span class='punct'>')))[</span><span class='constant'>RAILS_ENV</span><span class='punct'>])</span>
+<span class='keyword'>end</span>
+</pre>
+
+	<p>If you need to use something other than `<span class='code'>mysql</span>&#8217; (maybe you need to include the full path?), just replace the return value of the <span class='code'>mysql_command</span> method.  Lucky for us this is easy, fast, and fairly safe: a the <span class='code'>mysql</span> shell command is nice enough to hide the password from <span class='code'>ps aux</span>.  That part of the command will show as &#8216;-pXXXXX&#8217;.  Fort Knox style.</p>
+
+
+	<p>That&#8217;s it.  Now you can <span class='code'>$ rake prod mysql</span> or <span class='code'>$ rake mysql</span> or whatever, all day long.  You barely need to code anymore.</p>
+
+
+	<h3>Tab-leeting It</h3>
+
+
+	<p>Since <a href='http://www.rubyinside.com/how-to-enable-tab-completion-in-irb-260.html'>tab</a> <a href='http://drnicwilliams.com/2006/10/12/my-irbrc-for-consoleirb/'>completion</a> is all the rage these days, I thought it&#8217;d be nice to dig through the Internet and find out how to get it rolling on rake.</p>
+
+
+	<p>What I came across was a chain letter ending at <a href='http://onrails.org/articles/2006/08/30/namespaces-and-rake-command-completion'>this onrails.org post</a>.  It rules!  But unfortunately, it&#8217;s slow.  Real slow.  Is my laptop really that old already?  Damn.</p>
+
+
+	<p>The problem is that <span class='code'>rake</span> is being run each time we hit tab.  Here&#8217;s my sped up version:</p>
+
+
+<pre class='ruby'>
+<span class='comment'>#!/usr/bin/env ruby</span>
+
+<span class='comment'># Save this somewhere, chmod 755 it, then add</span>
+<span class='comment'>#   complete -C path/to/this/script -o default rake</span>
+<span class='comment'># to your ~/.bashrc</span>
+<span class='comment'>#</span>
+<span class='comment'># If you update your tasks, just $ rm ~/.raketabs*</span>
+<span class='comment'>#</span>
+<span class='comment'># Adapted from </span>
+<span class='comment'># http://onrails.org/articles/2006/08/30/namespaces-and-rake-command-completion</span>
+
+<span class='ident'>exit</span> <span class='number'>0</span> <span class='keyword'>unless</span> <span class='constant'>File</span><span class='punct'>.</span><span class='ident'>file?</span><span class='punct'>(</span><span class='constant'>File</span><span class='punct'>.</span><span class='ident'>join</span><span class='punct'>(</span><span class='constant'>Dir</span><span class='punct'>.</span><span class='ident'>pwd</span><span class='punct'>,</span> <span class='punct'>'</span><span class='string'>Rakefile</span><span class='punct'>'))</span>
+<span class='ident'>exit</span> <span class='number'>0</span> <span class='keyword'>unless</span> <span class='punct'>/</span><span class='regex'>^rake<span class='escape'>\b</span></span><span class='punct'>/</span> <span class='punct'>=~</span> <span class='constant'>ENV</span><span class='punct'>[&quot;</span><span class='string'>COMP_LINE</span><span class='punct'>&quot;]</span>
+
+<span class='keyword'>def </span><span class='method'>rake_silent_tasks</span>
+  <span class='keyword'>if</span> <span class='constant'>File</span><span class='punct'>.</span><span class='ident'>exists?</span><span class='punct'>(</span><span class='ident'>dotcache</span> <span class='punct'>=</span> <span class='constant'>File</span><span class='punct'>.</span><span class='ident'>join</span><span class='punct'>(</span><span class='constant'>File</span><span class='punct'>.</span><span class='ident'>expand_path</span><span class='punct'>('</span><span class='string'>~</span><span class='punct'>'),</span> <span class='punct'>&quot;</span><span class='string'>.raketabs-<span class='expr'>#{Dir.pwd.hash}</span></span><span class='punct'>&quot;))</span>
+    <span class='constant'>File</span><span class='punct'>.</span><span class='ident'>read</span><span class='punct'>(</span><span class='ident'>dotcache</span><span class='punct'>)</span>
+  <span class='keyword'>else</span>
+    <span class='ident'>tasks</span> <span class='punct'>=</span> `<span class='ident'>rake</span> <span class='punct'>--</span><span class='ident'>silent</span> <span class='punct'>--</span><span class='ident'>tasks`</span>
+    <span class='constant'>File</span><span class='punct'>.</span><span class='ident'>open</span><span class='punct'>(</span><span class='ident'>dotcache</span><span class='punct'>,</span> <span class='punct'>'</span><span class='string'>w</span><span class='punct'>')</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>f</span><span class='punct'>|</span> <span class='ident'>f</span><span class='punct'>.</span><span class='ident'>puts</span> <span class='ident'>tasks</span> <span class='punct'>}</span>
+    <span class='ident'>tasks</span>
+  <span class='keyword'>end</span>
+<span class='keyword'>end</span>
+
+<span class='ident'>after_match</span> <span class='punct'>=</span> <span class='global'>$'</span>
+<span class='ident'>task_match</span> <span class='punct'>=</span> <span class='punct'>(</span><span class='ident'>after_match</span><span class='punct'>.</span><span class='ident'>empty?</span> <span class='punct'>||</span> <span class='ident'>after_match</span> <span class='punct'>=~</span> <span class='punct'>/</span><span class='regex'><span class='escape'>\s</span>$</span><span class='punct'>/)</span> <span class='punct'>?</span> <span class='constant'>nil</span> <span class='punct'>:</span> <span class='ident'>after_match</span><span class='punct'>.</span><span class='ident'>split</span><span class='punct'>.</span><span class='ident'>last</span>
+<span class='ident'>tasks</span> <span class='punct'>=</span> <span class='ident'>rake_silent_tasks</span><span class='punct'>.</span><span class='ident'>split</span><span class='punct'>(&quot;</span><span class='string'><span class='escape'>\n</span></span><span class='punct'>&quot;)[</span><span class='number'>1</span><span class='punct'>..-</span><span class='number'>1</span><span class='punct'>].</span><span class='ident'>map</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>line</span><span class='punct'>|</span> <span class='ident'>line</span><span class='punct'>.</span><span class='ident'>split</span><span class='punct'>[</span><span class='number'>1</span><span class='punct'>]</span> <span class='punct'>}</span>
+<span class='ident'>tasks</span> <span class='punct'>=</span> <span class='ident'>tasks</span><span class='punct'>.</span><span class='ident'>select</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>t</span><span class='punct'>|</span> <span class='punct'>/</span><span class='regex'>^<span class='expr'>#{Regexp.escape task_match}</span></span><span class='punct'>/</span> <span class='punct'>=~</span> <span class='ident'>t</span> <span class='punct'>}</span> <span class='keyword'>if</span> <span class='ident'>task_match</span>
+
+<span class='comment'># handle namespaces</span>
+<span class='keyword'>if</span> <span class='ident'>task_match</span> <span class='punct'>=~</span> <span class='punct'>/</span><span class='regex'>^([-<span class='escape'>\w</span>:]+:)</span><span class='punct'>/</span>
+  <span class='ident'>upto_last_colon</span> <span class='punct'>=</span> <span class='global'>$1</span>
+  <span class='ident'>after_match</span> <span class='punct'>=</span> <span class='global'>$'</span>
+  <span class='ident'>tasks</span> <span class='punct'>=</span> <span class='ident'>tasks</span><span class='punct'>.</span><span class='ident'>map</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>t</span><span class='punct'>|</span> <span class='punct'>(</span><span class='ident'>t</span> <span class='punct'>=~</span> <span class='punct'>/</span><span class='regex'>^<span class='expr'>#{Regexp.escape upto_last_colon}</span>([-<span class='escape'>\w</span>:]+)$</span><span class='punct'>/)</span> <span class='punct'>?</span> <span class='punct'>&quot;</span><span class='string'><span class='expr'>#{$1}</span></span><span class='punct'>&quot;</span> <span class='punct'>:</span> <span class='ident'>t</span> <span class='punct'>}</span>
+<span class='keyword'>end</span>
+
+<span class='ident'>puts</span> <span class='ident'>tasks</span>
+<span class='ident'>exit</span> <span class='number'>0</span>
+</pre>
+
+	<p>You can grab it with <span class='code'>wget http://pastie.caboo.se/17743/text</span>.</p>
+
+
+	<p>Next stick this into <span class='code'>.bashrc</span> or whatever init script your shell hits:</p>
+
+
+	<p><span class='code'>complete -C path/to/script/you/downloaded -o default rake</span></p>
+
+
+	<p>Now restart your shell, then <span class='code'>cd</span> to a Rails project.  Next type <span class='code'>rake db:&lt;tab&gt;</span>.  Wait a second.  Did all the tasks show up?  Awesome.  Hit tab again.  Only the first time should be slow.</p>
+
+
+	<p>Improvements?  Bug fixes?  Let&#8217;s hear &#8216;em.</p>
+
+
+	<h3>Love It</h3>
+
+
+	<p>Rake is real cool.  Beyond having <a href='http://rake.rubyforge.org/files/lib/rake_rb.html#M000007'>namespaces</a> and <a href='http://nubyonrails.com/articles/2006/07/28/foscon-and-living-dangerously-with-rake'>method_missing</a>, it&#8217;s got built in support for <a href='http://rake.rubyforge.org/classes/Rake/GemPackageTask.html'>building gems</a>.  And hey, if you look in <span class='code'>rake/lib/rake/contrib</span> you can even find files such as <span class='code'>rubyforgepublisher.rb</span> for, you guessed it, publishing to Rubyforge automatically.  What <em>can&#8217;t</em> this kid do?</p>
+
+    
+
+  </div>
+</li>
+<li class="post-li hentry">
+  <div class="sidebar">
+
+    <div class="title entry-title">&ldquo;<a href="/post/10" class="reverse" rel="bookmark">Strut Your Structs</a>&rdquo;</div>
+    <div class="secondary byline">&ndash; <span class="entry-author">admin</span> on <span class="published" title="Tue Sep 26 15:33:00 PDT 2006">September 26th, 2006</span></div>
+    
+      <br/>
+      <div class="secondary tags">
+        This post is tagged with <a href="/tag/ruby" class="tag-link" rel="tag">ruby</a>.<br/>
+        
+          
+          It has <a href="/post/10">zero comments</a>
+        
+      </div>
+    
+
+  </div>
+
+  <div class="main entry-content">
+
+    <p>I am sitting in the airport right now, waiting for my twice delayed flight to board.  The security man took my Scope.  He does not want my teeth to be clean or my breath to be fresh.  So be it.</p>
+
+
+	<p>Here&#8217;re two classes you may or may not have seen before.  Unlike, say, a small bottle of refreshing mouth wash, you can definitely take these guys on an airplane.</p>
+
+
+	<h3>Struct</h3>
+
+
+	<p><span class='code'>Struct</span> is like Ruby on Rails for classes.  Scaffolding.  It lets you quickly cobble together a new class with some gettable-settable attributes.  You can then instantiate your struct&#8217;d class and go nuts.  You don&#8217;t even need to <span class='code'>require</span> anything&#8212;<span class='code'>Struct</span> is right there, ready and willing, all the time.</p>
+
+
+	<p>When I was little we had a black lab named Tucker.  He was a dog with four legs and two eyeballs.</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='constant'>Animal</span> <span class='punct'>=</span> <span class='constant'>Struct</span><span class='punct'>.</span><span class='ident'>new</span><span class='punct'>(</span><span class='symbol'>:name</span><span class='punct'>,</span> <span class='symbol'>:legs</span><span class='punct'>,</span> <span class='symbol'>:eyeballs</span><span class='punct'>)</span>
+<span class='punct'>=&gt;</span> <span class='constant'>Animal</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span> <span class='punct'>=</span> <span class='constant'>Animal</span><span class='punct'>.</span><span class='ident'>new</span><span class='punct'>('</span><span class='string'>dog</span><span class='punct'>',</span> <span class='number'>4</span><span class='punct'>,</span> <span class='number'>2</span><span class='punct'>)</span>
+<span class='punct'>=&gt;</span> <span class='comment'>#&lt;struct Animal name=&quot;dog&quot;, legs=4, eyeballs=2&gt;</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>legs</span>
+<span class='punct'>=&gt;</span> <span class='number'>4</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>legs</span> <span class='punct'>=</span> <span class='number'>3</span>
+<span class='punct'>=&gt;</span> <span class='number'>3</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>legs</span>
+<span class='punct'>=&gt;</span> <span class='number'>3</span>
+</pre>
+
+	<p>Wow, that&#8217;s quick.  We didn&#8217;t have to set up a class definition or fumble with <span class='code'>attr_accessor</span>.  But there&#8217;s more.</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>[</span><span class='number'>0</span><span class='punct'>]</span>
+<span class='punct'>=&gt;</span> <span class='punct'>&quot;</span><span class='string'>dog</span><span class='punct'>&quot;</span> 
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>['</span><span class='string'>name</span><span class='punct'>']</span>
+<span class='punct'>=&gt;</span> <span class='punct'>&quot;</span><span class='string'>dog</span><span class='punct'>&quot;</span> 
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>[</span><span class='symbol'>:name</span><span class='punct'>]</span>
+<span class='punct'>=&gt;</span> <span class='punct'>&quot;</span><span class='string'>dog</span><span class='punct'>&quot;</span> 
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>[</span><span class='symbol'>:name</span><span class='punct'>]</span> <span class='punct'>=</span> <span class='punct'>'</span><span class='string'>doggy</span><span class='punct'>'</span>
+<span class='punct'>=&gt;</span> <span class='punct'>&quot;</span><span class='string'>doggy</span><span class='punct'>&quot;</span> 
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>name</span>  
+<span class='punct'>=&gt;</span> <span class='punct'>&quot;</span><span class='string'>doggy</span><span class='punct'>&quot;</span> 
+</pre>
+
+	<p>It&#8217;s like <span class='code'>Array</span> and <span class='code'>Hash</span> got married and had a little classling.  Okay, that&#8217;s not true, but it sure looks that way from the outside.  I wonder if that means <span class='code'>Struct</span> objects are enumerable?</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>is_a?</span> <span class='constant'>Enumerable</span>
+<span class='punct'>=&gt;</span> <span class='constant'>true</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>methods</span><span class='punct'>.</span><span class='ident'>grep</span> <span class='punct'>/</span><span class='ident'>each</span><span class='punct'>/</span>
+<span class='punct'>=&gt;</span> <span class='punct'>[&quot;</span><span class='string'>each_with_index</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>each</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>each_pair</span><span class='punct'>&quot;]</span>
+</pre>
+
+	<p>How unexpected.  And it&#8217;s ordered, too&#8212;the order you passed your keys when creating your struct&#8217;d class is maintained.  In this case the order is <span class='code'>name</span>, <span class='code'>legs</span>, then <span class='code'>eyeballs</span>.  Always.</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>each_pair</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>k</span><span class='punct'>,</span><span class='ident'>v</span><span class='punct'>|</span> <span class='ident'>puts</span> <span class='punct'>&quot;</span><span class='string'>key: <span class='expr'>#{k}</span>, value: <span class='expr'>#{v}</span></span><span class='punct'>&quot;</span> <span class='punct'>}</span> 
+<span class='ident'>key</span><span class='punct'>:</span> <span class='ident'>name</span><span class='punct'>,</span> <span class='ident'>value</span><span class='punct'>:</span> <span class='ident'>dog</span>
+<span class='ident'>key</span><span class='punct'>:</span> <span class='ident'>legs</span><span class='punct'>,</span> <span class='ident'>value</span><span class='punct'>:</span> <span class='number'>4</span>
+<span class='ident'>key</span><span class='punct'>:</span> <span class='ident'>eyeballs</span><span class='punct'>,</span> <span class='ident'>value</span><span class='punct'>:</span> <span class='number'>2</span>
+<span class='punct'>=&gt;</span> <span class='comment'>#&lt;struct Animal name=&quot;dog&quot;, legs=4, eyeballs=2&gt;</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>each</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>v</span><span class='punct'>|</span> <span class='ident'>puts</span> <span class='ident'>v</span> <span class='punct'>}</span> 
+<span class='ident'>dog</span>
+<span class='number'>4</span>
+<span class='number'>2</span>
+<span class='punct'>=&gt;</span> <span class='comment'>#&lt;struct Animal name=&quot;dog&quot;, legs=4, eyeballs=2&gt;</span>
+</pre>
+
+	<p>For reference:</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='punct'>(</span><span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>methods</span> <span class='punct'>&amp;</span> <span class='constant'>Enumerable</span><span class='punct'>.</span><span class='ident'>instance_methods</span><span class='punct'>).</span><span class='ident'>sort</span>
+<span class='punct'>=&gt;</span> <span class='punct'>[&quot;</span><span class='string'>all?</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>any?</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>collect</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>detect</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>each_with_index</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>entries</span><span class='punct'>&quot;,</span> 
+<span class='punct'>&quot;</span><span class='string'>find</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>find_all</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>grep</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>include?</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>inject</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>map</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>max</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>member?</span><span class='punct'>&quot;,</span>
+<span class='punct'>&quot;</span><span class='string'>min</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>partition</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>reject</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>select</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>sort</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>sort_by</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>to_a</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>zip</span><span class='punct'>&quot;]</span>
+</pre>
+
+	<p>Since a struct&#8217;d class is not actually a <span class='code'>Hash</span> or an <span class='code'>Array</span>, there are differences.  A <span class='code'>Struct</span> instantiated object has no keys&#8212;it has <span class='code'>members</span>.</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>members</span>
+<span class='punct'>=&gt;</span> <span class='punct'>[&quot;</span><span class='string'>name</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>legs</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>eyeballs</span><span class='punct'>&quot;]</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>values</span>
+<span class='punct'>=&gt;</span> <span class='punct'>[&quot;</span><span class='string'>doggy</span><span class='punct'>&quot;,</span> <span class='number'>4</span><span class='punct'>,</span> <span class='number'>2</span><span class='punct'>]</span>
+</pre>
+
+	<p>Also: you can not add new <span class='code'>members</span> arbitrarily as you can with an <span class='code'>Array</span> or a <span class='code'>Hash</span>.  However many <span class='code'>members</span> you instantiate your struct&#8217;d class with is however many you&#8217;re stuck with.  As a result: no <span class='code'>merge</span>, <span class='code'>update</span>, or <span class='code'>concat</span> (+).  This is a class, after all.  Not a fancy faux-primitive.</p>
+
+
+	<p>If you need to turn a <span class='code'>Struct</span> object into a <span class='code'>Hash</span>, here&#8217;s an easy way:</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>hash</span> <span class='punct'>=</span> <span class='constant'>Hash</span><span class='punct'>[*</span><span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>members</span><span class='punct'>.</span><span class='ident'>zip</span><span class='punct'>(</span><span class='ident'>tucker</span><span class='punct'>.</span><span class='ident'>values</span><span class='punct'>).</span><span class='ident'>flatten</span><span class='punct'>]</span>
+<span class='punct'>=&gt;</span> <span class='punct'>{&quot;</span><span class='string'>name</span><span class='punct'>&quot;=&gt;&quot;</span><span class='string'>doggy</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>eyeballs</span><span class='punct'>&quot;=&gt;</span><span class='number'>2</span><span class='punct'>,</span> <span class='punct'>&quot;</span><span class='string'>legs</span><span class='punct'>&quot;=&gt;</span><span class='number'>4</span><span class='punct'>}</span>
+</pre>
+
+	<p>Maybe wrap that in a <span class='code'>to_hash</span> if you&#8217;d like.  For <span class='code'>to_a</span>, just use <span class='code'>values</span>.</p>
+
+
+	<p>It&#8217;s worth noting that since everything in Ruby is an object, we can inherit straight from a call to <span class='code'>Struct.new</span>.  Maybe we want to add some questions?</p>
+
+
+<pre class='ruby'>
+<span class='keyword'>class </span><span class='class'>Primate</span> <span class='punct'>&lt;</span> <span class='constant'>Struct</span><span class='punct'>.</span><span class='ident'>new</span><span class='punct'>(</span><span class='symbol'>:name</span><span class='punct'>,</span> <span class='symbol'>:legs</span><span class='punct'>,</span> <span class='symbol'>:eyeballs</span><span class='punct'>)</span>
+  <span class='keyword'>def </span><span class='method'>legs?</span>
+    <span class='punct'>(</span><span class='ident'>legs</span> <span class='punct'>&amp;&amp;</span> <span class='ident'>legs</span><span class='punct'>.</span><span class='ident'>to_i</span> <span class='punct'>&gt;</span> <span class='number'>0</span><span class='punct'>)</span> <span class='punct'>?</span> <span class='constant'>true</span> <span class='punct'>:</span> <span class='constant'>false</span>
+  <span class='keyword'>end</span>
+<span class='keyword'>end</span>
+</pre>
+
+	<p>Imagine the possibilities.  Fake-out <span class='code'>ActiveRecord</span> objects in your tests!  Mock hashes that are super indifferent!  Create resources which can only be described as active! Amaze your friends!</p>
+
+
+	<h3>OpenStruct</h3>
+
+
+	<p><span class='code'>OpenStruct</span> is a bit more liberal than <span class='code'>Struct</span>, with less structure.  Like that hippie cousin everyone has.  (in my family it&#8217;s me)</p>
+
+
+	<p>Usage: pass a hash to <span class='code'>OpenStruct.new</span>, receive an object with full-on getters and setters.  Because this behavior is a bit suspect we must explicitly require <span class='code'>OpenStruct</span> (<span class='code'>ostruct</span>) from the standard library.  Like <span class='code'><span class='caps'>YAML</span></span>.</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>require</span> <span class='punct'>'</span><span class='string'>ostruct</span><span class='punct'>'</span>
+<span class='punct'>=&gt;</span> <span class='constant'>true</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span> <span class='punct'>=</span> <span class='constant'>OpenStruct</span><span class='punct'>.</span><span class='ident'>new</span><span class='punct'>(</span><span class='symbol'>:brand</span> <span class='punct'>=&gt;</span> <span class='punct'>'</span><span class='string'>Scope</span><span class='punct'>',</span> <span class='symbol'>:owner</span> <span class='punct'>=&gt;</span> <span class='punct'>'</span><span class='string'>P&amp;G</span><span class='punct'>',</span> <span class='symbol'>:flavor</span> <span class='punct'>=&gt;</span> <span class='punct'>'</span><span class='string'>Cinnamon Ice</span><span class='punct'>')</span>
+<span class='punct'>=&gt;</span> <span class='comment'>#&lt;OpenStruct brand=&quot;Scope&quot;, owner=&quot;P&amp;G&quot;, flavor=&quot;Cinnamon Ice&quot;&gt;</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>brand</span>
+<span class='punct'>=&gt;</span> <span class='punct'>&quot;</span><span class='string'>Scope</span><span class='punct'>&quot;</span> 
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>brand</span> <span class='punct'>=</span> <span class='punct'>'</span><span class='string'>Scoped</span><span class='punct'>'</span>
+<span class='punct'>=&gt;</span> <span class='punct'>&quot;</span><span class='string'>Scoped</span><span class='punct'>&quot;</span> 
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>brand</span>
+<span class='punct'>=&gt;</span> <span class='punct'>&quot;</span><span class='string'>Scoped</span><span class='punct'>&quot;</span> 
+</pre>
+
+	<p>Unlike <span class='code'>Struct</span>, we <strong>can</strong> add new members to an <span class='code'>OpenStruct</span> object whenever we&#8217;d like.</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>tasty</span>
+<span class='punct'>=&gt;</span> <span class='constant'>nil</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>tasty</span> <span class='punct'>=</span> <span class='constant'>true</span>
+<span class='punct'>=&gt;</span> <span class='constant'>true</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>tasty</span>
+<span class='punct'>=&gt;</span> <span class='constant'>true</span>
+</pre>
+
+	<p>This is accomplished through some <span class='code'>method_missing</span>-like magic.  Unfortunately, this means all your <span class='code'>NoMethodError</span> exceptions go away.</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>something_fake</span>
+<span class='punct'>=&gt;</span> <span class='constant'>nil</span>
+</pre>
+
+	<p>Not the biggest deal.  That&#8217;s how hashes work when you try to access a non-existent key, after all.  And there&#8217;s always good ol&#8217; <span class='code'>respond_to</span>:</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>respond_to?</span> <span class='symbol'>:something_fake</span>
+<span class='punct'>=&gt;</span> <span class='constant'>false</span>
+</pre>
+
+	<p>So that&#8217;s all pretty cool.  I&#8217;ve been playing with this class in my code lately.  Mainly in tests to fake out <span class='code'>ActiveRecord</span> stuffs, as I suggested with <span class='code'>Struct</span>. There is one major disadvantage to <span class='code'>OpenStruct</span>: it&#8217;s not enumerable.  Less structure, see.  You can not <span class='code'>each</span>, you can not <span class='code'>members</span>, you can&#8217;t even <span class='code'>values</span>.  Well.  I mean.  Out of the box you can&#8217;t.</p>
+
+
+	<h3>Enum-o-Struct</h3>
+
+
+	<p>What we&#8217;re going to do is make <span class='code'>OpenStruct</span> enumerable by adding the <span class='code'>each</span> method, the <span class='code'>members</span> method, and including the <span class='code'>Enumerable</span> module.</p>
+
+
+<pre class='ruby'>
+<span class='ident'>require</span> <span class='punct'>'</span><span class='string'>ostruct</span><span class='punct'>'</span>
+
+<span class='keyword'>class </span><span class='class'>EnumoStruct</span> <span class='punct'>&lt;</span> <span class='constant'>OpenStruct</span>
+  <span class='ident'>include</span> <span class='constant'>Enumerable</span>
+
+  <span class='keyword'>def </span><span class='method'>members</span>
+    <span class='ident'>methods</span><span class='punct'>(</span><span class='constant'>false</span><span class='punct'>).</span><span class='ident'>grep</span><span class='punct'>(/</span><span class='regex'>=</span><span class='punct'>/).</span><span class='ident'>map</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>m</span><span class='punct'>|</span> <span class='ident'>m</span><span class='punct'>[</span><span class='number'>0</span><span class='punct'>...-</span><span class='number'>1</span><span class='punct'>]</span> <span class='punct'>}</span>
+  <span class='keyword'>end</span>
+
+  <span class='keyword'>def </span><span class='method'>each</span>
+    <span class='ident'>members</span><span class='punct'>.</span><span class='ident'>each</span> <span class='keyword'>do</span> <span class='punct'>|</span><span class='ident'>method</span><span class='punct'>|</span>
+      <span class='keyword'>yield</span> <span class='ident'>send</span><span class='punct'>(</span><span class='ident'>method</span><span class='punct'>)</span>
+    <span class='keyword'>end</span>
+    <span class='constant'>self</span>
+  <span class='keyword'>end</span>
+<span class='keyword'>end</span>
+</pre>
+
+	<p>Cryptic?  Hardly.</p>
+
+
+	<p>We want an <span class='code'>each</span> method.  How are we going to enumerate over an <span class='code'>OpenStruct</span>?  Well, we could always just pass the return value of each getter-method to whatever block is passed to our <span class='code'>each</span> method.  If that&#8217;s our approach, it looks like we need a way to find all the members.  All the getters.</p>
+
+
+	<p>While an <span class='code'>OpenStruct</span> object may have a ton of arbitrary methods, it has setters which end in an equal sign and almost always correspond to a getter.  The <span class='code'>members</span> method here finds all methods ending in <span class='code'>=</span> on an object by grabbing an array of methods <em>excluding</em> those defined on parent/ancestor classes (<span class='code'>methods(false)</span>) and creating an array of methods which match a regular expression, using <span class='code'>grep</span>.  It then strips the last character from each found method, the <span class='code'>=</span>, returning our array of members.</p>
+
+
+	<p>The members from our <span class='code'>scope</span> example: <span class='code'>[&#8220;flavor&#8221;, &#8220;owner&#8221;, &#8220;brand&#8221;]</span></p>
+
+
+	<p>The <span class='code'>Enumerable</span> module depends on your class implementing <span class='code'>each</span> to work its magic.  The concept is simple: go through each of the <span class='code'>member</span> methods and call the method, passing its value into the block passed to <span class='code'>each</span> using <span class='code'>yield</span>.  In this case, <span class='code'>send(method)</span> is the same as, for example, <span class='code'>self.flavor</span> or <span class='code'>self.brand</span>.</p>
+
+
+	<p>Notice we return <span class='code'>self</span> in our <span class='code'>each</span> method: it&#8217;s polite for <span class='code'>each</span> to return <span class='code'>self</span> so that calls to it may be chained.</p>
+
+
+	<p>In action:</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>require</span> <span class='punct'>'</span><span class='string'>enumostruct</span><span class='punct'>'</span>
+<span class='punct'>=&gt;</span> <span class='constant'>true</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span> <span class='punct'>=</span> <span class='constant'>EnumoStruct</span><span class='punct'>.</span><span class='ident'>new</span><span class='punct'>(</span><span class='symbol'>:brand</span> <span class='punct'>=&gt;</span> <span class='punct'>'</span><span class='string'>Scope</span><span class='punct'>',</span> <span class='symbol'>:owner</span> <span class='punct'>=&gt;</span> <span class='punct'>'</span><span class='string'>P&amp;G</span><span class='punct'>',</span> <span class='symbol'>:flavor</span> <span class='punct'>=&gt;</span> <span class='punct'>'</span><span class='string'>Cinnamon Ice</span><span class='punct'>')</span>
+<span class='punct'>=&gt;</span> <span class='comment'>#&lt;EnumoStruct brand=&quot;Scope&quot;, owner=&quot;P&amp;G&quot;, flavor=&quot;Cinnamon Ice&quot;&gt;</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>each</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>v</span><span class='punct'>|</span> <span class='ident'>puts</span> <span class='punct'>&quot;</span><span class='string'>value: <span class='expr'>#{v}</span></span><span class='punct'>&quot;</span> <span class='punct'>}</span>
+<span class='ident'>value</span><span class='punct'>:</span> <span class='constant'>Cinnamon</span> <span class='constant'>Ice</span>
+<span class='ident'>value</span><span class='punct'>:</span> <span class='constant'>P</span><span class='punct'>&amp;</span><span class='constant'>G</span>
+<span class='ident'>value</span><span class='punct'>:</span> <span class='constant'>Scope</span>
+<span class='punct'>=&gt;</span> <span class='comment'>#&lt;EnumoStruct brand=&quot;Scope&quot;, owner=&quot;P&amp;G&quot;, flavor=&quot;Cinnamon Ice&quot;&gt;</span>
+</pre>
+
+	<p>Oh that&#8217;s delicious.  Remember, now we have all the <span class='code'>Enumerable</span> methods.</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>map</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>v</span><span class='punct'>|</span> <span class='ident'>v</span> <span class='punct'>}</span>
+<span class='punct'>=&gt;</span> <span class='punct'>[&quot;</span><span class='string'>Cinnamon Ice</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>P&amp;G</span><span class='punct'>&quot;,</span> <span class='punct'>&quot;</span><span class='string'>Scope</span><span class='punct'>&quot;]</span>
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>detect</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>v</span><span class='punct'>|</span> <span class='ident'>v</span> <span class='punct'>=~</span> <span class='punct'>/</span><span class='regex'>&amp;</span><span class='punct'>/</span> <span class='punct'>}</span>
+<span class='punct'>=&gt;</span> <span class='punct'>&quot;</span><span class='string'>P&amp;G</span><span class='punct'>&quot;</span> 
+</pre>
+
+	<p>Hey, I liked that <span class='code'>each_pair</span> method that <span class='code'>Struct</span> gives you.  Let&#8217;s add it before we go.</p>
+
+
+<pre class='ruby'>
+<span class='keyword'>class </span><span class='class'>EnumoStruct</span> <span class='punct'>&lt;</span> <span class='constant'>OpenStruct</span>
+  <span class='keyword'>def </span><span class='method'>each_pair</span>
+    <span class='ident'>members</span><span class='punct'>.</span><span class='ident'>each</span> <span class='keyword'>do</span> <span class='punct'>|</span><span class='ident'>method</span><span class='punct'>|</span>
+      <span class='keyword'>yield</span> <span class='ident'>method</span><span class='punct'>,</span> <span class='ident'>send</span><span class='punct'>(</span><span class='ident'>method</span><span class='punct'>)</span>
+    <span class='keyword'>end</span>
+    <span class='constant'>self</span>
+  <span class='keyword'>end</span>
+<span class='keyword'>end</span>
+
+<span class='punct'>&gt;&gt;</span> <span class='ident'>scope</span><span class='punct'>.</span><span class='ident'>each_pair</span> <span class='punct'>{</span> <span class='punct'>|</span><span class='ident'>k</span><span class='punct'>,</span><span class='ident'>v</span><span class='punct'>|</span> <span class='ident'>puts</span> <span class='punct'>&quot;</span><span class='string'>key: <span class='expr'>#{k}</span>, value: <span class='expr'>#{v}</span></span><span class='punct'>&quot;</span> <span class='punct'>}</span> 
+<span class='ident'>key</span><span class='punct'>:</span> <span class='ident'>flavor</span><span class='punct'>,</span> <span class='ident'>value</span><span class='punct'>:</span> <span class='constant'>Cinnamon</span> <span class='constant'>Ice</span>
+<span class='ident'>key</span><span class='punct'>:</span> <span class='ident'>owner</span><span class='punct'>,</span> <span class='ident'>value</span><span class='punct'>:</span> <span class='constant'>P</span><span class='punct'>&amp;</span><span class='constant'>G</span>
+<span class='ident'>key</span><span class='punct'>:</span> <span class='ident'>brand</span><span class='punct'>,</span> <span class='ident'>value</span><span class='punct'>:</span> <span class='constant'>Scope</span>
+<span class='punct'>=&gt;</span> <span class='comment'>#&lt;EnumoStruct brand=&quot;Scope&quot;, owner=&quot;P&amp;G&quot;, flavor=&quot;Cinnamon Ice&quot;&gt;</span>
+</pre>
+
+	<p>Same as <span class='code'>each</span>, really.  The only difference is we pass the name of the current member into the block as the first argument.  Cake.</p>
+
+
+	<h3>Bye!</h3>
+
+
+	<p>Ah, we&#8217;ve accomplished so much.  My only hope is you can truly find a use for one of these humble classes.  They are not flammable and pose no threat to your fellow passengers.</p>
+
+    
+
+  </div>
+</li>
+<li class="post-li hentry">
+  <div class="sidebar">
+
+    <div class="title entry-title">&ldquo;<a href="/post/9" class="reverse" rel="bookmark">Content For Whom?</a>&rdquo;</div>
+    <div class="secondary byline">&ndash; <span class="entry-author">admin</span> on <span class="published" title="Sat Sep 16 15:46:00 PDT 2006">September 16th, 2006</span></div>
+    
+      <br/>
+      <div class="secondary tags">
+        This post is tagged with <a href="/tag/rails" class="tag-link" rel="tag">rails</a>.<br/>
+        
+          
+          It has <a href="/post/9">zero comments</a>
+        
+      </div>
+    
+
+  </div>
+
+  <div class="main entry-content">
+
+    <p>Larry is building a personal home page.  He&#8217;s using Ruby on Rails and fla-fla-flying.  Why, at the rate he&#8217;s going, link groups and banner exchanges will be <em>begging</em> him to join in no time flat.</p>
+
+
+<div align='center'><img src='http://errtheblog.com/static/images/meet_larry.jpg' alt='Meet Larry.' /></div>
+
+	<p>Just recently he was Googling and came across a post on Err the Blog titled <em><a href='http://errtheblog.com/post/28'>Content for Whom?</a></em>  While the writer of said blog is a bit of a flake, Larry was able to make his site more dynamic and <span class='caps'>DRY</span> using <span class='code'>content_for</span> after reading the post.  Here&#8217;s how.</p>
+
+
+	<h3>The Sidebar</h3>
+
+
+	<p>We all know Rails compiles views before it compiles the layout.  That is, if you set <span class='code'>@page_title</span> in your view, you may reference it in your layout.  Something like <span class='code'>&lt;title&gt;My Site :: &lt;%= @page_title %>&lt;/title&gt;</span>.  <span class='code'>content_for</span> is no different: it allows you to &#8216;assign&#8217; a chunk of <span class='caps'>HTML</span> or Ruby to a symbol which may be referenced in your layout.</p>
+
+
+Here&#8217;s Larry&#8217;s layout:
+<pre class='ruby'>
+<span class='punct'>&lt;</span><span class='ident'>html</span><span class='punct'>&gt;</span>
+<span class='punct'>&lt;</span><span class='ident'>head</span><span class='punct'>&gt;&lt;</span><span class='ident'>title</span><span class='punct'>&gt;</span><span class='constant'>Larry</span><span class='punct'>'</span><span class='string'>s Personal Home Page&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;table width=&quot;100%&quot;&gt;
+    &lt;tr&gt;&lt;td&gt;
+      &lt;%= yield %&gt;
+    &lt;/td&gt;&lt;td&gt;
+      &lt;%= yield :sidebar %&gt;
+    &lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td colspan=&quot;2&quot; align=&quot;center&quot;&gt;
+      Copyright (c) 2006 Larry
+    &lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;<span class='normal'>
+</span></span></pre>
+
+	<p>The first <span class='code'>yield</span>, clearly, will be replaced with Larry&#8217;s view when rendered.  The second <span class='code'>yield</span> is a bit different: he&#8217;s passing it a symbol, saying he wants to yield <span class='code'>:sidebar</span> at that point in time&#8212;whatever <span class='code'>:sidebar</span> may be.</p>
+
+
+Let&#8217;s look at Larry&#8217;s view:
+<pre class='ruby'>
+<span class='punct'>&lt;</span><span class='ident'>font</span> <span class='ident'>color</span><span class='punct'>=&quot;</span><span class='string'>red</span><span class='punct'>&quot;&gt;</span><span class='constant'>Welcome</span> <span class='ident'>to</span> <span class='ident'>my</span> <span class='ident'>website</span><span class='punct'>.&lt;/</span><span class='regex'>font&gt;&lt;br&gt;
+&lt;img src=&quot;under_construction.gif&quot;&gt;&lt;br&gt;
+&lt;font color=&quot;blue&quot;&gt;It was coded by hand in notepad.&lt;</span><span class='punct'>/</span><span class='ident'>font</span><span class='punct'>&gt;&lt;</span><span class='ident'>br</span><span class='punct'>&gt;</span>
+<span class='punct'>&lt;</span><span class='ident'>font</span> <span class='ident'>color</span><span class='punct'>=&quot;</span><span class='string'>green</span><span class='punct'>&quot;&gt;</span><span class='constant'>Tell</span> <span class='ident'>me</span> <span class='ident'>what</span> <span class='ident'>you</span> <span class='punct'>&lt;</span><span class='ident'>blink</span><span class='punct'>&gt;</span><span class='ident'>think!</span><span class='punct'>!&lt;/</span><span class='regex'>blink&gt;&lt;</span><span class='punct'>/</span><span class='ident'>font</span><span class='punct'>&gt;&lt;</span><span class='ident'>br</span><span class='punct'>&gt;</span>
+
+<span class='punct'>&lt;%</span> <span class='ident'>content_for</span> <span class='symbol'>:sidebar</span> <span class='keyword'>do</span> <span class='punct'>%&gt;</span><span class='string'>
+  Hot Links&lt;br</span><span class='punct'>&gt;</span>
+  <span class='punct'>&lt;</span><span class='ident'>a</span> <span class='ident'>href</span><span class='punct'>=&quot;</span><span class='string'>http://www.netscape.com</span><span class='punct'>&quot;&gt;</span><span class='constant'>Netscape</span><span class='punct'>&lt;/</span><span class='regex'>a&gt;&lt;br&gt;
+  &lt;a href=&quot;http:</span><span class='punct'>//</span><span class='ident'>www</span><span class='punct'>.</span><span class='ident'>lycos</span><span class='punct'>.</span><span class='ident'>com</span><span class='punct'>&quot;</span><span class='string'>&gt;Lycos&lt;/a&gt;&lt;br&gt;
+  &lt;a href=</span><span class='punct'>&quot;</span><span class='ident'>http</span><span class='punct'>:/</span><span class='regex'></span><span class='punct'>/</span><span class='ident'>www</span><span class='punct'>.</span><span class='ident'>walmart</span><span class='punct'>.</span><span class='ident'>com</span><span class='punct'>&quot;</span><span class='string'>&gt;Wal Mart&lt;/a&gt;&lt;br&gt;
+&lt;% end %&gt;<span class='normal'>
+</span></span></pre>
+
+	<p>You got it, right?  <span class='code'>yield :sidebar</span> is going to be replaced by whatever block is passed to <span class='code'>content_for :sidebar</span>.  In this case, Larry&#8217;s sidebar.</p>
+
+
+	<p>Ah, solidarity:</p>
+
+
+<div class="lightbox"><a href="http://errtheblog.com/static/images/larrys_php.jpg" rel="lightbox"><img src="http://errtheblog.com/static/images/larrys_php-small.jpg" alt='submit_to_popup form'></a></div>
+
+	<p>That&#8217;s fairly useful, but it means Larry has to set <span class='code'>:sidebar</span> in every view if he wants one to always show up.  A nice thing to do is provide a default.</p>
+
+
+	<h3>The Conditional</h3>
+
+
+Larry just needs to replace, in his layout,
+<pre class='ruby'>
+<span class='punct'>&lt;%=</span><span class='string'> yield :sidebar %&gt;<span class='normal'>
+</span></span></pre>
+
+	<p>with</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&lt;%=</span><span class='string'> (sidebar </span><span class='punct'>=</span> <span class='keyword'>yield</span> <span class='symbol'>:sidebar</span><span class='punct'>)</span> <span class='punct'>?</span> <span class='ident'>sidebar</span> <span class='punct'>:</span> <span class='ident'>render</span><span class='punct'>(</span><span class='symbol'>:partial</span> <span class='punct'>=&gt;</span> <span class='punct'>'</span><span class='string'>shared/sidebar</span><span class='punct'>')</span> <span class='punct'>%&gt;</span><span class='string'><span class='normal'>
+</span></span></pre>
+
+	<p>Now <span class='code'>shared/sidebar</span> will always be rendered unless a view defines <span class='code'>:sidebar</span> with <span class='code'>content_for</span>.  So, you can override a default element of the layout.  Nice.</p>
+
+
+	<p>As an aside, you can access <span class='code'>@content_for_sidebar</span> directly but that&#8217;s not legit.  Deprecated.</p>
+
+
+	<h3>The Faux Nested Layout</h3>
+
+
+	<p>Imagine Larry has a whole bunch of controllers.  He is happy with the default sidebar trick but there&#8217;s still an issue: he wants all the <span class='code'>HomeController</span> views to have a standard sidebar and all the <span class='code'>UsersController</span> to have a different standard sidebar.</p>
+
+
+	<p>One idea is to remove the <span class='code'>shared/</span> from the conditional in his layout:</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&lt;%=</span><span class='string'> (sidebar </span><span class='punct'>=</span> <span class='keyword'>yield</span> <span class='symbol'>:sidebar</span><span class='punct'>)</span> <span class='punct'>?</span> <span class='ident'>sidebar</span> <span class='punct'>:</span> <span class='ident'>render</span><span class='punct'>(</span><span class='symbol'>:partial</span> <span class='punct'>=&gt;</span> <span class='punct'>'</span><span class='string'>sidebar</span><span class='punct'>')</span> <span class='punct'>%&gt;</span><span class='string'><span class='normal'>
+</span></span></pre>
+
+	<p>Now either <span class='code'>home/_sidebar.rhtml</span> or <span class='code'>users/_sidebar.rhtml</span> will be rendered depending on which controller you&#8217;re in.  The problem is Larry loses his &#8216;catch-all&#8217; default sidebar and is forced to create a <span class='code'>_sidebar.rhtml</span> file for every controller.  Not cool.</p>
+
+
+	<p>I tell Larry, &#8220;Throw away that code and change it back to the conditional which uses <span class='code'>shared/sidebar</span>.  Now, think about layouts.  If you have a <span class='code'>HomeController</span> and <span class='code'>home.rhtml</span> exists in your <span class='code'>views/layouts/</span> directory, Rails will render that.  Perfect place to define a <span class='code'>home</span>-wide sidebar, yeah?&#8221;</p>
+
+
+<span class='code'>views/layouts/home.rhtml</span>:
+<pre class='ruby'>
+<span class='punct'>&lt;%</span> <span class='ident'>content_for</span> <span class='symbol'>:sidebar</span> <span class='keyword'>do</span> <span class='punct'>%&gt;</span><span class='string'>
+  Cool Pages on My Site:&lt;br</span><span class='punct'>&gt;</span>
+  <span class='punct'>&lt;</span><span class='ident'>a</span> <span class='ident'>href</span><span class='punct'>=&quot;</span><span class='string'>/home/lonely</span><span class='punct'>&quot;&gt;</span><span class='constant'>LonelyGrrl</span> <span class='constant'>Videos</span><span class='punct'>&lt;/</span><span class='regex'>a&gt;&lt;br&gt;
+  &lt;a href=&quot;</span><span class='punct'>/</span><span class='ident'>home</span><span class='punct'>/</span><span class='ident'>pagerank</span><span class='punct'>&quot;</span><span class='string'>&gt;My Google Pagerank&lt;/a&gt;&lt;br&gt;
+  &lt;a href=</span><span class='punct'>&quot;/</span><span class='ident'>home</span><span class='punct'>/</span><span class='ident'>web2</span><span class='punct'>&quot;</span><span class='string'>&gt;Web 2.0 Logo Generator (lol)&lt;/a&gt;
+&lt;% end %&gt;
+&lt;%= render :file =&gt; 'layouts/application' %&gt;<span class='normal'>
+</span></span></pre>
+
+	<p>This &#8216;layout&#8217; file is setting <span class='code'>:sidebar</span> then rendering the <span class='code'>application</span> layout.  Larry just needs to do the same thing for <span class='code'>views/layouts/users.rhtml</span> and he&#8217;s all set.</p>
+
+
+	<p>Let&#8217;s recap.  Larry can now define <span class='code'>content_for :sidebar</span> in a view, define it for a whole set of controller views, and also have a site-wide default.  All at the same time.  Talk about power!</p>
+
+
+	<p>One caveat here is that <span class='code'>content_for</span> <strong>appends</strong> content.  It don&#8217;t replace it.  If you&#8217;re defining <span class='code'>:sidebar</span> in a view under <span class='code'>views/home/</span>, using the above example, you&#8217;re going to end up with what looks like two sidebars: the one in the <span class='code'>home.rhtml</span> layout file and the one in your specific view.</p>
+
+
+	<p>And hey, if you want real nested layouts there&#8217;s a <a href='http://rubyforge.org/projects/nested-layouts/'>plugin</a> for Ruby on Rails available.  So get that.</p>
+
+
+	<h3>The Stylesheet</h3>
+
+
+	<p>Years pass.  Larry learns a bit of <span class='caps'>CSS</span> and begins working for a big, corporate website.  Special promotions are demanded by advertisers: they want to advertise on pages which have their own unique style with which &#8220;the kids&#8221; can identify.  Something street.  Like those <span class='caps'>PSP</span> graffiti ads.</p>
+
+
+	<p>Larry, now a seasoned Rails pro, knows this is not a problem.  <span class='code'>content_for</span>, after all.  He comes up with this:</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&lt;</span><span class='ident'>html</span><span class='punct'>&gt;</span>
+<span class='punct'>&lt;</span><span class='ident'>head</span><span class='punct'>&gt;</span>
+<span class='punct'>&lt;</span><span class='ident'>title</span><span class='punct'>&gt;</span><span class='constant'>Big</span> <span class='constant'>Corporate</span> <span class='constant'>Website</span> <span class='number'>4.0</span> <span class='constant'>Beta</span><span class='punct'>&lt;/</span><span class='regex'>title&gt;
+
+&lt;%= stylesheet_link_tag 'main' %&gt;
+&lt;%= yield :stylesheet %&gt;
+&lt;</span><span class='punct'>/</span><span class='ident'>head</span><span class='punct'>&gt;</span>
+<span class='punct'>&lt;</span><span class='ident'>body</span><span class='punct'>&gt;</span>
+  <span class='punct'>&lt;%=</span><span class='string'> yield %&gt;
+&lt;/body&gt;
+&lt;/html&gt;<span class='normal'>
+</span></span></pre>
+
+	<p>See it?  If there&#8217;s no <span class='code'>content_for :stylesheet</span>, everything works.  However, Larry can also bust out a <span class='code'>content_for :stylesheet</span> in any view to add a bit more spice to that particular page.  Like:</p>
+
+
+<pre class='ruby'>
+<span class='punct'>&lt;%</span> <span class='ident'>content_for</span> <span class='symbol'>:stylesheet</span> <span class='keyword'>do</span> <span class='punct'>%&gt;</span><span class='string'>
+  &lt;%= stylesheet_link_tag 'railsconf' -%</span><span class='punct'>&gt;</span>
+<span class='punct'>&lt;%</span> <span class='keyword'>end</span> <span class='punct'>%&gt;</span><span class='string'>
+
+&lt;h1</span><span class='punct'>&gt;</span><span class='constant'>Welcome</span> <span class='ident'>to</span> <span class='ident'>our</span> <span class='constant'>RailsConf</span> <span class='ident'>information</span> <span class='ident'>page!</span><span class='punct'>&lt;/</span><span class='regex'>h1&gt;<span class='normal'>
+</span></span></pre>
+
+	<p>Now his <span class='code'>h1</span>&#8217;s can be as nutty as all hell and won&#8217;t affect the other <span class='code'>h1</span>&#8217;s in his meticulously crafted website.  He can even change the background color.  Something pastel, I&#8217;d imagine.</p>
+
+
+	<h3>The Fin</h3>
+
+
+	<p>All of this <span class='code'>content_for</span> magic lovingly wraps ActionView&#8217;s <span class='code'>capture</span> method.  The <a href='http://api.rubyonrails.org/classes/ActionView/Helpers/CaptureHelper.html'>Rails <span class='caps'>API</span></a> has the scoop.  Just try to remember <span class='code'>:layout</span> is off limits when dealing with <span class='code'>content_for</span>.  If you use it, you&#8217;ll just be messing with what gets displayed in your layout&#8217;s vanilla <span class='code'>&lt;%= yield %&gt;</span> call.</p>
+
+
+	<p>The web&#8217;s really all about <span class='caps'>HTML</span>, amirite?  I dig the stuff <a href='http://codefluency.com/'>Bruce</a> is doing and hey, <a href='http://www.matthewman.net/articles/2006/09/04/new-rails-feature-simply_helpful'>SimplyHelpful</a> looks like a step in the right direction.  My memories of <a href='http://smarty.php.net/'>Smarty</a> are cherised, but ActionView has stolen my heart.</p>
+
+    
+
+  </div>
+</li>
+
+
+
+ 
+
+        
+          <li class="post-li">
+              <div id="time-travel">
+          <a href="/page/2"><img alt="Older" src="/images/theme/older.gif" /></a>
+              </div>
+
+          </li>
+        
+      </ul>
+
+
+      <div id="footer">
+        
+        <div class="projects">
+          <h3 class="title">Projects</h3>
+          <ul>
+            <li><a href="http://cheat.errtheblog.com/">Cheat! Sheets</a>            <li><a href="http://require.errtheblog.com/">require 'errtheblog'</a></li>
+            <li><a href="http://errtheblog.com/post/27">acts_as_cached</a></li>
+            <li><a href="http://errtheblog.com/post/15">acts_as_textiled</a></li>
+            <li><a href="http://errtheblog.com/post/37">tagurit [micrOformats]</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="title">Past Wanderings</h3>
+          <ul>
+            <li><a href="/post/1">first post!</a></li>
+<li><a href="/post/2">Block to Partial</a></li>
+<li><a href="/post/3">acts_as_textiled</a></li>
+<li><a href="/post/4">Colored Tests</a></li>
+<li><a href="/post/5">Accessor Missing</a></li>
+          </ul>
+        </div>
+        
+        <div class="meta">
+          This is Err,
+          the weblog of <span class="vcard"><a href="http://www.pjhyett.com" class="url fn">PJ Hyett</a></span>
+          and <span class="vcard"><a href="http://ozmm.org" class="url fn">Chris Wanstrath</a></span>.
+          <br/>All original content copyright &copy;2006 the aforementioned.
+        </div>
+        
+      </div>
+
+    </div>
+
+  </body>
+</html>

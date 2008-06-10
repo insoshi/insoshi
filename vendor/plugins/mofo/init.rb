@@ -1,0 +1,2 @@
+# Rails Plugin
+require 'mofo'

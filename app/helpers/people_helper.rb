@@ -55,6 +55,14 @@ module PeopleHelper
     end
     '<span class="imgHoverMarker"><img src="' + person.thumbnail + '" />' + person_link(text, person, html_options) + '</span>'
   end
+
+  def person_image_hover_text(text, person, html_options = nil)
+    '<span class="imgHoverMarker"><img src="' + person.thumbnail + '" />' + text + '</span>'
+  end
+  
+  def activated_status(person)
+    person.deactivated? ? "Activate" : "Deactivate"
+  end
   
   private
     

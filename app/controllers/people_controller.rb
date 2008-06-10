@@ -29,14 +29,9 @@ class PeopleController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.js {
-        render :update do |page|
-          page.replace_html 'contacts_grid', :partial => 'shared/contacts_grid'
-        end
-      }
     end
   end
-  
+
   def new
     @body = "register single-col"
     @person = Person.new

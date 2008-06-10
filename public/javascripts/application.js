@@ -15,8 +15,14 @@ $(document).ready(function() {
 	}
   });
 
-  //
-  $('#tContacts div.pagination a').livequery('click', function() {
+  $('input,textarea').focus( function() {
+	$(this).css('border-color', '#006699');
+  });
+  $('input,textarea').blur( function() {
+	$(this).css('border-color','#ccc');
+  });
+
+/*  $('#tContacts div.pagination a').livequery('click', function() {
     $('#contacts_grid').load(this.href);
     return false;
   });
@@ -25,7 +31,7 @@ $(document).ready(function() {
   // http://ozmm.org/posts/$_and_respond_to.html
   $.ajaxSetup({ 
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")} 
-  });
+  });*/
 });
 
 /*document.observe("dom:loaded", function() {

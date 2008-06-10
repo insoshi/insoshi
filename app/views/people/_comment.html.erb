@@ -6,12 +6,13 @@
   <p class="meta published">
     <%= person_link comment.commenter %> said
     <%= time_ago_in_words(comment.created_at) %> ago
+    <%- if current_person?(comment.commentable) -%>
+      <%= link_to image_tag("icons/close.gif", :class => 'actioner'), 
+						person_comment_path(@person, comment),
+                        :method => :delete,
+ 						:title => 'Delete wall post?' %>
+    <%- end -%>  
   </p>
   <%= display comment.body %>
-
-  <%- if current_person?(comment.commentable) -%>
-  <br />
-  <%= link_to "delete", person_comment_path(@person, comment),
-                        :method => :delete %>
-  <%- end -%>  
+  <div class="clear"></div>
 </li>
