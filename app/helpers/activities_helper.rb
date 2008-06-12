@@ -35,14 +35,12 @@ module ActivitiesHelper
     when "Topic"
       %(#{person_link(person)} created the new discussion topic
         #{topic_link(activity.item)}.)
-    when "Photo"
-      %(#{person_link(person)} changed their profile picture.)
     when "Person"
       %(#{person_link(person)} changed their description.)
-    when "Gallery"
-      gallery_link = 
+    when "Gallery" 
       %(#{person_link(person)} added new gallery #{gallery_link(activity.item)}.)
-      
+    when "Photo"
+      %(#{person_link(person)} added new #{photo_link(activity.item)} to the #{gallery_link(activity.item.gallery)} gallery)
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -84,13 +82,12 @@ module ActivitiesHelper
     when "Topic"
       %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", activity.item)}.)
-    when "Photo"
-      %(#{person_link(person)} changed their profile picture.)
     when "Person"
       %(#{person_link(person)} changed their description.)
     when "Gallery"
       %(#{person_link(person)} added new gallery #{gallery_link(activity.item)}.)
-      
+    when "Photo"
+      %(#{person_link(person)} added new #{photo_link(activity.item)} to the #{gallery_link(activity.item.gallery)} gallery)  
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -115,11 +112,11 @@ module ActivitiesHelper
               "new.gif"
             when "Topic"
               "add.gif"
-            when "Photo"
-              "camera.gif"
             when "Person"
                 "edit.gif"
             when "Gallery"
+              "camera.gif"
+            when "Photo"
               "camera.gif"
             else
               # TODO: make this a more graceful falure (?).
@@ -164,6 +161,14 @@ module ActivitiesHelper
       text = gallery.title
     end
     link_to(h(text), gallery_path(gallery))
+  end
+  
+  def photo_link(text, photo= nil)
+    if photo.nil?
+      photo = text
+      text = "photo"
+    end
+    link_to(h(text), photo_path(photo))
   end
 
   # Return a link to the wall.
