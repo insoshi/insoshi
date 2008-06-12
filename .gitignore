@@ -2,7 +2,7 @@ log/*.log
 log/*.out
 log/*.pid
 tmp/**/*
-.dotest/
+.dotest/*.
 .DS_Store
 doc/api
 doc/app
