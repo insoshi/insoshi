@@ -4,7 +4,10 @@ class GalleriesController < ApplicationController
   
   def show
     @body = "galleries"
+    @gallery = Gallery.find(params[:id])
+    @photos = @gallery.photos.paginate :page => params[:page] 
   end
+  
   def index
     @body = "galleries"
     @person = Person.find(params[:person_id])

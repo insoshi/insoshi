@@ -20,18 +20,19 @@ describe PhotosController do
       photos.each { |p| p.stub!(:person).and_return(@person) }
       @photo = @primary
       @person.stub!(:photos).and_return([@primary, @secondary])
+      @gallery = galleries(:valid_gallery)
     end
   
-    it "should have an index page" do
-      get :index
-      response.should be_success
-      response.should render_template("index")
-    end
     
     it "should have a new photo page" do
-      get :new
+      get :new, :gallery_id => @gallery
       response.should be_success
       response.should render_template("new")
+    end
+    
+    it "should not have a new photo page without given gallery id" do
+      get :new
+      response.should_not be_success
     end
 
     it "should have an edit photo page" do
@@ -43,10 +44,9 @@ describe PhotosController do
     
     it "should create photo" do
       image = uploaded_file("rails.png")
-      num_thumbnails = 3
       lambda do
-        post :create, :photo => { :uploaded_data => image }
-      end.should change(Photo, :count).by(num_thumbnails + 1)
+        post :create, :photo => { :uploaded_data => image, :gallery_id => @gallery }
+      end.should change(@gallery, :photos_count).by(1)
     end
     
     it "should handle empty photo upload" do

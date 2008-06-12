@@ -1,0 +1,27 @@
+<%- column_div :type => :primary do -%>
+	<% if !@photo.title.nil?%>
+		<h2> <%= h(@photo.title)%></h2>
+	<% end %>
+	<div class="photo-navigation">
+		<% if !@photo.first? %>
+			<%= link_to h("<<Previous"), photo_path(@photo.higher_item)%>
+		<% end %>
+		<% if !@photo.last? %>
+			<%= link_to h("Next>>"), photo_path(@photo.lower_item) %>
+		<% end %>
+	</div>
+	<%= image_tag(@photo.public_filename) %>
+	
+<% end %>
+
+<%- column_div :type => :secondary do -%>
+	<h2> Toolbox </h2>
+	<div class="toolbox">
+		<ul>
+			<li><%=link_to "Go back to gallery", gallery_path(@photo.gallery)%></li>
+		</ul>
+	</div>
+	<%= render :partial => 'shared/minifeed' %>
+<%- end-%>
+	
+	

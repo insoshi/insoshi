@@ -1,1 +1,29 @@
-TODO
+<%- column_div :type => :primary do -%>
+	<h2> Photos in <%= h(@gallery.title)%> </h2>
+	<table>
+		<% @photos.collect_every(N_COLUMNS) do |row| %>
+	  	<tr>		
+				<% row.each do |photo| %>
+	   			<td>
+						<%=render :partial=>"photo", :object=>photo%>
+					</td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+	<%= will_paginate(@photos) %>
+<%-end-%>
+
+<%- column_div :type => :secondary do -%>
+	<h2> Toolbox </h2>
+	<div class="toolbox">
+		<ul>
+			<% if current_person?(@gallery.person)%>
+				<li><%=link_to "Add photo", new_gallery_photo_path(@gallery)%></li>
+				<li><%=link_to "Edit gallery", edit_gallery_path()%> </li>
+			<% end %>
+			<li> <%=link_to "Go back to #{h(@gallery.person.name)}'s gallery list", person_galleries_path(@gallery.person)%> </li>
+		</ul>
+	</div>
+	<%= render :partial => 'shared/minifeed' %>
+<%- end-%>

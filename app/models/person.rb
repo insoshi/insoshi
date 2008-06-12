@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 25
+# Schema version: 30
 #
 # Table name: people
 #
@@ -24,6 +24,7 @@
 #  wall_comment_notifications :boolean(1)      default(TRUE)
 #  blog_comment_notifications :boolean(1)      default(TRUE)
 #  email_verified             :boolean(1)      
+#  avatar_id                  :integer(11)     
 #
 
 class Person < ActiveRecord::Base
@@ -236,8 +237,11 @@ class Person < ActiveRecord::Base
   ## Photo helpers
 
   def photo
-    # This should only have one entry, but be paranoid.
-    photos.find_all_by_primary(true).first
+    if avatar_id.nil?
+      nil
+    else
+      Photo.find(avatar_id)
+    end
   end
 
   # Return all the photos other than the primary one

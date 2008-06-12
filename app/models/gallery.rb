@@ -1,7 +1,22 @@
+# == Schema Information
+# Schema version: 28
+#
+# Table name: galleries
+#
+#  id               :integer(11)     not null, primary key
+#  person_id        :integer(11)     
+#  title            :string(255)     
+#  description      :string(255)     
+#  photos_count     :integer(11)     default(0), not null
+#  primary_photo_id :integer(11)     
+#  created_at       :datetime        
+#  updated_at       :datetime        
+#
+
 class Gallery < ActiveRecord::Base
   include ActivityLogger
   belongs_to :person
-  has_many :photos, :dependent => :destroy
+  has_many :photos, :dependent => :destroy, :order => :position
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
   
 

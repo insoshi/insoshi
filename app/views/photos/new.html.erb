@@ -1,8 +1,12 @@
 <h2>Profile photo upload</h2>
 <%= error_messages_for :photo %>
 
-<% form_for @photo, :html => { :multipart => true } do |f| -%>
+<% form_for @photo,:url=>{:controller => :photos, :action => :create, :gallery_id => @gallery}, :html => { :multipart => true } do |f| -%>
 
+	<div class="form_field">
+    <label for="photo">Title:</label>
+    <%= f.text_field :title %>
+  </div>
   <div class="form_field">
     <label for="photo">Upload a photo:</label>
     <%= f.file_field :uploaded_data %>
