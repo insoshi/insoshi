@@ -193,11 +193,11 @@ a.show-follow:visited {
   padding: 0;
 }
 .pagination {
-  border-bottom: 1px solid #eee;
+  /*border-bottom: 1px solid #eee;*/
   font-size: 12px;
   padding-bottom: 12px;
-  text-align: center;
-  margin-bottom: 12px;
+  /* text-align: center;
+  too much whitespace margin-bottom: 12px; */
 }
 
 
@@ -213,7 +213,8 @@ form {
 input, textarea {
   font-family: Helvetica, Arial, Univers, sans-serif;
   font-size: 12px;
-  padding: 6px 3px
+  padding: 6px 3px;
+  border: 1px solid #ccc;
 }
 textarea {
   line-height: 1.4em;
@@ -228,15 +229,24 @@ input, textarea, select {
   margin-bottom: 1em;
 }
 input.button, button, input[submit], input[button] {
-  background: #e5e5e5;
+  background: #006699 url(/images/header-grad.jpg) bottom repeat-x;
   border: 1px solid #ccc;
   clear: both;
   cursor: pointer;
 /*  display: block;*/
-  font-family: Helvetica, Arial, Univers, sans-serif;
-  font-size: 12px;
-  height: 32px;
   padding: 3px 12px;
+  font-weight: bold;
+  font-size: 116%;
+}
+div.button {
+	height: 20px;
+	width: 72px;
+	float: left;
+	margin-right: 10px;
+}
+div.button a {
+	background: #006699 url(/images/header-grad.jpg) bottom repeat-x;
+	padding: 3px 12px;
 }
 .col1 textarea {
   width: 478px;
@@ -277,6 +287,8 @@ body.single-col .col1 form input.checkbox {
   clear: none;
   margin: 0;
   width: 72px;
+  background: #006699 url(/images/header-grad.jpg) bottom repeat-x;
+  color: #ffffff;
 }
 
 form a.add-recipient {
@@ -288,7 +300,8 @@ form a.add-recipient {
 /* Styles for when the site is (nearly) blank, as for new users. */
 
 h3.blankslate {
-  text-align: center;
+/*  Align with title instead - Bill L
+text-align: center; */
 }
 
 
@@ -317,3 +330,12 @@ strong { font-weight: bold; }
 .highlight  { background:#ff0; }
 .added      { background:#060; color: #fff; }
 .removed    { background:#900; color: #fff; }
+
+/* Bill's additions */
+.clear      {clear: both;}
+.disabled   {color: #c0c0c0;} /* greyed out to emphasize unavailability */
+
+#new_form_subject form {border-bottom: none;}
+#new_form_subject input {width: 138px; vertical-align: top;}
+#new_form_subject .button {width: 72px;}
+.button a, .button {color: #ffffff;}

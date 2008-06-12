@@ -3,7 +3,7 @@
 
   <%- if @posts.empty? -%>
     <h3 class="blankslate">
-      No posts yet!
+      Start this blog: 
       <%- if current_person?(@blog.person) -%>
         <%= link_to "Write a post", new_blog_post_path(@blog) %>
       <%- end -%>
@@ -21,11 +21,9 @@
   <%- if current_person?(@blog.person) -%>
   <h2>Add new post</h2>
 
-  <p><%= formatting_note %></p>
-
   <%= render :partial => 'posts/blog_form',
              :locals => { :url => blog_posts_path(@blog),
                           :method => :post } %>
+
   <%- end -%>
-  <%= render :partial => 'shared/minifeed' %>
 <%- end -%>

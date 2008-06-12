@@ -1,53 +1,46 @@
-<h2>Global preferences</h2>
+<h2>Global Preferences <div class="button"><%= link_to 'Edit', edit_admin_preference_path(@preferences) %></div></h2>
 
-<p>
-  <b>Application name:</b>
-  <%=h @preferences.app_name %>
-</p>
+<div class="prefItem">
+  <div class="prefLabel">Application name</div>
+  <div class="prefValue"><%=h @preferences.app_name %></div>
+</div>
 
-<p>
-  <b>Email domain:</b>
-  <%=h @preferences.domain %>
-</p>
+<div class="prefItem">
+  <div class="prefLabel">Email domain</div>
+  <div class="prefValue"><%=h @preferences.domain %></div>
+</div>
 
-<p>
-  <b>Server name:</b>
-  <%=h @preferences.server_name %>
-</p>
+<div class="prefItem">
+  <div class="prefLabel">Server name</div>
+  <div class="prefValue"><%=h @preferences.server_name %></div>
+</div>
 
-<p>
-  <b>Smtp server:</b>
-  <%=h @preferences.smtp_server %>
-</p>
+<div class="prefItem">
+  <div class="prefLabel">Smtp server</div>
+  <div class="prefValue"><%=h @preferences.smtp_server %></div>
+</div>
 
-<p>
-  <b>Email notifications:</b>
-  <%=h @preferences.email_notifications %>
-</p>
+<div class="prefItem">
+  <div class="prefLabel">Email notifications</div>
+  <div class="prefValue"><%=h @preferences.email_notifications %></div>
+</div>
 
-<p>
-  <b>Email verifications:</b>
-  <%=h @preferences.email_verifications %>
-</p>
+<div class="prefItem">
+  <div class="prefLabel">Email verifications</div>
+  <div class="prefValue"><%=h @preferences.email_verifications %></div>
+</div>
 
-<p>
-  <b>Demo site:</b>
-  <%=h @preferences.demo %>
-</p>
+<div class="prefItem">
+  <div class="prefLabel">Demo site</div>
+  <div class="prefValue"><%=h @preferences.demo %></div>
+</div>
 
-<p>
-  <b>About text (nonblank text will lead to an 'about' link):</b>
-</p>
-<%= display @preferences.about %>
+<div class="prefItem">
+  <b>About text (nonblank text will lead to an 'about' link)</b>
+  <div class="prefAbout"><%= display @preferences.about %></div>
+</div>
 
-
-<p>
-  <b>Analytics (will be inserted 
-     just before the <%= h("</body>") %> tag):</b>
-</p>
-  <pre>
-<%=h @preferences.analytics %>
-  </pre>
-
-
-<%= link_to 'Edit', edit_admin_preference_path(@preferences) %>
+<div class="prefItem">
+  <b>Analytics (will be inserted just before the <%= h("</body>") %> tag)</b>
+  <pre><%=h @preferences.analytics %></pre>
+</div>

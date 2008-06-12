@@ -50,6 +50,7 @@ class Person < ActiveRecord::Base
   NUM_WALL_COMMENTS = 10
   NUM_RECENT = 8
   FEED_SIZE = 10
+  MAX_DEFAULT_CONTACTS = 12
   TIME_AGO_FOR_MOSTLY_ACTIVE = 1.month.ago
   # These constants should be methods, but I couldn't figure out  how to use
   # methods in the has_many associations.  I hope you can do better.
@@ -190,7 +191,7 @@ class Person < ActiveRecord::Base
 
   # Return some contacts for the home page.
   def some_contacts
-    contacts[(0...12)]
+    contacts[(0...MAX_DEFAULT_CONTACTS)]
   end
 
   # Contact links for the contact image raster.
@@ -228,6 +229,13 @@ class Person < ActiveRecord::Base
                                    recipient_deleted_at IS NULL), id],
                  :order => "created_at DESC",
                  :limit => NUM_RECENT_MESSAGES)
+  end
+
+  ## Forum helpers
+  def forum_posts
+    Topic.find(:all,
+               :conditions => [%(forum_id =? AND
+                                 person_id = ?), 1, id])
   end
 
   ## Photo helpers

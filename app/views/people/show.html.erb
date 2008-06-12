@@ -1,6 +1,26 @@
-<%- column_div :type => :primary do -%>
-  <div class="profile vcard">
-    <h2>Profile: <span class="fn n"><%= h @person.name %></span></h2>
+<div id="tabCol">
+  <ul> <!-- this list sets up the jQuery tabs, with the content of each tab in the linked div -->
+	<li><a href="#tProfile"><span>Profile</span></a></li>
+	<li><a href="#tRecentActivity"><span>Recent Activity</span></a></li>
+	<li><a href="#tContacts"><span>Contacts</span></a></li>
+	<li><a href="#tWall"><span>Wall</span></a></li>
+  </ul>
+  <div id="tProfile" class="profile vcard">
+    <h2>
+	  Profile: <span class="fn n"><%= h @person.name %></span>
+	</h2>
+    <%- if current_person?(@person) -%>
+	  <div class="button"><%= link_to "Edit", edit_person_path(@person) %></div>
+	<%- end -%>
+    <%- if current_person.admin? -%>
+      <div class="button">
+        <%- activity = activated_status(@person)  -%>
+        <%= link_to activity, admin_person_path(@person, 
+				  :task => "deactivated"),
+                  :method => :put %>
+      </div>
+	  <div class="clear"></div>
+    <%- end -%>
     <%- if admin? and not @person.active? -%>
       <p class="error">This person is not active</p>
     <%- end -%>
@@ -11,11 +31,6 @@
           <%= link_to "Click here to add a description",
                       edit_person_path(@person) %>
         </div>
-      <%- else -%>
-        <div class="notice">
-          You are viewing your own profile.
-          <%= link_to "Click here to edit it", edit_person_path(@person) %>
-        </div>
       <%- end -%>
     <%- end -%>
     <div class="toolbox">
@@ -23,60 +38,57 @@
                                         :alt => h(@person.name) %>
 
       <%- unless current_person?(@person) -%>
+		<h3>Your <%= @person.name -%> Toolbox</h3>
         <ul class="tools">
          <%- if logged_in? -%>
           <%- unless Connection.exists?(@person, current_person) -%>
             <li>
-            <%= link_to "Connect with #{h @person.name}!",
+            <%= link_to "Request a Connection?",
                         person_connections_path(@person), :method => :post %>
             </li>
           <%- end -%>
           <%- if Connection.connected?(@person, current_person) -%>
-          <li>
-            <%= h @person.name %> is one of your contacts
-            <br />
-           (<%= link_to "end connection", 
-               connection_path(Connection.conn(current_person, @person)), 
-               :method => :delete,
-              :confirm => 
-"Are you sure you want to end connection with #{h @person.name}?" %>)
-          
-          </li>
+            <li><%= link_to "Remove this connection?", 
+               		connection_path(Connection.conn(current_person, @person)), 
+               		:method => :delete,
+               		:confirm => "Are you sure you want to remove this connection?" %>
+            </li>
           <%- end -%>
-          <li><%= email_link @person %></li>
+          <li><%= email_link(@person, :use_image => false) %></li>
         <%- end -%>
-          <li><%= link_to "#{h @person.name}'s blog",
+		<% if !@person.blog.posts.empty? %>
+          <li><%= link_to "Read blog",
                   blog_path(@person.blog) %></li>
-          <%- if current_person.admin? -%>
-          <li>
-          <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
-          <%= link_to activity, 
-                      admin_person_path(@person, :task => "deactivated"),
-                      :method => :put %>
-          </li>
-          <%- end -%>
-        </ul>
-      <%- end -%>
-      
-      <%- if current_person?(@person) and current_person.admin? -%>
-        <ul class="tools">
-          <li><%= email_link @person %> to everyone</li>
+		<% end %>
         </ul>
       <%- end -%>
     </div>
     <%= display @person.description %>
+	<div class="clear"></div>
   </div>
 
-  <%= render :partial => 'recent_activity' %>
-  <%= render :partial => 'wall' %>
-<%- end -%>
+  <div id="tRecentActivity">
+    <%= render :partial => 'recent_activity' %>
+  </div>
+  <div id="tWall">
+    <%= render :partial => 'wall' %>
+  </div>
 
-<%- column_div :type => :secondary do -%>
-  <%= render :partial => 'shared/minifeed' %>
-  <%- if logged_in? -%>
-    <%= render :partial => 'shared/contacts_preview',
-               :locals => { :person => @person } %>
-    <%= render :partial => 'common_contacts' %>
-  <%- end -%>
-<%- end -%>
+  <div id="tContacts">
+	  <div class="innerTabLeft">
+        <h2>Contacts for <%= @person.name %></h2>
+		<% if @person.connections.count > Person::MAX_DEFAULT_CONTACTS %>
+	      <div class='button see_all_link'><%= link_to "See All Contacts", person_connections_path(@person) %></div>
+		<% end %>
+        <%= render :partial => 'shared/contacts_grid',
+	                 :locals => { :contacts => @contacts } %>
+		<%= render :partial => 'common_contacts' %>
+	  </div>
+	  <div class="innerTabRight">
+		<%= render :partial => 'searches/box' %>
+	  </div>
+	  <div class="clear">
+	  </div>
+  </div>
+</div>
 

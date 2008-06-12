@@ -1,15 +1,18 @@
 module ActivitiesHelper
 
   # Given an activity, return a message for the feed for the activity's class.
-  def feed_message(activity)
+  def feed_message(activity, recent)
     person = activity.person
     case activity_type(activity)
     when "BlogPost"
       post = activity.item
       blog = post.blog
-      view_blog = blog_link("View #{h person.name}'s blog", blog)
-      %(#{person_link(person)} made a blog post titled
-        #{post_link(blog, post)}.<br /> #{view_blog}.)
+      view_blog = blog_link("#{h person.name}'s blog", blog)
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)} posted  #{post_link(blog, post)} &mdash; #{view_blog})
+      else
+        %(new blog post  #{post_link(blog, post)})
+      end
     when "Comment"
       parent = activity.item.commentable
       parent_type = parent.class.to_s
@@ -17,28 +20,57 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        %(#{person_link(person)} made a comment to
-           #{someones(blog.person, person)}
-           blog post #{post_link(blog, post)}.)
+        if recent.nil? || !recent
+          %(#{person_link_with_image(person)} made a comment to #{someones(blog.person, person)} blog post #{post_link(blog, post)})
+        else
+          %(made a comment to #{someones(blog.person, person)} blog post #{post_link(blog, post)})
+        end
       when "Person"
-        %(#{person_link(activity.item.commenter)} commented on 
-          #{wall(activity)}.)
+        if recent.nil? || !recent
+          %(#{person_link_with_image(activity.item.commenter)} commented on #{wall(activity)})
+        else
+          %(commented on #{wall(activity)})
+        end
       end
     when "Connection"
-      %(#{person_link(activity.item.person)} and
-        #{person_link(activity.item.contact)}
-        have connected.)
+      if activity.item.contact.admin?
+        if recent.nil? || !recent
+          %(#{person_link_with_image(activity.item.person)} has joined the system)
+        else
+          %(joined the system)
+        end
+      else
+        if recent.nil? || !recent
+          %(#{person_link_with_image(activity.item.person)} and #{person_link_with_image(activity.item.contact)} have connected)
+        else
+          %(connected with #{person_link_with_image(activity.item.contact)})
+        end
+      end
     when "ForumPost"
       post = activity.item
-      %(#{person_link(person)} made a post on the forum topic
-        #{topic_link(post.topic)}.)
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)} made a post to forum topic #{topic_link(post.topic)})
+      else
+        %(new post to forum topic #{topic_link(post.topic)})
+      end
     when "Topic"
-      %(#{person_link(person)} created the new discussion topic
-        #{topic_link(activity.item)}.)
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)} created the new discussion topic #{topic_link(activity.item)})
+      else
+        %(new discussion topic #{topic_link(activity.item)})
+      end
     when "Photo"
-      %(#{person_link(person)}'s profile picture has changed.)
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)}'s profile picture changed)
+      else
+        %(#{person_image_hover_text('profile picture changed', person)})
+      end
     when "Person"
-      %(#{person_link(person)}'s description has changed.)
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)}'s description changed)
+      else
+        %(description changed)
+      end
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -51,8 +83,8 @@ module ActivitiesHelper
     when "BlogPost"
       post = activity.item
       blog = post.blog
-      %(#{person_link(person)} made a
-        #{post_link("new blog post", blog, post)}.)
+      %(#{person_link_with_image(person)} made a
+        #{post_link("new blog post", blog, post)})
     when "Comment"
       parent = activity.item.commentable
       parent_type = parent.class.to_s
@@ -60,30 +92,29 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        %(#{person_link(person)} made a comment to
-           #{someones(blog.person, person)}
-           blog post #{post_link(blog, post)}.)
-        %(#{person_link(person)} made a comment on
-          #{someones(blog.person, person)} 
-          #{post_link("blog post", post.blog, post)}.)
+        %(#{person_link_with_image(person)} made a comment to #{someones(blog.person, person)} blog post #{post_link(blog, post)})
+        %(#{person_link_with_image(person)} made a comment on #{someones(blog.person, person)}  #{post_link("blog post", post.blog, post)})
       when "Person"
-        %(#{person_link(activity.item.commenter)} commented on 
+        %(#{person_link_with_image(activity.item.commenter)} commented on 
           #{wall(activity)}.)
       end
     when "Connection"
-      %(#{person_link(person)} and #{person_link(activity.item.contact)}
-        have connected.)
+      if activity.item.contact.admin?
+        %(#{person_link_with_image(person)} has joined the system)
+      else
+        %(#{person_link_with_image(person)} and #{person_link_with_image(activity.item.contact)} have connected)
+      end
     when "ForumPost"
       topic = activity.item.topic
       # TODO: deep link this to the post
-      %(#{person_link(person)} made a #{topic_link("forum post", topic)}.)
+      %(#{person_link_with_image(person)} made a #{topic_link("forum post", topic)})
     when "Topic"
-      %(#{person_link(person)} created a 
-        #{topic_link("new discussion topic", activity.item)}.)
+      %(#{person_link_with_image(person)} created a 
+        #{topic_link("new discussion topic", activity.item)})
     when "Photo"
-      %(#{person_link(person)}'s profile picture has changed.)
+      %(#{person_link_with_image(person)}'s profile picture changed)
     when "Person"
-      %(#{person_link(person)}'s description has changed.)
+      %(#{person_link_with_image(person)}'s description changed)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -149,7 +180,22 @@ module ActivitiesHelper
     commenter = activity.person
     person = activity.item.commentable
     link_to("#{someones(person, commenter, false)} wall",
-            person_path(person, :anchor => "wall"))
+            person_path(person, :anchor => "tWall"))
+  end
+  
+  # Only show member photo for certain types of activity
+  def posterPhoto(activity)
+    shouldShow = case activity_type(activity)
+    when "Photo"
+      true
+    when "Connection"
+      true
+    else
+      false
+    end
+    if shouldShow
+      image_link(activity.person, :image => :thumbnail)
+    end
   end
   
   private

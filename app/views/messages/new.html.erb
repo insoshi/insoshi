@@ -11,8 +11,6 @@
     <%= display @preview %>
   <%- end -%>
   
-  <%= image_link @recipient, :image => :thumbnail %>
-
   <% form_for(:message,
               :url => person_messages_path(@recipient)) do |f| %>
     <div class="form_row full">
@@ -28,7 +26,7 @@
       <%= f.text_field :subject, :id => "message_subject" %>
     </div>
     <div class="form_row">
-      <label for="message_body">Your message</label>
+      <label for="message_body">Message</label>
       <%= f.text_area :content, :id => "message_body" %>
       <%- if @message.reply? -%>
         <%= f.hidden_field :parent_id %>
@@ -46,8 +44,4 @@
       <%- end -%>
     </div>
   <% end %>
-<%- end -%>
-
-<%- column_div :type => :secondary do -%>
-  <%= render :partial => 'shared/minifeed' %>
 <%- end -%>

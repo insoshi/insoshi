@@ -1,0 +1,23 @@
+﻿SVN (26 may 2008)
+* additional support for update/delete methods
+* support for success/failure hash
+* setRequestHeader now gets called globally
+* Better support for droppables, sortables
+* Add support for prototype AJAX callbacks
+* better support for AJAX form calls
+
+0.3.0 (22 Feb 2008)
+* updated to jquery-fx 1.0b and jquery-ui 1.5b
+* Add text/javascript request header to fix format.js
+* Added Tasks (thanks ggarside)
+* Improve visual_effects methods
+* Fixed some RJS calls
+* Fixed observer code for ie
+
+0.2.0 (26 Nov 2007)
+* Vastly Improved FX
+* Improved Form Observers
+* Fixed Rails <= 1.2.6 Compatibility
+
+0.1.0 (15 Nov 2007)
+* Initial release

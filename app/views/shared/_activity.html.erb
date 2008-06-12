@@ -1,20 +1,19 @@
 <%# The activity shouldn't be nil, but we're wearing a belt and suspenders. %>
 <%- unless activity.item.nil? -%>
 <li>
-  <div class="profile-image">
-    <%= image_link activity.person, :image => :thumbnail %>
+  <p class="activity_detail">
     <%= feed_icon activity %>
-  </div>
-  <p>
-    <%= feed_message activity %>
-      <%- if current_person?(activity.person) -%>
-        <%= link_to(image_tag("icons/close.gif"), 
-                          activity_path(activity), 
-                          :method => :delete, 
-                          :confirm => %(Are you sure you want to delete this activity from your profile?)) %>
-  <%- end -%>
-    </p>
-  <p class="meta published">
+	<% recent ||= false %>
+    <%= feed_message(activity, recent) %>
+    <%- if current_person?(activity.person) -%>
+      <%= link_to(image_tag("icons/close.gif", :class => 'actioner'), 
+                        activity_path(activity), 
+                        :method => :delete, 
+                        :confirm => %(Are you sure you want to delete this activity from your profile?),
+	 					:title => "Are you sure you want to delete this activity?") %>
+    <%- end -%>
+  </p>
+  <p class="meta published clear">
     <%= time_ago_in_words(activity.created_at).capitalize %> ago
   </p>
 

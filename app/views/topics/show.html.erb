@@ -1,9 +1,8 @@
-<%- column_div :type => :primary do -%>
-  <h2><%= h @topic.name %></h2>
+<%- column_div :type => :primary, :class => "hentry" do -%>
+  <h2 class="entry-title"><%= h @topic.name %></h2>
   <ul class="list topic full">
     <%= render :partial => 'forum_post', :collection => @posts %>
   </ul>
-
 
   <h3>Add new post</h3>
 

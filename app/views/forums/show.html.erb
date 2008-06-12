@@ -6,20 +6,22 @@
   </ol>
   <%= will_paginate(@topics) %>
   
-  <%- if logged_in? -%>
-    <h2>Add new topic</h2>
-  
-    <% form_for :topic, :url => forum_topics_path(@forum) do |f| %>
-      <div class="form_row">
-        <%= f.text_field :name %>
-        <%= submit_tag "Submit", :class => "button" %>
-      </div>
-    <% end %>
-  <%- end -%>
-
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'searches/box' %>
-  <%= render :partial => 'shared/minifeed' %>
+  <%- if logged_in? -%>
+    <div id="new_form_subject">
+      <h2>New Topic</h2>
+  
+      <% form_for :topic, :url => forum_topics_path(@forum) do |f| %>
+        <div class="form_row">
+          <%= f.label :name, "Subject" %>
+          <%= f.text_field :name %>
+          <%= submit_tag "Start", :class => "button" %>
+        </div>
+	  </div>
+    <% end %>
+  <%- end -%>
+
 <%- end -%>

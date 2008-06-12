@@ -4,8 +4,8 @@
     <%= image_link forum_post.person, :image => :thumbnail %>
     <%= image_tag "icons/comment.gif", :class => "icon" %>
   </div>
-  <p class="meta"><%= person_link forum_post.person %> posted
-      <%= time_ago_in_words(forum_post.created_at) %> ago
+  <p class="meta"><span class="author"><%= person_link forum_post.person %></span> posted
+      <abbr class="updated" title="<%= forum_post.created_at %>"><%= time_ago_in_words(forum_post.created_at) %> ago
       <%- if current_person?(forum_post.person) or admin? -%>
         | <%= link_to "Edit",
                 edit_forum_topic_post_path(@forum, @topic, forum_post) %>
@@ -17,7 +17,7 @@
                       :method => :delete %>
       <%- end -%>
   </p>
-  <div class="forum">
+  <div class="forum entry-content">
   <%= display forum_post.body %>
   </div>
 </li>

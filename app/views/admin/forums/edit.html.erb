@@ -1,21 +1,23 @@
-<h1>Editing forum</h1>
+<%- column_div :type => :primary do -%>
+<h2>Edit Forum</h2>
 
 <%= error_messages_for :forum %>
 
-<% form_for(@forum) do |f| %>
-  <p>
+<% form_for :forum,
+            :url => admin_forum_path(@forum),
+            :html => { :method => :put, :id => 'admin_forums' } do |f| %>
+  <div class="form_row">
     <b>Name</b><br />
     <%= f.text_field :name %>
-  </p>
+  </div>
 
-  <p>
+  <div class="form_row">
     <b>Description</b><br />
-    <%= f.text_area :description %>
-  </p>
+    <%= f.text_area :description, :rows => 10 %>
+  </div>
   
-  <p>
-    <%= f.submit "Update" %>
-  </p>
+  <div class="form_row">
+    <%= f.submit "Update", :class => "button" %>
+  </div>
 <% end %>
-
-<%= link_to 'Back', admin_forums_path %>
+<% end %>

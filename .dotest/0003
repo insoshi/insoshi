@@ -1,0 +1,25 @@
+From 40af8a0732e45c6ca193af6d0c6e85bf849a2a8e Mon Sep 17 00:00:00 2001
+From: William Lazar <williamlazar@Miami-Steve.local>
+Date: Tue, 3 Jun 2008 16:51:14 -0700
+Subject: Updated .gitignore
+
+---
+ .gitignore |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/.gitignore b/.gitignore
+index 6214d85684819661a8817a65c9b7b7716a8700d5..a218a7b8e02fd9ebfb1ba939618b476981899f1d 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -5,7 +5,7 @@ tmp/**/*
+ .DS_Store
+ doc/api
+ doc/app
+-doc/bill's insoshi notes.doc
++doc/*.doc
+ db/schema.rb
+ db/schema.sql
+ db/*.sqlite3*
+-- 
+1.5.3.8
+

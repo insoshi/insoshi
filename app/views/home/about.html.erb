@@ -1,1 +1,16 @@
-<%= display global_prefs.about %>
+<%- column_div :type => :primary do -%>
+  <h2>About <%= app_name %></h2>
+  <%= display global_prefs.about %>
+<%- end %>
+
+<%- column_div :type => :secondary do -%>
+  <h2>Related Resources</h2>
+  <ul id="resourceList">
+	<li><%= link_to 'Insoshi', 'http://insoshi.com' %></li>
+	<li><%= link_to 'Ruby on Rails', 'http://rubyonrails.com' %></li>
+	<li><%= link_to 'GitHub', 'http://github.com' %></li>
+	<li><%= link_to 'Bill Lazar', 'http://billsaysthis.com' %></li>
+	<li><%= link_to 'Michael Hartl', 'http://michaelhartl.com/' %></li>
+	<li><%= link_to 'Insoshi on GitHub', 'http://github.com/insoshi/insoshi/tree/master' %></li>
+  </ul>
+<%- end -%>

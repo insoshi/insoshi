@@ -1,9 +1,7 @@
 <%- column_div :type => :primary do -%>
-  <h2>Edit profile</h2>
+  <h2>Edit Your Profile</h2>
 
   <div id="profile_edit">
-
-  <h3>Personal details</h3>
 
     <%= error_messages_for :person %>
     
@@ -15,33 +13,16 @@
       </div>
   
       <div class="form_row">
-        <label for="person_description">Description
-        </label>
-    
-        <%- unless @preview.nil? -%>
-          <%= display @preview %>
-        <%- end -%>
-        
-        <p><%= formatting_note %></p>
-        <%= f.text_area :description %>
-      </div>
-
-      <div class="form_row">
         <label for="person_email">Email</label>
         <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
       </div>
       
       <%- if global_prefs.email_notifications? -%>
       
-        <br />
+        <a name="email_prefs"></a>
+		<h3>Email notification preferences</h3>
       
-        <h3>Email notification preferences</h3>
-      
-        <p>
-          You will receive email notifications
-          for each event type whose box is checked.
-        </p>
-        
+        <p>Receive email notifications for each activated event type.</p>
       
         <div class="form_row">
           <p>
@@ -67,6 +48,18 @@
         </div>
       <%- end -%>
       
+	  <h3>Public Description</h3>
+      <div class="form_row">
+        <label for="person_description"> (<%= formatting_note %>)
+        </label>
+    
+        <%- unless @preview.nil? -%>
+          <%= display @preview %>
+        <%- end -%>
+        
+        <%= f.text_area :description %>
+      </div>
+
       <br />
   
       <div class="form_row">
@@ -78,7 +71,7 @@
 
   <br />
 
-  <h3>Photos</h3>
+  <h3 id="photos">Photos</h3>
   
     <% if @person.photos.empty? %>
       <%= image_tag @person.thumbnail %>
@@ -113,38 +106,37 @@
     <br />
     <%= button_to "Add a photo", new_photo_path, :class => "button" %>
   </div>
-
-  <br />
-
-  <% form_for @person, :html => { :id => "change_password" } do |f| %>
-
-    <h3>Change Password</h3>
-
-    <div class="form_row">
-      <label for="password">Current Password</label>
-      <%= f.password_field :verify_password,
-                           :maxlength => Person::MAX_PASSWORD %>
-    </div>
-
-    <div class="form_row">
-      <label for="password">New Password</label>
-      <%= f.password_field :new_password,
-                           :maxlength => Person::MAX_PASSWORD %>
-    </div>
-
-    <div class="form_row">
-      <label for="password_confirmation">Confirm Password</label>
-      <%= f.password_field :password_confirmation, 
-                           :maxlength => Person::MAX_PASSWORD,
-                           :value => "" %>
-    </div>
-    <div class="form_row">
-      <%= submit_tag 'Change password', :class => "button" %>
-    </div>
-    <input type="hidden" name="type" value="password_edit" />
-  <% end %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <%= render :partial => 'searches/box' %>
+	  <% form_for @person, :html => { :id => "change_password" } do |f| %>
+
+	    <h3>Change Your Password</h3>
+
+	    <div class="form_row">
+	      <label for="password">Current Password</label>
+	      <%= f.password_field :verify_password,
+							   :size => 34,
+	                           :maxlength => Person::MAX_PASSWORD %>
+	    </div>
+
+	    <div class="form_row">
+	      <label for="password">New Password</label>
+	      <%= f.password_field :new_password,
+		   					   :size => 34,
+	                           :maxlength => Person::MAX_PASSWORD %>
+	    </div>
+
+	    <div class="form_row">
+	      <label for="password_confirmation">Confirm Password</label>
+	      <%= f.password_field :password_confirmation, 
+		   					   :size => 34,
+	                           :maxlength => Person::MAX_PASSWORD,
+	                           :value => "" %>
+	    </div>
+	    <div class="form_row">
+	      <%= submit_tag 'Change password', :class => "button" %>
+	    </div>
+	    <input type="hidden" name="type" value="password_edit" />
+	  <% end %>
 <%- end -%>

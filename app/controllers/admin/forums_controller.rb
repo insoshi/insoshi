@@ -50,7 +50,7 @@ class Admin::ForumsController < ApplicationController
     respond_to do |format|
       if @forum.update_attributes(params[:forum])
         flash[:notice] = 'Forum was successfully updated.'
-        format.html { redirect_to(@forum) }
+        format.html { redirect_to(admin_forums_path()) }
       else
         format.html { render :action => "edit" }
       end

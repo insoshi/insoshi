@@ -6,6 +6,7 @@ tmp/**/*
 .DS_Store
 doc/api
 doc/app
+doc/*.doc
 db/schema.rb
 db/schema.sql
 db/*.sqlite3*
