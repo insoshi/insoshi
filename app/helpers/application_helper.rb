@@ -22,20 +22,22 @@ module ApplicationHelper
       about = menu_element("About", about_url)
     end
     resources = menu_element("Resources", "http://docs.insoshi.com/")
-    if logged_in? and not admin_view?
-      profile  = menu_element("Profile",  person_path(current_person))
-      messages = menu_element("Messages", messages_path)
-      blog     = menu_element("Blog",     blog_path(current_person.blog))
-      photos   = menu_element("Photos",   photos_path)
-      contacts = menu_element("Contacts", person_connections_path(current_person))
-      links = [home, profile, contacts, messages, blog, people, forum, about]
-    elsif logged_in? and admin_view?
-      home =    menu_element("Home", home_path)
-      people =  menu_element("People", admin_people_path)
-      forums =  menu_element(inflect("Forum", Forum.count),
-                             admin_forums_path)
-      preferences = menu_element("Prefs", admin_preferences_path)
-      links = [home, people, forums, preferences, resources]
+    if logged_in?
+      if not admin_view?
+        profile  = menu_element("Profile",  person_path(current_person))
+        messages = menu_element("Messages", messages_path)
+        blog     = menu_element("Blog",     blog_path(current_person.blog))
+        photos   = menu_element("Photos",   photos_path)
+        contacts = menu_element("Contacts", person_connections_path(current_person))
+        links = [home, profile, contacts, messages, blog, people, forum, about]
+      else
+        home =    menu_element("Home", home_path)
+        people =  menu_element("People", admin_people_path)
+        forums =  menu_element(inflect("Forum", Forum.count),
+                               admin_forums_path)
+        preferences = menu_element("Prefs", admin_preferences_path)
+        links = [home, people, forums, preferences, resources]
+      end
     else
       links = [home, people, about]
     end

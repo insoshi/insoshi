@@ -6,65 +6,7 @@
 	<li><a href="#tWall"><span>Wall</span></a></li>
   </ul>
   <div id="tProfile" class="profile vcard">
-    <h2>
-	  Profile: <span class="fn n"><%= h @person.name %></span>
-	</h2>
-    <%- if current_person?(@person) -%>
-	  <div class="button"><%= link_to "Edit", edit_person_path(@person) %></div>
-	<%- end -%>
-    <%- if current_person.admin? -%>
-      <div class="button">
-        <%- activity = activated_status(@person)  -%>
-        <%= link_to activity, admin_person_path(@person, 
-				  :task => "deactivated"),
-                  :method => :put %>
-      </div>
-	  <div class="clear"></div>
-    <%- end -%>
-    <%- if admin? and not @person.active? -%>
-      <p class="error">This person is not active</p>
-    <%- end -%>
-    <%- if current_person?(@person) -%>
-      <%- if current_person.description.blank? -%>
-        <div class="error">
-          Your description is blank.
-          <%= link_to "Click here to add a description",
-                      edit_person_path(@person) %>
-        </div>
-      <%- end -%>
-    <%- end -%>
-    <div class="toolbox">
-      <%= image_tag @person.main_photo, :class => "profile-image photo",
-                                        :alt => h(@person.name) %>
-
-      <%- unless current_person?(@person) -%>
-		<h3>Your <%= @person.name -%> Toolbox</h3>
-        <ul class="tools">
-         <%- if logged_in? -%>
-          <%- unless Connection.exists?(@person, current_person) -%>
-            <li>
-            <%= link_to "Request a Connection?",
-                        person_connections_path(@person), :method => :post %>
-            </li>
-          <%- end -%>
-          <%- if Connection.connected?(@person, current_person) -%>
-            <li><%= link_to "Remove this connection?", 
-               		connection_path(Connection.conn(current_person, @person)), 
-               		:method => :delete,
-               		:confirm => "Are you sure you want to remove this connection?" %>
-            </li>
-          <%- end -%>
-          <li><%= email_link(@person, :use_image => false) %></li>
-        <%- end -%>
-		<% if !@person.blog.posts.empty? %>
-          <li><%= link_to "Read blog",
-                  blog_path(@person.blog) %></li>
-		<% end %>
-        </ul>
-      <%- end -%>
-    </div>
-    <%= display @person.description %>
-	<div class="clear"></div>
+	<%= render_partial 'profile' %>
   </div>
 
   <div id="tRecentActivity">

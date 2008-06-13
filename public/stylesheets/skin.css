@@ -463,3 +463,6 @@ ul.admin li {display: list-item; list-style-image: url(/images/icons/switch.gif)
   width: 116px !important;
   margin: -10px 0px 10px 6px;
 }
+.pag_center {
+	text-align: center;
+}
