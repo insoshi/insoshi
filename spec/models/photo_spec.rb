@@ -13,13 +13,15 @@ describe Photo do
     new_photo.should be_valid
   end
   
-  # it "should be able to make a primary photo" do
-  #   new_photo(:primary => true).should be_primary
-  # end
-  # 
-  # it "should be able to make a non-primary photo" do
-  #   new_photo(:primary => false).should_not be_primary    
-  # end
+  it "should be invalid without person_id" do
+    @person = nil
+    new_photo.should_not be_valid
+  end
+  
+  it "should be invalid without gallery_id" do
+    @gallery = nil
+    new_photo.should_not be_valid
+  end
   
   
   it "should have an associated person" do
