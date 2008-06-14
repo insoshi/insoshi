@@ -36,10 +36,10 @@ class PhotosController < ApplicationController
     if params[:photo].nil?
       # This is mainly to prevent exceptions on iPhones.
       flash[:error] = "Your browser doesn't appear to support file uploading"
-      redirect_to edit_person_url(current_person) and return
+      redirect_to gallery_path(Gallery.find(params[:gallery_id])) and return
     end
     if params[:commit] == "Cancel"
-      redirect_to edit_person_url(current_person) and return
+      redirect_to gallery_path(Gallery.find(params[:gallery_id])) and return
     end
     
     @gallery = Gallery.find(params[:gallery_id])

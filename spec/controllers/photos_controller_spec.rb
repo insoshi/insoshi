@@ -45,37 +45,27 @@ describe PhotosController do
     it "should create photo" do
       image = uploaded_file("rails.png")
       lambda do
-        post :create, :photo => { :uploaded_data => image, :gallery_id => @gallery }
-      end.should change(@gallery, :photos_count).by(1)
+        post :create, :photo => { :uploaded_data => image}, :gallery_id => @gallery
+      end.should change(Photo, :count).by(1)
     end
     
     it "should handle empty photo upload" do
       lambda do
-        post :create, :photo => { :uploaded_data => nil }
+        post :create, :photo => { :uploaded_data => nil }, :gallery_id => @gallery
         response.should render_template("new")
       end.should_not change(Photo, :count)
     end
     
     it "should handle cancellation and doesn't report about problem" do
-      post :create, :commit => "Cancel", :photo => { :uploaded_data => nil }
-      response.should redirect_to(edit_person_url(@person))
+      post :create, :commit => "Cancel", :photo => { :uploaded_data => nil }, :gallery_id => @gallery
+      response.should redirect_to(gallery_url(@gallery))
       flash[:error].should be_nil
     end
     
     it "should handle nil photo parameter" do
-      post :create, :photo => nil
-      response.should redirect_to(edit_person_url(@person))
+      post :create, :photo => nil, :gallery_id => @gallery
+      response.should redirect_to(gallery_url(@gallery))
       flash[:error].should_not be_nil
-    end
-    
-    it "should mark a photo as primary" do
-      # We check that the secondary photo is made primary, while the old
-      # primary photo is marked non-primary.
-      Photo.should_receive(:find).and_return(@secondary)
-      @secondary.should_receive(:update_attributes).with(:primary => true).
-        and_return(true)
-      @primary.should_receive(:update_attributes!).with(:primary => false)
-      put :update, :photo => @secondary
     end
     
     it "should destroy a photo" do

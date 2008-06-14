@@ -33,11 +33,14 @@ class Photo < ActiveRecord::Base
                  :resize_to => '240>',
                  :thumbnails => { :thumbnail    => '72>',
                                   :icon         => '36>',
-                                  :bounded_icon => '36x36>' }
+                                  :bounded_icon => '36x36>' },
+                 :thumbnail_class => Thumbnail
   
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
     
   validates_length_of :title, :maximum => 255, :allow_nil => true
+  validates_presence_of :person_id
+  validates_presence_of :gallery_id
   after_create :log_activity
   
   def self.per_page
