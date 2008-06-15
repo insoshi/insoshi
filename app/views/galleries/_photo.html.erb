@@ -1,1 +1,2 @@
-<%=link_to image_tag(photo.public_filename(:thumbnail)), photo_path(photo)%>
+<%=link_to image_tag(photo.public_filename(:thumbnail)), photo_path(photo)%><br/>
+<%=link_to image_tag("icons/close.gif"), photo_path(photo), :method => :delete, :confirm => "Do you really want to delete the photo?"%>

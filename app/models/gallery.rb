@@ -33,15 +33,15 @@ class Gallery < ActiveRecord::Base
   
 
   def primary_photo
-    if !self.primary_photo_id.nil?
-      Photo.find(self.primary_photo_id)
-    else
-      nil
-    end
+    photos.find_all_by_primary(true).first
   end
   
   def primary_photo=(photo)
-    self.primary_photo_id = photo.id
+    if photo.nil?
+      self.primary_photo_id = nil
+    else
+      self.primary_photo_id = photo.id
+    end
   end
   
   def primary_photo_url

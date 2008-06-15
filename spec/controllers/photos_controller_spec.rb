@@ -15,12 +15,12 @@ describe PhotosController do
     
     before(:each) do
       @person = login_as(:quentin)
-      @primary, @secondary = [mock_photo(:primary => true), mock_photo]
+      @gallery = galleries(:valid_gallery)
+      @primary, @secondary = [mock_photo(:primary => true, :gallery => @gallery), mock_photo(:gallery => @gallery)]
       photos = [@primary, @secondary]
       photos.each { |p| p.stub!(:person).and_return(@person) }
       @photo = @primary
       @person.stub!(:photos).and_return([@primary, @secondary])
-      @gallery = galleries(:valid_gallery)
     end
   
     
@@ -72,13 +72,6 @@ describe PhotosController do
       Photo.should_receive(:find).and_return(@secondary)
       @secondary.should_receive(:destroy).and_return(true)
       delete :destroy, :id => @secondary
-    end
-    
-    it "should mark another photo as primary if destroying primary" do
-      Photo.should_receive(:find).and_return(@primary)
-      @primary.should_receive(:destroy).and_return(true)
-      @secondary.should_receive(:update_attributes!).with(:primary => true)
-      delete :destroy, :id => @primary
     end
     
     it "should require the correct user to edit" do
