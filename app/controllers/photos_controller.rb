@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
 
   before_filter :login_required
-  before_filter :correct_user_required, :only => [ :edit, :update, :destroy ]
+  before_filter :correct_user_required, :only => [ :edit, :update, :destroy, :set_primary, :set_avatar ]
   before_filter :correct_gallery_requried, :only => [:new, :create]
   
   # def index
@@ -86,17 +86,53 @@ class PhotosController < ApplicationController
   end
 
   def destroy
-    redirect_to edit_person_url(current_person) and return if @photo.nil?
-    if @photo.primary?
-      first_non_primary = current_person.photos.reject(&:primary?).first
-      unless first_non_primary.nil?
-        first_non_primary.update_attributes!(:primary => true)
-      end
-    end
+    redirect_to person_galleries_path(current_person) and return if @photo.nil?
     @photo.destroy
     flash[:success] = "Photo deleted"
     respond_to do |format|
-      format.html { redirect_to edit_person_url(current_person) }
+      format.html { redirect_to gallery_path(@gallery) }
+    end
+  end
+  
+  def set_primary
+    @photo = Photo.find(params[:id])
+    if @photo.nil? or @photo.primary?
+      redirect_to person_galleries_path(current_person) and return
+    end
+    # This should only have one entry, but be paranoid.
+    @old_primary = @photo.gallery.photos.select(&:primary?)
+  
+    respond_to do |format|
+      if @photo.update_attributes(:primary => true)
+        @old_primary.each { |p| p.update_attributes!(:primary => false) }
+        format.html { redirect_to(person_galleries_path(current_person)) }
+      else    
+        format.html do
+          flash[:error] = "Invalid image!"
+          redirect_to home_url
+        end
+      end
+    end
+  end
+  
+  def set_avatar
+    @photo = Photo.find(params[:id])
+    if @photo.nil? or @photo.avatar?
+      redirect_to person_galleries_path(current_person) and return
+    end
+    # This should only have one entry, but be paranoid.
+    @old_primary = current_person.photos.select(&:avatar?)
+  
+    respond_to do |format|
+      if @photo.update_attributes(:avatar => true)
+        @old_primary.each { |p| p.update_attributes!(:avatar => false) }
+        format.html { redirect_to(person_galleries_path(current_person)) }
+      else    
+        format.html do
+          flash[:error] = "Invalid image!"
+          redirect_to home_url
+        end
+      end
     end
   end
   

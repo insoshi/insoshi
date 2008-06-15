@@ -228,13 +228,10 @@ class Person < ActiveRecord::Base
   end
 
   ## Photo helpers
-
+  
   def photo
-    if avatar_id.nil?
-      nil
-    else
-      Photo.find(avatar_id)
-    end
+    # This should only have one entry, but be paranoid.
+    photos.find_all_by_avatar(true).first
   end
 
   # Return all the photos other than the primary one

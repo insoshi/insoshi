@@ -10,10 +10,11 @@ valid_gallery:
     person: quentin
     title: "Title"
     description: "Some description"
-    primary_photo_id: NULL
+    
+aarons_gallery:
+    person: aaron
 
 invalid_gallery:
     person_id: NULL
     title: "Title"
     description: "Some description"
-    primary_photo_id: NULL

@@ -67,10 +67,8 @@ class Photo < ActiveRecord::Base
   end
   
   def log_activity
-    if self.parent.nil?
       activity = Activity.create!(:item => self, :person => self.person)
       add_activities(:activity => activity, :person => self.person)
-    end
   end
 
 end

@@ -159,10 +159,10 @@ describe Person do
   describe "photo methods" do
 
     before(:each) do
-      @photo_1 = mock_photo(:primary => true)
+      @photo_1 = mock_photo(:avatar => true)
       @photo_2 = mock_photo
       @photos = [@photo_1, @photo_2]
-      @photos.stub!(:find_all_by_primary).and_return([@photo_1])
+      @photos.stub!(:find_all_by_avatar).and_return([@photo_1])
       @person.stub!(:photos).and_return(@photos)
     end
 
