@@ -66,26 +66,19 @@ class PhotosController < ApplicationController
   # Mark a photo as primary.
   # This marks the other photos as non-primary as a side-effect.
   def update
-    if @photo.nil? or @photo.primary?
-      redirect_to edit_person_url(current_person) and return
-    end
-    # This should only have one entry, but be paranoid.
-    @old_primary = current_person.photos.select(&:primary?)
-  
+    @photo = Photo.find(params[:id])
     respond_to do |format|
-      if @photo.update_attributes(:primary => true)
-        @old_primary.each { |p| p.update_attributes!(:primary => false) }
-        format.html { redirect_to(edit_person_path(current_person)) }
-      else    
-        format.html do
-          flash[:error] = "Invalid image!"
-          redirect_to home_url
-        end
+      if @photo.update_attributes(params[:photo])
+        flash[:success] = "Photo successfully updated"
+        format.html { redirect_to(photo_path(@photo)) }
+      else
+        format.html { render :action => "new" }
       end
     end
   end
 
   def destroy
+    @gallery = @photo.gallery
     redirect_to person_galleries_path(current_person) and return if @photo.nil?
     @photo.destroy
     flash[:success] = "Photo deleted"
@@ -141,7 +134,7 @@ class PhotosController < ApplicationController
     def correct_user_required
       @photo = Photo.find(params[:id])
       if @photo.nil?
-        redirect_to edit_person_url(current_person)
+        redirect_to home_url
       elsif @photo.person != current_person
         redirect_to home_url
       end
