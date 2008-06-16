@@ -343,6 +343,22 @@ div.toolbox ul li
 	background: none;
 }
 
+div.photo, div.photo-small
+{
+	padding-top: 10px;
+	text-align: center;
+}
+
+div.gallery-description p
+{
+	font-size: 12px;
+	text-align: justify;
+}
+
+div.photo-small:hover
+{
+	background-color: #ccccff;
+}
 #gallery_list ul li
 {
 	list-style-type: none;

@@ -25,5 +25,11 @@
 			<li> <%=link_to "Go back to #{h(@gallery.person.name)}'s gallery list", person_galleries_path(@gallery.person)%> </li>
 		</ul>
 	</div>
+	<%if !@gallery.description.nil?%>
+	<h2>Description</h2>
+		<div class = "gallery-description">
+			<p><%=h(@gallery.description)%></p>
+		</div>
+	<%end%>
 	<%= render :partial => 'shared/minifeed' %>
 <%- end-%>
