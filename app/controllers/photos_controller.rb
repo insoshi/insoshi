@@ -67,6 +67,11 @@ class PhotosController < ApplicationController
   # This marks the other photos as non-primary as a side-effect.
   def update
     @photo = Photo.find(params[:id])
+    
+    if params[:commit] == "Cancel"
+      redirect_to photo_path(@photo) and return
+    end
+    
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
         flash[:success] = "Photo successfully updated"

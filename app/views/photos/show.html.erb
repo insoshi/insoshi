@@ -25,6 +25,8 @@
 				<% if @photo.person.photo != @photo%>
 					<li><%=link_to "Set as avatar", set_avatar_photo_path(@photo), :confirm => "Do you really want to set this photo as avatar?", :method => :put %> </li>
 				<% end %>
+				<li>	<%=link_to "Edit", edit_photo_path(@photo) %> </li>
+				<li> <%=link_to "Delete", photo_path(@photo), :method => :delete, :confirm => "Do you really want to delete the photo?"%> </li>
 			<% end %>
 			<li><%=link_to "Go back to gallery", gallery_path(@photo.gallery)%></li>
 		</ul>
