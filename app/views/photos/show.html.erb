@@ -2,16 +2,21 @@
 	<% if !@photo.title.nil?%>
 		<h2> <%= h(@photo.title)%></h2>
 	<% end %>
-	<div class="photo-navigation">
+	<div class="pagination">
 		<% if !@photo.first? %>
-			<%= link_to h("<<Previous"), photo_path(@photo.higher_item)%>
+			<%= link_to h("Previous"), photo_path(@photo.higher_item)%>
+		<% else %>
+			<span class="disabled"> Previous </span>
 		<% end %>
 		<% if !@photo.last? %>
-			<%= link_to h("Next>>"), photo_path(@photo.lower_item) %>
+			<%= link_to h("Next"), photo_path(@photo.lower_item) %>
+		<% else %>
+			<span class="disabled"> Next </span>
 		<% end %>
 	</div>
-	<%= image_tag(@photo.public_filename) %>
-	
+	<div class = "photo">
+		<%= image_tag(@photo.public_filename) %>
+	</div>
 <% end %>
 
 <%- column_div :type => :secondary do -%>
