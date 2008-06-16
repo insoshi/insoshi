@@ -1,16 +1,22 @@
 <h2>
   Profile: <span class="fn n"><%= h @person.name %></span>
 </h2>
-<%- if current_person?(@person) -%>
-  <div class="button"><%= link_to "Edit", edit_person_path(@person) %></div>
+<%- if current_person?(@person) || current_person.admin? -%>
+  <div class="button_container">
 <%- end -%>
 <%- if current_person.admin? -%>
-  <div class="button">
-    <%- activity = activated_status(@person)  -%>
-    <%= link_to activity, admin_person_path(@person, :task => "deactivated"),
+    <div class="button">
+      <%- activity = activated_status(@person)  -%>
+      <%= link_to activity, admin_person_path(@person, :task => "deactivated"),
               :method => :put %>
+    </div>
+<%- end -%>
+<%- if current_person?(@person) -%>
+    <div class="button"><%= link_to "Edit", edit_person_path(@person) %></div>
+<%- end -%>
+<%- if current_person?(@person) || current_person.admin? -%>
+    <div class="clear"></div>
   </div>
-  <div class="clear"></div>
 <%- end -%>
 <%- if admin? and not @person.active? -%>
   <p class="error">This person is not active</p>

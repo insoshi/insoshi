@@ -1,0 +1,17 @@
+<% unless @person.photos.empty? %>
+<ul class="">
+<% @person.photos.each do |photo| %>
+  <li>
+	<p>
+	  <%= link_to photo_title(photo.filename), photo.public_filename, :rel => 'facebox' %>
+	</p>
+	<p class='gallPhoto'>
+	<%= image_tag(photo.public_filename(:thumbnail)) %>
+    <%= link_to image_tag("icons/edit.gif", :class => 'actioner'), edit_photo_path(photo) %>
+    <%= link_to image_tag("icons/close.gif", :class => 'actioner'), photo_path(photo),
+                            :method => :delete %>
+	</p>
+  </li>
+<% end %>
+</ul>
+<% end %>

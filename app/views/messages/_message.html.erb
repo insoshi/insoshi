@@ -4,14 +4,13 @@
                       message.recipient : message.sender %>
     <%= image_link other_person, :image => :thumbnail,
                    :image_options => { :class => "photo" } %>
-
+  </div>
+  <p>
     <%- if not message.read? and not current_person?(message.sender) -%>
       <%= image_tag("icons/email.gif", :class => "icon") %>
     <%- elsif message.replied_to? -%>
       <%= image_tag("icons/reply.gif", :class => "icon" )  %>
     <%- end -%>    
-  </div>
-  <p>
     <%- if current_person?(message.sender) -%>
       <span class="label">To:</span>
       <%= person_link message.recipient, :class => "url fn" %>

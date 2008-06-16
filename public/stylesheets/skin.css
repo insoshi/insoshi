@@ -381,6 +381,26 @@ ul.ui-tabs-nav li {
 #tRecentActivity p.meta {font-variant: small-caps;}
 #tRecentActivity ul li, #tWall ul li, #tWall ul li div {display: block; border-bottom: none;}
 #tWall form, form#admin_preferences, form#admin_forums {border-bottom: none;}
+#tPhotos ul li {
+    background: url(/images/blue-grad.jpg) bottom repeat-x;
+	margin: 10px;
+    float: left;
+	display: inline;
+	width: 120px;
+	height: 120px;
+	border: 1px solid #ccc;
+	padding: 4px;
+	overflow: hidden;
+}
+#tPhotos ul li .first {
+    clear: both;
+}
+#tPhotos ul li img {
+	vertical-align: top;
+}
+.gallPhoto {
+	height: 72px;
+}
 ul.activity {margin-bottom: 0px;}
 ul.activity li p.activity_detail {font-size: 126%;}
 img.actioner {vertical-align: text-bottom;}
@@ -463,6 +483,6 @@ ul.admin li {display: list-item; list-style-image: url(/images/icons/switch.gif)
   width: 116px !important;
   margin: -10px 0px 10px 6px;
 }
-.pag_center {
-	text-align: center;
+.list .message img.icon {
+  margin-left: -20px;
 }

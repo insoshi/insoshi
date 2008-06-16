@@ -10,9 +10,9 @@
 	  <%= auto_discovery_link_tag(:atom, :action => :index, :format => :atom ) %>
 	<% end %>
     <%= stylesheet_link_tag "default" %>
-    <%= stylesheet_link_tag "jquery-flora.tabs.css", "jquery.tooltip.css" %>
+    <%= stylesheet_link_tag "jquery-flora.tabs.css", "jquery.tooltip.css", "facebox.css" %>
     <%= javascript_include_tag "jquery.js", "jquery-ui-personalized-1.5b3.packed.js", "jquery-fx.js", "jrails.js" %>
-    <%= javascript_include_tag "jquery.collection-min.js", "jquery.bgiframe.js", "jquery.tooltip.pack.js", "jquery.livequery.js", "application.js" %>
+    <%= javascript_include_tag "jquery.collection-min.js", "jquery.bgiframe.js", "jquery.tooltip.pack.js", "jquery.livequery.js", "facebox.js", "application.js" %>
   </head>
   <body class="<%= @body %>">
     <%= render :partial => 'shared/header' %>

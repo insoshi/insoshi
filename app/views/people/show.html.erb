@@ -2,8 +2,9 @@
   <ul> <!-- this list sets up the jQuery tabs, with the content of each tab in the linked div -->
 	<li><a href="#tProfile"><span>Profile</span></a></li>
 	<li><a href="#tRecentActivity"><span>Recent Activity</span></a></li>
-	<li><a href="#tContacts"><span>Contacts</span></a></li>
 	<li><a href="#tWall"><span>Wall</span></a></li>
+	<li><a href="#tContacts"><span>Contacts</span></a></li>
+	<li><a href="#tPhotos"><span>Photos</span></a></li>
   </ul>
   <div id="tProfile" class="profile vcard">
 	<%= render_partial 'profile' %>
@@ -14,6 +15,10 @@
   </div>
   <div id="tWall">
     <%= render :partial => 'wall' %>
+  </div>
+
+  <div id="tPhotos">
+	<%= render_partial 'photos/photos' %>
   </div>
 
   <div id="tContacts">

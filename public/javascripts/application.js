@@ -22,26 +22,7 @@ $(document).ready(function() {
 	$(this).css('border-color','#ccc');
   });
 
-/*  $('#tContacts div.pagination a').livequery('click', function() {
-    $('#contacts_grid').load(this.href);
-    return false;
-  });
+  // facebox popups
+  jQuery('a[rel*=facebox]').facebox() 
 
-  // Setup Rails so ajax requests trigger the wants.js block in respond_to
-  // http://ozmm.org/posts/$_and_respond_to.html
-  $.ajaxSetup({ 
-    'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")} 
-  });*/
 });
-
-/*document.observe("dom:loaded", function() {
-  var container = $(document.body)
-
-  container.observe('click', function(e) {
-    var el = e.element()
-    if (el.match('.pagination a')) {
-      new Ajax.Request(el.href, { method: 'get' })
-      e.stop()
-    }
-  })
-})*/
