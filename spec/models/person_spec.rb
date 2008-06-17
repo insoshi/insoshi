@@ -79,7 +79,7 @@ describe Person do
       # (with the first admin) as a side-effect, thereby ensuring a
       # nonempty feed.
       person = create_person(:save => true)
-      person.feed.should_not be_empty
+      Activity.find_all_by_person_id(person).should_not be_empty
       person.destroy
       Activity.find_all_by_person_id(person).should be_empty
       Feed.find_all_by_person_id(person).should be_empty
