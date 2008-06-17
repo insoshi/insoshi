@@ -14,13 +14,22 @@ describe PhotosController do
     integrate_views
     
     before(:each) do
+
       @person = login_as(:quentin)
       @gallery = galleries(:valid_gallery)
-      @primary, @secondary = [mock_photo(:primary => true, :gallery => @gallery), mock_photo(:gallery => @gallery)]
-      photos = [@primary, @secondary]
-      photos.each { |p| p.stub!(:person).and_return(@person) }
+      # @primary, @secondary = [mock_photo(:primary => true, :gallery => @gallery, :title=>"snsi"), mock_photo(:gallery => @gallery, :title => nil)]
+      # photos = [@primary, @secondary]
+      # photos.each { |p| p.stub!(:person).and_return(@person) }
+      # @person.stub!(:photos).and_return([@primary, @secondary])
+      
+      @filename = "rails.png"
+      @image = uploaded_file(@filename, "image/png")
+      @primary = Photo.new({:uploaded_data => @image, :person => people(:quentin), :gallery => @gallery, :avatar => true, :primary => true})
+      @primary.save
+      @secondary = Photo.new({:uploaded_data => @image, :person => people(:quentin), :gallery => @gallery, :avatar => false, :primary => false})
+      @secondary.save
       @photo = @primary
-      @person.stub!(:photos).and_return([@primary, @secondary])
+      
     end
   
     
@@ -79,6 +88,28 @@ describe PhotosController do
       Photo.should_receive(:find).and_return(@photo)
       get :edit, :id => @photo
       response.should redirect_to(home_url)
+    end
+    
+    it "should be able to set the photo as avatar" do
+      put :set_avatar, :id => @secondary.id
+      response.should redirect_to(person_galleries_url(@person))
+      #assigns(@secondary).avatar.should be_true
+      # @primary.avatar.should_not be_true
+      @secondary = Photo.find(@secondary.id)
+      @secondary.avatar.should be_true
+      @primary = Photo.find(@primary.id)
+      @primary.avatar.should_not be_true
+    end
+    
+    it "should be able to set the photo as primary for the gallery" do
+      put :set_primary, :id => @secondary
+      response.should redirect_to(person_galleries_url(@person))
+      
+      @secondary = Photo.find(@secondary.id)
+      @secondary.primary.should be_true
+      @primary = Photo.find(@primary.id)
+      @primary.primary.should_not be_true
+    
     end
   end
 end

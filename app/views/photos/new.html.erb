@@ -13,6 +13,6 @@
   </div>
   <div class="form_field">
     <%= submit_tag 'Upload', :class => "button" %>
-    <%= f.submit "Cancel", :id => "cancel", :class => "button" %>
+		<%= link_to "Cancel", gallery_path(@photo.gallery)%>
   </div>
 <% end -%>

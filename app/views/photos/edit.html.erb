@@ -19,8 +19,8 @@
 	  </div>
 	  <div class="form_field">
 	    <%= submit_tag 'Update' %>
-	    <%= f.submit "Cancel", :id => "cancel" %>
-	  </div>
+	  	<%= link_to "Cancel", photo_path(@photo)%>
+	</div>
 	<% end -%>
 	
 <% end %>
