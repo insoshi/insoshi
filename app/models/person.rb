@@ -102,7 +102,7 @@ class Person < ActiveRecord::Base
 
   before_create :create_blog
   before_save :encrypt_password
-  before_validation :prepare_email
+  before_validation :prepare_email, :handle_nil_description
   after_create :connect_to_admin
 
   before_update :set_old_description
@@ -377,8 +377,19 @@ class Person < ActiveRecord::Base
 
     ## Callbacks
 
+    # Prepare email for database insertion.
     def prepare_email
       self.email = email.downcase.strip if email
+    end
+
+    # Handle the case of a nil description.
+    # Some databases (e.g., MySQL) don't allow default values for text fields.
+    # By default, "blank" fields are really nil, which breaks certain
+    # validations; e.g., nil.length raises an exception, which breaks
+    # validates_length_of.  Fix this by setting the description to the empty
+    # string if it's nil.
+    def handle_nil_description
+      self.description = "" if description.nil?
     end
 
     def encrypt_password

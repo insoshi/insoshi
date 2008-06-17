@@ -31,8 +31,23 @@ describe Person do
       p.errors.on(:name).should_not be_nil
     end
 
-    it "should treat spaces in email field" do
+    it "should strip spaces in email field" do
       create_person(:email => 'example@example.com ').should be_valid
+    end
+    
+    it "should be valid even with a nil description" do
+      p = create_person(:description => nil)
+      p.should be_valid
+    end
+  end
+  
+  describe "length validations" do
+    it "should enforce a maximum name length" do
+      @person.should have_maximum(:name, Person::MAX_NAME)
+    end
+    
+    it "should enforce a maximum description length" do
+      @person.should have_maximum(:description, Person::MAX_DESCRIPTION)
     end
   end
 
