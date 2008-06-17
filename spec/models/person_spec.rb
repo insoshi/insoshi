@@ -25,6 +25,15 @@ describe Person do
       p = create_person(:email => nil)
       p.errors.on(:email).should_not be_nil
     end
+    
+    it "should prevent duplicate email addresses using a unique key" do
+      create_person(:save => true)
+      duplicate = create_person
+      lambda do
+        # Pass 'false' to 'save' in order to skip the validations.
+        duplicate.save(false)
+      end.should raise_error(ActiveRecord::StatementInvalid)
+    end
 
     it "should require name" do
       p = create_person(:name => nil)
