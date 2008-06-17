@@ -1,12 +1,18 @@
 module ActionView
 	module Helpers
+		
 		module PrototypeHelper
+
+			unless const_defined? :JQUERY_VAR
+				JQUERY_VAR = '$'
+			end
+					
 			unless const_defined? :JQCALLBACKS
 				JQCALLBACKS = Set.new([ :beforeSend, :complete, :error, :success ] + (100..599).to_a)
 				AJAX_OPTIONS = Set.new([ :before, :after, :condition, :url,
 												 :asynchronous, :method, :insertion, :position,
 												 :form, :with, :update, :script ]).merge(JQCALLBACKS)
-				end
+			end
 			
 			def periodically_call_remote(options = {})
 				frequency = options[:frequency] || 10 # every ten seconds by default
@@ -27,7 +33,7 @@ module ActionView
 					update << "'#{options[:update]}'"
 				end
 
-				function = "$.ajax(#{javascript_options})"
+				function = "#{JQUERY_VAR}.ajax(#{javascript_options})"
 
 				function = "#{options[:before]}; #{function}" if options[:before]
 				function = "#{function}; #{options[:after]}"  if options[:after]
@@ -43,7 +49,7 @@ module ActionView
 						insertion = position.to_s.downcase
 						insertion = 'append' if insertion == 'bottom'
 						insertion = 'prepend' if insertion == 'top'
-						call "$(\"##{id}\").#{insertion}", render(*options_for_render)
+						call "#{JQUERY_VAR}(\"##{id}\").#{insertion}", render(*options_for_render)
 					end
 					
 					def replace_html(id, *options_for_render)
@@ -51,23 +57,23 @@ module ActionView
 					end
 					
 					def replace(id, *options_for_render)
-						call "$(\"##{id}\").replaceWith", render(*options_for_render)
+						call "#{JQUERY_VAR}(\"##{id}\").replaceWith", render(*options_for_render)
 					end
 					
 					def remove(*ids)
-						call "$(\"##{ids.join(',#')}\").remove"
+						call "#{JQUERY_VAR}(\"##{ids.join(',#')}\").remove"
 					end
 					
 					def show(*ids)
-						call "$(\"##{ids.join(',#')}\").show"
+						call "#{JQUERY_VAR}(\"##{ids.join(',#')}\").show"
 					end
 					
 					def hide(*ids)
-						call "$(\"##{ids.join(',#')}\").hide"
+						call "#{JQUERY_VAR}(\"##{ids.join(',#')}\").hide"
 					end
 
 					def toggle(*ids)
-						call "$(\"##{ids.join(',#')}\").toggle"
+						call "#{JQUERY_VAR}(\"##{ids.join(',#')}\").toggle"
 					end
 					
 				end
@@ -85,11 +91,11 @@ module ActionView
 				js_options['dataType'] = options[:datatype] ? "'#{options[:datatype]}'" : (options[:update] ? nil : "'script'")
 				
 				if options[:form]
-					js_options['data'] = "$.param($(this).serializeArray())"
+					js_options['data'] = "#{JQUERY_VAR}.param(#{JQUERY_VAR}(this).serializeArray())"
 				elsif options[:submit]
-					js_options['data'] = "$(\"##{options[:submit]}\").serializeArray()"
+					js_options['data'] = "#{JQUERY_VAR}(\"##{options[:submit]} :input\").serialize()"
 				elsif options[:with]
-					js_options['data'] = options[:with].gsub('Form.serialize(this.form)','$.param($(this.form).serializeArray())')
+					js_options['data'] = options[:with].gsub("Form.serialize(this.form)","#{JQUERY_VAR}.param(#{JQUERY_VAR}(this.form).serializeArray())")
 				end
 				
 				if options[:method]
@@ -118,12 +124,12 @@ module ActionView
 			
 			def build_update_for_success(html_id, insertion=nil)
 				insertion = build_insertion(insertion)
-				"$('##{html_id}').#{insertion}(request);"
+				"#{JQUERY_VAR}('##{html_id}').#{insertion}(request);"
 			end
 
 			def build_update_for_error(html_id, insertion=nil)
 				insertion = build_insertion(insertion)
-				"$('##{html_id}').#{insertion}(request.responseText);"
+				"#{JQUERY_VAR}('##{html_id}').#{insertion}(request.responseText);"
 			end
 
 			def build_insertion(insertion)
@@ -141,7 +147,7 @@ module ActionView
 				end
 
 				callback = options[:function] || remote_function(options)
-				javascript  = "$(\"##{name}\").delayedObserver("
+				javascript  = "#{JQUERY_VAR}(\"##{name}\").delayedObserver("
 				javascript << "#{options[:frequency] || 0}, "
 				javascript << "function(element, value) {"
 				javascript << "#{callback}}"
@@ -184,7 +190,7 @@ module ActionView
 		class JavaScriptElementProxy < JavaScriptProxy #:nodoc:
 			def initialize(generator, id)
 				@id = id
-				super(generator, "$(\"##{id}\")")
+				super(generator, "#{JQUERY_VAR}(\"##{id}\")")
 			end
 			
 			def replace_html(*options_for_render)
@@ -194,15 +200,28 @@ module ActionView
 			def replace(*options_for_render)
 				call 'replaceWith', @generator.send(:render, *options_for_render)
 			end
+			
+			def value()
+				call 'val()'
+			end
+
+			def value=(value)
+				call 'val', value
+			end
+			
 		end
 		
 		class JavaScriptElementCollectionProxy < JavaScriptCollectionProxy #:nodoc:\
 			def initialize(generator, pattern)
-				super(generator, "$(#{pattern.to_json})")
+				super(generator, "#{JQUERY_VAR}(#{pattern.to_json})")
 			end
 		end
 		
 		module ScriptaculousHelper
+			
+			unless const_defined? :JQUERY_VAR
+				JQUERY_VAR = ActionView::Helpers::PrototypeHelper::JQUERY_VAR
+			end
 			
 			unless const_defined? :TOGGLE_EFFECTS
 				TOGGLE_EFFECTS = [:toggle_appear, :toggle_slide, :toggle_blind]
@@ -256,7 +275,7 @@ module ActionView
 				#if TOGGLE_EFFECTS.include? name.to_sym
 				#  "Effect.toggle(#{element},'#{name.to_s.gsub(/^toggle_/,'')}',#{options_for_javascript(js_options)});"
 				
-				javascript = "$(\"##{element_id}\").effect(\"#{name.to_s.downcase}\""
+				javascript = "#{JQUERY_VAR}(\"##{element_id}\").effect(\"#{name.to_s.downcase}\""
 				javascript << ",#{options_for_javascript(js_options)}" unless speed.nil? && js_options.empty?
 				javascript << ",#{speed}" unless speed.nil?
 				javascript << ")"
@@ -268,7 +287,7 @@ module ActionView
 				options[:items] = options[:only] if options[:only]
 				
 				if options[:onUpdate] || options[:url]
-					options[:with] ||= "$(this).sortable('serialize')"
+					options[:with] ||= "#{JQUERY_VAR}(this).sortable('serialize')"
 					options[:onUpdate] ||= "function(){" + remote_function(options) + "}"
 				end
 				
@@ -282,11 +301,11 @@ module ActionView
 				options[:containment] = array_or_string_for_javascript(options[:containment]) if options[:containment]
 				options[:items] = array_or_string_for_javascript(options[:items]) if options[:items]
 	
-				%($("##{element_id}").sortable(#{options_for_javascript(options)});)
+				%(#{JQUERY_VAR}("##{element_id}").sortable(#{options_for_javascript(options)});)
 			end
 			
 			def draggable_element_js(element_id, options = {})
-				%($("##{element_id}").draggable(#{options_for_javascript(options)});)
+				%(#{JQUERY_VAR}("##{element_id}").draggable(#{options_for_javascript(options)});)
 			end
 			
 			def drop_receiving_element_js(element_id, options = {})
@@ -295,7 +314,7 @@ module ActionView
 				options[:drop] = options.delete(:onDrop) if options[:onDrop]
 				
 				if options[:drop] || options[:url]
-					options[:with] ||= "'id=' + encodeURIComponent($(ui.draggable).clone().attr('id'))"
+					options[:with] ||= "'id=' + encodeURIComponent(#{JQUERY_VAR}(ui.draggable).attr('id'))"
 					options[:drop] ||= "function(ev, ui){" + remote_function(options) + "}"
 				end
 				
@@ -304,7 +323,7 @@ module ActionView
 				options[:accept] = array_or_string_for_javascript(options[:accept]) if options[:accept]    
 				options[:hoverClass] = "'#{options[:hoverClass]}'" if options[:hoverClass]
 				
-				%($("##{element_id}").droppable(#{options_for_javascript(options)});)
+				%(#{JQUERY_VAR}("##{element_id}").droppable(#{options_for_javascript(options)});)
 			end
 			
 		end

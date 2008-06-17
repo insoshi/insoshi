@@ -1,0 +1,11 @@
+<h2>Add Photo</h2>
+<%= error_messages_for :photo %>
+
+<% remote_form_for photo, url_for(:controller => 'photos', :action => 'create'), :html => { :multipart => true } do |f| -%>
+  <div class="form_field">
+    <%= f.file_field :uploaded_data, :size => 22 %>
+  </div>
+  <div class="form_field">
+    <%= submit_tag 'Upload', :class => "button" %>
+  </div>
+<% end -%>

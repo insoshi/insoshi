@@ -18,7 +18,14 @@
   </div>
 
   <div id="tPhotos">
-	<%= render_partial 'photos/photos' %>
+    <div class="innerTabLeft">
+	  <h2><%= @person.name %>'s Photos</h2>
+	  <%= render_partial 'photos/photos' %>
+	</div>
+    <div class="innerTabRight">
+	  <%= render :partial => 'photos/add_photo', :locals => {:photo => @person.photo} %>
+    </div>
+    <div class="clear"></div>
   </div>
 
   <div id="tContacts">
@@ -34,8 +41,7 @@
 	  <div class="innerTabRight">
 		<%= render :partial => 'searches/box' %>
 	  </div>
-	  <div class="clear">
-	  </div>
+	  <div class="clear"></div>
   </div>
 </div>
 

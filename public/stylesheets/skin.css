@@ -377,7 +377,7 @@ ul.ui-tabs-nav li {
 .comments li div {border-bottom: 1px solid #ccc;}
 .imgHoverMarker {display: inline;}
 .imgHoverMarker img {display: none;}
-#tRecentActivity h2 {margin-bottom: 10px;}
+#tRecentActivity h2, #tPhotos h2 {margin-bottom: 10px;}
 #tRecentActivity p.meta {font-variant: small-caps;}
 #tRecentActivity ul li, #tWall ul li, #tWall ul li div {display: block; border-bottom: none;}
 #tWall form, form#admin_preferences, form#admin_forums {border-bottom: none;}
@@ -398,8 +398,21 @@ ul.ui-tabs-nav li {
 #tPhotos ul li img {
 	vertical-align: top;
 }
+#tPhotos form {
+	margin-top: 20px;
+	border-bottom: none;
+}
+.gallPhotoTitle {
+	height: 35px;
+}
 .gallPhoto {
 	height: 72px;
+}
+.gpuTitle {
+	font-weight: bold;
+	font-size: 116%;
+	text-align: center;
+	margin: 5px;
 }
 ul.activity {margin-bottom: 0px;}
 ul.activity li p.activity_detail {font-size: 126%;}

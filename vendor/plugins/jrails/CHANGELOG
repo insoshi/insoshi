@@ -1,4 +1,7 @@
-﻿SVN (26 may 2008)
+﻿0.4.0 (16 June 2008)
+* updated to jquery-ui 1.5 & merged js into single file
+* Added jQuery.noConflict support
+* support for value/val
 * additional support for update/delete methods
 * support for success/failure hash
 * setRequestHeader now gets called globally

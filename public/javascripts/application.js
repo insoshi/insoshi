@@ -23,6 +23,6 @@ $(document).ready(function() {
   });
 
   // facebox popups
-  jQuery('a[rel*=facebox]').facebox() 
+  $('a[rel*=facebox]').facebox() 
 
 });
