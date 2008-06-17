@@ -68,10 +68,6 @@ class PhotosController < ApplicationController
   def update
     @photo = Photo.find(params[:id])
     
-    if params[:commit] == "Cancel"
-      redirect_to photo_path(@photo) and return
-    end
-    
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
         flash[:success] = "Photo successfully updated"
@@ -122,7 +118,7 @@ class PhotosController < ApplicationController
     @old_primary = current_person.photos.select(&:avatar?)
   
     respond_to do |format|
-      if @photo.update_attributes(:avatar => true)
+      if @photo.update_attributes!(:avatar => true)
         @old_primary.each { |p| p.update_attributes!(:avatar => false) }
         format.html { redirect_to(person_galleries_path(current_person)) }
       else    
