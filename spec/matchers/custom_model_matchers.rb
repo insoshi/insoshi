@@ -21,6 +21,8 @@ module CustomModelMatchers
     end
   end
   
+  # Verify that the given attribute has given maxlength.
+  # Usage: @person.should have_maximum(:name, Person::MAX_NAME)
   def have_maximum(attribute, maxlength)
     MaximumLength.new(attribute, maxlength)
   end
