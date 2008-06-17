@@ -81,9 +81,10 @@ class Person < ActiveRecord::Base
     person.has_many :_received_messages, :foreign_key => "recipient_id",
                     :conditions => "recipient_deleted_at IS NULL"
   end
-  has_many :feeds
+  has_many :feeds#, :dependent => :destroy
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE
+                                            :limit => FEED_SIZE,
+                                            :dependent => :destroy
   has_many :page_views, :order => 'created_at DESC'
   
   validates_presence_of     :email, :name

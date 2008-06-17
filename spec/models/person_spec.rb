@@ -65,6 +65,28 @@ describe Person do
       Activity.global_feed.should_not contain(activity)
     end
 
+    it "should disappear if the person is destroyed" do
+      # Create a person, which creates a connection activity
+      # (with the first admin) as a side-effect, thereby ensuring a
+      # nonempty feed.
+      person = create_person(:save => true)
+      person.feed.should_not be_empty
+      person.destroy
+      Activity.find_all_by_person_id(person).should be_empty
+      Feed.find_all_by_person_id(person).should be_empty
+    end
+
+    it "should disappear from other feeds if the person is destroyed" do
+      # Both these people are connected to the first admin.
+      initial_person = create_person(:save => true)
+      # This creates an activity in the initial_person's feed.
+      person         = create_person(:email => "new@foo.com", :name => "Foo",
+                                     :save => true)
+      initial_person.activities.length.should == 2
+      person.destroy
+      # The connection between person and the admin should be destroyed.
+      initial_person.reload.activities.length.should == 1
+    end
   end
 
   describe "utility methods" do
