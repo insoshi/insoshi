@@ -83,8 +83,7 @@ class Person < ActiveRecord::Base
   end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE,
-                                            :dependent => :destroy
+                                            :limit => FEED_SIZE
   has_many :page_views, :order => 'created_at DESC'
   
   validates_presence_of     :email, :name
@@ -108,6 +107,7 @@ class Person < ActiveRecord::Base
 
   before_update :set_old_description
   after_update :log_activity_description_changed
+  before_destroy :destroy_activities, :destroy_feeds
 
   class << self
 
@@ -406,6 +406,15 @@ class Person < ActiveRecord::Base
       unless @old_description == description or description.blank?
         add_activities(:item => self, :person => self)
       end
+    end
+    
+    # Clear out all activities associated with this person.
+    def destroy_activities
+      Activity.find_all_by_person_id(self).each {|a| a.destroy}
+    end
+    
+    def destroy_feeds
+      Feed.find_all_by_person_id(self).each {|f| f.destroy}
     end
 
     # Connect new users to "Tom".
