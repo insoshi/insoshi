@@ -6,7 +6,8 @@ class AddAdmin < ActiveRecord::Migration
     person = Person.new(:email => "admin@example.com",
                         :name => "admin",
                         :password => "admin",
-                        :password_confirmation => "admin")
+                        :password_confirmation => "admin",
+                        :description => "")
     person.admin = true
     person.save!
   end
