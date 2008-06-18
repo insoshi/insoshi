@@ -13,7 +13,7 @@ class AddAdmin < ActiveRecord::Migration
 
   def self.down
     remove_column :people, :deactivated
-    Person.find_by_name("admin").destroy
+    Person.delete(Person.find_by_name("admin"))
     remove_column :people, :admin
   end
 end
