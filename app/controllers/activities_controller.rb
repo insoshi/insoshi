@@ -50,10 +50,12 @@ class ActivitiesController < ApplicationController
       if @activity.save
         flash[:notice] = 'Activity was successfully created.'
         format.html { redirect_to(@activity) }
-        format.xml  { render :xml => @activity, :status => :created, :location => @activity }
+        format.xml  { render :xml => @activity, :status => :created,
+                             :location => @activity }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @activity.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @activity.errors,
+                             :status => :unprocessable_entity }
       end
     end
   end
@@ -70,7 +72,8 @@ class ActivitiesController < ApplicationController
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @activity.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @activity.errors,
+                              :status => :unprocessable_entity }
       end
     end
   end

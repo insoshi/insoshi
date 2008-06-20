@@ -10,6 +10,7 @@ db/schema.sql
 db/*.sqlite3*
 config/database.yml
 public/photos/*
+public/thumbnails/*
 uuid.state
 nbproject*
 index/*
@@ -21,3 +22,5 @@ tmp/.*
 *~
 vendor/**/**/doc/*
 rsa_key*
+.dotest/
+test/

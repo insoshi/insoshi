@@ -3,6 +3,7 @@ class ConnectionsController < ApplicationController
   before_filter :login_required, :setup
   before_filter :authorize_view, :only => :index
   before_filter :authorize_person, :only => [:edit, :update, :destroy]
+  before_filter :redirect_for_inactive, :only => [:edit, :update]
   
   # Show all the contacts for a person.
   def index
@@ -83,6 +84,16 @@ class ConnectionsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       flash[:error] = "Invalid or expired connection request"
       redirect_to home_url
+    end
+    
+    # Redirect if the target person is inactive.
+    # Suppose Alice sends Bob a connection request, but then the admin 
+    # deactivates Alice.  We don't want Bob to be able to make the connection.
+    def redirect_for_inactive
+      if @connection.contact.deactivated?
+        flash[:error] = "Invalid connection request: person deactivated"
+        redirect_to home_url
+      end
     end
 
 end

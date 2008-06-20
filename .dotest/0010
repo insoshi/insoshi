@@ -1,0 +1,319 @@
+From 2f9fbc30e9f23d18b6d0f3b4d8bdfb090dbd8e71 Mon Sep 17 00:00:00 2001
+From: Piotr Jakubowski <piotrj@piotr-jakubowskis-macbook.local>
+Date: Sun, 15 Jun 2008 15:12:06 +0200
+Subject: Avatar for a person and primary photo for a gallery features enhanced
+
+---
+ app/controllers/photos_controller.rb               |   54 ++++++++++++++++---
+ app/models/gallery.rb                              |   12 ++--
+ app/models/person.rb                               |    9 +--
+ app/models/photo.rb                                |    2 -
+ app/views/galleries/_photo.html.erb                |    3 +-
+ app/views/photos/show.html.erb                     |    8 +++
+ config/routes.rb                                   |    2 +-
+ ...0_move_avatar_and_primary_ids_to_photo_model.rb |   15 ++++++
+ spec/controllers/photos_controller_spec.rb         |   11 +---
+ spec/fixtures/galleries.yml                        |    5 +-
+ spec/helpers/activities_helper_spec.rb             |    9 +++-
+ spec/models/person_spec.rb                         |    4 +-
+ 12 files changed, 94 insertions(+), 40 deletions(-)
+ create mode 100644 db/migrate/030_move_avatar_and_primary_ids_to_photo_model.rb
+
+diff --git a/app/controllers/photos_controller.rb b/app/controllers/photos_controller.rb
+index fee3cb366f1e1d41128ffd4a630b1f0e6c2709bc..908ede073c68c3b2fde6fd687dac2d31aa7deab8 100644
+--- a/app/controllers/photos_controller.rb
++++ b/app/controllers/photos_controller.rb
+@@ -1,7 +1,7 @@
+ class PhotosController < ApplicationController
+ 
+   before_filter :login_required
+-  before_filter :correct_user_required, :only => [ :edit, :update, :destroy ]
++  before_filter :correct_user_required, :only => [ :edit, :update, :destroy, :set_primary, :set_avatar ]
+   before_filter :correct_gallery_requried, :only => [:new, :create]
+   
+   # def index
+@@ -86,17 +86,53 @@ class PhotosController < ApplicationController
+   end
+ 
+   def destroy
+-    redirect_to edit_person_url(current_person) and return if @photo.nil?
+-    if @photo.primary?
+-      first_non_primary = current_person.photos.reject(&:primary?).first
+-      unless first_non_primary.nil?
+-        first_non_primary.update_attributes!(:primary => true)
+-      end
+-    end
++    redirect_to person_galleries_path(current_person) and return if @photo.nil?
+     @photo.destroy
+     flash[:success] = "Photo deleted"
+     respond_to do |format|
+-      format.html { redirect_to edit_person_url(current_person) }
++      format.html { redirect_to gallery_path(@gallery) }
++    end
++  end
++  
++  def set_primary
++    @photo = Photo.find(params[:id])
++    if @photo.nil? or @photo.primary?
++      redirect_to person_galleries_path(current_person) and return
++    end
++    # This should only have one entry, but be paranoid.
++    @old_primary = @photo.gallery.photos.select(&:primary?)
++  
++    respond_to do |format|
++      if @photo.update_attributes(:primary => true)
++        @old_primary.each { |p| p.update_attributes!(:primary => false) }
++        format.html { redirect_to(person_galleries_path(current_person)) }
++      else    
++        format.html do
++          flash[:error] = "Invalid image!"
++          redirect_to home_url
++        end
++      end
++    end
++  end
++  
++  def set_avatar
++    @photo = Photo.find(params[:id])
++    if @photo.nil? or @photo.avatar?
++      redirect_to person_galleries_path(current_person) and return
++    end
++    # This should only have one entry, but be paranoid.
++    @old_primary = current_person.photos.select(&:avatar?)
++  
++    respond_to do |format|
++      if @photo.update_attributes(:avatar => true)
++        @old_primary.each { |p| p.update_attributes!(:avatar => false) }
++        format.html { redirect_to(person_galleries_path(current_person)) }
++      else    
++        format.html do
++          flash[:error] = "Invalid image!"
++          redirect_to home_url
++        end
++      end
+     end
+   end
+   
+diff --git a/app/models/gallery.rb b/app/models/gallery.rb
+index 02fe3067a9af0793fa00dca3d147913b7e66cc82..024f5020fe425cedd177c9470da3ae5cce9c392e 100644
+--- a/app/models/gallery.rb
++++ b/app/models/gallery.rb
+@@ -33,15 +33,15 @@ class Gallery < ActiveRecord::Base
+   
+ 
+   def primary_photo
+-    if !self.primary_photo_id.nil?
+-      Photo.find(self.primary_photo_id)
+-    else
+-      nil
+-    end
++    photos.find_all_by_primary(true).first
+   end
+   
+   def primary_photo=(photo)
+-    self.primary_photo_id = photo.id
++    if photo.nil?
++      self.primary_photo_id = nil
++    else
++      self.primary_photo_id = photo.id
++    end
+   end
+   
+   def primary_photo_url
+diff --git a/app/models/person.rb b/app/models/person.rb
+index c4cb18d05f552aeeeaea5a0b59d1b88f767ef426..14500692e85a24bbe5b478b05023175b4b3212d6 100644
+--- a/app/models/person.rb
++++ b/app/models/person.rb
+@@ -228,13 +228,10 @@ class Person < ActiveRecord::Base
+   end
+ 
+   ## Photo helpers
+-
++  
+   def photo
+-    if avatar_id.nil?
+-      nil
+-    else
+-      Photo.find(avatar_id)
+-    end
++    # This should only have one entry, but be paranoid.
++    photos.find_all_by_avatar(true).first
+   end
+ 
+   # Return all the photos other than the primary one
+diff --git a/app/models/photo.rb b/app/models/photo.rb
+index a61c7ed2eb24365a1261143057daca2d4baee728..e78368068f1eea8fe94963c36e8bc34a4ac4f117 100644
+--- a/app/models/photo.rb
++++ b/app/models/photo.rb
+@@ -67,10 +67,8 @@ class Photo < ActiveRecord::Base
+   end
+   
+   def log_activity
+-    if self.parent.nil?
+       activity = Activity.create!(:item => self, :person => self.person)
+       add_activities(:activity => activity, :person => self.person)
+-    end
+   end
+ 
+ end
+diff --git a/app/views/galleries/_photo.html.erb b/app/views/galleries/_photo.html.erb
+index 91c31bcc6318e40c5749e856d3fb6ff2a5cf5388..476fce524020ac36636ae5d245289ba97e0a110a 100644
+--- a/app/views/galleries/_photo.html.erb
++++ b/app/views/galleries/_photo.html.erb
+@@ -1 +1,2 @@
+-<%=link_to image_tag(photo.public_filename(:thumbnail)), photo_path(photo)%>
++<%=link_to image_tag(photo.public_filename(:thumbnail)), photo_path(photo)%><br/>
++<%=link_to image_tag("icons/close.gif"), photo_path(photo), :method => :delete, :confirm => "Do you really want to delete the photo?"%>
+diff --git a/app/views/photos/show.html.erb b/app/views/photos/show.html.erb
+index 96db988f1204d789b798e4011d3464934bc7f126..bca88d594df7ce413e356a33d7ba8ea55a380f65 100644
+--- a/app/views/photos/show.html.erb
++++ b/app/views/photos/show.html.erb
+@@ -18,6 +18,14 @@
+ 	<h2> Toolbox </h2>
+ 	<div class="toolbox">
+ 		<ul>
++			<% if current_person?(@photo.person)%>
++				<% if @photo.gallery.primary_photo != @photo%>
++					<li><%=link_to "Set as primary photo of the gallery", set_primary_photo_path(@photo), :confirm => "Do you really want to set this photo as primary?", :method => :put %> </li>
++				<% end %>
++				<% if @photo.person.photo != @photo%>
++					<li><%=link_to "Set as avatar", set_avatar_photo_path(@photo), :confirm => "Do you really want to set this photo as avatar?", :method => :put %> </li>
++				<% end %>
++			<% end %>
+ 			<li><%=link_to "Go back to gallery", gallery_path(@photo.gallery)%></li>
+ 		</ul>
+ 	</div>
+diff --git a/config/routes.rb b/config/routes.rb
+index 4469767aa306624fe00de104b96db8d86cbe672c..4c4c2204f912f14514fd63d250ae3267399197fa 100644
+--- a/config/routes.rb
++++ b/config/routes.rb
+@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
+   map.resources :activities
+   map.resources :connections
+   map.resources :password_reminders
+-  map.resources :photos
++  map.resources :photos, :member => {:set_primary => :put, :set_avatar => :put}
+   map.resource :session
+   map.resource :galleries
+   map.resources :messages, :collection => { :sent => :get, :trash => :get },
+diff --git a/db/migrate/030_move_avatar_and_primary_ids_to_photo_model.rb b/db/migrate/030_move_avatar_and_primary_ids_to_photo_model.rb
+new file mode 100644
+index 0000000000000000000000000000000000000000..76ad85756b1faee93702788471153f0938b9859d
+--- /dev/null
++++ b/db/migrate/030_move_avatar_and_primary_ids_to_photo_model.rb
+@@ -0,0 +1,15 @@
++class MoveAvatarAndPrimaryIdsToPhotoModel < ActiveRecord::Migration
++  def self.up
++    remove_column :galleries,  :primary_photo_id
++    remove_column :people,  :avatar_id
++    add_column    :photos,  :primary, :boolean
++    add_column    :photos,   :avatar,  :boolean
++  end
++
++  def self.down
++    add_column    :galleries,  :primary_photo_id, :integer
++    add_column    :people,  :avatar_id, :integer
++    remove_column :photos,  :primary
++    remove_column :photos,  :avatar
++  end
++end
+diff --git a/spec/controllers/photos_controller_spec.rb b/spec/controllers/photos_controller_spec.rb
+index 1105c06202244ab24c4de10b08a5b823f110e100..83fe09a116216262b2b2aa86d74b07f3ceacafe3 100644
+--- a/spec/controllers/photos_controller_spec.rb
++++ b/spec/controllers/photos_controller_spec.rb
+@@ -15,12 +15,12 @@ describe PhotosController do
+     
+     before(:each) do
+       @person = login_as(:quentin)
+-      @primary, @secondary = [mock_photo(:primary => true), mock_photo]
++      @gallery = galleries(:valid_gallery)
++      @primary, @secondary = [mock_photo(:primary => true, :gallery => @gallery), mock_photo(:gallery => @gallery)]
+       photos = [@primary, @secondary]
+       photos.each { |p| p.stub!(:person).and_return(@person) }
+       @photo = @primary
+       @person.stub!(:photos).and_return([@primary, @secondary])
+-      @gallery = galleries(:valid_gallery)
+     end
+   
+     
+@@ -74,13 +74,6 @@ describe PhotosController do
+       delete :destroy, :id => @secondary
+     end
+     
+-    it "should mark another photo as primary if destroying primary" do
+-      Photo.should_receive(:find).and_return(@primary)
+-      @primary.should_receive(:destroy).and_return(true)
+-      @secondary.should_receive(:update_attributes!).with(:primary => true)
+-      delete :destroy, :id => @primary
+-    end
+-    
+     it "should require the correct user to edit" do
+       login_as :aaron
+       Photo.should_receive(:find).and_return(@photo)
+diff --git a/spec/fixtures/galleries.yml b/spec/fixtures/galleries.yml
+index 2f1094ffd4bae6a248bea0cd34effff0bb84503b..7e2ada6cc7a9fa3bdf5428ce685522cc8ed35227 100644
+--- a/spec/fixtures/galleries.yml
++++ b/spec/fixtures/galleries.yml
+@@ -10,10 +10,11 @@ valid_gallery:
+     person: quentin
+     title: "Title"
+     description: "Some description"
+-    primary_photo_id: NULL
++    
++aarons_gallery:
++    person: aaron
+ 
+ invalid_gallery:
+     person_id: NULL
+     title: "Title"
+     description: "Some description"
+-    primary_photo_id: NULL
+\ No newline at end of file
+diff --git a/spec/helpers/activities_helper_spec.rb b/spec/helpers/activities_helper_spec.rb
+index 474c4cdffd3e136b7415e122ad646f9ef2c63dfc..6863620f0839930a18078b1c6c9b70bfdf0e9579 100644
+--- a/spec/helpers/activities_helper_spec.rb
++++ b/spec/helpers/activities_helper_spec.rb
+@@ -5,6 +5,7 @@ describe ActivitiesHelper do
+ 
+   before(:each) do
+     @current_person = login_as(:aaron)
++    @gallery = galleries(:aarons_gallery)
+     # It sucks that RSpec makes me do this.
+     self.stub!(:logged_in?).and_return(true)
+     self.stub!(:current_person).and_return(people(:aaron))
+@@ -48,8 +49,12 @@ describe ActivitiesHelper do
+   end
+   
+   it "should have the right message for a photo" do
+-    activity = Activity.new(:item => mock_photo, :person => @current_person)
+-    feed_message(activity).should =~ /profile picture/
++    @filename = "rails.png"
++    @image = uploaded_file(@filename, "image/png")
++    photo = Photo.new({:uploaded_data => @image, :person => @current_person, :gallery => @gallery})
++    photo.save
++    activity = Activity.find_by_item_id(photo)
++    feed_message(activity).should =~ /photo/
+   end
+ 
+ end
+diff --git a/spec/models/person_spec.rb b/spec/models/person_spec.rb
+index 7401d70ece0336a079f39bfa20627f29028b3359..d92acf7723e97b1ae1e9a165b5c883747c631457 100644
+--- a/spec/models/person_spec.rb
++++ b/spec/models/person_spec.rb
+@@ -159,10 +159,10 @@ describe Person do
+   describe "photo methods" do
+ 
+     before(:each) do
+-      @photo_1 = mock_photo(:primary => true)
++      @photo_1 = mock_photo(:avatar => true)
+       @photo_2 = mock_photo
+       @photos = [@photo_1, @photo_2]
+-      @photos.stub!(:find_all_by_primary).and_return([@photo_1])
++      @photos.stub!(:find_all_by_avatar).and_return([@photo_1])
+       @person.stub!(:photos).and_return(@photos)
+     end
+ 
+-- 
+1.5.3.7
+
+

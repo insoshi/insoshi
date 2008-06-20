@@ -59,6 +59,9 @@ class PeopleController < ApplicationController
         format.html { render :action => 'new' }
       end
     end
+  rescue ActiveRecord::StatementInvalid
+    # Handle duplicate email addresses gracefully by redirecting.
+    redirect_to home_url
   end
 
   def verify

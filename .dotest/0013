@@ -1,0 +1,131 @@
+From 8e7331fb5ba15fb987d8f594519a354f842f8b0a Mon Sep 17 00:00:00 2001
+From: Piotr Jakubowski <piotrj@piotr-jakubowskis-macbook.local>
+Date: Tue, 17 Jun 2008 01:22:52 +0200
+Subject: Fixed stylesheet to have galleries and photos more fancy
+
+---
+ app/views/galleries/_gallery.html.erb |    7 +++++--
+ app/views/galleries/_photo.html.erb   |   12 +++++++-----
+ app/views/galleries/show.html.erb     |    6 ++++++
+ app/views/photos/show.html.erb        |   15 ++++++++++-----
+ public/stylesheets/skin.css           |   16 ++++++++++++++++
+ 5 files changed, 44 insertions(+), 12 deletions(-)
+
+diff --git a/app/views/galleries/_gallery.html.erb b/app/views/galleries/_gallery.html.erb
+index 599d4211461a6ecbdcc3481b8f6ecc93f0f35e4a..5e8c3df3882ef92ade3dd8d2689a96f37627ff8a 100644
+--- a/app/views/galleries/_gallery.html.erb
++++ b/app/views/galleries/_gallery.html.erb
+@@ -4,10 +4,13 @@
+ 	<p>	
+ 		<%= link_to h(gallery.title), gallery_path(gallery)%>
+ 	</p>
+-	<div class="tools">
++	<p>
++		<%= h(truncate(gallery.description, 60, "..."))%>
++	</p>
+ 	<% if current_person?(gallery.person)%>
++	<div class="tools">
+ 		<%= link_to "Edit", edit_gallery_path(gallery) %> | <%= link_to "Delete", gallery_path(gallery), :method => :delete, :confirm => "Do you really want to delete #{h gallery.title} gallery"%> <br/>
+-	<%-end-%>
+ 	</div>
++	<%-end-%>
+ </div>
+ </div>
+\ No newline at end of file
+diff --git a/app/views/galleries/_photo.html.erb b/app/views/galleries/_photo.html.erb
+index 87edba39fadcc8875b3dee778b3d7a7804e4a148..211a573d72e422384e120289504e32cf282f3e94 100644
+--- a/app/views/galleries/_photo.html.erb
++++ b/app/views/galleries/_photo.html.erb
+@@ -1,5 +1,7 @@
+-<%=link_to image_tag(photo.public_filename(:thumbnail)), photo_path(photo)%><br/>
+-<% if current_person == photo.person %>
+-	<%=link_to "Edit", edit_photo_path(photo) %> |
+-	<%=link_to image_tag("icons/close.gif"), photo_path(photo), :method => :delete, :confirm => "Do you really want to delete the photo?"%>
+-<% end %>
++<div class="photo-small">
++	<%=link_to image_tag(photo.public_filename(:thumbnail)), photo_path(photo)%><br/>
++	<% if current_person == photo.person %>
++		<%=link_to "Edit", edit_photo_path(photo) %> |
++		<%=link_to image_tag("icons/close.gif"), photo_path(photo), :method => :delete, :confirm => "Do you really want to delete the photo?"%>
++	<% end %>
++</div>
+\ No newline at end of file
+diff --git a/app/views/galleries/show.html.erb b/app/views/galleries/show.html.erb
+index 5e736a6753b14ceeb160ada173c8eb733896134d..486338b421a303fe08219c0f50b64575f75407f9 100644
+--- a/app/views/galleries/show.html.erb
++++ b/app/views/galleries/show.html.erb
+@@ -25,5 +25,11 @@
+ 			<li> <%=link_to "Go back to #{h(@gallery.person.name)}'s gallery list", person_galleries_path(@gallery.person)%> </li>
+ 		</ul>
+ 	</div>
++	<%if !@gallery.description.nil?%>
++	<h2>Description</h2>
++		<div class = "gallery-description">
++			<p><%=h(@gallery.description)%></p>
++		</div>
++	<%end%>
+ 	<%= render :partial => 'shared/minifeed' %>
+ <%- end-%>
+\ No newline at end of file
+diff --git a/app/views/photos/show.html.erb b/app/views/photos/show.html.erb
+index 1b9b970e38cf2cfb87b99e2a99f1adf7b710b4f5..e45aa7176ae19ef0396ff2fd50633d4eff845581 100644
+--- a/app/views/photos/show.html.erb
++++ b/app/views/photos/show.html.erb
+@@ -2,16 +2,21 @@
+ 	<% if !@photo.title.nil?%>
+ 		<h2> <%= h(@photo.title)%></h2>
+ 	<% end %>
+-	<div class="photo-navigation">
++	<div class="pagination">
+ 		<% if !@photo.first? %>
+-			<%= link_to h("<<Previous"), photo_path(@photo.higher_item)%>
++			<%= link_to h("Previous"), photo_path(@photo.higher_item)%>
++		<% else %>
++			<span class="disabled"> Previous </span>
+ 		<% end %>
+ 		<% if !@photo.last? %>
+-			<%= link_to h("Next>>"), photo_path(@photo.lower_item) %>
++			<%= link_to h("Next"), photo_path(@photo.lower_item) %>
++		<% else %>
++			<span class="disabled"> Next </span>
+ 		<% end %>
+ 	</div>
+-	<%= image_tag(@photo.public_filename) %>
+-	
++	<div class = "photo">
++		<%= image_tag(@photo.public_filename) %>
++	</div>
+ <% end %>
+ 
+ <%- column_div :type => :secondary do -%>
+diff --git a/public/stylesheets/skin.css b/public/stylesheets/skin.css
+index 2e910c32b3b950b91c108303cdf1e07046e295f6..78260a5ce50a401c9ae39815c53271c59dcd3ee5 100755
+--- a/public/stylesheets/skin.css
++++ b/public/stylesheets/skin.css
+@@ -342,6 +342,22 @@ div.toolbox ul li
+ 	background: none;
+ }
+ 
++div.photo, div.photo-small
++{
++	padding-top: 10px;
++	text-align: center;
++}
++
++div.gallery-description p
++{
++	font-size: 12px;
++	text-align: justify;
++}
++
++div.photo-small:hover
++{
++	background-color: #ccccff;
++}
+ #gallery_list ul li
+ {
+ 	list-style-type: none;
+-- 
+1.5.3.7
+
+

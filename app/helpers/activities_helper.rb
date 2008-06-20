@@ -37,10 +37,13 @@ module ActivitiesHelper
         #{topic_link(activity.item)}.)
     when "Person"
       %(#{person_link(person)} changed their description.)
-    when "Gallery" 
-      %(#{person_link(person)} added new gallery #{gallery_link(activity.item)}.)
+
+    when "Gallery"
+      %(#{person_link(person)} added new gallery 
+        #{gallery_link(activity.item)}.)
     when "Photo"
-      %(#{person_link(person)} added new #{photo_link(activity.item)} to the #{gallery_link(activity.item.gallery)} gallery)
+      %(#{person_link(person)} added new #{photo_link(activity.item)} to the 
+        #{gallery_link(activity.item.gallery)} gallery)
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -85,9 +88,11 @@ module ActivitiesHelper
     when "Person"
       %(#{person_link(person)} changed their description.)
     when "Gallery"
-      %(#{person_link(person)} added new gallery #{gallery_link(activity.item)}.)
+      %(#{person_link(person)} added new gallery 
+        #{gallery_link(activity.item)}.)
     when "Photo"
-      %(#{person_link(person)} added new #{photo_link(activity.item)} to the #{gallery_link(activity.item.gallery)} gallery)  
+      %(#{person_link(person)} added new #{photo_link(activity.item)} to the 
+        #{gallery_link(activity.item.gallery)} gallery)  
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -126,12 +131,7 @@ module ActivitiesHelper
   end
   
   def someones(person, commenter, link = true)
-    # raise commenter.inspect
-    if link
-      person == commenter ? "their own" : "#{person_link(person)}'s"
-    else
-      person == commenter ? "their own" : "#{h person.name}'s"
-    end
+    link ? "#{person_link(person)}'s" : "#{h person.name}'s"
   end
   
   def blog_link(text, blog)

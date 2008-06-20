@@ -1,0 +1,118 @@
+From b0de63746055e27cb2afc3f88bbd01783c694f42 Mon Sep 17 00:00:00 2001
+From: Piotr Jakubowski <piotrj@piotr-jakubowskis-macbook.local>
+Date: Mon, 16 Jun 2008 03:20:42 +0200
+Subject: Photo editing
+
+---
+ app/controllers/photos_controller.rb |   23 +++++++--------------
+ app/views/galleries/_photo.html.erb  |    5 +++-
+ app/views/photos/edit.html.erb       |   36 +++++++++++++++++++++++----------
+ 3 files changed, 37 insertions(+), 27 deletions(-)
+
+diff --git a/app/controllers/photos_controller.rb b/app/controllers/photos_controller.rb
+index 908ede073c68c3b2fde6fd687dac2d31aa7deab8..879c6036b83f8ff55b75ab1647552864c79beb84 100644
+--- a/app/controllers/photos_controller.rb
++++ b/app/controllers/photos_controller.rb
+@@ -66,26 +66,19 @@ class PhotosController < ApplicationController
+   # Mark a photo as primary.
+   # This marks the other photos as non-primary as a side-effect.
+   def update
+-    if @photo.nil? or @photo.primary?
+-      redirect_to edit_person_url(current_person) and return
+-    end
+-    # This should only have one entry, but be paranoid.
+-    @old_primary = current_person.photos.select(&:primary?)
+-  
++    @photo = Photo.find(params[:id])
+     respond_to do |format|
+-      if @photo.update_attributes(:primary => true)
+-        @old_primary.each { |p| p.update_attributes!(:primary => false) }
+-        format.html { redirect_to(edit_person_path(current_person)) }
+-      else    
+-        format.html do
+-          flash[:error] = "Invalid image!"
+-          redirect_to home_url
+-        end
++      if @photo.update_attributes(params[:photo])
++        flash[:success] = "Photo successfully updated"
++        format.html { redirect_to(photo_path(@photo)) }
++      else
++        format.html { render :action => "new" }
+       end
+     end
+   end
+ 
+   def destroy
++    @gallery = @photo.gallery
+     redirect_to person_galleries_path(current_person) and return if @photo.nil?
+     @photo.destroy
+     flash[:success] = "Photo deleted"
+@@ -141,7 +134,7 @@ class PhotosController < ApplicationController
+     def correct_user_required
+       @photo = Photo.find(params[:id])
+       if @photo.nil?
+-        redirect_to edit_person_url(current_person)
++        redirect_to home_url
+       elsif @photo.person != current_person
+         redirect_to home_url
+       end
+diff --git a/app/views/galleries/_photo.html.erb b/app/views/galleries/_photo.html.erb
+index 476fce524020ac36636ae5d245289ba97e0a110a..87edba39fadcc8875b3dee778b3d7a7804e4a148 100644
+--- a/app/views/galleries/_photo.html.erb
++++ b/app/views/galleries/_photo.html.erb
+@@ -1,2 +1,5 @@
+ <%=link_to image_tag(photo.public_filename(:thumbnail)), photo_path(photo)%><br/>
+-<%=link_to image_tag("icons/close.gif"), photo_path(photo), :method => :delete, :confirm => "Do you really want to delete the photo?"%>
++<% if current_person == photo.person %>
++	<%=link_to "Edit", edit_photo_path(photo) %> |
++	<%=link_to image_tag("icons/close.gif"), photo_path(photo), :method => :delete, :confirm => "Do you really want to delete the photo?"%>
++<% end %>
+diff --git a/app/views/photos/edit.html.erb b/app/views/photos/edit.html.erb
+index 87dc589ce0c5b242d805909fd16225ff95588428..86badf7e95adc46f57da72e5d4563600fa13a986 100644
+--- a/app/views/photos/edit.html.erb
++++ b/app/views/photos/edit.html.erb
+@@ -1,13 +1,27 @@
+ <%= error_messages_for :photo %>
+ 
+-<% form_for @photo, :html => { :multipart => true } do |f| -%>
+-  <div class="form_field">
+-    <%= image_tag(@display_photo.public_filename(:thumbnail)) %><br />
+-    <label for="photo">Update your photo:</label><br />
+-    <%= f.file_field :uploaded_data %>
+-  </div>
+-  <div class="form_field">
+-    <%= submit_tag 'Update' %>
+-    <%= f.submit "Cancel", :id => "cancel" %>
+-  </div>
+-<% end -%>
+\ No newline at end of file
++
++<%- column_div :type => :primary do -%>
++<h2>Edit photo</h2>
++
++	<% form_for @photo, :html => { :multipart => true } do |f| -%>
++	  <div class="form_field">
++	    <%= image_tag(@display_photo.public_filename(:thumbnail)) %>
++	  </div>
++		
++		<div class="form_field">
++	    <label for="photo">Title:</label>
++	    <%= f.text_field :title %>
++	  </div>
++	  <div class="form_field">
++	    <label for="photo">Upload a photo:</label>
++	    <%= f.file_field :uploaded_data %>
++	  </div>
++	  <div class="form_field">
++	    <%= submit_tag 'Update' %>
++	    <%= f.submit "Cancel", :id => "cancel" %>
++	  </div>
++	<% end -%>
++	
++<% end %>
++	
+\ No newline at end of file
+-- 
+1.5.3.7
+
+

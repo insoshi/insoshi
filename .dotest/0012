@@ -1,0 +1,43 @@
+From f471ffdd6d38914d5bf080ed4fd6a469a875451f Mon Sep 17 00:00:00 2001
+From: Piotr Jakubowski <piotrj@piotr-jakubowskis-macbook.local>
+Date: Mon, 16 Jun 2008 03:28:49 +0200
+Subject: Minor enhancments in displaying the photo and in update action of photo controller
+
+---
+ app/controllers/photos_controller.rb |    5 +++++
+ app/views/photos/show.html.erb       |    2 ++
+ 2 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/app/controllers/photos_controller.rb b/app/controllers/photos_controller.rb
+index 879c6036b83f8ff55b75ab1647552864c79beb84..c0aab12fd39162aa52b211393591ffd36128bc7d 100644
+--- a/app/controllers/photos_controller.rb
++++ b/app/controllers/photos_controller.rb
+@@ -67,6 +67,11 @@ class PhotosController < ApplicationController
+   # This marks the other photos as non-primary as a side-effect.
+   def update
+     @photo = Photo.find(params[:id])
++    
++    if params[:commit] == "Cancel"
++      redirect_to photo_path(@photo) and return
++    end
++    
+     respond_to do |format|
+       if @photo.update_attributes(params[:photo])
+         flash[:success] = "Photo successfully updated"
+diff --git a/app/views/photos/show.html.erb b/app/views/photos/show.html.erb
+index bca88d594df7ce413e356a33d7ba8ea55a380f65..1b9b970e38cf2cfb87b99e2a99f1adf7b710b4f5 100644
+--- a/app/views/photos/show.html.erb
++++ b/app/views/photos/show.html.erb
+@@ -25,6 +25,8 @@
+ 				<% if @photo.person.photo != @photo%>
+ 					<li><%=link_to "Set as avatar", set_avatar_photo_path(@photo), :confirm => "Do you really want to set this photo as avatar?", :method => :put %> </li>
+ 				<% end %>
++				<li>	<%=link_to "Edit", edit_photo_path(@photo) %> </li>
++				<li> <%=link_to "Delete", photo_path(@photo), :method => :delete, :confirm => "Do you really want to delete the photo?"%> </li>
+ 			<% end %>
+ 			<li><%=link_to "Go back to gallery", gallery_path(@photo.gallery)%></li>
+ 		</ul>
+-- 
+1.5.3.7
+
+

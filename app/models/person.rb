@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 30
 #
 # Table name: people
 #
@@ -41,8 +41,8 @@ class Person < ActiveRecord::Base
 
   MAX_EMAIL = MAX_PASSWORD = SMALL_STRING_LENGTH
   MAX_NAME = SMALL_STRING_LENGTH
+  MAX_DESCRIPTION = MAX_TEXT_LENGTH
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
-  DESCRIPTION_LENGTH = 2000
   TRASH_TIME_AGO = 1.month.ago
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
@@ -52,25 +52,29 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 1.month.ago
+  # These constants should be methods, but I couldn't figure out  how to use
+  # methods in the has_many associations.  I hope you can do better.
   ACCEPTED_AND_ACTIVE =  [%(status = ? AND
                             deactivated = ? AND
                             (email_verified IS NULL OR email_verified = ?)),
                           Connection::ACCEPTED, false, true]
+  REQUESTED_AND_ACTIVE =  [%(status = ? AND
+                            deactivated = ? AND
+                            (email_verified IS NULL OR email_verified = ?)),
+                          Connection::REQUESTED, false, true]
 
   has_one :blog
   has_many :email_verifications
   has_many :comments, :as => :commentable, :order => 'created_at DESC',
                       :limit => NUM_WALL_COMMENTS
   has_many :connections
-
-
   has_many :contacts, :through => :connections,
                       :conditions => ACCEPTED_AND_ACTIVE,
                       :order => 'people.created_at DESC'
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
            :source => :contact,
-           :conditions => ["status = ?", Connection::REQUESTED]
+           :conditions => REQUESTED_AND_ACTIVE
   with_options :class_name => "Message", :dependent => :destroy,
                :order => 'created_at DESC' do |person|
     person.has_many :_sent_messages, :foreign_key => "sender_id",
@@ -80,7 +84,9 @@ class Person < ActiveRecord::Base
   end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE
+                                            :limit => FEED_SIZE,
+                                            :dependent => :destroy
+  has_many :page_views, :order => 'created_at DESC'
   has_many :galleries
 
   validates_presence_of     :email, :name
@@ -91,6 +97,7 @@ class Person < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :email, :within => 6..MAX_EMAIL
   validates_length_of       :name,  :maximum => MAX_NAME
+  validates_length_of       :description, :maximum => MAX_DESCRIPTION
   validates_format_of       :email,
                             :with => EMAIL_REGEX,
                             :message => "must be a valid email address"
@@ -98,7 +105,7 @@ class Person < ActiveRecord::Base
 
   before_create :create_blog
   before_save :encrypt_password
-  before_validation :prepare_email
+  before_validation :prepare_email, :handle_nil_description
   after_create :connect_to_admin
 
   before_update :set_old_description
@@ -368,13 +375,24 @@ class Person < ActiveRecord::Base
     opts = { :page => page, :per_page => RASTER_PER_PAGE }
     @common_connections ||= Connection.paginate_by_sql(conditions, opts)
   end
-
+  
   protected
 
     ## Callbacks
 
+    # Prepare email for database insertion.
     def prepare_email
       self.email = email.downcase.strip if email
+    end
+
+    # Handle the case of a nil description.
+    # Some databases (e.g., MySQL) don't allow default values for text fields.
+    # By default, "blank" fields are really nil, which breaks certain
+    # validations; e.g., nil.length raises an exception, which breaks
+    # validates_length_of.  Fix this by setting the description to the empty
+    # string if it's nil.
+    def handle_nil_description
+      self.description = "" if description.nil?
     end
 
     def encrypt_password
@@ -413,16 +431,16 @@ class Person < ActiveRecord::Base
       # Return the conditions for a user to be active.
       def conditions_for_active
         [%(deactivated = ? AND 
-          (email_verified IS NULL OR email_verified = ?)),
+           (email_verified IS NULL OR email_verified = ?)),
          false, true]
       end
       
       # Return the conditions for a user to be 'mostly' active.
       def conditions_for_mostly_active
         [%(deactivated = ? AND 
-          (email_verified IS NULL OR email_verified = ?) AND
-          (last_logged_in_at IS NOT NULL AND
-           last_logged_in_at >= ?)),
+           (email_verified IS NULL OR email_verified = ?) AND
+           (last_logged_in_at IS NOT NULL AND
+            last_logged_in_at >= ?)),
          false, true, TIME_AGO_FOR_MOSTLY_ACTIVE]
       end
     end

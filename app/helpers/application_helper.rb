@@ -72,16 +72,19 @@ module ApplicationHelper
   #  display("foo", :class => "bar")
   #  => '<p class="bar">foo</p>'
   def display(text, html_options = nil)
-    if html_options
-      html_options = html_options.stringify_keys
-      tag_options = tag_options(html_options)
-    else
-      tag_options = nil
+    begin
+      if html_options
+        html_options = html_options.stringify_keys
+        tag_opts = tag_options(html_options)
+      else
+        tag_opts = nil
+      end
+      processed_text = markdown(sanitize(text))
+    rescue
+      # Sometimes Markdown throws exceptions, so rescue gracefully.
+      processed_text = content_tag(:p, sanitize(text))
     end
-    markdown(sanitize(text)).gsub("<p>", "<p#{tag_options}>")
-  rescue
-    # Sometimes Markdown throws exceptions, so rescue gracefully.
-    content_tag(:p, sanitize(text))
+    add_tag_options(processed_text, tag_opts)
   end
   
   # Output a column div.
@@ -125,5 +128,9 @@ module ApplicationHelper
   
     def inflect(word, number)
       number > 1 ? word.pluralize : word
+    end
+    
+    def add_tag_options(text, options)
+      text.gsub("<p>", "<p#{options}>")
     end
 end

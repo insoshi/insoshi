@@ -247,7 +247,6 @@ body.single-col .col1 form input {
 label.checkbox {display: inline; float: left;margin-right: 12px;}
 body.single-col .col1 form input.checkbox {
   display: inline;
-  float: left;
   width: auto;
 }
 .form_row {
