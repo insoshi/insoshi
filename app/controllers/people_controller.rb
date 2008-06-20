@@ -43,7 +43,8 @@ class PeopleController < ApplicationController
     @person = Person.new(params[:person])
     respond_to do |format|
       @person.email_verified = false if global_prefs.email_verifications?
-      if @person.save
+      @person.save
+      if @person.errors.empty?
         if global_prefs.email_verifications?
           @person.email_verifications.create
           flash[:notice] = %(Thanks for signing up! A verification email has 
