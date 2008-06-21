@@ -7,7 +7,9 @@ class PeopleController < ApplicationController
   before_filter :setup
   
   def index
-    @people = Person.mostly_active(params[:page])
+    #@people = Person.mostly_active(params[:page])
+        @people = Person.find(:all).paginate(:page => params[:page],
+                                          :per_page => RASTER_PER_PAGE)
 
     respond_to do |format|
       format.html

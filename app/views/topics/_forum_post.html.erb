@@ -1,23 +1,23 @@
 <li>
   <a name="post_<%= forum_post.id %>"></a>
-  <div class="profile-image">
-    <%= image_link forum_post.person, :image => :thumbnail %>
-    <%= image_tag "icons/comment.gif", :class => "icon" %>
+  <div class="forum entry_content">
+    <%= display forum_post.body %>
   </div>
-  <p class="meta"><span class="author"><%= person_link forum_post.person %></span> posted
-      <abbr class="updated" title="<%= forum_post.created_at %>"><%= time_ago_in_words(forum_post.created_at) %> ago
+  <p class="meta">
+	Posted by <span class="author"><%= person_link_with_image forum_post.person %></span> 
+      <abbr class="updated" title="<%= forum_post.created_at %>"><%= time_ago_in_words(forum_post.created_at) %> ago</abbr>
       <%- if current_person?(forum_post.person) or admin? -%>
-        | <%= link_to "Edit",
-                edit_forum_topic_post_path(@forum, @topic, forum_post) %>
+        <%= link_to image_tag("icons/note_edit.png", :class => 'actioner'),
+                edit_forum_topic_post_path(@forum, @topic, forum_post),
+ 				:title => 'Edit' %>
       <%- end -%>
       <%- if admin? -%>
-        | <%= link_to "Destroy",
+        <%= link_to image_tag("icons/comment_delete.png", :class => 'actioner'),
                       forum_topic_post_path(@forum, @topic, forum_post),
-                      :confirm => 'Are you sure?',
-                      :method => :delete %>
+                      :confirm => 'Delete comment?',
+                      :method => :delete,
+	 				  :title => 'Delete' %>
       <%- end -%>
   </p>
-  <div class="forum entry-content">
-  <%= display forum_post.body %>
-  </div>
+  <div class="clear"></div>
 </li>

@@ -1,13 +1,26 @@
-<%= error_messages_for :photo %>
+<%- column_div :type => :primary do -%>
+  <%= error_messages_for :photo %>
+  <h2>Update Photo</h2>
 
-<% form_for @photo, :html => { :multipart => true } do |f| -%>
-  <div class="form_field">
-    <%= image_tag(@display_photo.public_filename(:thumbnail)) %><br />
-    <label for="photo">Update your photo:</label><br />
-    <%= f.file_field :uploaded_data %>
-  </div>
-  <div class="form_field">
-    <%= submit_tag 'Update' %>
-    <%= f.submit "Cancel", :id => "cancel" %>
-  </div>
+  <h3>Current Image</h3>
+  <p><%= image_tag(@display_photo.public_filename(:thumbnail)) %></p>
+
+  <h3>Select New Image</h3>
+  <% form_for @photo, :html => { :multipart => true } do |f| -%>
+    <div class="form_field">
+      <%= f.file_field :uploaded_data %>
+    </div>
+    <div class="form_field">
+	  <%= f.label :label %>
+      <%= f.text_field :label %>
+    </div>
+    <div class="form_field">
+	  <%= f.label :description %>
+      <%= f.text_area :description %>
+    </div>
+    <div class="form_field">
+      <%= submit_tag 'Update', :class => 'button' %>
+      <%= f.submit "Cancel", :id => "cancel", :class => 'button' %>
+    </div>
+  <% end -%>
 <% end -%>

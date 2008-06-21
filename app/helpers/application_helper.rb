@@ -116,17 +116,15 @@ module ApplicationHelper
     else
       path = new_person_message_path(person)
     end
-    img = image_tag("icons/email.gif")
+    img = image_tag("icons/email_add.png")
     if reply.nil?
-      action = to_all.nil? ? "Send a message" : "Message to Everyone"
+      action = to_all.nil? ? "Send Message" : "Message to Everyone"
     else
-      action = "Send reply"
+      action = "Send Reply"
     end
     opts = { :class => 'email-link' }
     if use_image
-      str = link_to(img, path, opts)
-      str << "&nbsp;"
-      str << link_to_unless_current(action, path, opts)
+      str = link_to(action + ' ' + img, path, opts)
     else
       str = link_to_unless_current(action, path, opts)
     end

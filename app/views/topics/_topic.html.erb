@@ -2,7 +2,6 @@
   <a name="topic_<%= topic.id %>"></a>
   <div class="profile-image">
     <%= image_link topic.person, :image => :thumbnail %>
-    <%= image_tag "icons/new.gif", :class => "icon", :alt => "Topic" %>
   </div>
   <div class="topic_body">
     <%- n = topic.posts.count -%>
@@ -11,17 +10,17 @@
                 :class => "show-follow" %>
     <span class="meta">(<%= pluralize(n, "post") %>)</span>
     <p class="meta">
-      Created by <%= person_link topic.person %>
+      Started by <%= person_link topic.person %>
       <%= time_ago_in_words(topic.created_at) %> ago
       <%- if admin? -%>
-        <%= link_to image_tag("icons/edit.gif", :class => 'actioner'),  
+        <%= link_to image_tag("icons/note_edit.png", :class => 'actioner'),  
 				  edit_forum_topic_path(topic.forum, topic),
 				  :title => 'Edit Topic' %>
-	    <%= link_to image_tag("icons/close.gif", :class => 'actioner'), 
+	    <%= link_to image_tag("icons/note_delete.png", :class => 'actioner'), 
          		  forum_topic_path(topic.forum, topic), 
          		  :method => :delete,
          		  :confirm => "Are you sure you want to delete this Topic?",
-				  :title => "Delete Topic?" %>
+				  :title => "Delete Topic" %>
       <%- end -%>
     </p>
   </div>

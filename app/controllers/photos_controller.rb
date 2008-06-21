@@ -42,7 +42,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.save
         flash[:success] = "Photo successfully uploaded"
-        format.html { redirect_to(edit_person_path(current_person)) }
+        format.html { redirect_to photos_url() }
       else
         format.html { render :action => "new" }
       end
@@ -61,7 +61,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.update_attributes(:primary => true)
         @old_primary.each { |p| p.update_attributes!(:primary => false) }
-        format.html { redirect_to(edit_person_path(current_person)) }
+        format.html { redirect_to(photos_path()) }
       else    
         format.html do
           flash[:error] = "Invalid image!"
@@ -82,7 +82,7 @@ class PhotosController < ApplicationController
     @photo.destroy
     flash[:success] = "Photo deleted"
     respond_to do |format|
-      format.html { redirect_to edit_person_url(current_person) }
+      format.html { redirect_to photos_path() }
     end
   end
   

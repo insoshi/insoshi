@@ -7,9 +7,9 @@
   </div>
   <p>
     <%- if not message.read? and not current_person?(message.sender) -%>
-      <%= image_tag("icons/email.gif", :class => "icon") %>
+      <%= image_tag("icons/email.png", :class => "icon") %>
     <%- elsif message.replied_to? -%>
-      <%= image_tag("icons/reply.gif", :class => "icon" )  %>
+      <%= image_tag("icons/email-go.png", :class => "icon" )  %>
     <%- end -%>    
     <%- if current_person?(message.sender) -%>
       <span class="label">To:</span>

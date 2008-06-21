@@ -36,15 +36,15 @@
     <ul class="tools">
      <%- if logged_in? -%>
       <%- unless Connection.exists?(@person, current_person) -%>
-        <li><%= link_to "Request a Connection?", person_connections_path(@person), :method => :post %></li>
+        <li><%= link_to "Request Connection", person_connections_path(@person), :method => :post %></li>
       <%- end -%>
       <%- if Connection.connected?(@person, current_person) -%>
-        <li><%= link_to "Remove this connection?", connection_path(Connection.conn(current_person, @person)), 
+        <li><%= link_to "Remove Connection " + image_tag('icons/user_delete.png'), connection_path(Connection.conn(current_person, @person)), 
            		:method => :delete,
            		:confirm => "Are you sure you want to remove this connection?" %>
         </li>
       <%- end -%>
-      <li><%= email_link(@person, :use_image => false) %></li>
+      <li><%= email_link(@person) %></li>
     <%- end -%>
 	<% if !@person.blog.posts.empty? %>
         <li><%= link_to "Read blog", blog_path(@person.blog) %></li>

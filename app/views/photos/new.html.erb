@@ -1,14 +1,21 @@
-<h2>Profile photo upload</h2>
+<h2>Add a Photo</h2>
 <%= error_messages_for :photo %>
 
+<h3>Select New Image</h3>
 <% form_for @photo, :html => { :multipart => true } do |f| -%>
-
   <div class="form_field">
-    <label for="photo">Upload a photo:</label>
     <%= f.file_field :uploaded_data %>
   </div>
   <div class="form_field">
-    <%= submit_tag 'Upload', :class => "button" %>
-    <%= f.submit "Cancel", :id => "cancel", :class => "button" %>
+    <%= f.label :label %>
+    <%= f.text_field :label %>
+  </div>
+  <div class="form_field">
+	  <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+  <div class="form_field">
+    <%= submit_tag 'Update', :class => 'button' %>
+    <%= f.submit "Cancel", :id => "cancel", :class => 'button' %>
   </div>
 <% end -%>

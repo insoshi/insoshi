@@ -1,7 +1,13 @@
-<% unless @photos.empty? %>
-<ul style="list-style-type: none;">
-<% @photos.each do |photo| %>
-  <li><%= image_tag(photo.public_filename) %></li>
-<% end %>
-</ul>
+<%- column_div :type => :primary, :id => 'photos' do -%>
+  <% unless @photos.empty? %>
+	  <h2><%= current_person.name %>'s Photos</h2>
+	  <div class="button_container">
+		    <div class="button"><%= link_to "Add Photo", new_photo_path() %></div>
+		    <div class="clear"></div>
+	  </div>
+	  <ul class="">
+	    <%= render :partial => '/photos/photo', :collection => @photos %>
+	  </ul>
+	</div>
+  <% end %>
 <% end %>

@@ -3,8 +3,10 @@
   <ul class="list topic full">
     <%= render :partial => 'forum_post', :collection => @posts %>
   </ul>
+<%- end -%>
 
-  <h3>Add new post</h3>
+<%- column_div :type => :secondary do -%>
+  <h2>Add Reply</h2>
 
   <p><%= formatting_note %></p>
 
@@ -13,16 +15,11 @@
   <% form_for :post,
               :url => forum_topic_posts_path(@forum, @topic)  do |f| %>
     <div class="form_row">
-      <%= f.text_area :body, :rows => 10 %>
+      <%= f.text_area :body, :rows => 10, :cols => 30 %>
     </div>
 
     <div class="form_row">
       <%= f.submit "Submit", :class => "button" %>
     </div>
   <% end %>
-
-<%- end -%>
-
-<%- column_div :type => :secondary do -%>
-  <%= render :partial => 'shared/minifeed' %>
 <%- end -%>

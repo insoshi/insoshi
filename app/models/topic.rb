@@ -1,13 +1,13 @@
 # == Schema Information
-# Schema version: 25
+# Schema version: 28
 #
 # Table name: topics
 #
-#  id                :integer(11)     not null, primary key
-#  forum_id          :integer(11)     
-#  person_id         :integer(11)     
+#  id                :integer         not null, primary key
+#  forum_id          :integer         
+#  person_id         :integer         
 #  name              :string(255)     
-#  forum_posts_count :integer(11)     default(0), not null
+#  forum_posts_count :integer         default(0), not null
 #  created_at        :datetime        
 #  updated_at        :datetime        
 #

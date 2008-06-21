@@ -7,10 +7,11 @@
     <%= person_link comment.commenter %> said
     <%= time_ago_in_words(comment.created_at) %> ago
     <%- if current_person?(comment.commentable) -%>
-      <%= link_to image_tag("icons/close.gif", :class => 'actioner'), 
+      <%= link_to image_tag("icons/comment_delete.png", :class => 'actioner'), 
 						person_comment_path(@person, comment),
                         :method => :delete,
- 						:title => 'Delete wall post?' %>
+						:confirm => %('Delete this wall post?'),
+ 						:title => 'Delete wall post' %>
     <%- end -%>  
   </p>
   <%= display comment.body %>

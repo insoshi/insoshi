@@ -380,8 +380,8 @@ ul.ui-tabs-nav li {
 #tRecentActivity h2, #tPhotos h2 {margin-bottom: 10px;}
 #tRecentActivity p.meta {font-variant: small-caps;}
 #tRecentActivity ul li, #tWall ul li, #tWall ul li div {display: block; border-bottom: none;}
-#tWall form, form#admin_preferences, form#admin_forums {border-bottom: none;}
-#tPhotos ul li {
+#tWall form, form#admin_preferences, form#admin_forums, form.edit_photo, .col2 form {border-bottom: none;}
+#tPhotos ul li, #photos ul li {
     background: url(/images/blue-grad.jpg) bottom repeat-x;
 	margin: 10px;
     float: left;
@@ -392,13 +392,10 @@ ul.ui-tabs-nav li {
 	padding: 4px;
 	overflow: hidden;
 }
-#tPhotos ul li .first {
-    clear: both;
-}
-#tPhotos ul li img {
+#tPhotos ul li img, #photos ul li img {
 	vertical-align: top;
 }
-#tPhotos form {
+#tPhotos form, , #photos form {
 	margin-top: 20px;
 	border-bottom: none;
 }
@@ -424,6 +421,10 @@ img.actioner {vertical-align: text-bottom;}
 .contacts.grid.medium li.vcard {
 	line-height: 1em;
 }
+ul.people li.vcard p {
+	margin-left: 80px;
+	vertical-align: top;
+}
 .prefItem {
 	clear: both;
 	padding-bottom: 30px;
@@ -443,14 +444,15 @@ img.actioner {vertical-align: text-bottom;}
 	border: 1px solid #ccc;
 	padding: 5px;
 }
-.forum .topic {
-	
+.forum .topic li {
+  border-bottom: 1px solid #ccc;
+  display: block;
 }
 .forum .topic .profile-image {
   float: left;
   /* overflow: hidden; this hides the activity icon when no member thumbnail */
   position: relative;
-  width: 102px;
+  width: 80px;
 }
 .forum .topic .topic_body {
   float: left;
@@ -498,4 +500,7 @@ ul.admin li {display: list-item; list-style-image: url(/images/icons/switch.gif)
 }
 .list .message img.icon {
   margin-left: -20px;
+}
+.forum .entry_content {
+	clear: both;
 }

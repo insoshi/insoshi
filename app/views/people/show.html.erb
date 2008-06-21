@@ -18,14 +18,12 @@
   </div>
 
   <div id="tPhotos">
-    <div class="innerTabLeft">
 	  <h2><%= @person.name %>'s Photos</h2>
-	  <%= render_partial 'photos/photos' %>
-	</div>
-    <div class="innerTabRight">
-	  <%= render :partial => 'photos/add_photo', :locals => {:photo => @person.photo} %>
-    </div>
-    <div class="clear"></div>
+	  <div class="button_container">
+		    <div class="button"><%= link_to "Add Photo", new_photo_path() %></div>
+		    <div class="clear"></div>
+	  </div>
+	  <%= render_partial 'photos/photos', :locals => {:photos => @person.photos} %>
   </div>
 
   <div id="tContacts">

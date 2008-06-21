@@ -30,7 +30,7 @@ h2 {
   border-bottom: 1px solid #ccc;
   color: #069;
   clear: both;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: Papyrus, Georgia, "Times New Roman", Times, serif;
   font-size: 22px;
   font-weight: normal;
   line-height: 1.4em;
@@ -132,6 +132,9 @@ p.welcome a, p.welcome a:visited {
   color: #aaa;
   font-size: 12px;
   line-height: 1.8em;
+}
+.list.topic.full p.meta {
+  border-top: 1px dashed #e0e0e0;
 }
 p.meta, li p.meta {
   font-size: 12px;
@@ -343,7 +346,7 @@ strong { font-weight: bold; }
 .disabled   {color: #c0c0c0;} /* greyed out to emphasize unavailability */
 
 #new_form_subject form {border-bottom: none;}
-#new_form_subject input {width: 138px; vertical-align: top;}
+#new_form_subject input, #photos .button, #tPhotos .button {width: 138px; vertical-align: top;}
 #new_form_subject .button {width: 72px;}
 .button a, .button {color: #ffffff;}
 .button_container {margin: 10px 0px;}
