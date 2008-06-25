@@ -66,11 +66,9 @@ module ActivitiesHelper
         %(description changed)
       end
     when "Gallery"
-      %(#{person_link(person)} added new gallery 
-        #{gallery_link(activity.item)}.)
+      %(#{person_link(person)} added new gallery #{gallery_link(activity.item)}.)
     when "Photo"
-      %(#{person_link(person)} added new #{photo_link(activity.item)} to the 
-        #{gallery_link(activity.item.gallery)} gallery)
+      %(#{person_link(person)} added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -114,10 +112,9 @@ module ActivitiesHelper
     when "Person"
       %(#{person_link_with_image(person)}'s description changed)
     when "Gallery"
-      %(#{person_link(person)} added new gallery 
-        #{gallery_link(activity.item)}.)
+      %(#{person_link(person)} added new gallery #{gallery_link(activity.item)}.)
     when "Photo"
-      %(#{person_link(person)} added new #{photo_link(activity.item)} to the  #{gallery_link(activity.item.gallery)} gallery)  
+      %(#{person_link(person)} added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -186,6 +183,14 @@ module ActivitiesHelper
       text = gallery.title
     end
     link_to(h(text), gallery_path(gallery))
+  end
+  
+  def to_gallery_link(text = nil, gallery = nil)
+    if text.nil?
+      ''
+    else
+      'to the ' + gallery_link(text, gallery) + ' gallery'
+    end
   end
   
   def photo_link(text, photo= nil)
