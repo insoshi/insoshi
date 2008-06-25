@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 25
+# Schema version: 30
 #
 # Table name: people
 #
@@ -26,6 +26,7 @@
 #  email_verified             :boolean         
 #  demo                       :boolean         
 #  preferences                :boolean         
+#  avatar_id                  :integer(11)     
 #
 
 class Person < ActiveRecord::Base
@@ -42,8 +43,8 @@ class Person < ActiveRecord::Base
 
   MAX_EMAIL = MAX_PASSWORD = SMALL_STRING_LENGTH
   MAX_NAME = SMALL_STRING_LENGTH
+  MAX_DESCRIPTION = MAX_TEXT_LENGTH
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
-  DESCRIPTION_LENGTH = 2000
   TRASH_TIME_AGO = 1.month.ago
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
@@ -86,7 +87,8 @@ class Person < ActiveRecord::Base
   end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE
+                                            :limit => FEED_SIZE,
+                                            :dependent => :destroy
   has_many :page_views, :order => 'created_at DESC'
   
   # has_easy fields
@@ -109,6 +111,8 @@ class Person < ActiveRecord::Base
                   :postprocess => Proc.new { |value| value ? 'true' : 'false' }
   end
   
+  has_many :galleries
+
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
@@ -117,6 +121,7 @@ class Person < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :email, :within => 6..MAX_EMAIL
   validates_length_of       :name,  :maximum => MAX_NAME
+  validates_length_of       :description, :maximum => MAX_DESCRIPTION
   validates_format_of       :email,
                             :with => EMAIL_REGEX,
                             :message => "must be a valid email address"
@@ -124,7 +129,7 @@ class Person < ActiveRecord::Base
 
   before_create :create_blog
   before_save :encrypt_password
-  before_validation :prepare_email
+  before_validation :prepare_email, :handle_nil_description
   after_create :connect_to_admin
 
   before_update :set_old_description
@@ -261,10 +266,10 @@ class Person < ActiveRecord::Base
   end
 
   ## Photo helpers
-
+  
   def photo
     # This should only have one entry, but be paranoid.
-    photos.find_all_by_primary(true).first
+    photos.find_all_by_avatar(true).first
   end
 
   # Return all the photos other than the primary one
@@ -406,8 +411,19 @@ class Person < ActiveRecord::Base
 
     ## Callbacks
 
+    # Prepare email for database insertion.
     def prepare_email
       self.email = email.downcase.strip if email
+    end
+
+    # Handle the case of a nil description.
+    # Some databases (e.g., MySQL) don't allow default values for text fields.
+    # By default, "blank" fields are really nil, which breaks certain
+    # validations; e.g., nil.length raises an exception, which breaks
+    # validates_length_of.  Fix this by setting the description to the empty
+    # string if it's nil.
+    def handle_nil_description
+      self.description = "" if description.nil?
     end
 
     def encrypt_password

@@ -1,0 +1,20 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+
+valid_gallery:
+    person: quentin
+    title: "Title"
+    description: "Some description"
+    
+aarons_gallery:
+    person: aaron
+
+invalid_gallery:
+    person_id: NULL
+    title: "Title"
+    description: "Some description"

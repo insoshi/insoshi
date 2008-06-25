@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 25
+# Schema version: 30
 #
 # Table name: photos
 #
@@ -9,18 +9,22 @@
 #  content_type :string(255)     
 #  filename     :string(255)     
 #  thumbnail    :string(255)     
-#  size         :integer         
-#  width        :integer         
-#  height       :integer         
-#  primary      :boolean         
+#  size         :integer(11)     
+#  width        :integer(11)     
+#  height       :integer(11)     
 #  created_at   :datetime        
 #  updated_at   :datetime        
+#  gallery_id   :integer(11)     
+#  title        :string(255)     
+#  position     :integer(11)     
 #
 
 class Photo < ActiveRecord::Base
   include ActivityLogger
   UPLOAD_LIMIT = 5 # megabytes
   
+  belongs_to :gallery, :counter_cache => true
+  acts_as_list :scope => :gallery_id
   belongs_to :person
   has_attachment :content_type => :image, 
                  :storage => :file_system, 
@@ -29,11 +33,19 @@ class Photo < ActiveRecord::Base
                  :resize_to => '240>',
                  :thumbnails => { :thumbnail    => '72>',
                                   :icon         => '36>',
-                                  :bounded_icon => '36x36>' }
+                                  :bounded_icon => '36x36>' },
+                 :thumbnail_class => Thumbnail
   
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
     
-  after_save :log_activity
+  validates_length_of :title, :maximum => 255, :allow_nil => true
+  validates_presence_of :person_id
+  validates_presence_of :gallery_id
+  after_create :log_activity
+  
+  def self.per_page
+    16
+  end
                  
   # Override the crappy default AttachmentFu error messages.
   def validate
@@ -55,10 +67,8 @@ class Photo < ActiveRecord::Base
   end
   
   def log_activity
-    if self.primary?
       activity = Activity.create!(:item => self, :person => self.person)
       add_activities(:activity => activity, :person => self.person)
-    end
   end
 
 end

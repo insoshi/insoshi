@@ -1,0 +1,42 @@
+<%- column_div :type => :primary do -%>
+	<% if !@photo.title.nil?%>
+		<h2> <%= h(@photo.title)%></h2>
+	<% end %>
+	<div class="pagination">
+		<% if !@photo.first? %>
+			<%= link_to h("Previous"), photo_path(@photo.higher_item)%>
+		<% else %>
+			<span class="disabled"> Previous </span>
+		<% end %>
+		<% if !@photo.last? %>
+			<%= link_to h("Next"), photo_path(@photo.lower_item) %>
+		<% else %>
+			<span class="disabled"> Next </span>
+		<% end %>
+	</div>
+	<div class = "photo">
+		<%= image_tag(@photo.public_filename) %>
+	</div>
+<% end %>
+
+<%- column_div :type => :secondary do -%>
+	<h2> Toolbox </h2>
+	<div class="toolbox">
+		<ul>
+			<% if current_person?(@photo.person)%>
+				<% if @photo.gallery.primary_photo != @photo%>
+					<li><%=link_to "Set as primary photo of the gallery", set_primary_photo_path(@photo), :confirm => "Do you really want to set this photo as primary?", :method => :put %> </li>
+				<% end %>
+				<% if @photo.person.photo != @photo%>
+					<li><%=link_to "Set as avatar", set_avatar_photo_path(@photo), :confirm => "Do you really want to set this photo as avatar?", :method => :put %> </li>
+				<% end %>
+				<li>	<%=link_to "Edit", edit_photo_path(@photo) %> </li>
+				<li> <%=link_to "Delete", photo_path(@photo), :method => :delete, :confirm => "Do you really want to delete the photo?"%> </li>
+			<% end %>
+			<li><%=link_to "Go back to gallery", gallery_path(@photo.gallery)%></li>
+		</ul>
+	</div>
+	<%= render :partial => 'shared/minifeed' %>
+<%- end-%>
+	
+	

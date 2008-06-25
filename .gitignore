@@ -2,6 +2,7 @@ log/*.log
 log/*.out
 log/*.pid
 tmp/**/*
+.dotest/
 .dotest/*.
 .DS_Store
 doc/api
@@ -12,6 +13,7 @@ db/schema.sql
 db/*.sqlite3*
 config/database.yml
 public/photos/*
+public/thumbnails/*
 uuid.state
 nbproject*
 index/*

@@ -5,6 +5,7 @@ describe ActivitiesHelper do
 
   before(:each) do
     @current_person = login_as(:aaron)
+    @gallery = galleries(:aarons_gallery)
     # It sucks that RSpec makes me do this.
     self.stub!(:logged_in?).and_return(true)
     self.stub!(:current_person).and_return(people(:aaron))
@@ -48,8 +49,12 @@ describe ActivitiesHelper do
   end
   
   it "should have the right message for a photo" do
-    activity = Activity.new(:item => mock_photo, :person => @current_person)
-    feed_message(activity).should =~ /profile picture/
+    @filename = "rails.png"
+    @image = uploaded_file(@filename, "image/png")
+    photo = Photo.new({:uploaded_data => @image, :person => @current_person, :gallery => @gallery})
+    photo.save
+    activity = Activity.find_by_item_id(photo)
+    feed_message(activity).should =~ /photo/
   end
 
 end

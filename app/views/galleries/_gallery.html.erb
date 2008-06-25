@@ -1,0 +1,16 @@
+<div class="gallery_list_item">
+	<%=link_to image_tag(gallery.thumbnail_url), gallery_path(gallery)%>
+	<div class="description">
+	<p>	
+		<%= link_to h(gallery.title), gallery_path(gallery)%>
+	</p>
+	<p>
+		<%= h(truncate(gallery.description, 60, "..."))%>
+	</p>
+	<% if current_person?(gallery.person)%>
+	<div class="tools">
+		<%= link_to "Edit", edit_gallery_path(gallery) %> | <%= link_to "Delete", gallery_path(gallery), :method => :delete, :confirm => "Do you really want to delete #{h gallery.title} gallery"%> <br/>
+	</div>
+	<%-end-%>
+</div>
+</div>

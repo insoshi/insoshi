@@ -25,14 +25,38 @@ describe Person do
       p = create_person(:email => nil)
       p.errors.on(:email).should_not be_nil
     end
+    
+    it "should prevent duplicate email addresses using a unique key" do
+      create_person(:save => true)
+      duplicate = create_person
+      lambda do
+        # Pass 'false' to 'save' in order to skip the validations.
+        duplicate.save(false)
+      end.should raise_error(ActiveRecord::StatementInvalid)
+    end
 
     it "should require name" do
       p = create_person(:name => nil)
       p.errors.on(:name).should_not be_nil
     end
 
-    it "should treat spaces in email field" do
+    it "should strip spaces in email field" do
       create_person(:email => 'example@example.com ').should be_valid
+    end
+    
+    it "should be valid even with a nil description" do
+      p = create_person(:description => nil)
+      p.should be_valid
+    end
+  end
+  
+  describe "length validations" do
+    it "should enforce a maximum name length" do
+      @person.should have_maximum(:name, Person::MAX_NAME)
+    end
+    
+    it "should enforce a maximum description length" do
+      @person.should have_maximum(:description, Person::MAX_DESCRIPTION)
     end
   end
 
@@ -50,6 +74,28 @@ describe Person do
       Activity.global_feed.should_not contain(activity)
     end
 
+    it "should disappear if the person is destroyed" do
+      # Create a person, which creates a connection activity
+      # (with the first admin) as a side-effect, thereby ensuring a
+      # nonempty feed.
+      person = create_person(:save => true)
+      Activity.find_all_by_person_id(person).should_not be_empty
+      person.destroy
+      Activity.find_all_by_person_id(person).should be_empty
+      Feed.find_all_by_person_id(person).should be_empty
+    end
+
+    it "should disappear from other feeds if the person is destroyed" do
+      # Both these people are connected to the first admin.
+      initial_person = create_person(:save => true)
+      # This creates an activity in the initial_person's feed.
+      person         = create_person(:email => "new@foo.com", :name => "Foo",
+                                     :save => true)
+      initial_person.activities.length.should == 2
+      person.destroy
+      # The connection between person and the admin should be destroyed.
+      initial_person.reload.activities.length.should == 1
+    end
   end
 
   describe "utility methods" do
@@ -159,10 +205,10 @@ describe Person do
   describe "photo methods" do
 
     before(:each) do
-      @photo_1 = mock_photo(:primary => true)
+      @photo_1 = mock_photo(:avatar => true)
       @photo_2 = mock_photo
       @photos = [@photo_1, @photo_2]
-      @photos.stub!(:find_all_by_primary).and_return([@photo_1])
+      @photos.stub!(:find_all_by_avatar).and_return([@photo_1])
       @person.stub!(:photos).and_return(@photos)
     end
 

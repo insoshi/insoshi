@@ -97,7 +97,7 @@ describe PeopleController do
       end.should_not change(Person, :count)
     end
     
-    describe "email validations" do
+    describe "email verifications" do
       
       before(:each) do
         logout
