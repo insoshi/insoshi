@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 25
 #
 # Table name: photos
 #
@@ -15,8 +15,6 @@
 #  primary      :boolean         
 #  created_at   :datetime        
 #  updated_at   :datetime        
-#  description  :text            
-#  label        :string(255)     
 #
 
 class Photo < ActiveRecord::Base

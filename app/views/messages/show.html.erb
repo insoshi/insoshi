@@ -1,29 +1,32 @@
 <%- column_div :type => :primary do -%>
   <% if current_person?(@message.sender) %>
     <% other_person = @message.recipient %>
-    <% heading = "Message sent to #{h other_person.name}" %>
+    <% heading = "Sent to " %>
   <% else %>
     <% other_person = @message.sender %>
-    <% heading = "Message from #{h other_person.name}" %>
+    <% heading = "Sent by " %>
   <% end %>
   
-  <h2><%= heading %></h2>
+  <h2><%= @message.subject %></h2>
 
   <%= render :partial => 'message_nav' %>
   
-  <h3 class="subject">
-  <%= image_link other_person %>
-  <%= @message.subject %></h3>
   <%= display @message.content %>
   <p class="meta tools">
-    Sent <%= time_ago_in_words @message.created_at %> ago |
-    <%= link_to "Reply", reply_message_path(@message) %> |
+    <%= heading + person_link(other_person) -%> <%= time_ago_in_words @message.created_at %> ago
+    <%= link_to(image_tag("icons/email_go.png", :class => 'actioner'), 
+                      reply_message_path(@message),
+	 					:title => "Reply to this message") %>
     <% unless @message.trashed?(current_person) -%>
-      <%= link_to("Trash", @message, :method => :delete) %>
+      <%= link_to(image_tag("icons/email_delete.png", :class => 'actioner'), 
+                        message_path(@message), 
+                        :method => :delete, 
+                        :confirm => %(Delete this message?),
+	 					:title => "Delete this message") %>
     <% else -%>
       <%= link_to "Untrash", undestroy_message_path(@message), 
                              :method => :put %>
-    <% end -%>
+    <% end -%>    
   </p>
 
 <%- end -%>

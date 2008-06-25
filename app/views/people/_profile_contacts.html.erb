@@ -1,0 +1,12 @@
+<div class="innerTabLeft">
+  <h2>Contacts for <%= @person.name %></h2>
+  <% if @person.connections.count > Person::MAX_DEFAULT_CONTACTS %>
+    <div class='button see_all_link'><%= link_to "See All Contacts", person_connections_path(@person) %></div>
+  <% end %>
+  <%= render :partial => 'shared/contacts_grid', :locals => { :contacts => @contacts } %>
+  <%= render :partial => 'common_contacts' %>
+</div>
+<div class="innerTabRight">
+  <%= render :partial => 'searches/box' %>
+</div>
+<div class="clear"></div>

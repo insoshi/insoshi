@@ -63,6 +63,7 @@ Rails::Initializer.run do |config|
 end
 
 require 'bluecloth'
+require 'vendor/plugins/jquery_ui_rails_helpers/helpers/tabs_renderer'
 
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation

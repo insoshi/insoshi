@@ -18,6 +18,7 @@ index/*
 identifier
 .project
 .#*
+tmp
 tmp/.*
 \#*
 *~

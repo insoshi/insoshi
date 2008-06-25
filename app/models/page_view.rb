@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 25
 #
 # Table name: page_views
 #
@@ -11,7 +11,6 @@
 #  created_at  :datetime        
 #  updated_at  :datetime        
 #  person_id   :integer         
-#  user_id     :integer         
 #
 
 class PageView < ActiveRecord::Base

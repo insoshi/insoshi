@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 25
 #
 # Table name: people
 #
@@ -24,6 +24,8 @@
 #  wall_comment_notifications :boolean         default(TRUE)
 #  blog_comment_notifications :boolean         default(TRUE)
 #  email_verified             :boolean         
+#  demo                       :boolean         
+#  preferences                :boolean         
 #
 
 class Person < ActiveRecord::Base
@@ -86,6 +88,26 @@ class Person < ActiveRecord::Base
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
                                             :limit => FEED_SIZE
   has_many :page_views, :order => 'created_at DESC'
+  
+  # has_easy fields
+  has_easy :prefs do |p|
+    p.define :en_connections, :default => false,
+                  :type_check => [TrueClass, FalseClass],
+                  :preprocess => Proc.new{ |value| value == 'true' },
+                  :postprocess => Proc.new { |value| value ? 'true' : 'false' }
+    p.define :en_messages, :default => false,
+                  :type_check => [TrueClass, FalseClass],
+                  :preprocess => Proc.new{ |value| value == 'true' },
+                  :postprocess => Proc.new { |value| value ? 'true' : 'false' }
+    p.define :en_walls, :default => false,
+                  :type_check => [TrueClass, FalseClass],
+                  :preprocess => Proc.new{ |value| value == 'true' },
+                  :postprocess => Proc.new { |value| value ? 'true' : 'false' }
+    p.define :en_blogs, :default => false,
+                  :type_check => [TrueClass, FalseClass],
+                  :preprocess => Proc.new{ |value| value == 'true' },
+                  :postprocess => Proc.new { |value| value ? 'true' : 'false' }
+  end
   
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?

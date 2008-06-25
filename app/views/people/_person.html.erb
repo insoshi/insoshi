@@ -1,4 +1,5 @@
-<li class="vcard person">
+<% person_class = (person.eql?@people.last()) ? ' last' : '' %>
+<li class="vcard person<%= person_class -%>">
   <div class="profile-image">
     <%= image_link person, :class => "photo", :image => :thumbnail %>
   </div>

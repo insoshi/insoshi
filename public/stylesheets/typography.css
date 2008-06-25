@@ -28,14 +28,16 @@ h6 {
 h2 {
   background: url(/images/yellow-grad.jpg) 30px 10px repeat-x;
   border-bottom: 1px solid #ccc;
-  color: #069;
+  color: #6AA2FD;
   clear: both;
-  font-family: Papyrus, Georgia, "Times New Roman", Times, serif;
   font-size: 22px;
   font-weight: normal;
   line-height: 1.4em;
   margin-top: 24px;
   padding-left: 6px;
+}
+h2, p.welcome span, .powered_by {
+  font-family: Papyrus, Georgia, "Times New Roman", Times, serif;
 }
 li h2 {font-size: 1em;}
 h2 a, h3 a {
@@ -98,7 +100,7 @@ pre {
   padding: 1em;
 }
 a:link,a:visited {
-  color: #069;
+  color: #6AA2FD;
   font-weight: bold;
   text-decoration: none;
 }
@@ -140,7 +142,7 @@ p.meta, li p.meta {
   font-size: 12px;
 }
 .label {
-  font-weight: normal;
+  font-weight: bold;
 }
 body.blog .comments p, body.forum .reply p {
   font-size: 12px;
@@ -232,7 +234,7 @@ input, textarea, select {
   margin-bottom: 1em;
 }
 input.button, button, input[submit], input[button] {
-  background: #006699 url(/images/header-grad.jpg) bottom repeat-x;
+  background: #006699 url(/images/header-grad-lt.jpg) bottom repeat-x;
   border: 1px solid #ccc;
   clear: both;
   cursor: pointer;
@@ -248,11 +250,11 @@ div.button {
 	margin-right: 20px;
 }
 div.button a {
-	background: #006699 url(/images/header-grad.jpg) bottom repeat-x;
+	background: #006699 url(/images/header-grad-lt.jpg) bottom repeat-x;
 	padding: 3px 12px;
 }
 input.button, div.button a:hover, input[button], input[submit], button {
-  background: url(/images/header-grad-inv.jpg) top repeat-x;
+  background: url(/images/header-grad-inv-lt.jpg) top repeat-x;
 }
 
 .col1 textarea {
@@ -294,11 +296,11 @@ body.single-col .col1 form input.checkbox {
   clear: none;
   margin: 0;
   width: 72px;
-  background: #006699 url(/images/header-grad.jpg) bottom repeat-x;
+  background: #006699 url(/images/header-grad-lt.jpg) bottom repeat-x;
   color: #ffffff;
 }
 #frmSearch #btnSearch.button:hover {
-  background: url(/images/header-grad-inv.jpg) top repeat-x;
+  background: url(/images/header-grad-inv-lt.jpg) top repeat-x;
 }
 
 form a.add-recipient {

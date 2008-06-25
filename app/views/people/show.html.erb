@@ -1,45 +1,43 @@
-<div id="tabCol">
-  <ul> <!-- this list sets up the jQuery tabs, with the content of each tab in the linked div -->
-	<li><a href="#tProfile"><span>Profile</span></a></li>
-	<li><a href="#tRecentActivity"><span>Recent Activity</span></a></li>
-	<li><a href="#tWall"><span>Wall</span></a></li>
-	<li><a href="#tContacts"><span>Contacts</span></a></li>
-	<li><a href="#tPhotos"><span>Photos</span></a></li>
-  </ul>
-  <div id="tProfile" class="profile vcard">
+<% tabs = TabsRenderer.new(self, :id => "tabCol") %>
+  <% tabs.create('tProfile', 'Profile', :class => "profile vcard") do %>
 	<%= render_partial 'profile' %>
-  </div>
+  <% end %>
 
-  <div id="tRecentActivity">
+  <% tabs.create('tRecentActivity', 'Recent Activity') do %>
     <%= render :partial => 'recent_activity' %>
-  </div>
-  <div id="tWall">
-    <%= render :partial => 'wall' %>
-  </div>
+  <% end %>
 
-  <div id="tPhotos">
+  <% tabs.create('tContacts', 'Contacts') do %>
+    <%= render :partial => 'profile_contacts' %>
+  <% end %>
+
+  <% tabs.create('tWall', 'Wall') do %>
+    <%= render :partial => 'wall' %>
+  <% end %>
+
+  <% tabs.create('tPhoto', 'Photos') do %>
 	  <h2><%= @person.name %>'s Photos</h2>
 	  <div class="button_container">
 		    <div class="button"><%= link_to "Add Photo", new_photo_path() %></div>
 		    <div class="clear"></div>
 	  </div>
-	  <%= render_partial 'photos/photos', :locals => {:photos => @person.photos} %>
-  </div>
-
-  <div id="tContacts">
-	  <div class="innerTabLeft">
-        <h2>Contacts for <%= @person.name %></h2>
-		<% if @person.connections.count > Person::MAX_DEFAULT_CONTACTS %>
-	      <div class='button see_all_link'><%= link_to "See All Contacts", person_connections_path(@person) %></div>
+	  <% unless @person.photos.empty? %>
+	  <ul class="">
+		<% @person.photos.each do |photo| %>
+		  <li>
+			<p class="gallPhotoTitle">
+			  <%= link_to photo_title(photo.filename), '#gpu' + photo_id(photo), :rel => 'facebox' %>
+			  <div style="display: none;" id="gpu<%= photo_id(photo) -%>"><%= image_tag photo.public_filename -%> <div class="gpuTitle"><%= photo_title(photo.filename) -%> </div></div>
+			</p>
+			<p class='gallPhoto'>
+			  <%= image_tag(photo.public_filename(:thumbnail)) %>
+		    <%= link_to image_tag("icons/picture_edit.png", :class => 'actioner'), edit_photo_path(photo) %>
+		    <%= link_to image_tag("icons/picture_delete.png", :class => 'actioner'), photo_path(photo), :method => :delete %>
+			</p>
+		  </li>
 		<% end %>
-        <%= render :partial => 'shared/contacts_grid',
-	                 :locals => { :contacts => @contacts } %>
-		<%= render :partial => 'common_contacts' %>
-	  </div>
-	  <div class="innerTabRight">
-		<%= render :partial => 'searches/box' %>
-	  </div>
-	  <div class="clear"></div>
-  </div>
-</div>
+	  </ul>
+	  <% end %>
+  <% end %>
+<%= tabs.render %>
 

@@ -2,11 +2,8 @@
   <h2>Edit Your Profile</h2>
 
   <div id="profile_edit">
-
     <%= error_messages_for :person %>
-    
     <% form_for @person do |f| %>
-
       <div class="form_row">
         <label for="person_name">Name</label>
         <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
@@ -18,7 +15,6 @@
       </div>
       
       <%- if global_prefs.email_notifications? -%>
-      
         <a name="email_prefs"></a>
 		<h3>Email notification preferences</h3>
       
@@ -26,117 +22,61 @@
       
         <div class="form_row">
           <p>
-          <label for="connection_notifications"
-                 class="checkbox">Connections:</label>
-          <%= f.check_box :connection_notifications %>
+            <%= f.label :prefs_en_connections, 'Connections', :class => "checkbox" %>
+            <%= f.check_box :prefs_en_connections, {}, 'true', 'false' %>
           </p>
           <p>
-          <label for="message_notifications"
-                 class="checkbox">Messages:</label>
-          <%= f.check_box :message_notifications %>
+            <%= f.label :prefs_en_messages, 'Messages', :class => "checkbox" %>
+            <%= f.check_box :prefs_en_messages, {}, 'true', 'false' %>
           </p>
           <p>
-          <label for="wall_comment_notifications"
-                 class="checkbox">Wall comments:</label>
-          <%= f.check_box :wall_comment_notifications %>
+            <%= f.label :prefs_en_walls, 'Wall Comments', :class => "checkbox" %>
+            <%= f.check_box :prefs_en_walls, {}, 'true', 'false' %>
           </p>
           <p>
-          <label for="blog_comment_notifications"
-                 class="checkbox">Blog comments:</label>
-          <%= f.check_box :blog_comment_notifications %>
+            <%= f.label :prefs_en_blogs, 'Blog Comments', :class => "checkbox" %>
+            <%= f.check_box :prefs_en_blogs, {}, 'true', 'false' %>
           </p>
         </div>
       <%- end -%>
       
 	  <h3>Public Description</h3>
       <div class="form_row">
-        <label for="person_description"> (<%= formatting_note %>)
-        </label>
-    
-        <%- unless @preview.nil? -%>
-          <%= display @preview %>
-        <%- end -%>
-        
-        <%= f.text_area :description %>
+		<%= fckeditor_textarea("person", :description, :toolbarSet => 'InsoshiBase', :width => '100%', :height => '200px') %>
       </div>
 
       <br />
   
       <div class="form_row">
         <%= f.submit "Update", :class => "button" %>
-        <%= f.submit "Preview", :id => "preview", :class => "button" %>
       </div>
       <input type="hidden" name="type" value="info_edit" />
   <% end %>
-
-  <br />
-
-  <h3 id="photos">Photos</h3>
-  
-    <% if @person.photos.empty? %>
-      <%= image_tag @person.thumbnail %>
-    <% else %>
-    <table>
-      <% @person.sorted_photos.collect_every(N_COLUMNS) do |row| %>
-      <tr>
-      <% row.each do |photo| %>
-        <td  style="padding-left: 1em;">
-          <%= image_tag photo.public_filename(:thumbnail) %>
-        </td>
-      <% end %>
-      </tr>
-      <tr>
-        <% row.each do |photo| %>
-        <td style="padding-left: 1em;">
-          <% if photo.primary? %>
-            primary
-          <% else %>
-            <%= link_to "select", photo_path(photo),
-                                          :method => :put %>
-          <% end %>
-          |
-          <%= link_to image_tag("icons/close.gif"), photo_path(photo),
-                                               :method => :delete %>
-        </td>
-        <% end %>
-      </tr>
-      <% end %>
-    </table>
-    <% end %>
-    <br />
-    <%= button_to "Add a photo", new_photo_path, :class => "button" %>
   </div>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-	  <% form_for @person, :html => { :id => "change_password" } do |f| %>
+  <h2>Change Your Password</h2>
 
-	    <h3>Change Your Password</h3>
+  <% form_for @person, :html => { :id => "change_password" } do |f| %>
+    <div class="form_row">
+      <label for="password">Current Password</label>
+      <%= f.password_field :verify_password, :size => 34, :maxlength => Person::MAX_PASSWORD %>
+    </div>
 
-	    <div class="form_row">
-	      <label for="password">Current Password</label>
-	      <%= f.password_field :verify_password,
-							   :size => 34,
-	                           :maxlength => Person::MAX_PASSWORD %>
-	    </div>
+    <div class="form_row">
+      <label for="password">New Password</label>
+      <%= f.password_field :new_password, :size => 34, :maxlength => Person::MAX_PASSWORD %>
+    </div>
 
-	    <div class="form_row">
-	      <label for="password">New Password</label>
-	      <%= f.password_field :new_password,
-		   					   :size => 34,
-	                           :maxlength => Person::MAX_PASSWORD %>
-	    </div>
+    <div class="form_row">
+      <label for="password_confirmation">Confirm Password</label>
+      <%= f.password_field :password_confirmation,  :size => 34, :maxlength => Person::MAX_PASSWORD, :value => "" %>
+    </div>
 
-	    <div class="form_row">
-	      <label for="password_confirmation">Confirm Password</label>
-	      <%= f.password_field :password_confirmation, 
-		   					   :size => 34,
-	                           :maxlength => Person::MAX_PASSWORD,
-	                           :value => "" %>
-	    </div>
-	    <div class="form_row">
-	      <%= submit_tag 'Change password', :class => "button" %>
-	    </div>
-	    <input type="hidden" name="type" value="password_edit" />
-	  <% end %>
+    <div class="form_row">
+      <%= submit_tag 'Change password', :class => "button" %>
+    </div>
+    <input type="hidden" name="type" value="password_edit" />
+  <% end %>
 <%- end -%>
