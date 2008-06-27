@@ -11,10 +11,7 @@ class CreateGalleries < ActiveRecord::Migration
     Person.find(:all).each do |person|
       prime = person.photos.find(:first, :conditions => 'primary = true')
       gall = Gallery.new(:person => person)
-      gall.title = 'Primary'
-      gall.description = 'Default ' + app_name + ' Gallery'
-      gall.primary_photo_id = prime.id
-      gall.save!
+      gall.update_attributes!(:title => 'Primary', :description => 'Default ' + app_name + ' Gallery', :primary_photo_id = prime.id)
     end
   end
 

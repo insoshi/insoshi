@@ -1,7 +1,11 @@
-<div class="photo-small">
-	<%=link_to image_tag(photo.public_filename(:thumbnail)), photo_path(photo)%><br/>
-	<% if current_person == photo.person %>
-		<%=link_to "Edit", edit_photo_path(photo) %> |
-		<%=link_to image_tag("icons/close.gif"), photo_path(photo), :method => :delete, :confirm => "Do you really want to delete the photo?"%>
-	<% end %>
-</div>
+<li>
+	<p class="gallPhotoTitle">
+	  <%= link_to photo_title(photo.filename), '#gpu' + photo_id(photo), :rel => 'facebox' %>
+	  <div style="display: none;" id="gpu<%= photo_id(photo) -%>"><%= image_tag photo.public_filename -%> <div class="gpuTitle"><%= photo_title(photo.filename) -%> </div></div>
+	</p>
+	<p class='gallPhoto'>
+	  <%= image_tag(photo.public_filename(:thumbnail)) %>
+  <%= link_to image_tag("icons/picture_edit.png", :class => 'actioner'), edit_photo_path(photo) %>
+  <%= link_to image_tag("icons/picture_delete.png", :class => 'actioner'), photo_path(photo), :method => :delete %>
+	</p>
+</li>

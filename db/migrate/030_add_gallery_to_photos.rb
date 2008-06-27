@@ -4,10 +4,8 @@ class AddGalleryToPhotos < ActiveRecord::Migration
   def self.up
     add_column :photos, :gallery_id, :integer
     add_column :photos, :title, :string
-    Photos.find(:all).each do |ph|
-      ph.gallery_id = ph.person.galleries.find(:first).id
-      ph.title = photo_title(ph.filename)
-      photo.save!
+    Photos.find(:all).each do |photo|
+      photo.update_attributes!(:gallery_id => photo.person.galleries.find(:first).id, :title => photo_title(photo.filename))
     end
     remove_column :photos, :primary
   end
@@ -22,8 +20,7 @@ class AddGalleryToPhotos < ActiveRecord::Migration
     remove_column :photos, :title
     add_column :photos, :primary
     Photo.find(:all).each do |photo|
-        photo.primary = gals.has_value?(photo.id)
-        photo.save!
+        photo.update_attributes!(primary => gals.has_value?(photo.id))
     end
   end
 end

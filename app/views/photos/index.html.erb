@@ -9,7 +9,7 @@
 		<% @photos.each do |photo| %>
 		  <li>
 			<p class="gallPhotoTitle">
-			  <%= link_to photo.label, '#gpu' + photo_id(photo), :rel => 'facebox' %>
+			  <%= link_to photo_title(photo.filename), '#gpu' + photo_id(photo), :rel => 'facebox' %>
 			  <div style="display: none;" id="gpu<%= photo_id(photo) -%>"><%= image_tag photo.public_filename -%> <div class="gpuTitle"><%= photo_title(photo.filename) -%> </div></div>
 			</p>
 			<p class='gallPhoto'>

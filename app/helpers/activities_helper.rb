@@ -66,9 +66,17 @@ module ActivitiesHelper
         %(description changed)
       end
     when "Gallery"
-      %(#{person_link_with_image(person)} added new gallery #{gallery_link(activity.item)}.)
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)} added new gallery #{gallery_link(activity.item)}.)
+      else
+        %(new gallery #{gallery_link(activity.item)})
+      end
     when "Photo"
-      %(#{person_link_with_image(person)} added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
+      if recent.nil? || !recent
+        %(#{person_link_with_image(person)} added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
+      else
+        %(added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
+      end
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"

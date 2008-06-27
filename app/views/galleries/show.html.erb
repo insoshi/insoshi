@@ -1,16 +1,13 @@
-<%- column_div :type => :primary do -%>
+<%- column_div :type => :primary, :id => 'photos' do -%>
 	<h2> Photos in <%= h(@gallery.title)%> </h2>
-	<table>
-		<% @photos.collect_every(N_COLUMNS) do |row| %>
-	  	<tr>		
-				<% row.each do |photo| %>
-	   			<td>
-						<%=render :partial=>"photo", :object=>photo%>
-					</td>
-				<% end %>
-			</tr>
-		<% end %>
-	</table>
+	<%if !@gallery.description.nil?%>
+	<div class = "gallery-description">
+		<p><strong>Description:</strong> <%=h(@gallery.description)%></p>
+	</div>
+	<%end%>
+	<ul>
+	  <%=render :partial=>"photo", :collection => @photos%>
+	</ul>
 	<%= will_paginate(@photos) %>
 <%-end-%>
 
@@ -22,14 +19,7 @@
 				<li><%=link_to "Add photo", new_gallery_photo_path(@gallery)%></li>
 				<li><%=link_to "Edit gallery", edit_gallery_path()%> </li>
 			<% end %>
-			<li> <%=link_to "Go back to #{h(@gallery.person.name)}'s gallery list", person_galleries_path(@gallery.person)%> </li>
+			<li><%=link_to "#{h(@gallery.person.name)}'s gallery list", person_galleries_path(@gallery.person)%> </li>
 		</ul>
 	</div>
-	<%if !@gallery.description.nil?%>
-	<h2>Description</h2>
-		<div class = "gallery-description">
-			<p><%=h(@gallery.description)%></p>
-		</div>
-	<%end%>
-	<%= render :partial => 'shared/minifeed' %>
 <%- end-%>

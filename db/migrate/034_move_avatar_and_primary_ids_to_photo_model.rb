@@ -8,8 +8,7 @@ class MoveAvatarAndPrimaryIdsToPhotoModel < ActiveRecord::Migration
     add_column    :photos,  :primary, :boolean
     add_column    :photos,   :avatar,  :boolean
     Photo.find(:all).each do |photo|
-        photo.primary = gals.has_value?(photo.id)
-        photo.save!
+        photo.update_attributes!(:primary => gals.has_value?(photo.id), :avatar => gals.has_value?(photo.id))
     end
     remove_column :galleries,  :primary_photo_id
     remove_column :people,  :avatar_id
@@ -19,7 +18,7 @@ class MoveAvatarAndPrimaryIdsToPhotoModel < ActiveRecord::Migration
     add_column    :galleries,  :primary_photo_id, :integer
     add_column    :people,  :avatar_id, :integer
     Gallery.find(:all).each do |gall|
-      gall.primary_photo_id = gall.photos.find(:first, :conditions => "primary = true")
+      gall.primary_photo_id = gall.photos.find(:first, :conditions => "primary = true").id
       gall.save!
     end
     remove_column :photos,  :primary
