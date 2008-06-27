@@ -66,9 +66,9 @@ module ActivitiesHelper
         %(description changed)
       end
     when "Gallery"
-      %(#{person_link(person)} added new gallery #{gallery_link(activity.item)}.)
+      %(#{person_link_with_image(person)} added new gallery #{gallery_link(activity.item)}.)
     when "Photo"
-      %(#{person_link(person)} added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
+      %(#{person_link_with_image(person)} added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
     else
       # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"

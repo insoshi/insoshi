@@ -127,6 +127,9 @@ class Person < ActiveRecord::Base
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
 
+  # TODO:
+  # validate email
+
   before_create :create_blog
   before_save :encrypt_password
   before_validation :prepare_email, :handle_nil_description

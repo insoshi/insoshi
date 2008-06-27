@@ -8,6 +8,14 @@ class CreateGalleries < ActiveRecord::Migration
       t.integer :primary_photo_id
       t.timestamps
     end
+    Person.find(:all).each do |person|
+      prime = person.photos.find(:first, :conditions => 'primary = true')
+      gall = Gallery.new(:person => person)
+      gall.title = 'Primary'
+      gall.description = 'Default ' + app_name + ' Gallery'
+      gall.primary_photo_id = prime.id
+      gall.save!
+    end
   end
 
   def self.down

@@ -5,12 +5,12 @@
     <%= error_messages_for :person %>
     <% form_for @person do |f| %>
       <div class="form_row">
-        <label for="person_name">Name</label>
+        <%= f.label :name %>
         <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
       </div>
   
       <div class="form_row">
-        <label for="person_email">Email</label>
+        <%= f.label :email %>
         <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
       </div>
       
