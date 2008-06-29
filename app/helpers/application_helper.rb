@@ -29,7 +29,7 @@ module ApplicationHelper
         blog     = menu_element("Blog",     blog_path(current_person.blog))
         galleries   = menu_element("Galleries",   person_galleries_path(current_person))
         contacts = menu_element("Contacts", person_connections_path(current_person))
-        links = [profile, contacts, galleries, messages, blog, people, forum, about]
+        links = [profile, contacts, galleries, messages, people, forum, about]
       else
         home =    menu_element("Home", home_path)
         people =  menu_element("People", admin_people_path)

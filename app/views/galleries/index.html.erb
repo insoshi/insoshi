@@ -1,20 +1,13 @@
 <%- column_div :type => :primary do -%>
-	<h2> Galleries </h2>
-	<div id="gallery_list">
-			<% @galleries.each do |gallery| %>
-				<%=render :partial=>"gallery", :object=>gallery%>
-			<%- end -%>
-	</div >	
-	<%= will_paginate(@galleries) %>
+  <h2> Galleries </h2>
+  <% if current_person?(@person)%>
+    <div class="button">
+	  <%=link_to "Add Gallery", new_gallery_path()%>
+    </div>
+  <% end %>
 
+  <ul id="gallery_list" class="grid">
+    <%= render :partial => "gallery", :collection => @galleries %>
+  </div >	
+  <%= will_paginate(@galleries) %>
 <%- end -%>
-<%- column_div :type => :secondary do -%>
-	<% if current_person?(@person)%>
-	<h2> Toolbox </h2>
-	<div class="toolbox">
-		<ul>
-			<li><%=link_to "Add new gallery", new_gallery_path()%></li>
-		</ul>
-	</div>
-	<% end %>
-<%- end-%>

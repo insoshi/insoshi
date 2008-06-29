@@ -5,9 +5,10 @@ body {
   text-align: center;
 }
 #header-wrap {
-  /* background: #069; */
+  /* background: #4A70B1; */
   background: #6AA2FD url('/images/header_background_lt2.png');
   margin: 0px auto;
+  width: 844px;
 }
 #header, #wrap, #footer {
   margin: 0 auto;
@@ -73,7 +74,7 @@ body {
   background: url(/images/header-grad-inv-lt.jpg) top repeat-x;
 }
 #nav li.active a, #nav li.active a:hover {
-  background: #fff;
+  background: #FFF5B5;
   color: #6AA2FD;
   border-bottom: 1px solid #6AA2FD;
 }
@@ -83,7 +84,7 @@ body {
 
 
 #footer {
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #FFDFDA;
   clear: both;
   margin-top: 48px;
   padding: 24px 0;
@@ -296,65 +297,42 @@ p.welcome {
 }
 
 /* Gallery list */
-div.gallery_list_item
-{
-	border: 1px dotted #999;
+#gallery_list li {
 	margin-bottom: 5px;
+	width: 300px;
 }
-
-div.gallery_list_item:hover
-{
-	background-color: #ccccff;
+#gallery_list li div, #gallery_list li p {
+	padding-left: 10px;
 }
-
-
-div.gallery_list_item div.description 
-{
-	float: right;
-	text-align: right;
-	padding: 5px;
+#gallery_list li p {
+	float: left;
+	width: 200px;
+	line-height: 1.6;
 }
-div.gallery_list_item div.description p
-{
-	color: #999;
-	font-size: 10px;
-	font-weight: normal;
+.gallery_title {
+	font-size: 146%;
+	font-weight: bold;
 }
-
-div.gallery_list_item div.description div.tools
-{
-	font-size: 10px;
-}
-div.gallery_list_item img
-{
-	clear: right;
-	padding: 5px;
-}
-div.toolbox ul li
-{
+div.toolbox ul li {
 	font-size: 12px;
 	list-style: disc inside;
 	background: none;
 }
 
-div.photo, div.photo-small
-{
+div.photo, div.photo-small {
 	padding-top: 10px;
 	text-align: center;
 }
 
-div.gallery-description p
-{
+div.gallery-description {
 	font-size: 12px;
 	text-align: justify;
 }
 
-div.photo-small:hover
-{
+div.photo-small:hover {
 	background-color: #ccccff;
 }
-#gallery_list ul li
-{
+#gallery_list ul li {
 	list-style-type: none;
 	background: none;
 	margin: 0px;
@@ -410,7 +388,7 @@ h3.subject {
 	vertical-align: top;
 }
 #profile_edit h3, #change_password h3 {
-	color: #006699;
+	color: #4A70B1;
 }
 #profile_edit form, form#blogpost {
 	border-bottom: none;
@@ -425,7 +403,7 @@ ul.ui-tabs-nav li {
 	padding-left: 0px;
 }
 .ui-tabs-panel {
-	min-height: 400px;
+	min-height: 540px;
 }
 .innerTabRight {
 	float: left;
@@ -443,7 +421,7 @@ ul.ui-tabs-nav li {
 .comments li div {border-bottom: 1px solid #ccc;}
 .imgHoverMarker {display: inline;}
 .imgHoverMarker img {display: none;}
-#tRecentActivity h2, #tPhotos h2 {margin-bottom: 10px;}
+#tRecentActivity h2, #tPhotos h2, #tWall h2 {margin-bottom: 10px;}
 #tRecentActivity p.meta {font-variant: small-caps;}
 #tRecentActivity ul li, #tWall ul li, #tWall ul li div {display: block; border-bottom: none;}
 #tWall form, form#admin_preferences, form#admin_forums, form.edit_photo, .col2 form {border-bottom: none;}
@@ -527,6 +505,10 @@ ul.people li.vcard p {
   float: left;
   width: 370px;
 }
+#tBlog .col2, #tWall .col2 {
+	width: 224px;
+	padding: 0px 0px 0px 6px;
+}
 #blogpost .prefLabel {
 	width: 100px;
 }
@@ -536,14 +518,14 @@ ul.people li.vcard p {
 #blogpost #post_submit {
 	text-align: right;
 }
-.col2 #blogpost .prefValue #post_title, .col2 #blogpost .prefValue textarea {
-  width: 212px !important; /* width reduced by Bill L */
+.col2 #blogpost .prefValue #post_title, .col2 #blogpost .prefValue textarea, #tWall #comment_body {
+  width: 208px !important; /* width reduced by Bill L */
 }
 .col2 #blogpost #post_submit {
 	text-align: left;
 }
 .adminMsgLink {
-	background-color: yellow;
+	background-color: #FFF5B5;
 	color: #6AA2FD;
 	font-weight: bold;
 	width: 90px;
@@ -551,6 +533,7 @@ ul.people li.vcard p {
 	position: absolute;
 	top: 5px;
 	left: 5px;
+	border: 1px solid #6a70b1;
 }
 .adminMsgLink a {
 	color: #6AA2FD;
@@ -575,4 +558,7 @@ ul.admin li {display: list-item; list-style-image: url(/images/icons/switch.gif)
 }
 p.welcome span, .powered_by a {
 	font-size: 116%
+}
+hr {
+	color: #FFF5B5;
 }

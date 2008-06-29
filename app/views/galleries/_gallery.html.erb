@@ -1,16 +1,20 @@
-<div class="gallery_list_item">
-	<%=link_to image_tag(gallery.thumbnail_url), gallery_path(gallery)%>
-	<div class="description">
-	<p>	
-		<%= link_to h(gallery.title), gallery_path(gallery)%>
-	</p>
-	<p>
-		<%= h(truncate(gallery.description, 60, "..."))%>
-	</p>
-	<% if current_person?(gallery.person)%>
-	<div class="tools">
-		<%= link_to "Edit", edit_gallery_path(gallery) %> | <%= link_to "Delete", gallery_path(gallery), :method => :delete, :confirm => "Do you really want to delete #{h gallery.title} gallery"%> <br/>
-	</div>
-	<%-end-%>
-</div>
-</div>
+<li class="list gallery">
+  <div class="profile-image">
+	<%= link_to image_tag(gallery.thumbnail_url), gallery_path(gallery) %>
+  </div>
+  <p>
+	<%= link_to h(gallery.title), gallery_path(gallery), :class => 'gallery_title' %>
+	<% if current_person?(gallery.person) %>
+    <%= link_to image_tag("icons/picture_edit.png", :class => 'actioner'),  
+			  edit_gallery_path(gallery),
+			  :title => 'Edit Gallery' %>
+    <%= link_to(image_tag("icons/picture_delete.png", :class => 'actioner'), 
+              gallery_path(gallery), 
+              :method => :delete, 
+              :confirm => %(Are you sure you want to delete this gallery from your profile?),
+	 		  :title => "Delete Gallery") %>
+	<%- end -%>
+	<br />
+	<%= gallery.description %>
+  </p>
+</li>

@@ -1,4 +1,4 @@
-<h2>Profile: <span class="fn n"><%= h @person.name %></span></h2>
+<h2><span class="fn n"><%= @person.name %></span>'s Profile</h2>
 <%- if current_person?(@person) || current_person.admin? -%>
   <div class="button_container">
 <%- end -%>

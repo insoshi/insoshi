@@ -2,7 +2,13 @@
     <%- if logged_in? -%>
 	  <%- if current_person.admin? -%>
         <div class="adminMsgLink">
-          <%= email_link @person, :use_image => false, :to_all => true %>
+          <%= email_link @person, :use_image => false, :to_all => true %><br />
+		  <hr />
+          <%- if admin_view? -%>
+            <%= link_to("Standard View", home_path) %>
+          <%- else -%>
+            <%= link_to("Admin View", admin_preferences_path) %>
+          <%- end -%>
         </div>
       <%- end -%>
     <%- end -%>
@@ -16,15 +22,7 @@
     
     <p class="welcome">
       <%- if logged_in? -%>
-        <span>Welcome, <%= h current_person.name %>!</span>
-        (<%= link_to "Sign out", logout_path %>)
-        <%- if current_person.admin? -%>
-          <%- if admin_view? -%>
-            <%= link_to("Standard view", home_path) %>
-          <%- else -%>
-            <%= link_to("Admin view", admin_preferences_path) %>
-          <%- end -%>
-        <%- end -%>
+        <%= link_to "Sign out", logout_path %>
       <%- else -%>
         <%= link_to "Sign in", login_path %> or
         <%= link_to "Sign up", signup_path %>

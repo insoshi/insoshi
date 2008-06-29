@@ -11,11 +11,15 @@
     <%= render :partial => 'profile_contacts' %>
   <% end %>
 
+  <% tabs.create('tBlog', 'Blog') do %>
+	<%= render :partial => 'shared/blog' %>
+  <% end %>
+
   <% tabs.create('tWall', 'Wall') do %>
     <%= render :partial => 'wall' %>
   <% end %>
 
-  <% tabs.create('tPhoto', 'Photos') do %>
+  <% tabs.create('tPhotos', 'Photos') do %>
 	  <h2><%= @person.name %>'s Photos</h2>
 	  <div class="button_container">
 		    <div class="button"><%= link_to "Add Photo", new_photo_path() %></div>
@@ -23,19 +27,7 @@
 	  </div>
 	  <% unless @person.photos.empty? %>
 	  <ul class="">
-		<% @person.photos.each do |photo| %>
-		  <li>
-			<p class="gallPhotoTitle">
-			  <%= link_to photo_title(photo.filename), '#gpu' + photo_id(photo), :rel => 'facebox' %>
-			  <div style="display: none;" id="gpu<%= photo_id(photo) -%>"><%= image_tag photo.public_filename -%> <div class="gpuTitle"><%= photo_title(photo.filename) -%> </div></div>
-			</p>
-			<p class='gallPhoto'>
-			  <%= image_tag(photo.public_filename(:thumbnail)) %>
-		    <%= link_to image_tag("icons/picture_edit.png", :class => 'actioner'), edit_photo_path(photo) %>
-		    <%= link_to image_tag("icons/picture_delete.png", :class => 'actioner'), photo_path(photo), :method => :delete %>
-			</p>
-		  </li>
-		<% end %>
+		  <%=render :partial=>"shared/photo", :collection => @person.photos%>
 	  </ul>
 	  <% end %>
   <% end %>

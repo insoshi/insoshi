@@ -1,12 +1,12 @@
 <%- column_div :type => :primary, :id => 'photos' do -%>
 	<h2> Photos in <%= h(@gallery.title)%> </h2>
 	<%if !@gallery.description.nil?%>
-	<div class = "gallery-description">
+	<div class="gallery-description">
 		<p><strong>Description:</strong> <%=h(@gallery.description)%></p>
 	</div>
 	<%end%>
 	<ul>
-	  <%=render :partial=>"photo", :collection => @photos%>
+	  <%=render :partial=>"shared/photo", :collection => @photos%>
 	</ul>
 	<%= will_paginate(@photos) %>
 <%-end-%>

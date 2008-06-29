@@ -1,24 +1,21 @@
-<%- if logged_in? -%>
-  <div class="wall">
-    <h2>Comment Wall</h2>
-    <a name="wall"></a>
-    
-    <%- if connected_to?(@person) -%>
-      <% form_for :comment, :url => person_comments_path(@person) do |f| %>
-        <div class="form_row">
-          <%= f.text_area :body, :rows => 2 %>
-        </div>
-  
-        <div class="form_row">
-          <%= submit_tag "Submit", :class => "button" %>
-        </div>
-      <% end %>
-    <%- end -%>
-
+<%- column_div :type => :primary do -%>
+    <h2><%= @person.name %>'s Comment Wall</h2>
     <%- unless @person.comments.empty? -%>
       <ul class="list comments full">
         <%= render :partial => 'comment', :collection => @person.comments %>
       </ul>
     <%- end -%>
-  </div>
+<%- end -%>    
+<%- column_div :type => :secondary do -%>
+    <%- if connected_to?(@person) -%>
+	<h2>Add Comment</h2>
+      <% form_for :comment, :url => person_comments_path(@person) do |f| %>
+        <div class="form_row">
+          <%= f.text_area :body, :rows => 10 %>
+        </div>
+        <div class="form_row">
+          <%= submit_tag "Submit", :class => "button" %>
+        </div>
+      <% end %>
+    <%- end -%>
 <%- end -%>

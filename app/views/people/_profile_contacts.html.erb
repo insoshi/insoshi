@@ -1,5 +1,5 @@
 <div class="innerTabLeft">
-  <h2>Contacts for <%= @person.name %></h2>
+  <h2><%= @person.name %>'s Contacts</h2>
   <% if @person.connections.count > Person::MAX_DEFAULT_CONTACTS %>
     <div class='button see_all_link'><%= link_to "See All Contacts", person_connections_path(@person) %></div>
   <% end %>
