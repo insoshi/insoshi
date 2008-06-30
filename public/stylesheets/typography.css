@@ -254,7 +254,7 @@ div.button {
 	float: left;
 	margin-right: 20px;
 }
-div.button a {
+.button a {
 	background: #4A70B1 url(/images/header-grad-lt.jpg) bottom repeat-x;
 	padding: 3px 12px;
 }
@@ -352,7 +352,7 @@ strong { font-weight: bold; }
 .disabled   {color: #c0c0c0;} /* greyed out to emphasize unavailability */
 
 #new_form_subject form {border-bottom: none;}
-#new_form_subject input, #photos .button, #tPhotos .button {width: 138px; vertical-align: top;}
+#new_form_subject input, #photos .button, #tGalleries .button {width: 138px; vertical-align: top;}
 #new_form_subject .button {width: 72px;}
 .button a, .button {color: #ffffff;}
 .button_container {margin: 10px 0px;}

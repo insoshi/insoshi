@@ -30,6 +30,7 @@ class PeopleController < ApplicationController
       @some_common_connections = @common_connections[(0...Person::MAX_DEFAULT_CONTACTS)]
       @blog = @person.blog
       @posts = @person.blog.posts.paginate(:page => params[:page])
+      @galleries = @person.galleries.paginate(:page => params[:page])
     end
     respond_to do |format|
       format.html

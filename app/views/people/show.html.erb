@@ -19,17 +19,8 @@
     <%= render :partial => 'wall' %>
   <% end %>
 
-  <% tabs.create('tPhotos', 'Photos') do %>
-	  <h2><%= @person.name %>'s Photos</h2>
-	  <div class="button_container">
-		    <div class="button"><%= link_to "Add Photo", new_photo_path() %></div>
-		    <div class="clear"></div>
-	  </div>
-	  <% unless @person.photos.empty? %>
-	  <ul class="">
-		  <%=render :partial=>"shared/photo", :collection => @person.photos%>
-	  </ul>
-	  <% end %>
+  <% tabs.create('tGalleries', 'Galleries') do %>
+    <%=render :partial=>"shared/galleries", :locals => {:galleries => @galleries} %>
   <% end %>
 <%= tabs.render %>
 

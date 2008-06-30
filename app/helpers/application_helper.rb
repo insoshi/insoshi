@@ -29,7 +29,7 @@ module ApplicationHelper
         blog     = menu_element("Blog",     blog_path(current_person.blog))
         galleries   = menu_element("Galleries",   person_galleries_path(current_person))
         contacts = menu_element("Contacts", person_connections_path(current_person))
-        links = [profile, contacts, galleries, messages, people, forum, about]
+        links = [profile, contacts, messages, people, forum, about]
       else
         home =    menu_element("Home", home_path)
         people =  menu_element("People", admin_people_path)
@@ -53,10 +53,21 @@ module ApplicationHelper
   
   def menu_li(link, options = {})
     klass = "n-#{link[:content].downcase}"
-    klass += " active" if current_page?(link[:href])
-    content_tag(:li, menu_link_to(link, options), :class => klass)
+    if current_page?(link[:href])
+      klass += " active"
+      content_tag(:li, link[:content], :class => klass)
+    else
+      content_tag(:li, menu_link_to(link, options), :class => klass)
+    end
   end
   
+  def login_block
+    forgot = global_prefs.can_send_mail? ? '<br />' + link_to('I forgot my password', new_password_reminder_path) : ''
+    content_tag(:span, link_to("Sign in", login_path) + ' or ' +
+                       link_to("Sign up", signup_path) + 
+                       forgot)
+  end
+
   # Return true if the user is viewing the site in admin view.
   def admin_view?
     params[:controller] =~ /admin/ and admin?

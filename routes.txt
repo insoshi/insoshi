@@ -1,4 +1,7 @@
 (in /Users/williamlazar/Sites/insoshi)
+                                             /fckeditor/check_spelling                                       {:action=>"check_spelling", :controller=>"fckeditor"}
+                                             /fckeditor/command                                              {:action=>"command", :controller=>"fckeditor"}
+                                             /fckeditor/upload                                               {:action=>"upload", :controller=>"fckeditor"}
                            categories GET    /categories                                                     {:action=>"index", :controller=>"categories"}
                  formatted_categories GET    /categories.:format                                             {:action=>"index", :controller=>"categories"}
                                       POST   /categories                                                     {:action=>"create", :controller=>"categories"}
@@ -105,6 +108,10 @@
                   formatted_new_photo GET    /photos/new.:format                                             {:action=>"new", :controller=>"photos"}
                            edit_photo GET    /photos/:id/edit                                                {:action=>"edit", :controller=>"photos"}
                  formatted_edit_photo GET    /photos/:id/edit.:format                                        {:action=>"edit", :controller=>"photos"}
+                    set_primary_photo PUT    /photos/:id/set_primary                                         {:action=>"set_primary", :controller=>"photos"}
+          formatted_set_primary_photo PUT    /photos/:id/set_primary.:format                                 {:action=>"set_primary", :controller=>"photos"}
+                     set_avatar_photo PUT    /photos/:id/set_avatar                                          {:action=>"set_avatar", :controller=>"photos"}
+           formatted_set_avatar_photo PUT    /photos/:id/set_avatar.:format                                  {:action=>"set_avatar", :controller=>"photos"}
                                 photo GET    /photos/:id                                                     {:action=>"show", :controller=>"photos"}
                       formatted_photo GET    /photos/:id.:format                                             {:action=>"show", :controller=>"photos"}
                                       PUT    /photos/:id                                                     {:action=>"update", :controller=>"photos"}
@@ -123,22 +130,34 @@
                                       PUT    /session.:format                                                {:action=>"update", :controller=>"sessions"}
                                       DELETE /session                                                        {:action=>"destroy", :controller=>"sessions"}
                                       DELETE /session.:format                                                {:action=>"destroy", :controller=>"sessions"}
-                       trash_messages GET    /messages/trash                                                 {:action=>"trash", :controller=>"messages"}
-             formatted_trash_messages GET    /messages/trash.:format                                         {:action=>"trash", :controller=>"messages"}
+                                      POST   /galleries                                                      {:action=>"create", :controller=>"galleries"}
+                                      POST   /galleries.:format                                              {:action=>"create", :controller=>"galleries"}
+                        new_galleries GET    /galleries/new                                                  {:action=>"new", :controller=>"galleries"}
+              formatted_new_galleries GET    /galleries/new.:format                                          {:action=>"new", :controller=>"galleries"}
+                       edit_galleries GET    /galleries/edit                                                 {:action=>"edit", :controller=>"galleries"}
+             formatted_edit_galleries GET    /galleries/edit.:format                                         {:action=>"edit", :controller=>"galleries"}
+                                      GET    /galleries                                                      {:action=>"show", :controller=>"galleries"}
+                                      GET    /galleries.:format                                              {:action=>"show", :controller=>"galleries"}
+                                      PUT    /galleries                                                      {:action=>"update", :controller=>"galleries"}
+                                      PUT    /galleries.:format                                              {:action=>"update", :controller=>"galleries"}
+                                      DELETE /galleries                                                      {:action=>"destroy", :controller=>"galleries"}
+                                      DELETE /galleries.:format                                              {:action=>"destroy", :controller=>"galleries"}
                         sent_messages GET    /messages/sent                                                  {:action=>"sent", :controller=>"messages"}
               formatted_sent_messages GET    /messages/sent.:format                                          {:action=>"sent", :controller=>"messages"}
+                       trash_messages GET    /messages/trash                                                 {:action=>"trash", :controller=>"messages"}
+             formatted_trash_messages GET    /messages/trash.:format                                         {:action=>"trash", :controller=>"messages"}
                              messages GET    /messages                                                       {:action=>"index", :controller=>"messages"}
                    formatted_messages GET    /messages.:format                                               {:action=>"index", :controller=>"messages"}
                                       POST   /messages                                                       {:action=>"create", :controller=>"messages"}
                                       POST   /messages.:format                                               {:action=>"create", :controller=>"messages"}
                           new_message GET    /messages/new                                                   {:action=>"new", :controller=>"messages"}
                 formatted_new_message GET    /messages/new.:format                                           {:action=>"new", :controller=>"messages"}
-                    undestroy_message PUT    /messages/:id/undestroy                                         {:action=>"undestroy", :controller=>"messages"}
-          formatted_undestroy_message PUT    /messages/:id/undestroy.:format                                 {:action=>"undestroy", :controller=>"messages"}
                          edit_message GET    /messages/:id/edit                                              {:action=>"edit", :controller=>"messages"}
                formatted_edit_message GET    /messages/:id/edit.:format                                      {:action=>"edit", :controller=>"messages"}
                         reply_message GET    /messages/:id/reply                                             {:action=>"reply", :controller=>"messages"}
               formatted_reply_message GET    /messages/:id/reply.:format                                     {:action=>"reply", :controller=>"messages"}
+                    undestroy_message PUT    /messages/:id/undestroy                                         {:action=>"undestroy", :controller=>"messages"}
+          formatted_undestroy_message PUT    /messages/:id/undestroy.:format                                 {:action=>"undestroy", :controller=>"messages"}
                               message GET    /messages/:id                                                   {:action=>"show", :controller=>"messages"}
                     formatted_message GET    /messages/:id.:format                                           {:action=>"show", :controller=>"messages"}
                                       PUT    /messages/:id                                                   {:action=>"update", :controller=>"messages"}
@@ -191,20 +210,20 @@
                                       PUT    /people/:person_id/messages/:id.:format                         {:action=>"update", :controller=>"messages"}
                                       DELETE /people/:person_id/messages/:id                                 {:action=>"destroy", :controller=>"messages"}
                                       DELETE /people/:person_id/messages/:id.:format                         {:action=>"destroy", :controller=>"messages"}
-                        person_photos GET    /people/:person_id/photos                                       {:action=>"index", :controller=>"photos"}
-              formatted_person_photos GET    /people/:person_id/photos.:format                               {:action=>"index", :controller=>"photos"}
-                                      POST   /people/:person_id/photos                                       {:action=>"create", :controller=>"photos"}
-                                      POST   /people/:person_id/photos.:format                               {:action=>"create", :controller=>"photos"}
-                     new_person_photo GET    /people/:person_id/photos/new                                   {:action=>"new", :controller=>"photos"}
-           formatted_new_person_photo GET    /people/:person_id/photos/new.:format                           {:action=>"new", :controller=>"photos"}
-                    edit_person_photo GET    /people/:person_id/photos/:id/edit                              {:action=>"edit", :controller=>"photos"}
-          formatted_edit_person_photo GET    /people/:person_id/photos/:id/edit.:format                      {:action=>"edit", :controller=>"photos"}
-                         person_photo GET    /people/:person_id/photos/:id                                   {:action=>"show", :controller=>"photos"}
-               formatted_person_photo GET    /people/:person_id/photos/:id.:format                           {:action=>"show", :controller=>"photos"}
-                                      PUT    /people/:person_id/photos/:id                                   {:action=>"update", :controller=>"photos"}
-                                      PUT    /people/:person_id/photos/:id.:format                           {:action=>"update", :controller=>"photos"}
-                                      DELETE /people/:person_id/photos/:id                                   {:action=>"destroy", :controller=>"photos"}
-                                      DELETE /people/:person_id/photos/:id.:format                           {:action=>"destroy", :controller=>"photos"}
+                     person_galleries GET    /people/:person_id/galleries                                    {:action=>"index", :controller=>"galleries"}
+           formatted_person_galleries GET    /people/:person_id/galleries.:format                            {:action=>"index", :controller=>"galleries"}
+                                      POST   /people/:person_id/galleries                                    {:action=>"create", :controller=>"galleries"}
+                                      POST   /people/:person_id/galleries.:format                            {:action=>"create", :controller=>"galleries"}
+                   new_person_gallery GET    /people/:person_id/galleries/new                                {:action=>"new", :controller=>"galleries"}
+         formatted_new_person_gallery GET    /people/:person_id/galleries/new.:format                        {:action=>"new", :controller=>"galleries"}
+                  edit_person_gallery GET    /people/:person_id/galleries/:id/edit                           {:action=>"edit", :controller=>"galleries"}
+        formatted_edit_person_gallery GET    /people/:person_id/galleries/:id/edit.:format                   {:action=>"edit", :controller=>"galleries"}
+                       person_gallery GET    /people/:person_id/galleries/:id                                {:action=>"show", :controller=>"galleries"}
+             formatted_person_gallery GET    /people/:person_id/galleries/:id.:format                        {:action=>"show", :controller=>"galleries"}
+                                      PUT    /people/:person_id/galleries/:id                                {:action=>"update", :controller=>"galleries"}
+                                      PUT    /people/:person_id/galleries/:id.:format                        {:action=>"update", :controller=>"galleries"}
+                                      DELETE /people/:person_id/galleries/:id                                {:action=>"destroy", :controller=>"galleries"}
+                                      DELETE /people/:person_id/galleries/:id.:format                        {:action=>"destroy", :controller=>"galleries"}
                    person_connections GET    /people/:person_id/connections                                  {:action=>"index", :controller=>"connections"}
          formatted_person_connections GET    /people/:person_id/connections.:format                          {:action=>"index", :controller=>"connections"}
                                       POST   /people/:person_id/connections                                  {:action=>"create", :controller=>"connections"}
@@ -233,6 +252,34 @@
                                       PUT    /people/:person_id/comments/:id.:format                         {:action=>"update", :controller=>"comments"}
                                       DELETE /people/:person_id/comments/:id                                 {:action=>"destroy", :controller=>"comments"}
                                       DELETE /people/:person_id/comments/:id.:format                         {:action=>"destroy", :controller=>"comments"}
+                            galleries GET    /galleries                                                      {:action=>"index", :controller=>"galleries"}
+                  formatted_galleries GET    /galleries.:format                                              {:action=>"index", :controller=>"galleries"}
+                                      POST   /galleries                                                      {:action=>"create", :controller=>"galleries"}
+                                      POST   /galleries.:format                                              {:action=>"create", :controller=>"galleries"}
+                          new_gallery GET    /galleries/new                                                  {:action=>"new", :controller=>"galleries"}
+                formatted_new_gallery GET    /galleries/new.:format                                          {:action=>"new", :controller=>"galleries"}
+                         edit_gallery GET    /galleries/:id/edit                                             {:action=>"edit", :controller=>"galleries"}
+               formatted_edit_gallery GET    /galleries/:id/edit.:format                                     {:action=>"edit", :controller=>"galleries"}
+                              gallery GET    /galleries/:id                                                  {:action=>"show", :controller=>"galleries"}
+                    formatted_gallery GET    /galleries/:id.:format                                          {:action=>"show", :controller=>"galleries"}
+                                      PUT    /galleries/:id                                                  {:action=>"update", :controller=>"galleries"}
+                                      PUT    /galleries/:id.:format                                          {:action=>"update", :controller=>"galleries"}
+                                      DELETE /galleries/:id                                                  {:action=>"destroy", :controller=>"galleries"}
+                                      DELETE /galleries/:id.:format                                          {:action=>"destroy", :controller=>"galleries"}
+                       gallery_photos GET    /galleries/:gallery_id/photos                                   {:action=>"index", :controller=>"photos"}
+             formatted_gallery_photos GET    /galleries/:gallery_id/photos.:format                           {:action=>"index", :controller=>"photos"}
+                                      POST   /galleries/:gallery_id/photos                                   {:action=>"create", :controller=>"photos"}
+                                      POST   /galleries/:gallery_id/photos.:format                           {:action=>"create", :controller=>"photos"}
+                    new_gallery_photo GET    /galleries/:gallery_id/photos/new                               {:action=>"new", :controller=>"photos"}
+          formatted_new_gallery_photo GET    /galleries/:gallery_id/photos/new.:format                       {:action=>"new", :controller=>"photos"}
+                   edit_gallery_photo GET    /galleries/:gallery_id/photos/:id/edit                          {:action=>"edit", :controller=>"photos"}
+         formatted_edit_gallery_photo GET    /galleries/:gallery_id/photos/:id/edit.:format                  {:action=>"edit", :controller=>"photos"}
+                        gallery_photo GET    /galleries/:gallery_id/photos/:id                               {:action=>"show", :controller=>"photos"}
+              formatted_gallery_photo GET    /galleries/:gallery_id/photos/:id.:format                       {:action=>"show", :controller=>"photos"}
+                                      PUT    /galleries/:gallery_id/photos/:id                               {:action=>"update", :controller=>"photos"}
+                                      PUT    /galleries/:gallery_id/photos/:id.:format                       {:action=>"update", :controller=>"photos"}
+                                      DELETE /galleries/:gallery_id/photos/:id                               {:action=>"destroy", :controller=>"photos"}
+                                      DELETE /galleries/:gallery_id/photos/:id.:format                       {:action=>"destroy", :controller=>"photos"}
                          admin_people GET    /admin/people                                                   {:action=>"index", :controller=>"admin/people"}
                formatted_admin_people GET    /admin/people.:format                                           {:action=>"index", :controller=>"admin/people"}
                                       POST   /admin/people                                                   {:action=>"create", :controller=>"admin/people"}
@@ -373,22 +420,6 @@ formatted_edit_admin_forum_topic_post GET    /admin/forums/:forum_id/topics/:top
                                       PUT    /forums/:forum_id/topics/:id.:format                            {:action=>"update", :controller=>"topics"}
                                       DELETE /forums/:forum_id/topics/:id                                    {:action=>"destroy", :controller=>"topics"}
                                       DELETE /forums/:forum_id/topics/:id.:format                            {:action=>"destroy", :controller=>"topics"}
-                                      GET    /forums/:forum_id/topics/:topic_id/posts                        {:action=>"index", :controller=>"posts"}
-                                      GET    /forums/:forum_id/topics/:topic_id/posts.:format                {:action=>"index", :controller=>"posts"}
-                                      POST   /forums/:forum_id/topics/:topic_id/posts                        {:action=>"create", :controller=>"posts"}
-                                      POST   /forums/:forum_id/topics/:topic_id/posts.:format                {:action=>"create", :controller=>"posts"}
-                                      GET    /forums/:forum_id/topics/:topic_id/posts/new                    {:action=>"new", :controller=>"posts"}
-                                      GET    /forums/:forum_id/topics/:topic_id/posts/new.:format            {:action=>"new", :controller=>"posts"}
-                                      GET    /forums/:forum_id/topics/:topic_id/posts/:id/edit               {:action=>"edit", :controller=>"posts"}
-                                      GET    /forums/:forum_id/topics/:topic_id/posts/:id/edit.:format       {:action=>"edit", :controller=>"posts"}
-                                      GET    /forums/:forum_id/topics/:topic_id/posts/:id                    {:action=>"show", :controller=>"posts"}
-                                      GET    /forums/:forum_id/topics/:topic_id/posts/:id.:format            {:action=>"show", :controller=>"posts"}
-                                      PUT    /forums/:forum_id/topics/:topic_id/posts/:id                    {:action=>"update", :controller=>"posts"}
-                                      PUT    /forums/:forum_id/topics/:topic_id/posts/:id.:format            {:action=>"update", :controller=>"posts"}
-                                      DELETE /forums/:forum_id/topics/:topic_id/posts/:id                    {:action=>"destroy", :controller=>"posts"}
-                                      DELETE /forums/:forum_id/topics/:topic_id/posts/:id.:format            {:action=>"destroy", :controller=>"posts"}
-               atom_forum_topic_posts GET    /forums/:forum_id/topics/:topic_id/posts/atom                   {:action=>"atom", :controller=>"posts"}
-     formatted_atom_forum_topic_posts GET    /forums/:forum_id/topics/:topic_id/posts/atom.:format           {:action=>"atom", :controller=>"posts"}
                     forum_topic_posts GET    /forums/:forum_id/topics/:topic_id/posts                        {:action=>"index", :controller=>"posts"}
           formatted_forum_topic_posts GET    /forums/:forum_id/topics/:topic_id/posts.:format                {:action=>"index", :controller=>"posts"}
                                       POST   /forums/:forum_id/topics/:topic_id/posts                        {:action=>"create", :controller=>"posts"}

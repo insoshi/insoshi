@@ -1,32 +1,27 @@
 # == Schema Information
-# Schema version: 30
+# Schema version: 34
 #
 # Table name: people
 #
-#  id                         :integer         not null, primary key
-#  email                      :string(255)     
-#  name                       :string(255)     
-#  remember_token             :string(255)     
-#  crypted_password           :string(255)     
-#  description                :text            
-#  remember_token_expires_at  :datetime        
-#  last_contacted_at          :datetime        
-#  last_logged_in_at          :datetime        
-#  forum_posts_count          :integer         default(0), not null
-#  blog_post_comments_count   :integer         default(0), not null
-#  wall_comments_count        :integer         default(0), not null
-#  created_at                 :datetime        
-#  updated_at                 :datetime        
-#  admin                      :boolean         not null
-#  deactivated                :boolean         not null
-#  connection_notifications   :boolean         default(TRUE)
-#  message_notifications      :boolean         default(TRUE)
-#  wall_comment_notifications :boolean         default(TRUE)
-#  blog_comment_notifications :boolean         default(TRUE)
-#  email_verified             :boolean         
-#  demo                       :boolean         
-#  preferences                :boolean         
-#  avatar_id                  :integer(11)     
+#  id                        :integer         not null, primary key
+#  email                     :string(255)     
+#  name                      :string(255)     
+#  remember_token            :string(255)     
+#  crypted_password          :string(255)     
+#  description               :text            
+#  remember_token_expires_at :datetime        
+#  last_contacted_at         :datetime        
+#  last_logged_in_at         :datetime        
+#  forum_posts_count         :integer         default(0), not null
+#  blog_post_comments_count  :integer         default(0), not null
+#  wall_comments_count       :integer         default(0), not null
+#  created_at                :datetime        
+#  updated_at                :datetime        
+#  admin                     :boolean         not null
+#  deactivated               :boolean         not null
+#  email_verified            :boolean         
+#  demo                      :boolean         
+#  preferences               :boolean         
 #
 
 class Person < ActiveRecord::Base

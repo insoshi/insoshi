@@ -1,16 +1,15 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 34
 #
 # Table name: galleries
 #
-#  id               :integer(11)     not null, primary key
-#  person_id        :integer(11)     
-#  title            :string(255)     
-#  description      :string(255)     
-#  photos_count     :integer(11)     default(0), not null
-#  primary_photo_id :integer(11)     
-#  created_at       :datetime        
-#  updated_at       :datetime        
+#  id           :integer         not null, primary key
+#  person_id    :integer         
+#  title        :string(255)     
+#  description  :string(255)     
+#  photos_count :integer         default(0), not null
+#  created_at   :datetime        
+#  updated_at   :datetime        
 #
 
 class Gallery < ActiveRecord::Base
@@ -65,4 +64,7 @@ class Gallery < ActiveRecord::Base
     add_activities(:activity => activity, :person => self.person)
   end
   
+  def short_description
+    description[0..124]
+  end
 end

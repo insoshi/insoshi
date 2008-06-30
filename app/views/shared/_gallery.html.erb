@@ -5,16 +5,17 @@
   <p>
 	<%= link_to h(gallery.title), gallery_path(gallery), :class => 'gallery_title' %>
 	<% if current_person?(gallery.person) %>
-    <%= link_to image_tag("icons/picture_edit.png", :class => 'actioner'),  
+      <%= link_to image_tag("icons/picture_edit.png", :class => 'actioner'),  
 			  edit_gallery_path(gallery),
 			  :title => 'Edit Gallery' %>
-    <%= link_to(image_tag("icons/picture_delete.png", :class => 'actioner'), 
-              gallery_path(gallery), 
+	  <% ## CANNOT DELETE ONLY GALLERY! %>
+      <%= link_to_if(@person.galleries.count > 1, image_tag("icons/picture_delete.png", :class => 'actioner'), 
+              gallery, 
               :method => :delete, 
               :confirm => %(Are you sure you want to delete this gallery from your profile?),
-	 		  :title => "Delete Gallery") %>
+	 		  :title => "Delete Gallery") do '' end %>
 	<%- end -%>
 	<br />
-	<%= gallery.description %>
+	<%= gallery.short_description %>
   </p>
 </li>

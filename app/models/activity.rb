@@ -1,4 +1,16 @@
 # == Schema Information
+# Schema version: 34
+#
+# Table name: activities
+#
+#  id         :integer         not null, primary key
+#  public     :boolean         
+#  item_id    :integer         
+#  person_id  :integer         
+#  item_type  :string(255)     
+#  created_at :datetime        
+#  updated_at :datetime        
+#
 
 # Schema version: 30
 #

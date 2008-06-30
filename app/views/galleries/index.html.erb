@@ -1,13 +1,3 @@
-<%- column_div :type => :primary do -%>
-  <h2> Galleries </h2>
-  <% if current_person?(@person)%>
-    <div class="button">
-	  <%=link_to "Add Gallery", new_gallery_path()%>
-    </div>
-  <% end %>
-
-  <ul id="gallery_list" class="grid">
-    <%= render :partial => "gallery", :collection => @galleries %>
-  </div >	
-  <%= will_paginate(@galleries) %>
-<%- end -%>
+<div id="tGalleries">
+  <%= render :partial=>"shared/galleries", :locals => {:galleries => @galleries} %>
+</div>

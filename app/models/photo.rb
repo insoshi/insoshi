@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 30
+# Schema version: 34
 #
 # Table name: photos
 #
@@ -9,14 +9,16 @@
 #  content_type :string(255)     
 #  filename     :string(255)     
 #  thumbnail    :string(255)     
-#  size         :integer(11)     
-#  width        :integer(11)     
-#  height       :integer(11)     
+#  size         :integer         
+#  width        :integer         
+#  height       :integer         
 #  created_at   :datetime        
 #  updated_at   :datetime        
-#  gallery_id   :integer(11)     
+#  gallery_id   :integer         
 #  title        :string(255)     
-#  position     :integer(11)     
+#  position     :integer         
+#  primary      :boolean         
+#  avatar       :boolean         
 #
 
 class Photo < ActiveRecord::Base
@@ -64,6 +66,18 @@ class Photo < ActiveRecord::Base
         errors.add_to_base(msg)
       end
     end
+  end
+  
+  def label
+    if self.title.nil? or (self.title.length == 0)
+      label_from_filename
+    else
+      self.title
+    end
+  end
+
+  def label_from_filename
+    File.basename(self.filename, File.extname(self.filename)).titleize
   end
   
   def log_activity
