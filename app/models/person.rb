@@ -86,26 +86,6 @@ class Person < ActiveRecord::Base
                                             :dependent => :destroy
   has_many :page_views, :order => 'created_at DESC'
   
-  # has_easy fields
-  has_easy :prefs do |p|
-    p.define :en_connections, :default => false,
-                  :type_check => [TrueClass, FalseClass],
-                  :preprocess => Proc.new{ |value| value == 'true' },
-                  :postprocess => Proc.new { |value| value ? 'true' : 'false' }
-    p.define :en_messages, :default => false,
-                  :type_check => [TrueClass, FalseClass],
-                  :preprocess => Proc.new{ |value| value == 'true' },
-                  :postprocess => Proc.new { |value| value ? 'true' : 'false' }
-    p.define :en_walls, :default => false,
-                  :type_check => [TrueClass, FalseClass],
-                  :preprocess => Proc.new{ |value| value == 'true' },
-                  :postprocess => Proc.new { |value| value ? 'true' : 'false' }
-    p.define :en_blogs, :default => false,
-                  :type_check => [TrueClass, FalseClass],
-                  :preprocess => Proc.new{ |value| value == 'true' },
-                  :postprocess => Proc.new { |value| value ? 'true' : 'false' }
-  end
-  
   has_many :galleries
 
   validates_presence_of     :email, :name

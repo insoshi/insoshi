@@ -22,20 +22,20 @@
       
         <div class="form_row">
           <p>
-            <%= f.label :prefs_en_connections, 'Connections', :class => "checkbox" %>
-            <%= f.check_box :prefs_en_connections, {}, 'true', 'false' %>
+            <%= f.label :connection_notifications, 'Connections', :class => "checkbox" %>
+            <%= f.check_box :connection_notifications, {}, 'true', 'false' %>
           </p>
           <p>
-            <%= f.label :prefs_en_messages, 'Messages', :class => "checkbox" %>
-            <%= f.check_box :prefs_en_messages, {}, 'true', 'false' %>
+            <%= f.label :message_notifications, 'Messages', :class => "checkbox" %>
+            <%= f.check_box :message_notifications, {}, 'true', 'false' %>
           </p>
           <p>
-            <%= f.label :prefs_en_walls, 'Wall Comments', :class => "checkbox" %>
-            <%= f.check_box :prefs_en_walls, {}, 'true', 'false' %>
+            <%= f.label :wall_comment_notifications, 'Wall Comments', :class => "checkbox" %>
+            <%= f.check_box :wall_comment_notifications, {}, 'true', 'false' %>
           </p>
           <p>
-            <%= f.label :prefs_en_blogs, 'Blog Comments', :class => "checkbox" %>
-            <%= f.check_box :prefs_en_blogs, {}, 'true', 'false' %>
+            <%= f.label :blog_comment_notifications, 'Blog Comments', :class => "checkbox" %>
+            <%= f.check_box :blog_comment_notifications, {}, 'true', 'false' %>
           </p>
         </div>
       <%- end -%>

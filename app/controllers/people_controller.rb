@@ -101,7 +101,6 @@ class PeopleController < ApplicationController
       case params[:type]
       when 'info_edit'
         if !preview? and @person.update_attributes(params[:person])
-          @person.prefs.save!
           flash[:success] = 'Profile updated!'
           format.html { redirect_to(@person) }
         else
