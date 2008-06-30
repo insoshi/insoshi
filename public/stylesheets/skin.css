@@ -15,8 +15,12 @@ body {
   text-align: left;
   width: 744px;
 }
+#wrap {
+	border: 1px solid #4A70B1; padding: 0px 0px 0px 6px; background: #fff; position: absolute; right: 120px; top: 44px;
+}
 #content {
   width: 744px;
+	min-height: 540px;
   float: left;
   padding-bottom: 10px;
 }

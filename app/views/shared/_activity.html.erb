@@ -1,6 +1,7 @@
 <%# The activity shouldn't be nil, but we're wearing a belt and suspenders. %>
 <%- unless activity.item.nil? -%>
-<li>
+<% post_class = (activity.eql?(@feed.last)) ? 'last' : '' %>
+<li class="<%= post_class -%>">
   <p class="activity_detail">
     <%= feed_icon activity %>
 	<% recent ||= false %>
