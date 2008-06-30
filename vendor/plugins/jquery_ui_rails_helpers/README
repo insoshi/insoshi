@@ -1,0 +1,66 @@
+JQuery UI Rails Helpers Readme
+----------------------------------------------------------------
+
+* Web:        http://www.codeofficer.com/
+* Email:      spam*@*codeofficer*dot*com
+* JQuery:     http://www.jquery.com/
+* JQuery UI:  http://ui.jquery.com/
+
+These are some view helpers I use in Rails to better integrate JQuery UI in my sites.
+
+Maybe you will find them useful as well.
+
+These include ...
+
+
+TabsRenderer
+----------------------------------------------------------------	
+
+This helper simplifies the code required to use JQuery UIs Tabs plugin.
+
+There are 3 steps to rendering a tab ... initialize, create and render.
+
+  <% tabs = TabsRenderer.new(self) %>
+  	<% tabs.create('tab_one', 'Tab 1') do %>
+      # ... insert tab contents
+  	<% end %>
+  	<% tabs.create('tab_two', 'Tab 2') do %>
+      # ... insert tab contents
+  	<% end %>
+  <%= tabs.render %>
+
+The above will generate this HTML in your view:
+
+  <div id="tabs">
+    <ul>
+      <li><a href="#tab_one"><span>Tab 1</span></a></li>
+      <li><a href="#tab_two"><span>Tab 2</span></a></li>
+    </ul>
+    <div id="tab_one">
+      # ... insert tab contents
+    </div>
+    <div id="tab_two">
+      # ... insert tab contents
+    </div>
+  </div>
+  
+Tabs will be rendered in the order you create them.
+
+You can easily render a tab conditionally by appending your condition to the end of 
+the 'create' block as such ...
+
+  <% tabs.create('profile_tab', 'Your Profile') do %>
+  	# ... insert tab contents
+  <% end unless @current_user.nil? %>
+
+You can pass HTML options to either the parent DIV or any individual tab's
+DIV as you like ...
+
+  <% tabs = TabsRenderer.new(self, :class = 'flora') %>
+  	<% tabs.create('tab_one', 'Tab 1', :style => 'background: #FFF') do %>
+      # ... insert tab contents
+  	<% end %>
+  <%= tabs.render %>
+
+The default DOM ID for the parent div is ... id="tabs" ... unless you pass in an HTML
+option with a different value.
