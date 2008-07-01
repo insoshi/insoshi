@@ -1,0 +1,37 @@
+TODO:
+  * Create ProfilerNote
+
+== Footnotes v3.2.1
+Author: José Valim (jose.valim@gmail.com)
+Site: http://www.pagestacker.com/
+  * Added some tests
+  * Redefined Footnotes CSS and Javascripts to use concise names.
+  
+== Footnotes v3.2
+  * Now you can easily add your own notes;
+  * Added numbers to tabs;
+  * Added Queries note;
+  * Added MySQL Query Analyzer.
+
+== Footnotes v3.1
+  * Code refactoring (using modules, except backtracer);
+  * Ability to cherry pick notes;
+  * Working on Rails 2.1.
+
+== Footnotes v3.0
+  * Some code refactoring;
+  * Stylesheets bug fixed: was showing not only css in Stylesheets div;
+  * Logtail fix: working with Rails 2.0 logger and in all OS, since it's Regexp based;
+  * Rails 1.2 (except backtrace) and 2.0 compatible;
+  * RoutingNavigator (based on Rick Olson plugin);
+  * FilterChain.
+
+== Textmate Footnotes v2.0
+Copyright (c) 2006 InquiryLabs, Inc.
+Author: Duane Johnson (duane.johnson@gmail.com)
+Site: http://inquirylabs.com/
+Description:
+  Creates clickable footnotes on each rendered page, as well as clickable
+  links in the backtrace should an error occur in your Rails app. Links take
+  you to the right place inside TextMate.
+  Enable only the TextMate on Macs in development mode
