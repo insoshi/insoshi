@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
   
-  skip_before_filter :require_activation, :only => :verify
+  skip_before_filter :require_activation, :only => :verify_email
   skip_before_filter :admin_warning, :only => [ :show, :update ]
   before_filter :login_required, :only => [ :show, :edit, :update ]
   before_filter :correct_user_required, :only => [ :edit, :update ]
@@ -65,7 +65,7 @@ class PeopleController < ApplicationController
     redirect_to home_url
   end
 
-  def verify
+  def verify_email
     verification = EmailVerification.find_by_code(params[:id])
     if verification.nil?
       flash[:error] = "Invalid email verification code"
