@@ -2,7 +2,11 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'test_hel
 require 'net/http'
 
 class S3Test < Test::Unit::TestCase
-  if File.exist?(File.join(File.dirname(__FILE__), '../../amazon_s3.yml'))
+  def self.test_S3?
+    true unless ENV["TEST_S3"] == "false"
+  end
+  
+  if test_S3? && File.exist?(File.join(File.dirname(__FILE__), '../../amazon_s3.yml'))
     include BaseAttachmentTests
     attachment_model S3Attachment
 
