@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+system("sudo rake gems:install")
+system("rake install")
