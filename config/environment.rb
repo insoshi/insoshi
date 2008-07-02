@@ -62,11 +62,12 @@ Rails::Initializer.run do |config|
   # config.active_record.default_timezone = :utc
   
   # Custom gem requirements
-  config.gem 'mislav-will_paginate', :version => '~> 2.3.2',
-                                     :lib => 'will_paginate',
-                                     :source => 'http://gems.github.com'    
+  # config.gem 'mislav-will_paginate', :version => '~> 2.3.2',
+  #                                    :lib => 'will_paginate',
+  #                                    :source => 'http://gems.github.com'    
 end
 
+require 'will_paginate'
 require 'bluecloth'
 
 # Set INLINEDIR to override default location for ruby_inline directory
