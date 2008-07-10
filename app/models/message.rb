@@ -23,7 +23,7 @@ class Message < Communication
   extend PreferencesHelper
   
   attr_accessor :reply, :parent, :send_mail
-  acts_as_ferret :fields => [ :subject, :content ] if search?
+  # is_indexed :fields => [ :subject, :content ] if search?
   
   MAX_CONTENT_LENGTH = MAX_TEXT_LENGTH
   SEARCH_LIMIT = 20

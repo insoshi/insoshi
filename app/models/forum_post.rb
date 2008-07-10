@@ -16,7 +16,7 @@
 #
 
 class ForumPost < Post
-  acts_as_ferret :fields => [ :title, :body ] if search?
+  # is_indexed :fields => [ :title, :body ] if search?
   
   belongs_to :topic,  :counter_cache => true
   belongs_to :person, :counter_cache => true
