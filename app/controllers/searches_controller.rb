@@ -3,15 +3,19 @@ class SearchesController < ApplicationController
 
   def index
     query = params[:q].strip
+    # if query.blank?
+    #   flash[:notice] = "No search results for '#{CGI.escapeHTML(query)}'."
+    #   redirect_to :back and return
+    # end
     if query.blank?
-      flash[:notice] = "No search results for '#{CGI.escapeHTML(query)}'."
-      redirect_to :back and return
+      @results = [].paginate
+    else
+      @search = Ultrasphinx::Search.new(:query => params[:q], 
+      :page => params[:page] || 1,
+      :class_names => "Person")
+      @search.run
+      @results = @search.results
     end
-    @search = Ultrasphinx::Search.new(:query => params[:q], 
-    :page => params[:page] || 1,
-    :class_names => "Person")
-    @search.run
-    @results = @search.results
     # redirect_to home_url and return if params[:model].nil?
     # model = strip_admin(params[:model])
     # if model == "Message"

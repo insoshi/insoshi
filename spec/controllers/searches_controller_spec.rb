@@ -1,22 +1,46 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
+# Return a list of system processes.
+def processes
+  process_cmd = case RUBY_PLATFORM
+                when /djgpp|(cyg|ms|bcc)win|mingw/
+                  'tasklist /v'
+                when /solaris/
+                  'ps -ef'
+                else
+                  'ps aux'
+                end
+  `#{process_cmd}`
+end
+
+# Return true if the search daemon is running.
+def testing_search?
+  processes.include?('searchd')
+end
+
 describe SearchesController do
-  
+
   before(:each) do
     @back = "http://test.host/previous/page"
     request.env['HTTP_REFERER'] = @back
   end
 
-  
   it "should return empty for a blank query" do
     get :index, :q => " ", :model => "Person"
-    response.should be_redirect
-    response.should redirect_to(@back)
+    response.should be_success
+    assigns(:results).should == [].paginate
   end
-  # 
-  # it "should return empty for a wildcard query" do
-  #   Person.search(:q => "*").should == [].paginate
-  # end
+  
+  it "should return empty for a 'wildcard' query" do
+    get :index, :q => " ", :model => "Person"
+    assigns(:results).should == [].paginate
+  end
+
+  it "should return Quentin for query 'quentin'" do
+    get :index, :q => "quentin", :model => "Person"
+    assigns(:results).should == [people(:quentin)].paginate
+  end
+
   # 
   # it "should return empty for a space-padded wildcard query" do
   #   Person.search(:q => " *  ").should == [].paginate
@@ -31,9 +55,9 @@ describe SearchesController do
   # it "should return the Quentin for the search 'quentin'" do
   #   Person.search(:q => 'quentin').should == [people(:quentin)].paginate
   # end
-  
+
   # it "should find people" do
   #   get :index, :q => "Quentin", :model => "Person"
   #   assigns(:results).should == [people(:quentin)].paginate
   # end
-end
+end if testing_search?
