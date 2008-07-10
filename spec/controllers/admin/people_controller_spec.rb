@@ -4,7 +4,7 @@ describe Admin::PeopleController do
   integrate_views
   
   before(:each) do
-      request.env['HTTP_REFERER'] = "http://test.host/previous/page"    
+    request.env['HTTP_REFERER'] = "http://test.host/previous/page"    
   end
   
   it "should redirect a non-logged-in user" do

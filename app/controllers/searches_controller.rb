@@ -2,8 +2,13 @@ class SearchesController < ApplicationController
   include ApplicationHelper
 
   def index
+    query = params[:q].strip
+    if query.blank?
+      flash[:notice] = "No search results for '#{CGI.escapeHTML(query)}'."
+      redirect_to :back and return
+    end
     @search = Ultrasphinx::Search.new(:query => params[:q], 
-    :page => params[:page] || 1, :per_page => 5,
+    :page => params[:page] || 1,
     :class_names => "Person")
     @search.run
     @results = @search.results
