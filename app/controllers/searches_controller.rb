@@ -1,6 +1,8 @@
 class SearchesController < ApplicationController
   include ApplicationHelper
 
+  before_filter :login_required
+
   def index
     query = params[:q].strip
     # if query.blank?

@@ -23,9 +23,16 @@ describe SearchesController do
   before(:each) do
     @back = "http://test.host/previous/page"
     request.env['HTTP_REFERER'] = @back
+    login_as :quentin
   end
 
   describe "Person searches" do
+
+    it "should require login" do
+      logout
+      get :index, :q => "", :model => "Person"
+      response.should redirect_to(login_url)
+    end
 
     it "should return empty for a blank query" do
       get :index, :q => " ", :model => "Person"
