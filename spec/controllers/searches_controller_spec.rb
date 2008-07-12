@@ -46,12 +46,12 @@ describe SearchesController do
       assigns(:results).should == [].paginate
     end
 
-    it "should return Quentin for name query" do
+    it "should search by name" do
       get :index, :q => "quentin", :model => "Person"
       assigns(:results).should == [people(:quentin)].paginate
     end
     
-    it "should return Quentin for description query" do
+    it "should search by description" do
       get :index, :q => "I'm Quentin", :model => "Person"
       assigns(:results).should == [people(:quentin)].paginate
     end
@@ -96,4 +96,23 @@ describe SearchesController do
 
     end
   end
+  
+  describe "Message searches" do
+
+    it "should search by subject" 
+    
+    it "should search by content" 
+    
+    it "should find only messages sent to logged-in user" 
+    
+    it "should not find trashed messages" 
+  end
+  
+  describe "Forum post searches searches" do
+    
+    it "should search by post text" 
+    
+    it "should search by topic name" 
+  end  
+  
 end if testing_search?
