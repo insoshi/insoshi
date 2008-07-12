@@ -24,6 +24,7 @@ describe SearchesController do
     @back = "http://test.host/previous/page"
     request.env['HTTP_REFERER'] = @back
     login_as :quentin
+    @preference = Preference.find(:first)
   end
 
   describe "Person searches" do
@@ -45,16 +46,17 @@ describe SearchesController do
       assigns(:results).should == [].paginate
     end
 
-    it "should return Quentin for query 'quentin'" do
+    it "should return Quentin for name query" do
       get :index, :q => "quentin", :model => "Person"
       assigns(:results).should == [people(:quentin)].paginate
     end
     
+    it "should return Quentin for description query" do
+      get :index, :q => "I'm Quentin", :model => "Person"
+      assigns(:results).should == [people(:quentin)].paginate
+    end
+    
     describe "as a normal user" do
-      
-      before(:each) do
-        login_as :quentin
-      end
       
       it "should not return deactivated users" do
         people(:deactivated).should be_deactivated
@@ -62,15 +64,35 @@ describe SearchesController do
         assigns(:results).should == [].paginate
       end
       
-      it "should not return email unverified users" 
+      it "should not return email unverified users" do
+        @preference.email_verifications = true
+        @preference.save!
+        @preference.reload.email_verifications.should == true
+        get :index, :q => "unverified", :model => "Person"
+        assigns(:results).should == [].paginate
+      end
       
     end
     
     describe "as an admin" do
-
-      it "should return deactivated users" 
       
-      it "should return email unverified users" 
+      before(:each) do
+        login_as :admin
+      end
+
+      it "should return deactivated users" do
+        people(:deactivated).should be_deactivated
+        get :index, :q => "deactivated", :model => "Person"
+        assigns(:results).should == [people(:deactivated)].paginate
+      end
+      
+      it "should return email unverified users" do
+        @preference.email_verifications = true
+        @preference.save!
+        @preference.reload.email_verifications.should == true
+        get :index, :q => "unverified", :model => "Person"
+        assigns(:results).should == [people(:email_unverified)].paginate
+      end
 
     end
     

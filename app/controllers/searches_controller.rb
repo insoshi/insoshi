@@ -12,8 +12,14 @@ class SearchesController < ApplicationController
     if query.blank?
       @results = [].paginate
     else
+      filters = {}
+      unless current_person.admin?
+        filters['deactivated']    = 0
+        filters['email_verified'] = 1 if global_prefs.email_verifications?
+      end
+      
       @search = Ultrasphinx::Search.new(:query => params[:q], 
-      :filters => { 'deactivated' => 0 },
+      :filters => filters,
       :page => params[:page] || 1,
       :class_names => "Person"
       )

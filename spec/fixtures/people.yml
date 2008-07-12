@@ -63,8 +63,8 @@ deactivated:
 
 email_unverified:
   email: inactive@example.com
-  name: No email verified
-  description: No email verified
+  name: Email unverified
+  description: Email unverified
   crypted_password: <%= password %>
   created_at: <%= 1.day.ago.to_s :db %>
   email_verified: false 
