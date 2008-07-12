@@ -25,20 +25,48 @@ describe SearchesController do
     request.env['HTTP_REFERER'] = @back
   end
 
-  it "should return empty for a blank query" do
-    get :index, :q => " ", :model => "Person"
-    response.should be_success
-    assigns(:results).should == [].paginate
-  end
-  
-  it "should return empty for a 'wildcard' query" do
-    get :index, :q => " ", :model => "Person"
-    assigns(:results).should == [].paginate
-  end
+  describe "Person searches" do
 
-  it "should return Quentin for query 'quentin'" do
-    get :index, :q => "quentin", :model => "Person"
-    assigns(:results).should == [people(:quentin)].paginate
+    it "should return empty for a blank query" do
+      get :index, :q => " ", :model => "Person"
+      response.should be_success
+      assigns(:results).should == [].paginate
+    end
+  
+    it "should return empty for a 'wildcard' query" do
+      get :index, :q => " ", :model => "Person"
+      assigns(:results).should == [].paginate
+    end
+
+    it "should return Quentin for query 'quentin'" do
+      get :index, :q => "quentin", :model => "Person"
+      assigns(:results).should == [people(:quentin)].paginate
+    end
+    
+    describe "as a normal user" do
+      
+      before(:each) do
+        login_as :quentin
+      end
+      
+      it "should not return deactivated users" do
+        people(:deactivated).should be_deactivated
+        get :index, :q => "deactivated", :model => "Person"
+        assigns(:results).should == [].paginate
+      end
+      
+      it "should not return email unverified users" 
+      
+    end
+    
+    describe "as an admin" do
+
+      it "should return deactivated users" 
+      
+      it "should return email unverified users" 
+
+    end
+    
   end
 
   # 

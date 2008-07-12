@@ -11,10 +11,13 @@ class SearchesController < ApplicationController
       @results = [].paginate
     else
       @search = Ultrasphinx::Search.new(:query => params[:q], 
+      :filters => { 'deactivated' => 0 },
       :page => params[:page] || 1,
-      :class_names => "Person")
+      :class_names => "Person"
+      )
       @search.run
       @results = @search.results
+      # raise @results.first.deactivated.inspect
     end
     # redirect_to home_url and return if params[:model].nil?
     # model = strip_admin(params[:model])

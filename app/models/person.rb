@@ -38,7 +38,7 @@ class Person < ActiveRecord::Base
                   :blog_comment_notifications
   # Indexed fields for Sphinx
   # The :conditions line is > 80 chars because of an Ultrasphinx limitation. 
-  is_indexed :fields => ['name', 'description', 'deactivated']# ,
+  is_indexed :fields => [{:field => 'name'}, {:field => 'description'}, 'deactivated']#, 'description'], 'deactivated'# ,
   #              :conditions => %(deactivated = 0 AND (email_verified IS NULL OR email_verified = 1))
   #              
   
