@@ -14,6 +14,7 @@ class SearchesController < ApplicationController
     else
       filters = {}
       unless current_person.admin?
+        # Filter out deactivated and email unverified users for non-admins.
         filters['deactivated']    = 0
         filters['email_verified'] = 1 if global_prefs.email_verifications?
       end

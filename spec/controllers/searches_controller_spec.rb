@@ -95,26 +95,5 @@ describe SearchesController do
       end
 
     end
-    
   end
-
-  # 
-  # it "should return empty for a space-padded wildcard query" do
-  #   Person.search(:q => " *  ").should == [].paginate
-  # end
-  # 
-  # it "should not raise an error for a generic query" do
-  #   lambda do
-  #     Person.search(:q => "foobar")
-  #   end.should_not raise_error
-  # end
-  # 
-  # it "should return the Quentin for the search 'quentin'" do
-  #   Person.search(:q => 'quentin').should == [people(:quentin)].paginate
-  # end
-
-  # it "should find people" do
-  #   get :index, :q => "Quentin", :model => "Person"
-  #   assigns(:results).should == [people(:quentin)].paginate
-  # end
 end if testing_search?
