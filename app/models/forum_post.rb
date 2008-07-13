@@ -16,13 +16,16 @@
 #
 
 class ForumPost < Post
-  # is_indexed :fields => [ :title, :body ] if search?
+  is_indexed :fields => [ 'body' ],
+             :conditions => "type = 'ForumPost'"#,
+             # :include => [{:association_name => 'topic', :field => 'name'}]
+
   
   belongs_to :topic,  :counter_cache => true
   belongs_to :person, :counter_cache => true
   
   validates_presence_of :body, :person
-  validates_length_of :body, :maximum => MAX_TEXT_LENGTH
+  validates_length_of :body, :maximum => 5000 # MAX_TEXT_LENGTH
   
   after_create :log_activity
   

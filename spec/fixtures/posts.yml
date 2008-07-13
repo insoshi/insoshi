@@ -1,14 +1,12 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 forum:
-  id: 1
   topic: one
   person: quentin
   body: MyText
   type: ForumPost
 
 forum_2:
-  id: 3
   topic: two
   person: aaron
   body: FooBar

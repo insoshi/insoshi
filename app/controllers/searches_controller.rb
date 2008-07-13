@@ -6,6 +6,7 @@ class SearchesController < ApplicationController
   def index
     query = params[:q].strip
     model = strip_admin(params[:model])
+    page  = params[:page] || 1
     # if query.blank?
     #   flash[:notice] = "No search results for '#{CGI.escapeHTML(query)}'."
     #   redirect_to :back and return
@@ -14,20 +15,37 @@ class SearchesController < ApplicationController
       @results = [].paginate
     else
       filters = {}
-      if model == "Person" and not current_person.admin?
+      if model == "Person" 
+        
+        if not current_person.admin?
         # Filter out deactivated and email unverified users for non-admins.
         filters['deactivated']    = 0
         filters['email_verified'] = 1 if global_prefs.email_verifications?
+        end
+        
+              @search = Ultrasphinx::Search.new(:query => query, 
+                                        :filters => filters,
+                                        :page => page,
+                                        :class_names => model)
+      
+
       elsif model == "Message"
         filters['recipient_id'] = current_person.id
         filters['recipient_deleted_at'] = 0  # 0 is the same as NULL (!)
-      end
+        
       
-      @search = Ultrasphinx::Search.new(:query => params[:q], 
-      :filters => filters,
-      :page => params[:page] || 1,
-      :class_names => model
-      )
+      @search = Ultrasphinx::Search.new(:query => query, 
+                                        :filters => filters,
+                                        :page => page,
+                                        :class_names => model)
+      elsif model == "ForumPost"
+
+      
+      @search = Ultrasphinx::Search.new(:query => query, 
+                                        :filters => filters,
+                                        :page => page,
+                                        :class_names => model)
+      end
       @search.run
       @results = @search.results
       # raise @results.first.deactivated.inspect

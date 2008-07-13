@@ -104,33 +104,49 @@ describe SearchesController do
     end
 
     it "should search by subject" do
-      get :index, :q => "The subject", :model => "Message"
+      get :index, :q => @message.subject, :model => "Message"
       assigns(:results).should contain(@message)
     end
     
     it "should search by content" do
-      get :index, :q => "Dude!", :model => "Message"
+      get :index, :q => @message.content, :model => "Message"
       assigns(:results).should contain(@message)      
     end
     
     it "should find only messages sent to logged-in user" do
       invalid_message = communications(:sent_to_aaron)
-      get :index, :q => "The subject", :model => "Message"
+      get :index, :q => invalid_message.subject, :model => "Message"
       assigns(:results).should_not contain(invalid_message)
     end
     
     it "should not find trashed messages" do
       trashed_message = communications(:sent_to_quentin_from_kelly_and_trashed)
-      get :index, :q => "The subject", :model => "Message"
+      get :index, :q => trashed_message.subject, :model => "Message"
       assigns(:results).should_not contain(trashed_message)      
     end
   end
   
-  describe "Forum post searches searches" do
+  describe "Forum post searches" do
     
-    it "should search by post text" 
+    before(:each) do
+      @post = posts(:forum)
+    end
+        
+    it "should search by post body" do
+      get :index, :q => @post.body, :model => "ForumPost"
+      assigns(:results).should contain(@post)
+    end
     
-    it "should search by topic name" 
+    it "should not raise errors due to finding blog posts" do
+      # With STI, it's easy to include blog posts by accident.
+      # When Ultrasphinx tries to use ForumPost on a blog post id,
+      # it raises an ActiveRecord::RecordNotFound error.
+      lambda do
+        get :index, :q => posts(:blog_post).body, :model => "ForumPost"
+      end.should_not raise_error(ActiveRecord::RecordNotFound)
+    end
+        
+    it "should search by topic name"
   end  
   
 end if testing_search?
