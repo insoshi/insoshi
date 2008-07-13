@@ -24,6 +24,7 @@ module SearchesHelper
     klass = object.class.to_s
     dir  = klass.tableize  # E.g., 'Person' becomes 'people'
     part = dir.singularize # E.g., 'people' becomes 'person'
+    dir = "topics" if klass == "ForumPost"
     admin_search? ? "admin/#{dir}/#{part}" : "#{dir}/#{part}"
   end
 

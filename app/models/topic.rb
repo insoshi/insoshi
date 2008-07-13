@@ -15,7 +15,7 @@
 class Topic < ActiveRecord::Base
   include ActivityLogger
   
-  MAX_NAME = 100 #MEDIUM_STRING_LENGTH
+  MAX_NAME = 100
   NUM_RECENT = 6
   
   belongs_to :forum, :counter_cache => true
