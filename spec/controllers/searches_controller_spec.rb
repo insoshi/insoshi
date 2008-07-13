@@ -113,7 +113,13 @@ describe SearchesController do
       assigns(:results).should contain(@message)      
     end
     
-    it "should find only messages sent to logged-in user" 
+    it "should find only messages sent to logged-in user" do
+      invalid_message = communications(:sent_to_aaron)
+      get :index, :q => "The subject", :model => "Message"
+      results = assigns(:results)
+      results.should contain(@message)
+      results.should_not contain(invalid_message)
+    end
     
     it "should not find trashed messages" 
   end

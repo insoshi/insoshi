@@ -23,8 +23,8 @@ class Message < Communication
   extend PreferencesHelper
   
   attr_accessor :reply, :parent, :send_mail
-  is_indexed :fields => [ 'subject', 'content' ]
-  # :include => [{:association_name => 'recipient', :field => 'recipient_id'}]
+  is_indexed :fields => [{ :field => 'subject' }, { :field => 'content' },
+                         'recipient_id']
 
   MAX_CONTENT_LENGTH = 5000 #MAX_TEXT_LENGTH
   SEARCH_LIMIT = 20
