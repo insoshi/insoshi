@@ -20,6 +20,7 @@ class SearchesController < ApplicationController
         filters['email_verified'] = 1 if global_prefs.email_verifications?
       elsif model == "Message"
         filters['recipient_id'] = current_person.id
+        filters['recipient_deleted_at'] = 0  # 0 is the same as NULL (!)
       end
       
       @search = Ultrasphinx::Search.new(:query => params[:q], 

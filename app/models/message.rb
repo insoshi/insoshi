@@ -24,7 +24,7 @@ class Message < Communication
   
   attr_accessor :reply, :parent, :send_mail
   is_indexed :fields => [{ :field => 'subject' }, { :field => 'content' },
-                         'recipient_id']
+                         'recipient_id', 'recipient_deleted_at']
 
   MAX_CONTENT_LENGTH = 5000 #MAX_TEXT_LENGTH
   SEARCH_LIMIT = 20
