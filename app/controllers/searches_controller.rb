@@ -1,22 +1,30 @@
 class SearchesController < ApplicationController
   include ApplicationHelper
 
+  before_filter :login_required
+
   def index
-    redirect_to home_url and return if params[:model].nil?
+    query = params[:q].strip
     model = strip_admin(params[:model])
-    if model == "Message"
-      options = params.merge(:recipient => current_person)
+    page  = params[:page] || 1
+    if query.blank?
+      @results = [].paginate
     else
-      options = params
-    end
-    options[:all] = true if admin?
-    @results = model.constantize.search(options)
-    if model == "ForumPost" and @results
-      # Consolidate the topics, eliminating duplicates.
-      # TODO: do this in the Topic model.  This will probably require some
-      #       search-engine specific hacking, so defer to the time when we're
-      #       ready to switch to Sphinx.
-      @results = @results.map(&:topic).uniq.paginate
+      filters = {}
+      if model == "Person" and not current_person.admin?
+        # Filter out deactivated and email unverified users for non-admins.
+        filters['deactivated']    = 0
+        filters['email_verified'] = 1 if global_prefs.email_verifications?
+      elsif model == "Message"
+        filters['recipient_id'] = current_person.id
+        filters['recipient_deleted_at'] = 0  # 0 is the same as NULL (!)
+      end
+      @search = Ultrasphinx::Search.new(:query => query, 
+                                        :filters => filters,
+                                        :page => page,
+                                        :class_names => model)
+      @search.run
+      @results = @search.results
     end
   end
   

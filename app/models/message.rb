@@ -23,9 +23,10 @@ class Message < Communication
   extend PreferencesHelper
   
   attr_accessor :reply, :parent, :send_mail
-  acts_as_ferret :fields => [ :subject, :content ] if search?
-  
-  MAX_CONTENT_LENGTH = MAX_TEXT_LENGTH
+  is_indexed :fields => [{ :field => 'subject' }, { :field => 'content' },
+                         'recipient_id', 'recipient_deleted_at']
+
+  MAX_CONTENT_LENGTH = 5000
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
   
@@ -33,28 +34,12 @@ class Message < Communication
   belongs_to :recipient, :class_name => 'Person',
                          :foreign_key => 'recipient_id'
   validates_presence_of :subject, :content
-  validates_length_of :subject, :maximum => SMALL_STRING_LENGTH
+  validates_length_of :subject, :maximum => 40
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
   
   after_create :update_recipient_last_contacted_at,
                :save_recipient, :set_replied_to, :send_receipt_reminder
-  
-  class << self
-    def search(options = {})
-      query = options[:q]
-      query = options[:q]
-      return [].paginate if query.blank? or query == "*"
-      # This is ineffecient.  We'll fix it when we move to Sphinx.
-      conditions = ["recipient_id = ? AND recipient_deleted_at IS NULL",
-                    options[:recipient]]
-      # raise conditions.inspect
-      results = find_by_contents(query, {}, :conditions => conditions)
-      results[0...SEARCH_LIMIT].paginate(:page => options[:page],
-                                         :per_page => SEARCH_PER_PAGE)
-    end
-    
-  end
   
   def parent
     return @parent unless @parent.nil?

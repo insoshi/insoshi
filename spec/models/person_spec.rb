@@ -430,12 +430,6 @@ describe Person do
       @person.should_not be_last_admin
     end
   end
-
-  describe "search" do
-    it "should have a working search page" do
-      Person.search(:q => "Quentin").should == [people(:quentin)].paginate
-    end
-  end if SEARCH_IN_TESTS
   
   describe "active class methods" do
     it "should not return deactivated people" do

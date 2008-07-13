@@ -77,7 +77,6 @@ module CustomModelMatchers
   # Verify that an action destroys an associated attribute.
   # Usage:
   #  @topic.should destroy_associated(:posts)
-
   class DestroyAssociated
 
     def initialize(attribute)

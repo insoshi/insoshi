@@ -19,7 +19,6 @@ module SearchesHelper
   
   # Return the partial (including path) for the given object.
   # partial can also accept an array of objects (of the same type).
-  
   def partial(object)
     object = object.first if object.is_a?(Array)
     klass = object.class.to_s
