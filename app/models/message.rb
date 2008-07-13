@@ -23,9 +23,10 @@ class Message < Communication
   extend PreferencesHelper
   
   attr_accessor :reply, :parent, :send_mail
-  # is_indexed :fields => [ :subject, :content ] if search?
-  
-  MAX_CONTENT_LENGTH = MAX_TEXT_LENGTH
+  is_indexed :fields => [ 'subject', 'content' ]
+  # :include => [{:association_name => 'recipient', :field => 'recipient_id'}]
+
+  MAX_CONTENT_LENGTH = 5000 #MAX_TEXT_LENGTH
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
   
@@ -33,7 +34,7 @@ class Message < Communication
   belongs_to :recipient, :class_name => 'Person',
                          :foreign_key => 'recipient_id'
   validates_presence_of :subject, :content
-  validates_length_of :subject, :maximum => SMALL_STRING_LENGTH
+  validates_length_of :subject, :maximum => 40 # SMALL_STRING_LENGTH
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
   

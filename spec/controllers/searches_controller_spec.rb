@@ -83,7 +83,7 @@ describe SearchesController do
       it "should return deactivated users" do
         people(:deactivated).should be_deactivated
         get :index, :q => "deactivated", :model => "Person"
-        assigns(:results).should == [people(:deactivated)].paginate
+        assigns(:results).should contain(people(:deactivated))
       end
       
       it "should return email unverified users" do
@@ -91,17 +91,27 @@ describe SearchesController do
         @preference.save!
         @preference.reload.email_verifications.should == true
         get :index, :q => "unverified", :model => "Person"
-        assigns(:results).should == [people(:email_unverified)].paginate
+        assigns(:results).should contain(people(:email_unverified))
       end
 
     end
   end
   
   describe "Message searches" do
-
-    it "should search by subject" 
     
-    it "should search by content" 
+    before(:each) do
+      @message = communications(:sent_to_quentin)
+    end
+
+    it "should search by subject" do
+      get :index, :q => "The subject", :model => "Message"
+      assigns(:results).should contain(@message)
+    end
+    
+    it "should search by content" do
+      get :index, :q => "Dude!", :model => "Message"
+      assigns(:results).should contain(@message)      
+    end
     
     it "should find only messages sent to logged-in user" 
     

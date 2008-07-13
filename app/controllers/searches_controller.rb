@@ -5,6 +5,7 @@ class SearchesController < ApplicationController
 
   def index
     query = params[:q].strip
+    model = strip_admin(params[:model])
     # if query.blank?
     #   flash[:notice] = "No search results for '#{CGI.escapeHTML(query)}'."
     #   redirect_to :back and return
@@ -13,23 +14,24 @@ class SearchesController < ApplicationController
       @results = [].paginate
     else
       filters = {}
-      unless current_person.admin?
+      if model == "Person" and not current_person.admin?
         # Filter out deactivated and email unverified users for non-admins.
         filters['deactivated']    = 0
         filters['email_verified'] = 1 if global_prefs.email_verifications?
+      elsif model == "Message"
+        
       end
       
       @search = Ultrasphinx::Search.new(:query => params[:q], 
       :filters => filters,
       :page => params[:page] || 1,
-      :class_names => "Person"
+      :class_names => model
       )
       @search.run
       @results = @search.results
       # raise @results.first.deactivated.inspect
     end
     # redirect_to home_url and return if params[:model].nil?
-    # model = strip_admin(params[:model])
     # if model == "Message"
     #   options = params.merge(:recipient => current_person)
     # else
