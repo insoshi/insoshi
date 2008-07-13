@@ -9,7 +9,7 @@
 if (ENV['RAILS_ENV'] == 'development')
   dir = File.dirname(__FILE__)
   require File.join(dir,'lib','footnotes')
-  require File.join(dir,'lib','initializer')
+  require File.join(dir,'lib','loader')
   require File.join(dir,'lib','backtracer')
 
   Footnotes::Filter.prefix ||= 'txmt://open?url=file://' if RUBY_PLATFORM.include?('darwin') 
