@@ -26,7 +26,7 @@ class Message < Communication
   is_indexed :fields => [{ :field => 'subject' }, { :field => 'content' },
                          'recipient_id', 'recipient_deleted_at']
 
-  MAX_CONTENT_LENGTH = 5000 #MAX_TEXT_LENGTH
+  MAX_CONTENT_LENGTH = 5000
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
   
@@ -34,7 +34,7 @@ class Message < Communication
   belongs_to :recipient, :class_name => 'Person',
                          :foreign_key => 'recipient_id'
   validates_presence_of :subject, :content
-  validates_length_of :subject, :maximum => 40 # SMALL_STRING_LENGTH
+  validates_length_of :subject, :maximum => 40
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
   

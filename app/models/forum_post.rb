@@ -25,20 +25,10 @@ class ForumPost < Post
   belongs_to :person, :counter_cache => true
   
   validates_presence_of :body, :person
-  validates_length_of :body, :maximum => 5000 # MAX_TEXT_LENGTH
+  validates_length_of :body, :maximum => 5000
   
   after_create :log_activity
-  
-  class << self
-    def search(options = {})
-      query = options[:q]
-      return [] if query.blank?
-      # TODO: change the limit (probably when switching to Sphinx).
-      find_by_contents(query, :limit => :all,
-                              :conditions => ['forum_id = :forum_id', options])
-    end
-  end
-  
+    
   private
   
     def log_activity

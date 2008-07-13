@@ -41,9 +41,9 @@ class Person < ActiveRecord::Base
   is_indexed :fields => [{ :field => 'name' }, { :field => 'description' },
                          'deactivated', 'email_verified']
   
-  MAX_EMAIL = MAX_PASSWORD = 40#SMALL_STRING_LENGTH
-  MAX_NAME = 40#SMALL_STRING_LENGTH
-  MAX_DESCRIPTION = 10000#MAX_TEXT_LENGTH
+  MAX_EMAIL = MAX_PASSWORD = 40
+  MAX_NAME = 40
+  MAX_DESCRIPTION = 5000
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
   TRASH_TIME_AGO = 1.month.ago
   SEARCH_LIMIT = 20
