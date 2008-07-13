@@ -1,0 +1,5 @@
+<%= link_to h(search_result.topic.name),
+            forum_topic_path(search_result.topic.forum, search_result.topic) 
+%>
+<%= render :partial => 'topics/forum_post',
+           :locals => { :forum_post =>  search_result } %>
