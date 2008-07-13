@@ -17,8 +17,8 @@
 
 class ForumPost < Post
   is_indexed :fields => [ 'body' ],
-             :conditions => "type = 'ForumPost'"#,
-             # :include => [{:association_name => 'topic', :field => 'name'}]
+             :conditions => "type = 'ForumPost'",
+             :include => [{:association_name => 'topic', :field => 'name'}]
 
   
   belongs_to :topic,  :counter_cache => true

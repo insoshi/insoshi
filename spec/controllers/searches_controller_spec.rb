@@ -146,7 +146,10 @@ describe SearchesController do
       end.should_not raise_error(ActiveRecord::RecordNotFound)
     end
         
-    it "should search by topic name"
+    it "should search by topic name" do
+      get :index, :q => @post.topic.name, :model => "ForumPost"
+      assigns(:results).should contain(@post)
+    end
   end  
   
 end if testing_search?
