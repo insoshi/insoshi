@@ -134,26 +134,6 @@ class Person < ActiveRecord::Base
       find(:all, :conditions => conditions_for_active)
     end
     
-    # People search.
-    def search(options = {})
-      query = options[:q].strip
-      return [].paginate if query.blank? or query == "*"
-      @search = Ultrasphinx::Search.new(:query => query, 
-                              :page => options[:page] || 1,
-                              :class_names => "Person")
-      @search.run
-      @results = @search.results
-      # if options[:all]
-      #   results = find_by_contents(query)
-      # else
-      #   conditions = conditions_for_active
-      #   results = find_by_contents(query, {}, :conditions => conditions)
-      # end
-      # # This is inefficient.  We'll fix it when we move to Sphinx.
-      # results[0...SEARCH_LIMIT].paginate(:page => options[:page],
-      #                                    :per_page => SEARCH_PER_PAGE)
-    end
-
     def find_recent
       find(:all, :order => "people.created_at DESC",
                  :include => :photos, :limit => NUM_RECENT)

@@ -41,22 +41,6 @@ class Message < Communication
   after_create :update_recipient_last_contacted_at,
                :save_recipient, :set_replied_to, :send_receipt_reminder
   
-  class << self
-    def search(options = {})
-      query = options[:q]
-      query = options[:q]
-      return [].paginate if query.blank? or query == "*"
-      # This is ineffecient.  We'll fix it when we move to Sphinx.
-      conditions = ["recipient_id = ? AND recipient_deleted_at IS NULL",
-                    options[:recipient]]
-      # raise conditions.inspect
-      results = find_by_contents(query, {}, :conditions => conditions)
-      results[0...SEARCH_LIMIT].paginate(:page => options[:page],
-                                         :per_page => SEARCH_PER_PAGE)
-    end
-    
-  end
-  
   def parent
     return @parent unless @parent.nil?
     return Message.find(parent_id) unless parent_id.nil?
