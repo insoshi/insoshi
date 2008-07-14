@@ -56,7 +56,6 @@ source
   sql_ranged_throttle = 0  
   sql_range_step = 5000   
   sql_query_post =
-  strip_html = 1
 }
 
 index
@@ -69,7 +68,7 @@ index
   min_word_len = 1
 
   # HTML-specific options
-  html_strip = 0
+  html_strip = 1
   html_index_attrs =
   
   # Enable these if you need wildcard searching. They will slow down indexing significantly.
