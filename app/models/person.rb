@@ -37,7 +37,6 @@ class Person < ActiveRecord::Base
                   :message_notifications, :wall_comment_notifications,
                   :blog_comment_notifications
   # Indexed fields for Sphinx
-  # The :conditions line is > 80 chars because of an Ultrasphinx limitation. 
   is_indexed :fields => [{ :field => 'name' }, { :field => 'description' },
                          'deactivated', 'email_verified']
   

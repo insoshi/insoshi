@@ -3,10 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 # Return a list of system processes.
 def processes
   process_cmd = case RUBY_PLATFORM
-                when /djgpp|(cyg|ms|bcc)win|mingw/
-                  'tasklist /v'
-                when /solaris/
-                  'ps -ef'
+                when /djgpp|(cyg|ms|bcc)win|mingw/ then 'tasklist /v'
+                when /solaris/                     then 'ps -ef'
                 else
                   'ps aux'
                 end
@@ -21,8 +19,6 @@ end
 describe SearchesController do
 
   before(:each) do
-    @back = "http://test.host/previous/page"
-    request.env['HTTP_REFERER'] = @back
     login_as :quentin
     @preference = Preference.find(:first)
   end
