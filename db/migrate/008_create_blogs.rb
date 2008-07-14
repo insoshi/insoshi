@@ -4,6 +4,7 @@ class CreateBlogs < ActiveRecord::Migration
       t.integer :person_id
       t.timestamps
     end
+    add_index :blogs, :person_id
   end
 
   def self.down

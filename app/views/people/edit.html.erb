@@ -16,9 +16,9 @@
       
       <%- if global_prefs.email_notifications? -%>
         <a name="email_prefs"></a>
-		<h3>Email notification preferences</h3>
+		<h3>Email Notification Preferences</h3>
       
-        <p>Receive email notifications for each activated event type.</p>
+        <p class="meta">Get emails when these events occur</p>
       
         <div class="form_row">
           <p>
@@ -41,6 +41,7 @@
       <%- end -%>
       
 	  <h3>Public Description</h3>
+      <p class="meta">This is what other users of the system see as your description.</p>
       <div class="form_row">
 		<%= fckeditor_textarea("person", :description, :toolbarSet => 'InsoshiBase', :width => '100%', :height => '200px') %>
       </div>

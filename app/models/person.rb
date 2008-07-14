@@ -247,7 +247,9 @@ class Person < ActiveRecord::Base
   
   def photo
     # This should only have one entry, but be paranoid.
-    photos.find_all_by_avatar(true).first
+    if !photos.find_by_avatar.nil?
+      photos.find_all_by_avatar(true).first
+    end
   end
 
   # Return all the photos other than the primary one

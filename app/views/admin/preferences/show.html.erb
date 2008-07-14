@@ -1,8 +1,9 @@
-<h2>Global Preferences <div class="button"><%= link_to 'Edit', edit_admin_preference_path(@preferences) %></div></h2>
-
+<%- column_div :type => :primary do -%>
+<h2>Global Preferences</h2>
+<div class="button"><%= link_to 'Edit', edit_admin_preference_path(@preferences) %></div>
 <div class="prefItem">
   <div class="prefLabel">Application name</div>
-  <div class="prefValue"><%=h @preferences.app_name %></div>
+  <div class="prefValue"><%= in_place_editor_field :preferences, :app_name %></div>
 </div>
 
 <div class="prefItem">
@@ -41,6 +42,17 @@
 </div>
 
 <div class="prefItem">
+  <div class="prefLabel">Sidebar Title</div>
+  <div class="prefValue"><%=h @preferences.sidebar_title %></div>
+</div>
+
+<div class="prefItem">
+  <b>Sidebar Body</b>
+  <div class="prefAbout"><%= display @preferences.sidebar_body %></div>
+</div>
+
+<div class="prefItem">
   <b>Analytics (will be inserted just before the <%= h("</body>") %> tag)</b>
   <pre><%=h @preferences.analytics %></pre>
 </div>
+<% end %>

@@ -1,22 +1,17 @@
 <%# The activity shouldn't be nil, but we're wearing a belt and suspenders. %>
 <%- unless activity.item.nil? -%>
-<%# post_class = (activity.eql?(@feed.last)) ? 'last' : '' %>
-<li class="<%# post_class -%>">
+<li>
   <p class="activity_detail">
     <%= feed_icon activity %>
-	<% recent ||= false %>
-    <%= feed_message(activity, recent) %>
-    <%- if current_person?(activity.person) -%>
-      <%= link_to(image_tag("icons/comment_delete.png", :class => 'actioner'), 
+    <%= feed_message(activity, recent ||= false) %>
+  </p>
+  <p class="meta published clear">
+    <%= time_ago_in_words(activity.created_at).capitalize %> ago
+    <%= link_to_if(current_person?(activity.person), image_tag("icons/comment_delete.png", :class => 'actioner'), 
                         activity_path(activity), 
                         :method => :delete, 
                         :confirm => %(Are you sure you want to delete this activity from your profile?),
 	 					:title => "Delete this activity") %>
-    <%- end -%>
   </p>
-  <p class="meta published clear">
-    <%= time_ago_in_words(activity.created_at).capitalize %> ago
-  </p>
-
 </li>
 <%- end -%>

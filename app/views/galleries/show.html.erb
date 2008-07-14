@@ -2,7 +2,7 @@
 	<h2>Photos in <%= h(@gallery.title) %> Gallery</h2>
 	<% if !@gallery.description.nil? %>
 	<div class="gallery-description">
-		<p><strong>Description:</strong> <%=h(@gallery.description)%></p>
+		<p><strong>Description:</strong> <%= @gallery.description %></p>
 	</div>
 	<% end %>
 	<ul>

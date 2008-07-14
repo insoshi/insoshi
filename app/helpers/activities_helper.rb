@@ -67,7 +67,7 @@ module ActivitiesHelper
       end
     when "Gallery"
       if recent.nil? || !recent
-        %(#{person_link_with_image(person)} added new gallery #{gallery_link(activity.item)}.)
+        %(#{person_link_with_image(person)} added new gallery #{gallery_link(activity.item)})
       else
         %(new gallery #{gallery_link(activity.item)})
       end
@@ -120,7 +120,7 @@ module ActivitiesHelper
     when "Person"
       %(#{person_link_with_image(person)}'s description changed)
     when "Gallery"
-      %(#{person_link(person)} added new gallery #{gallery_link(activity.item)}.)
+      %(#{person_link(person)} added new gallery #{gallery_link(activity.item)})
     when "Photo"
       %(#{person_link(person)} added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
     else
@@ -132,27 +132,31 @@ module ActivitiesHelper
   def feed_icon(activity)
     img = case activity_type(activity)
             when "BlogPost"
-              "blog.gif"
+              "page_white.png"
             when "Comment"
               parent_type = activity.item.commentable.class.to_s
               case parent_type
               when "BlogPost"
-                "comment.gif"
+                "comment.png"
               when "Person"
-                "signal.gif"
+                "sound.png"
               end
             when "Connection"
-              "switch.gif"
+              if activity.item.contact.admin?
+                "vcard.png"
+              else
+                "connect.png"
+              end
             when "ForumPost"
-              "new.gif"
+              "asterisk_yellow.png"
             when "Topic"
-              "add.gif"
+              "note.png"
             when "Person"
-                "edit.gif"
+                "user_edit.png"
             when "Gallery"
-              "camera.gif"
+              "photos.png"
             when "Photo"
-              "camera.gif"
+              "photo.png"
             else
               # TODO: make this a more graceful falure (?).
               raise "Invalid activity type #{activity_type(activity).inspect}"

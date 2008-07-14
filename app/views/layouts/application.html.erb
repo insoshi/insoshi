@@ -16,7 +16,7 @@
   </head>
   <body class="<%= @body %>">
     <%= render :partial => 'shared/header' %>
-    
+    <%= render :partial => 'shared/sidebar' %>
     <div id="wrap">
       <div id="content">
         <%- if global_prefs.demo? -%>
@@ -30,7 +30,7 @@
         <% end %>     
         <%= yield %>
       </div>
-	  <%= render :partial => 'shared/footer' %>
+      <%= render :partial => 'shared/footer' %>
       <%= render :partial => 'shared/debug' if development? %>
     </div>
     <%= global_prefs.analytics %>

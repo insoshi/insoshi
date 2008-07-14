@@ -49,8 +49,7 @@ class Connection < ActiveRecord::Base
     # Make a pending connection request.
     def request(person, contact, send_mail = nil)
       if send_mail.nil?
-        send_mail = global_prefs.email_notifications? &&
-                    contact.connection_notifications?
+        send_mail = !global_prefs.nil? && global_prefs.email_notifications? && contact.connection_notifications?
       end
       if person == contact or Connection.exists?(person, contact)
         nil

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: InPlaceMacrosHelper</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">InPlaceMacrosHelper</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/in_place_macros_helper_rb.html">
+                lib/in_place_macros_helper.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000003">in_place_editor</a>&nbsp;&nbsp;
+      <a href="#M000004">in_place_editor_field</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">in_place_editor</span><span class="method-args">(field_id, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Makes an HTML element specified by the DOM ID <tt>field_id</tt> become an
+in-place editor of a property.
+</p>
+<p>
+A form is automatically created and displayed when the user clicks the
+element, something like this:
+</p>
+<pre>
+  &lt;form id=&quot;myElement-in-place-edit-form&quot; target=&quot;specified url&quot;&gt;
+    &lt;input name=&quot;value&quot; text=&quot;The content of myElement&quot;/&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;ok&quot;/&gt;
+    &lt;a onclick=&quot;javascript to cancel the editing&quot;&gt;cancel&lt;/a&gt;
+  &lt;/form&gt;
+</pre>
+<p>
+The form is serialized and sent to the server using an AJAX call, the
+action on the server should process the value and return the updated value
+in the body of the reponse. The element will automatically be updated with
+the changed value (as returned from the server).
+</p>
+<p>
+Required <tt>options</tt> are:
+</p>
+<table>
+<tr><td valign="top"><tt>:url</tt>:</td><td>Specifies the url where the updated value should be sent after the user
+presses &quot;ok&quot;.
+
+</td></tr>
+</table>
+<p>
+Addtional <tt>options</tt> are:
+</p>
+<table>
+<tr><td valign="top"><tt>:rows</tt>:</td><td>Number of rows (more than 1 will use a TEXTAREA)
+
+</td></tr>
+<tr><td valign="top"><tt>:cols</tt>:</td><td>Number of characters the text input should span (works for both INPUT and
+TEXTAREA)
+
+</td></tr>
+<tr><td valign="top"><tt>:size</tt>:</td><td>Synonym for :cols when using a single line text input.
+
+</td></tr>
+<tr><td valign="top"><tt>:cancel_text</tt>:</td><td>The text on the cancel link. (default: &quot;cancel&quot;)
+
+</td></tr>
+<tr><td valign="top"><tt>:save_text</tt>:</td><td>The text on the save link. (default: &quot;ok&quot;)
+
+</td></tr>
+<tr><td valign="top"><tt>:loading_text</tt>:</td><td>The text to display while the data is being loaded from the server
+(default: &quot;Loading&#8230;&quot;)
+
+</td></tr>
+<tr><td valign="top"><tt>:saving_text</tt>:</td><td>The text to display when submitting to the server (default:
+&quot;Saving&#8230;&quot;)
+
+</td></tr>
+<tr><td valign="top"><tt>:external_control</tt>:</td><td>The id of an external control used to enter edit mode.
+
+</td></tr>
+<tr><td valign="top"><tt>:load_text_url</tt>:</td><td>URL where initial value of editor (content) is retrieved.
+
+</td></tr>
+<tr><td valign="top"><tt>:options</tt>:</td><td>Pass through options to the AJAX call (see prototype&#8216;s Ajax.Updater)
+
+</td></tr>
+<tr><td valign="top"><tt>:with</tt>:</td><td>JavaScript snippet that should return what is to be sent in the AJAX call,
+<tt>form</tt> is an implicit parameter
+
+</td></tr>
+<tr><td valign="top"><tt>:script</tt>:</td><td>Instructs the in-place editor to evaluate the remote JavaScript response
+(default: false)
+
+</td></tr>
+</table>
+<p>
+<tt>:click_to_edit_text</tt>::The text shown during mouseover the editable
+text (default: &quot;Click to edit&quot;)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/in_place_macros_helper.rb, line 37</span>
+37:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">in_place_editor</span>(<span class="ruby-identifier">field_id</span>, <span class="ruby-identifier">options</span> = {})
+38:     <span class="ruby-identifier">function</span> =  <span class="ruby-value str">&quot;new Ajax.InPlaceEditor(&quot;</span>
+39:     <span class="ruby-identifier">function</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;'#{field_id}', &quot;</span>
+40:     <span class="ruby-identifier">function</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;'#{url_for(options[:url])}'&quot;</span>
+41: 
+42:     <span class="ruby-identifier">js_options</span> = {}
+43:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'cancelText'</span>] = <span class="ruby-node">%('#{options[:cancel_text]}')</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:cancel_text</span>]
+44:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'okText'</span>] = <span class="ruby-node">%('#{options[:save_text]}')</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:save_text</span>]
+45:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'loadingText'</span>] = <span class="ruby-node">%('#{options[:loading_text]}')</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:loading_text</span>]
+46:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'savingText'</span>] = <span class="ruby-node">%('#{options[:saving_text]}')</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:saving_text</span>]
+47:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'rows'</span>] = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:rows</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:rows</span>]
+48:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'cols'</span>] = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:cols</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:cols</span>]
+49:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'size'</span>] = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>]
+50:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'externalControl'</span>] = <span class="ruby-node">&quot;'#{options[:external_control]}'&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:external_control</span>]
+51:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'loadTextURL'</span>] = <span class="ruby-node">&quot;'#{url_for(options[:load_text_url])}'&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:load_text_url</span>]        
+52:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'ajaxOptions'</span>] = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:options</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:options</span>]
+53:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'evalScripts'</span>] = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:script</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:script</span>]
+54:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'callback'</span>]   = <span class="ruby-node">&quot;function(form) { return #{options[:with]} }&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:with</span>]
+55:     <span class="ruby-identifier">js_options</span>[<span class="ruby-value str">'clickToEditText'</span>] = <span class="ruby-node">%('#{options[:click_to_edit_text]}')</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:click_to_edit_text</span>]
+56:     <span class="ruby-identifier">function</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-value str">', '</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">options_for_javascript</span>(<span class="ruby-identifier">js_options</span>)) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">js_options</span>.<span class="ruby-identifier">empty?</span>
+57:     
+58:     <span class="ruby-identifier">function</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">')'</span>
+59: 
+60:     <span class="ruby-identifier">javascript_tag</span>(<span class="ruby-identifier">function</span>)
+61:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">in_place_editor_field</span><span class="method-args">(object, method, tag_options = {}, in_place_editor_options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders the value of the specified object and method with in-place editing
+capabilities.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/in_place_macros_helper.rb, line 64</span>
+64:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">in_place_editor_field</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">method</span>, <span class="ruby-identifier">tag_options</span> = {}, <span class="ruby-identifier">in_place_editor_options</span> = {})
+65:     <span class="ruby-identifier">tag</span> = <span class="ruby-operator">::</span><span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">Helpers</span><span class="ruby-operator">::</span><span class="ruby-constant">InstanceTag</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">method</span>, <span class="ruby-keyword kw">self</span>)
+66:     <span class="ruby-identifier">tag_options</span> = {<span class="ruby-identifier">:tag</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;span&quot;</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{object}_#{method}_#{tag.object.id}_in_place_editor&quot;</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;in_place_editor_field&quot;</span>}.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">tag_options</span>)
+67:     <span class="ruby-identifier">in_place_editor_options</span>[<span class="ruby-identifier">:url</span>] = <span class="ruby-identifier">in_place_editor_options</span>[<span class="ruby-identifier">:url</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">url_for</span>({ <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;set_#{object}_#{method}&quot;</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">object</span>.<span class="ruby-identifier">id</span> })
+68:     <span class="ruby-identifier">tag</span>.<span class="ruby-identifier">to_content_tag</span>(<span class="ruby-identifier">tag_options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:tag</span>), <span class="ruby-identifier">tag_options</span>) <span class="ruby-operator">+</span>
+69:     <span class="ruby-identifier">in_place_editor</span>(<span class="ruby-identifier">tag_options</span>[<span class="ruby-identifier">:id</span>], <span class="ruby-identifier">in_place_editor_options</span>)
+70:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

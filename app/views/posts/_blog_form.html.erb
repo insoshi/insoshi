@@ -1,17 +1,19 @@
-<% form_for :post, :url => url, :html => { :method => method,
-                                           :id => "blogpost" }  do |f| %>
+<% form_for :post, 
+			:url => url, 
+			:html => { :method => method, :id => "blogpost" }  do |f| %>
 
-  <div class="prefItem">
-    <div class="prefLabel"><%= f.label :title %></div>
-    <div class="prefValue"><%= f.text_field :title, :id => 'post_title' %></div>
+  <div class="form_row">
+    <%= f.label :title %>
+    <%= f.text_field :title, :id => 'post_title' %>
   </div>
 
-  <div class="prefItem">
-	<div class="prefLabel"><%= f.label :body, "Post" %></div>
-    <div class="prefValue"><%= f.text_area :body, :rows => 20 %></div>
+  <div class="form_row">
+	<%= f.label :body, "Post" %>
+    <%# f.text_area :body, :rows => 20 %>
+    <%= fckeditor_textarea("post", :body, :toolbarSet => 'Basic', :width => '98%', :height => '200px') %>
   </div>
 
-  <div class="prefItem" id="post_submit">
-    <div class="prefValue"><%= f.submit "Save", :class => "button" %></div>
+  <div class="form_row" id="post_submit">
+    <%= f.submit "Save", :class => "button" %>
   </div>
 <% end %>

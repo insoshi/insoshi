@@ -112,12 +112,6 @@ a:visited {
 /* Specific elements */
 p.welcome {
   color: #fff;
-  font-size: 12px
-}
-
-p.welcome a, p.welcome a:visited {
-  color: #fff;
-  text-decoration: underline;
 }
 
 #footer p {
@@ -134,7 +128,9 @@ p.welcome a, p.welcome a:visited {
   text-align: right;
   width: 100%;
 }
-
+#content div li.more a {
+	margin-right: 4px;
+}
 .meta {
   color: #aaa;
   font-size: 12px;
@@ -268,7 +264,7 @@ input.button, div.button a:hover, input[button], input[submit], button {
 body.single-col .col1 form input {
   width: 312px;
 }
-label.checkbox {display: inline; float: left;margin-right: 12px;}
+label.checkbox {float: left;margin-right: 12px; width: 120px;}
 body.single-col .col1 form input.checkbox {
   display: inline;
   width: auto;

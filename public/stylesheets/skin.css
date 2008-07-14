@@ -6,7 +6,7 @@ body {
 }
 #header-wrap {
   /* background: #4A70B1; */
-  background: #6AA2FD url('/images/header_background_lt2.png');
+  background: #4B6DF9;
   margin: 0px auto;
   width: 844px;
 }
@@ -15,13 +15,30 @@ body {
   text-align: left;
   width: 744px;
 }
+#sidebar {
+	width: 146px;
+	position: absolute;
+	left: 175px;
+	border: 1px solid #4A70B1;
+	min-height: 200px;
+	text-align: left;
+}
+#sidebar h2 {
+	padding: 0px 6px;
+	margin: 2px 0px;
+}
 #wrap {
-	border: 1px solid #4A70B1; padding: 0px 0px 0px 6px; background: #fff; position: absolute; right: 120px; top: 44px;
+	border: 1px solid #4A70B1; 
+	padding: 0px 0px 0px 6px; 
+	background: #fff; 
+	position: absolute; 
+	right: 120px; 
+	top: 44px;
+    min-height: 570px;
 }
 #content {
   width: 744px;
-	min-height: 540px;
-  float: left;
+  min-height: 540px;
   padding-bottom: 10px;
 }
 .col1 {
@@ -39,23 +56,24 @@ body {
 
 /* Header */
 #header {
-  position: relative;
   height: 80px;
   padding-bottom: 1px;
 }
 
 #header-wrap h1 {
   float: left;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  width: 144px;
+  margin-top: 2px;
+}
+
+#header-wrap a {
+	z-index: 14;
 }
 
 
 /* Header-nav */
 #nav {
   margin: 10px;
-  width: 560px;
+  width: 500px;
   float: right;
 }
 #nav li, p.welcome {
@@ -63,19 +81,23 @@ body {
   float: left;
   height: 24px;
   line-height: 24px;
-  list-style-type: none;
   margin: 0 0 1px 0;
   padding: 0;
   text-align: center;
+}
+#nav li {
+  list-style-type: none;
   width: 70px;
 }
 #nav li a, p.welcome a {
   color: #fff;
-  display: block;
   height: 24px;
   font-size: 12px;
 }
-#nav li a:hover, p.welcome a:hover {
+#nav li a {
+  display: block;
+}
+#nav li a:hover {
 	background: #4A70B1;
 	font-weight: bold;
 }
@@ -87,25 +109,27 @@ body {
 #nav li.n-home {
   margin-left: 0;
 }
-
+p.welcome a:hover {
+	background: #4A70B1;
+}
 
 #footer {
   border-top: 1px solid #FFDFDA;
-  clear: both;
   margin-top: 48px;
   padding: 24px 0;
-  width: 744px;
-  
+  clear: both;
 }
 
 /* Welcome message */
 p.welcome {
   float: right;
   margin: 10px 10px 0px 0px;
+  width: 130px;
 }
 p.welcome a {
 	text-decoration: none;
 	font-weight: normal;
+	padding: 6px 10px;
 }
 
 /* Site elements */
@@ -205,6 +229,9 @@ p.welcome a {
   margin: 0 0 6px 6px;
   overflow: hidden;
   width: 36px;
+}
+.col2 .contacts li.more a {
+	margin-right: 12px !important;
 }
 .grid.medium li {
   background: url(/images/blue-grad.jpg) bottom repeat-x;
@@ -390,8 +417,9 @@ h2 {
 h3.subject {
 	vertical-align: top;
 }
-#profile_edit h3, #change_password h3 {
+#profile_edit h3 {
 	color: #4A70B1;
+	margin-bottom: 1px;
 }
 #profile_edit form, form#blogpost {
 	border-bottom: none;
@@ -468,7 +496,6 @@ ul.ui-tabs-nav li {
 	margin: 5px;
 }
 ul.activity {margin-bottom: 0px;}
-ul.activity li p.activity_detail {font-size: 126%;}
 img.actioner {
 	vertical-align: text-bottom;
 	padding-left: 5px;
@@ -486,17 +513,21 @@ ul.people li.vcard p {
 }
 .prefItem {
 	clear: both;
-	padding-bottom: 30px;
+	width: 520px;
+	margin: 15px 0px;
+	border-bottom: 1px dotted #e0e0e0;
 }
 .prefLabel {
 	float: left;
 	font-weight: bold;
 	width: 200px;
+	padding: 10px 0px;
 }
 .prefValue {
 	float: left;
 	margin-left: 10px;
 	width: 300px;
+	padding: 10px 0px;
 }
 .prefAbout {
 	margin-top: 5px;
@@ -573,4 +604,16 @@ p.welcome span, .powered_by a {
 }
 hr {
 	color: #FFF5B5;
+}
+form#admin_preferences label {
+	display: inline;
+	float: left;
+	width: 160px;
+}
+#sidebar_body {
+	padding: 4px;
+}
+#sidebar_body ul li {
+	background: none;
+	padding-left: 3px;
 }

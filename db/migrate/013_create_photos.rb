@@ -10,6 +10,10 @@ class CreatePhotos < ActiveRecord::Migration
       t.integer :width
       t.integer :height
       t.boolean :primary
+      t.boolean :avatar
+      t.integer :gallery_id
+      t.string :title
+      t.integer :position
 
       t.timestamps
     end

@@ -8,8 +8,7 @@ class PeopleController < ApplicationController
   
   def index
     #@people = Person.mostly_active(params[:page])
-        @people = Person.find(:all).paginate(:page => params[:page],
-                                          :per_page => RASTER_PER_PAGE)
+    @people = Person.find(:all).paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
 
     respond_to do |format|
       format.html

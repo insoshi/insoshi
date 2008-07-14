@@ -5,6 +5,14 @@ module ApplicationHelper
   def app_name
     'Lazar Insoshi'
   end
+
+  def sidebox_title
+    Preference.find(:first).sidebar_title
+  end
+  
+  def sidebox_body
+    Preference.find(:first).sidebar_body
+  end
   
   ## Menu helpers
   
@@ -16,11 +24,6 @@ module ApplicationHelper
     else
       forum = menu_element("Forums", forums_path)
     end
-    if global_prefs.about.blank?
-      about = ''
-    else
-      about = menu_element("About", about_url)
-    end
     resources = menu_element("Resources", "http://docs.insoshi.com/")
     if logged_in?
       if not admin_view?
@@ -29,7 +32,7 @@ module ApplicationHelper
         blog     = menu_element("Blog",     blog_path(current_person.blog))
         galleries   = menu_element("Galleries",   person_galleries_path(current_person))
         contacts = menu_element("Contacts", person_connections_path(current_person))
-        links = [profile, contacts, messages, people, forum, about]
+        links = [profile, contacts, messages, people, forum]
       else
         home =    menu_element("Home", home_path)
         people =  menu_element("People", admin_people_path)
@@ -39,7 +42,7 @@ module ApplicationHelper
         links = [people, forums, preferences, resources]
       end
     else
-      links = [people, about]
+      links = [people]
     end
   end
 
