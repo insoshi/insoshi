@@ -3,12 +3,13 @@ class Seller < ActiveRecord::Base
   delegate :address, :to => :user
   
   is_indexed :fields => [
-    {:field => 'company_name', :facet => true},
+    {:field => :company_name, :facet => true, :sortable => true},
     {:field => 'mission_statement', :sortable => true},
     'created_at', 
-    'capitalization', 
-    'user_id'
-  ]
+    :capitalization, 
+    :user_id
+  ],
+    :delta => true
   
   def name 
     company_name

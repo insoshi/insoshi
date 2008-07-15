@@ -2,7 +2,7 @@
 
 <%= error_messages_for :address %>
 
-<% form_for(@address) do |f| %>
+<% form_for @address, :url => address_path(@address) do |f| %>
   <p>
     <%= f.submit "Create" %>
   </p>

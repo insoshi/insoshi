@@ -51,6 +51,15 @@ class Hash
       end._flatten_once]
   end
   
+  def _stringify_all!(*skip)
+    # Stringifies all keys, and stringifies all values except those slotted for keys in 'skip'
+    stringify_keys!
+    self.except(*skip).each do |key, value|
+      self[key] = value.to_s
+    end
+    self
+  end
+  
   # Delete by multiple keys
   def _delete(*args)
     args.map do |key|
@@ -97,9 +106,15 @@ class String
     end
   end
   
-  def _interpolate(value)
-    self.sub('?', value)
+  # Interpolate SQL field names into functions
+  def _interpolate(*values)
+    if values.size == 1
+      self.gsub('?', values.first)
+    else
+      values.inject(self) { |result, value| result.sub('?', value.to_s) }
+    end
   end
+  
 end
 
 module Ultrasphinx::NumericSelf

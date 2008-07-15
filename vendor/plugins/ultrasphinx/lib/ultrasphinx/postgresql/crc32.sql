@@ -1,7 +1,7 @@
 
 /* Fake CRC32 */
 
-CREATE OR REPLACE FUNCTION crc32(text)
+CREATE FUNCTION crc32(text)
 RETURNS bigint AS $$
   DECLARE
     tmp bigint;

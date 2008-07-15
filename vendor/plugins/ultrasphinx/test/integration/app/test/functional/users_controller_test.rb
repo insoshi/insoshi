@@ -48,10 +48,15 @@ class UsersControllerTest < Test::Unit::TestCase
   end
 
   def test_should_destroy_user
-    assert_difference('User.count', -1) do
-      delete :destroy, :id => 1
+    new_user = User.new(:login => 'test', :email => 'test@test.com')
+    
+    assert_difference('User.count', +1) do
+      new_user.save
     end
 
+    assert_difference('User.count', -1) do
+      delete :destroy, :id => new_user.id
+    end
     assert_redirected_to users_path
   end
 end

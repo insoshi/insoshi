@@ -26,7 +26,7 @@ class SellersControllerTest < Test::Unit::TestCase
 
   def test_should_create_seller
     assert_difference('Seller.count') do
-      post :create, :seller => { }
+      post :create, :seller => { :user_id => 1 }
     end
 
     assert_redirected_to seller_path(assigns(:seller))
@@ -48,8 +48,15 @@ class SellersControllerTest < Test::Unit::TestCase
   end
 
   def test_should_destroy_seller
+    new_user = User.create(:login => 'test', :email => 'test@test.com')
+    new_seller = Seller.new(:user_id => new_user.id, :company_name => 'test')
+    
+    assert_difference('Seller.count', +1) do
+      new_seller.save
+    end
+
     assert_difference('Seller.count', -1) do
-      delete :destroy, :id => 1
+      delete :destroy, :id => new_seller.id
     end
 
     assert_redirected_to sellers_path

@@ -7,9 +7,9 @@
 <% for state in @states %>
   <tr>
     <td><%= state.name %></td>
-    <td><%= link_to 'Show', state %></td>
+    <td><%= link_to 'Show', state_path(state) %></td>
     <td><%= link_to 'Edit', edit_state_path(state) %></td>
-    <td><%= link_to 'Destroy', state, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', state_path(state), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

@@ -2,11 +2,11 @@
 
 <%= error_messages_for :address %>
 
-<% form_for(@address) do |f| %>
+<% form_for @address, :url => address_path(@address) do |f| %>
   <p>
     <%= f.submit "Update" %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @address %> |
+<%= link_to 'Show', address_path(@address) %> |
 <%= link_to 'Back', addresses_path %>

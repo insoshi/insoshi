@@ -1,4 +1,12 @@
 
+v1.11. Update to Sphinx 0.9.8-rc2.
+
+v1.10. Add geodistance support (Jeremy Seitz, Mark Lane). Move Postgres stored procedures into a migration generator (Lang Riley). Duplicate text :sortable columns so that they are also searchable.
+
+v1.9.1. Add ultrasphinx:index:merge task for index merging, and a note in DEPLOYMENT_NOTES about how to use it.
+
+v1.9. Delta indexing. ERb now supported in .base files. Allow setting the searched indexes at runtime.
+
 v1.8.1. Use multifind/multiget for record loading; avoid using HashWithIndifferentAccess internally for speed; other minor performance improvements.
 
 v1.8. Update client for compatibility with Sphinx 0.9.8 r1112. This is a breaking release! You need to update Sphinx along with Ultrasphinx. Float range bugfix; text faceting on association_include bugfix. Postgres users, please note that the return type of CRC32() has changed to bigint.

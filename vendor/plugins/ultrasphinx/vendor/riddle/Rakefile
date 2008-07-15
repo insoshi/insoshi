@@ -1,4 +1,5 @@
 require 'rake'
+require 'rake/packagetask'
 require 'rake/rdoctask'
 require 'spec/rake/spectask'
 require 'rdoc/rdoc'

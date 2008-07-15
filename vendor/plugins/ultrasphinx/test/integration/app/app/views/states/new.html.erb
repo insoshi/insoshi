@@ -2,7 +2,7 @@
 
 <%= error_messages_for :state %>
 
-<% form_for(@state) do |f| %>
+<% form_for @state, :url => state_path(@state) do |f| %>
   <p>
     <%= f.submit "Create" %>
   </p>

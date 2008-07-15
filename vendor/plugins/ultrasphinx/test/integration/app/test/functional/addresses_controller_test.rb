@@ -25,8 +25,8 @@ class AddressesControllerTest < Test::Unit::TestCase
   end
 
   def test_should_create_address
-    assert_difference('Address.count') do
-      post :create, :address => { }
+    assert_difference('Geo::Address.count') do
+      post :create, :address => { :user_id => 1, :state_id => 1, :country_id => 1 }
     end
 
     assert_redirected_to address_path(assigns(:address))
@@ -48,10 +48,15 @@ class AddressesControllerTest < Test::Unit::TestCase
   end
 
   def test_should_destroy_address
-    assert_difference('Address.count', -1) do
-      delete :destroy, :id => 1
+    new_address = Geo::Address.new(:user_id => 1, :name => 'test', :city => 'test', :state_id => 15, :country_id => 2)
+    
+    assert_difference('Geo::Address.count', +1) do
+      new_address.save
     end
 
+    assert_difference('Geo::Address.count', -1) do
+      delete :destroy, :id => new_address.id
+    end
     assert_redirected_to addresses_path
   end
 end

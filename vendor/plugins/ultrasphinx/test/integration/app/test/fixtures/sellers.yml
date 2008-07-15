@@ -5,7 +5,7 @@
   company_name: <%= "seller#{num}" %>
   capitalization: <%= num * 1.548 %>
   mission_statement: <%= %w(Add value through developing superior products.).sort_by(&:rand).join(" ") %>
-  updated_at: <%= ((time = Time.parse("Tue Oct 23 04:28:11")) - num.days).to_s(:db) %>  
+  updated_at: <%= ((time = Time.parse("Tue Oct 23 04:28:11 2007")) - num.days).to_s(:db) %>  
   created_at: <%= (time - num.weeks).to_s(:db) %>
 <% end %>
 

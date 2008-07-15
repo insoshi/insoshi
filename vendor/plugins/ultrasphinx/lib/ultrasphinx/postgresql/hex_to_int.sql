@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION hex_to_int(varchar) RETURNS int4 AS '
+CREATE FUNCTION hex_to_int(varchar) RETURNS int4 AS '
   DECLARE
     h alias for $1;
     exec varchar;
