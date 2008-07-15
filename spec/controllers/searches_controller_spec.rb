@@ -156,9 +156,8 @@ describe SearchesController do
     it "should render with a topic link" do
       topic = @post.topic
       get :index, :q => topic.name, :model => "ForumPost"
-      response.should have_tag("a[href=?]",
-                               forum_topic_path(topic.forum, topic),
-                               topic.name)
+      url = forum_topic_path(topic.forum, topic, :anchor => "post_#{@post.id}")
+      response.should have_tag("a[href=?]", url)
     end
   end
   
