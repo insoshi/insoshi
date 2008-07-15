@@ -5,16 +5,28 @@ client and the original PHP client - credit where credit's due, after all.
 It does not follow the same syntax as those two, though (not much point writing this otherwise) -
 opting for a more Ruby-like structure.
 
-While it doesn't (yet) exist as a gem, you can obtain the sourcecode via subversion. If you
+The easiest way to install is to grab the gem (available since 0.9.8r1112 only):
+
+  sudo gem install riddle
+
+However, if you're so inclined, you can grab sourcecode via subversion. If you
 are after a specific release, use the tag as follows:
 
-  svn co http://rails-oceania.googlecode.com/svn/patallan/riddle/tags/0.9.8-r1065 riddle
+  svn co http://rails-oceania.googlecode.com/svn/patallan/riddle/tags/0.9.8-rc2 riddle
 
 Or for the most current, just use trunk:
 
   svn co http://rails-oceania.googlecode.com/svn/patallan/riddle/trunk riddle
 
-Please note that at the time of writing, only 0.9.8r871, 0.9.8r909, 0.9.8r985 and 0.9.8r1065 are supported.
+Please note that at the time of writing, the following versions are supported (if you get the appropriate tag):
+
+* 0.9.8-r871
+* 0.9.8-r909
+* 0.9.8-r985
+* 0.9.8-r1065
+* 0.9.8-r1112
+* 0.9.8-rc1 (gem version: 0.9.8.1198)
+* 0.9.8-rc2 (gem version: 0.9.8.1231)
 
 To get started, just instantiate a Client object:
 
@@ -58,3 +70,5 @@ that the query took to run.
 
 <tt>:status</tt> is the error code for the query - and if there was a related warning, it will be under
 the <tt>:warning</tt> key. Fatal errors will be described under <tt>:error</tt>.
+
+If you've installed the gem and wondering why there's no tests - check out the svn version. I've kept the specs out of the gem as I have a decent amount of test data in there, which really isn't needed unless you want to submit patches.

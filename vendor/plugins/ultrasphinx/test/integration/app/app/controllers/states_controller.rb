@@ -2,7 +2,7 @@ class StatesController < ApplicationController
   # GET /states
   # GET /states.xml
   def index
-    @states = State.find(:all)
+    @states = Geo::State.find(:all)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class StatesController < ApplicationController
   # GET /states/1
   # GET /states/1.xml
   def show
-    @state = State.find(params[:id])
+    @state = Geo::State.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +24,7 @@ class StatesController < ApplicationController
   # GET /states/new
   # GET /states/new.xml
   def new
-    @state = State.new
+    @state = Geo::State.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,18 +34,18 @@ class StatesController < ApplicationController
 
   # GET /states/1/edit
   def edit
-    @state = State.find(params[:id])
+    @state = Geo::State.find(params[:id])
   end
 
   # POST /states
   # POST /states.xml
   def create
-    @state = State.new(params[:state])
+    @state = Geo::State.new(params[:state])
 
     respond_to do |format|
       if @state.save
         flash[:notice] = 'State was successfully created.'
-        format.html { redirect_to(@state) }
+        format.html { redirect_to(state_path(@state)) }
         format.xml  { render :xml => @state, :status => :created, :location => @state }
       else
         format.html { render :action => "new" }
@@ -57,12 +57,12 @@ class StatesController < ApplicationController
   # PUT /states/1
   # PUT /states/1.xml
   def update
-    @state = State.find(params[:id])
+    @state = Geo::State.find(params[:id])
 
     respond_to do |format|
       if @state.update_attributes(params[:state])
         flash[:notice] = 'State was successfully updated.'
-        format.html { redirect_to(@state) }
+        format.html { redirect_to(state_path(@state)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -74,7 +74,7 @@ class StatesController < ApplicationController
   # DELETE /states/1
   # DELETE /states/1.xml
   def destroy
-    @state = State.find(params[:id])
+    @state = Geo::State.find(params[:id])
     @state.destroy
 
     respond_to do |format|

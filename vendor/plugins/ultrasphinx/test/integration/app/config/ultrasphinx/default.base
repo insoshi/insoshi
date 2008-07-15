@@ -19,35 +19,43 @@
 # people think they need to do that. It's wrong.
 #
 
+<% tmp = "/tmp/sphinx/" %>
+
 indexer
 {
   # Indexer running options
   mem_limit = 256M 
+  
+  # Ultrasphinx-specific key
+  delta = <%= 1.day + 30.minutes %> 
 }
 
 searchd
 {
   # Daemon options
-  # What interface the search daemon should listen on and where to store its logs
+  
+  # What interface the search daemon should listen on 
   address = 0.0.0.0
-  port = 3312
+  port = 3313
   seamless_rotate = 1
-  log = /tmp/sphinx/searchd.log
-  query_log = /tmp/sphinx/query.log
+  
+  # Where to to store the logs
+  log = <%= tmp %>searchd.log
+  query_log = <%= tmp %>query.log
   read_timeout = 5
   max_children = 300
-  pid_file = /tmp/sphinx/searchd.pid
+  pid_file = <%= tmp %>searchd.pid
   max_matches = 100000
 }
 
 client
 {
-  # Client options
+  # Ultrasphinx-specific client options
   # Name of the Aspell dictionary (two letters max)
-  dictionary_name = ap
+  dictionary_name = <%= dictionary = 'ap' %>
   # How your application connects to the search daemon (not necessarily the same as above)
   server_host = localhost
-  server_port = 3312
+  server_port = 3313
 }
 
 source
@@ -61,10 +69,10 @@ source
 index
 {
   # Index building options
-  path = /tmp/sphinx
+  path = <%= tmp %>
   docinfo = extern # just leave this alone
   morphology = stem_en
-  stopwords = # /path/to/stopwords.txt
+  stopwords = # <%= tmp %>/<%= dictionary %>-stopwords.txt
   min_word_len = 1
 
   # HTML-specific options

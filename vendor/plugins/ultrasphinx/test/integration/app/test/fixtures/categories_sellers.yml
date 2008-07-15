@@ -1,0 +1,29 @@
+categories_sellers_a1:
+  seller_id: 1
+  category_id: 1 # Category 1
+categories_sellers_b1:
+  seller_id: 1
+  category_id: 2 # Category 2
+categories_sellers_extra1:
+  seller_id: 1
+  category_id: 3 # A category from the remaining categories
+categories_sellers_a2:
+  seller_id: 2
+  category_id: 1 # Category 1
+categories_sellers_b2:
+  seller_id: 2
+  category_id: 2 # Category 2
+categories_sellers_extra2:
+  seller_id: 2
+  category_id: 3 # A category from the remaining categories
+<% 3.upto(20) do |num| %>
+<%="categories_sellers_a#{num}:" %>
+  seller_id: <%= num %>
+  category_id: 1 # Category 1
+<%="categories_sellers_b#{num}:" %>
+  seller_id: <%= num %>
+  category_id: 2 # Category 2
+<%="categories_sellers_extra#{num}:" %>
+  seller_id: <%= num %>
+  category_id: <%= num %> # A category from the remaining categories
+<% end %>

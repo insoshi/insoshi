@@ -32,12 +32,16 @@ module Ultrasphinx
 
   MAX_INT = 2**32-1
 
-  MAX_WORDS = 2**16 # maximum number of stopwords built  
+  MAX_WORDS = 2**16 # The maximum number of stopwords built  
   
-  UNIFIED_INDEX_NAME = "complete"
+  MAIN_INDEX = "main"
+  
+  DELTA_INDEX = "delta"
+  
+  INDEXES = [MAIN_INDEX, DELTA_INDEX]
 
   CONFIG_MAP = {
-    # These must be symbols for key mapping against Rails itself
+    # These must be symbols for key mapping against Rails itself.
     :username => 'sql_user',
     :password => 'sql_pass',
     :host => 'sql_host',
@@ -47,7 +51,9 @@ module Ultrasphinx
   }
   
   CONNECTION_DEFAULTS = {
-    :host => 'localhost'
+    :host => 'localhost',
+    :password => '',
+    :username => 'root'
   }
      
   mattr_accessor :with_rake
@@ -58,83 +64,120 @@ module Ultrasphinx
 
   SQL_FUNCTIONS = {
     'mysql' => {
-      'group_concat' => "CAST(GROUP_CONCAT(DISTINCT ? SEPARATOR ' ') AS CHAR)",
+      'group_concat' => "CAST(GROUP_CONCAT(DISTINCT ? ? SEPARATOR ' ') AS CHAR)",
+      'delta' => "DATE_SUB(NOW(), INTERVAL ? SECOND)",      
       'hash' => "CAST(CRC32(?) AS unsigned)",
-      'range_cast' => "?",
-      'stored_procedures' => {}
+      'range_cast' => "?"
     },
     'postgresql' => {
       'group_concat' => "GROUP_CONCAT(?)",
+      'delta' => "(NOW() - '? SECOND'::interval)",
       'range_cast' => "cast(coalesce(?,1) AS integer)",
-      'hash' => "CRC32(?)",
-      'stored_procedures' => Hash[*(
-        ['hex_to_int', 'group_concat', 'concat_ws', 'unix_timestamp', 'crc32'].map do |name|
-          [name, load_stored_procedure(name)]
-        end.flatten
-        )
-      ]
+      'hash' => "CRC32(?)"
     }      
   }
   
   DEFAULTS = {
     'mysql' => %(
-type = mysql
-sql_query_pre = SET SESSION group_concat_max_len = 65535
-sql_query_pre = SET NAMES utf8
-  ), 
+      type = mysql
+      sql_query_pre = SET SESSION group_concat_max_len = 65535
+      sql_query_pre = SET NAMES utf8
+    ), 
     'postgresql' => %(
-type = pgsql
-sql_query_pre = ) + SQL_FUNCTIONS['postgresql']['stored_procedures'].values.join(' ') + %(
-  )
-}
+      type = pgsql
+      sql_query_pre =
+    )
+  }
     
   ADAPTER = ActiveRecord::Base.connection.instance_variable_get("@config")[:adapter] rescue 'mysql'
-  
-  # Install the stored procedures
-  SQL_FUNCTIONS[ADAPTER]['stored_procedures'].each do |key, value|
-    ActiveRecord::Base.connection.execute(value)
-  end
-  
-  # Logger.
+    
+  # Warn-mode logger. Also called from rake tasks.  
   def self.say msg
+    # XXX Method name is stupid.
     if with_rake
       puts msg[0..0].upcase + msg[1..-1]
     else
       msg = "** ultrasphinx: #{msg}"
-      if defined? RAILS_DEFAULT_LOGGER
+      if defined?(RAILS_DEFAULT_LOGGER) && RAILS_DEFAULT_LOGGER
         RAILS_DEFAULT_LOGGER.warn msg
       else
         STDERR.puts msg
       end
-    end
-    nil
+    end        
+    nil # Explicitly return nil
   end
+  
+  # Debug-mode logger.  
+  def self.log msg
+    # XXX Method name is stupid.
+    if defined?(RAILS_DEFAULT_LOGGER) && RAILS_DEFAULT_LOGGER
+      RAILS_DEFAULT_LOGGER.debug msg
+    else
+      STDERR.puts msg
+    end
+  end    
   
   # Configuration file parser.
   def self.options_for(heading, path)
-    section = open(path).read[/^#{heading.gsub('/', '__')}\s*?\{(.*?)\}/m, 1]    
+    # Evaluate ERB
+    template = ERB.new(File.open(path) {|f| f.read})
+    contents = template.result(binding)
     
-    unless section
-      Ultrasphinx.say "warning; heading #{heading} not found in #{path}; it may be corrupted. "
-      {}
-    else      
+    # Find the correct heading.
+    section = contents[/^#{heading.gsub('/', '__')}\s*?\{(.*?)\}/m, 1]
+    
+    if section
+      # Convert to a hash
       options = section.split("\n").map do |line|
         line =~ /\s*(.*?)\s*=\s*([^\#]*)/
         $1 ? [$1, $2.strip] : []
       end      
       Hash[*options.flatten] 
-    end
-    
+    else
+      # XXX Is it safe to raise here?
+      Ultrasphinx.say "warning; heading #{heading} not found in #{path}; it may be corrupted. "
+      {}    
+    end    
   end
+  
+  def self.get_models_to_class_ids #:nodoc:
+    # Reading the conf file makes sure that we are in sync with the actual Sphinx index, not
+    # whatever you happened to change your models to most recently.
+    if File.exist? CONF_PATH
+      lines, hash = open(CONF_PATH).readlines, {}
+      msg = "#{CONF_PATH} file is corrupted. Please run 'rake ultrasphinx:configure'."
+      
+      lines.each_with_index do |line, index| 
+        # Find the main sources
+        if line =~ /^source ([\w\d_-]*)_#{MAIN_INDEX}/
+          # Derive the model name
+          model = $1.gsub('__', '/').classify
 
-  # Introspect on the existing generated conf files
+          # Get the id modulus out of the adjacent sql_query
+          query = lines[index..-1].detect do |query_line|
+            query_line =~ /^sql_query /
+          end
+          raise ConfigurationError, msg unless query
+          hash[model] = query[/(\d*) AS class_id/, 1].to_i
+        end  
+      end            
+      raise ConfigurationError, msg unless hash.values.size == hash.values.uniq.size      
+      hash          
+    else
+      # We can't raise here because you may be generating the configuration for the first time
+      Ultrasphinx.say "configuration file not found for #{RAILS_ENV.inspect} environment"
+      Ultrasphinx.say "please run 'rake ultrasphinx:configure'"
+    end      
+  end  
+
+  # Introspect on the existing generated conf files.
   INDEXER_SETTINGS = options_for('indexer', BASE_PATH)
   CLIENT_SETTINGS = options_for('client', BASE_PATH)
   DAEMON_SETTINGS = options_for('searchd', BASE_PATH)
   SOURCE_SETTINGS = options_for('source', BASE_PATH)
   INDEX_SETTINGS = options_for('index', BASE_PATH)
   
-  # Make sure there's a trailing slash
+  # Make sure there's a trailing slash.
   INDEX_SETTINGS['path'] = INDEX_SETTINGS['path'].chomp("/") + "/" 
   
   DICTIONARY = CLIENT_SETTINGS['dictionary_name'] || 'ap'  
@@ -143,21 +186,14 @@ sql_query_pre = ) + SQL_FUNCTIONS['postgresql']['stored_procedures'].values.join
   STOPWORDS_PATH = "#{Ultrasphinx::INDEX_SETTINGS['path']}/#{DICTIONARY}-stopwords.txt"
 
   MODEL_CONFIGURATION = {}     
-
-  # Complain if the database names go out of sync.
-  def self.verify_database_name
-    if File.exist? CONF_PATH
-      begin
-        if options_for(
-          "source #{MODEL_CONFIGURATION.keys.first.tableize}", 
-          CONF_PATH
-        )['sql_db'] != ActiveRecord::Base.connection.instance_variable_get("@config")[:database]
-          say "warning; configured database name is out-of-date"
-          say "please run 'rake ultrasphinx:configure'"
-        end 
-      rescue Object
+  
+  # See if a delta index was defined.
+  def self.delta_index_present?
+    if File.exist?(CONF_PATH) 
+      File.open(CONF_PATH).readlines.detect do |line|
+        line =~ /^index delta/
       end
     end
   end
-        
+  
 end

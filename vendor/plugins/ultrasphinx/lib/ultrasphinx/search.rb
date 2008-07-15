@@ -42,6 +42,10 @@ The hash lets you customize internal aspects of the search.
 <tt>:weights</tt>:: A hash. Text-field names and associated query weighting. The default weight for every field is 1.0. Example: <tt>:weights => {'title' => 2.0}</tt>
 <tt>:filters</tt>:: A hash. Names of numeric or date fields and associated values. You can use a single value, an array of values, or a range. (See the bottom of the ActiveRecord::Base page for an example.)
 <tt>:facets</tt>:: An array of fields for grouping/faceting. You can access the returned facet values and their result counts with the <tt>facets</tt> method.
+<tt>:location</tt>:: A hash. Specify the names of your latititude and longitude attributes as declared in your is_indexed calls. To sort the results by distance, set <tt>:sort_mode => 'extended'</tt> and <tt>:sort_by => 'distance asc'.</tt>
+<tt>:indexes</tt>:: An array of indexes to search. Currently only <tt>Ultrasphinx::MAIN_INDEX</tt> and <tt>Ultrasphinx::DELTA_INDEX</tt> are available. Defaults to both; changing this is rarely needed.
+
+== Query Defaults
 
 Note that you can set up your own query defaults in <tt>environment.rb</tt>: 
   
@@ -52,6 +56,34 @@ Note that you can set up your own query defaults in <tt>environment.rb</tt>:
   })
 
 = Advanced features
+
+== Geographic distance
+
+If you pass a <tt>:location</tt> Hash, distance from the location in meters will be available in your result records via the <tt>distance</tt> accessor:
+
+  @search = Ultrasphinx::Search.new(:class_names => 'Point', 
+            :query => 'pizza',
+            :sort_mode => 'extended',
+            :sort_by => 'distance',
+            :location => {
+              :lat => 40.3,
+              :long => -73.6
+            })
+            
+   @search.run.first.distance #=> 1402.4
+
+Note that Sphinx expects lat/long to be indexed as radians. If you have degrees in your database, do the conversion in the <tt>is_indexed</tt> as so:
+  
+    is_indexed 'fields' => [
+        'name', 
+        'description',
+        {:field => 'lat', :function_sql => "RADIANS(?)"}, 
+        {:field => 'lng', :function_sql => "RADIANS(?)"}
+      ]
+
+Then, set <tt>Ultrasphinx::Search.client_options[:location][:units] = 'degrees'</tt>.
+
+The MySQL <tt>:double</tt> column type is recommended for storing location data. For Postgres, use <tt>:float</tt.
 
 == Interlock integration
   
@@ -100,10 +132,19 @@ Note that your database is never changed by anything Ultrasphinx does.
       :per_page => 20,
       :sort_by => nil,
       :sort_mode => 'relevance',
+      :indexes => [
+          MAIN_INDEX, 
+          (DELTA_INDEX if Ultrasphinx.delta_index_present?)
+        ].compact,
       :weights => {},
       :class_names => [],
       :filters => {},
-      :facets => []
+      :facets => [],
+      :location => HashWithIndifferentAccess.new({
+        :lat_attribute_name  => 'lat',
+        :long_attribute_name => 'lng',
+        :units => 'radians'
+      })
     })
     
     cattr_accessor :excerpting_options
@@ -112,7 +153,8 @@ Note that your database is never changed by anything Ultrasphinx does.
       :chunk_separator => "...",
       :limit => 256,
       :around => 3,
-      # Results should respond to one in each group of these, in precedence order, for the excerpting to fire
+      # Results should respond to one in each group of these, in precedence order, for the 
+      # excerpting to fire
       :content_methods => [['title', 'name'], ['body', 'description', 'content'], ['metadata']] 
     })
     
@@ -124,10 +166,16 @@ Note that your database is never changed by anything Ultrasphinx does.
       :max_missing_records => 5, 
       :max_retries => 4,
       :retry_sleep_time => 0.5,
-      :max_facets => 100,
+      :max_facets => 1000,
+      :max_matches_offset => 1000,
+      # Whether to add an accessor to each returned result that specifies its global rank in 
+      # the search.
       :with_global_rank => false,
-      # Finder methods must accept an Array of ids, but do not have to preserve order
-      :finder_methods => ['find_all_by_id'] 
+      # Which method names to try to use for loading records. You can define your own (for 
+      # example, with :includes) and then attach it here. Each method must accept an Array 
+      # of ids, but do not have to preserve order. If the class does not respond_to? any 
+      # method name in the array, :find_all_by_id will be used.
+      :finder_methods => [] 
     })
     
     # Friendly sort mode mappings    
@@ -143,45 +191,12 @@ Note that your database is never changed by anything Ultrasphinx does.
     
     INTERNAL_KEYS = ['parsed_query'] #:nodoc:
 
-    def self.get_models_to_class_ids #:nodoc:
-      # Reading the conf file makes sure that we are in sync with the actual Sphinx index,
-      # not whatever you happened to change your models to most recently
-      unless File.exist? CONF_PATH
-        Ultrasphinx.say "configuration file not found for #{RAILS_ENV.inspect} environment"
-        Ultrasphinx.say "please run 'rake ultrasphinx:configure'"
-      else
-        begin  
-          lines = open(CONF_PATH).readlines          
-
-          sources = lines.select do |line| 
-            line =~ /^source \w/
-          end.map do |line| 
-            line[/source ([\w\d_-]*)/, 1].gsub('__', '/').classify
-          end
-          
-          ids = lines.select do |line| 
-            line =~ /^sql_query /
-          end.map do |line| 
-            line[/(\d*) AS class_id/, 1].to_i
-          end
-          
-          raise unless sources.size == ids.size          
-          Hash[*sources.zip(ids).flatten]
-                                  
-        rescue
-          Ultrasphinx.say "#{CONF_PATH} file is corrupted"
-          Ultrasphinx.say "please run 'rake ultrasphinx:configure'"
-        end    
-        
-      end
-    end
-
-    MODELS_TO_IDS = get_models_to_class_ids || {} 
+    MODELS_TO_IDS = Ultrasphinx.get_models_to_class_ids || {} 
 
     IDS_TO_MODELS = MODELS_TO_IDS.invert #:nodoc:
-      
-    MAX_MATCHES = DAEMON_SETTINGS["max_matches"].to_i 
     
+    MAX_MATCHES = DAEMON_SETTINGS["max_matches"].to_i 
+
     FACET_CACHE = {} #:nodoc: 
     
     # Returns the options hash.
@@ -219,7 +234,9 @@ Note that your database is never changed by anything Ultrasphinx does.
       @response
     end
     
-    # Returns a hash of total result counts, scoped to each available model. This requires extra queries against the search daemon right now. Set <tt>Ultrasphinx::Search.client_options[:with_subtotals] = true</tt> to enable the extra queries. Most of the overhead is in instantiating the AR result sets, so the performance hit is not usually significant.
+    # Returns a hash of total result counts, scoped to each available model. Set <tt>Ultrasphinx::Search.client_options[:with_subtotals] = true</tt> to enable.
+    # 
+    # The subtotals are implemented as a special type of facet.
     def subtotals
       raise UsageError, "Subtotals are not enabled" unless self.class.client_options['with_subtotals']
       require_run
@@ -254,11 +271,16 @@ Note that your database is never changed by anything Ultrasphinx does.
     end
         
     # Returns the last available page number in the result set.  
-    def page_count
+    def total_pages
       require_run    
       (total_entries / per_page.to_f).ceil
     end
-            
+
+    # to keep backward compatibility with previous version
+    def page_count
+      total_pages
+    end
+         
     # Returns the previous page number.
     def previous_page 
       current_page > 1 ? (current_page - 1) : nil
@@ -266,7 +288,7 @@ Note that your database is never changed by anything Ultrasphinx does.
 
     # Returns the next page number.
     def next_page
-      current_page < page_count ? (current_page + 1) : nil
+      current_page < total_pages ? (current_page + 1) : nil
     end
     
     # Returns the global index position of the first result on this page.
@@ -281,15 +303,23 @@ Note that your database is never changed by anything Ultrasphinx does.
       opts = Hash[HashWithIndifferentAccess.new(opts._deep_dup._coerce_basic_types)]
       unless self.class.query_defaults.instance_of? Hash
         self.class.query_defaults = Hash[self.class.query_defaults]
+        self.class.query_defaults['location'] = Hash[self.class.query_defaults['location']]
+        
         self.class.client_options = Hash[self.class.client_options]
         self.class.excerpting_options = Hash[self.class.excerpting_options]
         self.class.excerpting_options['content_methods'].map! {|ary| ary.map {|m| m.to_s}}
       end    
+
+      # We need an annoying deep merge on the :location parameter
+      opts['location'].reverse_merge!(self.class.query_defaults['location']) if opts['location']
+
+      # Merge the rest of the defaults      
+      @options = self.class.query_defaults.merge(opts)
       
-      @options = self.class.query_defaults.merge(opts)            
       @options['query'] = @options['query'].to_s
       @options['class_names'] = Array(@options['class_names'])
       @options['facets'] = Array(@options['facets'])
+      @options['indexes'] = Array(@options['indexes']).join(" ")
             
       raise UsageError, "Weights must be a Hash" unless @options['weights'].is_a? Hash
       raise UsageError, "Filters must be a Hash" unless @options['filters'].is_a? Hash
@@ -299,21 +329,29 @@ Note that your database is never changed by anything Ultrasphinx does.
       @results, @subtotals, @facets, @response = [], {}, {}, {}
         
       extra_keys = @options.keys - (self.class.query_defaults.keys + INTERNAL_KEYS)
-      say "discarded invalid keys: #{extra_keys * ', '}" if extra_keys.any? and RAILS_ENV != "test" 
+      log "discarded invalid keys: #{extra_keys * ', '}" if extra_keys.any? and RAILS_ENV != "test" 
     end
     
-    # Run the search, filling results with an array of ActiveRecord objects. Set the parameter to false if you only want the ids returned.
+    # Run the search, filling results with an array of ActiveRecord objects. Set the parameter to false 
+    # if you only want the ids returned.
     def run(reify = true)
       @request = build_request_with_options(@options)
 
-      say "searching for #{@options.inspect}"
+      log "searching for #{@options.inspect}"
 
       perform_action_with_retries do
-        @response = @request.query(parsed_query, UNIFIED_INDEX_NAME)
-        say "search returned #{total_entries}/#{response[:total_found].to_i} in #{time.to_f} seconds."
+        @response = @request.query(parsed_query, @options['indexes'])
+        log "search returned #{total_entries}/#{response[:total_found].to_i} in #{time.to_f} seconds."
           
         if self.class.client_options['with_subtotals']        
           @subtotals = get_subtotals(@request, parsed_query) 
+          
+          # If the original query has a filter on this class, we will use its more accurate total rather the facet's 
+          # less accurate total.
+          if @options['class_names'].size == 1
+            @subtotals[@options['class_names'].first] = response[:total_found]
+          end
+          
         end
         
         Array(@options['facets']).each do |facet|
@@ -357,8 +395,8 @@ Note that your database is never changed by anything Ultrasphinx does.
       end.flatten
       
       excerpting_options = {
-        :docs => docs, 
-        :index => UNIFIED_INDEX_NAME, 
+        :docs => docs,         
+        :index => MAIN_INDEX, # http://www.sphinxsearch.com/forum/view.html?id=100
         :words => strip_query_commands(parsed_query)
       }
       self.class.excerpting_options.except('content_methods').each do |key, value|
@@ -405,6 +443,10 @@ Note that your database is never changed by anything Ultrasphinx does.
       end
     end
   
+    def log msg #:nodoc:
+      Ultrasphinx.log msg
+    end
+
     def say msg #:nodoc:
       Ultrasphinx.say msg
     end

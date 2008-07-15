@@ -3,8 +3,8 @@
 # Sphinx/Ultrasphinx user-configurable options.
 #
 # Copy this file to RAILS_ROOT/config/ultrasphinx. You can use individual 
-# namespaces if you want (e.g. development.base, production.base,
-# test.base).
+# namespaces if you want (e.g. development.base, production.base, 
+# test.base). Note that ERb is also allowed.
 #
 # This file should not be handed directly to Sphinx. Use the rake task 
 #
@@ -15,56 +15,61 @@
 # to Sphinx.
 # 
 # It is safe to edit .base files by hand. It is not safe to edit the generated 
-# .conf files. Do not symlink the .conf file to the .base file! I don't know why 
-# people think they need to do that. It's wrong.
+# .conf files. Do not symlink the .conf file to the .base file; it's wrong.
 #
 
+<% path = "/opt/local/var/db/sphinx/" %>
+
+# Indexing options
 indexer
-{
-  # Indexer running options
+{  
   mem_limit = 256M 
+
+  # Ultrasphinx-specific key
+  delta = <%= 1.day + 30.minutes %> 
 }
 
+# Daemon options
 searchd
-{
-  # Daemon options
+{  
   # What interface the search daemon should listen on and where to store its logs
   address = 0.0.0.0
-  port = 3312
+  port = 3313
   seamless_rotate = 1
-  log = /opt/local/var/db/sphinx/log/searchd.log
-  query_log = /opt/local/var/db/sphinx/log/query.log
+  log = <%= path %>log/searchd.log
+  query_log = <%= path %>log/query.log
   read_timeout = 5
   max_children = 300
-  pid_file = /opt/local/var/db/sphinx/log/searchd.pid
+  pid_file = <%= path %>log/searchd.pid
   max_matches = 100000
 }
 
+# Client options
 client
 {
-  # Client options
   # Name of the Aspell dictionary (two letters max)
   dictionary_name = ap
+  
   # How your application connects to the search daemon (not necessarily the same as above)
   server_host = localhost
-  server_port = 3312
+  server_port = 3313
 }
 
+# Individual SQL source options
 source
-{
-  # Individual SQL source options
+{  
   sql_ranged_throttle = 0  
   sql_range_step = 5000   
   sql_query_post =
 }
 
+# Index building options
 index
-{
-  # Index building options
-  path = /opt/local/var/db/sphinx/
-  docinfo = extern # just leave this alone
+{  
+  path = <%= path %>
+  docinfo = extern # Just leave this alone
   morphology = stem_en
-  stopwords = # /path/to/stopwords.txt
+  stopwords = # <%= path %>/ap-stopwords.txt
   min_word_len = 1
 
   # HTML-specific options

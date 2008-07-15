@@ -15,12 +15,12 @@ describe Riddle::Client do
   
   it "should translate anchor arguments correctly" do
     client = Riddle::Client.new
-    client.set_anchor "latitude", 10.0, "longtitude", 95.0
+    client.set_anchor "latitude", 10.0, "longitude", 95.0
     client.anchor.should == {
       :latitude_attribute   => "latitude",
       :latitude             => 10.0,
-      :longtitude_attribute => "longtitude",
-      :longtitude           => 95.0
+      :longitude_attribute  => "longitude",
+      :longitude            => 95.0
     }
   end
   
@@ -104,9 +104,29 @@ describe Riddle::Client do
   
   it "should build a message with an anchor correctly" do
     client = Riddle::Client.new
-    client.set_anchor "latitude", 10.0, "longtitude", 95.0
+    client.set_anchor "latitude", 10.0, "longitude", 95.0
     client.append_query "test "
     client.queue.first.should == query_contents(:anchor)
+  end
+  
+  it "should build a message with index weights correctly" do
+    client = Riddle::Client.new
+    client.index_weights = {"people" => 101}
+    client.append_query "test "
+    client.queue.first.should == query_contents(:index_weights)
+  end
+  
+  it "should build a message with field weights correctly" do
+    client = Riddle::Client.new
+    client.field_weights = {"city" => 101}
+    client.append_query "test "
+    client.queue.first.should == query_contents(:field_weights)
+  end
+  
+  it "should build a message with acomment correctly" do
+    client = Riddle::Client.new
+    client.append_query "test ", "*", "commenting"
+    client.queue.first.should == query_contents(:comment)
   end
   
   it "should keep multiple messages in the queue" do
@@ -136,5 +156,25 @@ describe Riddle::Client do
       ["birthday"],
       {1 => [191163600]}
     ).should == query_contents(:update_simple)
+  end
+  
+  it "should build a keywords request without hits correctly" do
+    client = Riddle::Client.new
+    client.send(
+      :keywords_message,
+      "pat",
+      "people",
+      false
+    ).should == query_contents(:keywords_without_hits)
+  end
+  
+  it "should build a keywords request with hits correctly" do
+    client = Riddle::Client.new
+    client.send(
+      :keywords_message,
+      "pat",
+      "people",
+      true
+    ).should == query_contents(:keywords_with_hits)
   end
 end

@@ -21,6 +21,6 @@ end
 
 require 'integration/app/config/environment'
 
-Dir.chdir "#{HERE}/integration/app" do
-  system("rake us:start")
-end
+#Dir.chdir "#{HERE}/integration/app" do
+#  system("rake us:start")
+#end

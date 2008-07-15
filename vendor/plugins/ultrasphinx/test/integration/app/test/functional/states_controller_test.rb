@@ -25,8 +25,8 @@ class StatesControllerTest < Test::Unit::TestCase
   end
 
   def test_should_create_state
-    assert_difference('State.count') do
-      post :create, :state => { }
+    assert_difference('Geo::State.count') do
+      post :create, :state => { :name => 'test', :abbreviation => 'te' }
     end
 
     assert_redirected_to state_path(assigns(:state))
@@ -48,10 +48,16 @@ class StatesControllerTest < Test::Unit::TestCase
   end
 
   def test_should_destroy_state
-    assert_difference('State.count', -1) do
-      delete :destroy, :id => 1
+    new_state = Geo::State.new(:name => 'test', :abbreviation => 'te')
+    
+    assert_difference('Geo::State.count', +1) do
+      new_state.save
     end
 
+    assert_difference('Geo::State.count', -1) do
+      delete :destroy, :id => new_state.id
+    end
+    
     assert_redirected_to states_path
   end
 end

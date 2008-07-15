@@ -7,9 +7,9 @@
 <% for user in @users %>
   <tr>
 	<td><%= h(user.login) %></td>
-	<td><%= h(user.address.line_1) %></td>
-	<td><%= h(user.address.city) %></td>
-	<td><%= h(user.address.state.name) %></td>
+	<td><%= h(user.address.line_1) if user.address %></td>
+	<td><%= h(user.address.city) if user.address %></td>
+	<td><%= h(user.address.state.name) if user.address %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>

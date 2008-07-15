@@ -35,14 +35,18 @@ For more detailed information, check out our guide for Installing Git under Git 
 
 You'll need to install FreeImage or some other image processor (such as ImageMagick/RMagick), SQLite, and (optionally) MySQL.  Install instructions for all three are easy to find using Google.
 
+To use Insoshi's search capability, you also need Sphinx.  Follow the instructions at http://www.sphinxsearch.com/downloads.html to install Sphinx for your platform.  When running Insoshi in a production envinronment, you should also set up a cron job to rotate the search index as described here:
+
+http://blog.evanweaver.com/files/doc/fauna/ultrasphinx/files/DEPLOYMENT_NOTES.html
+
 === Gems
 
 You probably have Rails already, but might not have the others.
 
   $ sudo gem install rails
-  $ sudo gem install ferret
   $ sudo gem install sqlite3-ruby
   $ sudo gem install mysql
+  $ sudo gem install chronic
 
 If you're using FreeImage/ImageScience, you'll also need the image_science gem:
 

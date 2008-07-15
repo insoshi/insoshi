@@ -42,6 +42,16 @@ SQL conditions, to scope which records are selected for indexing. Accepts a stri
   
 The <tt>:conditions</tt> key is especially useful if you delete records by marking them deleted rather than removing them from the database.
 
+== Ordering subgroups
+ 
+Use the <tt>:order</tt> key.
+
+An SQL order string.
+
+  :order => 'posts.id ASC'
+  
+
+
 == Including a field from an association
 
 Use the <tt>:include</tt> key.
@@ -58,7 +68,7 @@ The keys <tt>:facet</tt>, <tt>:sortable</tt>, <tt>:class_name</tt>, <tt>:associa
 
 == Concatenating several fields within one record
 
-Use the <tt>:concatenate</tt> key (MySQL only).
+Use the <tt>:concatenate</tt> key.
 
 Accepts an array of option hashes. 
 
@@ -76,9 +86,9 @@ Also use the <tt>:concatenate</tt> key.
 To concatenate one field from a set of associated records as a combined field in the parent record, use a group (or vertical) concatenation. A group concatenation should contain an <tt>:association_name</tt> key (the association name for the included model), a <tt>:field</tt> key (the field on the included model to concatenate), and an optional <tt>:as</tt> key (also the name of the result of the concatenation). For example, to concatenate all <tt>Post#body</tt> contents into the parent's <tt>responses</tt> field:
   :concatenate => [{:association_name => 'posts', :field => 'body', :as => 'responses'}]
 
-The keys <tt>:facet</tt>, <tt>:sortable</tt>, <tt>:conditions</tt>, <tt>:function_sql</tt>, <tt>:class_name</tt>, and <tt>:association_sql</tt>, are also recognized.
+The keys <tt>:facet</tt>, <tt>:sortable</tt>, <tt>:order</tt>, <tt>:conditions</tt>, <tt>:function_sql</tt>, <tt>:class_name</tt>, and <tt>:association_sql</tt>, are also recognized. 
 
-Vertical concatenations are implemented with GROUP_CONCAT on MySQL and with an aggregate and a stored procedure on PostgreSQL.
+Vertical concatenations are implemented with GROUP_CONCAT on MySQL and with an aggregate and a stored procedure on PostgreSQL. Note that <tt>:order</tt> is useful if you need to order the grouping so that proximity search works correctly, and <tt>:conditions</tt> are currently ignored if you have <tt>:association_sql</tt> defined.
 
 == Custom joins
 
@@ -87,6 +97,26 @@ Vertical concatenations are implemented with GROUP_CONCAT on MySQL and with an a
 Also, If you want to include a model that you don't have an actual ActiveRecord association for, you can use <tt>:association_sql</tt> combined with <tt>:class_name</tt> instead of <tt>:association_name</tt>. <tt>:class_name</tt> should be camelcase.
 
 Ultrasphinx is not an object-relational mapper, and the association generation is intended to stay minimal--don't be afraid of <tt>:association_sql</tt>.
+
+== Enabling delta indexing
+
+Use the <tt>:delta</tt> key.
+
+Accepts either <tt>true</tt>, or a hash with a <tt>:field</tt> key.
+
+If you pass <tt>true</tt>, the <tt>updated_at</tt> column will be used for choosing the delta records, if it exists. If it doesn't exist, the entire table will be reindexed at every delta. Example:
+
+  :delta => true
+
+If you need to use a non-default column name, use a hash:
+ 
+  :delta => {:field => 'created_at'}
+  
+Note that the column type must be time-comparable in the DB. Also note that faceting may return higher counts than actually exist on delta-indexed tables, and that sorting by string columns will not work well. These are both limitations of Sphinx's index merge scheme. You can perhaps mitigate the issues by only searching the main index for facets or sorts:
+
+  Ultrasphinx::Search.new(:query => "query", :indexes => Ultrasphinx::MAIN_INDEX)
+
+The date range of the delta include is set in the <tt>.base</tt> file.
 
 = Examples
 
@@ -110,6 +140,7 @@ Here's an example configuration using most of the options, taken from production
         {:association_name => 'comments', :field => 'body', :as => 'comments', 
           :conditions => "comments.item_type = '#{base_class}'"}
       ],
+      :delta => {:field => 'published_at'},
       :conditions => self.live_condition_string
   end  
 
@@ -135,31 +166,61 @@ If the associations weren't just <tt>has_many</tt> and <tt>belongs_to</tt>, you 
 =end
   
     def self.is_indexed opts = {}    
-      opts = HashWithIndifferentAccess.new(opts)
-          
-      opts.assert_valid_keys ['fields', 'concatenate', 'conditions', 'include']
+      opts.stringify_keys!          
+      opts.assert_valid_keys ['fields', 'concatenate', 'conditions', 'include', 'delta', 'order']
+
+      # Single options
       
-      Array(opts['fields']).each do |entry|
+      if opts['conditions']
+        # Do nothing
+      end
+      
+      if opts['delta']
+        if opts['delta'] == true
+          opts['delta'] = {'field' => 'updated_at'} 
+        elsif opts['delta'].is_a? String
+          opts['delta'] = {'field' => opts['delta']} 
+        end
+        
+        opts['delta']._stringify_all!
+        opts['delta'].assert_valid_keys ['field']
+      end
+      
+      # Enumerable options
+      
+      opts['fields'] = Array(opts['fields'])
+      opts['concatenate'] = Array(opts['concatenate'])
+      opts['include'] = Array(opts['include'])
+                  
+      opts['fields'].map! do |entry|
         if entry.is_a? Hash
-          entry.stringify_keys!
-          entry.assert_valid_keys ['field', 'as', 'facet', 'function_sql', 'sortable']
+          entry._stringify_all!('sortable', 'facet')
+          entry.assert_valid_keys ['field', 'as', 'facet', 'function_sql', 'sortable', 'table_alias']
+          entry
+        else
+          # Single strings
+          {'field' => entry.to_s}
         end
       end
       
-      Array(opts['concatenate']).each do |entry|
-        entry.stringify_keys!
-        entry.assert_valid_keys ['class_name', 'association_name', 'conditions', 'field', 'as', 'fields', 'association_sql', 'facet', 'function_sql', 'sortable']
+      opts['concatenate'].each do |entry|
+        entry._stringify_all!('fields', 'sortable', 'facet')
+      
+        entry.assert_valid_keys ['class_name', 'association_name', 'conditions', 'field', 'as', 'fields', 'association_sql', 'facet', 'function_sql', 'sortable', 'order', 'table_alias']
         raise Ultrasphinx::ConfigurationError, "You can't mix regular concat and group concats" if entry['fields'] and (entry['field'] or entry['class_name'] or entry['association_name'])
         raise Ultrasphinx::ConfigurationError, "Concatenations must specify an :as key" unless entry['as']
         raise Ultrasphinx::ConfigurationError, "Group concatenations must not have multiple fields" if entry['field'].is_a? Array
         raise Ultrasphinx::ConfigurationError, "Regular concatenations should have multiple fields" if entry['fields'] and !entry['fields'].is_a?(Array)
+        raise Ultrasphinx::ConfigurationError, "Regular concatenations can't specify an order" if entry['fields'] and entry['order']
+
+        entry['fields'].map!(&:to_s) if entry['fields'] # Stringify fields array
       end
       
-      Array(opts['include']).each do |entry|
-        entry.stringify_keys!
-        entry.assert_valid_keys ['class_name', 'association_name', 'field', 'as', 'association_sql', 'facet', 'function_sql', 'sortable']
+      opts['include'].each do |entry|
+        entry._stringify_all!('sortable', 'facet')
+        entry.assert_valid_keys ['class_name', 'association_name', 'field', 'as', 'association_sql', 'facet', 'function_sql', 'sortable', 'table_alias']
       end
-      
+                  
       Ultrasphinx::MODEL_CONFIGURATION[self.name] = opts
     end
   end

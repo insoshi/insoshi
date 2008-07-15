@@ -2,6 +2,9 @@
 module Ultrasphinx
   class Search
     module Internals
+    
+      INFINITY = 1/0.0
+    
       include Associations
 
       # These methods are kept stateless to ease debugging
@@ -11,17 +14,43 @@ module Ultrasphinx
       def build_request_with_options opts
       
         request = Riddle::Client.new
+        
+        # Basic options
         request.instance_eval do          
           @server = Ultrasphinx::CLIENT_SETTINGS['server_host']
           @port = Ultrasphinx::CLIENT_SETTINGS['server_port']          
           @match_mode = :extended # Force extended query mode
           @offset = opts['per_page'] * (opts['page'] - 1)
           @limit = opts['per_page']
-          @max_matches = [@offset + @limit, MAX_MATCHES].min
+          @max_matches = [@offset + @limit + Ultrasphinx::Search.client_options['max_matches_offset'], MAX_MATCHES].min
         end
           
+        # Geosearch location
+        loc = opts['location']
+        loc.stringify_keys!
+        lat, long = loc['lat'], loc['long']
+        if lat and long
+          # Convert degrees to radians, if requested
+          if loc['units'] == 'degrees'
+            lat = degrees_to_radians(lat)
+            long = degrees_to_radians(long)
+          end
+          # Set the location/anchor point
+          request.set_anchor(loc['lat_attribute_name'], lat, loc['long_attribute_name'], long)
+        end
+                  
         # Sorting
         sort_by = opts['sort_by']
+        if options['location']
+          case sort_by
+            when "distance asc", "distance" then sort_by = "@geodist asc"
+            when "distance desc" then sort_by = "@geodist desc"
+          end
+        end
+        
+        # Use the additional sortable column if it is a text type
+        sort_by += "_sortable" if Fields.instance.types[sort_by] == "text"
+        
         unless sort_by.blank?
           if opts['sort_mode'].to_s == 'relevance'
             # If you're sorting by a field you don't want 'relevance' order
@@ -62,13 +91,19 @@ module Ultrasphinx
         end          
 
         # Extract raw filters 
-        # XXX We should coerce based on the Field values, not on the class
+        # XXX This is poorly done. We should coerce based on the Field types, not the value class.
+        # That would also allow us to move numeric filters from the query string into the hash.
         Array(opts['filters']).each do |field, value|          
-          field = field.to_s
-          type = Fields.instance.types[field]
-          unless type
-            raise UsageError, "field #{field.inspect} is invalid"
+
+          field = field.to_s          
+          type = Fields.instance.types[field]             
+          
+          # Special derived attribute
+          if field == 'distance' and options['location']
+            field, type = '@geodist', 'float'
           end
+
+          raise UsageError, "field #{field.inspect} is invalid" unless type
           
           begin
             case value
@@ -92,7 +127,7 @@ module Ultrasphinx
                 raise NoMethodError
             end
           rescue NoMethodError => e
-            raise UsageError, "filter value #{value.inspect} for field #{field.inspect} is invalid"
+            raise UsageError, "Filter value #{value.inspect} for field #{field.inspect} is invalid"
           end
         end
         
@@ -130,12 +165,12 @@ module Ultrasphinx
           @group_clauses = '@count desc'
           @offset = 0
           @limit = Ultrasphinx::Search.client_options['max_facets']
-          @max_matches = [@limit, MAX_MATCHES].min
+          @max_matches = [@limit + Ultrasphinx::Search.client_options['max_matches_offset'], MAX_MATCHES].min
         end
         
         # Run the query
         begin
-          matches = request.query(query, UNIFIED_INDEX_NAME)[:matches]
+          matches = request.query(query, options['indexes'])[:matches]
         rescue DaemonError
           raise ConfigurationError, "Index seems out of date. Run 'rake ultrasphinx:index'"
         end
@@ -175,7 +210,7 @@ module Ultrasphinx
 
           # Concatenates might not work well
           type, configuration = nil, nil
-          MODEL_CONFIGURATION[klass.name].except('conditions').each do |_type, values| 
+          MODEL_CONFIGURATION[klass.name].except('conditions', 'delta').each do |_type, values| 
             type = _type
             configuration = values.detect { |this_field| this_field['as'] == facet }
             break if configuration
@@ -226,7 +261,10 @@ module Ultrasphinx
             
       # Inverse-modulus map the Sphinx ids to the table-specific ids
       def convert_sphinx_ids(sphinx_ids)    
-        number_of_models = IDS_TO_MODELS.size
+        
+        number_of_models = IDS_TO_MODELS.size        
+        raise ConfigurationError, "No model mappings were found. Your #{RAILS_ENV}.conf file is corrupted, or your application container needs to be restarted." if number_of_models == 0
+        
         sphinx_ids.sort_by do |item| 
           item[:index]
         end.map do |item|
@@ -248,12 +286,14 @@ module Ultrasphinx
         ids.map {|ary| ary.first}.uniq.each do |class_name|
           klass = class_name.constantize
           
-          method_choices = Ultrasphinx::Search.client_options['finder_methods']
-          finder = if method_choices.size > 1
-            method_choices.detect { |method_name| klass.respond_to? method_name }
-          else
-            method_choices.last
-          end
+          finder = (
+            Ultrasphinx::Search.client_options['finder_methods'].detect do |method_name| 
+              klass.respond_to? method_name
+            end or
+              # XXX This default is kind of buried, but I'm not sure why you would need it to be 
+              # configurable, since you can use ['finder_methods'].
+              "find_all_by_#{klass.primary_key}"
+            )
 
           records = klass.send(finder, ids_hash[class_name])
           
@@ -276,10 +316,21 @@ module Ultrasphinx
         
         # Add an accessor for global search rank for each record, if requested
         if self.class.client_options['with_global_rank']
+          # XXX Nobody uses this
           results.each_with_index do |result, index|
             if result
               global_index = per_page * (current_page - 1) + index
               result.instance_variable_get('@attributes')['result_index'] = global_index
+            end
+          end
+        end
+
+        # Add an accessor for distance, if requested
+        if self.options['location']['lat'] and self.options['location']['long']
+          results.each_with_index do |result, index|
+            if result
+              distance = (response[:matches][index][:attributes]['@geodist'] or INFINITY)
+              result.instance_variable_get('@attributes')['distance'] = distance
             end
           end
         end
@@ -296,14 +347,10 @@ module Ultrasphinx
       
       def perform_action_with_retries
         tries = 0
+        exceptions = [NoMethodError, Riddle::VersionError, Riddle::ResponseError, Errno::ECONNREFUSED, Errno::ECONNRESET,  Errno::EPIPE]
         begin
           yield
-        rescue NoMethodError,
-            Riddle::VersionError,
-            Riddle::ResponseError,
-            Errno::ECONNREFUSED, 
-            Errno::ECONNRESET, 
-            Errno::EPIPE => e
+        rescue *exceptions => e
           tries += 1
           if tries <= Ultrasphinx::Search.client_options['max_retries']
             say "restarting query (#{tries} attempts already) (#{e})"            
@@ -311,7 +358,9 @@ module Ultrasphinx
             retry
           else
             say "query failed"
-            raise DaemonError, e.to_s
+            # Clear the rescue list, retry one last time, and let the error fail up the stack
+            exceptions = []
+            retry
           end
         end
       end
@@ -326,6 +375,10 @@ module Ultrasphinx
         # Also removes apostrophes in the middle of words so that they don't get split in two.
         s.gsub(/(^|\s)(AND|OR|NOT|\@\w+)(\s|$)/i, "").gsub(/(\w)\'(\w)/, '\1\2')
       end 
+      
+      def degrees_to_radians(value)
+        Math::PI * value / 180.0
+      end
     
     end
   end  

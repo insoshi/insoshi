@@ -1,0 +1,101 @@
+--- 
+categories_001: 
+  name: Category 1
+  id: "1"
+  children_count: "3"
+  parent_id: "0"
+categories_0002: 
+  name: Category 2
+  id: "2"
+  children_count: "3"
+  parent_id: "1"
+categories_0003: 
+  name: Category 3
+  id: "3"
+  children_count: "3"
+  parent_id: "1"
+categories_0004: 
+  name: Category 4
+  id: "4"
+  children_count: "0"
+  parent_id: "1"
+categories_0005: 
+  name: Category 5
+  id: "5"
+  children_count: "0"
+  parent_id: "2"
+categories_0006: 
+  name: Category 6
+  id: "6"
+  children_count: "0"
+  parent_id: "2"
+categories_0007: 
+  name: Category 7
+  id: "7"
+  children_count: "0"
+  parent_id: "2"
+categories_0008: 
+  name: Category 8
+  id: "8"
+  children_count: "0"
+  parent_id: "3"
+categories_0009: 
+  name: Category 9
+  id: "9"
+  children_count: "0"
+  parent_id: "3"
+categories_0010: 
+  name: Category 10
+  id: "10"
+  children_count: "0"
+  parent_id: "3"
+categories_0011: 
+  name: Category 11
+  id: "11"
+  children_count: "3"
+  parent_id: "0"
+categories_0012: 
+  name: Category 12
+  id: "12"
+  children_count: "3"
+  parent_id: "1"
+categories_0013: 
+  name: Category 13
+  id: "13"
+  children_count: "3"
+  parent_id: "1"
+categories_0014: 
+  name: Category 14
+  id: "14"
+  children_count: "0"
+  parent_id: "1"
+categories_0015: 
+  name: Category 15
+  id: "15"
+  children_count: "0"
+  parent_id: "2"
+categories_0016: 
+  name: Category 16
+  id: "16"
+  children_count: "0"
+  parent_id: "2"
+categories_0017: 
+  name: Category 17
+  id: "17"
+  children_count: "0"
+  parent_id: "2"
+categories_0018: 
+  name: Category 18
+  id: "18"
+  children_count: "0"
+  parent_id: "3"
+categories_0019: 
+  name: Category 19
+  id: "19"
+  children_count: "0"
+  parent_id: "3"
+categories_0020: 
+  name: Category 20
+  id: "20"
+  children_count: "0"
+  parent_id: "3"

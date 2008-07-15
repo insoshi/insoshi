@@ -1,11 +1,11 @@
 
 /* http://osdir.com/ml/db.postgresql.admIN/2003-08/msg00057.html */
 
-CREATE OR REPLACE FUNCTION MAKE_CONCAT_WS() RETURNS text AS '
+CREATE FUNCTION MAKE_CONCAT_WS() RETURNS text AS '
 declare
   v_args int := 32;
-  v_first text := ''CREATE OR REPLACE FUNCTION CONCAT_WS(text,text,text) RETURNS text AS ''''SELECT CASE WHEN $1 IS NULL THEN NULL WHEN $3 IS NULL THEN $2 ELSE $2 || $1 || $3 END'''' LANGUAGE sql IMMUTABLE'';
-  v_part1 text := ''CREATE OR REPLACE FUNCTION CONCAT_WS(text,text'';
+  v_first text := ''CREATE FUNCTION CONCAT_WS(text,text,text) RETURNS text AS ''''SELECT CASE WHEN $1 IS NULL THEN NULL WHEN $3 IS NULL THEN $2 ELSE $2 || $1 || $3 END'''' LANGUAGE sql IMMUTABLE'';
+  v_part1 text := ''CREATE FUNCTION CONCAT_WS(text,text'';
   v_part2 text := '') RETURNS text AS ''''SELECT CONCAT_WS($1,CONCAT_WS($1,$2'';
   v_part3 text := '')'''' LANGUAGE sql IMMUTABLE'';  
   v_sql text;
