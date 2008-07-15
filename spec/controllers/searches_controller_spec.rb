@@ -3,10 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 # Return a list of system processes.
 def processes
   process_cmd = case RUBY_PLATFORM
-                when /djgpp|(cyg|ms|bcc)win|mingw/
-                  'tasklist /v'
-                when /solaris/
-                  'ps -ef'
+                when /djgpp|(cyg|ms|bcc)win|mingw/ then 'tasklist /v'
+                when /solaris/                     then 'ps -ef'
                 else
                   'ps aux'
                 end
@@ -21,8 +19,6 @@ end
 describe SearchesController do
 
   before(:each) do
-    @back = "http://test.host/previous/page"
-    request.env['HTTP_REFERER'] = @back
     login_as :quentin
     @preference = Preference.find(:first)
   end
@@ -127,6 +123,7 @@ describe SearchesController do
   end
   
   describe "Forum post searches" do
+    integrate_views
     
     before(:each) do
       @post = posts(:forum)
@@ -150,6 +147,18 @@ describe SearchesController do
       get :index, :q => @post.topic.name, :model => "ForumPost"
       assigns(:results).should contain(@post)
     end
-  end  
+    
+    it "should render with a post div" do
+      get :index, :q => @post.body, :model => "ForumPost"
+      response.should have_tag("div[class='forum']")
+    end
+    
+    it "should render with a topic link" do
+      topic = @post.topic
+      get :index, :q => topic.name, :model => "ForumPost"
+      url = forum_topic_path(topic.forum, topic, :anchor => "post_#{@post.id}")
+      response.should have_tag("a[href=?]", url)
+    end
+  end
   
 end if testing_search?
