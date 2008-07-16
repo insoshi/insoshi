@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     # Create a Scribd-style PageView.
     # See http://www.scribd.com/doc/49575/Scaling-Rails-Presentation
     def create_page_view
-      PageView.create(:person => session[:person_id],
+      PageView.create(:person_id => session[:person_id],
                       :request_url => request.request_uri,
                       :ip_address => request.remote_ip,
                       :referer => request.env["HTTP_REFERER"],

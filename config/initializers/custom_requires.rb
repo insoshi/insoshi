@@ -1,5 +1,4 @@
 require 'digest/sha1'
-require 'ferret_mixin'
 require 'rand'
 
 # In some cases autotest interprets the initialization of the UUID generator
