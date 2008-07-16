@@ -24,8 +24,6 @@ namespace :db do
     desc "Remove sample data" 
     task :remove => :environment do |t|
       system("rake db:migrate VERSION=0")
-      # Blow away the Ferret index.
-      system("rm -rf index/")
       # Remove images to avoid accumulation.
       system("rm -rf public/photos")
     end
