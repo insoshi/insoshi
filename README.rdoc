@@ -97,18 +97,42 @@ The install rake task runs the database migration and performs some additional s
 
 If the install step fails, you may not have properly set up the configuration files.
 
-Then prepare the test database and run the tests (which are actually RSpec examples in the spec/ directory):
+Then prepare the test database
 
   $ rake db:test:prepare
+
+configure and start the Ultrasphinx daemon for the test runtime
+
+  $ rake ultrasphinx:configure RAILS_ENV=test
+  $ rake ultrasphinx:index RAILS_ENV=test
+  $ rake ultrasphinx:daemon:start RAILS_ENV=test
+
+and run the tests (which are actually RSpec examples in the spec/ directory):
+
   $ rake spec
 
 If the tests fail in the Photos controller test, double-check that an image processor is properly installed.
 
+To shut down the Ultrasphinx daemon for test
+
+  $ rake ultrasphinx:daemon:stop RAILS_ENV=test
+
+(The search specs are written to run only if the daemon is up.)
+
 === Loading sample data
 
-Now load the sample data and start the server:
+Now load the sample data
 
   $ rake db:sample_data:reload
+
+configure and start the Ultrasphinx daemon for the development runtime
+
+  $ rake ultrasphinx:configure
+  $ rake ultrasphinx:index
+  $ rake ultrasphinx:daemon:start
+
+and start the server
+
   $ script/server
 
 The rake task loads sample data to make developing easier.  All the sample users have email logins <name>@example.com, with password foobar.  
