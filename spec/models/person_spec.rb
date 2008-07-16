@@ -182,22 +182,22 @@ describe Person do
       end
 
       it "should have common contacts with someone" do
-        common_connections = @person.common_connections_with(@kelly)
-        common_connections.size.should == 1
-        common_connections.map(&:contact).should == [@contact]
+        common_contacts = @person.common_contacts_with(@kelly)
+        common_contacts.size.should == 1
+        common_contacts.should == [@contact]
       end
 
       it "should exclude deactivated people from common contacts" do
         @contact.toggle!(:deactivated)
-        common_connections = @person.common_connections_with(@kelly)
-        common_connections.should be_empty
+        common_contacts = @person.common_contacts_with(@kelly)
+        common_contacts.should be_empty
       end
       
       it "should exclude email unverified people from common contacts" do
         enable_email_notifications
         @contact.email_verified = false; @contact.save!
-        common_connections = @person.common_connections_with(@kelly)
-        common_connections.should be_empty
+        common_contacts = @person.common_contacts_with(@kelly)
+        common_contacts.should be_empty
       end      
     end
   end

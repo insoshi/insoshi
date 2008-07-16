@@ -346,19 +346,20 @@ class Person < ActiveRecord::Base
   end
 
   # Return the common connections with the given person.
-  def common_connections_with(person, page = 1)
-    sql = %(SELECT connections.*, COUNT(contact_id) FROM `connections`
+  def common_contacts_with(contact, page = 1)
+    sql = %(SELECT DISTINCT contact_id FROM connections
             INNER JOIN people contact ON connections.contact_id = contact.id
             WHERE ((person_id = ? OR person_id = ?)
                    AND status = ? AND
                    contact.deactivated = ? AND
                    (contact.email_verified IS NULL
-                    OR contact.email_verified = ?))
-            GROUP BY contact_id
-            HAVING count(contact_id) = 2)
-    conditions = [sql, id, person.id, Connection::ACCEPTED, false, true]
+                    OR contact.email_verified = ?)))
+    conditions = [sql, id, contact.id, Connection::ACCEPTED, false, true]
     opts = { :page => page, :per_page => RASTER_PER_PAGE }
-    @common_connections ||= Connection.paginate_by_sql(conditions, opts)
+    connections = 
+    @common_contacts ||= Person.find(Connection.
+                                     paginate_by_sql(conditions, opts).
+                                     map(&:contact_id))
   end
   
   protected
