@@ -30,6 +30,11 @@ describe SearchesController do
       get :index, :q => "", :model => "Person"
       response.should redirect_to(login_url)
     end
+    
+    it "should redirect for an invalid model" do
+      get :index, :q => "foo", :model => "AllPerson"
+      response.should redirect_to(home_url)
+    end
 
     it "should return empty for a blank query" do
       get :index, :q => " ", :model => "Person"
@@ -77,9 +82,11 @@ describe SearchesController do
       end
 
       it "should return deactivated users" do
-        people(:deactivated).should be_deactivated
+        # Use the AllPerson find to get the right class.
+        deactivated_person = AllPerson.find(people(:deactivated))
+        deactivated_person.should be_deactivated
         get :index, :q => "deactivated", :model => "Person"
-        assigns(:results).should contain(people(:deactivated))
+        assigns(:results).should contain(deactivated_person)
       end
       
       it "should return email unverified users" do
@@ -87,7 +94,8 @@ describe SearchesController do
         @preference.save!
         @preference.reload.email_verifications.should == true
         get :index, :q => "unverified", :model => "Person"
-        assigns(:results).should contain(people(:email_unverified))
+        email_unverified = AllPerson.find(people(:email_unverified))
+        assigns(:results).should contain(email_unverified)
       end
 
     end
