@@ -43,7 +43,7 @@ describe SearchesController do
     end
   
     it "should return empty for a 'wildcard' query" do
-      get :index, :q => " ", :model => "Person"
+      get :index, :q => "*", :model => "Person"
       assigns(:results).should == [].paginate
     end
 
