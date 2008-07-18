@@ -359,7 +359,7 @@ class Person < ActiveRecord::Base
     connections = 
     @common_contacts ||= Person.find(Connection.
                                      paginate_by_sql(conditions, opts).
-                                     map(&:contact_id))
+                                     map(&:contact_id)).paginate
   end
   
   protected

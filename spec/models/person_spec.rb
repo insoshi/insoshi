@@ -184,6 +184,7 @@ describe Person do
       it "should have common contacts with someone" do
         common_contacts = @person.common_contacts_with(@kelly)
         common_contacts.size.should == 1
+        common_contacts.should be_a_kind_of(WillPaginate::Collection)
         common_contacts.should == [@contact]
       end
 
