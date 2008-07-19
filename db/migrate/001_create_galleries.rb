@@ -9,7 +9,7 @@ class CreateGalleries < ActiveRecord::Migration
       t.timestamps
     end
   end
-
+  #TODO fix deleted migrations
   def self.down
     drop_table :galleries
   end
