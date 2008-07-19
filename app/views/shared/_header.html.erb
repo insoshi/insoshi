@@ -1,23 +1,23 @@
 <div id="header-wrap">
     <%- if logged_in? -%>
-	  <%- if current_person.admin? -%>
+    <%- if current_person.admin? -%>
         <div class="adminMsgLink">
           <%= email_link @person, :use_image => false, :to_all => true %><br />
-		  <hr />
+      <hr />
           <%= link_to_if(admin_view?, "Standard View", home_path) do
-            	link_to("Admin View", admin_preferences_path) 
-          	  end -%>
+              link_to("Admin View", admin_preferences_path) 
+              end -%>
         </div>
       <%- end -%>
     <%- end -%>
     <h1><%= link_to image_tag("logo-insoshi.png"), home_url, :title => "Homepage" %></h1>
     <p class="welcome">
-	  <% if !global_prefs.about.blank? %>
+    <% if !global_prefs.about.blank? %>
         <%= link_to "About", about_path -%> /
-	  <% end %>
+    <% end %>
       <%= link_to_if logged_in?, "Sign out", logout_path do
-			login_block
-		end %>
+      login_block
+    end %>
     </p>
   <div id="header">
     <ul id="nav">
