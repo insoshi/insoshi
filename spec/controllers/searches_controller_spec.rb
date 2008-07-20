@@ -24,6 +24,7 @@ describe SearchesController do
   end
 
   describe "Person searches" do
+    integrate_views
 
     it "should require login" do
       logout

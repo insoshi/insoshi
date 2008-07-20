@@ -14,7 +14,8 @@ class SearchesController < ApplicationController
     end
 
     if query.blank?
-      @results = [].paginate
+      @search  = [].paginate
+      @results = []
     else
       filters = {}
       if model == "Person" and current_person.admin?
