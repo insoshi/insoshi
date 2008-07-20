@@ -6,14 +6,6 @@ module ApplicationHelper
     'Lazar Insoshi'
   end
 
-  def sidebox_title
-    Preference.find(:first).sidebar_title
-  end
-  
-  def sidebox_body
-    Preference.find(:first).sidebar_body
-  end
-  
   ## Menu helpers
   
   def menu

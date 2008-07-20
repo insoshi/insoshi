@@ -1,5 +1,5 @@
 <%- column_div :type => :primary, :id => 'photos' do -%>
-  <% unless @photos.empty? %>
+  <% if !@photos.empty? %>
 	  <h2><%= current_person.name %>'s Photos</h2>
 	  <div class="button_container">
 		    <div class="button"><%= link_to "Add Photo", new_photo_path() %></div>
@@ -9,5 +9,7 @@
 		  <%=render :partial=>"shared/photo", :collection => @photos%>
 	  </ul>
 	</div>
+	<% else %>
+	  <h2>No Photos to Show</h2>
   <% end %>
 <% end %>

@@ -1,16 +1,16 @@
 # == Schema Information
-# Schema version: 34
+# Schema version: 17
 #
 # Table name: page_views
 #
-#  id          :integer         not null, primary key
+#  id          :integer(11)     not null, primary key
+#  person_id   :integer(11)     
 #  request_url :string(200)     
 #  ip_address  :string(16)      
 #  referer     :string(200)     
 #  user_agent  :string(200)     
 #  created_at  :datetime        
 #  updated_at  :datetime        
-#  person_id   :integer         
 #
 
 class PageView < ActiveRecord::Base

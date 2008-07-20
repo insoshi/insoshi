@@ -4,13 +4,15 @@ class PhotosController < ApplicationController
   before_filter :correct_user_required, :only => [ :edit, :update, :destroy, :set_primary, :set_avatar ]
   before_filter :correct_gallery_requried, :only => [:new, :create]
   
-  # def index
+  def index
   #   @photos = current_person.photos
   # 
   #   respond_to do |format|
   #     format.html
   #   end
-  # end
+  # BILL: punt over to current person's gallery list in case of direct navigation
+    redirect_to person_galleries_path(current_person)
+  end
   
   def show
     @photo = Photo.find(params[:id])

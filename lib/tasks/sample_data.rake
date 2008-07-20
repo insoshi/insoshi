@@ -119,7 +119,7 @@ def make_feed
 end
 
 def make_preferences
-  Preference.create!(:app_name => 'Insoshi', :domain => 'example.com', :smtp_server => 'mail.example.com', :email_notifications => false, :sidebar_title => 'News to Use')
+  Preference.create!(:app_name => 'Insoshi', :domain => 'example.com', :smtp_server => 'mail.example.com', :email_notifications => false)
 end
 
 def uploaded_file(filename, content_type)

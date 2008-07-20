@@ -1,8 +1,8 @@
-<% if sidebox_title != "" %>
-<div id="sidebar">
-  <h2><%= sidebox_title -%></h2>
-  <div id="sidebar_body">
-	<%= sidebox_body -%>
+<% if global_prefs.sidebar_title != "" %>
+  <div id="sidebar">
+    <h2><%= global_prefs.sidebar_title -%></h2>
+    <div id="sidebar_body">
+	    <%= global_prefs.sidebar_body -%>
+    </div>
   </div>
-</div>
 <% end %>

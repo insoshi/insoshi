@@ -1,24 +1,24 @@
 # == Schema Information
-# Schema version: 34
+# Schema version: 17
 #
 # Table name: photos
 #
-#  id           :integer         not null, primary key
-#  person_id    :integer         
-#  parent_id    :integer         
+#  id           :integer(11)     not null, primary key
+#  person_id    :integer(11)     
+#  parent_id    :integer(11)     
 #  content_type :string(255)     
 #  filename     :string(255)     
 #  thumbnail    :string(255)     
-#  size         :integer         
-#  width        :integer         
-#  height       :integer         
+#  size         :integer(11)     
+#  width        :integer(11)     
+#  height       :integer(11)     
+#  primary      :boolean(1)      
+#  avatar       :boolean(1)      
+#  gallery_id   :integer(11)     
+#  title        :string(255)     
+#  position     :integer(11)     
 #  created_at   :datetime        
 #  updated_at   :datetime        
-#  gallery_id   :integer         
-#  title        :string(255)     
-#  position     :integer         
-#  primary      :boolean         
-#  avatar       :boolean         
 #
 
 class Photo < ActiveRecord::Base
