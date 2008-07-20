@@ -17,8 +17,7 @@ namespace :db do
       make_forum_posts
       make_blog_posts
       make_feed
-      puts "Creating the search index"
-      Rake::Task["ultrasphinx:bootstrap"]
+      puts "Run 'rake ultrasphinx:bootstrap' to start Sphinx search"
     end
       
     desc "Remove sample data" 

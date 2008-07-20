@@ -24,6 +24,7 @@ describe SearchesController do
   end
 
   describe "Person searches" do
+    integrate_views
 
     it "should require login" do
       logout
@@ -40,6 +41,12 @@ describe SearchesController do
       get :index, :q => " ", :model => "Person"
       response.should be_success
       assigns(:results).should == [].paginate
+    end
+    
+    it "should return empty for a nil query" do
+      get :index, :q => nil, :model => "Person"
+      response.should be_redirect
+      response.should redirect_to(home_url)
     end
   
     it "should return empty for a 'wildcard' query" do
@@ -76,14 +83,14 @@ describe SearchesController do
     end
     
     describe "as an admin" do
+      integrate_views
       
       before(:each) do
         login_as :admin
       end
 
       it "should return deactivated users" do
-        # Use the AllPerson find to get the right class.
-        deactivated_person = AllPerson.find(people(:deactivated))
+        deactivated_person = people(:deactivated)
         deactivated_person.should be_deactivated
         get :index, :q => "deactivated", :model => "Person"
         assigns(:results).should contain(deactivated_person)
@@ -94,8 +101,7 @@ describe SearchesController do
         @preference.save!
         @preference.reload.email_verifications.should == true
         get :index, :q => "unverified", :model => "Person"
-        email_unverified = AllPerson.find(people(:email_unverified))
-        assigns(:results).should contain(email_unverified)
+        assigns(:results).should contain(people(:email_unverified))
       end
 
     end

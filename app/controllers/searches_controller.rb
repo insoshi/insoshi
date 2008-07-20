@@ -4,6 +4,9 @@ class SearchesController < ApplicationController
   before_filter :login_required
 
   def index
+    
+    redirect_to(home_url) and return if params[:q].nil?
+    
     query = params[:q].strip
     model = strip_admin(params[:model])
     page  = params[:page] || 1
@@ -14,7 +17,8 @@ class SearchesController < ApplicationController
     end
 
     if query.blank?
-      @results = [].paginate
+      @search  = [].paginate
+      @results = []
     else
       filters = {}
       if model == "Person" and current_person.admin?
@@ -29,6 +33,10 @@ class SearchesController < ApplicationController
                                         :class_names => model)
       @search.run
       @results = @search.results
+      if model == "AllPerson"
+        # Convert to people so that the routing works.
+        @results.map!{ |person| Person.find(person)}
+      end
     end
   end
   
