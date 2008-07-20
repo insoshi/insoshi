@@ -128,10 +128,10 @@ class FootnoteFilter
     insert_text :before, /<\/head>/i, <<-HTML
     <!-- TextMate Footnotes Style -->
     <style type="text/css">
-      #tm_footnotes_debug {margin-top: 0.5em; text-align: center; color: #999;}
+      #tm_footnotes_debug {margin: 1.5em 5px; color: #999; border: 1px dashed #ee0000; width: 180px; padding: 4px;}
       #tm_footnotes_debug a {text-decoration: none; color: #bbb;}
       #tm_footnotes_debug pre {overflow: scroll;}
-      fieldset.tm_footnotes_debug_info {text-align: left; border: 1px dashed #aaa; padding: 1em; margin: 1em 2em 1em 2em; color: #777;}
+      fieldset.tm_footnotes_debug_info {text-align: left; border: 1px dashed #ed0000; padding: 4px; margin: 1em 0px; color: #777; background: #fff;}
     </style>
     <!-- End TextMate Footnotes Style -->
     HTML

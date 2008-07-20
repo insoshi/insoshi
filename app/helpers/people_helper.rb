@@ -53,7 +53,7 @@ module PeopleHelper
       person = text
       text = person.name
     end
-    '<span class="imgHoverMarker"><img src="' + person.thumbnail + '" />' + person_link(text, person, html_options) + '</span>'
+    '<span class="imgHoverMarker"><img src="' + person.thumbnail + '" alt="" />' + person_link(text, person, html_options) + '</span>'
   end
 
   def person_image_hover_text(text, person, html_options = nil)

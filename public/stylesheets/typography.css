@@ -177,8 +177,7 @@ a.show-follow:visited {
 
 .error,
 .notice, 
-.success    { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd;
-              margin-top: 1em; }
+.success    { padding: .8em; margin: 0px 0px 1em -6px; border: 2px solid #ddd;}
 
 .error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
 .notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }

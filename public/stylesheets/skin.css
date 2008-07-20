@@ -13,12 +13,12 @@ body {
 #header, #wrap, #footer {
   margin: 0 auto;
   text-align: left;
-  width: 744px;
+  width: 704px;
 }
 #sidebar {
-	width: 146px;
-	position: absolute;
-	left: 175px;
+	width: 173px;
+	float: left;
+	margin: 36px 0px 0px -181px;
 	border: 1px solid #4A70B1;
 	min-height: 200px;
 	text-align: left;
@@ -32,18 +32,19 @@ body {
 	padding: 0px 0px 0px 6px; 
 	background: #fff; 
 	position: absolute; 
-	right: 120px; 
+	right: 160px; 
 	top: 44px;
-    min-height: 570px;
+	min-height: 570px;
 }
 #content {
-  width: 744px;
+  width: 704px;
   min-height: 540px;
   padding-bottom: 10px;
+  float: left;
 }
 .col1 {
   float: left;
-  width: 490px;
+  width: 450px;
 }
 .col2 {
   float: right;
@@ -64,7 +65,9 @@ body {
   float: left;
   margin-top: 2px;
 }
-
+#header-wrap h1 img {
+	margin-left: 10px;
+}
 #header-wrap a {
 	z-index: 14;
 }
@@ -72,9 +75,9 @@ body {
 
 /* Header-nav */
 #nav {
-  margin: 10px;
+  margin: -10px 0px 0px 21px;
   width: 500px;
-  float: right;
+  float: left;
 }
 #nav li, p.welcome {
   background: none;
@@ -123,8 +126,10 @@ p.welcome a:hover {
 /* Welcome message */
 p.welcome {
   float: right;
-  margin: 10px 10px 0px 0px;
-  width: 130px;
+  margin-top: 2px;
+  width: 205px;
+  line-height: 1.2;
+  text-align: right;
 }
 p.welcome a {
 	text-decoration: none;
@@ -435,6 +440,8 @@ ul.ui-tabs-nav li {
 }
 .ui-tabs-panel {
 	min-height: 540px;
+	width: 96%;
+	border: 1px solid #4A70B1;
 }
 .innerTabRight {
 	float: left;
@@ -617,3 +624,4 @@ form#admin_preferences label {
 	background: none;
 	padding-left: 3px;
 }
+.debug_info pre {width: 670px;}
