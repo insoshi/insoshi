@@ -54,7 +54,7 @@ def create_people
                               :description => @lipsum)
       gallery = Gallery.create!(:person => person, :title => 'Primary', :description => 'My first Insoshi gallery')
       photo = uploaded_file(photos[i], 'image/jpg')
-      puts 'Photo: ' + photo
+      puts 'Photo: ' + photos[i]
       Photo.create!(:uploaded_data => photo,
                     :person => person, :primary => true, :avatar => true, :gallery => gallery)
     end
