@@ -22,11 +22,16 @@ module SearchesHelper
   def partial(object)
     object = object.first if object.is_a?(Array)
     klass = object.class.to_s
-    dir  = klass.tableize  # E.g., 'Person' becomes 'people'
-    part = dir.singularize # E.g., 'people' becomes 'person'
-    if klass == "ForumPost"
-      dir = "topics" 
+    case klass
+    when "ForumPost"
+      dir  = "topics" 
       part = "search_result"
+    when "AllPerson"
+      dir  = 'people'
+      part = 'person'
+    else
+      dir  = klass.tableize  # E.g., 'Person' becomes 'people'
+      part = dir.singularize # E.g., 'people' becomes 'person'
     end
     admin_search? ? "admin/#{dir}/#{part}" : "#{dir}/#{part}"
   end

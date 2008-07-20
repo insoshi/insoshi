@@ -33,6 +33,10 @@ class SearchesController < ApplicationController
                                         :class_names => model)
       @search.run
       @results = @search.results
+      if model == "AllPerson"
+        # Convert to people so that the routing works.
+        @results.map!{ |person| Person.find(person)}
+      end
     end
   end
   
