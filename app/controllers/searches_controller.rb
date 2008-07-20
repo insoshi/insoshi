@@ -4,6 +4,9 @@ class SearchesController < ApplicationController
   before_filter :login_required
 
   def index
+    
+    redirect_to(home_url) and return if params[:q].nil?
+    
     query = params[:q].strip
     model = strip_admin(params[:model])
     page  = params[:page] || 1
