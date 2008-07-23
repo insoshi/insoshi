@@ -21,3 +21,5 @@ tmp/.*
 *~
 vendor/**/**/doc/*
 rsa_key*
+sphinx/*
+config/ultrasphinx/*.conf
