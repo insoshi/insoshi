@@ -15,10 +15,20 @@ module ActivityLogger
     include_person = options[:include_person]
     activity = options[:activity] ||
                Activity.create!(:item => options[:item], :person => person)
-    person.contacts.each do |c|
-      # Prevent duplicate entries in the feed.
-      c.activities << activity unless c.activities.include?(activity)
+    all_ids = person.contacts.map(&:id)
+    invalid_ids =  Feed.find(:all, :select => "DISTINCT person_id",
+                      :conditions => ["person_id IN (?) and activity_id = ?",
+                                       all_ids, activity]).map(&:person_id)
+    valid_ids = all_ids - invalid_ids
+    values = [valid_ids, [activity.id] * valid_ids.length].transpose
+    values = values.inspect[1...-1].gsub('[', '(').gsub(']', ')')
+    unless valid_ids.empty?
+      ActiveRecord::Base.connection.execute("INSERT INTO feeds (person_id, activity_id) VALUES #{values}")
     end
+    # person.contacts.each do |c|
+    #   # Prevent duplicate entries in the feed.
+    #   c.activities << activity unless c.activities.include?(activity)
+    # end
     if include_person
       person.activities << activity unless person.activities.include?(activity)
     end
