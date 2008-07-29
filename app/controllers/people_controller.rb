@@ -47,8 +47,8 @@ class PeopleController < ApplicationController
       if @person.errors.empty?
         if global_prefs.email_verifications?
           @person.email_verifications.create
-          flash[:notice] = %(Thanks for signing up! A verification email has 
-                             been sent to #{@person.email}.)
+          flash[:notice] = %(Thanks for signing up! Check your email
+                             to activate your account.)
           format.html { redirect_to(home_url) }
         else
           self.current_person = @person
