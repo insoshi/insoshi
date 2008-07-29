@@ -70,3 +70,21 @@ require 'bluecloth'
 #
 # The directory /tmp/ruby.[USER] is used instead
 ENV['INLINEDIR']="/tmp/ruby.#{ENV['USER']}" unless ENV['OS'] =~ /Windows/
+
+# For the sake of rawk profiling.
+# Rails > 2.0 uses BufferedLogger, not Logger as in Rails 1.2.
+module ActiveSupport
+  class BufferedLogger
+    def add(severity, message = nil, progname = nil, &block)
+      return if @level > severity
+      message = (message || (block && block.call) || progname).to_s
+      # If a newline is necessary then create a new message ending with a newline.
+      # Ensures that the original message is not mutated.
+      message = "#{message} (pid:#{$$})"
+      message = "#{message}\n" unless message[-1] == ?\n
+      @buffer << message
+      auto_flush
+      message
+    end
+  end
+end
