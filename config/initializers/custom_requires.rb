@@ -1,5 +1,6 @@
 require 'digest/sha1'
 require 'rand'
+require 'string'
 
 # In some cases autotest interprets the initialization of the UUID generator
 # as something new, and so just keeps running the tests.
