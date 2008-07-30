@@ -3,7 +3,7 @@
 
   <% form_tag session_path do -%>
     <div class="form_row">
-      <label for="username">Email address</label>
+      <label for="email">Email address</label>
       <%= text_field_tag 'email', params[:email],
                                   :maxlength => Person::MAX_EMAIL  %>
     </div>
