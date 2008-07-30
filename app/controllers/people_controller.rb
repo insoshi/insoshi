@@ -15,7 +15,7 @@ class PeopleController < ApplicationController
   end
   
   def show
-    @person = Person.find(params[:id], :include => :activities)
+    @person = Person.find(params[:id])
     unless @person.active? or current_person.admin?
       flash[:error] = "That person is not active"
       redirect_to home_url and return
