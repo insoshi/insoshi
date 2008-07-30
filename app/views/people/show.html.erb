@@ -57,12 +57,6 @@
           <%- end -%>
         </ul>
       <%- end -%>
-      
-      <%- if current_person?(@person) and current_person.admin? -%>
-        <ul class="tools">
-          <li><%= email_link @person %> to everyone</li>
-        </ul>
-      <%- end -%>
     </div>
     <%= display @person.description %>
   </div>
