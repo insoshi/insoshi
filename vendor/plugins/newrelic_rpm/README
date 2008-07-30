@@ -1,0 +1,54 @@
+=============
+NEW RELIC RPM
+=============
+
+NewRelic RPM is a Rails performance management system, developed by New Relic, Inc.
+RPM provides you with deep information about the performance of your Ruby on
+Rails application as it runs in production. The New Relic Agent is distributed as
+a Rails Plugin, which is trivial to install and use.
+
+Our testing shows that this agent introduces minimal overhead: in production, a
+typical controller action will be impacted by less than 5 milliseconds in
+response time. (That's significantly less time than is typically spent in mapping
+a request to the appropriate controller action.) So, you can run RPM all the
+time, and always have access to the information you need to resolve performance
+problems and ensure your application can scale to meet the demands of your
+business.
+
+The New Relic Agent runs in one of two modes:
+
+DEVELOPER MODE
+------------
+Developer mode is on by default when you run your application in the development
+environment (but not when it runs in other environments.) When running in
+developer mode, the NewRelic Agent Rails Extension will track the performance of
+every http request serviced by your application, and store in memory this
+information for the last 100 http transactions.
+
+When running in Developer Mode, the New Relic Agent will also add a few pages to 
+your application that allow you to analyze this performance information. (Don't 
+worry - those pages are not added to your application's routes when you run in 
+production mode.)
+
+To view this performance information, including detailed SQL statement analysis,
+go to http://localhost:3000/newrelic and start drilling down.
+
+PRODUCTION MODE
+---------------
+When your application runs in the production environment, the NewRelic agent
+runs in production mode. It connects to the New Relic RPM service and sends deep
+performance data to the RPM service for your analysis. To view this data, login
+to http://rpm.newrelic.com.
+
+NOTE: you must have a valid account and license key to view this data online.
+When you sign up for an account at newrelic.com, you will be provided with a
+license key, as well as a default configuration file for NewRelic RPM. You can
+either paste your license key into your existing configuration file,
+config/newrelic.yml, or you can replace that config file with the one included in
+your welcome email.
+
+Thank you, and may your application scale to infinity plus one.  
+
+Lew Cirne, Founder and CEO
+New Relic, Inc.
+
