@@ -133,4 +133,10 @@ module ApplicationHelper
     def add_tag_options(text, options)
       text.gsub("<p>", "<p#{options}>")
     end
+    
+    # Use RDiscount, which is much faster than BlueCloth.
+    # See, e.g., http://tomayko.com/writings/ruby-markdown-libraries-real-cheap-for-you-two-for-price-of-one
+    def markdown(text)
+      RDiscount.new(text).to_html
+    end
 end

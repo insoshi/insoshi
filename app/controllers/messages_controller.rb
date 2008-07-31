@@ -47,9 +47,9 @@ class MessagesController < ApplicationController
 
   def reply
     original_message = Message.find(params[:id])
-    @message = Message.new(:parent_id => original_message.id,
-                           :subject => original_message.subject,
-                           :sender => current_person,
+    @message = Message.new(:parent    => original_message,
+                           :subject   => original_message.subject,
+                           :sender    => current_person,
                            :recipient => original_message.sender)
     @recipient = not_current_person(original_message)
     respond_to do |format|

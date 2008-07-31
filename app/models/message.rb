@@ -34,11 +34,12 @@ class Message < Communication
   belongs_to :sender, :class_name => 'Person', :foreign_key => 'sender_id'
   belongs_to :recipient, :class_name => 'Person',
                          :foreign_key => 'recipient_id'
+  belongs_to :conversation
   validates_presence_of :subject, :content
   validates_length_of :subject, :maximum => 40
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
-  
+  before_create :assign_conversation
   after_create :update_recipient_last_contacted_at,
                :save_recipient, :set_replied_to, :send_receipt_reminder
   
@@ -115,6 +116,14 @@ class Message < Communication
   end
 
   private
+
+    # Assign the conversation id.
+    # This is the parent message's conversation unless there is no parent,
+    # in which case we create a new conversation.
+    def assign_conversation
+      self.conversation = parent.nil? ? Conversation.create :
+                                        parent.conversation
+    end
   
     # Mark the parent message as replied to if the current message is a reply.
     def set_replied_to

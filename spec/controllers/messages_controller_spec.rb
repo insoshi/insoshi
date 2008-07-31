@@ -121,8 +121,8 @@ describe MessagesController do
     login_as(recipient)
     lambda do
       post :create, :message => { :subject => "The subject",
-                                  :content   => "This is a reply",
-                                  :parent_id => message },
+                                  :content => "This is a reply",
+                                  :parent  => message },
                     :person_id => sender
       assigns(:message).should be_reply
     end.should change(Message, :count).by(1)

@@ -61,9 +61,10 @@ describe Message do
   
   it "should handle replies" do
     @message.save!
+    # raise @message.id.inspect
     @reply = create_message(:sender    => @message.recipient,
                             :recipient => @message.sender,
-                            :parent_id => @message)
+                            :parent    => @message)
     @reply.should be_reply
     @reply.parent.should be_replied_to
   end
@@ -72,7 +73,7 @@ describe Message do
     @message.save!
     @next_message = create_message(:sender    => people(:kelly),
                                    :recipient => @message.sender,
-                                   :parent_id => @message)
+                                   :parent    => @message)
     @next_message.should_not be_reply
     @next_message.parent.should_not be_replied_to
   end
@@ -82,6 +83,19 @@ describe Message do
     @message.should be_read
   end
   
+  it "should belong to a conversation" do
+    @message.should respond_to(:conversation)
+  end
+
+  it "should assign conversation ids properly" do
+    @message.save!
+    @message.conversation.should_not be_nil
+    @next_message = create_message(:sender    => people(:kelly),
+                                   :recipient => @message.sender,
+                                   :parent    => @message)
+    @next_message.conversation.should == @message.conversation
+  end
+    
   describe "email notifications" do
     
     before(:each) do
