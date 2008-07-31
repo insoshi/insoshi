@@ -1,9 +1,11 @@
 <li class="vcard person">
+  <%- if n_messages > 1 -%>
+    <a name="<%= message_anchor(full_message) %>"></a>
+  <%- end -%>
   <div class="profile-image">
   <%= image_link full_message.sender, :class => "photo",
                                       :image => :thumbnail %>
   </div>
-  <a name="<%= message_anchor(full_message) %>"></a>
   <%= display full_message.content %>
   <p class="meta tools">
     Sent <%= time_ago_in_words full_message.created_at %> ago |
