@@ -5,6 +5,7 @@ class CreateConversations < ActiveRecord::Migration
     end
     add_column :communications, :conversation_id, :integer
     add_index :communications, :conversation_id
+    system("rake db:conversation_bootstrap")
   end
 
   def self.down
