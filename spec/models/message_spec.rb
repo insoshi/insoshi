@@ -83,11 +83,18 @@ describe Message do
     @message.should be_read
   end
   
-  it "should belong to a conversation" 
+  it "should belong to a conversation" do
+    @message.should respond_to(:conversation)
+  end
 
-  it "should assign the parent's conversation id if present " 
-
-  it "should assign a new conversation id to messages with no parent" 
+  it "should assign conversation ids properly" do
+    @message.save!
+    @message.conversation.should_not be_nil
+    @next_message = create_message(:sender    => people(:kelly),
+                                   :recipient => @message.sender,
+                                   :parent    => @message)
+    @next_message.conversation.should == @message.conversation
+  end
     
   describe "email notifications" do
     
