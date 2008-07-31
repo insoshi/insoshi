@@ -12,6 +12,7 @@
     <%= time_ago_in_words message.created_at %> ago
   </p>
   <p title="Subject">
-    <%= link_to sanitize(truncate(message.subject, 30)), message %>
+    <%= link_to sanitize(truncate(message.subject, 30)),
+                message_path(message, :anchor => message_anchor(message)) %>
   </p>
 </li>

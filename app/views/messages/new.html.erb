@@ -16,7 +16,7 @@
   <% form_for(:message,
               :url => person_messages_path(@recipient)) do |f| %>
     <div class="form_row full">
-      <label for="message_to">To</label>
+      <label for="recipient">To</label>
       <%= text_field_tag :recipient, h(@recipient.name) %>
       <!-- TODO: be able to change recipients with this
       <a href="#" class="add-recipient">

@@ -5,4 +5,8 @@ module CommunicationsHelper
       edit_connection_path(conn)
     end
   end
+
+  def message_anchor(message)
+    "message_#{message.id}"
+  end
 end

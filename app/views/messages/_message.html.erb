@@ -23,7 +23,8 @@
   </p>
   <p>
     <span class="label">Subject:</span>
-    <%= link_to sanitize(message.subject), message %>    
+    <%= link_to sanitize(message.subject),
+                message_path(message, :anchor => message_anchor(message)) %>
   </p>
   <p class="tools meta">
     <%= link_to "Read", message %> |
@@ -31,7 +32,7 @@
     <% unless message.trashed?(current_person) -%>
       <%= link_to("Trash", message, :method => :delete) %>
     <% else -%>
-      <%= link_to "Untrash", undestroy_message_path(message), 
+      <%= link_to "Untrash", undestroy_message_path(message),
                              :method => :put %>
     <% end -%>    
   </p>
