@@ -5,7 +5,7 @@ class CreateConversations < ActiveRecord::Migration
     end
     add_column :communications, :conversation_id, :integer
     
-    messages = Message.find(:all)
+    messages = Message.find(:all, :order => :created_at)
     unless messages.empty?
       puts "Bootstrapping existing messages by adding conversation ids."
       messages.each do |message|
