@@ -4,6 +4,7 @@ class CreateConversations < ActiveRecord::Migration
       # We only need the id, but the migration chokes if we don't pass a block.
     end
     add_column :communications, :conversation_id, :integer
+    add_index :communications, :conversation_id
   end
 
   def self.down
