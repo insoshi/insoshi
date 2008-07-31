@@ -65,6 +65,11 @@ class Message < Communication
   def parent=(message)
     @parent = message
   end
+  
+  # Return the sender/recipient that *isn't* the given person.
+  def other_person(person)
+    person == sender ? recipient : sender
+  end
 
   # Put the message in the trash for the given person.
   def trash(person, time=Time.now)
@@ -99,7 +104,7 @@ class Message < Communication
   
   # Return true if the message is a reply to a previous message.
   def reply?
-    !parent.nil? and correct_sender_recipient_pair?
+    (!parent.nil? or !parent_id.nil?) and correct_sender_recipient_pair?
   end
   
   # Return true if the sender/recipient pair is valid for a given parent.
