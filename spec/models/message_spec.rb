@@ -83,6 +83,12 @@ describe Message do
     @message.should be_read
   end
   
+  it "should belong to a conversation" 
+
+  it "should assign the parent's conversation id if present " 
+
+  it "should assign a new conversation id to messages with no parent" 
+    
   describe "email notifications" do
     
     before(:each) do
