@@ -39,12 +39,13 @@ describe MessagesController do
     end
     
     it "should have a working reply page" do
-      login_as @message.recipient
-      get :reply, :id => @message
-      response.should be_success
-      response.should render_template("new")
-      assigns(:message).parent.should == @message
-      assigns(:recipient).should == @message.sender
+      proper_reply_behavior(@message.recipient)
+    end
+    
+    it "should have a working reply page for the recipient" do
+      # This spec tests replying to your *own* message, as at
+      # the bottom of a thread.
+      proper_reply_behavior(@message.sender)
     end
 
     it "should reply correctly when logged in as the sender" do
@@ -126,5 +127,20 @@ describe MessagesController do
                     :person_id => sender
       assigns(:message).should be_reply
     end.should change(Message, :count).by(1)
+  end
+  
+  def proper_reply_behavior(person)
+    login_as person
+    get :reply, :id => @message
+    response.should be_success
+    # Check that the hidden parent_id tag is there, with the right value.
+    response.should have_tag("input[id=?][name=?][type=?][value=?]",
+                             "message_parent_id",
+                             "message[parent_id]",
+                             "hidden",
+                             @message.id)
+    response.should render_template("new")
+    assigns(:message).parent.should == @message
+    assigns(:recipient).should == @message.other_person(person)
   end
 end
