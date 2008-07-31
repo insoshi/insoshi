@@ -61,9 +61,10 @@ describe Message do
   
   it "should handle replies" do
     @message.save!
+    # raise @message.id.inspect
     @reply = create_message(:sender    => @message.recipient,
                             :recipient => @message.sender,
-                            :parent_id => @message)
+                            :parent    => @message)
     @reply.should be_reply
     @reply.parent.should be_replied_to
   end
@@ -72,7 +73,7 @@ describe Message do
     @message.save!
     @next_message = create_message(:sender    => people(:kelly),
                                    :recipient => @message.sender,
-                                   :parent_id => @message)
+                                   :parent    => @message)
     @next_message.should_not be_reply
     @next_message.parent.should_not be_replied_to
   end
