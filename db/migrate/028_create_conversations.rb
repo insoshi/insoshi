@@ -5,7 +5,7 @@ class CreateConversations < ActiveRecord::Migration
     end
     add_column :communications, :conversation_id, :integer
     add_index :communications, :conversation_id
-    system("rake db:conversation_bootstrap")
+    system("rake db:conversation_bootstrap") unless Message.count.zero?
   end
 
   def self.down
