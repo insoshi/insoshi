@@ -1,19 +1,17 @@
 class AddAdmin < ActiveRecord::Migration
 
   class Person < ActiveRecord::Base  
-    attr_accessor :password
-    validates_confirmation_of  :password
   end
 
   def self.up
     add_column :people, :admin, :boolean, :default => false, :null => false
     add_column :people, :deactivated, :boolean, 
                         :default => false, :null => false
-                      
+    
+    key = Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key.pub")
     person = Person.new(:email => "admin@example.com",
                         :name => "admin",
-                        :password => "admin",
-                        :password_confirmation => "admin",
+                        :crypted_password => key.encrypt("admin"),
                         :description => "")
     person.admin = true
     person.save!
