@@ -17,6 +17,7 @@ namespace :db do
       make_forum_posts
       make_blog_posts
       make_feed
+      puts "Completed loading sample data."
       puts "Run 'rake ultrasphinx:bootstrap' to start Sphinx search"
     end
       
