@@ -81,13 +81,13 @@ For more information on configuring your local clone of our repository, check ou
 
 which also includes a scripted Quick Local Repository Setup.
 
-=== Config files and tests
+=== Install script
 
-You will to set up your database configuration.  If you're using SQLite, you can just copy the example file
+To run the install script, you first need to set up your database configuration.  If you're using MySQL, you can just copy the example file as follows:
 
   $ cp config/database.example config/database.yml
-
-If you're using MySQL, you'll need to create a configure the database.yml manually.  The easiest way is to copy and modify one from an existing Rails application or from a new Rails project that explicitly uses MySQL (rails -d mysql <mysql project>).
+  
+Then open up database.yml and set up the passwords to match your system.
 
 Run the following custom install script
 
