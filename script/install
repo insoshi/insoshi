@@ -1,11 +1,8 @@
 #!/usr/bin/env ruby
 
-# Touch some files so they won't be created as root.
-system("touch log/development.log")
-system("touch log/production.log")
-system("touch db/development.sqlite3")
-system("touch db/production.sqlite3")
-system("touch tmp/attachment_fu")
+# Create some files and directories so they won't be created as root.
+# This doesn't do the actual installation, since that needs to be done as root.
+system("rake gems:install")
 # Install the gem dependencies (if any).
 system("sudo rake gems:install")
 # Run the main install task.
