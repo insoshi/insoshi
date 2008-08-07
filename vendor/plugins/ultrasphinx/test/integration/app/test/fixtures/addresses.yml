@@ -1,0 +1,84 @@
+# Waikiki Aquarium‎Address:
+# 2777 Kalakaua Ave
+# Honolulu, HI 96815
+# (21.265915, -157.821256)
+# 0.972 miles to Diamond Head State Park
+# 10.147 miles to Aloha Stadium
+# 10.880 miles to Kailua Beach Park
+<% 1.upto(10) do |num| %>
+<%="address#{num}:" %>
+  id: <%= num %>
+  user_id: <%= num %>
+  name: <%= "Waikiki Aquarium #{num}" %>
+  line_1: "2777 Kalakaua Ave"
+  line_2: "Suite 122"
+  city: "Honolulu"
+  state_id: 15
+  province_region: "Honolulu County"
+  zip_postal_code: "96815"
+  country_id: 2
+  lat: <%= 21.265915 %>
+  lng: <%= -157.821256 %>
+<% end %>
+
+# Diamond Head State Monument
+# 4200 Diamond Head Rd
+# Honolulu, HI 96816
+# (21.2627, -157.80655)
+# 10.563 miles to Kailua Beach Park
+<% 11.upto(20) do |num| %>
+<%="address#{num}:" %>
+  id: <%= num %>
+  user_id: <%= num %>
+  name: <%= "Diamond Head State Monument #{num}" %>
+  line_1: "4200 Diamond Head Rd"
+  line_2: "Suite 122"
+  city: "Honolulu"
+  state_id: 15
+  province_region: "Honolulu County"
+  zip_postal_code: "96816"
+  country_id: 2
+  lat: <%= 21.2627 %>
+  lng: <%= -157.80655 %>
+<% end %>
+
+# Aloha Stadium‎Address:
+# 99-500 Salt Lake Blvd
+# Aiea, HI 96701
+# (21.370824, -157.931578)
+# 13.366 miles to Kailua Beach Park
+<% 21.upto(30) do |num| %>
+<%="address#{num}:" %>
+  id: <%= num %>
+  user_id: <%= num %>
+  name: <%= "Aloha Stadium #{num}" %>
+  line_1: "99-500 Salt Lake Blvd"
+  line_2: "Suite 122"
+  city: "Aiea"
+  state_id: 15
+  province_region: "Honolulu County"
+  zip_postal_code: "96701"
+  country_id: 2
+  lat: <%= 21.370824 %>
+  lng: <%= -157.80655 %>
+<% end %>
+
+# Kailua Beach Park‎Address:
+# 450 Kawailoa Road
+# Honolulu, HI 96734
+# (21.39567059288111, -157.72552013397217)
+<% 31.upto(40) do |num| %>
+<%="address#{num}:" %>
+  id: <%= num %>
+  user_id: <%= num %>
+  name: <%= "Kailua Beach Park #{num}" %>
+  line_1: "450 Kawailoa Road"
+  line_2: "Suite 122"
+  city: "Honolulu"
+  state_id: 15
+  province_region: "Honolulu County"
+  zip_postal_code: "96734"
+  country_id: 2
+  lat: <%= 21.39567059288111 %>
+  lng: <%= -157.72552013397217 %>
+<% end %>

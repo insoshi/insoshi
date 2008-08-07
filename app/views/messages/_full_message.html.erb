@@ -1,0 +1,20 @@
+<li class="vcard person">
+  <%- if n_messages > 1 -%>
+    <a name="<%= message_anchor(full_message) %>"></a>
+  <%- end -%>
+  <div class="profile-image">
+  <%= image_link full_message.sender, :class => "photo",
+                                      :image => :thumbnail %>
+  </div>
+  <%= display full_message.content %>
+  <p class="meta tools">
+    Sent <%= time_ago_in_words full_message.created_at %> ago |
+    <%= link_to "Reply", reply_message_path(full_message) %> |
+    <% unless full_message.trashed?(current_person) -%>
+      <%= link_to("Trash", full_message, :method => :delete) %>
+    <% else -%>
+      <%= link_to "Untrash", undestroy_message_path(full_message), 
+                             :method => :put %>
+    <% end -%>
+  </p>
+</li>

@@ -9,6 +9,7 @@ namespace :db do
   
     desc "Load sample data"
     task :load => :environment do |t|
+      Rake::Task["install"].invoke      
       @lipsum = File.open(File.join(DATA_DIRECTORY, "lipsum.txt")).read
       create_people
       make_connections
@@ -16,13 +17,13 @@ namespace :db do
       make_forum_posts
       make_blog_posts
       make_feed
+      puts "Completed loading sample data."
+      puts "Run 'rake ultrasphinx:bootstrap' to start Sphinx search"
     end
       
     desc "Remove sample data" 
     task :remove => :environment do |t|
-      Rake::Task["db:migrate:reset"].invoke
-      # Blow away the Ferret index.
-      system("rm -rf index/")
+      system("rake db:migrate VERSION=0")
       # Remove images to avoid accumulation.
       system("rm -rf public/photos")
     end
@@ -30,8 +31,10 @@ namespace :db do
     desc "Reload sample data"
     task :reload => :environment do |t|
       Rake::Task["db:sample_data:remove"].invoke
-      Rake::Task["install"].invoke
-      Rake::Task["db:sample_data:load"].invoke
+      # We use a system call to reload the Rails environment.
+      # Otherwise, the db:migrate might use the *old* schema, causing
+      # an error when creating the admin user.
+      system("rake db:sample_data:load")
     end
   end
 end
@@ -51,6 +54,8 @@ def create_people
                               :password_confirmation => password,
                               :name => full_name,
                               :description => @lipsum)
+      person.last_logged_in_at = Time.now
+      person.save
       Photo.create!(:uploaded_data => uploaded_file(photos[i], 'image/jpg'),
                     :person => person, :primary => true)
     end

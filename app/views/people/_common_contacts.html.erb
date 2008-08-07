@@ -1,10 +1,10 @@
 <%- if logged_in? -%>
-  <%- unless @common_connections.empty? -%>
+  <%- unless @common_contacts.empty? -%>
     <h2>Common Contacts</h2>
     <ul class="grid contacts small">
-      <%- @common_connections.each do |connection| -%>
+      <%- @common_contacts.each do |contact| -%>
         <li class="vcard">
-          <%= image_link(connection.contact,
+          <%= image_link(contact,
                          :image_options => { :class => "photo fn" },
                          :link_options =>  { :class => "url" }) %>
         </li>

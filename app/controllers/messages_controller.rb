@@ -47,10 +47,11 @@ class MessagesController < ApplicationController
 
   def reply
     original_message = Message.find(params[:id])
-    @message = Message.new(:parent_id => original_message.id,
-                           :subject => original_message.subject,
-                           :sender => current_person,
-                           :recipient => original_message.sender)
+    recipient = original_message.other_person(current_person)
+    @message = Message.new(:parent_id    => original_message.id,
+                           :subject   => original_message.subject,
+                           :sender    => current_person,
+                           :recipient => recipient)
     @recipient = not_current_person(original_message)
     respond_to do |format|
       format.html { render :action => "new" }
@@ -58,37 +59,16 @@ class MessagesController < ApplicationController
   end
 
   def create
-    
-    if params["commit"] == "Send to all" and current_person.admin?
-      # Send messages to all (active) people.
-      messages = Person.all_active.inject([]) do |messages, person|
-        message = Message.new(params[:message].merge(:sender => current_person,
-                                                     :recipient => person))
-        messages.push(message)
-      end
-      respond_to do |format|
-        @message = messages.first
-        if !preview? and @message.save
-          messages.each { |m| m.save }
-          flash[:success] = 'Message sent to everyone!'
-          format.html { redirect_to messages_url }
-        else
-          @preview = @message.content if preview?
-          format.html { render :action => "new" }
-        end
-      end
-    else
-      @message = Message.new(params[:message].merge(:sender => current_person,
-                                                    :recipient => @recipient))
-    
-      respond_to do |format|
-        if !preview? and @message.save
-          flash[:success] = 'Message sent!'
-          format.html { redirect_to messages_url }
-        else
-          @preview = @message.content if preview?
-          format.html { render :action => "new" }
-        end
+    @message = Message.new(params[:message].merge(:sender => current_person,
+                                                  :recipient => @recipient))
+  
+    respond_to do |format|
+      if !preview? and @message.save
+        flash[:success] = 'Message sent!'
+        format.html { redirect_to messages_url }
+      else
+        @preview = @message.content if preview?
+        format.html { render :action => "new" }
       end
     end
   end

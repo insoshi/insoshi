@@ -12,15 +12,6 @@ MAX_TEXT_LENGTH = 5000
 MEDIUM_TEXT_LENGTH = 500
 SMALL_TEXT_LENGTH = 300
 
-# Search adds a significant overhead to tests, so disable it by default.
-# Set this to true to run the tests with search enabled.
-SEARCH_IN_TESTS = false
-
-# Search runs if test is not true, or (if test true) if search is true.
-def search?
-  !test? or SEARCH_IN_TESTS
-end
-
 # The number of raster colums.
 N_COLUMNS = 4
 # The number of raster results per page.

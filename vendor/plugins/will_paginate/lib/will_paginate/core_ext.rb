@@ -1,5 +1,5 @@
-require 'will_paginate'
 require 'set'
+require 'will_paginate/array'
 
 unless Hash.instance_methods.include? 'except'
   Hash.class_eval do
@@ -27,54 +27,6 @@ unless Hash.instance_methods.include? 'slice'
     # Replaces the hash with only the given keys.
     def slice!(*keys)
       replace(slice(*keys))
-    end
-  end
-end
-
-unless Hash.instance_methods.include? 'rec_merge!'
-  Hash.class_eval do
-    # Same as Hash#merge!, but recursively merges sub-hashes
-    # (stolen from Haml)
-    def rec_merge!(other)
-      other.each do |key, other_value|
-        value = self[key]
-        if value.is_a?(Hash) and other_value.is_a?(Hash)
-          value.rec_merge! other_value
-        else
-          self[key] = other_value
-        end
-      end
-      self
-    end
-  end
-end
-
-require 'will_paginate/collection'
-
-unless Array.instance_methods.include? 'paginate'
-  # http://www.desimcadam.com/archives/8
-  Array.class_eval do
-    def paginate(options_or_page = {}, per_page = nil)
-      if options_or_page.nil? or Fixnum === options_or_page
-        if defined? WillPaginate::Deprecation
-          WillPaginate::Deprecation.warn <<-DEPR
-            Array#paginate now conforms to the main, ActiveRecord::Base#paginate API.  You should \
-            call it with a parameters hash (:page, :per_page).  The old API (numbers as arguments) \
-            has been deprecated and is going to be unsupported in future versions of will_paginate.
-          DEPR
-        end
-        page = options_or_page
-        options = {}
-      else
-        options = options_or_page
-        page = options[:page]
-        raise ArgumentError, "wrong number of arguments (1 hash or 2 Fixnums expected)" if per_page
-        per_page = options[:per_page]
-      end
-
-      WillPaginate::Collection.create(page || 1, per_page || 30, options[:total_entries] || size) do |pager|
-        pager.replace self[pager.offset, pager.per_page].to_a
-      end
     end
   end
 end

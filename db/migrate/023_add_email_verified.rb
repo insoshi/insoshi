@@ -1,4 +1,8 @@
 class AddEmailVerified < ActiveRecord::Migration
+  
+  class Person < ActiveRecord::Base    
+  end
+  
   def self.up
     add_column :people, :email_verified, :boolean, :default => nil
     if Preference.find(:first).email_verifications?

@@ -52,3 +52,20 @@ admin:
   message_notifications: true
   wall_comment_notifications: true
   blog_comment_notifications: true
+
+deactivated:
+  email: deactivated@example.com
+  name: Deactivated Person
+  description: I didn't deserve to be deactivated
+  crypted_password: <%= password %>
+  created_at: <%= 1.day.ago.to_s :db %>
+  deactivated: true
+
+email_unverified:
+  email: inactive@example.com
+  name: Email unverified
+  description: Email unverified
+  crypted_password: <%= password %>
+  created_at: <%= 1.day.ago.to_s :db %>
+  email_verified: false 
+  

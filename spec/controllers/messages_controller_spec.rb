@@ -39,12 +39,13 @@ describe MessagesController do
     end
     
     it "should have a working reply page" do
-      login_as @message.recipient
-      get :reply, :id => @message
-      response.should be_success
-      response.should render_template("new")
-      assigns(:message).parent.should == @message
-      assigns(:recipient).should == @message.sender
+      proper_reply_behavior(@message.recipient)
+    end
+    
+    it "should have a working reply page for the recipient" do
+      # This spec tests replying to your *own* message, as at
+      # the bottom of a thread.
+      proper_reply_behavior(@message.sender)
     end
 
     it "should reply correctly when logged in as the sender" do
@@ -70,16 +71,6 @@ describe MessagesController do
                                     :content => "Hey there!" },
                       :person_id => @other_person
       end.should change(Message, :count).by(1)
-    end
-    
-    it "should sent messages to all (active) people" do
-      login_as(:admin)
-      lambda do
-        post :create, :message => { :subject => "The subject",
-                                    :content => "Hey there!" },
-                      :person_id => @other_person,
-                      :commit => "Send to all"
-      end.should change(Message, :count).by(Person.active.length)
     end
     
     it "should send a message receipt email" do
@@ -131,10 +122,25 @@ describe MessagesController do
     login_as(recipient)
     lambda do
       post :create, :message => { :subject => "The subject",
-                                  :content   => "This is a reply",
-                                  :parent_id => message },
+                                  :content => "This is a reply",
+                                  :parent  => message },
                     :person_id => sender
       assigns(:message).should be_reply
     end.should change(Message, :count).by(1)
+  end
+  
+  def proper_reply_behavior(person)
+    login_as person
+    get :reply, :id => @message
+    response.should be_success
+    # Check that the hidden parent_id tag is there, with the right value.
+    response.should have_tag("input[id=?][name=?][type=?][value=?]",
+                             "message_parent_id",
+                             "message[parent_id]",
+                             "hidden",
+                             @message.id)
+    response.should render_template("new")
+    assigns(:message).parent.should == @message
+    assigns(:recipient).should == @message.other_person(person)
   end
 end

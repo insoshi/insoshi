@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
   
-  skip_before_filter :require_activation, :only => :verify
+  skip_before_filter :require_activation, :only => :verify_email
   skip_before_filter :admin_warning, :only => [ :show, :update ]
   before_filter :login_required, :only => [ :show, :edit, :update ]
   before_filter :correct_user_required, :only => [ :edit, :update ]
@@ -15,14 +15,14 @@ class PeopleController < ApplicationController
   end
   
   def show
-    @person = Person.find(params[:id], :include => :activities)
+    @person = Person.find(params[:id])
     unless @person.active? or current_person.admin?
       flash[:error] = "That person is not active"
       redirect_to home_url and return
     end
     if logged_in?
       @some_contacts = @person.some_contacts
-      @common_connections = current_person.common_connections_with(@person)
+      @common_contacts = current_person.common_contacts_with(@person)
     end
     respond_to do |format|
       format.html
@@ -65,7 +65,7 @@ class PeopleController < ApplicationController
     redirect_to home_url
   end
 
-  def verify
+  def verify_email
     verification = EmailVerification.find_by_code(params[:id])
     if verification.nil?
       flash[:error] = "Invalid email verification code"
@@ -119,7 +119,7 @@ class PeopleController < ApplicationController
   
   def common_contacts
     @person = Person.find(params[:id])
-    @common_connections = @person.common_connections_with(current_person,
+    @common_contacts = @person.common_contacts_with(current_person,
                                                           params[:page])
     respond_to do |format|
       format.html

@@ -2,6 +2,8 @@ log/*.log
 log/*.out
 log/*.pid
 tmp/**/*
+tmp/.*
+tmp/profile*
 .DS_Store
 doc/api
 doc/app
@@ -17,10 +19,10 @@ index/*
 identifier
 .project
 .#*
-tmp/.*
 \#*
 *~
 vendor/**/**/doc/*
+vendor/plugins/footnotes/*
 rsa_key*
 sphinx/*
 config/ultrasphinx/*.conf

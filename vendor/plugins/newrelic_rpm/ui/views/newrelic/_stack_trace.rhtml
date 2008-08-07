@@ -1,0 +1,28 @@
+<% trace = segment[:backtrace]%>
+<%= 
+link_to_function('Show Rails', :id => 'show_rails_link') do |page| 
+  page[:full_stack_trace].show
+  page[:application_stack_trace].hide
+  page[:show_rails_link].hide
+  page[:hide_rails_link].show
+end %>
+<%= 
+link_to_function('Hide Rails', :id => 'hide_rails_link', :style => "display: none;") do |page| 
+  page[:full_stack_trace].hide
+  page[:application_stack_trace].show
+  page[:hide_rails_link].hide
+  page[:show_rails_link].show
+end %>
+
+<pre id='application_stack_trace'>
+<% application_stack_trace(trace, false).each do |trace_line| -%>
+  <%= link_to trace_line, url_for_source(trace_line) %>
+<% end -%>
+</pre>
+
+<pre id='full_stack_trace' style="display: none;">
+<% application_stack_trace(trace, true).each do |trace_line| -%>
+  <%= link_to trace_line, url_for_source(trace_line) %>
+<% end -%>
+</pre>
+  

@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xml:lang="en" lang="en">
+<head>
+<%= javascript_include_tag "#{server}/javascripts/prototype" %>
+<%= javascript_include_tag "#{server}/javascripts/effects" %>
+<%= javascript_include_tag "#{server}/javascripts/dragdrop" %>
+<%= javascript_include_tag "#{server}/javascripts/controls" %>
+	<link href="<%= url_for(:controller => :newrelic, :action => :css, :file => 'style.css') %>" 
+				media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="header">
+		<img width="100%" height="4" src="<%= url_for(:controller => :newrelic, :action => :image, :file => 'blue_bar.gif', :content_type => 'image/gif') %>" alt="spacer"/>
+		<table width="100%" height="60">
+			<tr>
+				<td valign="middle">
+					<a href='/newrelic'><img src="<%= server %>/images/new_relic_rpm_desktop.gif" hspace="10" alt="New Relic RPM"/></a>
+				</td>
+				<td class="top_nav" valign="bottom">
+					<ul id="navlist">
+						<li>&raquo; <a href='/newrelic'>Home</a></li>
+					</ul>
+				</td>
+			</tr>
+		</table>
+		<div id="page_nav">
+			<table width="100%" height="100%" background="<%= url_for(:controller => :newrelic, :action => :image, :file => 'gray_bar.gif', :content_type => 'image/gif') %>">
+				<tr valign="middle">
+					<td>
+						<span class="application_title">DEVELOPER MODE</span>
+					</td>
+					<td class="title_bar_right">
+						Monitor your Rails Application in production. <%=link_to 'Learn more.', 'http://www.newrelic.com/dev-upgrade.html' %>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id='content'>
+		<%= yield %>
+	</div>
+	<div id='footer'>
+		<img width="100%" height="4" src="<%= url_for(:controller => :newrelic, :action => :image, :file => 'blue_bar.gif', :content_type => 'image/gif') %>" alt="spacer"/>
+		<p>We're Hiring! Are you a Rails Jock? We're venture funded and growing! <a href="&#109;&#97;&#105;&#108;&#116;&#111;:&#x6A;&#x6F;&#x62;&#115;&#64;&#x6E;&#101;&#x77;&#x72;&#x65;&#108;&#105;&#x63;&#x2E;&#99;&#x6F;&#x6D;?subject=&#x4A;&#x6F;&#105;&#110;&#x20;&#x55;&#x73;" title="">&#74;&#x6F;&#105;&#x6E;&#x20;&#85;&#x73;&#32;&#187;</a><br />
+		<a href="/newrelic">Home</a> | <a href="&#109;&#97;&#105;&#108;&#116;&#111;:&#x73;&#x75;&#x70;&#112;&#111;&#x72;&#116;&#x40;&#x6E;&#x65;&#119;&#114;&#x65;&#x6C;&#105;&#x63;&#x2E;&#99;&#x6F;&#109;?subject=&#70;&#101;&#x65;&#x64;&#x62;&#x61;&#x63;&#107;" title="">&#x46;&#x65;&#101;&#x64;&#98;&#97;&#x63;&#x6B;</a><br />
+		Monitor your Rails Application in Production. <a href="http://www.newrelic.com/dev-upgrade.html">Learn more. &raquo;</a><br />
+		&copy; 2008 New Relic. All rights reserved.</p>
+	</div>
+</body>
