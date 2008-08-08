@@ -2,7 +2,7 @@
   <h2>Discussion topics</h2>
   
   <ol class="list forum full">
-    <%= render :partial => @topics %>
+    <%= render :partial => 'topics/topic', :collection => @topics %>
   </ol>
   <%= will_paginate(@topics) %>
   

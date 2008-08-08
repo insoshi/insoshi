@@ -44,7 +44,7 @@ class TopicsController < ApplicationController
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
         flash[:success] = 'Topic was successfully updated.'
-        format.html { redirect_to admin_forum_url(@forum) }
+        format.html { redirect_to forum_url(@forum) }
       else
         format.html { render :action => "edit" }
       end
@@ -57,7 +57,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       flash[:success] = 'Topic was successfully destroyed.'
-      format.html { redirect_to admin_forum_url(@forum) }
+      format.html { redirect_to forum_url(@forum) }
     end
   end
 
