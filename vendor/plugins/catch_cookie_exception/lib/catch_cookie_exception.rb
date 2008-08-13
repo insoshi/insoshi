@@ -14,6 +14,8 @@ class CGI::Session::CookieStore
     @original = read_cookie
     @data = unmarshal(@original) || {}
   rescue CGI::Session::CookieStore::TamperedWithCookie
+    logger = Logger.new("#{RAILS_ROOT}/log/#{RAILS_ENV}.log")
+    logger.warn "Caught TamperedWithCookie exception on #{Time.now}"
     @data = {}
   end
 end
