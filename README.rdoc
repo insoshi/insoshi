@@ -51,6 +51,14 @@ You probably have Rails already, but might not have the others.
 If you're using FreeImage/ImageScience, you'll also need the image_science gem:
 
   $ sudo gem install image_science
+  
+If you want Markdown formatting support you can install either RDiscount (fast but platform-dependent):
+
+$ sudo gem install rdiscount
+
+or BlueCloth (slower but pure Ruby)
+
+$ sudo gem install BlueCloth
 
 
 == Installing the app

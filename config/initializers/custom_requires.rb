@@ -2,7 +2,14 @@ require 'digest/sha1'
 require 'rand'
 require 'will_paginate'
 require 'string'
-require 'rdiscount'
+# Handle RDiscount and BlueCloth in a unified way.
+begin
+  require 'rdiscount'
+  BlueCloth = RDiscount
+rescue LoadError
+  # Rails loads BlueCloth automatically if present.
+  nil
+end
 
 # In some cases autotest interprets the initialization of the UUID generator
 # as something new, and so just keeps running the tests.

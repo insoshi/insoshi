@@ -64,8 +64,7 @@ Rails::Initializer.run do |config|
   # Custom gem requirements
   # config.gem 'mislav-will_paginate', :version => '~> 2.3.2',
   #                                    :lib => 'will_paginate',
-  #                                    :source => 'http://gems.github.com'    
-  config.gem 'rdiscount'
+  #                                    :source => 'http://gems.github.com'
 end
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation
