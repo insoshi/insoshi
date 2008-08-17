@@ -84,8 +84,11 @@ class Person < ActiveRecord::Base
                     :conditions => "recipient_deleted_at IS NULL"
   end
   has_many :feeds
-  has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE
+  has_many :activities, :through => :feeds, :order => 'activities.created_at DESC',
+                                            :limit => FEED_SIZE,
+                                            :conditions => ["people.deactivated = ?", false],
+                                            :include => :person
+
   has_many :page_views, :order => 'created_at DESC'
   
   validates_presence_of     :email, :name
