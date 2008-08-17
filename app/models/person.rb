@@ -222,6 +222,12 @@ class Person < ActiveRecord::Base
                  :limit => NUM_RECENT_MESSAGES)
   end
 
+  def has_unread_messages?
+    Message.count(:all,
+                  :conditions => [%(recipient_id = ? AND
+                                    recipient_read_at IS NULL), id]) > 0
+  end
+
   ## Photo helpers
 
   def photo
