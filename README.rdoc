@@ -39,7 +39,7 @@ To use Insoshi's search capability, you also need Sphinx.  Follow the instructio
 
 http://blog.evanweaver.com/files/doc/fauna/ultrasphinx/files/DEPLOYMENT_NOTES.html
 
-(We previously recommended SQLite as a database but Sphinx doesn't support it.)
+This currently works only with MySQL due to a bug in Ultrasphinx.
 
 === Gems
 
