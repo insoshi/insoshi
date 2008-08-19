@@ -1,0 +1,28 @@
+<%= error_messages_for :event %>
+
+<% form_for(@event) do |f| %>
+<div class="form_row full">
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+</div>
+<div class="form_row full">
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+</div>
+<div class="form_row full">
+  <%= f.label :start_time %>
+  <%= f.datetime_select :start_time %>
+</div>
+<div class="form_row">
+  <%= f.label :end_time %>
+  <%= f.datetime_select :end_time %>
+</div>
+<div class="form_row full">
+  <%= f.label :reminder %>
+  <%= f.check_box :reminder %>
+</div>
+<div class="form_row">
+  <%= f.submit @event.new_record? ? "Create" : "Update" %>
+</div>
+<% end %>
+

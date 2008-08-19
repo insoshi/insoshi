@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  description: MyString
+  person: 
+  start_time: 2008-08-19 19:38:49
+  end_time: 2008-08-19 19:38:49
+  reminder: false
+
+two:
+  title: MyString
+  description: MyString
+  person: 
+  start_time: 2008-08-19 19:38:49
+  end_time: 2008-08-19 19:38:49
+  reminder: false
