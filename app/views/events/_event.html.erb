@@ -20,4 +20,9 @@
       | <%= link_to_if(current_person?(event.person), "Destroy",  event, :confirm => 'Are you sure?', :method  => :delete) %>
     <%- end -%>
   </p>
+  <% unless event.attending?(current_person) -%>
+    <%= link_to "I will attend", attend_event_path(event) %>
+  <% else -%>
+    <%= link_to "I won't attend", unattend_event_path(event) %>
+  <% end -%>
 </li>

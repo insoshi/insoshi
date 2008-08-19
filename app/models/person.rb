@@ -90,7 +90,11 @@ class Person < ActiveRecord::Base
                                             :include => :person
 
   has_many :page_views, :order => 'created_at DESC'
-  
+
+  has_many :events
+  has_many :event_attendees
+  has_many :attendee_events, :through => :event_attendees, :source => :event
+
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?

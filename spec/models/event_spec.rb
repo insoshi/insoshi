@@ -15,4 +15,24 @@ describe Event do
   it "should create a new instance given valid attributes" do
     Event.create!(@valid_attributes)
   end
+
+  describe "attendees association" do
+    before(:each) do
+      @event = events(:one)
+      @person = people(:aaron)
+    end
+    
+    it "should allow people to attend" do
+      @event.attend(@person)                                   
+      @event.attendees.should include(@person)
+    end
+
+    it 'should not allow people to attend twice' do
+      @event.attend(@person)
+      @event.attend(@person).errors.on(:person_id).should_not be_empty
+    end
+                                       
+    
+  end
+
 end

@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :events
+  map.resources :events, :member => { :attend => :get, :unattend => :get }
 
   map.resources :preferences
   map.resources :searches

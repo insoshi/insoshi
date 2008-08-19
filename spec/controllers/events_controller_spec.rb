@@ -1,12 +1,18 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+#TODO: Write tests about permissions
 describe EventsController do
+  
+  before(:each) do
+    @person = login_as(:aaron)
+  end
 
   def mock_event(stubs={})
     stubs = {
       :save => true,
       :update_attributes => true,
       :destroy => true,
+      :person => @person,
       :to_xml => ''
     }.merge(stubs)
     @mock_event ||= mock_model(Event, stubs)
@@ -15,19 +21,19 @@ describe EventsController do
   describe "responding to GET /events" do
 
     it "should succeed" do
-      Event.stub!(:find)
+      Event.stub!(:paginate)
       get :index
       response.should be_success
     end
 
     it "should render the 'index' template" do
-      Event.stub!(:find)
+      Event.stub!(:paginate)
       get :index
       response.should render_template('index')
     end
   
     it "should find all events" do
-      Event.should_receive(:find).with(:all)
+      Event.should_receive(:paginate).with(:all, :page => params[:page])
       get :index
     end
   
@@ -52,12 +58,12 @@ describe EventsController do
     end
 
     it "should find all events" do
-      Event.should_receive(:find).with(:all).and_return([])
+      Event.should_receive(:paginate).with(:all, :page => params[:page]).and_return([])
       get :index
     end
   
     it "should render the found events as xml" do
-      Event.should_receive(:find).and_return(events = mock("Array of Events"))
+      Event.should_receive(:paginate).and_return(events = mock("Array of Events"))
       events.should_receive(:to_xml).and_return("generated XML")
       get :index
       response.body.should == "generated XML"
@@ -146,19 +152,19 @@ describe EventsController do
   describe "responding to GET /events/1/edit" do
 
     it "should succeed" do
-      Event.stub!(:find)
+      Event.stub!(:find).and_return(mock_event)
       get :edit, :id => "1"
       response.should be_success
     end
   
     it "should render the 'edit' template" do
-      Event.stub!(:find)
+      Event.stub!(:find).and_return(mock_event)
       get :edit, :id => "1"
       response.should render_template('edit')
     end
   
     it "should find the requested event" do
-      Event.should_receive(:find).with("37")
+      Event.should_receive(:find).with("37").and_return(mock_event)
       get :edit, :id => "37"
     end
   
@@ -175,7 +181,7 @@ describe EventsController do
     describe "with successful save" do
   
       it "should create a new event" do
-        Event.should_receive(:new).with({'these' => 'params'}).and_return(mock_event)
+        Event.should_receive(:new).with({'these' => 'params','person' => @person}).and_return(mock_event)
         post :create, :event => {:these => 'params'}
       end
 
@@ -196,7 +202,7 @@ describe EventsController do
     describe "with failed save" do
 
       it "should create a new event" do
-        Event.should_receive(:new).with({'these' => 'params'}).and_return(mock_event(:save => false))
+        Event.should_receive(:new).with({'these' => 'params','person' => @person}).and_return(mock_event(:save => false))
         post :create, :event => {:these => 'params'}
       end
 

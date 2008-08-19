@@ -77,6 +77,29 @@ class EventsController < ApplicationController
     end
   end
 
+  def attend
+    @event = Event.find(params[:id])
+    if @event.attend(current_person)
+      flash[:notice] = "You are attending this event."
+      redirect_to @event
+    else
+      flash[:error] = "You can only attend once."
+      redirect_to @event
+    end
+  end
+
+  def unattend
+    @event = Event.find(params[:id])
+    if @event.unattend(current_person)
+      flash[:notice] = "You are not attending this event."
+      redirect_to @event
+    else
+      flash[:error] = "You are not attending this event."
+      redirect_to @event
+    end
+
+  end
+
   private
   def check_owner
     redirect_to home_url unless current_person?(@event.person)

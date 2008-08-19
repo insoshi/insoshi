@@ -3,7 +3,7 @@
 one:
   title: MyString
   description: MyString
-  person: 
+  person: aaron 
   start_time: 2008-08-19 19:38:49
   end_time: 2008-08-19 19:38:49
   reminder: false
@@ -11,7 +11,7 @@ one:
 two:
   title: MyString
   description: MyString
-  person: 
+  person: quentin
   start_time: 2008-08-19 19:38:49
   end_time: 2008-08-19 19:38:49
   reminder: false
