@@ -6,23 +6,30 @@
   </div>
   <p>
     <%= link_to h(event.title), event,
-                :class => "show-follow" %>
+    :class => "show-follow" %>
     Starts at: <%= event.start_time.to_s :short %>
     <% unless event.end_time.nil? -%>
     / Ends at: <%= event.end_time.to_s :short %>
     <% end -%>
   </p>
+  <p>
+    <%=h event.description %>
+  </p>
   <p class="meta">
     Created by <%= person_link event.person %>
     <%= time_ago_in_words(event.created_at) %> ago
-    <%- if admin? -%>
-      | <%= link_to_if(current_person?(event.person), "Edit",  edit_event_path(event)) %>
-      | <%= link_to_if(current_person?(event.person), "Destroy",  event, :confirm => 'Are you sure?', :method  => :delete) %>
-    <%- end -%>
+    <% if current_person?(event.person) -%>
+    | <%= link_to "Edit",  edit_event_path(event) %>
+    <% end -%>
+    <% if admin? || current_person?(event.person) -%>
+    | <%= link_to "Destroy",  event, :confirm => 'Are you sure?', :method  => :delete %>
+    <% end -%>
   </p>
-  <% unless event.attending?(current_person) -%>
+  <p>
+    <% unless event.attending?(current_person) -%>
     <%= link_to "I will attend", attend_event_path(event) %>
-  <% else -%>
+    <% else -%>
     <%= link_to "I won't attend", unattend_event_path(event) %>
-  <% end -%>
+    <% end -%>
+  </p>
 </li>

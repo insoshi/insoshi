@@ -1,0 +1,20 @@
+=== 0.2.2 / 2007-08-29
+
+* Fixed missing tr tag in thead section. [Ian Struble]
+
+=== 0.2.1 / 2007-07-07
+
+* Added html output to the tests for visual confirmation or
+  for developing new stylesheets. Run 'rake' and look
+  in the 'test/output' directory.
+* Adds a 'today' CSS class to the cell for the current day.
+  Can be turned of by sending option 'show_today => false'.
+  [Chris O'Sullivan]
+* Added 'accessible' option to show extra fields around 
+  days that are not in the current month. [Tom Armitage]
+
+=== 0.2.0
+
+* Converted to hoe and a rubygem
+* Renamed to README.txt for Hoe compatibility
+

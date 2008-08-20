@@ -1,27 +1,5 @@
 <% column_div :type => :primary do -%>
 <ul class="list full">
-<li>
-  <a name="event_<%= @event.id %>"></a>
-  <div class="profile-image">
-    <%= image_link @event.person, :image => :thumbnail %>
-    <%= image_tag "icons/comment.gif", :class => "icon" %>
-  </div>
-  <p class="meta"><%= person_link @event.person %> posted
-      <%= time_ago_in_words(@event.created_at) %> ago
-      <%- if current_person?(@event.person) or admin? -%>
-        | <%= link_to "Edit",
-                edit_event_path(@event) %>
-      <%- end -%>
-      <%- if admin? -%>
-        | <%= link_to "Destroy",
-                      @event,
-                      :confirm => 'Are you sure?',
-                      :method => :delete %>
-      <%- end -%>
-  </p>
-  <div class="forum">
-  <%= display @event.description %>
-  </div>
-</li>
+  <%= render :partial => @event %>
 <ul>
 <% end -%>

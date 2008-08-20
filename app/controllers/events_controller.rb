@@ -1,10 +1,16 @@
+# -*- coding: utf-8 -*-
 class EventsController < ApplicationController
 
   before_filter :login_required, :except => :index
+  before_filter :load_date, :only => :index
   
   def index
-    @events = Event.paginate(:all, :page => params[:page])
-
+    unless filter_by_day?
+      @events = Event.monthly_events(@date).user_events(current_person)
+    else
+      @events = Event.daily_events(@date).user_events(current_person)
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @events }
@@ -100,8 +106,24 @@ class EventsController < ApplicationController
 
   end
 
+  helper_method :filter_by_day?
+
+  def filter_by_day?
+    !params[:day].nil?
+  end
+
   private
   def check_owner
     redirect_to home_url unless current_person?(@event.person)
+  end
+
+  def load_date
+    now = Time.now
+    year = (params[:year]||now.year).to_i
+    month = (params[:month]||now.month).to_i
+    day = (params[:day]||now.mday).to_i
+    @date = Date.new(year,month,day)
+  rescue ArgumentError
+    @date = Time.now.to_date
   end
 end
