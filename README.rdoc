@@ -178,6 +178,8 @@ Note that there is a minimalist stat tracker that lets us keep track of how many
 
   <%# A tracker to tell us about the activity of Insoshi installs %>
 
+The tracker works by hitting an external URL, so you should comment out this linem if working offline.
+
 == License
 
 See the file LICENSE.

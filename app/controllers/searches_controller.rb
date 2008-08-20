@@ -35,7 +35,7 @@ class SearchesController < ApplicationController
       @results = @search.results
       if model == "AllPerson"
         # Convert to people so that the routing works.
-        @results.map!{ |person| Person.find(person)}
+        @results.map!{ |person| Person.find(person) }
       end
     end
   end
