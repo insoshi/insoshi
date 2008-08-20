@@ -28,8 +28,8 @@ describe Event do
     end
 
     it 'should not allow people to attend twice' do
-      @event.attend(@person)
-      @event.attend(@person).errors.on(:person_id).should_not be_empty
+      @event.attend(@person).should_not be_nil
+      @event.attend(@person).should be_nil
     end
                                        
     
