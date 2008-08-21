@@ -44,7 +44,4 @@ class Event < ActiveRecord::Base
     self.attendee_ids.include?(person[:id])
   end
 
-  def privacy
-    
-  end
 end
