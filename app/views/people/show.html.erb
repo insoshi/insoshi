@@ -38,11 +38,24 @@
            (<%= link_to "end connection", 
                connection_path(Connection.conn(current_person, @person)), 
                :method => :delete,
-              :confirm => 
-"Are you sure you want to end connection with #{h @person.name}?" %>)
+               :confirm => 
+         "Are you sure you want to end connection with #{h @person.name}?" %>)
           
           </li>
           <%- end -%>
+          <%- if Connection.pending?(current_person,@person) -%>
+          <li>
+            <%= h @person.name %> has contacted you
+            <br />
+            (<%= link_to "respond to contact request", 
+             edit_connection_path(Connection.conn(current_person,@person)) %>)
+          </li>
+          <%- end -%>
+          <%- if Connection.pending?(@person,current_person) -%>
+          <li>
+            You've contacted <%= h @person.name %>
+          </li>
+          <%- end -%>          
           <li><%= email_link @person %></li>
         <%- end -%>
           <li><%= link_to "#{h @person.name}'s blog",
