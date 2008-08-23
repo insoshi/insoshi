@@ -108,7 +108,7 @@ class Connection < ActiveRecord::Base
       exist?(person, contact) and accepted?(person, contact)
     end
     
-    def pending?(person,contact)
+    def pending?(person, contact)
       exist?(person, contact) and conn(contact,person).status == PENDING
     end
   end
