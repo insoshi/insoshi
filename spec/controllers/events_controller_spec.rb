@@ -13,7 +13,8 @@ describe EventsController do
       :update_attributes => true,
       :destroy => true,
       :person => @person,
-      :to_xml => ''
+      :to_xml => '',
+      :start_time => Time.now
     }.merge(stubs)
     @mock_event ||= mock_model(Event, stubs)
   end
@@ -35,21 +36,14 @@ describe EventsController do
     it "should find monthly events" do
       events = mock("Array of Events")
       Event.should_receive(:monthly_events).with(Time.now.to_date).and_return(events)
-      events.should_receive(:user_events).with(@person).and_return(events)
-      get :index
-    end
-
-    it "should find monthly events" do
-      events = mock("Array of Events")
-      Event.should_receive(:monthly_events).with(Time.now.to_date).and_return(events)
-      events.should_receive(:user_events).with(@person).and_return(events)
+      events.should_receive(:person_events).with(@person).and_return(events)
       get :index
     end
 
     it "should find daily events" do
       events = mock("Array of Events")
       Event.should_receive(:daily_events).with(Time.now.to_date).and_return(events)
-      events.should_receive(:user_events).with(@person).and_return(events)
+      events.should_receive(:person_events).with(@person).and_return(events)
       get :index, :day => Time.now.mday
     end
 
@@ -64,7 +58,7 @@ describe EventsController do
       request.env["HTTP_ACCEPT"] = "application/xml"
       events = mock("Array of Events")
       Event.should_receive(:monthly_events).and_return(events)
-      events.should_receive(:user_events).and_return(events)
+      events.should_receive(:person_events).and_return(events)
       events.should_receive(:to_xml).and_return("generated XML")
       get :index
       response.body.should == "generated XML"
@@ -75,19 +69,19 @@ describe EventsController do
   describe "responding to GET /events/1" do
 
     it "should succeed" do
-      Event.stub!(:find)
+      Event.stub!(:find).and_return(mock_event)
       get :show, :id => "1"
       response.should be_success
     end
   
     it "should render the 'show' template" do
-      Event.stub!(:find)
+      Event.stub!(:find).and_return(mock_event)
       get :show, :id => "1"
       response.should render_template('show')
     end
   
     it "should find the requested event" do
-      Event.should_receive(:find).with("37")
+      Event.should_receive(:find).with("37").and_return(mock_event)
       get :show, :id => "37"
     end
   
