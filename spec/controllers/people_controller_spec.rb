@@ -126,14 +126,14 @@ describe PeopleController do
         
         it "should have the right notice" do
           person = create_person
-          flash[:notice].should =~ /verification email/
+          flash[:notice].should =~ /activate your account/
           response.should redirect_to(home_url)
         end
         
         it "should verify a person" do
           person = create_person
           verification = assigns(:person).email_verifications.last
-          get :verify, :id => verification.code
+          get :verify_email, :id => verification.code
           person.reload.should_not be_deactivated
           person.should be_email_verified
           response.should redirect_to(person_path(person))
@@ -153,13 +153,13 @@ describe PeopleController do
           person = create_person
           login_as(person)
           verification = person.email_verifications.last
-          get :verify, :id => verification.code
+          get :verify_email, :id => verification.code
           person.reload.should_not be_deactivated
           response.should redirect_to(person_path(person))
         end
         
         it "should redirect home on failed verification" do
-          get :verify, :id => "invalid"
+          get :verify_email, :id => "invalid"
           response.should redirect_to(home_url)
         end
       end

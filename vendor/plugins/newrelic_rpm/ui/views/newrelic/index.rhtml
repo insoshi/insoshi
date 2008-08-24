@@ -1,0 +1,37 @@
+<table>
+	<tr>
+		<td valign=top>
+			<table class="transaction_list_table">
+				<thead>
+				<tr>
+          			<td>Resp Time</td>
+					<td>URL</td>
+					<td/>
+				</tr>
+				</thead>
+				<%= render :partial => 'sample', :collection => @samples %>
+			</table>
+		</td>
+		<td valign=top>
+			<h3>Welcome</h3>
+			<p>
+			Welcome to <b>New Relic RPM Developer Mode</b>.  This Rails extension traces the performance activity
+			of your 100 most recent controller actions in your rails application, and presents the performance
+			information for your analysis.
+			</p>
+			<p>
+			The url's of the most recent transactions are presented to the left, most-recent first.  Click
+			on any one of these to drill down and inspect its performance information.
+			</p>
+			<p>
+			The identical agent technology that provides this data is also capable of monitoring your application as it
+       runs in production.  For more information, visit <a href="http://www.newrelic.com">http://www.newrelic.com</a>.
+			</p>
+			<p>
+			Note, to increase the accuracy of our performance measurement, we automatically "strip out" any
+			time spent in application code loading, which will not happen when your application runs in 
+			production mode.
+			</p>
+		</td>
+	<tr>
+</table>

@@ -1,0 +1,1 @@
+require 'catch_cookie_exception'

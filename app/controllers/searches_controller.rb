@@ -1,22 +1,42 @@
 class SearchesController < ApplicationController
   include ApplicationHelper
 
+  before_filter :login_required
+
   def index
-    redirect_to home_url and return if params[:model].nil?
+    
+    redirect_to(home_url) and return if params[:q].nil?
+    
+    query = params[:q].strip
     model = strip_admin(params[:model])
-    if model == "Message"
-      options = params.merge(:recipient => current_person)
-    else
-      options = params
+    page  = params[:page] || 1
+
+    unless %(Person Message ForumPost).include?(model)
+      flash[:error] = "Invalid search"
+      redirect_to home_url and return
     end
-    options[:all] = true if admin?
-    @results = model.constantize.search(options)
-    if model == "ForumPost" and @results
-      # Consolidate the topics, eliminating duplicates.
-      # TODO: do this in the Topic model.  This will probably require some
-      #       search-engine specific hacking, so defer to the time when we're
-      #       ready to switch to Sphinx.
-      @results = @results.map(&:topic).uniq.paginate
+
+    if query.blank?
+      @search  = [].paginate
+      @results = []
+    else
+      filters = {}
+      if model == "Person" and current_person.admin?
+        # Find all people, including deactivated and email unverified.
+        model = "AllPerson"
+      elsif model == "Message"
+        filters['recipient_id'] = current_person.id
+      end
+      @search = Ultrasphinx::Search.new(:query => query, 
+                                        :filters => filters,
+                                        :page => page,
+                                        :class_names => model)
+      @search.run
+      @results = @search.results
+      if model == "AllPerson"
+        # Convert to people so that the routing works.
+        @results.map!{ |person| Person.find(person) }
+      end
     end
   end
   

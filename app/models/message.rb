@@ -24,38 +24,25 @@ class Message < Communication
   extend PreferencesHelper
   
   attr_accessor :reply, :parent, :send_mail
-  acts_as_ferret :fields => [ :subject, :content ] if search?
-  
-  MAX_CONTENT_LENGTH = MAX_TEXT_LENGTH
+  is_indexed :fields => [ 'subject', 'content', 'recipient_id',
+                          'recipient_deleted_at' ],
+             :conditions => "recipient_deleted_at IS NULL"
+
+  MAX_CONTENT_LENGTH = 5000
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
   
   belongs_to :sender, :class_name => 'Person', :foreign_key => 'sender_id'
   belongs_to :recipient, :class_name => 'Person',
                          :foreign_key => 'recipient_id'
+  belongs_to :conversation
   validates_presence_of :subject, :content
-  validates_length_of :subject, :maximum => SMALL_STRING_LENGTH
+  validates_length_of :subject, :maximum => 40
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
-  
+  before_create :assign_conversation
   after_create :update_recipient_last_contacted_at,
                :save_recipient, :set_replied_to, :send_receipt_reminder
-  
-  class << self
-    def search(options = {})
-      query = options[:q]
-      query = options[:q]
-      return [].paginate if query.blank? or query == "*"
-      # This is ineffecient.  We'll fix it when we move to Sphinx.
-      conditions = ["recipient_id = ? AND recipient_deleted_at IS NULL",
-                    options[:recipient]]
-      # raise conditions.inspect
-      results = find_by_contents(query, {}, :conditions => conditions)
-      results[0...SEARCH_LIMIT].paginate(:page => options[:page],
-                                         :per_page => SEARCH_PER_PAGE)
-    end
-    
-  end
   
   def parent
     return @parent unless @parent.nil?
@@ -64,6 +51,11 @@ class Message < Communication
   
   def parent=(message)
     @parent = message
+  end
+  
+  # Return the sender/recipient that *isn't* the given person.
+  def other_person(person)
+    person == sender ? recipient : sender
   end
 
   # Put the message in the trash for the given person.
@@ -99,7 +91,7 @@ class Message < Communication
   
   # Return true if the message is a reply to a previous message.
   def reply?
-    !parent.nil? and correct_sender_recipient_pair?
+    (!parent.nil? or !parent_id.nil?) and correct_sender_recipient_pair?
   end
   
   # Return true if the sender/recipient pair is valid for a given parent.
@@ -130,6 +122,14 @@ class Message < Communication
   end
 
   private
+
+    # Assign the conversation id.
+    # This is the parent message's conversation unless there is no parent,
+    # in which case we create a new conversation.
+    def assign_conversation
+      self.conversation = parent.nil? ? Conversation.create :
+                                        parent.conversation
+    end
   
     # Mark the parent message as replied to if the current message is a reply.
     def set_replied_to

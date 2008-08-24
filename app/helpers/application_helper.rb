@@ -79,7 +79,6 @@ module ApplicationHelper
   end
   
   # Display text by sanitizing and formatting.
-  # The formatting is done by Markdown via the BlueCloth gem.
   # The html_options, if present, allow the syntax
   #  display("foo", :class => "bar")
   #  => '<p class="bar">foo</p>'
@@ -91,7 +90,7 @@ module ApplicationHelper
       else
         tag_opts = nil
       end
-      processed_text = markdown(sanitize(text))
+      processed_text = format(sanitize(text))
     rescue
       # Sometimes Markdown throws exceptions, so rescue gracefully.
       processed_text = content_tag(:p, sanitize(text))
@@ -136,12 +135,17 @@ module ApplicationHelper
     end
   end
 
+  # Return a formatting note (depends on the presence of a Markdown library)
   def formatting_note
-    %(HTML and
-      #{link_to("Markdown",
-                "http://daringfireball.net/projects/markdown/basics",
-                :popup => true)}
-     supported)
+    if markdown?
+      %(HTML and
+        #{link_to("Markdown",
+                  "http://daringfireball.net/projects/markdown/basics",
+                  :popup => true)}
+       formatting supported)
+    else 
+      "HTML formatting supported"
+    end
   end
 
   private
@@ -152,5 +156,20 @@ module ApplicationHelper
     
     def add_tag_options(text, options)
       text.gsub("<p>", "<p#{options}>")
+    end
+    
+    # Format text using BlueCloth (or RDiscount) if available.
+    def format(text)
+      text.nil? ? "" : BlueCloth.new(text).to_html
+    rescue NameError
+      text
+    end
+    
+    # Is a Markdown library present?
+    def markdown?
+      BlueCloth.new("")
+      true
+    rescue NameError
+      false
     end
 end

@@ -1,4 +1,3 @@
-# Provide tasks to load and delete sample user data.
 require 'active_record'
 require 'active_record/fixtures'
 

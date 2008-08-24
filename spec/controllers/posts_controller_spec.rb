@@ -99,11 +99,19 @@ describe PostsController do
       end.should change(BlogPost, :count).by(1)
     end
     
+    it "should require the right user to show a blog post" do
+      person = login_as(:aaron)
+      aarons_blog = person.blog
+      quentins_post = @post
+      get :show, :blog_id => aarons_blog, :id => quentins_post
+      response.should be_redirect
+    end
+    
     it "should require the right user to create a blog post" do
       login_as :aaron
       post :create, :blog_id => @blog,
                     :post => { :title => "The post", :body => "The body" }
-      response.should redirect_to(home_url)
+      response.should be_redirect
     end
     
     it "should create the right blog post associations" do

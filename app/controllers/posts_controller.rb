@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   
   before_filter :login_required
   before_filter :get_instance_vars
+  before_filter :check_blog_mismatch, :only => :show
   before_filter :authorize_new, :only => [:create, :new]
   before_filter :authorize_change, :only => [:edit, :update]
   before_filter :authorize_destroy, :only => :destroy
@@ -89,6 +90,10 @@ class PostsController < ApplicationController
         @blog = Blog.find(params[:blog_id])
         @body = "blog"
       end
+    end
+    
+    def check_blog_mismatch
+      redirect_to home_url unless @post.blog == @blog
     end
 
     # Verify the person is authorized to create a post.

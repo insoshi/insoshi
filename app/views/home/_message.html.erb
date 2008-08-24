@@ -1,12 +1,18 @@
 <li>
   <div class="profile-image">
     <%= image_link message.sender %>
+    <%- if not message.read? and not current_person?(message.sender) -%>
+      <%= image_tag("icons/email.gif", :class => "icon") %>
+    <%- elsif message.replied_to? -%>
+      <%= image_tag("icons/reply.gif", :class => "icon" )  %>
+    <%- end -%>    
   </div>
   <p><span class="field">From:</span> <%= person_link message.sender %></p>
   <p class="meta published">
     <%= time_ago_in_words message.created_at %> ago
   </p>
   <p title="Subject">
-    <%= link_to sanitize(truncate(message.subject, 30)), message %>
+    <%= link_to sanitize(truncate(message.subject, 30)),
+                message_path(message, :anchor => message_anchor(message)) %>
   </p>
 </li>

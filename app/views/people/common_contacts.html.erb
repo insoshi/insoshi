@@ -1,12 +1,12 @@
 <%- column_div :type => :primary do -%>
 <h2>Common contacts with <%= @person.name %></h2>
-<% unless @common_connections.empty? -%>
-  <%- common_contacts = @common_connections.map(&:contact) -%>
-  <%= will_paginate(@common_connections) %>
+<% unless @common_contacts.empty? -%>
+  <%= will_paginate(@common_contacts) %>
   <ul class="list people">
-    <%= render :partial => 'people/person', :collection => common_contacts %>
+    <%= render :partial => 'people/person',
+               :collection => @common_contacts %>
   </ul>
-  <%= will_paginate(@common_connections) %>
+  <%= will_paginate(@common_contacts) %>
 <% else %>
   <h2>No contacts in common</h2>
 <% end -%>

@@ -36,11 +36,13 @@ class Person < ActiveRecord::Base
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications,
                   :blog_comment_notifications
-  acts_as_ferret :fields => [ :name, :description ] if search?
-
-  MAX_EMAIL = MAX_PASSWORD = SMALL_STRING_LENGTH
-  MAX_NAME = SMALL_STRING_LENGTH
-  MAX_DESCRIPTION = MAX_TEXT_LENGTH
+  # Indexed fields for Sphinx
+  is_indexed :fields => [ 'name', 'description', 'deactivated',
+                          'email_verified'],
+             :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
+  MAX_EMAIL = MAX_PASSWORD = 40
+  MAX_NAME = 40
+  MAX_DESCRIPTION = 5000
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
   TRASH_TIME_AGO = 1.month.ago
   SEARCH_LIMIT = 20
@@ -52,7 +54,7 @@ class Person < ActiveRecord::Base
   FEED_SIZE = 10
   MAX_DEFAULT_CONTACTS = 12
   TIME_AGO_FOR_MOSTLY_ACTIVE = 1.month.ago
-  # These constants should be methods, but I couldn't figure out  how to use
+  # These constants should be methods, but I couldn't figure out how to use
   # methods in the has_many associations.  I hope you can do better.
   ACCEPTED_AND_ACTIVE =  [%(status = ? AND
                             deactivated = ? AND
@@ -84,8 +86,7 @@ class Person < ActiveRecord::Base
   end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE,
-                                            :dependent => :destroy
+                                            :limit => FEED_SIZE
   has_many :page_views, :order => 'created_at DESC'
   
   has_many :galleries
@@ -114,6 +115,7 @@ class Person < ActiveRecord::Base
 
   before_update :set_old_description
   after_update :log_activity_description_changed
+  before_destroy :destroy_activities, :destroy_feeds
 
   class << self
 
@@ -137,21 +139,6 @@ class Person < ActiveRecord::Base
       find(:all, :conditions => conditions_for_active)
     end
     
-    # People search.
-    def search(options = {})
-      query = options[:q]
-      return [].paginate if query.blank? or query == "*"
-      if options[:all]
-        results = find_by_contents(query)
-      else
-        conditions = conditions_for_active
-        results = find_by_contents(query, {}, :conditions => conditions)
-      end
-      # This is inefficient.  We'll fix it when we move to Sphinx.
-      results[0...SEARCH_LIMIT].paginate(:page => options[:page],
-                                         :per_page => SEARCH_PER_PAGE)
-    end
-
     def find_recent
       find(:all, :order => "people.created_at DESC",
                  :include => :photos, :limit => NUM_RECENT)
@@ -372,19 +359,20 @@ class Person < ActiveRecord::Base
   end
 
   # Return the common connections with the given person.
-  def common_connections_with(person, page = 1)
-    sql = %(SELECT connections.*, COUNT(contact_id) FROM `connections`
+  def common_contacts_with(contact, page = 1)
+    sql = %(SELECT DISTINCT contact_id FROM connections
             INNER JOIN people contact ON connections.contact_id = contact.id
             WHERE ((person_id = ? OR person_id = ?)
                    AND status = ? AND
                    contact.deactivated = ? AND
                    (contact.email_verified IS NULL
-                    OR contact.email_verified = ?))
-            GROUP BY contact_id
-            HAVING count(contact_id) = 2)
-    conditions = [sql, id, person.id, Connection::ACCEPTED, false, true]
+                    OR contact.email_verified = ?)))
+    conditions = [sql, id, contact.id, Connection::ACCEPTED, false, true]
     opts = { :page => page, :per_page => RASTER_PER_PAGE }
-    @common_connections ||= Connection.paginate_by_sql(conditions, opts)
+    connections = 
+    @common_contacts ||= Person.find(Connection.
+                                     paginate_by_sql(conditions, opts).
+                                     map(&:contact_id)).paginate
   end
   
   protected
@@ -419,6 +407,15 @@ class Person < ActiveRecord::Base
       unless @old_description == description or description.blank?
         add_activities(:item => self, :person => self)
       end
+    end
+    
+    # Clear out all activities associated with this person.
+    def destroy_activities
+      Activity.find_all_by_person_id(self).each {|a| a.destroy}
+    end
+    
+    def destroy_feeds
+      Feed.find_all_by_person_id(self).each {|f| f.destroy}
     end
 
     # Connect new users to "Tom".

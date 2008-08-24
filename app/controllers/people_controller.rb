@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
   
-  skip_before_filter :require_activation, :only => :verify
+  skip_before_filter :require_activation, :only => :verify_email
   skip_before_filter :admin_warning, :only => [ :show, :update ]
   before_filter :login_required, :only => [ :show, :edit, :update ]
   before_filter :correct_user_required, :only => [ :edit, :update ]
@@ -16,7 +16,7 @@ class PeopleController < ApplicationController
   end
   
   def show
-    @person = Person.find(params[:id], :include => :activities)
+    @person = Person.find(params[:id])
     unless @person.active? or current_person.admin?
       flash[:error] = "That person is not active"
       redirect_to home_url and return
@@ -24,9 +24,9 @@ class PeopleController < ApplicationController
     @people = @contacts = @person.contacts.paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
     if logged_in?
       @some_contacts = @person.some_contacts
-      @common_connections = current_person.common_connections_with(@person)
+      @common_contacts = current_person.common_contacts_with(@person)
       # gives us the same max number as in basic contacts list to show on the Profile
-      @some_common_connections = @common_connections[(0...Person::MAX_DEFAULT_CONTACTS)]
+      @some_common_connections = @common_contacts[(0...Person::MAX_DEFAULT_CONTACTS)]
       @blog = @person.blog
       @posts = @person.blog.posts.paginate(:page => params[:page])
       @galleries = @person.galleries.paginate(:page => params[:page])
@@ -50,11 +50,12 @@ class PeopleController < ApplicationController
     @person = Person.new(params[:person])
     respond_to do |format|
       @person.email_verified = false if global_prefs.email_verifications?
-      if @person.save
+      @person.save
+      if @person.errors.empty?
         if global_prefs.email_verifications?
           @person.email_verifications.create
-          flash[:notice] = %(Thanks for signing up! A verification email has 
-                             been sent to #{@person.email}.)
+          flash[:notice] = %(Thanks for signing up! Check your email
+                             to activate your account.)
           format.html { redirect_to(home_url) }
         else
           self.current_person = @person
@@ -71,7 +72,7 @@ class PeopleController < ApplicationController
     redirect_to home_url
   end
 
-  def verify
+  def verify_email
     verification = EmailVerification.find_by_code(params[:id])
     if verification.nil?
       flash[:error] = "Invalid email verification code"
@@ -125,7 +126,7 @@ class PeopleController < ApplicationController
   
   def common_contacts
     @person = Person.find(params[:id])
-    @common_connections = @person.common_connections_with(current_person,
+    @common_contacts = @person.common_contacts_with(current_person,
                                                           params[:page])
     respond_to do |format|
       format.html

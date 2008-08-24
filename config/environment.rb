@@ -5,10 +5,11 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.0.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+require 'rails_generator/secret_key_generator'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -40,9 +41,16 @@ Rails::Initializer.run do |config|
   # If you change this key, all old sessions will become invalid!
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
+  secret_file = File.join(RAILS_ROOT, "secret")
+  if File.exist?(secret_file)
+    secret = File.read(secret_file)
+  else
+    secret = Rails::SecretKeyGenerator.new("insoshi").generate_secret
+    File.open(secret_file, 'w') { |f| f.write(secret) }
+  end
   config.action_controller.session = {
     :session_key => '_instant_social_session',
-    :secret      => '63143b62852716dbfd7998e4545370e91baf63e9bc878cbbaaea1fd03e79fd3ff91dc2e8d7b9f637c89d872d3ae536ea09e21e8237de8bb9ef87d9f2168c2327'
+    :secret      => secret
   }
 
   # Use the database for sessions instead of the cookie-based default,
@@ -60,14 +68,41 @@ Rails::Initializer.run do |config|
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
+  
+  # Custom gem requirements
+  # config.gem 'mislav-will_paginate', :version => '~> 2.3.2',
+  #                                    :lib => 'will_paginate',
+  #                                    :source => 'http://gems.github.com'
+  config.gem 'chronic'
 end
+<<<<<<< HEAD:config/environment.rb
 
 require 'bluecloth'
 require 'vendor/plugins/jquery_ui_rails_helpers/helpers/tabs_renderer'
 
+=======
+>>>>>>> master:config/environment.rb
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation
 # and will lead to runtime errors with image_science
 #
 # The directory /tmp/ruby.[USER] is used instead
 ENV['INLINEDIR']="/tmp/ruby.#{ENV['USER']}" unless ENV['OS'] =~ /Windows/
+
+# For the sake of rawk profiling.
+# Rails > 2.0 uses BufferedLogger, not Logger as in Rails 1.2.
+module ActiveSupport
+  class BufferedLogger
+    def add(severity, message = nil, progname = nil, &block)
+      return if @level > severity
+      message = (message || (block && block.call) || progname).to_s
+      # If a newline is necessary then create a new message ending with a newline.
+      # Ensures that the original message is not mutated.
+      message = "#{message} (pid:#{$$})"
+      message = "#{message}\n" unless message[-1] == ?\n
+      @buffer << message
+      auto_flush
+      message
+    end
+  end
+end

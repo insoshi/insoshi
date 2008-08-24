@@ -1,0 +1,115 @@
+#
+# This file configures the NewRelic RPM Agent, NewRelic RPM monitors Rails 
+# applications with deep visibility and low overhead.  For more information, 
+# visit www.newrelic.com.
+#
+# 
+#
+# here are the settings that are common to all environments
+common: &default_settings
+  # ============================== LICENSE KEY ===============================
+  # You must specify the licence key associated with your New Relic account.
+  # This key binds your Agent's data to your account in the New Relic RPM service.
+  license_key: 'PASTE_YOUR_KEY_HERE'
+
+  # the 'enabled' setting is used to turn on the NewRelic Agent.  When false,
+  # your application is not instrumented and the Agent does not start up or
+  # collect any data; it is a complete shut-off.
+  #
+  # when turned on, the agent collects performance data by inserting lightweight
+  # tracers on key methods inside the rails framework and asynchronously aggregating
+  # and reporting this performance data to the NewRelic RPM service at NewRelic.com.
+  # below.
+  enabled: false
+
+  # The newrelic agent generates its own log file to keep its logging information
+  # separate from that of your application.  Specify its log level here.
+  log_level: info
+  
+  # The newrelic agent communicates with the RPM service via http by default.
+  # If you want to communicate via https to increase security, then turn on
+  # SSL by setting this value to true.  Note, this will result in increased
+  # CPU overhead to perform the encryption involved in SSL communication, but this
+  # work is done asynchronously to the threads that process your application code, so
+  # it should not impact response times.
+  ssl: false
+  
+
+  # Proxy settings for connecting to the RPM server.
+  #
+  # If a proxy is used, the host setting is required.  Other settings are optional.  Default
+  # port is 8080.
+  #
+  # proxy_host: proxy.sample.com
+  # proxy_port: 8080
+  # proxy_user:
+  # proxy_pass:
+
+  
+  # Transaction tracer is a EARLY ACCESS feature that captures deep information about slow
+  # transactions and sends this to the RPM service once a minute. Included in the
+  # transaction is the exact call sequence of the transactions including any SQL statements
+  # issued.
+  #
+  # Because this feature is EARLY ACCESS, only accounts that have been approved for
+  # early access features by New Relic will have this capability enabled
+  transaction_tracer:
+  
+    # The default for transaction tracer is false due to the sensitive nature of the SQL
+    # data we send to the RPM service. Get comfortable with the SQL obfuscator in development
+    # mode before enabling transaction tracer.
+    enabled: false
+  
+    # When transaction tracer is on, only report the slowest trace every minute to RPM
+    # if the trace is slower than this value
+    transaction_threshold: 2.0
+ 
+    # When transaction tracer is on, SQL statements can optionally be recorded. The recorder
+    # has three modes, "off" which sends no SQL, "raw" which sends the SQL statement in its 
+    # original form, and "obfuscated", which strips out numeric and string literals
+    record_sql: obfuscated
+    
+    # When transaction tracer is on, should show SQL statements be EXPLAINED
+    explain_enabled: true
+
+    # When EXPLAIN is enabled, only run it for SQL statements slower than this value 
+    explain_threshold: 0.50
+    
+
+# override default settings based on your application's environment
+
+# NOTE if your application has other named environments, you should
+# provide newrelic conifguration settings for these enviromnents here.
+
+development:
+  <<: *default_settings
+  # turn off communication to RPM service in development mode.
+  # NOTE: for initial evaluation purposes, you may want to temporarily turn
+  # the agent on in development mode.
+  enabled: false
+
+  # When running in Developer Mode, the New Relic Agent will present 
+  # performance information on the last 100 transactions you have 
+  # executed since starting the mongrel.  to view this data, go to 
+  # http://localhost:3000/newrelic
+  developer: true
+
+test:
+  <<: *default_settings
+  # it almost never makes sense to turn on the agent when running unit, functional or
+  # integration tests or the like.
+  enabled: false
+
+# Turn on the agent in production for 24x7 monitoring.  NewRelic testing shows
+# an average performance impact of < 5 ms per transaction, you you can leave this on
+# all the time without incurring any user-visible performance degredation.
+production:
+  <<: *default_settings
+  enabled: true
+
+# many applications have a staging environment which behaves identically to production.
+# Support for that environment is provided here.  By default, the staging environment has
+# the agent turned on.
+staging:
+  <<: *default_settings
+  enabled: true

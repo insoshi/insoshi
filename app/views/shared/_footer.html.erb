@@ -3,4 +3,10 @@
     <a href="/">Dashboard</a> | <a href="/messages">My Messages</a> | <a href="/people">People</a> | <a href="/forums">Forum</a>
   </p>
   <p class="powered_by"><a href="http://insoshi.com/">Powered by Insoshi</a></p>
+
+  <%- unless test? -%>
+    <%# A tracker to tell us about the activity of Insoshi installs %>
+    <img src="http://stats.insoshi.com/<%= @tracker_id %>?env=<%= @env %>" 
+         alt="" width="1" height="1" />
+  <%- end -%>
 </div>

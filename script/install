@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+# Create some files and directories so they won't be created as root.
+# This doesn't do the actual installation, since that needs to be done as root.
+puts "Creating empty files.  Please ignore permissions error messages."
+system("rake gems:install")
+# Install the gem dependencies (if any).
+system("sudo rake gems:install")
+# Run the main install task.
+system("rake install")

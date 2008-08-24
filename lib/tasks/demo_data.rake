@@ -18,8 +18,6 @@ namespace :db do
     desc "Remove demo data" 
     task :remove => :environment do |t|
       Rake::Task["db:migrate:reset"].invoke
-      # Blow away the Ferret index.
-      system("rm -rf index/")
       # Remove images to avoid accumulation.
       system("rm -rf public/photos")
     end

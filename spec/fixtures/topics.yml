@@ -3,11 +3,11 @@
 one:
   forum: one
   person: quentin
-  name: 1
+  name: foobar
   forum_posts_count: 1
 
 two:
   forum: one
   person: quentin
-  name: 1
+  name: bazquux
   forum_posts_count: 1

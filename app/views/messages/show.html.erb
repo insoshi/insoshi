@@ -1,16 +1,23 @@
 <%- column_div :type => :primary do -%>
   <% if current_person?(@message.sender) %>
+<<<<<<< HEAD:app/views/messages/show.html.erb
     <% other_person = @message.recipient %>
     <% heading = "Sent to " %>
   <% else %>
     <% other_person = @message.sender %>
     <% heading = "Sent by " %>
+=======
+    <% heading = "Message sent to #{h @message.recipient.name}" %>
+  <% else %>
+    <% heading = "Message from #{h @message.sender.name}" %>
+>>>>>>> master:app/views/messages/show.html.erb
   <% end %>
   
   <h2><%= @message.subject %></h2>
 
   <%= render :partial => 'message_nav' %>
   
+<<<<<<< HEAD:app/views/messages/show.html.erb
   <%= display @message.content %>
   <p class="meta tools">
     <%= heading + person_link(other_person) -%> <%= time_ago_in_words @message.created_at %> ago
@@ -28,6 +35,15 @@
                              :method => :put %>
     <% end -%>    
   </p>
+=======
+  <h3 class="subject"><%= sanitize @message.subject %></h3>
+  <ul class="list person">
+    <% all_messages =  @message.conversation.messages %>
+    <%= render :partial => 'full_message',
+               :collection => all_messages,
+               :locals => { :n_messages => all_messages.length } %>
+  </ul>
+>>>>>>> master:app/views/messages/show.html.erb
 
 <%- end -%>
 

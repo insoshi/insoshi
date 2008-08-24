@@ -1,4 +1,8 @@
 class CreateForums < ActiveRecord::Migration
+  
+  class Forum < ActiveRecord::Base
+  end
+  
   def self.up
     create_table :forums do |t|
       t.string :name

@@ -17,5 +17,13 @@
           <%= submit_tag "Submit", :class => "button" %>
         </div>
       <% end %>
+    <%- else -%>
+      <p>
+      You must be connected to <%= h @person.name %> to leave a wall comment.
+      </p>
+      <p>
+      <%= link_to "Connect with #{h @person.name} now",
+                  person_connections_path(@person), :method => :post %>
+      </p>
     <%- end -%>
 <%- end -%>

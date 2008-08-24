@@ -1,8 +1,87 @@
+<<<<<<< HEAD:app/views/people/show.html.erb
 <div>
 <% tabs = TabsRenderer.new(self, :id => "tabCol") %>
 <% tabs.create('tProfile', 'Profile', :class => "profile vcard") do %>
   <%= render :partial => 'profile' %>
 <% end %>
+=======
+<%- column_div :type => :primary do -%>
+  <div class="profile vcard">
+    <h2>Profile: <span class="fn n"><%= h @person.name %></span></h2>
+    <%- if admin? and not @person.active? -%>
+      <p class="error">This person is not active</p>
+    <%- end -%>
+    <%- if current_person?(@person) -%>
+      <%- if current_person.description.blank? -%>
+        <div class="error">
+          Your description is blank.
+          <%= link_to "Click here to add a description",
+                      edit_person_path(@person) %>
+        </div>
+      <%- else -%>
+        <div class="notice">
+          You are viewing your own profile.
+          <%= link_to "Click here to edit it", edit_person_path(@person) %>
+        </div>
+      <%- end -%>
+    <%- end -%>
+    <div class="toolbox">
+      <%= image_tag @person.main_photo, :class => "profile-image photo",
+                                        :alt => h(@person.name) %>
+
+      <%- unless current_person?(@person) -%>
+        <ul class="tools">
+         <%- if logged_in? -%>
+          <%- unless Connection.exists?(@person, current_person) -%>
+            <li>
+            <%= link_to "Connect with #{h @person.name}!",
+                        person_connections_path(@person), :method => :post %>
+            </li>
+          <%- end -%>
+          <%- if Connection.connected?(@person, current_person) -%>
+          <li>
+            <%= h @person.name %> is one of your contacts
+            <br />
+           (<%= link_to "end connection", 
+               connection_path(Connection.conn(current_person, @person)), 
+               :method => :delete,
+               :confirm => 
+         "Are you sure you want to end connection with #{h @person.name}?" %>)
+          
+          </li>
+          <%- end -%>
+          <%- if Connection.pending?(current_person, @person) -%>
+          <li>
+            <%= h @person.name %> has contacted you
+            <br />
+            (<%= link_to "respond to contact request", 
+                         edit_connection_path(Connection.conn(current_person,
+                                                              @person)) %>)
+          </li>
+          <%- end -%>
+          <%- if Connection.pending?(@person, current_person) -%>
+          <li>
+            You've contacted <%= h @person.name %>
+          </li>
+          <%- end -%>          
+          <li><%= email_link @person %></li>
+        <%- end -%>
+          <li><%= link_to "#{h @person.name}'s blog",
+                  blog_path(@person.blog) %></li>
+          <%- if current_person.admin? -%>
+          <li>
+          <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
+          <%= link_to activity, 
+                      admin_person_path(@person, :task => "deactivated"),
+                      :method => :put %>
+          </li>
+          <%- end -%>
+        </ul>
+      <%- end -%>
+    </div>
+    <%= display @person.description %>
+  </div>
+>>>>>>> master:app/views/people/show.html.erb
 
 <% tabs.create('tRecentActivity', 'Recent Activity') do %>
   <%= render :partial => 'recent_activity' %>
@@ -12,6 +91,7 @@
   <%= render :partial => 'profile_contacts' %>
 <% end %>
 
+<<<<<<< HEAD:app/views/people/show.html.erb
 <% tabs.create('tBlog', 'Blog') do %>
   <%= render :partial => 'shared/blog' %>
 <% end %>
@@ -19,6 +99,16 @@
 <% tabs.create('tWall', 'Wall') do %>
   <%= render :partial => 'wall' %>
 <% end %>
+=======
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+  <%- unless current_person?(@person) -%>
+    <%= render :partial => 'shared/contacts_preview',
+               :locals => { :person => @person } %>
+    <%= render :partial => 'common_contacts' %>
+  <%- end -%>
+<%- end -%>
+>>>>>>> master:app/views/people/show.html.erb
 
 <% tabs.create('tGalleries', 'Galleries') do %>
   <%= render :partial => "shared/galleries",

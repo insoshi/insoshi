@@ -11,7 +11,7 @@ describe "/people/show.html.erb" do
     assigns[:posts] = @person.blog.posts.paginate(:page => 1)
     assigns[:galleries] = @person.galleries.paginate(:page => 1)
     assigns[:some_contacts] = @person.some_contacts
-    assigns[:common_connections] = []
+    assigns[:common_contacts] = []
     render "/people/show.html.erb"
   end
 
@@ -19,8 +19,12 @@ describe "/people/show.html.erb" do
     response.should have_tag("h2", /#{@person.name}/)
   end
   
-  it "should have a description rendered by Markdown" do
-    response.should have_tag("em", "bar")
-  end
- 
+  it "should have a Markdown-ed description if BlueCloth is present" do
+    begin
+      BlueCloth.new("used to raise an exeption")
+      response.should have_tag("em", "bar")
+    rescue NameError
+      nil
+    end
+  end 
 end

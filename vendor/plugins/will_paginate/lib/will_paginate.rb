@@ -20,6 +20,10 @@ module WillPaginate
       return if ActionView::Base.instance_methods.include? 'will_paginate'
       require 'will_paginate/view_helpers'
       ActionView::Base.class_eval { include ViewHelpers }
+
+      if defined?(ActionController::Base) and ActionController::Base.respond_to? :rescue_responses
+        ActionController::Base.rescue_responses['WillPaginate::InvalidPage'] = :not_found
+      end
     end
     
     # mixes in WillPaginate::Finder in ActiveRecord::Base and classes that deal
@@ -29,19 +33,36 @@ module WillPaginate
       require 'will_paginate/finder'
       ActiveRecord::Base.class_eval { include Finder }
 
-      associations = ActiveRecord::Associations
-      collection = associations::AssociationCollection
-      
-      # to support paginating finders on associations, we have to mix in the
-      # method_missing magic from WillPaginate::Finder::ClassMethods to AssociationProxy
-      # subclasses, but in a different way for Rails 1.2.x and 2.0
-      (collection.instance_methods.include?(:create!) ?
-        collection : collection.subclasses.map(&:constantize)
-      ).push(associations::HasManyThroughAssociation).each do |klass|
+      # support pagination on associations
+      a = ActiveRecord::Associations
+      returning([ a::AssociationCollection ]) { |classes|
+        # detect http://dev.rubyonrails.org/changeset/9230
+        unless a::HasManyThroughAssociation.superclass == a::HasManyAssociation
+          classes << a::HasManyThroughAssociation
+        end
+      }.each do |klass|
         klass.class_eval do
           include Finder::ClassMethods
           alias_method_chain :method_missing, :paginate
         end
+      end
+    end
+
+    # Enable named_scope, a feature of Rails 2.1, even if you have older Rails
+    # (tested on Rails 2.0.2 and 1.2.6).
+    #
+    # You can pass +false+ for +patch+ parameter to skip monkeypatching
+    # *associations*. Use this if you feel that <tt>named_scope</tt> broke
+    # has_many, has_many :through or has_and_belongs_to_many associations in
+    # your app. By passing +false+, you can still use <tt>named_scope</tt> in
+    # your models, but not through associations.
+    def enable_named_scope(patch = true)
+      return if defined? ActiveRecord::NamedScope
+      require 'will_paginate/named_scope'
+      require 'will_paginate/named_scope_patch' if patch
+
+      ActiveRecord::Base.class_eval do
+        include WillPaginate::NamedScope
       end
     end
   end
@@ -50,7 +71,7 @@ module WillPaginate
     extend ActiveSupport::Deprecation
 
     def self.warn(message, callstack = caller)
-      message = 'WillPaginate: ' + message.strip.gsub(/ {3,}/, ' ')
+      message = 'WillPaginate: ' + message.strip.gsub(/\s+/, ' ')
       behavior.call(message, callstack) if behavior && !silenced?
     end
 
@@ -58,4 +79,8 @@ module WillPaginate
       ActiveSupport::Deprecation.silenced?
     end
   end
+end
+
+if defined?(Rails) and defined?(ActiveRecord) and defined?(ActionController)
+  WillPaginate.enable
 end

@@ -1,9 +1,8 @@
 <% msg_class = (message.eql?(@messages.last())) ? 'message last' : 'message' %>
 <li class="<%= msg_class -%>">
   <div class="profile-image">
-    <% other_person = current_person?(message.sender) ?
-                      message.recipient : message.sender %>
-    <%= image_link other_person, :image => :thumbnail,
+    <%= image_link message.other_person(current_person),
+                   :image => :thumbnail,
                    :image_options => { :class => "photo" } %>
   </div>
   <p>
@@ -23,12 +22,25 @@
       <span class="label">From:</span>
       <%= person_link message.sender, :class => "url fn" %>
     <%- end -%>
+<<<<<<< HEAD:app/views/messages/_message.html.erb
 <br />
   <span class="tools meta">
   Sent <%= time_ago_in_words message.created_at %> ago 
     <%= link_to(image_tag("icons/email_go.png", :class => 'actioner'), 
                       reply_message_path(message),
              :title => "Reply to this message") %>
+=======
+    <span class="meta"><%= time_ago_in_words message.created_at %> ago</span>
+  </p>
+  <p>
+    <span class="label">Subject:</span>
+    <%= link_to sanitize(message.subject),
+                message_path(message, :anchor => message_anchor(message)) %>
+  </p>
+  <p class="tools meta">
+    <%= link_to "Read", message %> |
+    <%= link_to "Reply", reply_message_path(message) %> |
+>>>>>>> master:app/views/messages/_message.html.erb
     <% unless message.trashed?(current_person) -%>
       <%= link_to(image_tag("icons/email_delete.png", :class => 'actioner'), 
                         message_path(message), 
@@ -36,7 +48,7 @@
                         :confirm => %(Delete this message?),
              :title => "Delete this message") %>
     <% else -%>
-      <%= link_to "Untrash", undestroy_message_path(message), 
+      <%= link_to "Untrash", undestroy_message_path(message),
                              :method => :put %>
     <% end -%>    
   </span>
