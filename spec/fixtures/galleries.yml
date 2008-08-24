@@ -13,6 +13,8 @@ valid_gallery:
     
 aarons_gallery:
     person: aaron
+    title: "Another title"
+    description: "Another description"
 
 invalid_gallery:
     person_id: NULL
