@@ -1,7 +1,7 @@
 module ActivitiesHelper
 
   # Given an activity, return a message for the feed for the activity's class.
-  def feed_message(activity, recent)
+  def feed_message(activity, recent = nil)
     person = activity.person
     case activity_type(activity)
     when "BlogPost"
