@@ -50,6 +50,8 @@ describe Event do
     it "should allow people to attend" do
       @event.attend(@person)                                   
       @event.attendees.should include(@person)
+      @event.reload
+      @event.event_attendees_count.should be(1)
     end
 
     it 'should not allow people to attend twice' do
