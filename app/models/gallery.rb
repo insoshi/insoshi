@@ -1,4 +1,5 @@
 # == Schema Information
+# Schema version: 28
 # Schema version: 17
 #
 # Table name: galleries

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 17
+# Schema version: 28
 #
 # Table name: photos
 #
@@ -13,10 +13,6 @@
 #  width        :integer(11)     
 #  height       :integer(11)     
 #  primary      :boolean(1)      
-#  avatar       :boolean(1)      
-#  gallery_id   :integer(11)     
-#  title        :string(255)     
-#  position     :integer(11)     
 #  created_at   :datetime        
 #  updated_at   :datetime        
 #

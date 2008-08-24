@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 17
+# Schema version: 28
 #
 # Table name: preferences
 #
@@ -8,15 +8,13 @@
 #  smtp_server         :string(255)     default(""), not null
 #  email_notifications :boolean(1)      not null
 #  email_verifications :boolean(1)      not null
+#  created_at          :datetime        
+#  updated_at          :datetime        
 #  analytics           :text            
 #  server_name         :string(255)     
 #  app_name            :string(255)     
 #  about               :text            
 #  demo                :boolean(1)      
-#  sidebar_title       :string(255)     
-#  sidebar_body        :text            
-#  created_at          :datetime        
-#  updated_at          :datetime        
 #
 
 class Preference < ActiveRecord::Base
