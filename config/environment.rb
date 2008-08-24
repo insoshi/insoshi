@@ -75,13 +75,9 @@ Rails::Initializer.run do |config|
   #                                    :source => 'http://gems.github.com'
   config.gem 'chronic'
 end
-<<<<<<< HEAD:config/environment.rb
 
-require 'bluecloth'
 require 'vendor/plugins/jquery_ui_rails_helpers/helpers/tabs_renderer'
 
-=======
->>>>>>> master:config/environment.rb
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation
 # and will lead to runtime errors with image_science

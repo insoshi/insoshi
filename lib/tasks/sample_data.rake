@@ -55,18 +55,13 @@ def create_people
                               :password_confirmation => password,
                               :name => full_name,
                               :description => @lipsum)
-<<<<<<< HEAD:lib/tasks/sample_data.rake
+      person.last_logged_in_at = Time.now
+      person.save
       gallery = Gallery.create!(:person => person, :title => 'Primary', :description => 'My first Insoshi gallery')
       photo = uploaded_file(photos[i], 'image/jpg')
       puts 'Photo: ' + photos[i]
       Photo.create!(:uploaded_data => photo,
                     :person => person, :primary => true, :avatar => true, :gallery => gallery)
-=======
-      person.last_logged_in_at = Time.now
-      person.save
-      Photo.create!(:uploaded_data => uploaded_file(photos[i], 'image/jpg'),
-                    :person => person, :primary => true)
->>>>>>> master:lib/tasks/sample_data.rake
     end
   end
 end
