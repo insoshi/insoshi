@@ -2,12 +2,12 @@
     <h2>Common Contacts</h2>
     <ul class="grid contacts medium">
       <%- @some_common_connections.each do |connection| -%>
-		<%= render :partial => 'shared/contact_medium', :locals => {:contact => connection.contact} %>
+    <%= render :partial => 'shared/contact_medium', :locals => {:contact => connection.contact} %>
       <%- end -%>
-	  <%- if @common_connections.length > Person::MAX_DEFAULT_CONTACTS -%>
+    <%- if @common_connections.length > Person::MAX_DEFAULT_CONTACTS -%>
         <li class="more">
           <%= link_to "See all &raquo;", common_contacts_person_path(@person) %>
         </li>
-	  <%- end -%>
+    <%- end -%>
     </ul>
 <%- end -%>

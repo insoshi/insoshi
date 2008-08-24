@@ -4,19 +4,19 @@
     <%= display forum_post.body %>
   </div>
   <p class="meta">
-	Posted by <span class="author"><%= person_link_with_image forum_post.person %></span> 
+  Posted by <span class="author"><%= person_link_with_image forum_post.person %></span> 
       <abbr class="updated" title="<%= forum_post.created_at %>"><%= time_ago_in_words(forum_post.created_at) %> ago</abbr>
       <%- if current_person?(forum_post.person) or admin? -%>
         <%= link_to image_tag("icons/note_edit.png", :class => 'actioner'),
                 edit_forum_topic_post_path(@forum, @topic, forum_post),
- 				:title => 'Edit' %>
+         :title => 'Edit' %>
       <%- end -%>
       <%- if admin? -%>
         <%= link_to image_tag("icons/comment_delete.png", :class => 'actioner'),
                       forum_topic_post_path(@forum, @topic, forum_post),
                       :confirm => 'Delete comment?',
                       :method => :delete,
-	 				  :title => 'Delete' %>
+             :title => 'Delete' %>
       <%- end -%>
   </p>
   <div class="clear"></div>

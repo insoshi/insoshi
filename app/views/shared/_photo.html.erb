@@ -1,15 +1,15 @@
 <li>
-	<p class='gallPhotoTitle'>
-	  <%= link_to photo.label, '#gpu' + photo_id(photo), :rel => 'facebox' %>
-	  <div style="display: none;" id="gpu<%= photo_id(photo) -%>"><%= image_tag photo.public_filename -%> <div class="gpuTitle"><%= photo.label -%> </div></div>
-	</p>
-	<div class='gallPhoto'>
-	  <%= image_tag(photo.public_filename(:thumbnail)) %>
-	</div>
-	<div class='gallPhotoMeta'>
+  <p class='gallPhotoTitle'>
+    <%= link_to photo.label, '#gpu' + photo_id(photo), :rel => 'facebox' %>
+    <div style="display: none;" id="gpu<%= photo_id(photo) -%>"><%= image_tag photo.public_filename -%> <div class="gpuTitle"><%= photo.label -%> </div></div>
+  </p>
+  <div class='gallPhoto'>
+    <%= image_tag(photo.public_filename(:thumbnail)) %>
+  </div>
+  <div class='gallPhotoMeta'>
       <%= link_to image_tag("icons/picture_edit.png", :class => 'actioner'), edit_photo_path(photo) %>
       <%= link_to image_tag("icons/picture_delete.png", :class => 'actioner'), photo_path(photo), :method => :delete %>
       <%= link_to image_tag("default_thumbnail.png", :class => 'actioner', :style => 'height: 16px;'), set_avatar_photo_path(photo.id), :method => :put, :title => 'Select as your avatar' %>
       <%= link_to image_tag("icons/photo.png", :class => 'actioner', :style => 'height: 16px;'), set_primary_photo_path(photo.id), :method => :put, :title => 'Select as gallery thumbnail' %>
-	</div>
+  </div>
 </li>

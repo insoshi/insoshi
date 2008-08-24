@@ -25,16 +25,16 @@
     <%- end -%>
 <br />
   <span class="tools meta">
-	Sent <%= time_ago_in_words message.created_at %> ago 
+  Sent <%= time_ago_in_words message.created_at %> ago 
     <%= link_to(image_tag("icons/email_go.png", :class => 'actioner'), 
                       reply_message_path(message),
-	 					:title => "Reply to this message") %>
+             :title => "Reply to this message") %>
     <% unless message.trashed?(current_person) -%>
       <%= link_to(image_tag("icons/email_delete.png", :class => 'actioner'), 
                         message_path(message), 
                         :method => :delete, 
                         :confirm => %(Delete this message?),
-	 					:title => "Delete this message") %>
+             :title => "Delete this message") %>
     <% else -%>
       <%= link_to "Untrash", undestroy_message_path(message), 
                              :method => :put %>

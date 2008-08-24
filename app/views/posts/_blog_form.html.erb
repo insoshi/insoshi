@@ -1,6 +1,6 @@
 <% form_for :post, 
-			:url => url, 
-			:html => { :method => method, :id => "blogpost" }  do |f| %>
+      :url => url, 
+      :html => { :method => method, :id => "blogpost" }  do |f| %>
 
   <div class="form_row">
     <%= f.label :title %>
@@ -8,7 +8,7 @@
   </div>
 
   <div class="form_row">
-	<%= f.label :body, "Post" %>
+  <%= f.label :body, "Post" %>
     <%# f.text_area :body, :rows => 20 %>
     <%= fckeditor_textarea("post", :body, :toolbarSet => 'Basic', :width => '98%', :height => '200px') %>
   </div>

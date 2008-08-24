@@ -8,9 +8,9 @@
     <%= render :partial => 'shared/contacts_grid',
                :locals => { :contacts => @contacts } %>
 
-	<% if @person.connections.count > Person::MAX_DEFAULT_CONTACTS %>
-	  <%= will_paginate @contacts %>
-	<% end %>
+  <% if @person.connections.count > Person::MAX_DEFAULT_CONTACTS %>
+    <%= will_paginate @contacts %>
+  <% end %>
 <% else %>
   <h3>No contacts (yet)</h3>
 <% end -%>

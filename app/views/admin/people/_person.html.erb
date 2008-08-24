@@ -10,8 +10,8 @@
               admin_person_path(person, :task => "admin"),
               :method => :put %>
   <p class="person_meta">
-	  <strong>Forum Posts:</strong> <%= person.forum_posts_count -%> | 
-	  <strong>Blog Posts:</strong> <%= link_to person.blog.posts.count.to_s ||= '0', blog_path(person) -%> |
+    <strong>Forum Posts:</strong> <%= person.forum_posts_count -%> | 
+    <strong>Blog Posts:</strong> <%= link_to person.blog.posts.count.to_s ||= '0', blog_path(person) -%> |
     <strong>Connections:</strong> <%= link_to (person.connections.count-1).to_s, person_connections_path(person) -%>
-	</p>
+  </p>
 </li>

@@ -47,11 +47,11 @@
 
     <div class="form_row">
       <%= f.label :about %>
-	  <%= fckeditor_textarea("preferences", :about, :toolbarSet => 'InsoshiBase', :width => '100%', :height => '200px') %>
+    <%= fckeditor_textarea("preferences", :about, :toolbarSet => 'InsoshiBase', :width => '100%', :height => '200px') %>
 
       <%# f.text_area :about, :rows => 10 %>
     </div>
-	<br />
+  <br />
     
     <div class="form_row">
       <%= f.label :sidebar_title, 'Sidebar Title' %>
@@ -61,7 +61,7 @@
 
     <div class="form_row">
       <%= f.label :sidebar_body %>
-	  <%= fckeditor_textarea("preferences", :sidebar_body, :toolbarSet => 'InsoshiBase', :width => '100%', :height => '200px') %>
+    <%= fckeditor_textarea("preferences", :sidebar_body, :toolbarSet => 'InsoshiBase', :width => '100%', :height => '200px') %>
 
       <%# f.text_area :about, :rows => 10 %>
     </div>
@@ -72,10 +72,10 @@
       <%= f.label :analytics %>
       <%= f.text_area :analytics, :rows => 10 %>
     </div>
-	<p class="meta">Code will be inserted just before the &lt;/body> tag</p>
+  <p class="meta">Code will be inserted just before the &lt;/body> tag</p>
 
     <div class="form_row">
-	  <div class="button"><%= link_to "Cancel", admin_preferences_path %></div>
+    <div class="button"><%= link_to "Cancel", admin_preferences_path %></div>
       <%= f.submit "Update", :class => "button" %>
     </div>
   <% end %>

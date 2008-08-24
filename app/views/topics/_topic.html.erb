@@ -15,13 +15,13 @@
       <%= time_ago_in_words(topic.created_at) %> ago
       <%- if admin? -%>
         <%= link_to image_tag("icons/note_edit.png", :class => 'actioner'),  
-				  edit_forum_topic_path(topic.forum, topic),
-				  :title => 'Edit Topic' %>
-	    <%= link_to image_tag("icons/note_delete.png", :class => 'actioner'), 
-         		  forum_topic_path(topic.forum, topic), 
-         		  :method => :delete,
-         		  :confirm => "Are you sure you want to delete this Topic?",
-				  :title => "Delete Topic" %>
+          edit_forum_topic_path(topic.forum, topic),
+          :title => 'Edit Topic' %>
+      <%= link_to image_tag("icons/note_delete.png", :class => 'actioner'), 
+               forum_topic_path(topic.forum, topic), 
+               :method => :delete,
+               :confirm => "Are you sure you want to delete this Topic?",
+          :title => "Delete Topic" %>
       <%- end -%>
     </p>
   </div>

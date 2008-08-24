@@ -3,18 +3,18 @@
 
   <%- form_for(@gallery) do |f| -%>
     <div class="form_row">
-	  <%= f.label :title %>
+    <%= f.label :title %>
       <%= f.text_field :title%>
-	</div>
+  </div>
 
     <div class="form_row">
-	  <%= f.label :description %>
+    <%= f.label :description %>
       <%= fckeditor_textarea("gallery", :description, :toolbarSet => 'InsoshiBase', :width => '98%', :height => '200px') %>
       <%# f.text_area :description, :rows => 5 %>
-	</div>
+  </div>
 
     <div class="form_row">
       <%= f.submit "Update", :class => 'button' %>
-	</div>
-	<%- end -%>
+  </div>
+  <%- end -%>
 <%- end -%>
