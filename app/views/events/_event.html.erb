@@ -5,8 +5,7 @@
     <%= image_tag "icons/new.gif", :class => "icon", :alt => "Event" %>
   </div>
   <p>
-    <%= link_to h(event.title), event,
-    :class => "show-follow" %>
+    <%= link_to h(event.title), event, :class => "show-follow" %>
     Starts at: <%= event.start_time.to_s :short %>
     <% unless event.end_time.nil? -%>
     / Ends at: <%= event.end_time.to_s :short %>

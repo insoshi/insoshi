@@ -3,3 +3,12 @@
   <%= render :partial => @event %>
 <ul>
 <% end -%>
+
+<% column_div :type => :secondary do -%>
+  <%= render :partial => 'calendar',
+             :locals => { :events => @month_events, :date => @date } %>
+
+  <h2>Add new event</h2>
+  <%= link_to "Click here", new_event_path %>
+<% end -%>
+

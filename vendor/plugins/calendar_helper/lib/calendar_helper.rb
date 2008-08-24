@@ -105,7 +105,14 @@ module CalendarHelper
     else
       colspan=7
     end
-    cal << %(<th colspan="#{colspan}" class="#{options[:month_name_class]}">#{Date::MONTHNAMES[options[:month]]}</th>)
+    cal << %(<th colspan="#{colspan}" class="#{options[:month_name_class]}">)
+    logger.debug "URL #{options[:month_url]}"
+    unless options[:month_url]
+      cal << "#{Date::MONTHNAMES[options[:month]]}"
+    else
+      cal << %(<a href="#{options[:month_url]}">#{Date::MONTHNAMES[options[:month]]}</a>)
+    end
+    cal << %(</th>)
     cal << %(<th colspan="2">#{options[:next_month_text]}</th>) if options[:next_month_text]
     cal << %(</tr><tr class="#{options[:day_name_class]}">)
     day_names.each do |d|

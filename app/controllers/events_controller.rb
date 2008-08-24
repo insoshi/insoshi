@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 class EventsController < ApplicationController
 
-  before_filter :login_required, :except => :index
+  before_filter :login_required
   before_filter :load_date, :only => :index
   
   def index
+    @month_events = Event.monthly_events(@date).person_events(current_person)
     unless filter_by_day?
-      @events = Event.monthly_events(@date).user_events(current_person)
+      @events = @month_events
     else
-      @events = Event.daily_events(@date).user_events(current_person)
+      @events = Event.daily_events(@date).person_events(current_person)
     end
     
     respond_to do |format|
@@ -19,6 +20,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @date = @event.start_time.to_date
+    @month_events = Event.monthly_events(@date).person_events(current_person)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -106,12 +109,6 @@ class EventsController < ApplicationController
 
   end
 
-  helper_method :filter_by_day?
-
-  def filter_by_day?
-    !params[:day].nil?
-  end
-
   private
   def check_owner
     redirect_to home_url unless current_person?(@event.person)
@@ -126,4 +123,9 @@ class EventsController < ApplicationController
   rescue ArgumentError
     @date = Time.now.to_date
   end
+
+  def filter_by_day?
+    !params[:day].nil?
+  end
+
 end

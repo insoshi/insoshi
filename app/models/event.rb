@@ -1,23 +1,36 @@
 class Event < ActiveRecord::Base
 
   MAX_DESCRIPTION_LENGTH = MAX_STRING_LENGTH
-  MAX_TITLE_LENGTH = MAX_STRING_LENGTH
+  MAX_TITLE_LENGTH = 40
+  PRIVACY = { :public => 1, :friends => 2 }
 
   belongs_to :person
   has_many :event_attendees
   has_many :attendees, :through => :event_attendees, :source => :person
 
-  validates_presence_of :title, :start_time, :person
+  validates_presence_of :title, :start_time, :person, :privacy
   validates_length_of :title, :maximum => MAX_TITLE_LENGTH
   validates_length_of :description, :maximum => MAX_DESCRIPTION_LENGTH, :allow_blank => true
 
-  named_scope :user_events, lambda { |person| { :conditions => { } } }
-  named_scope :monthly_events, 
-              lambda { |date| { :conditions => ['start_time >= ? and start_time <= ?', 
-                                                date.beginning_of_month, date.end_of_month] } }
-  named_scope :daily_events, 
-              lambda { |date| { :conditions => ['start_time >= ? and start_time <= ?', 
-                                                date.beginning_of_day, date.end_of_day] } }
+  named_scope :person_events, 
+              lambda { |person| { :conditions => ["person_id = ? OR (privacy = ? OR (privacy = ? AND (person_id IN (?))))", 
+                                                  person.id,
+                                                  PRIVACY[:public], 
+                                                  PRIVACY[:friends], 
+                                                  person.contact_ids] } }
+
+  named_scope :period_events,
+              lambda { |date_from, date_until| { :conditions => ['start_time >= ? and start_time <= ?',
+                                                 date_from, date_until] } }
+  
+  def self.monthly_events(date)
+    self.period_events(date.beginning_of_month, date.end_of_month)
+  end
+  
+  def self.daily_events(date)
+    self.period_events(date.beginning_of_day, date.end_of_day)
+  end
+
   def validate
     if end_time
       unless start_time <= end_time
