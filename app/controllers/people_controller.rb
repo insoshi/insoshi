@@ -26,7 +26,7 @@ class PeopleController < ApplicationController
       @some_contacts = @person.some_contacts
       @common_contacts = current_person.common_contacts_with(@person)
       # gives us the same max number as in basic contacts list to show on the Profile
-      @some_common_connections = @common_contacts[(0...Person::MAX_DEFAULT_CONTACTS)]
+      @some_common_contacts = @common_contacts[(0...Person::MAX_DEFAULT_CONTACTS)]
       @blog = @person.blog
       @posts = @person.blog.posts.paginate(:page => params[:page])
       @galleries = @person.galleries.paginate(:page => params[:page])
