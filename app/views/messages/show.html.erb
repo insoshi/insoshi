@@ -1,41 +1,14 @@
 <%- column_div :type => :primary do -%>
   <% if current_person?(@message.sender) %>
-<<<<<<< HEAD:app/views/messages/show.html.erb
-    <% other_person = @message.recipient %>
-    <% heading = "Sent to " %>
-  <% else %>
-    <% other_person = @message.sender %>
-    <% heading = "Sent by " %>
-=======
     <% heading = "Message sent to #{h @message.recipient.name}" %>
   <% else %>
     <% heading = "Message from #{h @message.sender.name}" %>
->>>>>>> master:app/views/messages/show.html.erb
   <% end %>
   
-  <h2><%= @message.subject %></h2>
-
+  
+  <h2><%= heading %></h2>
   <%= render :partial => 'message_nav' %>
   
-<<<<<<< HEAD:app/views/messages/show.html.erb
-  <%= display @message.content %>
-  <p class="meta tools">
-    <%= heading + person_link(other_person) -%> <%= time_ago_in_words @message.created_at %> ago
-    <%= link_to(image_tag("icons/email_go.png", :class => 'actioner'), 
-                      reply_message_path(@message),
-             :title => "Reply to this message") %>
-    <% unless @message.trashed?(current_person) -%>
-      <%= link_to(image_tag("icons/email_delete.png", :class => 'actioner'), 
-                        message_path(@message), 
-                        :method => :delete, 
-                        :confirm => %(Delete this message?),
-             :title => "Delete this message") %>
-    <% else -%>
-      <%= link_to "Untrash", undestroy_message_path(@message), 
-                             :method => :put %>
-    <% end -%>    
-  </p>
-=======
   <h3 class="subject"><%= sanitize @message.subject %></h3>
   <ul class="list person">
     <% all_messages =  @message.conversation.messages %>
@@ -43,7 +16,6 @@
                :collection => all_messages,
                :locals => { :n_messages => all_messages.length } %>
   </ul>
->>>>>>> master:app/views/messages/show.html.erb
 
 <%- end -%>
 
