@@ -1,5 +1,4 @@
-<% topic_class = (topic.eql?@topics.last()) ? 'topic last' : 'topic' %>
-<li class="<%= topic_class -%>">
+<li class="topic">
   <a name="topic_<%= topic.id %>"></a>
   <div class="profile-image">
     <%= image_link topic.person, :image => :thumbnail %>

@@ -1,5 +1,4 @@
-<% msg_class = (message.eql?(@messages.last())) ? 'message last' : 'message' %>
-<li class="<%= msg_class -%>">
+<li class="message">
   <div class="profile-image">
     <%= image_link message.other_person(current_person),
                    :image => :thumbnail,

@@ -1,5 +1,4 @@
-<% post_class = (blog_post.eql?(@posts.last)) ? 'post last' : 'post' %>
-<li class="<%= post_class -%>">
+<li class="post">
   <h3> 
     <a name="post_<%= blog_post.id %>"></a>
     <%= link_to sanitize(blog_post.title),
