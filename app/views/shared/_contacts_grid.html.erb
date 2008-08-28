@@ -2,9 +2,9 @@
   <%- contacts.each do |contact| -%>
     <li class="vcard contact"><span>
       <%= image_link contact, :image_options => { :class => "photo" },
-                          :link_options => { :class => "url" },
-                          :vcard => true,
-                          :image => :bounded_icon %>
+                              :link_options => { :class => "url" },
+                              :vcard => true,
+                              :image => :bounded_icon %>
   </span></li>
   <%- end %>
 </ul>

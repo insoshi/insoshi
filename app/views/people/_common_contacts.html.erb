@@ -1,14 +1,14 @@
-
 <%- if logged_in? && !@common_contacts.empty? -%>
     <h2>Common Contacts</h2>
     <ul class="grid contacts medium">
       <%- @some_common_contacts.each do |contact| -%>
-    <%= render :partial => 'shared/contact_medium',
-               :locals => { :contact => contact } %>
+        <%= render :partial => 'shared/contact_medium',
+                   :locals => { :contact => contact } %>
       <%- end -%>
     <%- if @common_contacts.length > Person::MAX_DEFAULT_CONTACTS -%>
         <li class="more">
-          <%= link_to "See all &raquo;", common_contacts_person_path(@person) %>
+          <%= link_to "See all &raquo;",
+                      common_contacts_person_path(@person) %>
         </li>
     <%- end -%>
     </ul>
