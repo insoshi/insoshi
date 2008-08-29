@@ -59,7 +59,13 @@ class CommentsController < ApplicationController
     end
   
     def person
-      @person || @blog.person
+      if wall?
+        @person
+      elsif blog?
+        @blog.person 
+      elsif event?
+        @event.person
+      end
     end
     
     # Require the users to be connected.

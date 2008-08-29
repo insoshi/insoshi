@@ -10,7 +10,6 @@
   <%= display comment.body %>
   <%- if current_person?(comment.commentable.person) -%>
   <div>
-    <br />
     <%= link_to "delete", event_comment_path(@event, comment),
                           :method => :delete %>
   </div>
