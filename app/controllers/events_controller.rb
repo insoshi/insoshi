@@ -22,6 +22,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @date = @event.start_time.to_date
     @month_events = Event.monthly_events(@date).person_events(current_person)
+    @attendees = @event.attendees.paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
 
     respond_to do |format|
       format.html # show.html.erb

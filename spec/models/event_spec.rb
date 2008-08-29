@@ -61,4 +61,15 @@ describe Event do
                                         
   end
 
+  describe "comments association" do
+    before(:each) do
+      @event = events(:public)
+    end
+
+    it "should have many comments" do
+      @event.comments.should be_a_kind_of(Array)
+      @event.comments.should_not be_empty
+    end
+  end
+
 end

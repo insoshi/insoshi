@@ -7,6 +7,7 @@ class Event < ActiveRecord::Base
   belongs_to :person
   has_many :event_attendees
   has_many :attendees, :through => :event_attendees, :source => :person
+  has_many :comments, :as => :commentable, :order => 'created_at DESC'
 
   validates_presence_of :title, :start_time, :person, :privacy
   validates_length_of :title, :maximum => MAX_TITLE_LENGTH

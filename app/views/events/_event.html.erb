@@ -24,6 +24,11 @@
     | <%= link_to "Destroy",  event, :confirm => 'Are you sure?', :method  => :delete %>
     <% end -%>
   </p>
+  <% unless event.event_attendees_count == 0 -%>
+  <p>
+    <%= pluralize(event.event_attendees_count, 'Person') %> attending this event
+  </p>
+  <% end -%>
   <p>
     <% unless event.attending?(current_person) -%>
     <%= link_to "I will attend", attend_event_path(event) %>

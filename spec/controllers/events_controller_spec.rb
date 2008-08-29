@@ -14,7 +14,8 @@ describe EventsController do
       :destroy => true,
       :person => @person,
       :to_xml => '',
-      :start_time => Time.now
+      :start_time => Time.now,
+      :attendees => []
     }.merge(stubs)
     @mock_event ||= mock_model(Event, stubs)
   end
@@ -69,15 +70,15 @@ describe EventsController do
   describe "responding to GET /events/1" do
 
     it "should succeed" do
-      Event.stub!(:find).and_return(mock_event)
+      Event.stub!(:find).and_return(mock_event)      
       get :show, :id => "1"
       response.should be_success
+      response.should render_template('show')
     end
   
     it "should render the 'show' template" do
       Event.stub!(:find).and_return(mock_event)
       get :show, :id => "1"
-      response.should render_template('show')
     end
   
     it "should find the requested event" do
