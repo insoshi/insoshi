@@ -40,7 +40,6 @@ module ActivitiesHelper
     when "Person"
       %(#{person_link(person)}'s description has changed.)
     else
-      # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
   end
@@ -75,7 +74,6 @@ module ActivitiesHelper
         have connected.)
     when "ForumPost"
       topic = activity.item.topic
-      # TODO: deep link this to the post
       %(#{person_link(person)} made a #{topic_link("forum post", topic)}.)
     when "Topic"
       %(#{person_link(person)} created a 
@@ -113,7 +111,6 @@ module ActivitiesHelper
             when "Person"
                 "edit.gif"
             else
-              # TODO: make this a more graceful falure (?).
               raise "Invalid activity type #{activity_type(activity).inspect}"
             end
     image_tag("icons/#{img}", :class => "icon")
