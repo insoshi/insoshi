@@ -76,7 +76,11 @@ class Connection < ActiveRecord::Base
         accept_one_side(person, contact, accepted_at)
         accept_one_side(contact, person, accepted_at)
       end
-      log_activity(conn(person, contact))
+      # Exclude the first admin to prevent everyone's feed from
+      # filling up with new registrants.
+      unless [person, contact].include?(Person.find_first_admin)
+        log_activity(conn(person, contact))
+      end
     end
     
     def connect(person, contact, send_mail = nil)
