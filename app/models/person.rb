@@ -125,7 +125,8 @@ class Person < ActiveRecord::Base
     def mostly_active(page = 1)
       paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
-                     :conditions => conditions_for_mostly_active)
+                     :conditions => conditions_for_mostly_active,
+                     :order => "created_at DESC")
     end
     
     # Return *all* the active users.
