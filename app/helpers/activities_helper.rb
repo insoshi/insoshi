@@ -23,6 +23,12 @@ module ActivitiesHelper
       when "Person"
         %(#{person_link(activity.item.commenter)} commented on 
           #{wall(activity)}.)
+      when "Event"
+        event = activity.item.commentable
+        commenter = activity.item.commenter
+        %(#{person_link(commenter)} commented on 
+          #{someones(event.person, commenter)} event: 
+          #{event_link(event.title, event)}.)
       end
     when "Connection"
       %(#{person_link(activity.item.person)} and
@@ -68,6 +74,9 @@ module ActivitiesHelper
       when "Person"
         %(#{person_link(activity.item.commenter)} commented on 
           #{wall(activity)}.)
+      when "Event"
+        %(#{person_link(activity.item.commenter)} commented on 
+          #{event_link("an event", activity.item)}.)
       end
     when "Connection"
       %(#{person_link(person)} and #{person_link(activity.item.contact)}
@@ -140,6 +149,11 @@ module ActivitiesHelper
     end
     link_to(text, forum_topic_path(topic.forum, topic))
   end
+
+  def event_link(text, event)
+    link_to(text, event_path(event))
+  end
+
 
   # Return a link to the wall.
   def wall(activity)
