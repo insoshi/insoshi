@@ -20,7 +20,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @date = @event.start_time.to_date
+    @date = @event.start_time
     @month_events = Event.monthly_events(@date).person_events(current_person)
     @attendees = @event.attendees.paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
 
@@ -120,9 +120,9 @@ class EventsController < ApplicationController
     year = (params[:year]||now.year).to_i
     month = (params[:month]||now.month).to_i
     day = (params[:day]||now.mday).to_i
-    @date = Date.new(year,month,day)
+    @date = DateTime.new(year,month,day)
   rescue ArgumentError
-    @date = Time.now.to_date
+    @date = Time.now
   end
 
   def filter_by_day?

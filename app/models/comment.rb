@@ -44,6 +44,8 @@ class Comment < ActiveRecord::Base
                             commentable
                           when "BlogPost"
                             commentable.blog.person
+                          when "Event"
+                            commentable.person
                           end
   end
   
@@ -55,6 +57,10 @@ class Comment < ActiveRecord::Base
   
     def blog_post_comment?
       commentable.class.to_s == "BlogPost"
+    end
+
+    def event_comment?
+      commentable.class.to_s == "Event"
     end
     
     def notifications?

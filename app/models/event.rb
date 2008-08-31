@@ -25,11 +25,11 @@ class Event < ActiveRecord::Base
                                                  date_from, date_until] } }
   
   def self.monthly_events(date)
-    self.period_events(date.beginning_of_month, date.end_of_month)
+    self.period_events(date.beginning_of_month, date.to_time.end_of_month)
   end
   
   def self.daily_events(date)
-    self.period_events(date.beginning_of_day, date.end_of_day)
+    self.period_events(date.beginning_of_day, date.to_time.end_of_day)
   end
 
   def validate

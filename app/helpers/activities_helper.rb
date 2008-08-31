@@ -76,7 +76,7 @@ module ActivitiesHelper
           #{wall(activity)}.)
       when "Event"
         %(#{person_link(activity.item.commenter)} commented on 
-          #{event_link("an event", activity.item)}.)
+          #{someones(activity.item.commentable.person, activity.item.commenter)} #{event_link("event", activity.item)}.)
       end
     when "Connection"
       %(#{person_link(person)} and #{person_link(activity.item.contact)}
