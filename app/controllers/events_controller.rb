@@ -2,7 +2,11 @@
 class EventsController < ApplicationController
 
   before_filter :login_required
-  before_filter :load_date, :only => :index
+  before_filter :load_event, :except => [:index, :new, :create]
+  before_filter :load_date, :only => [:index, :show]
+  before_filter :authorize_show, :only => :show
+  before_filter :authorize_change, :only => [:edit, :update]
+  before_filter :authorize_destroy, :only => :destroy
   
   def index
     @month_events = Event.monthly_events(@date).person_events(current_person)
@@ -19,11 +23,10 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
-    @date = @event.start_time
     @month_events = Event.monthly_events(@date).person_events(current_person)
-    @attendees = @event.attendees.paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
-
+    @attendees = @event.attendees.paginate(:page => params[:page], 
+                                           :per_page => RASTER_PER_PAGE)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @event }
@@ -40,8 +43,6 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
-    check_owner
   end
 
   def create
@@ -60,9 +61,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find(params[:id])
-    check_owner
-
     respond_to do |format|
       if @event.update_attributes(params[:event])
         flash[:notice] = 'Event was successfully updated.'
@@ -76,9 +74,6 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = Event.find(params[:id])
-    check_owner
-
     @event.destroy
 
     respond_to do |format|
@@ -88,7 +83,6 @@ class EventsController < ApplicationController
   end
 
   def attend
-    @event = Event.find(params[:id])
     if @event.attend(current_person)
       flash[:notice] = "You are attending this event."
       redirect_to @event
@@ -99,7 +93,6 @@ class EventsController < ApplicationController
   end
 
   def unattend
-    @event = Event.find(params[:id])
     if @event.unattend(current_person)
       flash[:notice] = "You are not attending this event."
       redirect_to @event
@@ -107,26 +100,44 @@ class EventsController < ApplicationController
       flash[:error] = "You are not attending this event."
       redirect_to @event
     end
-
   end
 
   private
-  def check_owner
+  def authorize_show
+    if @event.only_contacts? && !(@event.person.contact_ids.include?(current_person.id) || 
+                                  current_person?(@event.person) || current_person.admin?)
+      redirect_to home_url 
+    end
+  end
+  
+  def authorize_change
     redirect_to home_url unless current_person?(@event.person)
   end
 
+  def authorize_destroy
+    redirect_to home_url unless current_person?(@event.person) || current_person.admin?
+  end
+
   def load_date
-    now = Time.now
-    year = (params[:year]||now.year).to_i
-    month = (params[:month]||now.month).to_i
-    day = (params[:day]||now.mday).to_i
-    @date = DateTime.new(year,month,day)
+    if @event
+      @date = @event.start_time
+    else
+      now = Time.now
+      year = (params[:year]||now.year).to_i
+      month = (params[:month]||now.month).to_i
+      day = (params[:day]||now.mday).to_i
+      @date = DateTime.new(year,month,day)
+    end
   rescue ArgumentError
     @date = Time.now
   end
 
   def filter_by_day?
     !params[:day].nil?
+  end
+
+  def load_event
+    @event = Event.find(params[:id])
   end
 
 end

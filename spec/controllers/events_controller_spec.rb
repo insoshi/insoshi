@@ -15,7 +15,8 @@ describe EventsController do
       :person => @person,
       :to_xml => '',
       :start_time => Time.now,
-      :attendees => []
+      :attendees => [],
+      :only_contacts? => false
     }.merge(stubs)
     @mock_event ||= mock_model(Event, stubs)
   end
@@ -90,6 +91,23 @@ describe EventsController do
       Event.should_receive(:find).and_return(mock_event)
       get :show, :id => "1"
       assigns[:event].should equal(mock_event)
+    end
+
+    it "should allow to see private events if contact" do
+      contact = login_as(:quentin)
+      Event.should_receive(:find).and_return(mock_event)
+      mock_event.should_receive(:only_contacts?).and_return(true)
+      Connection.connect(@person,contact)
+      get :show, :id => "1"
+      response.should be_success
+    end
+
+    it "should not allow to see private events if not contact" do
+      login_as(:quentin)
+      Event.should_receive(:find).and_return(mock_event)
+      mock_event.should_receive(:only_contacts?).and_return(true)
+      get :show, :id => "1"
+      response.should be_redirect
     end
     
   end

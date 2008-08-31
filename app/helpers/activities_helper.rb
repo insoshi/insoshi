@@ -45,6 +45,8 @@ module ActivitiesHelper
       %(#{person_link(person)}'s profile picture has changed.)
     when "Person"
       %(#{person_link(person)}'s description has changed.)
+    when "Event"
+      %(#{person_link(person)} has created a new event: #{event_link(activity.item.title, activity.item)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -91,6 +93,8 @@ module ActivitiesHelper
       %(#{person_link(person)}'s profile picture has changed.)
     when "Person"
       %(#{person_link(person)}'s description has changed.)
+    when "Event"
+      %(#{person_link(person)}'s has created a new #{event_link("event", activity.item)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -106,6 +110,8 @@ module ActivitiesHelper
               case parent_type
               when "BlogPost"
                 "comment.gif"
+              when "Event"
+                "comment.gif"
               when "Person"
                 "signal.gif"
               end
@@ -118,7 +124,9 @@ module ActivitiesHelper
             when "Photo"
               "camera.gif"
             when "Person"
-                "edit.gif"
+              "edit.gif"
+            when "Event"
+              "event.gif"
             else
               raise "Invalid activity type #{activity_type(activity).inspect}"
             end

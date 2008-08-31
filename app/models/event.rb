@@ -1,13 +1,15 @@
 class Event < ActiveRecord::Base
+  include ActivityLogger
 
   MAX_DESCRIPTION_LENGTH = MAX_STRING_LENGTH
   MAX_TITLE_LENGTH = 40
-  PRIVACY = { :public => 1, :friends => 2 }
+  PRIVACY = { :public => 1, :contacts => 2 }
 
   belongs_to :person
   has_many :event_attendees
   has_many :attendees, :through => :event_attendees, :source => :person
   has_many :comments, :as => :commentable, :order => 'created_at DESC'
+  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
 
   validates_presence_of :title, :start_time, :person, :privacy
   validates_length_of :title, :maximum => MAX_TITLE_LENGTH
@@ -17,12 +19,14 @@ class Event < ActiveRecord::Base
               lambda { |person| { :conditions => ["person_id = ? OR (privacy = ? OR (privacy = ? AND (person_id IN (?))))", 
                                                   person.id,
                                                   PRIVACY[:public], 
-                                                  PRIVACY[:friends], 
+                                                  PRIVACY[:contacts], 
                                                   person.contact_ids] } }
 
   named_scope :period_events,
               lambda { |date_from, date_until| { :conditions => ['start_time >= ? and start_time <= ?',
                                                  date_from, date_until] } }
+
+  after_create :log_activity
   
   def self.monthly_events(date)
     self.period_events(date.beginning_of_month, date.to_time.end_of_month)
@@ -57,5 +61,15 @@ class Event < ActiveRecord::Base
   def attending?(person)
     self.attendee_ids.include?(person[:id])
   end
+
+  def only_contacts?
+    self.privacy == PRIVACY[:contacts]
+  end
+
+  private
+
+    def log_activity
+      add_activities(:item => self, :person => self.person)
+    end
 
 end

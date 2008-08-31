@@ -27,7 +27,7 @@
 </div>
 <div class="form_row full">
   <%= f.label :privacy %>
-  <%= f.select :privacy, [["Public", Event::PRIVACY[:public]],["Me and my contacts", Event::PRIVACY[:friends]]] %> 
+  <%= f.select :privacy, [["Public", Event::PRIVACY[:public]],["Me and my contacts", Event::PRIVACY[:contacts]]] %> 
 </div>
 <div class="form_row">
   <%= f.submit @event.new_record? ? "Create" : "Update" %>
