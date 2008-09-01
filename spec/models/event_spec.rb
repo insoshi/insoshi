@@ -72,4 +72,19 @@ describe Event do
     end
   end
 
+  describe 'event activity association' do
+    before(:each) do
+      @event = Event.create!(@valid_attributes)
+      @activity = Activity.find_by_item_id(@event)
+    end
+    
+    it "should have an activity" do
+      @activity.should_not be_nil
+    end
+    
+    it "should add an activity to the creator" do
+      @event.person.recent_activity.should contain(@activity)
+    end
+  end
+
 end
