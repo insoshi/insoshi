@@ -46,11 +46,12 @@ module ActivitiesHelper
     when "Person"
       %(#{person_link(person)}'s description has changed.)
     when "Event"
-      %(#{person_link(person)} has created a new event: #{event_link(activity.item.title, activity.item)}.)
+      event = activity.item
+      %(#{person_link(person)} has created a new event: #{event_link(event.title, event)}.)
     when "EventAttendee"
       event = activity.item.event
       %(#{person_link(person)} is attending #{someones(event.person, person)} event: 
-        #{event_link(event.title, event)}.)
+        #{event_link(event.title, event)}.) 
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -81,8 +82,9 @@ module ActivitiesHelper
         %(#{person_link(activity.item.commenter)} commented on 
           #{wall(activity)}.)
       when "Event"
+        event = activity.item.commentable
         %(#{person_link(activity.item.commenter)} commented on 
-          #{someones(activity.item.commentable.person, activity.item.commenter)} #{event_link("event", activity.item)}.)
+          #{someones(event.person, activity.item.commenter)} #{event_link("event", event)}.)
       end
     when "Connection"
       %(#{person_link(person)} and #{person_link(activity.item.contact)}
