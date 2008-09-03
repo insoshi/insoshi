@@ -131,7 +131,8 @@ class Person < ActiveRecord::Base
     def mostly_active(page = 1)
       paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
-                     :conditions => conditions_for_mostly_active)
+                     :conditions => conditions_for_mostly_active,
+                     :order => "created_at DESC")
     end
     
     # Return *all* the active users.
@@ -164,7 +165,6 @@ class Person < ActiveRecord::Base
   ## Feeds
 
   # Return a person-specific activity feed.
-  # TODO: put some algorithms in here to improve feed quality.
   def feed
     len = activities.length
     if len < FEED_SIZE

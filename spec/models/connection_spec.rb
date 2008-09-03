@@ -82,19 +82,17 @@ describe Connection do
     end
   end
   
-  describe "activity associations" do
-    
-    before(:each) do
-      Connection.request(@person, @contact)
-      @connection = Connection.conn(@person, @contact)
-      @connection.accept
-      @activity = Activity.find_by_item_id(@connection)
-    end
   
-    it "should have an activity" do
-      @activity.should_not be_nil
-      @activity.person.should_not be_nil
-    end
+  it "should create a feed activity for a new connection" do
+    connection = Connection.connect(@person, @contact)
+    activity = Activity.find_by_item_id(connection)
+    activity.should_not be_nil
+    activity.person.should_not be_nil
+  end
+  
+  it "should not create an activity for a connection with the first admin" do
+    connection = Connection.connect(@person, Person.find_first_admin)
+    Activity.find_by_item_id(connection).should be_nil
   end
   
   def status(person, conn)

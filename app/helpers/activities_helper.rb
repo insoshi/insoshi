@@ -78,7 +78,6 @@ module ActivitiesHelper
         %(added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
       end
     else
-      # TODO: make this a more graceful falure (?).
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
   end
@@ -112,7 +111,6 @@ module ActivitiesHelper
       end
     when "ForumPost"
       topic = activity.item.topic
-      # TODO: deep link this to the post
       %(#{person_link_with_image(person)} made a #{topic_link("forum post", topic)})
     when "Topic"
       %(#{person_link_with_image(person)} created a 
@@ -158,7 +156,6 @@ module ActivitiesHelper
             when "Photo"
               "photo.png"
             else
-              # TODO: make this a more graceful falure (?).
               raise "Invalid activity type #{activity_type(activity).inspect}"
             end
     image_tag("icons/#{img}", :class => "icon")

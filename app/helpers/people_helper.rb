@@ -28,7 +28,6 @@ module PeopleHelper
   end
 
   # Link to a person (default is by name).
-  # TODO: refactor this thing.
   def person_link(text, person = nil, html_options = nil)
     if person.nil?
       person = text
