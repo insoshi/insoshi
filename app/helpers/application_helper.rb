@@ -3,7 +3,9 @@ module ApplicationHelper
   
   ## Application-wide values
   def app_name
-    'Lazar Insoshi'
+    name = global_prefs.app_name
+    default = "Insoshi"
+    name.blank? ? default : name
   end
 
   ## Menu helpers
