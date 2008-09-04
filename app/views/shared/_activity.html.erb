@@ -3,15 +3,18 @@
 <li>
   <p class="activity_detail">
     <%= feed_icon activity %>
-    <%= feed_message(activity, recent || false) %>
+    <%- recent ||= false -%>
+    <%= feed_message(activity, recent) %>
   </p>
   <p class="meta published clear">
     <%= time_ago_in_words(activity.created_at).capitalize %> ago
-    <%= link_to_if(current_person?(activity.person), image_tag("icons/comment_delete.png", :class => 'actioner'), 
-                        activity_path(activity), 
-                        :method => :delete, 
-                        :confirm => %(Are you sure you want to delete this activity from your profile?),
-             :title => "Delete this activity") %>
+    <%= link_to_if(current_person?(activity.person),
+                   image_tag("icons/comment_delete.png",
+                             :class => 'actioner'), 
+                   activity_path(activity), 
+                   :method => :delete, 
+                   :confirm => %(Are you sure you want to delete this activity from your profile?),
+                   :title => "Delete this activity") %>
   </p>
 </li>
 <%- end -%>

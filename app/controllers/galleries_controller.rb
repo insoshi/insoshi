@@ -23,7 +23,7 @@ class GalleriesController < ApplicationController
      respond_to do |format|
         if @gallery.save
           flash[:success] = "Gallery successfully created"
-          format.html { redirect_to(gallery_path(@gallery)) }
+          format.html { redirect_to gallery_path(@gallery) }
         else
           format.html { render :action => "new" }
         end
@@ -39,7 +39,7 @@ class GalleriesController < ApplicationController
     respond_to do |format|
         if @gallery.update_attributes(params[:gallery])
           flash[:success] = "Gallery successfully updated"
-          format.html { redirect_to(gallery_path(@gallery)) }
+          format.html { redirect_to gallery_path(@gallery) }
         else
           format.html { render :action => "new" }
         end
@@ -51,12 +51,12 @@ class GalleriesController < ApplicationController
     if @gallery.destroy
       flash[:success] = "Gallery successfully deleted"
       respond_to do |format|
-        format.html {redirect_to(person_galleries_path(current_person))}
+        format.html { redirect_to person_galleries_path(current_person) }
       end
     else
       flash[:error] = "Gallery could not be deleted"
       respond_to do |format|
-        format.html {redirect_to(person_galleries_path(current_person))}
+        format.html { redirect_to person_galleries_path(current_person) }
       end
     end
   end

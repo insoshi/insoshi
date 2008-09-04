@@ -1,17 +1,18 @@
 module ActivitiesHelper
 
   # Given an activity, return a message for the feed for the activity's class.
-  def feed_message(activity, recent = nil)
+  def feed_message(activity, recent = false)
     person = activity.person
     case activity_type(activity)
     when "BlogPost"
       post = activity.item
       blog = post.blog
       view_blog = blog_link("#{h person.name}'s blog", blog)
-      if recent.nil? || !recent
-        %(#{person_link_with_image(person)} posted  #{post_link(blog, post)} &mdash; #{view_blog})
-      else
+      if recent
         %(new blog post  #{post_link(blog, post)})
+      else
+        %(#{person_link_with_image(person)} posted
+          #{post_link(blog, post)} &mdash; #{view_blog})
       end
     when "Comment"
       parent = activity.item.commentable
@@ -20,62 +21,74 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        if recent.nil? || !recent
-          %(#{person_link_with_image(person)} made a comment to #{someones(blog.person, person)} blog post #{post_link(blog, post)})
+        if recent
+          %(made a comment to #{someones(blog.person, person)} blog post
+            #{post_link(blog, post)})
         else
-          %(made a comment to #{someones(blog.person, person)} blog post #{post_link(blog, post)})
+          %(#{person_link_with_image(person)} made a comment to
+            #{someones(blog.person, person)} blog post
+            #{post_link(blog, post)})
         end
       when "Person"
-        if recent.nil? || !recent
-          %(#{person_link_with_image(activity.item.commenter)} commented on #{wall(activity)})
-        else
+        if recent
           %(commented on #{wall(activity)})
+        else
+          %(#{person_link_with_image(activity.item.commenter)}
+            commented on #{wall(activity)})
         end
       end
     when "Connection"
       if activity.item.contact.admin?
-        if recent.nil? || !recent
-          %(#{person_link_with_image(activity.item.person)} has joined the system)
-        else
+        if recent
           %(joined the system)
+        else
+          %(#{person_link_with_image(activity.item.person)}
+            has joined the system)
         end
       else
-        if recent.nil? || !recent
-          %(#{person_link_with_image(activity.item.person)} and #{person_link_with_image(activity.item.contact)} have connected)
-        else
+        if recent
           %(connected with #{person_link_with_image(activity.item.contact)})
+        else
+          %(#{person_link_with_image(activity.item.person)} and
+            #{person_link_with_image(activity.item.contact)} have connected)
         end
       end
     when "ForumPost"
       post = activity.item
-      if recent.nil? || !recent
-        %(#{person_link_with_image(person)} made a post to forum topic #{topic_link(post.topic)})
-      else
+      if recent
         %(new post to forum topic #{topic_link(post.topic)})
+      else
+        %(#{person_link_with_image(person)} made a post to forum topic
+          #{topic_link(post.topic)})
       end
     when "Topic"
-      if recent.nil? || !recent
-        %(#{person_link_with_image(person)} created the new discussion topic #{topic_link(activity.item)})
-      else
+      if recent
         %(new discussion topic #{topic_link(activity.item)})
+      else
+        %(#{person_link_with_image(person)} created the new discussion topic
+          #{topic_link(activity.item)})
       end
     when "Person"
-      if recent.nil? || !recent
-        %(#{person_link_with_image(person)}'s description changed)
-      else
+      if recent
         %(description changed)
+      else
+        %(#{person_link_with_image(person)}'s description changed)
       end
     when "Gallery"
-      if recent.nil? || !recent
-        %(#{person_link_with_image(person)} added new gallery #{gallery_link(activity.item)})
-      else
+      if recent
         %(new gallery #{gallery_link(activity.item)})
+      else
+        %(#{person_link_with_image(person)} added new gallery
+          #{gallery_link(activity.item)})
       end
     when "Photo"
-      if recent.nil? || !recent
-        %(#{person_link_with_image(person)} added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
+      if recent
+        %(added new #{photo_link(activity.item)}
+          #{to_gallery_link(activity.item.gallery)})
       else
-        %(added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
+        %(#{person_link_with_image(person)} added new
+          #{photo_link(activity.item)}
+          #{to_gallery_link(activity.item.gallery)})
       end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -97,8 +110,9 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        %(#{person_link_with_image(person)} made a comment to #{someones(blog.person, person)} blog post #{post_link(blog, post)})
-        %(#{person_link_with_image(person)} made a comment on #{someones(blog.person, person)}  #{post_link("blog post", post.blog, post)})
+        %(#{person_link_with_image(person)} made a comment on
+          #{someones(blog.person, person)} 
+          #{post_link("blog post", post.blog, post)})
       when "Person"
         %(#{person_link_with_image(activity.item.commenter)} commented on 
           #{wall(activity)}.)
@@ -107,20 +121,24 @@ module ActivitiesHelper
       if activity.item.contact.admin?
         %(#{person_link_with_image(person)} has joined the system)
       else
-        %(#{person_link_with_image(person)} and #{person_link_with_image(activity.item.contact)} have connected)
+        %(#{person_link_with_image(person)} and
+          #{person_link_with_image(activity.item.contact)} have connected)
       end
     when "ForumPost"
       topic = activity.item.topic
-      %(#{person_link_with_image(person)} made a #{topic_link("forum post", topic)})
+      %(#{person_link_with_image(person)} made a
+        #{topic_link("forum post", topic)})
     when "Topic"
       %(#{person_link_with_image(person)} created a 
         #{topic_link("new discussion topic", activity.item)})
     when "Person"
       %(#{person_link_with_image(person)}'s description changed)
     when "Gallery"
-      %(#{person_link(person)} added new gallery #{gallery_link(activity.item)})
+      %(#{person_link(person)} added new gallery
+        #{gallery_link(activity.item)})
     when "Photo"
-      %(#{person_link(person)} added new #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
+      %(#{person_link(person)} added new
+        #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end

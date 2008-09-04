@@ -7,8 +7,7 @@ class PeopleController < ApplicationController
   before_filter :setup
   
   def index
-    #@people = Person.mostly_active(params[:page])
-    @people = Person.find(:all).paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
+    @people = Person.mostly_active(params[:page])
 
     respond_to do |format|
       format.html
@@ -21,12 +20,12 @@ class PeopleController < ApplicationController
       flash[:error] = "That person is not active"
       redirect_to home_url and return
     end
-    @people = @contacts = @person.contacts.paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
     if logged_in?
       @some_contacts = @person.some_contacts
       @common_contacts = current_person.common_contacts_with(@person)
-      # gives us the same max number as in basic contacts list to show on the Profile
-      @some_common_contacts = @common_contacts[(0...Person::MAX_DEFAULT_CONTACTS)]
+      # Use the same max number as in basic contacts list.
+      num_contacts = Person::MAX_DEFAULT_CONTACTS
+      @some_common_contacts = @common_contacts[0...num_contacts]
       @blog = @person.blog
       @posts = @person.blog.posts.paginate(:page => params[:page])
       @galleries = @person.galleries.paginate(:page => params[:page])

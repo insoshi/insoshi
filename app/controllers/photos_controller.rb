@@ -5,12 +5,6 @@ class PhotosController < ApplicationController
   before_filter :correct_gallery_requried, :only => [:new, :create]
   
   def index
-  #   @photos = current_person.photos
-  # 
-  #   respond_to do |format|
-  #     format.html
-  #   end
-  # BILL: punt over to current person's gallery list in case of direct navigation
     redirect_to person_galleries_path(current_person)
   end
   
@@ -46,7 +40,7 @@ class PhotosController < ApplicationController
     
     @gallery = Gallery.find(params[:gallery_id])
     photo_data = { :person => current_person,
-                    :gallery => @gallery}
+                   :gallery => @gallery}
     @photo = Photo.new(params[:photo].merge(photo_data))
     # @photo.person_id = current_person;
 
@@ -58,7 +52,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.save
         flash[:success] = "Photo successfully uploaded"
-        format.html { redirect_to(gallery_path(@photo.gallery)) }
+        format.html { redirect_to gallery_path(@photo.gallery) }
       else
         format.html { render :action => "new" }
       end
@@ -122,7 +116,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.update_attributes!(:avatar => true)
         @old_primary.each { |p| p.update_attributes!(:avatar => false) }
-        format.html { redirect_to(person_galleries_path(current_person)) }
+        format.html { redirect_to person_galleries_path(current_person) }
       else    
         format.html do
           flash[:error] = "Invalid image!"
@@ -146,7 +140,7 @@ class PhotosController < ApplicationController
     def correct_gallery_requried
       if params[:gallery_id].nil?
         flash[:error] = "You cannot add photo without specifying gallery"
-        redirect_to home_path()
+        redirect_to home_path
       else
         @gallery = Gallery.find(params[:gallery_id])
         if @gallery.person != current_person
