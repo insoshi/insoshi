@@ -26,7 +26,7 @@
                       join_group_path(@group), :method => :post %>
             <%- else -%>
               <%= link_to "Leave group", 
-                      desjoin_group_path(@group), :method => :post %>
+                      leave_group_path(@group), :method => :post %>
             <%- end -%>
           <%- else -%>
             You are group's admin

@@ -128,6 +128,21 @@ class PeopleController < ApplicationController
     end
   end
   
+  def groups
+    @person = Person.find(params[:id])
+    @groups = @person.groups
+    
+    respond_to do |format|
+      format.html
+    end
+  end
+  
+  def admin_groups
+    @person = Person.find(params[:id])
+    @groups = @person.own_groups
+    render :action => :groups
+  end
+  
   private
 
     def setup

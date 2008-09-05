@@ -1,0 +1,36 @@
+<%- column_div :type => :primary do -%>
+<h2>Members for '<%= h @group.name %>'</h2>
+
+<% unless @members.empty? -%>
+  <%= will_paginate(@members) %>
+  <ul class="grid contacts medium">
+    <%- @members.each do |contact| -%>
+      <li class="vcard contact">
+        <%= image_link contact, :image_options => { :class => "photo" },
+                                :link_options => { :class => "url" },
+                                :vcard => true,
+                                :image => :bounded_icon %>
+      </li>
+    <%- end -%>
+      
+  </ul>
+  <%= will_paginate(@members) %>
+<% else %>
+  <h3>No members (yet)</h3>
+<% end -%>
+
+<h2>Administrator</h2>
+<ul class="grid contacts medium">
+  <li class="vcard contact">
+    <%= image_link @group.owner, :image_options => { :class => "photo" },
+                            :link_options => { :class => "url" },
+                            :vcard => true,
+                            :image => :bounded_icon %>
+  </li>
+</ul>
+
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

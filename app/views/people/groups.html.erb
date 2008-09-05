@@ -1,16 +1,17 @@
 <%- column_div :type => :primary do -%>
-  <h2>Groups</h2>
+  <h2><%= (params[:action] == 'admin_groups' ? "Admin " : "" ) + "Groups" %></h2>
+
   <% unless @groups.empty? -%>
-    <%= will_paginate %>
     <ul class="list people">
       <%= render :partial => @groups %>
     </ul>
-    <%= will_paginate %>
   <% else %>
     <h3>No groups (yet)</h3>
   <% end -%>
-
-  <%= link_to 'New group', new_group_path() %>
+  
+  <%- if params[:action] == 'admin_groups' -%>
+    <%= link_to 'New group', new_group_path() %>
+  <%- end -%>
   
 <%- end -%>
 

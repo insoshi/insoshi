@@ -11,7 +11,7 @@ class SearchesController < ApplicationController
     model = strip_admin(params[:model])
     page  = params[:page] || 1
 
-    unless %(Person Message ForumPost).include?(model)
+    unless %(Person Message ForumPost Group).include?(model)
       flash[:error] = "Invalid search"
       redirect_to home_url and return
     end
