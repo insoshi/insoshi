@@ -101,15 +101,22 @@ describe CommentsController do
       response.should render_template("wall_new")
     end
     
-    it "should allow destroy" do
+    it "should allow destroy for person" do
       login_as @person
       comment = comments(:wall_comment)
       delete :destroy, :person_id => @person, :id => comment
       comment.should_not exist_in_database
     end
     
-    it "should require the correct user to destroy a comment" do
-      login_as @commenter
+    it "should allow destroy for commenter" do
+      comment = comments(:wall_comment)
+      login_as comment.commenter
+      delete :destroy, :person_id => @person, :id => comment
+      comment.should_not exist_in_database
+    end
+    
+    it "should protect the destroy action" do
+      login_as :kelly
       comment = comments(:wall_comment)
       delete :destroy, :person_id => @person, :id => comment
       response.should redirect_to(home_url)

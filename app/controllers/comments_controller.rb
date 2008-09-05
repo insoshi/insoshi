@@ -7,6 +7,10 @@ class CommentsController < ApplicationController
   before_filter :authorize_destroy, :only => [:destroy]
   before_filter :connection_required
 
+  def show
+    redirect_to comments_url
+  end
+
   # Used for both wall and blog comments.
   def new
     @comment = parent.comments.new
@@ -32,7 +36,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
+    commentable = @comment.commentable
     @comment.destroy
 
     respond_to do |format|
@@ -66,8 +70,17 @@ class CommentsController < ApplicationController
       end
     end
     
+    def authorized_to_destroy?
+      @comment = Comment.find(params[:id])
+      if wall?
+        current_person?(person) or current_person?(@comment.commenter)
+      elsif blog?
+        current_person?(person)
+      end
+    end
+    
     def authorize_destroy
-      redirect_to home_url unless current_person?(person)
+      redirect_to home_url unless authorized_to_destroy?
     end
     
     ## Handle wall and blog comments in a uniform manner.
