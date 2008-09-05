@@ -13,7 +13,7 @@ module SearchesHelper
       "Forums" 
     elsif params[:controller] == "messages" or params[:model] == "Message"
       "Messages"
-    elsif params[:controller] == "groups" or params[:model] == "Group" or params[:action].include?("groups")
+    elsif params[:controller].include?("groups") or params[:model] == "Group" or params[:action].include?("groups")
       "Groups"
     else
       "People"

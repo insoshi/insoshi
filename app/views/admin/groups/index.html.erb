@@ -1,0 +1,16 @@
+<%- column_div :type => :primary do -%>
+
+  <h2>Groups</h2>
+
+  <%= will_paginate %>
+
+  <ul class="list people">
+    <%= render :partial => 'group', :collection => @groups %>
+  </ul>
+  
+  <%= will_paginate %>
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'searches/box' %>
+<%- end -%>

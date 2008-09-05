@@ -62,6 +62,7 @@ class GroupsController < ApplicationController
     @group.destroy
 
     respond_to do |format|
+      flash[:notice] = 'Group was successfully deleted.'
       format.html { redirect_to(groups_path()) }
     end
   end

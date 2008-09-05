@@ -22,10 +22,10 @@
         <li>
           <%- unless group_owner?(current_person,@group) -%>
             <%- unless current_person.groups.include?(@group) -%>
-              <%= link_to "Join to group", 
+              <%= link_to "Join to group",
                       join_group_path(@group), :method => :post %>
             <%- else -%>
-              <%= link_to "Leave group", 
+              <%= link_to "Leave group",
                       leave_group_path(@group), :method => :post %>
             <%- end -%>
           <%- else -%>
@@ -33,6 +33,12 @@
             <%= link_to "(delete it)", group_path(@group), :confirm => 'Are you sure?', :method => :delete %>
           <%- end -%>
         </li>
+        <%- if current_person.admin? -%>
+          <li>
+          <%= link_to "delete group",
+                admin_group_path(@group),:confirm => 'Are you sure?', :method => :delete%> 
+          </li>
+        <%- end -%>
       </ul>
     </div>
     <%= display @group.description %>
@@ -44,5 +50,8 @@
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'searches/box' %>
-  <%= render :partial => "people" %>
+  <%= render :partial => "people", 
+             :locals => {:members => @group.people, :title => "members"} %>
+  <%= render :partial => "people", 
+             :locals => {:members => ([] << @group.owner), :title => "admin"} %>
 <%- end -%>

@@ -15,14 +15,13 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'people/verify/:id', :controller => 'people',
                                     :action => 'verify_email'
   map.resources :people, :member => {:groups => :get, :admin_groups => :get} do |person|
-#     person.resources :groups
      person.resources :messages
      person.resources :photos
      person.resources :connections
      person.resources :comments
   end
   map.namespace :admin do |admin|
-    admin.resources :people, :preferences
+    admin.resources :people, :preferences, :groups
     admin.resources :forums do |forums|
       forums.resources :topics do |topic|
         topic.resources :posts
