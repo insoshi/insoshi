@@ -23,18 +23,18 @@ class SessionsController < ApplicationController
           @person.name = registration['nickname']
           @person.email = registration['email']
           @person.save
-          if @person.errors.empty?
-            self.current_person = @person
-            successful_login
-          else
+          if !@person.errors.empty?
             @body = "login single-col"
             err_message = "Your OpenID profile must provide"
             err_message += " nickname," if !@person.errors[:name].nil?
             err_message += " email," if !@person.errors[:email].nil?
 
             failed_login err_message.chop
+            return
           end
         end
+        self.current_person = @person
+        successful_login
       else
         failed_login result.message
       end
