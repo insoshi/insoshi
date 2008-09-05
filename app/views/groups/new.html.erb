@@ -1,0 +1,21 @@
+<%- column_div :type => :primary do -%>
+  <h2>New group</h2>
+
+  <% form_for(@group) do |f| %>
+    <%= f.error_messages %>
+
+    <div class="form_row">
+      <label for="name">Name</label>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="form_row">
+      <label for="description">Description</label>
+      <%= f.text_area :description %>
+    </div>
+      <%= f.hidden_field :person_id, :value => current_person.id %>
+    <div class="form_row">
+      <%= f.submit "Create", :class => "button" %>
+    </div>
+  <% end %>
+<%- end -%>

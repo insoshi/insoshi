@@ -88,6 +88,9 @@ class Person < ActiveRecord::Base
                                             :limit => FEED_SIZE
   has_many :page_views, :order => 'created_at DESC'
   
+  has_many :own_groups, :class_name => "Group", :foreign_key => "person_id"
+  has_and_belongs_to_many :groups, :order => "name DESC"
+  
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?

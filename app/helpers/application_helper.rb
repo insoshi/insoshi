@@ -19,7 +19,8 @@ module ApplicationHelper
       photos   = menu_element("Photos",   photos_path)
       contacts = menu_element("Contacts",
                               person_connections_path(current_person))
-      links = [home, profile, contacts, messages, blog, people, forum]
+      groups = menu_element("Groups", groups_path())
+      links = [home, profile, contacts, messages, groups, blog, people, forum]
     elsif logged_in? and admin_view?
       home =    menu_element("Home", home_path)
       people =  menu_element("People", admin_people_path)

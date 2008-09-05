@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :groups, :member => { :join => :post, :desjoin => :post}
   map.resources :preferences
   map.resources :searches
   map.resources :activities
@@ -14,6 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'people/verify/:id', :controller => 'people',
                                     :action => 'verify_email'
   map.resources :people do |person|
+#     person.resources :groups
      person.resources :messages
      person.resources :photos
      person.resources :connections

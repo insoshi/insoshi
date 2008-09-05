@@ -23,6 +23,8 @@ class PeopleController < ApplicationController
     if logged_in?
       @some_contacts = @person.some_contacts
       @common_contacts = current_person.common_contacts_with(@person)
+      @groups = @person.groups
+      @own_groups = @person.own_groups
     end
     respond_to do |format|
       format.html

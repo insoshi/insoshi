@@ -22,6 +22,7 @@ class Photo < ActiveRecord::Base
   UPLOAD_LIMIT = 5 # megabytes
   
   belongs_to :person
+  belongs_to :group
   has_attachment :content_type => :image, 
                  :storage => :file_system, 
                  :max_size => UPLOAD_LIMIT.megabytes,

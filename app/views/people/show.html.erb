@@ -85,6 +85,10 @@
     <%= render :partial => 'shared/contacts_preview',
                :locals => { :person => @person } %>
     <%= render :partial => 'common_contacts' %>
+    <%= render :partial => 'groups', 
+               :locals => {:groups => @groups, :title => "Groups"} %>
+    <%= render :partial => 'groups', 
+               :locals => {:groups => @own_groups, :title => "Admin Groups"} %>
   <%- end -%>
 <%- end -%>
 
