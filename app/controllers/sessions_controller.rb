@@ -8,7 +8,55 @@ class SessionsController < ApplicationController
   end
 
   def create
-    person = Person.authenticate(params[:email], params[:password])
+    if using_open_id?
+      open_id_authentication(params[:openid_url])
+    else
+      password_authentication(params[:login],params[:password])
+    end
+  end
+
+  def open_id_authentication(openid_url)
+    authenticate_with_open_id(openid_url, :required => [:nickname, :email]) do |result, identity_url, registration|
+      if result.successful?
+        @person = Person.find_or_initialize_by_identity_url(identity_url)
+        if @person.new_record?
+          @person.name = registration['nickname']
+          @person.email = registration['email']
+          @person.save
+          if @person.errors.empty?
+            self.current_person = @person
+            successful_login
+          else
+            @body = "login single-col"
+            err_message = "Your OpenID profile must provide"
+            err_message += " nickname," if !@person.errors[:name].nil?
+            err_message += " email," if !@person.errors[:email].nil?
+
+            failed_login err_message.chop
+          end
+        end
+      else
+        failed_login result.message
+      end
+    end
+  end
+
+  def failed_login(message = "Authentication failed.")
+    flash.now[:error] = message
+    render :action => 'new'
+  end
+  
+  def successful_login
+    if params[:remember_me] == "1"
+      self.current_person.remember_me
+      cookies[:auth_token] = { :value => self.current_person.remember_token , :expires => self.current_person.remember_token_expires_at }
+    end
+    redirect_back_or_default('/')
+    flash[:notice] = "Logged in successfully"
+  end
+
+  def password_authentication(login, password)
+    person = Person.authenticate(login, password)
     unless person.nil?
       if person.deactivated?
         flash[:error] = "Your account has been deactivated"

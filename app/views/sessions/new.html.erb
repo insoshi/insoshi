@@ -15,6 +15,15 @@
                                          :maxlength => Person::MAX_PASSWORD %>
     </div>
 
+    <p>
+      or use...
+    </p>
+
+    <div class="form_row">
+      <label for="openid_url">OpenID</label>
+      <%= text_field_tag "openid_url" %>
+    </div>
+
     <div class="form_row">
       <label for="remember_me" class="checkbox">Remember me:</label>
       <%= check_box_tag 'remember_me', '1', true, :class => "checkbox" %>

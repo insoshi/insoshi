@@ -35,7 +35,7 @@ class Person < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications,
-                  :blog_comment_notifications
+                  :blog_comment_notifications, :identity_url
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',
                           'email_verified'],
@@ -391,6 +391,7 @@ class Person < ActiveRecord::Base
     end
 
     def log_activity_description_changed
+      debugger
       unless @old_description == description or description.blank?
         add_activities(:item => self, :person => self)
       end
@@ -418,7 +419,7 @@ class Person < ActiveRecord::Base
     ## Other private method(s)
 
     def password_required?
-      crypted_password.blank? || !password.blank? || !verify_password.nil?
+      (crypted_password.blank? && identity_url.nil?) || !password.blank? || !verify_password.nil?
     end
     
     class << self
