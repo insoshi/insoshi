@@ -8,7 +8,6 @@ class SessionsController < ApplicationController
   end
 
   def create
-    logger.warn "XXX openid_url: #{params[:openid_url]}"
     if using_open_id?
       open_id_authentication(params[:openid_url])
     else
@@ -27,9 +26,11 @@ class SessionsController < ApplicationController
           @person.email_verified = true if global_prefs.email_verifications?
           @person.save
           if !@person.errors.empty?
-            err_message = "Your OpenID profile must provide"
-            err_message += " nickname," if !@person.errors[:name].nil?
-            err_message += " email," if !@person.errors[:email].nil?
+            err_message = "The following problems exist with your OpenID profile:<br>"
+            @person.errors.each do |attr,val| 
+              logger.warn "XXX #{attr}:#{val}"
+              err_message +=  "#{attr}: #{val}<br>" 
+            end
 
             failed_login err_message.chop
             return
