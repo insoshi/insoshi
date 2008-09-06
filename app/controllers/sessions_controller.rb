@@ -22,6 +22,8 @@ class SessionsController < ApplicationController
         if @person.new_record?
           @person.name = registration['nickname']
           @person.email = registration['email']
+          # XXX for now, don't mess with email verification for openid guys
+          @person.email_verified = true if global_prefs.email_verifications?
           @person.save
           if !@person.errors.empty?
             @body = "login single-col"
