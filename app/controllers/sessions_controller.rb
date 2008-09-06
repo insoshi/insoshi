@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
   end
 
   def create
+    logger.warn "XXX openid_url: #{params[:openid_url]}"
     if using_open_id?
       open_id_authentication(params[:openid_url])
     else
@@ -26,7 +27,6 @@ class SessionsController < ApplicationController
           @person.email_verified = true if global_prefs.email_verifications?
           @person.save
           if !@person.errors.empty?
-            @body = "login single-col"
             err_message = "Your OpenID profile must provide"
             err_message += " nickname," if !@person.errors[:name].nil?
             err_message += " email," if !@person.errors[:email].nil?
@@ -44,6 +44,7 @@ class SessionsController < ApplicationController
   end
 
   def failed_login(message = "Authentication failed.")
+    @body = "login single-col"
     flash.now[:error] = message
     render :action => 'new'
   end
