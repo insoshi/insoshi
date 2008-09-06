@@ -61,8 +61,8 @@ module ApplicationHelper
   end
   
   # Set the input focus for a specific id
-  # Usage: <%= set_focus_to_id 'form_field_label' %>
-  def set_focus_to_id(id)
+  # Usage: <%= set_focus_to 'form_field_label' %>
+  def set_focus_to(id)
     javascript_tag("$('#{id}').focus()");
   end
   
