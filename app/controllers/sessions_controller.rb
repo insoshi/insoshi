@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     if using_open_id?
       open_id_authentication(params[:openid_url])
     else
-      password_authentication(params[:login],params[:password])
+      password_authentication(params[:email],params[:password])
     end
   end
 
