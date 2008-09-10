@@ -101,6 +101,7 @@ class Person < ActiveRecord::Base
                             :with => EMAIL_REGEX,
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
+  validates_uniqueness_of   :identity_url, :allow_nil => true
 
   before_create :create_blog
   before_save :encrypt_password
@@ -391,7 +392,6 @@ class Person < ActiveRecord::Base
     end
 
     def log_activity_description_changed
-      debugger
       unless @old_description == description or description.blank?
         add_activities(:item => self, :person => self)
       end

@@ -17,29 +17,45 @@ class SessionsController < ApplicationController
 
   def open_id_authentication(openid_url)
     authenticate_with_open_id(openid_url, :required => [:nickname, :email]) do |result, identity_url, registration|
-      if result.successful?
+      if !result.successful?
+        failed_login result.message
+      else
         @person = Person.find_or_initialize_by_identity_url(identity_url)
         if @person.new_record?
+          @person.email_verified = false if global_prefs.email_verifications?
           @person.name = registration['nickname']
           @person.email = registration['email']
-          # XXX for now, don't mess with email verification for openid guys
-          @person.email_verified = true if global_prefs.email_verifications?
+
           @person.save
           if !@person.errors.empty?
             err_message = "The following problems exist with your OpenID profile:<br>"
-            @person.errors.each do |attr,val| 
-              logger.warn "XXX #{attr}:#{val}"
-              err_message +=  "#{attr}: #{val}<br>" 
+            @person.errors.each do |attr,val|
+              logger.warn "open_id_authentication() Error: #{attr}:#{val}"
+              err_message += "#{attr}: #{val}<br>"
             end
-
-            failed_login err_message.chop
-            return
+ 
+            flash[:error] = err_message.chop
+            @body = "login single-col"
+            session[:verified_identity_url] = identity_url
+            render :partial => "shared/personal_details.html.erb", :object => @person, :layout => 'application'
+          elsif global_prefs.email_verifications?
+            @person.email_verifications.create
+            flash[:notice] = %(Thanks for signing up! Check your email
+                               to activate your account.)
+            redirect_to(home_url)
+          else
+            successful_login("Thanks for signing up!")
           end
+
+          return
+        end # if new record
+
+        if @person.deactivated?
+          flash[:error] = "Your account has been deactivated"
+          redirect_to home_url and return
         end
-        self.current_person = @person
+
         successful_login
-      else
-        failed_login result.message
       end
     end
   end
@@ -50,13 +66,14 @@ class SessionsController < ApplicationController
     render :action => 'new'
   end
   
-  def successful_login
+  def successful_login(message = "Logged in successfully")
+    self.current_person = @person
     if params[:remember_me] == "1"
       self.current_person.remember_me
       cookies[:auth_token] = { :value => self.current_person.remember_token , :expires => self.current_person.remember_token_expires_at }
     end
     redirect_back_or_default('/')
-    flash[:notice] = "Logged in successfully"
+    flash[:notice] = message
   end
 
   def password_authentication(login, password)
