@@ -5,7 +5,6 @@ require 'string'
 # Handle RDiscount and BlueCloth in a unified way.
 begin
   require 'rdiscount'
-  BlueCloth = RDiscount
 rescue LoadError
   # Rails loads BlueCloth automatically if present.
   nil

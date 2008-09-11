@@ -140,16 +140,26 @@ module ApplicationHelper
     
     # Format text using BlueCloth (or RDiscount) if available.
     def format(text)
-      text.nil? ? "" : BlueCloth.new(text).to_html
-    rescue NameError
-      text
+      if text.nil?
+        ""
+      elsif defined?(RDiscount)
+        RDiscount.new(text).to_html
+      elsif defined?(BlueCloth)
+        BlueCloth.new(text).to_html
+      elsif no_paragraph_tag?(text)
+        content_tag :p, text
+      else
+        text
+      end
     end
     
     # Is a Markdown library present?
     def markdown?
-      BlueCloth.new("")
-      true
-    rescue NameError
-      false
+      defined?(RDiscount) or defined?(BlueCloth)
+    end
+    
+    # Return true if the text *doesn't* start with a paragraph tag.
+    def no_paragraph_tag?(text)
+      text !~ /^\<p/
     end
 end
