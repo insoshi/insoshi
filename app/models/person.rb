@@ -105,6 +105,7 @@ class Person < ActiveRecord::Base
 
   before_create :create_blog
   before_save :encrypt_password
+  before_save :check_config_for_deactivation
   before_validation :prepare_email, :handle_nil_description
   after_create :connect_to_admin
 
@@ -385,6 +386,14 @@ class Person < ActiveRecord::Base
     def encrypt_password
       return if password.blank?
       self.crypted_password = encrypt(password)
+    end
+
+    def check_config_for_deactivation
+      if Person.global_prefs.whitelist?
+        if self.new_record?
+          self.deactivated = true
+        end
+      end
     end
 
     def set_old_description
