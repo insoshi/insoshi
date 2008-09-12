@@ -103,9 +103,8 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of   :email
   validates_uniqueness_of   :identity_url, :allow_nil => true
 
-  before_create :create_blog
+  before_create :create_blog, :check_config_for_deactivation
   before_save :encrypt_password
-  before_save :check_config_for_deactivation
   before_validation :prepare_email, :handle_nil_description
   after_create :connect_to_admin
 
@@ -390,9 +389,7 @@ class Person < ActiveRecord::Base
 
     def check_config_for_deactivation
       if Person.global_prefs.whitelist?
-        if self.new_record?
-          self.deactivated = true
-        end
+        self.deactivated = true
       end
     end
 
