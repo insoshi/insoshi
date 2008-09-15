@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
   before_filter :login_required
-  before_filter :group_owner, :only => [:edit, :update, :destroy, :delete_photo]
+  before_filter :group_owner, :only => [:edit, :update, :destroy, 
+    :new_photo, :save_photo, :delete_photo]
   
   def index
     @groups = Group.paginate(:page => params[:page],

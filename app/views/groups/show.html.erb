@@ -39,10 +39,6 @@
                 admin_group_path(@group),:confirm => 'Are you sure?', :method => :delete%> 
           </li>
         <%- end -%>
-        <% unless @group.photos.empty? %>
-          <li><%= link_to "Photos", photos_group_path(@group) %></li>
-        <% end %>
-        <li><%= link_to "Add a photo", new_photo_group_path(@group), :method => :post %></li>
       </ul>
     </div>
     <%= display @group.description %>
