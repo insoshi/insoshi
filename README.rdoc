@@ -33,24 +33,34 @@ For more detailed information, check out our guide for Installing Git under Git 
 
 === Libraries
 
-You'll need to install FreeImage or some other image processor (such as ImageMagick/RMagick), SQLite, and (optionally) MySQL.  Install instructions for all three are easy to find using Google.  (If you're installing FreeImage on Windows, this blog post might be helpful: http://www.thewebfellas.com/blog/2008/2/18/imagescience-on-windows-without-the-pain/comments/931#comment-931.)
+You'll need to install FreeImage or some other image processor (such as ImageMagick/RMagick) and a database (MySQL or PostgreSQL).  Install instructions for these are easy to find using Google.  (If you're installing FreeImage on Windows, this blog post might be helpful: http://www.thewebfellas.com/blog/2008/2/18/imagescience-on-windows-without-the-pain/comments/931#comment-931.)
 
 To use Insoshi's search capability, you also need Sphinx.  Follow the instructions at http://www.sphinxsearch.com/downloads.html to install Sphinx for your platform.  When running Insoshi in a production envinronment, you should also set up a cron job to rotate the search index as described here:
 
 http://blog.evanweaver.com/files/doc/fauna/ultrasphinx/files/DEPLOYMENT_NOTES.html
+
+This currently works only with MySQL due to a bug in Ultrasphinx.
 
 === Gems
 
 You probably have Rails already, but might not have the others.
 
   $ sudo gem install rails
-  $ sudo gem install sqlite3-ruby
-  $ sudo gem install mysql
+  $ sudo gem install mysql     # for mysql support
+  $ sudo gem install postgres  # for postgres support
   $ sudo gem install chronic
 
 If you're using FreeImage/ImageScience, you'll also need the image_science gem:
 
   $ sudo gem install image_science
+  
+If you want Markdown formatting support you can install either RDiscount (fast but platform-dependent):
+
+$ sudo gem install rdiscount
+
+or BlueCloth (slower but pure Ruby)
+
+$ sudo gem install BlueCloth
 
 
 == Installing the app
@@ -93,31 +103,32 @@ Run the following custom install script
 
   $ script/install
 
-The install rake task runs the database migration and performs some additional setup tasks (generate an encryption keypair for password management, creating an admin account, etc.)
+The install script runs the database migration and performs some additional setup tasks (generate an encryption keypair for password management, creating an admin account, etc.)
 
-If the install step fails, you may not have properly set up the configuration files.
+If the install step fails, you may not have properly set up your database configuration.
 
-Then prepare the test database
+Then prepare the test database and run the tests (which are actually RSpec examples in the spec/ directory):
 
   $ rake db:test:prepare
+  $ rake spec
 
-configure and start the Ultrasphinx daemon for the test runtime
+If the tests fail in the Photos controller test, double-check that an image processor is properly installed.
+
+At this point, configure and start the Ultrasphinx daemon for the test runtime
 
   $ rake ultrasphinx:configure RAILS_ENV=test
   $ rake ultrasphinx:index RAILS_ENV=test
   $ rake ultrasphinx:daemon:start RAILS_ENV=test
 
-and run the tests (which are actually RSpec examples in the spec/ directory):
+and re-run the tests
 
   $ rake spec
 
-If the tests fail in the Photos controller test, double-check that an image processor is properly installed.
+The search specs detect whether the search daemon is running and weren't performed during the first test run.  An initial test run is needed in order to populate the test database for indexing (search specs would fail on an empty database).
 
 To shut down the Ultrasphinx daemon for test
 
   $ rake ultrasphinx:daemon:stop RAILS_ENV=test
-
-(The search specs are written to run only if the daemon is up.)
 
 === Loading sample data
 
@@ -166,6 +177,8 @@ Check out our Git Guides for information on how to manage your local development
 Note that there is a minimalist stat tracker that lets us keep track of how many different installs of Isoshi are out there.  We don't collect any personal information, but if you don't want to be tracked just open application.html.erb and comment out the line after this one:
 
   <%# A tracker to tell us about the activity of Insoshi installs %>
+
+The tracker works by hitting an external URL, so you should comment out this linem if working offline.
 
 == License
 

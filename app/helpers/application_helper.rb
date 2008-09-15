@@ -63,13 +63,12 @@ module ApplicationHelper
   end
   
   # Set the input focus for a specific id
-  # Usage: <%= set_focus_to_id 'form_field_label' %>
-  def set_focus_to_id(id)
+  # Usage: <%= set_focus_to 'form_field_label' %>
+  def set_focus_to(id)
     javascript_tag("$('#{id}').focus()");
   end
   
   # Display text by sanitizing and formatting.
-  # The formatting is done by Markdown via the BlueCloth gem.
   # The html_options, if present, allow the syntax
   #  display("foo", :class => "bar")
   #  => '<p class="bar">foo</p>'
@@ -81,7 +80,7 @@ module ApplicationHelper
       else
         tag_opts = nil
       end
-      processed_text = markdown(sanitize(text))
+      processed_text = format(sanitize(text))
     rescue
       # Sometimes Markdown throws exceptions, so rescue gracefully.
       processed_text = content_tag(:p, sanitize(text))
@@ -118,12 +117,17 @@ module ApplicationHelper
     str << link_to_unless_current(action, path, opts)
   end
 
+  # Return a formatting note (depends on the presence of a Markdown library)
   def formatting_note
-    %(HTML and
-      #{link_to("Markdown",
-                "http://daringfireball.net/projects/markdown/basics",
-                :popup => true)}
-     supported)
+    if markdown?
+      %(HTML and
+        #{link_to("Markdown",
+                  "http://daringfireball.net/projects/markdown/basics",
+                  :popup => true)}
+       formatting supported)
+    else 
+      "HTML formatting supported"
+    end
   end
 
   private
@@ -136,9 +140,28 @@ module ApplicationHelper
       text.gsub("<p>", "<p#{options}>")
     end
     
-    # Use RDiscount, which is much faster than BlueCloth.
-    # See, e.g., http://tomayko.com/writings/ruby-markdown-libraries-real-cheap-for-you-two-for-price-of-one
-    def markdown(text)
-      RDiscount.new(text).to_html
+    # Format text using BlueCloth (or RDiscount) if available.
+    def format(text)
+      if text.nil?
+        ""
+      elsif defined?(RDiscount)
+        RDiscount.new(text).to_html
+      elsif defined?(BlueCloth)
+        BlueCloth.new(text).to_html
+      elsif no_paragraph_tag?(text)
+        content_tag :p, text
+      else
+        text
+      end
+    end
+    
+    # Is a Markdown library present?
+    def markdown?
+      defined?(RDiscount) or defined?(BlueCloth)
+    end
+    
+    # Return true if the text *doesn't* start with a paragraph tag.
+    def no_paragraph_tag?(text)
+      text !~ /^\<p/
     end
 end

@@ -9,7 +9,8 @@
   </p>
   <%= display comment.body %>
 
-  <%- if current_person?(comment.commentable) -%>
+  <%- if (current_person?(comment.commentable) or
+          current_person?(comment.commenter)) -%>
   <br />
   <%= link_to "delete", person_comment_path(@person, comment),
                         :method => :delete %>

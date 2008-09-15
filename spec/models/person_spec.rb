@@ -75,10 +75,11 @@ describe Person do
     end
 
     it "should disappear if the person is destroyed" do
-      # Create a person, which creates a connection activity
-      # (with the first admin) as a side-effect, thereby ensuring a
-      # nonempty feed.
       person = create_person(:save => true)
+      # Create a feed activity.
+      Connection.connect(person, @person)
+      @person.update_attributes(:name => "New name")
+
       Activity.find_all_by_person_id(person).should_not be_empty
       person.destroy
       Activity.find_all_by_person_id(person).should be_empty
@@ -86,15 +87,13 @@ describe Person do
     end
 
     it "should disappear from other feeds if the person is destroyed" do
-      # Both these people are connected to the first admin.
       initial_person = create_person(:save => true)
-      # This creates an activity in the initial_person's feed.
       person         = create_person(:email => "new@foo.com", :name => "Foo",
                                      :save => true)
-      initial_person.activities.length.should == 2
+      Connection.connect(person, initial_person)
+      initial_person.activities.length.should == 1
       person.destroy
-      # The connection between person and the admin should be destroyed.
-      initial_person.reload.activities.length.should == 1
+      initial_person.reload.activities.length.should == 0
     end
   end
 

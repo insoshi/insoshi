@@ -81,7 +81,7 @@
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>
-  <%- if logged_in? -%>
+  <%- unless current_person?(@person) -%>
     <%= render :partial => 'shared/contacts_preview',
                :locals => { :person => @person } %>
     <%= render :partial => 'common_contacts' %>

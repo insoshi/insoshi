@@ -32,9 +32,9 @@
       <%= f.text_area :content, :id => "message_body" %>
       <%- if @message.reply? -%>
         <%= f.hidden_field :parent_id %>
-        <%= set_focus_to_id "message_body" %>
+        <%= set_focus_to "message_body" %>
       <%- else -%>
-        <%= set_focus_to_id "message_subject" %>
+        <%= set_focus_to "message_subject" %>
       <%- end -%>
     </div>
     <div class="form_row">
