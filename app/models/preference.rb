@@ -26,7 +26,7 @@ class Preference < ActiveRecord::Base
   validates_presence_of :smtp_server,  :if => :using_email?
   
   # Can we send mail with the present configuration?
-  def can_send_mail?
+  def can_send_email?
     not (domain.blank? or smtp_server.blank?)
   end
   
