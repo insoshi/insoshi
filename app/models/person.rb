@@ -84,10 +84,17 @@ class Person < ActiveRecord::Base
                     :conditions => "recipient_deleted_at IS NULL"
   end
   has_many :feeds
-  has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE
+  has_many :activities, :through => :feeds, :order => 'activities.created_at DESC',
+                                            :limit => FEED_SIZE,
+                                            :conditions => ["people.deactivated = ?", false],
+                                            :include => :person
+
   has_many :page_views, :order => 'created_at DESC'
-  
+
+  has_many :events
+  has_many :event_attendees
+  has_many :attendee_events, :through => :event_attendees, :source => :event
+
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
@@ -217,6 +224,12 @@ class Person < ActiveRecord::Base
                                    recipient_deleted_at IS NULL), id],
                  :order => "created_at DESC",
                  :limit => NUM_RECENT_MESSAGES)
+  end
+
+  def has_unread_messages?
+    Message.count(:all,
+                  :conditions => [%(recipient_id = ? AND
+                                    recipient_read_at IS NULL), id]) > 0
   end
 
   ## Photo helpers

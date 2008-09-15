@@ -24,6 +24,7 @@ class Comment < ActiveRecord::Base
 
   belongs_to :person, :counter_cache => true
   belongs_to :post, :counter_cache => true, :foreign_key => "blog_post_id"
+  belongs_to :event
 
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
 
@@ -43,6 +44,8 @@ class Comment < ActiveRecord::Base
                             commentable
                           when "BlogPost"
                             commentable.blog.person
+                          when "Event"
+                            commentable.person
                           end
   end
   
@@ -54,6 +57,10 @@ class Comment < ActiveRecord::Base
   
     def blog_post_comment?
       commentable.class.to_s == "BlogPost"
+    end
+
+    def event_comment?
+      commentable.class.to_s == "Event"
     end
     
     def notifications?

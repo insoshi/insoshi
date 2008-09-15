@@ -1,0 +1,36 @@
+<%= error_messages_for :event %>
+
+<% form_for(@event) do |f| %>
+<div class="form_row full">
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+</div>
+<div class="form_row full">
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+</div>
+<div class="form_row">
+  <%= f.label :start_time %>
+<%= calendar_date_select_tag "event[start_time]", @event.start_time||Time.now,
+                             :time => true, :size => 22,
+                             :valid_date_check => "date >= (new Date()).stripTime()" %>
+</div>
+<div class="form_row">
+  <%= f.label :end_time %>
+  <%= calendar_date_select_tag "event[end_time]", @event.end_time, :time => true, 
+                               :mixed => true, :size => 22,
+                               :valid_date_check => "date >= (new Date()).stripTime()" %>
+</div>
+<div class="form_row full">
+  <%= f.label :reminder %>
+  <%= f.check_box :reminder %> 
+</div>
+<div class="form_row full">
+  <%= f.label :privacy %>
+  <%= f.select :privacy, [["Public", Event::PRIVACY[:public]],["Me and my contacts", Event::PRIVACY[:contacts]]] %> 
+</div>
+<div class="form_row">
+  <%= f.submit @event.new_record? ? "Create" : "Update" %>
+</div>
+<% end %>
+
