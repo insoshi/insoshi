@@ -39,6 +39,8 @@ module ActivitiesHelper
       %(#{person_link(person)}'s profile picture has changed.)
     when "Person"
       %(#{person_link(person)}'s description has changed.)
+    when "Group"
+      %(#{person_link(person)} created the new group '#{group_link(Group.find(activity.item))}')
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -82,6 +84,8 @@ module ActivitiesHelper
       %(#{person_link(person)}'s profile picture has changed.)
     when "Person"
       %(#{person_link(person)}'s description has changed.)
+    when "Group"
+      %(#{person_link(person)} created the new group '#{group_link(Group.find(activity.item))}')
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -110,6 +114,8 @@ module ActivitiesHelper
               "camera.gif"
             when "Person"
                 "edit.gif"
+            when "Group"
+              "add.gif"
             else
               raise "Invalid activity type #{activity_type(activity).inspect}"
             end

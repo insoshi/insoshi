@@ -27,4 +27,9 @@ module GroupsHelper
     link_to(content, link, link_options)
   end
   
+  
+  def group_link(group)
+    link_to(group.name, group_path(group))
+  end
+  
 end

@@ -8,7 +8,7 @@ class CreateGroups < ActiveRecord::Migration
       t.timestamps
     end
     
-    create_table :groups_people do |t|
+    create_table :groups_people, :id => false do |t|
       t.integer :group_id
       t.integer :person_id
       

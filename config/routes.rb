@@ -1,5 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :groups, :member => { :join => :post, :leave => :post, :members => :get}
+  map.resources :groups, 
+    :member => { :join => :post, 
+                 :leave => :post, 
+                 :members => :get, 
+                 :new_photo => :post,
+                 :save_photo => :post,
+                 :delete_photo => :delete
+                 }
   map.resources :preferences
   map.resources :searches
   map.resources :activities

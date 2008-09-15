@@ -1,4 +1,6 @@
 class Group < ActiveRecord::Base
+  include ActivityLogger
+  
   validates_presence_of :name, :person_id
   
   has_many :photos, :dependent => :destroy, :order => "created_at"
@@ -6,9 +8,11 @@ class Group < ActiveRecord::Base
   
   belongs_to :owner, :class_name => "Person", :foreign_key => "person_id"
   
-  is_indexed :fields => [ 'name', 'description']
+  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
   
-  after_create :connect_to_owner
+  after_save :log_activity
+  
+  is_indexed :fields => [ 'name', 'description']
   
   ## Photo helpers
 
@@ -47,13 +51,12 @@ class Group < ActiveRecord::Base
     @sorted_photos ||= photos.partition(&:primary).flatten
   end
   
-  protected
   
-  def connect_to_owner
-#    tom = Person.find_first_admin
-#    unless tom.nil? or tom == self
-#      Connection.connect(self, tom)
-#    end
+  private
+  
+  def log_activity
+    activity = Activity.create!(:item => self, :person => Person.find(self.person_id))
+    add_activities(:activity => activity, :person => Person.find(self.person_id))
   end
   
 end

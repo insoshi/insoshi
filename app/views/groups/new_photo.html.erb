@@ -1,0 +1,14 @@
+<h2>Profile photo upload</h2>
+<%= error_messages_for :photo %>
+
+<% form_for :photo, @photo, :url => {:action => "save_photo"}, :html => { :multipart => true } do |f| -%>
+
+  <div class="form_field">
+    <label for="photo">Upload a photo:</label>
+    <%= f.file_field :uploaded_data %>
+  </div>
+  <div class="form_field">
+    <%= submit_tag 'Upload', :class => "button" %>
+    <%= f.submit "Cancel", :id => "cancel", :class => "button" %>
+  </div>
+<% end -%>
