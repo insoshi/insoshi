@@ -9,8 +9,8 @@ class CreateGroups < ActiveRecord::Migration
     end
     
     create_table :groups_people do |t|
-      t.group_id :integer
-      t.person_id :ineger
+      t.integer :group_id
+      t.integer :person_id
       
       t.timestamps
     end
