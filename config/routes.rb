@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
     :member => { :join => :post, 
                  :leave => :post, 
                  :members => :get, 
+                 :photos => :get,
                  :new_photo => :post,
                  :save_photo => :post,
                  :delete_photo => :delete

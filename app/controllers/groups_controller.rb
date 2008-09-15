@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_filter :login_required
-  before_filter :group_owner, :only => [:edit, :update, :destroy]
+  before_filter :group_owner, :only => [:edit, :update, :destroy, :delete_photo]
   
   def index
     @groups = Group.paginate(:page => params[:page],
@@ -97,6 +97,14 @@ class GroupsController < ApplicationController
     end
   end
   
+  def photos
+    @group = Group.find(params[:id])
+    @photos = @group.photos
+    respond_to do |format|
+      format.html
+    end
+  end
+  
   def new_photo
     @photo = Photo.new
 
@@ -124,7 +132,11 @@ class GroupsController < ApplicationController
     respond_to do |format|
       if @photo.save
         flash[:success] = "Photo successfully uploaded"
-        format.html { redirect_to(edit_group_path(group)) }
+        if group.owner == current_person
+          format.html { redirect_to(edit_group_path(group)) }
+        else
+          format.html { redirect_to(group_path(group)) }
+        end
       else
         format.html { render :action => "new_photo" }
       end

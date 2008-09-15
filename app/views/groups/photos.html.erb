@@ -1,0 +1,7 @@
+<% unless @photos.empty? %>
+<ul style="list-style-type: none;">
+<% @photos.each do |photo| %>
+  <li><%= image_tag(photo.public_filename) %></li>
+<% end %>
+</ul>
+<% end %>
