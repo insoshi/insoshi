@@ -1,6 +1,6 @@
-# -*- coding: utf-8 -*-
 class EventsController < ApplicationController
 
+  before_filter :in_progress if production?
   before_filter :login_required
   before_filter :load_event, :except => [:index, :new, :create]
   before_filter :load_date, :only => [:index, :show]
@@ -103,41 +103,49 @@ class EventsController < ApplicationController
   end
 
   private
-  def authorize_show
-    if @event.only_contacts? && !(@event.person.contact_ids.include?(current_person.id) || 
-                                  current_person?(@event.person) || current_person.admin?)
-      redirect_to home_url 
+    
+    def in_progress
+      flash[:notice] = "Work on this feature is in progress."
+      redirect_to home_url
     end
-  end
   
-  def authorize_change
-    redirect_to home_url unless current_person?(@event.person)
-  end
-
-  def authorize_destroy
-    redirect_to home_url unless current_person?(@event.person) || current_person.admin?
-  end
-
-  def load_date
-    if @event
-      @date = @event.start_time
-    else
-      now = Time.now
-      year = (params[:year]||now.year).to_i
-      month = (params[:month]||now.month).to_i
-      day = (params[:day]||now.mday).to_i
-      @date = DateTime.new(year,month,day)
+    def authorize_show
+      if (@event.only_contacts? and
+          not (@event.person.contact_ids.include?(current_person.id) or
+               current_person?(@event.person) or current_person.admin?))
+        redirect_to home_url 
+      end
     end
-  rescue ArgumentError
-    @date = Time.now
-  end
+  
+    def authorize_change
+      redirect_to home_url unless current_person?(@event.person)
+    end
 
-  def filter_by_day?
-    !params[:day].nil?
-  end
+    def authorize_destroy
+      can_destroy = current_person?(@event.person) || current_person.admin?
+      redirect_to home_url unless can_destroy
+    end
 
-  def load_event
-    @event = Event.find(params[:id])
-  end
+    def load_date
+      if @event
+        @date = @event.start_time
+      else
+        now = Time.now
+        year = (params[:year] || now.year).to_i
+        month = (params[:month] || now.month).to_i
+        day = (params[:day] || now.mday).to_i
+        @date = DateTime.new(year,month,day)
+      end
+    rescue ArgumentError
+      @date = Time.now
+    end
+
+    def filter_by_day?
+      !params[:day].nil?
+    end
+
+    def load_event
+      @event = Event.find(params[:id])
+    end
 
 end
