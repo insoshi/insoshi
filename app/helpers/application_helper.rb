@@ -20,7 +20,9 @@ module ApplicationHelper
       contacts = menu_element("Contacts",
                               person_connections_path(current_person))
       events   = menu_element("Events", events_path)
-      links = [home, profile, contacts, messages, blog, people, forum, events]
+      links = [home, profile, contacts, messages, blog, people, forum]
+      # TODO: remove 'unless production?' once events are ready.
+      links.push(events) unless production?
       
     elsif logged_in? and admin_view?
       home =    menu_element("Home", home_path)
