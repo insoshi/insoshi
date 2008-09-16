@@ -112,7 +112,7 @@ class EventsController < ApplicationController
     def authorize_show
       if (@event.only_contacts? and
           not (@event.person.contact_ids.include?(current_person.id) or
-               current_person?(@event.person) or current_person.admin?)
+               current_person?(@event.person) or current_person.admin?))
         redirect_to home_url 
       end
     end

@@ -23,7 +23,7 @@ class Comment < ActiveRecord::Base
                          :foreign_key => "commenter_id"
 
   belongs_to :person, :counter_cache => true
-  belongs_to :post, :counter_cache => true, :foreign_key => "blog_post_id"
+  belongs_to :post
   belongs_to :event
 
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
