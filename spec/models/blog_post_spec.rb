@@ -3,9 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe BlogPost do
   
   before(:each) do
-    @post = BlogPost.new(:title => "First post!",
-                         :body => "Hey there",
-                         :blog => blogs(:one))
+    @post = blogs(:one).posts.build(:title => "First post!",
+                                    :body => "Hey there")
   end
   
   it "should be valid" do
