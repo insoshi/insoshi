@@ -22,8 +22,9 @@ describe Activity do
   end
   
   it "should delete topic & post activities along with the parent items" do
-    @topic = Topic.create(:name => "A topic", :forum => forums(:one),
-                          :person => @person)
+    @topic = forums(:one).topics.build(:name => "A topic")
+    @topic.person = @person
+    @topic.save!
     post = @topic.posts.build(:body => "body")
     post.person = @person
     post.save!

@@ -4,8 +4,8 @@ describe Topic do
   
   before(:each) do
     @person = people(:quentin)
-    @topic = Topic.new(:name => "A topic", :forum => forums(:one),
-                       :person => @person)
+    @topic = forums(:one).topics.build(:name => "A topic")
+    @topic.person = @person
   end
 
   it "should be valid" do
@@ -38,7 +38,8 @@ describe Topic do
   
   it "should belong to a person" do
     quentin = people(:quentin)
-    topic = Topic.new(:person => quentin)
+    topic = Topic.new
+    topic.person = quentin
     topic.person.should == quentin
   end
   
