@@ -22,8 +22,8 @@ class CommentsController < ApplicationController
 
   # Used for both wall and blog comments.
   def create
-    @comment = parent.comments.new(params[:comment].
-                                   merge(:commenter => current_person))
+    @comment = parent.comments.build(params[:comment])
+    @comment.commenter = current_person
     
     respond_to do |format|
       if @comment.save

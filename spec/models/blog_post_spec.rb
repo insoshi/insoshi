@@ -48,8 +48,8 @@ describe BlogPost do
     
     before(:each) do
       @post.save
-      @post.comments.create(:body => "The body",
-                            :commenter => people(:aaron))
+      comment = @post.comments.unsafe_create(:body => "The body",
+                                             :commenter => people(:aaron))
     end
     
     it "should have associated comments" do

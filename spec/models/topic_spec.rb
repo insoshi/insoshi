@@ -28,9 +28,7 @@ describe Topic do
   
   it "should destroy associated posts" do
     @topic.save!
-    post = @topic.posts.build(:body => "body")
-    post.person = @person
-    post.save!
+    post = @topic.posts.unsafe_create(:body => "body", :person => @person)
     # See the custom model matcher DestroyAssociated, located in
     # spec/matchers/custom_model_matchers.rb.
     @topic.should destroy_associated(:posts)
