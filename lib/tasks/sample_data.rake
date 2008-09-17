@@ -56,7 +56,7 @@ def create_people
                               :description => @lipsum)
       person.last_logged_in_at = Time.now
       person.save
-      Photo.create!(:uploaded_data => uploaded_file(photos[i], 'image/jpg'),
+      Photo.unsafe_create!(:uploaded_data => uploaded_file(photos[i], 'image/jpg'),
                     :person => person, :primary => true)
     end
   end
@@ -76,10 +76,10 @@ def make_messages(text)
   senders = Person.find(:all, :limit => 10)
   senders.each do |sender|
     subject = some_text(SMALL_STRING_LENGTH)
-    Message.create!(:subject => subject, :content => text, 
+    Message.unsafe_create!(:subject => subject, :content => text, 
                     :sender => sender, :recipient => michael,
                     :send_mail => false)
-    Message.create!(:subject => subject, :content => text, 
+    Message.unsafe_create!(:subject => subject, :content => text, 
                     :sender => michael, :recipient => sender,
                     :send_mail => false)
   end
@@ -90,10 +90,10 @@ def make_forum_posts
   people = [default_person] + default_person.contacts
   (1..11).each do |n|
     name = some_text(rand(Topic::MAX_NAME))
-    topic = forum.topics.create(:name => name, :person => people.pick,
+    topic = forum.topics.unsafe_create(:name => name, :person => people.pick,
                                 :created_at => rand(10).hours.ago)
     11.times do
-      topic.posts.create(:body => @lipsum, :person => people.pick,
+      topic.posts.unsafe_create(:body => @lipsum, :person => people.pick,
                          :created_at => rand(10).hours.ago)
     end
   end
@@ -101,11 +101,11 @@ end
 
 def make_blog_posts
   3.times do
-    default_person.blog.posts.create!(:title => some_text(rand(25)),
+    default_person.blog.posts.unsafe_create!(:title => some_text(rand(25)),
       :body => some_text(rand(MEDIUM_TEXT_LENGTH)))
   end
   default_person.contacts.each do |contact|
-    contact.blog.posts.create!(:title => some_text(rand(25)),
+    contact.blog.posts.unsafe_create!(:title => some_text(rand(25)),
       :body => some_text(rand(MEDIUM_TEXT_LENGTH)))
   end
 end
