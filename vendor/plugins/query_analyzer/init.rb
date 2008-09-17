@@ -1,1 +1,1 @@
-require 'query_analyzer'
+#require 'query_analyzer'

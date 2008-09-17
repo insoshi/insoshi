@@ -84,7 +84,8 @@ describe CommentsController do
       lambda do
         post :create, :person_id => @person,
                       :comment => { :body => "The body" }
-        response.should redirect_to(person_url(@person))
+        #should go directly to the person's wall              
+        response.should redirect_to(person_url(@person)+'#tWall')
       end.should change(Comment, :count).by(1)
     end
       

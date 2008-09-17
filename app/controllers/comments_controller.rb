@@ -108,7 +108,7 @@ class CommentsController < ApplicationController
     # Return the URL for the resource comments.
     def comments_url
       if wall?
-        @person
+        (person_url @person)+'#tWall'  # go directly to comments tab
       elsif blog?
         blog_post_url(@blog, @post)
       end
