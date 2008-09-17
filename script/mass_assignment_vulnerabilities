@@ -49,7 +49,7 @@ def find_mass_assignment_problems(controller)
   end
 end
 
-controllers = Dir.glob("#{RAILS_ROOT}/app/controllers/*.rb")
+controllers = Dir.glob("#{RAILS_ROOT}/app/controllers/*_controller.rb")
 
 puts "Possible mass assignment vulnerabilities:"
 controllers.each do |controller|
