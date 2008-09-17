@@ -472,7 +472,7 @@ ul.ui-tabs-nav li {
     float: left;
 	display: inline;
 	width: 140px;
-	height: 110px;
+	height: 131px;
 	border: 1px solid #ccc;
 	padding: 4px;
 	overflow: hidden;
@@ -485,7 +485,8 @@ ul.ui-tabs-nav li {
 	border-bottom: none;
 }
 .gallPhotoTitle {
-	height: 35px;
+	height: 18px;
+	margin-bottom: 5px;
 }
 .gallPhoto {
 	float: left;

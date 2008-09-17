@@ -16,10 +16,15 @@
   <div>
     <ul>
       <% if current_person?(@gallery.person)%>
-        <li class='button'><%= link_to "Add photo", new_gallery_photo_path(@gallery) %></li>
-        <li class='button'><%= link_to "Edit gallery", edit_gallery_path() %></li>
+        <li class='button'><%= link_to "Add photo", 
+			new_gallery_photo_path(@gallery) %></li>
+        <li class='button'><%= link_to "Edit gallery", 
+			edit_gallery_path() %></li>
       <% end %>
-      <li class='button'><%= link_to "#{h(@gallery.person.name)}'s gallery list", person_path(@gallery.person, :anchor => 'tGalleries') %></li>
+      <li class='button'>
+		<%= link_to "#{h(@gallery.person.name)}'s gallery list", 
+			person_path(@gallery.person, :anchor => 'tGalleries') %>
+	  </li>
     </ul>
   </div>
 <%- end-%>
