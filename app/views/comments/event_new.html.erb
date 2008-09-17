@@ -1,0 +1,17 @@
+<h2>Event comment</h2>
+
+<%= error_messages_for :comment %>
+
+<h3>Leave a comment</h3>
+
+<% form_for :comment, :url => event_comments_path(@event),
+            :html => { :id => "eventcomment" } do |f| %>
+  <div class="form_row">
+    <%= f.text_area :body, :rows => 10 %>
+  </div>
+  
+  <div class="form_row">
+    <%= submit_tag "Submit", :class => "button" %>
+  </div>
+<% end %>
+

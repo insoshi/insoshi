@@ -7,7 +7,7 @@
       <%= text_field_tag 'email', params[:email],
                                   :maxlength => Person::MAX_EMAIL  %>
     </div>
-    <%= set_focus_to_id "email" %>
+    <%= set_focus_to "email" %>
 
     <div class="form_row">
       <label for="password">Password</label>
@@ -25,8 +25,10 @@
       <p>or <%= link_to "Sign up", signup_path %></p>
     </div>
 
+    <%- if global_prefs.can_send_email? -%>
     <p class="form_row">
       <%= link_to "I forgot my password!", new_password_reminder_path %>
     </p>
+    <%- end -%>
   <% end -%>
 <%- end -%>

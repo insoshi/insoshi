@@ -21,8 +21,10 @@ class Photo < ActiveRecord::Base
   include ActivityLogger
   UPLOAD_LIMIT = 5 # megabytes
   
-  belongs_to :gallery, :counter_cache => true
-  acts_as_list :scope => :gallery_id
+  # attr_accessible is a nightmare with attachment_fu, so use
+  # attr_protected instead.
+  attr_protected :id, :person_id, :parent_id, :created_at, :updated_at
+  
   belongs_to :person
   has_attachment :content_type => :image, 
                  :storage => :file_system, 
@@ -33,7 +35,9 @@ class Photo < ActiveRecord::Base
                                   :icon         => '36>',
                                   :bounded_icon => '36x36>' },
                  :thumbnail_class => Thumbnail
-  
+
+  belongs_to :gallery, :counter_cache => true
+  acts_as_list :scope => :gallery_id  
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
     
   validates_length_of :title, :maximum => 255, :allow_nil => true

@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+require File.dirname(__FILE__) + '/../config/boot'
+require 'active_support'
+
+# Find the models that have potential mass assignment problems.
+# The method is to scan the controllers for likely mass assignment,
+# and then find the corresponding models that *don't* have 
+# attr_accessible defined.  Any time that happens, it's a potential problem.
+
+class String
+  
+  MASS_ASSIGNMENT = /(\w+)\.(new|create|update_attributes|build)!*\(/
+  
+  # Return the strings that represent potential mass assignment problems.
+  # The MASS_ASSIGNMENT regex returns, e.g., ['Post', 'new'] because of
+  # the grouping methods; we want the first of the two.
+  def mass_assignment_problems
+    scan(MASS_ASSIGNMENT).map { |problem| problem.first }
+  end
+
+  def mass_assignment?
+    self =~ MASS_ASSIGNMENT
+  end
+  
+  def attr_accessible?
+    self =~ /attr_accessible/
+  end
+end
+
+def print_models_without_attr_accessible(controller, line, number)
+  line.mass_assignment_problems.each do |problem|
+    model = problem.classify
+    model_file = "#{RAILS_ROOT}/app/models/#{model}.rb"
+    if File.exist?(model_file)
+      unless File.open(model_file).read.attr_accessible?
+        puts  "  #{model} model:"
+        puts  "    #{controller}"
+        print "    #{number} #{line}"
+      end
+    end
+  end
+end
+
+def find_mass_assignment_problems(controller)
+  File.open(controller).each_with_index do |line, number|
+    if line.mass_assignment?
+      print_models_without_attr_accessible(controller, line, number)
+    end
+  end
+end
+
+controllers = Dir.glob("#{RAILS_ROOT}/app/controllers/*_controller.rb")
+
+puts "Possible mass assignment vulnerabilities:"
+controllers.each do |controller|
+  find_mass_assignment_problems(controller)
+end
+

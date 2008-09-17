@@ -31,6 +31,8 @@ class Message < Communication
   MAX_CONTENT_LENGTH = 5000
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
+
+  attr_accessible :subject, :content
   
   belongs_to :sender, :class_name => 'Person', :foreign_key => 'sender_id'
   belongs_to :recipient, :class_name => 'Person',
@@ -50,6 +52,7 @@ class Message < Communication
   end
   
   def parent=(message)
+    self.parent_id = message.id
     @parent = message
   end
   
@@ -91,16 +94,22 @@ class Message < Communication
   
   # Return true if the message is a reply to a previous message.
   def reply?
-    (!parent.nil? or !parent_id.nil?) and correct_sender_recipient_pair?
+    (!parent.nil? or !parent_id.nil?) and valid_reply?
   end
   
   # Return true if the sender/recipient pair is valid for a given parent.
-  def correct_sender_recipient_pair?
+  def valid_reply?
     # People can send multiple replies to the same message, in which case
     # the recipient is the same as the parent recipient.
     # For most replies, the message recipient should be the parent sender.
     # We use Set to handle both cases uniformly.
     Set.new([sender, recipient]) == Set.new([parent.sender, parent.recipient])
+  end
+  
+  # Return true if pair of people is valid.
+  def valid_reply_pair?(person, other)
+    ((recipient == person and sender == other) or
+     (recipient == other  and sender == person))
   end
   
   # Return true if the message has been replied to.
@@ -133,7 +142,10 @@ class Message < Communication
   
     # Mark the parent message as replied to if the current message is a reply.
     def set_replied_to
-      parent.update_attributes!(:replied_at => Time.now) if reply?
+      if reply?
+        parent.replied_at = Time.now
+        parent.save!
+      end
     end
     
     def update_recipient_last_contacted_at

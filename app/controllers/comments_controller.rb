@@ -7,6 +7,10 @@ class CommentsController < ApplicationController
   before_filter :authorize_destroy, :only => [:destroy]
   before_filter :connection_required
 
+  def show
+    redirect_to comments_url
+  end
+
   # Used for both wall and blog comments.
   def new
     @comment = parent.comments.new
@@ -18,8 +22,8 @@ class CommentsController < ApplicationController
 
   # Used for both wall and blog comments.
   def create
-    @comment = parent.comments.new(params[:comment].
-                                   merge(:commenter => current_person))
+    @comment = parent.comments.build(params[:comment])
+    @comment.commenter = current_person
     
     respond_to do |format|
       if @comment.save
@@ -32,7 +36,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
+    commentable = @comment.commentable
     @comment.destroy
 
     respond_to do |format|
@@ -49,11 +53,19 @@ class CommentsController < ApplicationController
       elsif blog?
         @blog = Blog.find(params[:blog_id])
         @post = Post.find(params[:post_id])
+      elsif event?
+        @event = Event.find(params[:event_id])
       end
     end
   
     def person
-      @person || @blog.person
+      if wall?
+        @person
+      elsif blog?
+        @blog.person 
+      elsif event?
+        @event.person
+      end
     end
     
     # Require the users to be connected.
@@ -66,8 +78,17 @@ class CommentsController < ApplicationController
       end
     end
     
+    def authorized_to_destroy?
+      @comment = Comment.find(params[:id])
+      if wall?
+        current_person?(person) or current_person?(@comment.commenter)
+      elsif blog?
+        current_person?(person)
+      end
+    end
+    
     def authorize_destroy
-      redirect_to home_url unless current_person?(person)
+      redirect_to home_url unless authorized_to_destroy?
     end
     
     ## Handle wall and blog comments in a uniform manner.
@@ -78,6 +99,8 @@ class CommentsController < ApplicationController
         @person.comments
       elsif blog?
         @post.comments.paginate(:page => params[:page])
+      elsif
+        @event.comments
       end  
     end
     
@@ -87,6 +110,8 @@ class CommentsController < ApplicationController
         @person
       elsif blog?
         @post
+      elsif event?
+        @event
       end
     end
     
@@ -102,6 +127,8 @@ class CommentsController < ApplicationController
         "wall"
       elsif blog?
         "blog_post"
+      elsif event?
+        "event"
       end
     end
     
@@ -111,6 +138,8 @@ class CommentsController < ApplicationController
         (person_url @person)+'#tWall'  # go directly to comments tab
       elsif blog?
         blog_post_url(@blog, @post)
+      elsif event?
+        @event
       end
     end
 
@@ -122,5 +151,9 @@ class CommentsController < ApplicationController
     # True if resource lives in a blog.
     def blog?
       !params[:blog_id].nil?
+    end
+
+    def event?
+      !params[:event_id].nil?
     end
 end

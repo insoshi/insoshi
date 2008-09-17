@@ -253,6 +253,10 @@ describe Person do
     it "should have received messages" do
       @person.received_messages.should_not be_nil
     end
+    
+    it "should have unread messages" do
+      @person.has_unread_messages?.should be_true
+    end
   end
 
   describe "authentication" do

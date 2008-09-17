@@ -36,8 +36,7 @@ class PhotosController < ApplicationController
     end
     if params[:commit] == "Cancel"
       redirect_to gallery_path(Gallery.find(params[:gallery_id])) and return
-    end
-    
+    end    
     @gallery = Gallery.find(params[:gallery_id])
     photo_data = { :person => current_person,
                    :gallery => @gallery}

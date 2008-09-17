@@ -36,7 +36,16 @@ module ActivitiesHelper
           %(#{person_link_with_image(activity.item.commenter)}
             commented on #{wall(activity)})
         end
+        %(#{person_link(activity.item.commenter)} commented on 
+          #{wall(activity)}.)
       end
+    when "Event"
+      # TODO: make recent/long versions for this
+      event = activity.item.commentable
+      commenter = activity.item.commenter
+      %(#{person_link(commenter)} commented on 
+        #{someones(event.person, commenter)} event: 
+        #{event_link(event.title, event)}.)
     when "Connection"
       if activity.item.contact.admin?
         if recent
@@ -90,6 +99,13 @@ module ActivitiesHelper
           #{photo_link(activity.item)}
           #{to_gallery_link(activity.item.gallery)})
       end
+    when "Event"
+      event = activity.item
+      %(#{person_link(person)} has created a new event: #{event_link(event.title, event)}.)
+    when "EventAttendee"
+      event = activity.item.event
+      %(#{person_link(person)} is attending #{someones(event.person, person)} event: 
+        #{event_link(event.title, event)}.) 
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -116,6 +132,10 @@ module ActivitiesHelper
       when "Person"
         %(#{person_link_with_image(activity.item.commenter)} commented on 
           #{wall(activity)}.)
+      when "Event"
+        event = activity.item.commentable
+        %(#{person_link(activity.item.commenter)} commented on 
+          #{someones(event.person, activity.item.commenter)} #{event_link("event", event)}.)
       end
     when "Connection"
       if activity.item.contact.admin?
@@ -139,6 +159,12 @@ module ActivitiesHelper
     when "Photo"
       %(#{person_link(person)} added new
         #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
+      %(#{person_link(person)}'s description has changed.)
+    when "Event"
+      %(#{person_link(person)}'s has created a new #{event_link("event", activity.item)}.)
+    when "EventAttendee"
+      event = activity.item.event
+      %(#{person_link(person)} is attending #{someones(event.person, person)} #{event_link("event", event)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -153,6 +179,8 @@ module ActivitiesHelper
               parent_type = activity.item.commentable.class.to_s
               case parent_type
               when "BlogPost"
+                "comment.png"
+              when "Event"
                 "comment.png"
               when "Person"
                 "sound.png"
@@ -173,6 +201,10 @@ module ActivitiesHelper
               "photos.png"
             when "Photo"
               "photo.png"
+            when "Event"
+              "time.gif"
+            when "EventAttendee"
+              "check.gif"
             else
               raise "Invalid activity type #{activity_type(activity).inspect}"
             end
@@ -227,6 +259,11 @@ module ActivitiesHelper
     end
     link_to(h(text), photo_path(photo))
   end
+
+  def event_link(text, event)
+    link_to(text, event_path(event))
+  end
+
 
   # Return a link to the wall.
   def wall(activity)

@@ -19,22 +19,31 @@ module ApplicationHelper
       forum = menu_element("Forums", forums_path)
     end
     resources = menu_element("Resources", "http://docs.insoshi.com/")
-    if logged_in?
-      if not admin_view?
-        profile  = menu_element("Profile",  person_path(current_person))
-        messages = menu_element("Messages", messages_path)
-        blog     = menu_element("Blog",     blog_path(current_person.blog))
-        galleries   = menu_element("Galleries",   person_galleries_path(current_person))
-        contacts = menu_element("Contacts", person_connections_path(current_person))
-        links = [profile, contacts, messages, people, forum]
-      else
-        home =    menu_element("Home", home_path)
-        people =  menu_element("People", admin_people_path)
-        forums =  menu_element(inflect("Forum", Forum.count),
-                               admin_forums_path)
-        preferences = menu_element("Prefs", admin_preferences_path)
-        links = [people, forums, preferences, resources]
-      end
+
+    if logged_in? and not admin_view?
+      profile  = menu_element("Profile",  person_path(current_person))
+      messages = menu_element("Messages", messages_path)
+      blog     = menu_element("Blog",     blog_path(current_person.blog))
+      photos   = menu_element("Photos",   photos_path)
+      contacts = menu_element("Contacts",
+                              person_connections_path(current_person))
+      events   = menu_element("Events", events_path)
+      links = [home, profile, contacts, messages, blog, people, forum]
+      # TODO: remove 'unless production?' once events are ready.
+      links.push(events) unless production?
+      
+    elsif logged_in? and admin_view?
+      home =    menu_element("Home", home_path)
+      people =  menu_element("People", admin_people_path)
+      forums =  menu_element(inflect("Forum", Forum.count),
+                             admin_forums_path)
+      preferences = menu_element("Prefs", admin_preferences_path)
+      links = [home, people, forums, preferences]
+    else
+      links = [home, people]
+    end
+    if global_prefs.about.blank?
+      links
     else
       links = [people]
     end
@@ -59,7 +68,7 @@ module ApplicationHelper
   end
   
   def login_block
-    forgot = global_prefs.can_send_mail? ? '<br />' + link_to('I forgot my password', new_password_reminder_path) : ''
+    forgot = global_prefs.can_send_email? ? '<br />' + link_to('I forgot my password', new_password_reminder_path) : ''
     content_tag(:span, link_to("Sign in", login_path) + ' or ' +
                        link_to("Sign up", signup_path) + 
                        forgot)
@@ -75,8 +84,8 @@ module ApplicationHelper
   end
   
   # Set the input focus for a specific id
-  # Usage: <%= set_focus_to_id 'form_field_label' %>
-  def set_focus_to_id(id)
+  # Usage: <%= set_focus_to 'form_field_label' %>
+  def set_focus_to(id)
     javascript_tag("$('#{id}').focus()");
   end
   
@@ -162,16 +171,26 @@ module ApplicationHelper
     
     # Format text using BlueCloth (or RDiscount) if available.
     def format(text)
-      text.nil? ? "" : BlueCloth.new(text).to_html
-    rescue NameError
-      text
+      if text.nil?
+        ""
+      elsif defined?(RDiscount)
+        RDiscount.new(text).to_html
+      elsif defined?(BlueCloth)
+        BlueCloth.new(text).to_html
+      elsif no_paragraph_tag?(text)
+        content_tag :p, text
+      else
+        text
+      end
     end
     
     # Is a Markdown library present?
     def markdown?
-      BlueCloth.new("")
-      true
-    rescue NameError
-      false
+      defined?(RDiscount) or defined?(BlueCloth)
+    end
+    
+    # Return true if the text *doesn't* start with a paragraph tag.
+    def no_paragraph_tag?(text)
+      text !~ /^\<p/
     end
 end

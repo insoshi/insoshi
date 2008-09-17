@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+public:
+  title: MyString
+  description: MyString
+  person: aaron 
+  start_time: 2008-08-19 19:38:49
+  end_time: 2008-08-19 19:38:49
+  reminder: false
+  privacy: 1 # public
+
+private:
+  title: MyString
+  description: MyString
+  person: quentin
+  start_time: 2008-08-19 19:38:49
+  end_time: 2008-08-19 19:38:49
+  reminder: false
+  privacy: 2 # contacts
