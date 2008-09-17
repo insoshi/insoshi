@@ -33,9 +33,9 @@ def print_models_without_attr_accessible(controller, line, number)
     model_file = "#{RAILS_ROOT}/app/models/#{model}.rb"
     if File.exist?(model_file)
       unless File.open(model_file).read.attr_accessible?
-        puts "#{model} model:"
-        puts "  " + controller
-        print "  ", number, line
+        puts  "  #{model} model:"
+        puts  "    #{controller}"
+        print "    #{number} #{line}"
       end
     end
   end
