@@ -11,10 +11,6 @@ class String
   
   MASS_ASSIGNMENT = /(\w+)\.(new|create|update_attributes|build)!*\(/
   
-  def attr_accessible?
-    self =~ /attr_accessible/
-  end
-  
   # Return the strings that represent potential mass assignment problems.
   # The MASS_ASSIGNMENT regex returns, e.g., ['Post', 'new'] because of
   # the grouping methods; we want the first of the two.
@@ -24,6 +20,10 @@ class String
 
   def mass_assignment?
     self =~ MASS_ASSIGNMENT
+  end
+  
+  def attr_accessible?
+    self =~ /attr_accessible/
   end
 end
 
