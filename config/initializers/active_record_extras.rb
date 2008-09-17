@@ -13,6 +13,11 @@ class ActiveRecord::Base
     o.save
     o
   end
+  
+  def self.unsafe_create!(attrs)
+    o = unsafe_build(attrs)
+    o.save!
+  end
 
   def unsafe_attributes=(attrs)
     attrs.each do |(k,v)|
