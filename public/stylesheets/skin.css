@@ -33,7 +33,7 @@ body {
 	background: #fff; 
 	position: absolute; 
 	right: 160px; 
-	top: 44px;
+	top: 80px;
 	min-height: 570px;
 }
 #content {
@@ -106,8 +106,8 @@ body {
 }
 #nav li.active {
   background: #FFF5B5;
-  color: #6AA2FD;
-  border-bottom: 1px solid #6AA2FD;
+  color: #184792;
+  border-bottom: 1px solid #184792;
 }
 #nav li.n-home {
   margin-left: 0;
@@ -576,7 +576,7 @@ ul.people li.vcard p {
 }
 .adminMsgLink {
 	background-color: #FFF5B5;
-	color: #6AA2FD;
+	color: #184792;
 	font-weight: bold;
 	width: 90px;
 	padding: 3px;
@@ -586,7 +586,7 @@ ul.people li.vcard p {
 	border: 1px solid #6a70b1;
 }
 .adminMsgLink a {
-	color: #6AA2FD;
+	color: #184792;
 }
 ul.admin, ul.admin li {list-style-position: inside;}
 ul.admin li {display: list-item; list-style-image: url(/images/icons/switch.gif); border-bottom: none;}

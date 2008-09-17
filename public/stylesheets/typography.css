@@ -28,7 +28,7 @@ h6 {
 h2 {
   background: url(/images/yellow-grad.jpg) 30px 10px repeat-x;
   border-bottom: 1px solid #ccc;
-  color: #6AA2FD;
+  color: #184792;
   clear: both;
   font-size: 22px;
   font-weight: normal;
@@ -37,7 +37,7 @@ h2 {
   padding-left: 6px;
 }
 h2, p.welcome span, .powered_by {
-  font-family: Papyrus, Georgia, "Times New Roman", Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 li h2 {font-size: 1em;}
 h2 a, h3 a {
@@ -104,7 +104,7 @@ a:link, a:visited {
   text-decoration: none;
 }
 a:link {
-  color: #6AA2FD;
+  color: #184792;
 }
 a:visited {
   color: #4A70B1;
