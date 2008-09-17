@@ -26,7 +26,8 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = @forum.topics.new(params[:topic].merge(:person => current_person))
+    @topic = @forum.topics.new(params[:topic])
+    @topic.person = current_person
 
     respond_to do |format|
       if @topic.save
