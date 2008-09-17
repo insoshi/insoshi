@@ -60,8 +60,9 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(params[:message])
+    @recipient = Person.find(params[:person_id])
     @message.sender    = current_person
-    @message.recipient = Person.find(params[:person_id])
+    @message.recipient = @recipient
     if reply?
       @message.parent = Message.find(params[:message][:parent_id])
       redirect_to home_url and return unless @message.valid_reply?

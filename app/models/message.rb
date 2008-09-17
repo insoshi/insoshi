@@ -52,6 +52,7 @@ class Message < Communication
   end
   
   def parent=(message)
+    self.parent_id = message.id
     @parent = message
   end
   
