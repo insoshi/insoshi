@@ -1,16 +1,4 @@
 <div id="header-wrap">
-  <%- if logged_in? -%>
-    <%- if current_person.admin? -%>
-      <div class="adminMsgLink">
-        <%= email_link @person, :use_image => false, :to_all => true %><br />
-        <hr />
-        <%= link_to_if(admin_view?, "Standard View", home_path) do
-            link_to("Admin View", admin_preferences_path) 
-          end -%>
-      </div>
-    <%- end -%>
-  <%- end -%>
-
   <div id="header">
 	  <h1><%= link_to image_tag("logo-insoshi.png"), home_url, :title => "Homepage" %></h1>
     <ul id="nav">
@@ -18,14 +6,27 @@
         <%= menu_li link %>
       <%- end -%>
     </ul>
-	  <p class="welcome">
-	    <% if !global_prefs.about.blank? %>
-	      <%= link_to "About", about_path -%> /
-	    <% end %>
-	    <%= link_to_if logged_in?, "Sign out", logout_path do
-	        login_block
-	      end %>
-	  </p>
-
+    <p class="welcome">
+      <%- if logged_in? -%>
+        Welcome, <%= h current_person.name %>!
+        (<%= link_to "Sign out", logout_path %>)
+        <%- if current_person.admin? -%>
+          <br />
+          <%- if admin_view? -%>
+            <%= link_to("Standard view", home_path) %>
+          <%- else -%>
+            <%= link_to("Admin view", admin_preferences_path) %>
+          <%- end -%>
+        <%- end -%>
+      <%- else -%>
+        <%= link_to "Sign in", login_path %> or
+        <%= link_to "Sign up", signup_path %>
+        <%- if global_prefs.can_send_email? -%>
+        <br />
+        <%= link_to "I forgot my password",
+                     new_password_reminder_path %>
+        <%- end -%>             
+      <%- end -%>
+    </p>
   </div>
 </div>

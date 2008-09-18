@@ -28,16 +28,14 @@ h6 {
 h2 {
   background: url(/images/yellow-grad.jpg) 30px 10px repeat-x;
   border-bottom: 1px solid #ccc;
-  color: #184792;
+  color: #069;
   clear: both;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 22px;
   font-weight: normal;
   line-height: 1.4em;
   margin-top: 24px;
   padding-left: 6px;
-}
-h2, p.welcome span, .powered_by {
-  font-family: Georgia, "Times New Roman", Times, serif;
 }
 li h2 {font-size: 1em;}
 h2 a, h3 a {
@@ -99,20 +97,25 @@ pre {
   margin: 1em 0;
   padding: 1em;
 }
-a:link, a:visited {
+#content a:link, #content a:visited {
   font-weight: bold;
   text-decoration: none;
 }
-a:link {
-  color: #184792;
-}
-a:visited {
-  color: #4A70B1;
+a:link, a:visited {
+	color:#006699;
+	font-weight:bold;
+	text-decoration:none;
 }
 /* Specific elements */
 p.welcome {
   color: #fff;
+  font-size: 12px
 }
+p.welcome a, p.welcome a:visited {
+  color: #fff;
+  text-decoration: underline;
+}
+
 
 #footer p {
   font-size: 12px;

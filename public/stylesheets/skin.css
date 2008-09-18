@@ -366,11 +366,6 @@ h2 {
 .profile {
 	position: relative;
 }
-#tabCol h2 {
-	border-bottom: none;
-	margin-top: 0px;
-	margin-bottom: 20px;
-}
 .profileEditLink a {
 	font-size: 80%;
 }
