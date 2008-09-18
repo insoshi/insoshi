@@ -1,50 +1,26 @@
 /* Main layout */
 
-
 body {
   text-align: center;
 }
 #header-wrap {
-  /* background: #4A70B1; */
-  background: #4B6DF9;
-  margin: 0px auto;
-  width: 844px;
+  /* background: #069; */
+  background: #069 url('/images/header_background.png');
+  float: left;
+  width: 100%;
 }
 #header, #wrap, #footer {
   margin: 0 auto;
   text-align: left;
-  width: 704px;
-}
-#sidebar {
-	width: 173px;
-	float: left;
-	margin: 36px 0px 0px -181px;
-	border: 1px solid #4A70B1;
-	min-height: 200px;
-	text-align: left;
-}
-#sidebar h2 {
-	padding: 0px 6px;
-	margin: 2px 0px;
-}
-#wrap {
-	border: 1px solid #4A70B1; 
-	padding: 0px 0px 0px 6px; 
-	background: #fff; 
-	position: absolute; 
-	right: 160px; 
-	top: 80px;
-	min-height: 570px;
+  width: 744px;
 }
 #content {
-  width: 704px;
-  min-height: 540px;
-  padding-bottom: 10px;
+  width: 744px;
   float: left;
 }
 .col1 {
   float: left;
-  width: 450px;
+  width: 490px;
 }
 .col2 {
   float: right;
@@ -57,85 +33,71 @@ body {
 
 /* Header */
 #header {
+  position: relative;
   height: 80px;
-  padding-bottom: 1px;
 }
 
-#header-wrap h1 {
+#header h1 {
   float: left;
-  margin-top: 2px;
-}
-#header-wrap h1 img {
-	margin-left: 10px;
-}
-#header-wrap a {
-	z-index: 14;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  width: 144px;
 }
 
 
 /* Header-nav */
 #nav {
-  margin: -10px 0px 0px 21px;
-  width: 500px;
-  float: left;
-}
-#nav li, p.welcome {
-  background: none;
-  float: left;
-  height: 24px;
-  line-height: 24px;
-  margin: 0 0 1px 0;
-  padding: 0;
-  text-align: center;
+  margin: 44px 0 0 0;
+  width: 560px;
+  float: right;
 }
 #nav li {
+  background: #069 url(/images/header-grad.jpg) bottom repeat-x;
+  float: left;
+  height: 36px;
+  line-height: 36px;
   list-style-type: none;
+  margin: 0 0 0 0;
+  padding: 0;
+  text-align: center;
   width: 70px;
 }
-#nav li a, p.welcome a {
+#nav li a {
   color: #fff;
-  height: 24px;
+  display: block;
+  height: 36px;
   font-size: 12px;
 }
-#nav li a {
-  display: block;
-}
 #nav li a:hover {
-	background: #4A70B1;
-	font-weight: bold;
+  background: url(/images/header-grad-inv.jpg) top repeat-x;
 }
-#nav li.active {
-  background: #FFF5B5;
-  color: #184792;
-  border-bottom: 1px solid #184792;
+#nav li.active a, #nav li.active a:hover {
+  background: #fff;
+  color: #069;
 }
 #nav li.n-home {
   margin-left: 0;
 }
-p.welcome a:hover {
-	background: #4A70B1;
-}
 
+
+/* footer */
 #footer {
-  border-top: 1px solid #FFDFDA;
+  border-top: 1px solid #ccc;
+  clear: both;
   margin-top: 48px;
   padding: 24px 0;
-  clear: both;
+  width: 744px;
+  
 }
-
 /* Welcome message */
 p.welcome {
-  float: right;
-  margin-top: 2px;
-  width: 205px;
-  line-height: 1.2;
+  position: absolute;
+  right: 0;
   text-align: right;
+  top: 12px;
 }
-p.welcome a {
-	text-decoration: none;
-	font-weight: normal;
-	padding: 6px 10px;
-}
+
+
 
 /* Site elements */
 
@@ -576,6 +538,7 @@ ul.people li.vcard p {
 	text-align: left;
 }
 .adminMsgLink {
+	display: none;
 	background-color: #FFF5B5;
 	color: #184792;
 	font-weight: bold;
@@ -626,3 +589,19 @@ form#admin_preferences label {
 	padding-left: 3px;
 }
 .debug_info pre {width: 670px;}
+
+/* ##################### disabled stuff ###################
+   this stuff is turned off temporarily to get the layouts to
+   work while I determine whether or not to eliminate the
+   html entirely  
+			-Evan
+*/	
+	#sidebar {
+		display: none;	
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 50px;
+		height: 50px;
+		z-index: 2;
+	}		

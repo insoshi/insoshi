@@ -10,20 +10,22 @@
       </div>
     <%- end -%>
   <%- end -%>
-  <h1><%= link_to image_tag("logo-insoshi.png"), home_url, :title => "Homepage" %></h1>
-  <p class="welcome">
-    <% if !global_prefs.about.blank? %>
-      <%= link_to "About", about_path -%> /
-    <% end %>
-    <%= link_to_if logged_in?, "Sign out", logout_path do
-        login_block
-      end %>
-  </p>
+
   <div id="header">
+	  <h1><%= link_to image_tag("logo-insoshi.png"), home_url, :title => "Homepage" %></h1>
     <ul id="nav">
       <%- menu.each do |link| -%>
         <%= menu_li link %>
       <%- end -%>
     </ul>
+	  <p class="welcome">
+	    <% if !global_prefs.about.blank? %>
+	      <%= link_to "About", about_path -%> /
+	    <% end %>
+	    <%= link_to_if logged_in?, "Sign out", logout_path do
+	        login_block
+	      end %>
+	  </p>
+
   </div>
 </div>

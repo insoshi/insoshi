@@ -59,12 +59,8 @@ module ApplicationHelper
   
   def menu_li(link, options = {})
     klass = "n-#{link[:content].downcase}"
-    if current_page?(link[:href])
-      klass += " active"
-      content_tag(:li, link[:content], :class => klass)
-    else
-      content_tag(:li, menu_link_to(link, options), :class => klass)
-    end
+    klass += " active" if current_page?(link[:href])
+    content_tag(:li, menu_link_to(link, options), :class => klass)
   end
   
   def login_block
