@@ -65,8 +65,8 @@
             <a href="/">Home</a> | <a href="/messages">Messages</a> | <a href="/people">People</a> | <a href="/forums">Forum</a>
 
           </p>
-          <p>Powered by
-            <a href="http://insoshi.com/">Insoshi open-source social networking platform</a>
+          <p>
+		<%= render :partial => 'shared/powered_by' %>
       <%- unless test? -%>
         <%# A tracker to tell us about the activity of Insoshi installs %>
         <img src="http://stats.insoshi.com/<%= @tracker_id %>?env=<%= @env %>" 
