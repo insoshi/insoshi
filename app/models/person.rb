@@ -275,7 +275,7 @@ class Person < ActiveRecord::Base
   # Authenticates a user by their email address and unencrypted password.
   # Returns the user or nil.
   def self.authenticate(email, password)
-    u = find_by_email_and_identity_url(email.downcase.strip,nil) # need to get the salt
+    u = find_by_email_and_identity_url(email.downcase.strip, nil) # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
 
