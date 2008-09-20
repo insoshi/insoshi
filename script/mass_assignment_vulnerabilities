@@ -9,21 +9,33 @@ require 'active_support'
 
 class String
   
+  # A regex to match likely cases of mass assignment
+  # Examples of matching strings:
+  #   "Foo.new( { :bar => 'baz' } )"
+  #   "Foo.update_attributes!(params[:foo])"
   MASS_ASSIGNMENT = /(\w+)\.(new|create|update_attributes|build)!*\(/
   
   # Return the strings that represent potential mass assignment problems.
   # The MASS_ASSIGNMENT regex returns, e.g., ['Post', 'new'] because of
-  # the grouping methods; we want the first of the two.
+  # the grouping methods; we want the first of the two for each match.
+  # For example, the call to scan might return
+  #   [['Post', 'new'], ['Person', 'create']]
+  # We then select the first element of each subarray, returning
+  #   ['Post', 'Person']
   def mass_assignment_problems
     scan(MASS_ASSIGNMENT).map { |problem| problem.first }
   end
 
+  # Return true if the string has potential mass assignment code.
   def mass_assignment?
     self =~ MASS_ASSIGNMENT
   end
   
+  # Return true if the string defines attr_accessible.
+  # Note that 'attr_accessible' must be preceded by nothing other than
+  # whitespace; this catches cases where attr_accessible is commented out.
   def attr_accessible?
-    self =~ /attr_accessible/
+    self =~ /^\s*attr_accessible/
   end
 end
 
