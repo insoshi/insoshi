@@ -438,7 +438,8 @@ class Person < ActiveRecord::Base
     ## Other private method(s)
 
     def password_required?
-      (crypted_password.blank? && identity_url.nil?) || !password.blank? || !verify_password.nil?
+      (crypted_password.blank? && identity_url.nil?) || !password.blank? ||
+      !verify_password.nil?
     end
     
     class << self

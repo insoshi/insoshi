@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     if using_open_id?
       open_id_authentication(params[:openid_url])
     else
-      password_authentication(params[:email],params[:password])
+      password_authentication(params[:email], params[:password])
     end
   end
 
@@ -69,8 +69,10 @@ class SessionsController < ApplicationController
   def successful_login(message = "Logged in successfully")
     self.current_person = @person
     if params[:remember_me] == "1"
-      self.current_person.remember_me
-      cookies[:auth_token] = { :value => self.current_person.remember_token , :expires => self.current_person.remember_token_expires_at }
+      current_person.remember_me
+      cookies[:auth_token] = {
+        :value => current_person.remember_token,
+        :expires => current_person.remember_token_expires_at }
     end
     redirect_back_or_default('/')
     flash[:notice] = message
@@ -98,10 +100,10 @@ class SessionsController < ApplicationController
       current_person.last_logged_in_at = Time.now
       current_person.save!
       if params[:remember_me] == "1"
-        self.current_person.remember_me
+        current_person.remember_me
         cookies[:auth_token] = {
-          :value => self.current_person.remember_token,
-          :expires => self.current_person.remember_token_expires_at }
+          :value => current_person.remember_token,
+          :expires => current_person.remember_token_expires_at }
       end
       flash[:success] = "Logged in successfully"
       if @first_admin_login
@@ -118,7 +120,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    self.current_person.forget_me if logged_in?
+    current_person.forget_me if logged_in?
     cookies.delete :auth_token
     if logged_in? and current_person.deactivated?
       reset_session
