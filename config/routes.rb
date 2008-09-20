@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :connections
   map.resources :password_reminders
   map.resources :photos, :member => {:set_primary => :put, :set_avatar => :put}
+  map.open_id_complete 'session', :controller => "sessions", :action => "create", :requirements => { :method => :get }
   map.resource :session
   map.resource :galleries
   map.resources :messages, :collection => { :sent => :get, :trash => :get },

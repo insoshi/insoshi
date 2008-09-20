@@ -1,13 +1,9 @@
 <%- column_div :type => :primary do -%>
-  <%- if global_prefs.app_name.blank? -%>
-  <h2>Sign up</h2>
-  <%- else -%>
-  <h2>Sign up for <%= global_prefs.app_name %></h2>
-  <%- end -%>
+  <h2>Edit Personal Info</h2>
 
-  <%= error_messages_for :person %>
+  <%= error_messages_for :personal_details %>
 
-  <% form_for @person do |f| -%>
+  <% form_for personal_details do |f| -%>
 
   <div class="form_row">
     <label for="email">
@@ -25,17 +21,6 @@
     <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
   </div>
 
-  <div class="form_row">
-    <label for="password">Password</label>
-    <%= f.password_field :password, :maxlength => Person::MAX_PASSWORD %>
-  </div>
-
-  <div class="form_row">
-    <label for="password_confirmation">Confirm Password</label>
-    <%= f.password_field :password_confirmation, 
-                         :maxlength => Person::MAX_PASSWORD,
-                         :value => "" %>
-  </div>
   <div class="form_row">
     <%= submit_tag 'Sign up', :class => "button" %>
   </div>

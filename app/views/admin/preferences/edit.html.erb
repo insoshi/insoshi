@@ -39,6 +39,18 @@
     </div>
     <p class="meta">Display a note to explain that this site is just a demonstration</p>  
 
+    <br />
+
+    <p>Register new people in a deactivated state until whitelisted</p>
+    <div class="form_row">
+      <label for="whitelist"
+             class="checkbox">Whitelist</label>
+      <%= f.check_box :whitelist %>
+    </div>
+
+    <br />
+
+    <p>Verify email for new registrations using an activation code</p>
     <div class="form_row">
       <%= f.label :email_verifications, 'Verification Emails', :class => 'checkbox' %>
       <%= f.check_box :email_verifications %>
@@ -48,8 +60,8 @@
     <div class="form_row">
       <%= f.label :about %>
     <%= fckeditor_textarea("preferences", :about, 
-			:toolbarSet => 'InsoshiBase', :width => '100%', 
-			:height => RICH_TEXT_HEIGHT) %>
+      :toolbarSet => 'InsoshiBase', :width => '100%', 
+      :height => RICH_TEXT_HEIGHT) %>
 
       <%# f.text_area :about, :rows => 10 %>
     </div>
@@ -64,8 +76,8 @@
     <div class="form_row">
       <%= f.label :sidebar_body %>
     <%= fckeditor_textarea("preferences", :sidebar_body, 
-			:toolbarSet => 'InsoshiBase', :width => '100%', 
-			:height => RICH_TEXT_HEIGHT) %>
+      :toolbarSet => 'InsoshiBase', :width => '100%', 
+      :height => RICH_TEXT_HEIGHT) %>
 
       <%# f.text_area :about, :rows => 10 %>
     </div>
