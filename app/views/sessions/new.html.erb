@@ -31,8 +31,10 @@
     </div>
 
 <div style="text-align: center; font-size: 12px; padding: 10px;">
-  <%= link_to "...or Sign up", signup_path %> ::
-  <%= link_to "I forgot my password!", new_password_reminder_path %> ::
+  <%= link_to "or Sign up", signup_path %> <br />
+  <%- if global_prefs.can_send_email? -%>
+    <%= link_to "I forgot my password!", new_password_reminder_path %> ::
+  <%- end -%>
     <span id="noscript" style="display:none;">
         <span id="openid_link"><a href="#" onclick="show_openid(); return false;">Login using OpenID</a></span>
         <span id="standard_link"><a href="#" onclick="show_standard(); return false;">Back to Regular Login</a></span>
