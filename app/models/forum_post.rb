@@ -20,6 +20,7 @@ class ForumPost < Post
              :conditions => "type = 'ForumPost'",
              :include => [{:association_name => 'topic', :field => 'name'}]
 
+  attr_accessible :body
   
   belongs_to :topic,  :counter_cache => true
   belongs_to :person, :counter_cache => true

@@ -24,7 +24,7 @@ class PasswordRemindersController < ApplicationController
   private
   
     def check_can_send_email
-      unless global_prefs.can_send_mail?
+      unless global_prefs.can_send_email?
         flash[:error] = "Invalid action"
         redirect_to home_url
       end

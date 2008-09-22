@@ -17,6 +17,8 @@ class Comment < ActiveRecord::Base
   extend PreferencesHelper
   
   attr_accessor :commented_person, :send_mail
+
+  attr_accessible :body
   
   belongs_to :commentable, :polymorphic => true
   belongs_to :commenter, :class_name => "Person",

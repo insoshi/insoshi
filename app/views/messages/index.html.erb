@@ -8,7 +8,7 @@
   <%- else -%>
     <%= will_paginate %>
     <ul class="list messages full">
-      <%= render :partial => "message", :collection => @messages %>
+      <%= render :partial => @messages %>
     </ul>
     <%= will_paginate %>
   <%- end -%>

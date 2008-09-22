@@ -5,8 +5,8 @@ describe Comment do
     
     before(:each) do
       @post = posts(:blog_post)
-      @comment = @post.comments.new(:body => "Hey there",
-                                    :commenter => people(:aaron))
+      @comment = @post.comments.unsafe_build(:body => "Hey there",
+                                             :commenter => people(:aaron))
     end
   
     it "should be valid" do
@@ -94,8 +94,9 @@ describe Comment do
       
       it "should not send an email for an own-comment" do
         lambda do
-          @post.comments.create(:body => "Hey there",
-                                :commenter => @post.blog.person)
+          commenter = @post.blog.person
+          comment = @post.comments.unsafe_create(:body => "Hey there",
+                                                 :commenter => commenter)
         end.should_not change(@emails, :length)
       end
     end
@@ -105,8 +106,8 @@ describe Comment do
   
     before(:each) do
       @person = people(:quentin)
-      @comment = @person.comments.new(:body => "Hey there",
-                                      :commenter => people(:aaron))
+      @comment = @person.comments.unsafe_build(:body => "Hey there",
+                                               :commenter => people(:aaron))
     end
   
     it "should be valid" do

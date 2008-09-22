@@ -18,4 +18,5 @@
 class Post < ActiveRecord::Base
   include ActivityLogger
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
+  attr_accessible nil
 end
