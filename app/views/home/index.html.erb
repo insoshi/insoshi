@@ -1,4 +1,11 @@
 <%- column_div :type => :primary do -%>
+  <%- if logged_in? && current_person.has_unread_messages? -%>
+    <div class="notice">
+      You have unread messages in your mailbox.
+      <%= link_to "Click here to see your messages",
+                  messages_path %>
+    </div>
+  <%- end -%>
   <%= render :partial => 'feed' %>
 <%- end -%>
 

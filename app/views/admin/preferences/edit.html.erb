@@ -45,6 +45,15 @@
 
     <br />
 
+    <p>Register new people in a deactivated state until whitelisted</p>
+    <div class="form_row">
+      <label for="whitelist"
+             class="checkbox">Whitelist</label>
+      <%= f.check_box :whitelist %>
+    </div>
+
+    <br />
+
     <p>Verify email for new registrations using an activation code</p>  
     <div class="form_row">
       <label for="email_verifications"

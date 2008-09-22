@@ -1,10 +1,16 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :events, :member => { :attend => :get, 
+                                      :unattend => :get } do |event|
+    event.resources :comments
+  end
+
   map.resources :preferences
   map.resources :searches
   map.resources :activities
   map.resources :connections
   map.resources :password_reminders
   map.resources :photos
+  map.open_id_complete 'session', :controller => "sessions", :action => "create", :requirements => { :method => :get }
   map.resource :session
   map.resources :messages, :collection => { :sent => :get, :trash => :get },
                            :member => { :reply => :get, :undestroy => :put }

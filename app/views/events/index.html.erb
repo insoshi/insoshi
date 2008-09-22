@@ -1,0 +1,16 @@
+<%- column_div :type => :primary do -%>
+<h2>Listing events</h2>
+
+<ol class="list full">
+  <%= render :partial => @events %>
+</ol>
+
+<% end -%>
+
+<% column_div :type => :secondary do -%>
+  <%= render :partial => 'calendar',
+             :locals => { :events => @month_events, :date => @date } %>
+
+  <h2>Add new event</h2>
+  <%= link_to "Click here", new_event_path %>
+<% end -%>

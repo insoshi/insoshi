@@ -53,11 +53,19 @@ class CommentsController < ApplicationController
       elsif blog?
         @blog = Blog.find(params[:blog_id])
         @post = Post.find(params[:post_id])
+      elsif event?
+        @event = Event.find(params[:event_id])
       end
     end
   
     def person
-      @person || @blog.person
+      if wall?
+        @person
+      elsif blog?
+        @blog.person 
+      elsif event?
+        @event.person
+      end
     end
     
     # Require the users to be connected.
@@ -91,6 +99,8 @@ class CommentsController < ApplicationController
         @person.comments
       elsif blog?
         @post.comments.paginate(:page => params[:page])
+      elsif
+        @event.comments
       end  
     end
     
@@ -100,6 +110,8 @@ class CommentsController < ApplicationController
         @person
       elsif blog?
         @post
+      elsif event?
+        @event
       end
     end
     
@@ -115,6 +127,8 @@ class CommentsController < ApplicationController
         "wall"
       elsif blog?
         "blog_post"
+      elsif event?
+        "event"
       end
     end
     
@@ -124,6 +138,8 @@ class CommentsController < ApplicationController
         @person
       elsif blog?
         blog_post_url(@blog, @post)
+      elsif event?
+        @event
       end
     end
 
@@ -135,5 +151,9 @@ class CommentsController < ApplicationController
     # True if resource lives in a blog.
     def blog?
       !params[:blog_id].nil?
+    end
+
+    def event?
+      !params[:event_id].nil?
     end
 end

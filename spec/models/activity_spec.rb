@@ -47,9 +47,12 @@ describe Activity do
   end
   
   it "should not show activities for users who are inactive" do
+    @person.activities.collect(&:person).should include(@commenter)
     @commenter.toggle!(:deactivated)
     @commenter.should be_deactivated
     Activity.global_feed.should be_empty
+    @person.reload
+    @person.activities.collect(&:person).should_not include(@commenter)
   end
   
   it "should not show activities for users who are email unverified" do

@@ -11,3 +11,9 @@ blog_comment:
   body: MyText
   commentable: blog_post
   commentable_type: BlogPost
+
+event_comment:
+  commenter: aaron
+  body: MyText
+  commentable: public
+  commentable_type: Event
