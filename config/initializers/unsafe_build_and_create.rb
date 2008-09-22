@@ -21,7 +21,7 @@ class ActiveRecord::Base
 
   def unsafe_attributes=(attrs)
     attrs.each do |k, v|
-      send("#{k} = ", v)
+      send("#{k}=", v)
     end
   end
 end
