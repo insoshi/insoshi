@@ -62,11 +62,19 @@ describe BlogPost do
       end
     end
     
-    it "should delete the comments if the post is destroyed" do
+    it "should destroy the comments if the post is destroyed" do
       comments = @post.comments
       @post.destroy
       comments.each do |comment|
         comment.should_not exist_in_database
+      end
+    end
+    
+    it "should destroy the comments activity if the post is destroyed" do
+      comments = @post.comments
+      @post.destroy
+      comments.each do |comment|
+        Activity.find_by_item_id(comment).should be_nil
       end
     end
   end
