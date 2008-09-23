@@ -47,8 +47,8 @@ describe BlogPost do
     
     before(:each) do
       @post.save
-      comment = @post.comments.unsafe_create(:body => "The body",
-                                             :commenter => people(:aaron))
+      @comment = @post.comments.unsafe_create(:body => "The body",
+                                              :commenter => people(:aaron))
     end
     
     it "should have associated comments" do
@@ -59,6 +59,14 @@ describe BlogPost do
       @post.comments.each do |comment|
         activity = Activity.find_by_item_id(comment)
         @post.blog.person.activities.should contain(activity)
+      end
+    end
+    
+    it "should delete the comments if the post is destroyed" do
+      comments = @post.comments
+      @post.destroy
+      comments.each do |comment|
+        comment.should_not exist_in_database
       end
     end
   end
