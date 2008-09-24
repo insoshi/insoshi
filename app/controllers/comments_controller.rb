@@ -7,6 +7,10 @@ class CommentsController < ApplicationController
   before_filter :authorize_destroy, :only => [:destroy]
   before_filter :connection_required
 
+  def index
+    redirect_to comments_url
+  end
+
   def show
     redirect_to comments_url
   end
