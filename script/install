@@ -6,5 +6,7 @@ puts "Creating empty files.  Please ignore permissions error messages."
 system("rake gems:install")
 # Install the gem dependencies (if any).
 system("sudo rake gems:install")
+# Create the databases.
+system("rake db:create:all")
 # Run the main install task.
 system("rake install")
