@@ -3,6 +3,8 @@
     <h2>Comment Wall</h2>
     <a name="wall"></a>
     
+    <p><%= formatting_note %></p>
+    
     <%- if connected_to?(@person) -%>
       <% form_for :comment, :url => person_comments_path(@person) do |f| %>
         <div class="form_row">
