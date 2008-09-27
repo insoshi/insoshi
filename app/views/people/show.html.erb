@@ -25,42 +25,8 @@
       <%- unless current_person?(@person) -%>
         <ul class="tools">
          <%- if logged_in? -%>
-          <%- unless Connection.exists?(@person, current_person) -%>
-            <li>
-            <%= link_to "Connect with #{h @person.name}!",
-                        person_connections_path(@person), :method => :post %>
-            </li>
-          <%- end -%>
-          <%- if Connection.connected?(@person, current_person) -%>
-          <li>
-            <%= h @person.name %> is one of your contacts
-            <br />
-           (<%= link_to "end connection", 
-               connection_path(Connection.conn(current_person, @person)), 
-               :method => :delete,
-               :confirm => 
-         "Are you sure you want to end connection with #{h @person.name}?" %>)
-          
-          </li>
-          <%- end -%>
-          <%- if Connection.pending?(current_person, @person) -%>
-          <li>
-            <%= h @person.name %> has contacted you
-            <br />
-            (<%= link_to "respond to contact request", 
-                         edit_connection_path(Connection.conn(current_person,
-                                                              @person)) %>)
-          </li>
-          <%- end -%>
-          <%- if Connection.pending?(@person, current_person) -%>
-          <li>
-            You've contacted <%= h @person.name %>
-          </li>
-          <%- end -%>          
           <li><%= email_link @person %></li>
-        <%- end -%>
-          <li><%= link_to "#{h @person.name}'s blog",
-                  blog_path(@person.blog) %></li>
+          <%- end -%>
           <%- if current_person.admin? -%>
           <li>
           <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
@@ -81,10 +47,5 @@
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>
-  <%- unless current_person?(@person) -%>
-    <%= render :partial => 'shared/contacts_preview',
-               :locals => { :person => @person } %>
-    <%= render :partial => 'common_contacts' %>
-  <%- end -%>
 <%- end -%>
 
