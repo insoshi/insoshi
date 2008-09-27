@@ -79,6 +79,14 @@ body {
   margin-left: 0;
 }
 
+#nav li.n-categories {
+  width: 82px;
+}
+
+#nav li.n-messages {
+  width: 74px;
+}
+
 
 #footer {
   border-top: 1px solid #ccc;
