@@ -12,10 +12,7 @@
 <%- column_div :type => :secondary do -%>
   <%= render :partial => "searches/box" %>
   <%- if logged_in? -%>
-    <%= render :partial => 'requested_contacts' %>
     <%= render :partial => 'messages_preview' %>
-    <%= render :partial => 'shared/contacts_preview',
-               :locals => { :person => current_person } %>
   <%- else -%>
     <%- unless global_prefs.app_name.blank? -%>
       <h2>About <%= global_prefs.app_name %></h2>
