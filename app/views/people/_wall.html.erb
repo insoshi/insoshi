@@ -5,7 +5,6 @@
     
     <p><%= formatting_note %></p>
     
-    <%- if connected_to?(@person) -%>
       <% form_for :comment, :url => person_comments_path(@person) do |f| %>
         <div class="form_row">
           <%= f.text_area :body, :rows => 2 %>
@@ -14,16 +13,6 @@
         <div class="form_row">
           <%= submit_tag "Submit", :class => "button" %>
         </div>
-      <% end %>
-    <%- else -%>
-      <p>
-      You must be connected to <%= h @person.name %> to leave a wall comment.
-      </p>
-      <p>
-      <%= link_to "Connect with #{h @person.name} now",
-                  person_connections_path(@person), :method => :post %>
-      </p>
-    <%- end -%>
 
     <%- unless @person.comments.empty? -%>
       <ul class="list comments full">

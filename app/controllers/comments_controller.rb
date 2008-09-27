@@ -5,7 +5,6 @@ class CommentsController < ApplicationController
   before_filter :login_required
   before_filter :get_instance_vars
   before_filter :authorize_destroy, :only => [:destroy]
-  before_filter :connection_required
 
   def index
     redirect_to comments_url
