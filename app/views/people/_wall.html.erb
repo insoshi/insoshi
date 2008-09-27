@@ -13,7 +13,7 @@
         <div class="form_row">
           <%= submit_tag "Submit", :class => "button" %>
         </div>
-
+      <% end %>
     <%- unless @person.comments.empty? -%>
       <ul class="list comments full">
         <%= render :partial => 'comment', :collection => @person.comments %>
