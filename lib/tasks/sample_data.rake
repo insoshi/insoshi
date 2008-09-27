@@ -77,11 +77,13 @@ def make_messages(text)
   senders.each do |sender|
     subject = some_text(SMALL_STRING_LENGTH)
     Message.unsafe_create!(:subject => subject, :content => text, 
-                    :sender => sender, :recipient => michael,
-                    :send_mail => false)
+                           :sender => sender, :recipient => michael,
+                           :send_mail => false,
+                           :conversation => Conversation.new)
     Message.unsafe_create!(:subject => subject, :content => text, 
-                    :sender => michael, :recipient => sender,
-                    :send_mail => false)
+                           :sender => michael, :recipient => sender,
+                           :send_mail => false,
+                           :conversation => Conversation.new)
   end
 end
 
