@@ -1,0 +1,28 @@
+<h1>Listing requests</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Estimated hours</th>
+    <th>Due date</th>
+    <th>Person</th>
+  </tr>
+
+<% for request in @requests %>
+  <tr>
+    <td><%=h request.name %></td>
+    <td><%=h request.description %></td>
+    <td><%=h request.estimated_hours %></td>
+    <td><%=h request.due_date %></td>
+    <td><%=h request.person_id %></td>
+    <td><%= link_to 'Show', request %></td>
+    <td><%= link_to 'Edit', edit_request_path(request) %></td>
+    <td><%= link_to 'Destroy', request, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New request', new_request_path %>
