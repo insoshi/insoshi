@@ -39,6 +39,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1/edit
   def edit
     @category = Category.find(params[:id])
+    @all_categories = Category.find(:all, :order => "parent_id, name")
   end
 
   # POST /categories

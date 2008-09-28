@@ -1,24 +1,17 @@
-<h1>Listing categories</h1>
+<%- column_div :type => :primary do -%>
+<h2>Categories</h2>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Parent</th>
-  </tr>
+<%- if @categories.empty? -%>
+    <h3 class="blankslate">No categories (yet!)</h3>
+<%- else -%>
+    <ul class="list categories full">
+      <%= render :partial => @categories %>
+    </ul>
+<%- end -%>
 
-<% for category in @categories %>
-  <tr>
-    <td><%=h category.name %></td>
-    <td><%=h category.description %></td>
-    <td><%=h category.parent_id %></td>
-    <td><%= link_to 'Show', category %></td>
-    <td><%= link_to 'Edit', edit_category_path(category) %></td>
-    <td><%= link_to 'Destroy', category, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<%- end -%>
 
-<br />
-
-<%= link_to 'New category', new_category_path %>
+<%- column_div :type => :secondary do -%>
+  <h2>Add new category</h2>
+  <%= link_to "Add", new_category_path %>
+<%- end -%>
