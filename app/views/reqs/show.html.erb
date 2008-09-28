@@ -1,0 +1,28 @@
+<p>
+  <b>Name:</b>
+  <%=h @req.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @req.description %>
+</p>
+
+<p>
+  <b>Estimated hours:</b>
+  <%=h @req.estimated_hours %>
+</p>
+
+<p>
+  <b>Due date:</b>
+  <%=h @req.due_date %>
+</p>
+
+<p>
+  <b>Person:</b>
+  <%=h @req.person_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_req_path(@req) %> |
+<%= link_to 'Back', reqs_path %>

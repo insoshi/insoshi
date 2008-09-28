@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  description: MyText
+  estimated_hours: 9.99
+  due_date: 2008-09-27 19:03:51
+  person_id: 1
+
+two:
+  name: MyString
+  description: MyText
+  estimated_hours: 9.99
+  due_date: 2008-09-27 19:03:51
+  person_id: 1

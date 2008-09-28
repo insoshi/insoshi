@@ -1,0 +1,28 @@
+<h1>Listing reqs</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Estimated hours</th>
+    <th>Due date</th>
+    <th>Person</th>
+  </tr>
+
+<% for req in @reqs %>
+  <tr>
+    <td><%=h req.name %></td>
+    <td><%=h req.description %></td>
+    <td><%=h req.estimated_hours %></td>
+    <td><%=h req.due_date %></td>
+    <td><%=h req.person_id %></td>
+    <td><%= link_to 'Show', req %></td>
+    <td><%= link_to 'Edit', edit_req_path(req) %></td>
+    <td><%= link_to 'Destroy', req, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New req', new_req_path %>
