@@ -1,28 +1,11 @@
-<p>
-  <b>Name:</b>
-  <%=h @req.name %>
-</p>
+<% column_div :type => :primary do -%>
+  <h2>Request</h2>
+  <ul class="list full">
+    <%= render :partial => @req %>
+  </ul>
 
-<p>
-  <b>Description:</b>
-  <%=h @req.description %>
-</p>
+<%- end -%>
 
-<p>
-  <b>Estimated hours:</b>
-  <%=h @req.estimated_hours %>
-</p>
-
-<p>
-  <b>Due date:</b>
-  <%=h @req.due_date %>
-</p>
-
-<p>
-  <b>Person:</b>
-  <%=h @req.person_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_req_path(@req) %> |
-<%= link_to 'Back', reqs_path %>
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

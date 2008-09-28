@@ -25,6 +25,7 @@ class ReqsController < ApplicationController
   # GET /reqs/new.xml
   def new
     @req = Req.new
+    @all_categories = Category.find(:all, :order => "parent_id, name")
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,6 +42,8 @@ class ReqsController < ApplicationController
   # POST /reqs.xml
   def create
     @req = Req.new(params[:req])
+
+    @req.person_id = current_person.id
 
     respond_to do |format|
       if @req.save

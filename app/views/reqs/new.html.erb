@@ -1,31 +1,34 @@
-<h1>New req</h1>
+<%- column_div :type => :primary do -%>
+
+<h2>New request</h2>
+
+<%= error_messages_for :req %>
 
 <% form_for(@req) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :name %><br />
+  <div class="form_row">
+    <%= f.label :name %>
     <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
+  </div>
+  <div class="form_row full">
+    <%= render :partial => "select_categories" %>
+  </div>
+  <div class="form_row">
+    <%= f.label :description %>
     <%= f.text_area :description %>
-  </p>
-  <p>
-    <%= f.label :estimated_hours %><br />
+  </div>
+  <div class="form_row">
+    <%= f.label :estimated_hours %>
     <%= f.text_field :estimated_hours %>
-  </p>
-  <p>
-    <%= f.label :due_date %><br />
+  </div>
+  <div class="form_row">
+    <%= f.label :due_date %>
     <%= f.datetime_select :due_date %>
-  </p>
-  <p>
-    <%= f.label :person_id %><br />
-    <%= f.text_field :person_id %>
-  </p>
-  <p>
+  </div>
+  <div class="form_row">
     <%= f.submit "Create" %>
-  </p>
+  </div>
 <% end %>
 
-<%= link_to 'Back', reqs_path %>
+<%- end -%>
