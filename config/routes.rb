@@ -1,6 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :requests
-
   map.resources :categories
 
   map.resources :events, :member => { :attend => :get, 
