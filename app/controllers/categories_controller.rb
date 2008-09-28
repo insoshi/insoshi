@@ -28,6 +28,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new.xml
   def new
     @category = Category.new
+    @all_categories = Category.find(:all, :order => "parent_id, name")
 
     respond_to do |format|
       format.html # new.html.erb
