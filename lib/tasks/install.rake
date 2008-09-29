@@ -3,7 +3,6 @@ require 'active_record/fixtures'
 
 desc "Install Insoshi"
 task :install => :environment do |t|
-  Rake::Task["db:create:all"].invoke
   Rake::Task["db:migrate"].invoke
   Preference.create!
 end

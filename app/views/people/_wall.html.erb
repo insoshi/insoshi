@@ -1,5 +1,8 @@
 <%- column_div :type => :primary do -%>
     <h2><%= @person.name %>'s Comment Wall</h2>
+    <a name="wall"></a>
+    
+    <p><%= formatting_note %></p>
     <%- unless @person.comments.empty? -%>
       <ul class="list comments full">
         <%= render :partial => 'comment', :collection => @person.comments %>
@@ -7,7 +10,8 @@
     <%- end -%>
 <%- end -%>    
 <%- column_div :type => :secondary do -%>
-    <%- if connected_to?(@person) -%>
+
+  <%- if connected_to?(@person) -%>
   <h2>Add Comment</h2>
       <% form_for :comment, :url => person_comments_path(@person) do |f| %>
         <div class="form_row">
