@@ -1,4 +1,6 @@
 class ReqsController < ApplicationController
+  before_filter :login_required, :only => [ :new, :edit, :create, :update ]
+
   # GET /reqs
   # GET /reqs.xml
   def index
