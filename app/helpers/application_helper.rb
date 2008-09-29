@@ -45,7 +45,7 @@ module ApplicationHelper
     if global_prefs.about.blank?
       links
     else
-      links = [people]
+      links.push(menu_element("About", about_url))
     end
   end
 
