@@ -47,7 +47,7 @@ class ReqsController < ApplicationController
 
     respond_to do |format|
       if @req.save
-        flash[:notice] = 'Req was successfully created.'
+        flash[:notice] = 'Request was successfully created.'
         format.html { redirect_to(@req) }
         format.xml  { render :xml => @req, :status => :created, :location => @req }
       else
@@ -64,7 +64,7 @@ class ReqsController < ApplicationController
 
     respond_to do |format|
       if @req.update_attributes(params[:req])
-        flash[:notice] = 'Req was successfully updated.'
+        flash[:notice] = 'Request was successfully updated.'
         format.html { redirect_to(@req) }
         format.xml  { head :ok }
       else

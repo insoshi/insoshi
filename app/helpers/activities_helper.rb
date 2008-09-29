@@ -52,6 +52,9 @@ module ActivitiesHelper
       event = activity.item.event
       %(#{person_link(person)} is attending #{someones(event.person, person)} event: 
         #{event_link(event.title, event)}.) 
+    when "Req"
+      req = activity.item
+      %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -104,6 +107,9 @@ module ActivitiesHelper
     when "EventAttendee"
       event = activity.item.event
       %(#{person_link(person)} is attending #{someones(event.person, person)} #{event_link("event", event)}.)
+    when "Req"
+      req = activity.item
+      %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -138,6 +144,8 @@ module ActivitiesHelper
               "time.gif"
             when "EventAttendee"
               "check.gif"
+            when "Req"
+              "new.gif"
             else
               raise "Invalid activity type #{activity_type(activity).inspect}"
             end
@@ -173,6 +181,9 @@ module ActivitiesHelper
     link_to(text, event_path(event))
   end
 
+  def req_link(text, req)
+    link_to(text, req_path(req))
+  end
 
   # Return a link to the wall.
   def wall(activity)

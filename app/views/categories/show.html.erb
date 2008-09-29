@@ -3,7 +3,14 @@
   <p>
   <%=h @category.description %>
   </p>
+  <ul class="list full">
+    <%= render :partial => 'reqs/req', :collection => @reqs %>
+  </ul>
 
-<%= link_to 'Edit', edit_category_path(@category) %>
+  <%= link_to 'Edit', edit_category_path(@category) if 0 == @reqs.size %>
 
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
 <%- end -%>

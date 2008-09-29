@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
 
-  before_filter :login_required, :only => [ :show, :edit, :update ]
+  before_filter :login_required, :only => [ :show, :new, :edit, :create, :update ]
 
   # GET /categories
   # GET /categories.xml
@@ -17,6 +17,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1.xml
   def show
     @category = Category.find(params[:id])
+    @reqs = @category.reqs
 
     respond_to do |format|
       format.html # show.html.erb
