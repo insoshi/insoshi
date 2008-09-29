@@ -57,10 +57,9 @@ def create_people
                               :description => @lipsum)
       person.last_logged_in_at = Time.now
       person.save
-      gallery = Gallery.unsafe_create!(:person => person, :title => 'Primary',
-                                       :description => 'My first gallery')
+      gallery = Gallery.unsafe_create(:person => person, :title => 'Primary',
+                                      :description => 'My first gallery')
       photo = uploaded_file(photos[i], 'image/jpg')
-      puts 'Photo: ' + photos[i]
       Photo.unsafe_create!(:uploaded_data => photo, :person => person,
                            :primary => true, :avatar => true,
                            :gallery => gallery)
