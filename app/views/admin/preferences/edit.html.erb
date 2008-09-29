@@ -67,20 +67,7 @@
     </div>
   <br />
     
-    <div class="form_row">
-      <%= f.label :sidebar_title, 'Sidebar Title' %>
-      <%= f.text_field :sidebar_title %>
-    </div>
     <p class="meta">Keep this short to fit the 146px width</p>  
-
-    <div class="form_row">
-      <%= f.label :sidebar_body %>
-    <%= fckeditor_textarea("preferences", :sidebar_body, 
-      :toolbarSet => 'InsoshiBase', :width => '100%', 
-      :height => RICH_TEXT_HEIGHT) %>
-
-      <%# f.text_area :about, :rows => 10 %>
-    </div>
     
     <br />
 
