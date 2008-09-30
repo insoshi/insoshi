@@ -180,7 +180,8 @@ a.show-follow:visited {
 
 .error,
 .notice, 
-.success    { padding: .8em; margin: 0px 0px 1em -6px; border: 2px solid #ddd;}
+.success    { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd;
+              margin-top: 1em; }
 
 .error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
 .notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }
@@ -221,8 +222,7 @@ form {
 input, textarea {
   font-family: Helvetica, Arial, Univers, sans-serif;
   font-size: 12px;
-  padding: 6px 3px;
-  border: 1px solid #ccc;
+  padding: 6px 3px
 }
 textarea {
   line-height: 1.4em;
@@ -237,27 +237,21 @@ input, textarea, select {
   margin-bottom: 1em;
 }
 input.button, button, input[submit], input[button] {
-  background: #4A70B1 url(/images/header-grad-lt.jpg) bottom repeat-x;
+  background: #e5e5e5;
   border: 1px solid #ccc;
   clear: both;
   cursor: pointer;
 /*  display: block;*/
+  font-family: Helvetica, Arial, Univers, sans-serif;
+  font-size: 12px;
+  height: 32px;
   padding: 3px 12px;
-  font-weight: bold;
-  font-size: 116%;
 }
 div.button {
 	height: 20px;
 	width: 72px;
 	float: left;
 	margin-right: 20px;
-}
-.button a {
-	background: #4A70B1 url(/images/header-grad-lt.jpg) bottom repeat-x;
-	padding: 3px 12px;
-}
-input.button, div.button a:hover, input[button], input[submit], button {
-  background: url(/images/header-grad-inv-lt.jpg) top repeat-x;
 }
 
 .col1 textarea {
@@ -298,11 +292,6 @@ body.single-col .col1 form input.checkbox {
   clear: none;
   margin: 0;
   width: 72px;
-  background: #4A70B1 url(/images/header-grad-lt.jpg) bottom repeat-x;
-  color: #ffffff;
-}
-#frmSearch #btnSearch.button:hover {
-  background: url(/images/header-grad-inv-lt.jpg) top repeat-x;
 }
 
 form a.add-recipient {
@@ -352,5 +341,4 @@ strong { font-weight: bold; }
 #new_form_subject form {border-bottom: none;}
 #new_form_subject input, #photos .button, #tGalleries .button {width: 138px; vertical-align: top;}
 #new_form_subject .button {width: 72px;}
-.button a, .button {color: #ffffff;}
 .button_container {margin: 10px 0px;}

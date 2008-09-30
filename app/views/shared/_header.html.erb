@@ -1,6 +1,7 @@
 <div id="header-wrap">
   <div id="header">
-	  <h1><%= link_to image_tag("logo-insoshi.png"), home_url, :title => "Homepage" %></h1>
+	  <h1><%= link_to image_tag("logo-insoshi.png"), home_url, 
+				:title => "Homepage" %></h1>
     <ul id="nav">
       <%- menu.each do |link| -%>
         <%= menu_li link %>
