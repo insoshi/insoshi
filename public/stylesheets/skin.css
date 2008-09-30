@@ -532,21 +532,6 @@ ul.people li.vcard p {
 .col2 #blogpost #post_submit {
 	text-align: left;
 }
-.adminMsgLink {
-	display: none;
-	background-color: #FFF5B5;
-	color: #184792;
-	font-weight: bold;
-	width: 90px;
-	padding: 3px;
-	position: absolute;
-	top: 5px;
-	left: 5px;
-	border: 1px solid #6a70b1;
-}
-.adminMsgLink a {
-	color: #184792;
-}
 ul.admin, ul.admin li {list-style-position: inside;}
 ul.admin li {display: list-item; list-style-image: url(/images/icons/switch.gif); border-bottom: none;}
 .person_meta {
