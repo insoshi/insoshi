@@ -64,6 +64,8 @@ class ReqsController < ApplicationController
   def update
     @req = Req.find(params[:id])
 
+    @req.person_id = current_person.id
+
     respond_to do |format|
       if @req.update_attributes(params[:req])
         flash[:notice] = 'Request was successfully updated.'
