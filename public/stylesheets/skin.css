@@ -31,6 +31,19 @@ body {
   width: 324px;
 }
 
+/* columns inside a tabbed panel */
+/* they need to be narrower because of the space consumed by the tabs 
+   interface */
+#tabCol .col1 {
+	float: left;
+	width: 60%;
+	padding-right: 10px;	
+}
+#tabCol .col2 {
+	float: right;
+	width: 35%;
+	margin-left: 20px;	
+}
 /* Header */
 #header {
   position: relative;
@@ -399,19 +412,6 @@ ul.ui-tabs-nav li {
 	min-height: 540px;
 	width: 96%;
 	border: 1px solid #4A70B1;
-}
-.innerTabRight {
-	float: left;
-	width: 35%;
-	margin-left: 20px;
-}
-.innerTabLeft {
-	float: left;
-	width: 60%;
-	padding-right: 10px;
-}
-.innerTabLeft h2 {
-	margin-bottom: 0px;
 }
 .comments li div {border-bottom: 1px solid #ccc;}
 .imgHoverMarker {display: inline;}

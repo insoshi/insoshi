@@ -59,9 +59,10 @@
 
     <div class="form_row">
       <%= f.label :about %>
-    <%= fckeditor_textarea("preferences", :about, 
-      :toolbarSet => 'InsoshiBase', :width => '100%', 
-      :height => RICH_TEXT_HEIGHT) %>
+			<p><%= formatting_note %></p>
+    	<%= fckeditor_textarea("preferences", :about, 
+      	:toolbarSet => 'InsoshiBase', :width => '100%', 
+      	:height => RICH_TEXT_HEIGHT) %>
 
       <%# f.text_area :about, :rows => 10 %>
     </div>
