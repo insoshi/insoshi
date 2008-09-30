@@ -4,7 +4,7 @@ class ReqsController < ApplicationController
   # GET /reqs
   # GET /reqs.xml
   def index
-    @reqs = Req.find(:all)
+    @reqs = Req.find(:all, :order => 'created_at DESC')
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,28 +1,18 @@
-<h1>Listing reqs</h1>
+<%- column_div :type => :primary do -%>
+<h2>Requests</h2>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Estimated hours</th>
-    <th>Due date</th>
-    <th>Person</th>
-  </tr>
-
-<% for req in @reqs %>
-  <tr>
-    <td><%=h req.name %></td>
-    <td><%=h req.description %></td>
-    <td><%=h req.estimated_hours %></td>
-    <td><%=h req.due_date %></td>
-    <td><%=h req.person_id %></td>
-    <td><%= link_to 'Show', req %></td>
-    <td><%= link_to 'Edit', edit_req_path(req) %></td>
-    <td><%= link_to 'Destroy', req, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
+<%- if @reqs.empty? -%>
+    <h3 class="blankslate">No requests (yet!)</h3>
+<%- else -%>
+  <ul class="list full">
+    <%= render :partial => 'req', :collection => @reqs %>
+  </ul>
+<%- end -%>
 <br />
 
 <%= link_to 'New req', new_req_path %>
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>
