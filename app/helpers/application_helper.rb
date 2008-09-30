@@ -22,14 +22,14 @@ module ApplicationHelper
 
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
-      #messages = menu_element("Messages", messages_path)
+      messages = menu_element("Messages", messages_path)
       #blog     = menu_element("Blog",     blog_path(current_person.blog))
       #photos   = menu_element("Photos",   photos_path)
       #contacts = menu_element("Contacts",
       #                        person_connections_path(current_person))
       events   = menu_element("Events", events_path)
       #links = [home, profile, contacts, messages, blog, people, forum]
-      links = [home, profile, people, forum]
+      links = [home, profile, messages, people, forum]
       # TODO: remove 'unless production?' once events are ready.
       links.push(events) unless production?
       
@@ -83,7 +83,7 @@ module ApplicationHelper
   # Set the input focus for a specific id
   # Usage: <%= set_focus_to 'form_field_label' %>
   def set_focus_to(id)
-    javascript_tag("$('#{id}').focus()");
+    javascript_tag(" $(document).ready(function(){$('##{id}').focus()});");
   end
   
   # Display text by sanitizing and formatting.
