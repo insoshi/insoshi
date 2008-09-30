@@ -139,9 +139,6 @@ p.welcome a, p.welcome a:visited {
   font-size: 12px;
   line-height: 1.8em;
 }
-.list.topic.full p.meta {
-  border-top: 1px dashed #e0e0e0;
-}
 p.meta, li p.meta {
   font-size: 12px;
 }

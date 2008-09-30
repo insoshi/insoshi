@@ -3,9 +3,7 @@
   <ul class="list topic full">
     <%= render :partial => 'forum_post', :collection => @posts %>
   </ul>
-<%- end -%>
 
-<%- column_div :type => :secondary do -%>
   <h2>Add Reply</h2>
 
   <p><%= formatting_note %></p>
@@ -22,4 +20,9 @@
       <%= f.submit "Submit", :class => "button" %>
     </div>
   <% end %>
+
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+	<%= render :partial => 'shared/minifeed' %>
 <%- end -%>

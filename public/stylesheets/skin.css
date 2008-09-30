@@ -121,6 +121,9 @@ p.welcome {
 .list li {
   border-bottom: 1px solid #eee;
   background: none;
+  clear: both;
+  display: inline;
+  float: left;
   list-style: none;
   margin: 0 0 12px 6px;
   padding: 0 0 6px 0;
@@ -149,7 +152,7 @@ p.welcome {
 }
 .list p {
   margin-bottom: 0;
-/*  margin-left: 102px;*/
+  margin-left: 102px;
 }
 .list .forum p {
   margin-bottom: 1em;
@@ -502,16 +505,6 @@ ul.people li.vcard p {
 .forum .topic li {
   border-bottom: 1px solid #ccc;
   display: block;
-}
-.forum .topic .profile-image {
-  float: left;
-  /* overflow: hidden; this hides the activity icon when no member thumbnail */
-  position: relative;
-  width: 80px;
-}
-.forum .topic .topic_body {
-  float: left;
-  width: 370px;
 }
 #tBlog .col2, #tWall .col2 {
 	width: 224px;

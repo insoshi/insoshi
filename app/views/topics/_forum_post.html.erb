@@ -1,8 +1,11 @@
 <li>
   <a name="post_<%= forum_post.id %>"></a>
-  <div class="forum entry_content">
-    <%= display forum_post.body %>
+  <div class="profile-image">
+    <%= image_link forum_post.person, :image => :thumbnail %>
+    <%= image_tag "icons/comment.gif", :class => "icon" %>
   </div>
+
+
   <p class="meta">
   Posted by <span class="author"><%= person_link_with_image forum_post.person %></span> 
       <abbr class="updated" title="<%= forum_post.created_at %>"><%= time_ago_in_words(forum_post.created_at) %> ago</abbr>
@@ -19,5 +22,8 @@
              :title => 'Delete' %>
       <%- end -%>
   </p>
+  <div class="forum">
+    <%= display forum_post.body %>
+  </div>
   <div class="clear"></div>
 </li>
