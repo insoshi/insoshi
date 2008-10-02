@@ -95,13 +95,18 @@ body {
 
 /* footer */
 #footer {
-  border-top: 1px solid #ccc;
   clear: both;
   margin-top: 48px;
   padding: 24px 0;
   width: 744px;
   
 }
+
+#footer-nav {
+  border-top: 1px solid #ccc;
+  padding-top: 24px;
+}
+
 /* Welcome message */
 p.welcome {
   position: absolute;
