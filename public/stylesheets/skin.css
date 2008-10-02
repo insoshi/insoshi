@@ -35,14 +35,14 @@ body {
 /* they need to be narrower because of the space consumed by the tabs 
    interface */
 #tabCol .col1 {
-	float: left;
-	width: 60%;
-	padding-right: 10px;	
+  float: left;
+  width: 60%;
+  padding-right: 10px;  
 }
 #tabCol .col2 {
-	float: right;
-	width: 35%;
-	margin-left: 20px;	
+  float: right;
+  width: 35%;
+  margin-left: 20px;  
 }
 /* Header */
 #header {
@@ -130,7 +130,7 @@ p.welcome {
   width: 100%;
 }
 .list li.last {
-	border-bottom: none;
+  border-bottom: none;
 }
 .list .profile-image {
   clear: left;
@@ -214,7 +214,7 @@ p.welcome {
   width: 36px;
 }
 .col2 .contacts li.more a {
-	margin-right: 12px !important;
+  margin-right: 12px !important;
 }
 .grid.medium li {
   background: url(/images/blue-grad.jpg) bottom repeat-x;
@@ -318,39 +318,44 @@ p.welcome {
   border: 1px solid #ccc;
   height: 80px;
   margin: 10px 0 12px 0px;
-	width: 300px;
+  width: 300px;
 }
 #gallery_list li div, #gallery_list li p {
-	padding-left: 10px;
+  padding-left: 10px;
 }
 #gallery_list li p {
-	float: left;
-	width: 200px;
-	line-height: 1.6;
+  float: left;
+  width: 200px;
+  line-height: 1.6;
 }
 .gallery_title {
-	font-size: 146%;
-	font-weight: bold;
+  font-size: 146%;
+  font-weight: bold;
 }
 div.toolbox ul li {
-	font-size: 12px;
-	list-style: disc inside;
-	background: none;
-	padding-left: 0px
+  font-size: 12px;
+  list-style: disc inside;
+  background: none;
+  padding-left: 0px
 }
 
 div.photo, div.photo-small {
-	padding-top: 10px;
-	text-align: center;
+  padding-top: 10px;
+  text-align: center;
 }
 
 div.gallery-description {
-	font-size: 12px;
-	text-align: justify;
+  font-size: 12px;
+  text-align: justify;
 }
 
 div.photo-small:hover {
-	background-color: #ccccff;
+  background-color: #ccccff;
+}
+
+.form_row a {
+  margin-left: 10px;
+  font-size: 80%;
 }
 
 /* Bug fixes */
@@ -377,44 +382,44 @@ form, div, h2, ul, li {zoom: 1;}
 
 /* Bill's additions */
 h2 {
-	padding-left: 0px;
+  padding-left: 0px;
 }
 .profile {
-	position: relative;
+  position: relative;
 }
 .profileEditLink a {
-	font-size: 80%;
+  font-size: 80%;
 }
 .minifeed, #change_password {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 .minifeed h2 {
-	margin-top: 0px;
-	border-bottom: none;
+  margin-top: 0px;
+  border-bottom: none;
 }
 h3.subject {
-	vertical-align: top;
+  vertical-align: top;
 }
 #profile_edit h3 {
-	color: #4A70B1;
-	margin-bottom: 1px;
+  color: #4A70B1;
+  margin-bottom: 1px;
 }
 #profile_edit form, form#blogpost {
-	border-bottom: none;
-	margin-bottom: auto;
+  border-bottom: none;
+  margin-bottom: auto;
 }
 #tabCol {
-	margin-top: 5px;
-	width: 100%;
+  margin-top: 5px;
+  width: 100%;
 }
 ul.ui-tabs-nav li {
-	background: none;
-	padding-left: 0px;
+  background: none;
+  padding-left: 0px;
 }
 .ui-tabs-panel {
-	min-height: 540px;
-	width: 96%;
-	border: 1px solid #4A70B1;
+  min-height: 540px;
+  width: 96%;
+  border: 1px solid #4A70B1;
 }
 .comments li div {border-bottom: 1px solid #ccc;}
 .imgHoverMarker {display: inline;}
@@ -424,112 +429,112 @@ ul.ui-tabs-nav li {
 #tRecentActivity ul li, #tWall ul li, #tWall ul li div {display: block; border-bottom: none;}
 #tWall form, form#admin_preferences, form#admin_forums, form.edit_photo, .col2 form {border-bottom: none;}
 #tGalleries .profile-image {
-	margin-top: 4px;
+  margin-top: 4px;
 }
 #photos ul li {
     background: url(/images/blue-grad.jpg) bottom repeat-x;
-	margin: 10px 10px 0px 0px;
+  margin: 10px 10px 0px 0px;
     float: left;
-	display: inline;
-	width: 140px;
-	height: 131px;
-	border: 1px solid #ccc;
-	padding: 4px;
-	overflow: hidden;
+  display: inline;
+  width: 140px;
+  height: 131px;
+  border: 1px solid #ccc;
+  padding: 4px;
+  overflow: hidden;
 }
 #photos ul li img {
-	vertical-align: top;
+  vertical-align: top;
 }
 #photos form {
-	margin-top: 20px;
-	border-bottom: none;
+  margin-top: 20px;
+  border-bottom: none;
 }
 .gallPhotoTitle {
-	height: 18px;
-	margin-bottom: 5px;
+  height: 18px;
+  margin-bottom: 5px;
 }
 .gallPhoto {
-	float: left;
-	width: 80px;
+  float: left;
+  width: 80px;
 }
 .gallPhotoMeta {
-	height: 72px;
-	float: left;
-	width: 60px;
+  height: 72px;
+  float: left;
+  width: 60px;
 }
 .gpuTitle {
-	font-weight: bold;
-	font-size: 116%;
-	text-align: center;
-	margin: 5px;
+  font-weight: bold;
+  font-size: 116%;
+  text-align: center;
+  margin: 5px;
 }
 ul.activity {margin-bottom: 0px;}
 img.actioner {
-	vertical-align: text-bottom;
-	padding-left: 5px;
+  vertical-align: text-bottom;
+  padding-left: 5px;
 }
 .contacts.grid li.vcard {
-	margin-right: 10px;
-	line-height: 2em;
+  margin-right: 10px;
+  line-height: 2em;
 }
 .contacts.grid.medium li.vcard {
-	line-height: 1em;
+  line-height: 1em;
 }
 ul.people li.vcard p {
-	margin-left: 80px;
-	vertical-align: top;
+  margin-left: 80px;
+  vertical-align: top;
 }
 .prefItem {
-	clear: both;
-	width: 520px;
-	margin: 15px 0px;
-	border-bottom: 1px dotted #e0e0e0;
+  clear: both;
+  width: 520px;
+  margin: 15px 0px;
+  border-bottom: 1px dotted #e0e0e0;
 }
 .prefLabel {
-	float: left;
-	font-weight: bold;
-	width: 200px;
-	padding: 10px 0px;
+  float: left;
+  font-weight: bold;
+  width: 200px;
+  padding: 10px 0px;
 }
 .prefValue {
-	float: left;
-	margin-left: 10px;
-	width: 300px;
-	padding: 10px 0px;
+  float: left;
+  margin-left: 10px;
+  width: 300px;
+  padding: 10px 0px;
 }
 .prefAbout {
-	margin-top: 5px;
-	border: 1px solid #ccc;
-	padding: 5px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  padding: 5px;
 }
 .forum .topic li {
   border-bottom: 1px solid #ccc;
   display: block;
 }
 #tBlog .col2, #tWall .col2 {
-	width: 224px;
-	padding: 0px 0px 0px 6px;
+  width: 224px;
+  padding: 0px 0px 0px 6px;
 }
 #blogpost .prefLabel {
-	width: 100px;
+  width: 100px;
 }
 #blogpost .prefValue #post_title, #blogpost .prefValue textarea {
   width: 400px !important; /* width reduced by Bill L */
 }
 #blogpost #post_submit {
-	text-align: right;
+  text-align: right;
 }
 
 .col2 #blogpost #post_submit {
-	text-align: left;
+  text-align: left;
 }
 ul.admin, ul.admin li {list-style-position: inside;}
 ul.admin li {display: list-item; list-style-image: url(/images/icons/switch.gif); border-bottom: none;}
 .person_meta {
-	margin-left: 50px;
+  margin-left: 50px;
 }
 .person_description {
-	clear: both;
+  clear: both;
 }
 .see_all_link {
   width: 116px !important;
@@ -539,25 +544,25 @@ ul.admin li {display: list-item; list-style-image: url(/images/icons/switch.gif)
   margin-left: -20px;
 }
 .forum .entry_content {
-	clear: both;
+  clear: both;
 }
 p.welcome span, .powered_by a {
-	font-size: 116%
+  font-size: 116%
 }
 hr {
-	color: #FFF5B5;
+  color: #FFF5B5;
 }
 form#admin_preferences label {
-	display: inline;
-	float: left;
-	width: 160px;
+  display: inline;
+  float: left;
+  width: 160px;
 }
 #sidebar_body {
-	padding: 4px;
+  padding: 4px;
 }
 #sidebar_body ul li {
-	background: none;
-	padding-left: 3px;
+  background: none;
+  padding-left: 3px;
 }
 .debug_info pre {width: 670px;}
 
@@ -565,14 +570,14 @@ form#admin_preferences label {
    this stuff is turned off temporarily to get the layouts to
    work while I determine whether or not to eliminate the
    html entirely  
-			-Evan
-*/	
-	#sidebar {
-		display: none;	
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 50px;
-		height: 50px;
-		z-index: 2;
-	}		
+      -Evan
+*/  
+  #sidebar {
+    display: none;  
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    z-index: 2;
+  }    

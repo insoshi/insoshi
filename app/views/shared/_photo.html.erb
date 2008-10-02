@@ -12,7 +12,8 @@
   <%- if current_person?(photo.person) -%>
   <div class='gallPhotoMeta'>
       <%= link_to image_tag("icons/picture_edit.png", :class => 'actioner'), 
-        edit_photo_path(photo) %>
+                  edit_photo_path(photo),
+                  :title => "Edit photo" %>
       <%= link_to image_tag("icons/picture_delete.png", :class => 'actioner'), 
         photo_path(photo), :method => :delete %>
       <%= link_to image_tag("default_thumbnail.png", :class => 'actioner', 

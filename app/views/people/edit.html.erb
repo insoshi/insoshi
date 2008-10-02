@@ -14,8 +14,28 @@
         <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
       </div>
       
-      <%- if global_prefs.email_notifications? -%>
-        <a name="email_prefs"></a>
+    <h3>Public Description</h3>
+      <p class="meta">This is what other users of the system see as your 
+        description.</p>
+      <div class="form_row">
+      <%= fckeditor_textarea("person", :description, 
+                                       :toolbarSet => 'InsoshiBase',
+                                       :width => '100%',
+                                       :height => RICH_TEXT_HEIGHT) %>
+      </div>
+
+      <br />
+  
+      <div class="form_row">
+        <%= f.submit "Update", :class => "button" %>
+        <%= link_to "Cancel", @person %>
+      </div>
+      <input type="hidden" name="type" value="info_edit" />
+  <% end %>
+  </div>
+  
+  <%- if global_prefs.email_notifications? -%>
+    <a name="email_prefs"></a>
     <h3>Email Notification Preferences</h3>
   
     <p class="meta">Get emails when these events occur</p>
@@ -38,29 +58,11 @@
       </p>
       <p>
         <%= f.label :blog_comment_notifications, 'Blog Comments', 
-          :class => "checkbox" %>
+                                                 :class => "checkbox" %>
         <%= f.check_box :blog_comment_notifications, {}, 'true', 'false' %>
       </p>
     </div>
   <%- end -%>
-      
-    <h3>Public Description</h3>
-      <p class="meta">This is what other users of the system see as your 
-        description.</p>
-      <div class="form_row">
-      <%= fckeditor_textarea("person", :description, 
-        :toolbarSet => 'InsoshiBase', :width => '100%', 
-        :height => RICH_TEXT_HEIGHT) %>
-      </div>
-
-      <br />
-  
-      <div class="form_row">
-        <%= f.submit "Update", :class => "button" %>
-      </div>
-      <input type="hidden" name="type" value="info_edit" />
-  <% end %>
-  </div>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
