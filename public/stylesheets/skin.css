@@ -519,9 +519,7 @@ ul.people li.vcard p {
 #blogpost #post_submit {
 	text-align: right;
 }
-.col2 #blogpost .prefValue #post_title, .col2 #blogpost .prefValue textarea, #tWall #comment_body {
-  width: 208px !important; /* width reduced by Bill L */
-}
+
 .col2 #blogpost #post_submit {
 	text-align: left;
 }
