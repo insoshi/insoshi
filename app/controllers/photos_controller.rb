@@ -1,7 +1,9 @@
 class PhotosController < ApplicationController
 
   before_filter :login_required
-  before_filter :correct_user_required, :only => [ :edit, :update, :destroy, :set_primary, :set_avatar ]
+  before_filter :correct_user_required,
+                :only => [ :edit, :update, :destroy, :set_primary, 
+                           :set_avatar ]
   before_filter :correct_gallery_requried, :only => [:new, :create]
   
   def index
@@ -90,7 +92,6 @@ class PhotosController < ApplicationController
     end
     # This should only have one entry, but be paranoid.
     @old_primary = @photo.gallery.photos.select(&:primary?)
-  
     respond_to do |format|
       if @photo.update_attributes(:primary => true)
         @old_primary.each { |p| p.update_attributes!(:primary => false) }
@@ -131,7 +132,7 @@ class PhotosController < ApplicationController
       @photo = Photo.find(params[:id])
       if @photo.nil?
         redirect_to home_url
-      elsif @photo.person != current_person
+      elsif !current_person?(@photo.person)
         redirect_to home_url
       end
     end

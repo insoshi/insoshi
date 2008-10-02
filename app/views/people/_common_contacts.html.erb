@@ -1,4 +1,4 @@
-<%- if logged_in? && !@common_contacts.empty? -%>
+<%- unless current_person?(@person) or @common_contacts.empty? -%>
     <h2>Common Contacts</h2>
     <ul class="grid contacts medium">
       <%- @some_common_contacts.each do |contact| -%>

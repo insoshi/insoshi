@@ -23,22 +23,22 @@
     <div class="form_row">
       <p>
         <%= f.label :connection_notifications, 'Connections', 
-					:class => "checkbox" %>
+          :class => "checkbox" %>
         <%= f.check_box :connection_notifications, {}, 'true', 'false' %>
       </p>
       <p>
         <%= f.label :message_notifications, 'Messages', 
-					:class => "checkbox" %>
+          :class => "checkbox" %>
         <%= f.check_box :message_notifications, {}, 'true', 'false' %>
       </p>
       <p>
         <%= f.label :wall_comment_notifications, 'Wall Comments', 
-					:class => "checkbox" %>
+          :class => "checkbox" %>
         <%= f.check_box :wall_comment_notifications, {}, 'true', 'false' %>
       </p>
       <p>
         <%= f.label :blog_comment_notifications, 'Blog Comments', 
-					:class => "checkbox" %>
+          :class => "checkbox" %>
         <%= f.check_box :blog_comment_notifications, {}, 'true', 'false' %>
       </p>
     </div>
@@ -46,11 +46,11 @@
       
     <h3>Public Description</h3>
       <p class="meta">This is what other users of the system see as your 
-				description.</p>
+        description.</p>
       <div class="form_row">
-    	<%= fckeditor_textarea("person", :description, 
-				:toolbarSet => 'InsoshiBase', :width => '100%', 
-				:height => RICH_TEXT_HEIGHT) %>
+      <%= fckeditor_textarea("person", :description, 
+        :toolbarSet => 'InsoshiBase', :width => '100%', 
+        :height => RICH_TEXT_HEIGHT) %>
       </div>
 
       <br />
