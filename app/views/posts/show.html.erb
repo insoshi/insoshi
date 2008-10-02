@@ -30,6 +30,8 @@
   <%- if logged_in? -%>
     <h4>Leave a comment</h4>
 
+    <p><%= formatting_note %></p>
+
     <% form_for :comment, :url => blog_post_comments_path(@blog, @post),
                           :html => { :id => "blogcomment" } do |f| %>
       <div class="form_row">
