@@ -16,6 +16,8 @@ class ReqsController < ApplicationController
   # GET /reqs/1.xml
   def show
     @req = Req.find(params[:id])
+    @bid = Bid.new
+    @bid.estimated_hours = @req.estimated_hours
 
     respond_to do |format|
       format.html # show.html.erb

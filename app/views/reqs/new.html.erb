@@ -5,8 +5,6 @@
 <%= error_messages_for :req %>
 
 <% form_for(@req) do |f| %>
-  <%= f.error_messages %>
-
   <div class="form_row">
     <%= f.label :name %>
     <%= f.text_field :name %>

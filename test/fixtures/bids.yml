@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  status_id: 1
+  estimated_hours: 9.99
+  actual_hours: 9.99
+  expiration_date: 2008-10-02 13:30:53
+
+two:
+  status_id: 1
+  estimated_hours: 9.99
+  actual_hours: 9.99
+  expiration_date: 2008-10-02 13:30:53

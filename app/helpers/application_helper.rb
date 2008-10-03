@@ -21,22 +21,24 @@ module ApplicationHelper
       photos   = menu_element("Photos",   photos_path)
 #      contacts = menu_element("Contacts",
 #                              person_connections_path(current_person))
-      events   = menu_element("Events", events_path)
 #      links = [home, profile, contacts, messages, blog, people, forum]
+      events   = menu_element("Events", events_path)
       links = [home, profile, requests, people, messages, forum, categories]
       # TODO: remove 'unless production?' once events are ready.
-      links.push(events) unless production?
+      links.push(events) #unless production?
       
     elsif logged_in? and admin_view?
       home =    menu_element("Home", home_path)
       categories = menu_element("Categories", categories_path)
       people =  menu_element("People", admin_people_path)
+      events   = menu_element("Events", events_path)
       forums =  menu_element(inflect("Forum", Forum.count),
                              admin_forums_path)
       preferences = menu_element("Prefs", admin_preferences_path)
       links = [home, categories, people, forums, preferences]
     else
-      links = [home, people]
+      events   = menu_element("Events", events_path)
+      links = [home, people, events]
     end
     if global_prefs.about.blank?
       links

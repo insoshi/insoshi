@@ -1,0 +1,23 @@
+<p>
+  <b>Status:</b>
+  <%=h @bid.status_id %>
+</p>
+
+<p>
+  <b>Estimated hours:</b>
+  <%=h @bid.estimated_hours %>
+</p>
+
+<p>
+  <b>Actual hours:</b>
+  <%=h @bid.actual_hours %>
+</p>
+
+<p>
+  <b>Expiration date:</b>
+  <%=h @bid.expiration_date %>
+</p>
+
+
+<%= link_to 'Edit', edit_bid_path(@bid) %> |
+<%= link_to 'Back', bids_path %>

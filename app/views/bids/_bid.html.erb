@@ -1,0 +1,17 @@
+<li class="bid">
+  <a name="bid_<%= bid.id %>"></a>
+  <div class="profile-image">
+    <%= image_link bid.person, :image => :thumbnail %>
+    <%= image_tag "icons/new.gif", :class => "icon", :alt => "Bid" %>
+  </div>
+  <p>
+    Hours bid: <%= h bid.estimated_hours %>
+  </p>
+  <p class="meta">
+    Submitted by <%= person_link bid.person %>
+    <%= time_ago_in_words(bid.created_at) %> ago
+    <% if admin? || current_person?(bid.person) -%>
+    | <%= link_to "Delete", req_bid_path(bid.req,bid), :confirm => 'Are you sure?', :method => :delete %>
+    <% end -%>
+  </p>
+</li>

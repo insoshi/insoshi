@@ -3,6 +3,7 @@ class Req < ActiveRecord::Base
 
   has_and_belongs_to_many :categories
   belongs_to :person
+  has_many :bids
 
   attr_protected :person_id
 

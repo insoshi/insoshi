@@ -1,5 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :reqs
+  map.resources :bids
+
+  map.resources :reqs do |req|
+    req.resources :bids
+  end
 
   map.resources :categories
 
