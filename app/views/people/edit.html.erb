@@ -25,6 +25,39 @@
       </div>
 
       <br />
+
+      <%- if global_prefs.email_notifications? -%>
+        <a name="email_prefs"></a>
+        <h3>Email Notification Preferences</h3>
+
+        <p class="meta">Get emails when these events occur</p>
+
+        <div class="form_row">
+          <p>
+            <%= f.label :connection_notifications, 'Connections', 
+              :class => "checkbox" %>
+            <%= f.check_box :connection_notifications, {}, 'true', 'false' %>
+          </p>
+          <p>
+            <%= f.label :message_notifications, 'Messages', 
+              :class => "checkbox" %>
+            <%= f.check_box :message_notifications, {}, 'true', 'false' %>
+          </p>
+          <p>
+            <%= f.label :wall_comment_notifications, 'Wall Comments', 
+              :class => "checkbox" %>
+            <%= f.check_box :wall_comment_notifications,
+                            {}, 'true', 'false' %>
+          </p>
+          <p>
+            <%= f.label :blog_comment_notifications, 'Blog Comments', 
+                                                     :class => "checkbox" %>
+            <%= f.check_box :blog_comment_notifications,
+                            {}, 'true', 'false' %>
+          </p>
+        </div>
+      <%- end -%>
+
   
       <div class="form_row">
         <%= f.submit "Update", :class => "button" %>
@@ -33,36 +66,6 @@
       <input type="hidden" name="type" value="info_edit" />
   <% end %>
   </div>
-  
-  <%- if global_prefs.email_notifications? -%>
-    <a name="email_prefs"></a>
-    <h3>Email Notification Preferences</h3>
-  
-    <p class="meta">Get emails when these events occur</p>
-  
-    <div class="form_row">
-      <p>
-        <%= f.label :connection_notifications, 'Connections', 
-          :class => "checkbox" %>
-        <%= f.check_box :connection_notifications, {}, 'true', 'false' %>
-      </p>
-      <p>
-        <%= f.label :message_notifications, 'Messages', 
-          :class => "checkbox" %>
-        <%= f.check_box :message_notifications, {}, 'true', 'false' %>
-      </p>
-      <p>
-        <%= f.label :wall_comment_notifications, 'Wall Comments', 
-          :class => "checkbox" %>
-        <%= f.check_box :wall_comment_notifications, {}, 'true', 'false' %>
-      </p>
-      <p>
-        <%= f.label :blog_comment_notifications, 'Blog Comments', 
-                                                 :class => "checkbox" %>
-        <%= f.check_box :blog_comment_notifications, {}, 'true', 'false' %>
-      </p>
-    </div>
-  <%- end -%>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
