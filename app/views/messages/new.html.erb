@@ -38,9 +38,9 @@
       <%- end -%>
     </div>
     <div class="form_row">
-      <%= f.submit "Send!", :class => "button", :id => "message_submit" %>
+      <%= f.submit "Send", :class => "button", :id => "message_submit" %>
       <%= f.submit "Preview", :class => "button", :id => "preview" %>
-      <%= f.submit "Cancel", :class => "button", :id => "cancel" %>
+      <%= link_to "Cancel", messages_url %>
     </div>
   <% end %>
 <%- end -%>

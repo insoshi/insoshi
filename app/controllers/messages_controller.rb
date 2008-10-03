@@ -2,7 +2,6 @@ class MessagesController < ApplicationController
 
   before_filter :login_required, :setup
   before_filter :authenticate_person, :only => :show
-  before_filter :handle_cancel, :only => :create
 
   # GET /messages
   def index
@@ -118,10 +117,6 @@ class MessagesController < ApplicationController
               current_person == @message.recipient)
         redirect_to login_url
       end
-    end
-
-    def handle_cancel
-      redirect_to messages_url if params[:commit] == "Cancel"
     end
         
     def reply?

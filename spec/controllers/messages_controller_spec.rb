@@ -55,11 +55,6 @@ describe MessagesController do
       assigns(:recipient).should == @message.recipient
     end
     
-    it "should allow create cancellation" do
-      post :create, :commit => "Cancel"
-      response.should redirect_to(messages_url)
-    end
-    
     it "should handle invalid reply creation" do
       login_as(:kelly)
       post :create, :message => { :parent_id => @message.id },
