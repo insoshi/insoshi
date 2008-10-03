@@ -37,8 +37,7 @@ module ApplicationHelper
       preferences = menu_element("Prefs", admin_preferences_path)
       links = [home, categories, people, forums, preferences]
     else
-      events   = menu_element("Events", events_path)
-      links = [home, people, events]
+      links = [home, people]
     end
     if global_prefs.about.blank?
       links
