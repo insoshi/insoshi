@@ -5,8 +5,9 @@
 <%- if current_person.admin? -%>
     <div class="button">
       <%- activity = activated_status(@person)  -%>
-      <%= link_to activity, admin_person_path(@person, :task => "deactivated"),
-              :method => :put %>
+      <%= link_to activity,
+                  admin_person_path(@person, :task => "deactivated"),
+                  :method => :put %>
     </div>
 <%- end -%>
 <%- if current_person?(@person) -%>
@@ -69,4 +70,3 @@
   <%- end -%>
 </div>
 <%= display @person.description %>
-<div class="clear"></div>
