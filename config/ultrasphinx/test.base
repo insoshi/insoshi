@@ -30,13 +30,13 @@ searchd
   # Daemon options
   # What interface the search daemon should listen on and where to store its logs
   address = 0.0.0.0
-  port = 3312
+  port = 3322
   seamless_rotate = 1
-  log = log/searchd.log
-  query_log = log/query.log
+  log = log/searchd_test.log
+  query_log = log/query_test.log
   read_timeout = 5
   max_children = 300
-  pid_file = log/searchd.pid
+  pid_file = log/searchd_test.pid
   max_matches = 100000
 }
 
@@ -47,7 +47,7 @@ client
   dictionary_name = ap
   # How your application connects to the search daemon (not necessarily the same as above)
   server_host = localhost
-  server_port = 3312
+  server_port = 3322
 }
 
 source
@@ -61,7 +61,7 @@ source
 index
 {
   # Index building options
-  path = sphinx
+  path = sphinx_test
   docinfo = extern # just leave this alone
   morphology = stem_en
   stopwords = # /path/to/stopwords.txt
