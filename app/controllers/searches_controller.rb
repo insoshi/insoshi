@@ -7,7 +7,7 @@ class SearchesController < ApplicationController
     
     redirect_to(home_url) and return if params[:q].nil?
     
-    query = params[:q].strip
+    query = params[:q].strip.inspect
     model = strip_admin(params[:model])
     page  = params[:page] || 1
 
@@ -38,6 +38,9 @@ class SearchesController < ApplicationController
         @results.map!{ |person| Person.find(person) }
       end
     end
+  rescue Ultrasphinx::UsageError
+    flash[:error] = "Invalid search query"
+    redirect_to searches_url(:q => "", :model => params[:model])
   end
   
   private

@@ -175,4 +175,13 @@ describe SearchesController do
     end
   end
   
+  describe "error handling" do
+    it "should catch Ultrasphinx::UsageError exceptions" do
+      invalid_query = "foo@bar"
+      get :index, :q => invalid_query, :model => "Person"
+      response.should be_redirect
+      response.should redirect_to(searches_url(:q => "", :model => "Person"))
+    end
+  end
+  
 end if testing_search?

@@ -26,4 +26,5 @@ vendor/**/**/doc/*
 vendor/plugins/footnotes/*
 rsa_key*
 sphinx/*
+sphinx_test/*
 config/ultrasphinx/*.conf
