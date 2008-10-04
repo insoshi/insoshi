@@ -52,7 +52,7 @@ body {
   float: right;
 }
 #nav li {
-  background: #069 url(/images/header-grad.jpg) bottom repeat-x;
+  background: #069 url(/images/aten_header-grad.jpg) bottom repeat-x;
   float: left;
   height: 36px;
   line-height: 36px;
@@ -69,7 +69,7 @@ body {
   font-size: 12px;
 }
 #nav li a:hover {
-  background: url(/images/header-grad-inv.jpg) top repeat-x;
+  background: url(/images/aten_header-grad-inv.jpg) top repeat-x;
 }
 #nav li.active a, #nav li.active a:hover {
   background: #fff;
