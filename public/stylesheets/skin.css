@@ -330,3 +330,7 @@ form, div, h2, ul, li {zoom: 1;}
   margin: 0 105px;
   width: 324px;
 }
+
+p.poweredby{
+	float:right;
+}
