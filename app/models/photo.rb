@@ -26,8 +26,8 @@ class Photo < ActiveRecord::Base
   attr_protected :id, :person_id, :parent_id, :created_at, :updated_at
   
   belongs_to :person
-  has_attachment :content_type => :image, 
-                 :storage => :file_system, 
+  has_attachment :content_type => :image,
+                 :storage => :file_system,
                  :max_size => UPLOAD_LIMIT.megabytes,
                  :min_size => 1,
                  :resize_to => '240>',
@@ -72,17 +72,17 @@ class Photo < ActiveRecord::Base
     if self.title.nil? or (self.title.length == 0)
       label_from_filename
     else
-      self.title
+      title
     end
   end
 
   def label_from_filename
-    File.basename(self.filename, File.extname(self.filename)).titleize
+    File.basename(filename, File.extname(filename)).titleize
   end
   
   def log_activity
-      activity = Activity.create!(:item => self, :person => self.person)
-      add_activities(:activity => activity, :person => self.person)
+      activity = Activity.create!(:item => self, :person => person)
+      add_activities(:activity => activity, :person => person)
   end
 
 end

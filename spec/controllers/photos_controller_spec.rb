@@ -1,4 +1,18 @@
 require File.dirname(__FILE__) + '/../spec_helper'
+require "thumbnail"
+
+class Thumbnail
+
+  # Override full_filename to avoid writing files to the public image directory.
+  # They go instead to Dir::tmpdir, which on *nix systems is usually /tmp.
+  # See http://www.fngtps.com/2007/04/testing-with-attachment_fu for more info.  
+  def full_filename(thumbnail = nil)
+    klass = thumbnail.nil? ? self : thumbnail_class
+    file_system_path = klass.attachment_options[:path_prefix].to_s
+    File.join(Dir::tmpdir, file_system_path,
+              *partitioned_path(thumbnail_name_for(thumbnail)))
+  end
+end
 
 describe PhotosController do
 
@@ -17,19 +31,20 @@ describe PhotosController do
 
       @person = login_as(:quentin)
       @gallery = galleries(:valid_gallery)
-      # @primary, @secondary = [mock_photo(:primary => true, :gallery => @gallery, :title=>"snsi"), mock_photo(:gallery => @gallery, :title => nil)]
-      # photos = [@primary, @secondary]
-      # photos.each { |p| p.stub!(:person).and_return(@person) }
-      # @person.stub!(:photos).and_return([@primary, @secondary])
       
       @filename = "rails.png"
       @image = uploaded_file(@filename, "image/png")
-      @primary = Photo.new({:uploaded_data => @image, :person => people(:quentin), :gallery => @gallery, :avatar => true, :primary => true})
-      @primary.save
-      @secondary = Photo.new({:uploaded_data => @image, :person => people(:quentin), :gallery => @gallery, :avatar => false, :primary => false})
-      @secondary.save
+      @primary = Photo.create(:uploaded_data => @image,
+                              :person => people(:quentin),
+                              :gallery => @gallery,
+                              :avatar => true, 
+                              :primary => true)
+      @secondary = Photo.create(:uploaded_data => @image,
+                                :person => people(:quentin),
+                                :gallery => @gallery,
+                                :avatar => false,
+                                :primary => false)
       @photo = @primary
-      
     end
   
     
@@ -54,19 +69,22 @@ describe PhotosController do
     it "should create photo" do
       image = uploaded_file("rails.png")
       lambda do
-        post :create, :photo => { :uploaded_data => image}, :gallery_id => @gallery
+        post :create, :photo => { :uploaded_data => image},
+                      :gallery_id => @gallery
       end.should change(Photo, :count).by(1)
     end
     
     it "should handle empty photo upload" do
       lambda do
-        post :create, :photo => { :uploaded_data => nil }, :gallery_id => @gallery
+        post :create, :photo => { :uploaded_data => nil },
+                      :gallery_id => @gallery
         response.should render_template("new")
       end.should_not change(Photo, :count)
     end
     
     it "should handle cancellation and doesn't report about problem" do
-      post :create, :commit => "Cancel", :photo => { :uploaded_data => nil }, :gallery_id => @gallery
+      post :create, :commit => "Cancel", :photo => { :uploaded_data => nil },
+                    :gallery_id => @gallery
       response.should redirect_to(gallery_url(@gallery))
       flash[:error].should be_nil
     end
