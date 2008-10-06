@@ -4,8 +4,8 @@ body {
   text-align: center;
 }
 #header-wrap {
-  /* background: #069; */
-  background: #069 url('/images/header_background.png');
+  /* background: #009908; */
+  background: #009908 url('/images/aten_header_background.png');
   float: left;
   width: 100%;
 }
@@ -52,7 +52,7 @@ body {
   float: right;
 }
 #nav li {
-  background: #069 url(/images/header-grad.jpg) bottom repeat-x;
+  background: #009908 url(/images/aten_header-grad.jpg) bottom repeat-x;
   float: left;
   height: 36px;
   line-height: 36px;
@@ -69,11 +69,11 @@ body {
   font-size: 12px;
 }
 #nav li a:hover {
-  background: url(/images/header-grad-inv.jpg) top repeat-x;
+  background: url(/images/aten_header-grad-inv.jpg) top repeat-x;
 }
 #nav li.active a, #nav li.active a:hover {
   background: #fff;
-  color: #069;
+  color: #009908;
 }
 #nav li.n-home {
   margin-left: 0;
@@ -329,4 +329,8 @@ form, div, h2, ul, li {zoom: 1;}
 * html .single-col .col1 {
   margin: 0 105px;
   width: 324px;
+}
+
+p.poweredby{
+	float:right;
 }
