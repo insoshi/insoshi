@@ -53,11 +53,19 @@ class BidsController < ApplicationController
 
     respond_to do |format|
       if @bid.save
+        bid_note = Message.new()
+        bid_note.subject = "BID: " + @bid.estimated_hours.to_s + " hours - " + @req.name 
+        bid_note.content = "See your <a href=\"" + req_path(@req) + "\">request</a> to consider bid"
+        bid_note.sender = @bid.person
+        bid_note.recipient = @req.person
+        bid_note.save!
+
         flash[:notice] = 'Bid was successfully created.'
         format.html { redirect_to req_path(@req) }
         #format.xml  { render :xml => @bid, :status => :created, :location => @bid }
       else
-        format.html { render :action => "new" }
+        flash[:error] = 'Error creating bid.'
+        format.html { redirect_to req_path(@req) }
         #format.xml  { render :xml => @bid.errors, :status => :unprocessable_entity }
       end
     end
