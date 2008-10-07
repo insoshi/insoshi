@@ -2,21 +2,16 @@
   <%= error_messages_for :photo %>
   <h2>Update Photo</h2>
 
-  <h3>Current Image</h3>
   <p><%= image_tag(@display_photo.public_filename(:thumbnail)) %></p>
 
-  <h3>Select New Image</h3>
-  <% form_for @photo, :html => { :multipart => true } do |f| -%>
-    <div class="form_field">
-      <%= f.file_field :uploaded_data %>
-    </div>
+  <% form_for @photo do |f| -%>
     <div class="form_field">
     <%= f.label :title %>
       <%= f.text_field :title %>
     </div>
     <div class="form_field">
       <%= submit_tag 'Update', :class => 'button' %>
-      <%= f.submit "Cancel", :id => "cancel", :class => 'button' %>
+      <%= link_to "Cancel", gallery_path(@photo.gallery) %>
     </div>
   <% end -%>
 <% end -%>

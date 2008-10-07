@@ -5,14 +5,14 @@
 <% form_for @photo,:url=>{:controller => :photos, :action => :create, :gallery_id => @gallery}, :html => { :multipart => true } do |f| -%>
 
   <div class="form_field">
+    <%= f.file_field :uploaded_data %>
+  </div>
+  <div class="form_field">
     <%= f.label :title %>
     <%= f.text_field :title %>
   </div>
   <div class="form_field">
-    <%= f.file_field :uploaded_data %>
-  </div>
-  <div class="form_field">
     <%= submit_tag 'Upload', :class => 'button' %>
-    <%= submit_tag "Cancel", :id => "cancel", :class => 'button' %>
+    <%= link_to 'Cancel', @gallery, :class => "button", :id => "cancel" %>
   </div>
 <% end -%>

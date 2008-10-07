@@ -1,13 +1,14 @@
 <li>
-  <p class='gallPhotoTitle'>
+  <div class='gallPhotoTitle'>
     <%= link_to photo.label, '#gpu' + photo_id(photo), :rel => 'facebox' %>
     <div style="display: none;" id="gpu<%= photo_id(photo) -%>">
-    <%= image_tag photo.public_filename -%> 
-    <div class="gpuTitle"><%= photo.label -%> </div>
+      <%= image_tag photo.public_filename %> 
+      <div class="gpuTitle"><%= photo.label %> </div>
+    </div>
   </div>
-  </p>
   <div class='gallPhoto'>
-    <%= image_tag(photo.public_filename(:thumbnail)) %>
+    <%= link_to image_tag(photo.public_filename(:thumbnail)),
+                '#gpu' + photo_id(photo), :rel => 'facebox' %>
   </div>
   <%- if current_person?(photo.person) -%>
   <div class='gallPhotoMeta'>
@@ -15,7 +16,8 @@
                   edit_photo_path(photo),
                   :title => "Edit photo" %>
       <%= link_to image_tag("icons/picture_delete.png", :class => 'actioner'), 
-        photo_path(photo), :method => :delete %>
+        photo_path(photo), :method => :delete,
+        :confirm => 'Really delete this photo?' %>
       <%= link_to image_tag("default_thumbnail.png", :class => 'actioner', 
         :style => 'height: 16px;'), set_avatar_photo_path(photo), 
         :method => :put, :title => 'Select as your avatar' %>

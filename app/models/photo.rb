@@ -69,11 +69,7 @@ class Photo < ActiveRecord::Base
   end
   
   def label
-    if self.title.nil? or (self.title.length == 0)
-      label_from_filename
-    else
-      title
-    end
+    title.nil? ? "" : title
   end
 
   def label_from_filename

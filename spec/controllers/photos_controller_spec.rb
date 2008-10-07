@@ -110,9 +110,7 @@ describe PhotosController do
     
     it "should be able to set the photo as avatar" do
       put :set_avatar, :id => @secondary.id
-      response.should redirect_to(person_galleries_url(@person))
-      #assigns(@secondary).avatar.should be_true
-      # @primary.avatar.should_not be_true
+      response.should redirect_to(person_path(@person))
       @secondary = Photo.find(@secondary.id)
       @secondary.avatar.should be_true
       @primary = Photo.find(@primary.id)

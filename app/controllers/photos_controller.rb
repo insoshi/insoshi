@@ -41,7 +41,7 @@ class PhotosController < ApplicationController
     end    
     @gallery = Gallery.find(params[:gallery_id])
     photo_data = { :person => current_person,
-                   :gallery => @gallery}
+                   :gallery => @gallery }
     @photo = Photo.new(params[:photo].merge(photo_data))
     # @photo.person_id = current_person;
 
@@ -60,15 +60,13 @@ class PhotosController < ApplicationController
     end
   end
 
-  # Mark a photo as primary.
-  # This marks the other photos as non-primary as a side-effect.
   def update
     @photo = Photo.find(params[:id])
     
     respond_to do |format|
       if @photo.update_attributes(params[:photo])
         flash[:success] = "Photo successfully updated"
-        format.html { redirect_to(photo_path(@photo)) }
+        format.html { redirect_to(gallery_path(@photo.gallery)) }
       else
         format.html { render :action => "new" }
       end
@@ -108,7 +106,7 @@ class PhotosController < ApplicationController
   def set_avatar
     @photo = Photo.find(params[:id])
     if @photo.nil? or @photo.avatar?
-      redirect_to person_galleries_path(current_person) and return
+      redirect_to current_person and return
     end
     # This should only have one entry, but be paranoid.
     @old_primary = current_person.photos.select(&:avatar?)
@@ -116,7 +114,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.update_attributes!(:avatar => true)
         @old_primary.each { |p| p.update_attributes!(:avatar => false) }
-        format.html { redirect_to person_galleries_path(current_person) }
+        format.html { redirect_to current_person }
       else    
         format.html do
           flash[:error] = "Invalid image!"
