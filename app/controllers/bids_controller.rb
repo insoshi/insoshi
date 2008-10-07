@@ -37,8 +37,8 @@ class BidsController < ApplicationController
   end
 =end
 
-  # GET /bids/1/edit
 =begin
+  # GET /bids/1/edit
   def edit
     @bid = Bid.find(params[:id])
   end
@@ -50,6 +50,7 @@ class BidsController < ApplicationController
     #@bid = Bid.new(params[:bid])
     @bid = @req.bids.new(params[:bid])
     @bid.person = current_person
+    @bid.status_id = Bid::OFFERED
 
     respond_to do |format|
       if @bid.save
@@ -73,22 +74,33 @@ class BidsController < ApplicationController
 
   # PUT /bids/1
   # PUT /bids/1.xml
-=begin
   def update
     @bid = Bid.find(params[:id])
+    new_bid = params[:bid]
+    status = new_bid[:status_id]
+    if current_person?(@bid.req.person)
+      # XXX so far, just doing accept
+      @bid.accepted_at = Time.now
+      @bid.status_id = status
+    end
 
     respond_to do |format|
-      if @bid.update_attributes(params[:bid])
+      if @bid.save!
         flash[:notice] = 'Bid was successfully updated.'
-        format.html { redirect_to(@bid) }
-        format.xml  { head :ok }
+        bid_note = Message.new()
+        bid_note.subject = "Bid accepted for " + @req.name # XXX make sure length does not exceed 40 chars
+        bid_note.content = "See the <a href=\"" + req_path(@bid.req) + "\">request</a> to commit to bid"
+        bid_note.sender = @bid.req.person
+        bid_note.recipient = @bid.person
+        bid_note.save!
+        format.html { redirect_to(@bid.req) }
+       # format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @bid.errors, :status => :unprocessable_entity }
+        format.html { redirect_to(@bid.req) }
+       # format.xml  { render :xml => @bid.errors, :status => :unprocessable_entity }
       end
     end
   end
-=end
 
   # DELETE /bids/1
   # DELETE /bids/1.xml
