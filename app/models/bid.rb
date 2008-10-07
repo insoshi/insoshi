@@ -3,4 +3,15 @@ class Bid < ActiveRecord::Base
   belongs_to :person
 
   attr_protected :person_id, :status_id, :created_at, :updated_at
+
+  INACTIVE = 1
+  OFFERED = 2
+  ACCEPTED = 3
+  COMMITTED = 4
+  COMPLETED = 5
+  SATISFIED = 6
+  NOT_SATISFIED = 7
+
+  def set_status
+  end
 end

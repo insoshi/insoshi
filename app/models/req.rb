@@ -5,9 +5,15 @@ class Req < ActiveRecord::Base
   belongs_to :person
   has_many :bids
 
-  attr_protected :person_id
+  attr_protected :person_id, :created_at, :updated_at
 
   after_create :log_activity
+
+  def has_accepted_bid?
+    a = false
+    bids.each {|bid| a = true if bid.status_id > Bid::OFFERED }
+    return a
+  end
 
   def log_activity
     add_activities(:item => self, :person => self.person)
