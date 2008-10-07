@@ -10,7 +10,7 @@
   </p>
   <p>
     <%- if not message.read? and not current_person?(message.sender) -%>
-      <%= image_tag("icons/email.png", :class => "icon") %>
+      <%= image_tag("icons/email_add.png", :class => "icon") %>
     <%- elsif message.replied_to? -%>
       <%= image_tag("icons/email_go.png", :class => "icon" )  %>
     <%- end -%>    

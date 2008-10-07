@@ -159,6 +159,11 @@ p.welcome {
   margin-bottom: 0;
   margin-left: 102px;
 }
+
+.activity p {
+  margin-left: 1em;
+}
+
 .list .forum p {
   margin-bottom: 1em;
   

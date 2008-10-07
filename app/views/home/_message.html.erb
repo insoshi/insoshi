@@ -2,9 +2,9 @@
   <div class="profile-image">
     <%= image_link message.sender %>
     <%- if not message.read? and not current_person?(message.sender) -%>
-      <%= image_tag("icons/email.gif", :class => "icon") %>
+      <%= image_tag("icons/email_add.png", :class => "icon") %>
     <%- elsif message.replied_to? -%>
-      <%= image_tag("icons/reply.gif", :class => "icon" )  %>
+      <%= image_tag("icons/email_go.png", :class => "icon" )  %>
     <%- end -%>    
   </div>
   <p><span class="field">From:</span> <%= person_link message.sender %></p>

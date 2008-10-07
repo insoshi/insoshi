@@ -30,7 +30,7 @@
 
 <div class="toolbox">
   <%= image_tag @person.main_photo, :class => "profile-image photo", 
-    :alt => h(@person.name) %>
+                                    :alt => h(@person.name) %>
 
   <%- unless current_person?(@person) -%>
     <h3><%= @person.name %> Toolbox</h3>
