@@ -1,20 +1,22 @@
-<% form_for :post, 
-      :url => url, 
-      :html => { :method => method, :id => "blogpost" }  do |f| %>
+<p><%= formatting_note %></p>
+
+<% form_for :post, :url => url, 
+                   :html => { :method => method,
+                              :id => "blogpost" }  do |f| %>
 
   <div class="form_row">
     <%= f.label :title %>
-    <%= f.text_field :title, :id => 'post_title' %>
+    <%= f.text_field :title, :size => 40 %>
+  </div>
+
+  <%= set_focus_to('post_title') %>
+
+  <div class="form_row">
+    <%= f.label :body, "Post" %>
+    <%= f.text_area :body, :cols => 80, :rows => 20 %>
   </div>
 
   <div class="form_row">
-  <%= f.label :body, "Post" %>
-    <%# f.text_area :body, :rows => 20 %>
-    <%= fckeditor_textarea("post", :body, :toolbarSet => 'Basic', 
-      :width => '98%', :height => RICH_TEXT_HEIGHT) %>
-  </div>
-
-  <div class="form_row" id="post_submit">
     <%= f.submit "Save", :class => "button" %>
   </div>
 <% end %>
