@@ -1,4 +1,6 @@
-<%- unless @person.recent_activity.empty? -%>
+<%- if @person.recent_activity.empty? -%>
+  <h2>No recent activity</h2>
+<%- else -%>
   <h2><%= @person.name %>'s Recent Activity</h2>
 
   <%- unless @person.last_logged_in_at.nil? or current_person?(@person) -%>
