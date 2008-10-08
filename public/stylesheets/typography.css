@@ -208,7 +208,14 @@ a.show-follow:visited {
 form {
   border-bottom: 1px solid #ccc;
   padding-bottom: 1em;
-  margin-bottom: 2em;
+  margin-bottom: 2em; 
+}
+li form {
+  float: right;
+  margin-right: 2em;
+  border-bottom: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
 }
 input, textarea {
   font-family: Helvetica, Arial, Univers, sans-serif;

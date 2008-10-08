@@ -4,11 +4,17 @@
     <%= image_link bid.person, :image => :thumbnail %>
     <%= image_tag "icons/new.gif", :class => "icon", :alt => "Bid" %>
   </div>
+    <% if current_person?(bid.req.person) && !bid.req.has_accepted_bid? -%>
+      <% form_for :bid, :url => req_bid_path(bid.req, bid), :html => {:method => :put} do |f| %>
+        <%= f.hidden_field :status_id, :value => Bid::ACCEPTED %>
+        <%= f.submit "Accept" %>
+      <% end -%>
+    <% end -%>
   <p>
 Hours bid: <%= h bid.estimated_hours %>
   </p>
   <p class="meta">
-<% if bid.status_id == 3 %>Accepted <%= time_ago_in_words(bid.accepted_at) -%> ago<br><% end %>   Submitted by <%= person_link bid.person %>
+<% if bid.status_id >= Bid::ACCEPTED %>Accepted <%= time_ago_in_words(bid.accepted_at) -%> ago<br><% end %>   Submitted by <%= person_link bid.person %>
     <%= time_ago_in_words(bid.created_at) %> ago
     <% if current_person?(bid.req.person) && !bid.req.has_accepted_bid? -%>
       <% form_for :bid, :url => req_bid_path(bid.req, bid), :html => {:method => :put} do |f| %>

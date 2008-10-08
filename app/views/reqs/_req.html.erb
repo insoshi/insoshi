@@ -4,6 +4,12 @@
     <%= image_link req.person, :image => :thumbnail %>
     <%= image_tag "icons/new.gif", :class => "icon", :alt => "Request" %>
   </div>
+    <% if req.has_accepted_bid? && current_person?(req.accepted_bid.person) && req.accepted_bid.status_id == Bid::ACCEPTED %>
+      <% form_for :bid, :url => req_bid_path(req, req.accepted_bid), :html => {:method => :put} do |f| %>
+        <%= f.hidden_field :status_id, :value => Bid::COMMITTED %>
+        <%= f.submit "Commit to task" %>
+      <% end -%>
+    <% end -%>
   <p>
     <%= link_to h(req.name), req, :class => "show-follow" %>
     Due at: <%= req.due_date.to_s :short %>
