@@ -9,11 +9,7 @@
     <%= link_to sanitize(message.subject), message %>
   </p>
   <p>
-    <%- if not message.read? and not current_person?(message.sender) -%>
-      <%= image_tag("icons/email_add.png", :class => "icon") %>
-    <%- elsif message.replied_to? -%>
-      <%= image_tag("icons/email_go.png", :class => "icon" )  %>
-    <%- end -%>    
+    <%= message_icon(message) %>
     <%- if current_person?(message.sender) -%>
       <span class="label">To:</span>
       <%= person_link message.recipient, :class => "url fn" %>
@@ -24,15 +20,15 @@
 <br />
   <span class="tools meta">
   Sent <%= time_ago_in_words message.created_at %> ago 
-    <%= link_to(image_tag("icons/email_go.png", :class => 'actioner'), 
-                      reply_message_path(message),
-             :title => "Reply to this message") %>
+    <%= link_to image_tag("icons/email_edit.png", :class => 'actioner'), 
+                reply_message_path(message),
+                :title => "Reply to this message" %>
     <% unless message.trashed?(current_person) -%>
-      <%= link_to(image_tag("icons/email_delete.png", :class => 'actioner'), 
-                        message_path(message), 
-                        :method => :delete, 
-                        :confirm => %(Delete this message?),
-             :title => "Delete this message") %>
+      <%= link_to image_tag("icons/email_delete.png", :class => 'actioner'), 
+                  message_path(message), 
+                  :method => :delete, 
+                  :confirm => %(Delete this message?),
+                  :title => "Delete this message" %>
     <% else -%>
       <%= link_to "Untrash", undestroy_message_path(message),
                              :method => :put %>

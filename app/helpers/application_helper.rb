@@ -129,7 +129,7 @@ module ApplicationHelper
     else
       path = new_person_message_path(person)
     end
-    img = image_tag("icons/email_go.png")
+    img = image_tag("icons/email_add.png")
     if reply.nil?
       action = to_all.nil? ? "Send Message" : "Message to Everyone"
     else

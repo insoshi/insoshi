@@ -8,15 +8,15 @@
   </div>
   <%= display full_message.content %>
   <p class="meta tools">
-    <%= link_to(image_tag("icons/email_go.png", :class => 'actioner'), 
-                      reply_message_path(@message),
-             :title => "Reply to this message") %>
+    <%= link_to image_tag("icons/email_edit.png", :class => 'actioner'), 
+                reply_message_path(@message),
+                :title => "Reply to this message" %>
     <% unless @message.trashed?(current_person) -%>
-      <%= link_to(image_tag("icons/email_delete.png", :class => 'actioner'), 
-                        message_path(@message), 
-                        :method => :delete, 
-                        :confirm => %(Delete this message?),
-             :title => "Delete this message") %>
+      <%= link_to image_tag("icons/email_delete.png", :class => 'actioner'), 
+                  @message,
+                  :method => :delete, 
+                  :confirm => %(Delete this message?),
+                  :title => "Delete this message" %>
     <% else -%>
       <%= link_to "Untrash", undestroy_message_path(@message), 
                              :method => :put %>

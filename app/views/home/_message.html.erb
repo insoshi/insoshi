@@ -1,10 +1,13 @@
 <li>
   <div class="profile-image">
     <%= image_link message.sender %>
+    
     <%- if not message.read? and not current_person?(message.sender) -%>
-      <%= image_tag("icons/email_add.png", :class => "icon") %>
+      <%= link_to image_tag("icons/email_add.png", :class => "icon"),
+                  @message %>
     <%- elsif message.replied_to? -%>
-      <%= image_tag("icons/email_go.png", :class => "icon" )  %>
+      <%= link_to image_tag("icons/email_go.png", :class => "icon" ),
+                  @message %>
     <%- end -%>    
   </div>
   <p><span class="field">From:</span> <%= person_link message.sender %></p>

@@ -117,6 +117,11 @@ class Message < Communication
     !replied_at.nil?
   end
   
+  # Return true if the message is new for the given person.
+  def new?(person)
+    not read? and person != sender
+  end
+  
   # Mark a message as read.
   def mark_as_read(time = Time.now)
     unless read?

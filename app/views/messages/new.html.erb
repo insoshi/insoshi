@@ -27,9 +27,7 @@
     </div>
     <div class="form_row">
       <label for="message_body">Message</label>
-       <%= fckeditor_textarea("message", :content, 
-          :toolbarSet => 'InsoshiBase', :width => '100%', 
-          :height => RICH_TEXT_HEIGHT) %>
+      <%= f.text_area :content, :id => "message_body" %>
       <%- if @message.reply? -%>
         <%= f.hidden_field :parent_id %>
         <%= set_focus_to "message_body" %>
