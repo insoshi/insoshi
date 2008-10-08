@@ -76,13 +76,6 @@ class BidsController < ApplicationController
   # PUT /bids/1.xml
   def update
     @bid = Bid.find(params[:id])
-    new_bid = params[:bid]
-    status = new_bid[:status_id]
-    if current_person?(@bid.req.person)
-      # XXX so far, just doing accept
-      @bid.accepted_at = Time.now
-      @bid.status_id = status
-    end
 
     updated_bid = params[:bid]
     status = updated_bid[:status_id]
