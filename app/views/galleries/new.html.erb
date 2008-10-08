@@ -2,18 +2,20 @@
   <h2>New gallery</h2>
 
   <%- form_for(@gallery) do |f| -%>
-    <p>
-      <b>Title</b><br />
-      <%= f.text_field :title%>
-    </p>
+    <div class="form_row">
+      <label for="title">Title</label>
+      <%= f.text_field :title %>
+    </div>
+    
+    <%= set_focus_to "gallery_title" %>
 
-    <p>
-      <b>Description</b><br />
+    <div class="form_row">
+      <label for="description">Description</label>
       <%= f.text_area :description, :rows => 5 %>
-    </p>
+    <div>
 
     <p>
-      <%= f.submit "Create" %>
+      <%= f.submit "Create", :class => "button" %>
     </p>
   <%- end -%>
 <%- end -%>
