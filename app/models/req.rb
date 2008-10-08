@@ -9,6 +9,18 @@ class Req < ActiveRecord::Base
 
   after_create :log_activity
 
+  def has_commitment?
+    a = false
+    bids.each {|bid| a = true if bid.status_id > Bid::ACCEPTED }
+    return a
+  end
+
+  def committed_bid
+    cbid = nil
+    bids.each {|bid| cbid = bid if bid.status_id > Bid::ACCEPTED }
+    return cbid
+  end
+
   def has_accepted_bid?
     a = false
     bids.each {|bid| a = true if bid.status_id > Bid::OFFERED }
