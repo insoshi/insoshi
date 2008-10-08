@@ -21,6 +21,7 @@
     <%= h req.description %>
   </p>
   <p class="meta">
+    <% if req.has_commitment? %><%= commitment_message(req) %><% end -%>
     Created by <%= person_link req.person %>
     <%= time_ago_in_words(req.created_at) %> ago
     <% if current_person?(req.person) -%>
