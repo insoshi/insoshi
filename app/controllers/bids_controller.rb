@@ -76,30 +76,67 @@ class BidsController < ApplicationController
   # PUT /bids/1.xml
   def update
     @bid = Bid.find(params[:id])
-    new_bid = params[:bid]
-    status = new_bid[:status_id]
-    if current_person?(@bid.req.person)
-      # XXX so far, just doing accept
-      @bid.accepted_at = Time.now
-      @bid.status_id = status
+
+    updated_bid = params[:bid]
+    status = updated_bid[:status_id]
+
+    case @bid.status_id
+    when Bid::OFFERED
+      unless current_person?(@req.person)
+        flash[:error] = 'Nothing to see here. Move along'
+      else
+        if Bid::ACCEPTED != status.to_i
+          flash[:error] = 'Unexpected state change'
+          logger.warn "Error. Bad state change: #{status}. expecting ACCEPTED"
+          redirect_to(@req)
+          return
+        end
+        @bid.accepted_at = Time.now
+        @bid.status_id = Bid::ACCEPTED
+        if @bid.save!
+          flash[:notice] = 'Bid accepted. Message sent to bidder to commit'
+          bid_note = Message.new()
+          bid_note.subject = "Bid accepted for " + @req.name # XXX make sure length does not exceed 40 chars
+          bid_note.content = "See the <a href=\"" + req_path(@req) + "\">request</a> to commit to bid"
+          bid_note.sender = @req.person
+          bid_note.recipient = @bid.person
+          bid_note.save!
+          redirect_to(@req)
+        else
+          redirect_to(@req)
+        end
+      end
+    when Bid::ACCEPTED
+      unless current_person?(@bid.person)
+        flash[:error] = 'Nothing to see here. Move along'
+      else
+        if Bid::COMMITTED != status.to_i
+          flash[:error] = 'Unexpected state change'
+          logger.warn "Error. Bad state change: #{status}. expecting COMMITTED"
+          redirect_to(@req)
+          return
+        end
+        @bid.committed_at = Time.now
+        @bid.status_id = Bid::COMMITTED
+        if @bid.save!
+          flash[:notice] = 'Bid committed. Notification sent to requestor'
+          bid_note = Message.new()
+          bid_note.subject = "Bid committed for " + @req.name # XXX make sure length does not exceed 40 chars
+          bid_note.content = "Commitment made for your <a href=\"" + req_path(@req) + "\">request</a>. This is an automated message"
+          bid_note.sender = @bid.person
+          bid_note.recipient = @req.person
+          bid_note.save!
+          redirect_to(@req)
+        else
+          redirect_to(@req)
+        end
+      end
+    when Bid::COMMITTED
+    when Bid::COMPLETED
+    else
+      logger.warn "Error.  Unexpected bid status: #{@bid.status_id}"
     end
 
-    respond_to do |format|
-      if @bid.save!
-        flash[:notice] = 'Bid was successfully updated.'
-        bid_note = Message.new()
-        bid_note.subject = "Bid accepted for " + @req.name # XXX make sure length does not exceed 40 chars
-        bid_note.content = "See the <a href=\"" + req_path(@bid.req) + "\">request</a> to commit to bid"
-        bid_note.sender = @bid.req.person
-        bid_note.recipient = @bid.person
-        bid_note.save!
-        format.html { redirect_to(@bid.req) }
-       # format.xml  { head :ok }
-      else
-        format.html { redirect_to(@bid.req) }
-       # format.xml  { render :xml => @bid.errors, :status => :unprocessable_entity }
-      end
-    end
   end
 
   # DELETE /bids/1

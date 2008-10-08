@@ -15,6 +15,12 @@ class Req < ActiveRecord::Base
     return a
   end
 
+  def accepted_bid
+    abid = nil
+    bids.each {|bid| abid = bid if bid.status_id > Bid::OFFERED }
+    return abid
+  end
+
   def log_activity
     add_activities(:item => self, :person => self.person)
   end

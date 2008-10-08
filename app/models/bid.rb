@@ -12,6 +12,4 @@ class Bid < ActiveRecord::Base
   SATISFIED = 6
   NOT_SATISFIED = 7
 
-  def set_status
-  end
 end
