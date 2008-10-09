@@ -84,6 +84,7 @@ class PhotosController < ApplicationController
       if @photo.update_attributes(:primary => true)
         @old_primary.each { |p| p.update_attributes!(:primary => false) }
         format.html { redirect_to(person_galleries_path(current_person)) }
+        flash[:success] = "Gallery thumbnail set"
       else    
         format.html do
           flash[:error] = "Invalid image!"
@@ -104,6 +105,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       if @photo.update_attributes!(:avatar => true)
         @old_primary.each { |p| p.update_attributes!(:avatar => false) }
+        flash[:success] = "Profile photo set"
         format.html { redirect_to current_person }
       else    
         format.html do
