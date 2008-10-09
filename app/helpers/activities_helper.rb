@@ -36,14 +36,14 @@ module ActivitiesHelper
           %(#{person_link_with_image(activity.item.commenter)}
             commented on #{wall(activity)})
         end
-        %(#{person_link(activity.item.commenter)} commented on 
+        %(#{person_link_with_image(activity.item.commenter)} commented on 
           #{wall(activity)}.)
       end
     when "Event"
       # TODO: make recent/long versions for this
       event = activity.item.commentable
       commenter = activity.item.commenter
-      %(#{person_link(commenter)} commented on 
+      %(#{person_link_with_image(commenter)} commented on 
         #{someones(event.person, commenter)} event: 
         #{event_link(event.title, event)}.)
     when "Connection"
@@ -101,10 +101,12 @@ module ActivitiesHelper
       end
     when "Event"
       event = activity.item
-      %(#{person_link(person)} has created a new event: #{event_link(event.title, event)}.)
+      %(#{person_link_with_image(person)} has created a new event:
+        #{event_link(event.title, event)}.)
     when "EventAttendee"
       event = activity.item.event
-      %(#{person_link(person)} is attending #{someones(event.person, person)} event: 
+      %(#{person_link_with_image(person)} is attending
+        #{someones(event.person, person)} event: 
         #{event_link(event.title, event)}.) 
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -134,7 +136,7 @@ module ActivitiesHelper
           #{wall(activity)}.)
       when "Event"
         event = activity.item.commentable
-        %(#{person_link(activity.item.commenter)} commented on 
+        %(#{person_link_with_image(activity.item.commenter)} commented on 
           #{someones(event.person, activity.item.commenter)} #{event_link("event", event)}.)
       end
     when "Connection"
@@ -154,17 +156,19 @@ module ActivitiesHelper
     when "Person"
       %(#{person_link_with_image(person)}'s description changed)
     when "Gallery"
-      %(#{person_link(person)} added new gallery
+      %(#{person_link_with_image(person)} added new gallery
         #{gallery_link(activity.item)})
     when "Photo"
-      %(#{person_link(person)} added new
+      %(#{person_link_with_image(person)} added new
         #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
-      %(#{person_link(person)}'s description has changed.)
+      %(#{person_link_with_image(person)}'s description has changed.)
     when "Event"
-      %(#{person_link(person)}'s has created a new #{event_link("event", activity.item)}.)
+      %(#{person_link_with_image(person)}'s has created a new
+        #{event_link("event", activity.item)}.)
     when "EventAttendee"
       event = activity.item.event
-      %(#{person_link(person)} is attending #{someones(event.person, person)} #{event_link("event", event)}.)
+      %(#{person_link_with_image(person)} is attending
+        #{someones(event.person, person)} #{event_link("event", event)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -212,7 +216,7 @@ module ActivitiesHelper
   end
   
   def someones(person, commenter, link = true)
-    link ? "#{person_link(person)}'s" : "#{h person.name}'s"
+    link ? "#{person_link_with_image(person)}'s" : "#{h person.name}'s"
   end
   
   def blog_link(text, blog)
