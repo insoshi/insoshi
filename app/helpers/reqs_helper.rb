@@ -1,4 +1,10 @@
 module ReqsHelper
+  def accepted_message(req)
+    bid = req.accepted_bid
+    accepted_time = time_ago_in_words(bid.accepted_at)
+    "Accepted bid from #{person_link bid.person} at #{accepted_time} ago"
+  end
+
   def commitment_message(req)
     bid = req.committed_bid
     commitment_time = time_ago_in_words(bid.committed_at)
