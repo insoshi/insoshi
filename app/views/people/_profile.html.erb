@@ -11,7 +11,8 @@
     </div>
 <%- end -%>
 <%- if current_person?(@person) -%>
-  <%= link_to "Edit profile", edit_person_path(@person) %>
+  <%= link_to "Edit profile", edit_person_path(@person) %> |
+  <%= link_to "Change photo", @person.galleries.first %>
 <%- end -%>
 <%- if current_person?(@person) || current_person.admin? -%>
     <div class="clear"></div>
@@ -31,8 +32,6 @@
 <div class="toolbox">
   <%= image_tag @person.main_photo, :class => "profile-image photo", 
                                     :alt => h(@person.name) %>
-  <%= link_to "Change photo",
-              @person.galleries.first if current_person?(@person) %>
   <%- unless current_person?(@person) -%>
     <h3><%= @person.name %> Toolbox</h3>
     <ul class="tools">

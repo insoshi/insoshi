@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 
-  before_filter :in_progress
+  before_filter :in_progress unless test?
   before_filter :login_required
   before_filter :load_event, :except => [:index, :new, :create]
   before_filter :load_date, :only => [:index, :show]
