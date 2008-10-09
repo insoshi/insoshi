@@ -17,7 +17,8 @@
                   :title => "Edit photo" %>
       <%= link_to image_tag("icons/picture_delete.png", :class => 'actioner'), 
         photo_path(photo), :method => :delete,
-        :confirm => 'Really delete this photo?' %>
+        :confirm => 'Really delete this photo?',
+         :title => 'Delete photo' %>
       <%= link_to image_tag("default_thumbnail.png", :class => 'actioner', 
         :style => 'height: 16px;'), set_avatar_photo_path(photo), 
         :method => :put, :title => 'Select as your profile photo' %>
