@@ -18,8 +18,10 @@
     <%= h req.description %>
   </p>
   <p class="meta">
+    <% if req.has_approved? %><%= approved_message(req) %><br><% end -%>
     <% if req.has_completed? %><%= completed_message(req) %><br><% end -%>
     <% if req.has_commitment? %><%= commitment_message(req) %><br><% end -%>
+    <% if req.has_accepted_bid? %><%= accepted_message(req) %><br><% end -%>
     Created by <%= person_link req.person %>
     <%= time_ago_in_words(req.created_at) %> ago
     <% if current_person?(req.person) -%>

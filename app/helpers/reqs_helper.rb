@@ -1,4 +1,10 @@
 module ReqsHelper
+  def accepted_message(req)
+    bid = req.accepted_bid
+    accepted_time = time_ago_in_words(bid.accepted_at)
+    "Accepted bid from #{person_link bid.person} at #{accepted_time} ago"
+  end
+
   def commitment_message(req)
     bid = req.committed_bid
     commitment_time = time_ago_in_words(bid.committed_at)
@@ -9,5 +15,11 @@ module ReqsHelper
     bid = req.committed_bid
     completed_time = time_ago_in_words(bid.completed_at)
     "Marked completed by #{person_link bid.person} #{completed_time} ago"
+  end
+
+  def approved_message(req)
+    bid = req.committed_bid
+    approved_time = time_ago_in_words(bid.approved_at)
+    "Confirmed completed by #{person_link bid.req.person} #{approved_time} ago"
   end
 end
