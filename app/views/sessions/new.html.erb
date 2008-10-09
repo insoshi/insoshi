@@ -2,20 +2,20 @@
   <h2>Sign in</h2>
 
   <% form_tag session_path do -%>
-<span id="standard">
-    <div class="form_row">
-      <label for="email">Email address</label>
-      <%= text_field_tag 'email', params[:email],
-                                  :maxlength => Person::MAX_EMAIL  %>
-    </div>
-    <%= set_focus_to "email" %>
+    <div id="standard">
+        <div class="form_row">
+          <label for="email">Email address</label>
+          <%= text_field_tag 'email', params[:email],
+                             :maxlength => Person::MAX_EMAIL  %>
+        </div>
+        <%= set_focus_to "email" %>
 
-    <div class="form_row">
-      <label for="password">Password</label>
-      <%= password_field_tag 'password', params[:password],
-                                         :maxlength => Person::MAX_PASSWORD %>
+        <div class="form_row">
+          <label for="password">Password</label>
+          <%= password_field_tag 'password', params[:password],
+                                 :maxlength => Person::MAX_PASSWORD %>
+        </div>
     </div>
-</span>
     <div class="form_row" id="openid">
       <label for="openid_url">OpenID</label>
       <%= text_field_tag "openid_url" %>
