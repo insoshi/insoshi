@@ -79,8 +79,8 @@
   <p class="meta">Code will be inserted just before the &lt;/body&gt; tag</p>
 
     <div class="form_row">
-    <div class="button"><%= link_to "Cancel", admin_preferences_path %></div>
       <%= f.submit "Update", :class => "button" %>
+      <%= link_to "Cancel", admin_preferences_path %>
     </div>
   <% end %>
 <%- end -%>

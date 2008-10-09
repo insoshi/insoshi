@@ -3,7 +3,7 @@
 <div class="button"><%= link_to 'Edit', edit_admin_preference_path(@preferences) %></div>
 <div class="prefItem">
   <div class="prefLabel">Application name</div>
-  <div class="prefValue"><%= in_place_editor_field :preferences, :app_name %></div>
+  <div class="prefValue"><%= h @preferences.app_name %></div>
 </div>
 
 <div class="prefItem">
@@ -48,6 +48,8 @@
 
 <div class="prefItem">
   <b>Analytics (will be inserted just before the <%= h("</body>") %> tag)</b>
-  <pre><%=h @preferences.analytics %></pre>
+  <%- unless @preferences.analytics.blank? -%>
+    <pre><%=h @preferences.analytics %></pre>
+  <%- end -%>
 </div>
 <% end %>
