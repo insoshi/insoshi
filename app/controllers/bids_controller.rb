@@ -113,8 +113,8 @@ class BidsController < ApplicationController
             redirect_to(@req)
             return
           end
-          @bid.approved_at = Time.now
-          @bid.status_id = Bid::SATISFIED
+          process_approval
+          redirect_to(@req)
         else
           flash[:error] = 'Nothing to see here. Move along'
         end
