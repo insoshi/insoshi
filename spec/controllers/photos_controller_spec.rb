@@ -81,14 +81,7 @@ describe PhotosController do
         response.should render_template("new")
       end.should_not change(Photo, :count)
     end
-    
-    it "should handle cancellation and doesn't report about problem" do
-      post :create, :commit => "Cancel", :photo => { :uploaded_data => nil },
-                    :gallery_id => @gallery
-      response.should redirect_to(gallery_url(@gallery))
-      flash[:error].should be_nil
-    end
-    
+        
     it "should handle nil photo parameter" do
       post :create, :photo => nil, :gallery_id => @gallery
       response.should redirect_to(gallery_url(@gallery))

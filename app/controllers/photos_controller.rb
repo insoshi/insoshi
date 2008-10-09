@@ -36,24 +36,14 @@ class PhotosController < ApplicationController
       flash[:error] = "Your browser doesn't appear to support file uploading"
       redirect_to gallery_path(Gallery.find(params[:gallery_id])) and return
     end
-    if params[:commit] == "Cancel"
-      redirect_to gallery_path(Gallery.find(params[:gallery_id])) and return
-    end    
-    @gallery = Gallery.find(params[:gallery_id])
-    photo_data = { :person => current_person,
-                   :gallery => @gallery }
-    @photo = Photo.new(params[:photo].merge(photo_data))
-    # @photo.person_id = current_person;
 
-    # @photo = Photo.new(params[:photo])
-    # @photo.gallery_id = @gallery
-    # @photo.person_id = current_person
-    # person_data = { :person => current_person }
-    # @photo = Photo.new(params[:photo].merge(person_data))
+    photo_data = params[:photo].merge(:person => current_person)
+    @photo = @gallery.photos.build(photo_data)
+
     respond_to do |format|
       if @photo.save
         flash[:success] = "Photo successfully uploaded"
-        format.html { redirect_to gallery_path(@photo.gallery) }
+        format.html { redirect_to @photo.gallery }
       else
         format.html { render :action => "new" }
       end
