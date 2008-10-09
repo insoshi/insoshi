@@ -103,6 +103,7 @@ class BidsController < ApplicationController
           bid_note.save!
           redirect_to(@req)
         else
+          # XXX bid not saved
           redirect_to(@req)
         end
       end
@@ -128,10 +129,36 @@ class BidsController < ApplicationController
           bid_note.save!
           redirect_to(@req)
         else
+          # XXX bid not saved
           redirect_to(@req)
         end
       end
     when Bid::COMMITTED
+      unless current_person?(@bid.person)
+        flash[:error] = 'Nothing to see here. Move along'
+      else
+        if Bid::COMPLETED != status.to_i
+          flash[:error] = 'Unexpected state change'
+          logger.warn "Error. Bad state change: #{status}. expecting COMPLETED"
+          redirect_to(@req)
+          return
+        end
+        @bid.completed_at = Time.now
+        @bid.status_id = Bid::COMPLETED
+        if @bid.save!
+          flash[:notice] = 'Work marked completed. Notification sent to requestor'
+          bid_note = Message.new()
+          bid_note.subject = "Work completed for " + @req.name # XXX make sure length does not exceed 40 chars
+          bid_note.content = "Work completed for your <a href=\"" + req_path(@req) + "\">request</a>. Please approve transaction! This is an automated message"
+          bid_note.sender = @bid.person
+          bid_note.recipient = @req.person
+          bid_note.save!
+          redirect_to(@req)
+        else
+          # XXX bid not saved
+          redirect_to(@req)
+        end
+      end
     when Bid::COMPLETED
     else
       logger.warn "Error.  Unexpected bid status: #{@bid.status_id}"

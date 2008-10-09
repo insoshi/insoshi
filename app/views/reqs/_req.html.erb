@@ -4,12 +4,9 @@
     <%= image_link req.person, :image => :thumbnail %>
     <%= image_tag "icons/new.gif", :class => "icon", :alt => "Request" %>
   </div>
-    <% if req.has_accepted_bid? && current_person?(req.accepted_bid.person) && req.accepted_bid.status_id == Bid::ACCEPTED %>
-      <% form_for :bid, :url => req_bid_path(req, req.accepted_bid), :html => {:method => :put} do |f| %>
-        <%= f.hidden_field :status_id, :value => Bid::COMMITTED %>
-        <%= f.submit "Commit to task" %>
-      <% end -%>
-    <% end -%>
+  <% if req.has_accepted_bid? %>
+    <%= render :partial => "accepted_bid", :object => req.accepted_bid %>
+  <% end -%>
   <p>
     <%= link_to h(req.name), req, :class => "show-follow" %>
     Due at: <%= req.due_date.to_s :short %>
@@ -21,7 +18,8 @@
     <%= h req.description %>
   </p>
   <p class="meta">
-    <% if req.has_commitment? %><%= commitment_message(req) %><% end -%>
+    <% if req.has_completed? %><%= completed_message(req) %><br><% end -%>
+    <% if req.has_commitment? %><%= commitment_message(req) %><br><% end -%>
     Created by <%= person_link req.person %>
     <%= time_ago_in_words(req.created_at) %> ago
     <% if current_person?(req.person) -%>
