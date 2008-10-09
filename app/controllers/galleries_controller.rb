@@ -47,18 +47,18 @@ class GalleriesController < ApplicationController
   end
   
   def destroy
-    @gallery = Gallery.find(params[:id])
-    if @gallery.destroy
+    if current_person.galleries.count == 1
+      flash[:error] = "You can't delete the final gallery"
+    elsif Gallery.find(params[:id]).destroy
       flash[:success] = "Gallery successfully deleted"
-      respond_to do |format|
-        format.html { redirect_to person_galleries_path(current_person) }
-      end
     else
       flash[:error] = "Gallery could not be deleted"
-      respond_to do |format|
-        format.html { redirect_to person_galleries_path(current_person) }
-      end
     end
+
+    respond_to do |format|
+      format.html { redirect_to person_galleries_path(current_person) }
+    end
+
   end
  
   private

@@ -24,9 +24,9 @@ class Gallery < ActiveRecord::Base
   validates_length_of :title, :maximum => 255, :allow_nil => true
   validates_length_of :description, :maximum => 1000, :allow_nil => true
   validates_presence_of :person_id
-  
-  after_create :log_activity
 
+  before_create :handle_nil_description
+  after_create :log_activity
   
   def self.per_page
     5
@@ -69,4 +69,10 @@ class Gallery < ActiveRecord::Base
   def short_description
     description[0..124]
   end
+
+  protected
+
+    def handle_nil_description
+      self.description = "" if description.nil?
+    end
 end

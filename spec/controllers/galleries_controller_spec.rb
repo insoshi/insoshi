@@ -15,6 +15,7 @@ describe GalleriesController do
     before(:each) do
       @gallery = galleries(:valid_gallery)
       @person  = people(:quentin)
+      @person.galleries.create(:title => "the title")
       login_as(:quentin)
     end
     
@@ -50,6 +51,13 @@ describe GalleriesController do
       login_as(:kelly)
       delete :destroy, :id => @gallery
       response.should redirect_to(person_galleries_url(@person))
+    end
+    
+    it "should not destroy the final gallery" do
+      delete :destroy, :id => @person.galleries.first
+      flash[:success].should =~ /successfully deleted/
+      delete :destroy, :id => @person.reload.galleries.first
+      flash[:error].should =~ /can't delete the final gallery/
     end
   end
 end

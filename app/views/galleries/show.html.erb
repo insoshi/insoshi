@@ -5,10 +5,12 @@
     <p><strong>Description:</strong> <%= @gallery.description %></p>
   </div>
   <% end %>
-  <ul>
-    <%= render :partial=>"shared/photo", :collection => @photos %>
-  </ul>
-  <%= will_paginate(@photos) %>
+  <%- unless @photos.empty? -%>
+    <ul>
+      <%= render :partial=>"shared/photo", :collection => @photos %>
+    </ul>
+    <%= will_paginate(@photos) %>
+  <%- end -%>
 <%-end-%>
 
 <%- column_div :type => :secondary, :class => 'toolbox' do -%>
