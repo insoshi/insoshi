@@ -32,6 +32,13 @@ describe GalleriesController do
       page.get    :edit,    :id => @gallery
       response.should be_success
       
+      page.post   :create, :gallery => { :title       => "foo",
+                                         :description => "bar" }
+      gallery = assigns(:gallery)
+      gallery.title.should == "foo"
+      gallery.description.should == "bar"
+      gallery.person.should == @person
+      
       page.delete :destroy, :id => @gallery
       @gallery.should_not exist_in_database
     end

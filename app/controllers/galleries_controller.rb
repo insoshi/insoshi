@@ -19,7 +19,7 @@ class GalleriesController < ApplicationController
   end
   
   def create
-    @gallery = current_person.galleries.build(params[:galleries])
+    @gallery = current_person.galleries.build(params[:gallery])
     respond_to do |format|
       if @gallery.save
         flash[:success] = "Gallery successfully created"

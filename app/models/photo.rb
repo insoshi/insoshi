@@ -47,6 +47,7 @@ class Photo < ActiveRecord::Base
   validates_length_of :title, :maximum => 255, :allow_nil => true
   validates_presence_of :person_id
   validates_presence_of :gallery_id
+  
   after_create :log_activity
   
   def self.per_page

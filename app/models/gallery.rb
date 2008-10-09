@@ -52,22 +52,20 @@ class Gallery < ActiveRecord::Base
   end
 
   def thumbnail_url
-    primary_photo.nil? ? "default_thumbnail.png" : primary_photo.public_filename(:thumbnail)
+    primary_photo.nil? ? "default_thumbnail.png" :
+                          primary_photo.public_filename(:thumbnail)
   end
 
   def icon_url
-    primary_photo.nil? ? "default_icon.png" : primary_photo.public_filename(:icon)
+    primary_photo.nil? ? "default_icon.png" :
+                         primary_photo.public_filename(:icon)
   end
 
   def bounded_icon_url
-    primary_photo.nil? ? "default_icon.png" : primary_photo.public_filename(:bounded_icon)
+    primary_photo.nil? ? "default_icon.png" :
+                         primary_photo.public_filename(:bounded_icon)
   end
-  
-  def log_activity
-    activity = Activity.create!(:item => self, :person => self.person)
-    add_activities(:activity => activity, :person => self.person)
-  end
-  
+    
   def short_description
     description[0..124]
   end
@@ -76,5 +74,10 @@ class Gallery < ActiveRecord::Base
 
     def handle_nil_description
       self.description = "" if description.nil?
+    end
+
+    def log_activity
+      activity = Activity.create!(:item => self, :person => person)
+      add_activities(:activity => activity, :person => person)
     end
 end
