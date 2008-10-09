@@ -1,8 +1,6 @@
 <h2><%= @person.name %>'s Galleries </h2>
 <% if current_person?(@person)%>
-  <div class="button">
-    <%=link_to "Add Gallery", new_gallery_path %>
-  </div>
+  <%= link_to "Add Gallery", new_gallery_path %>
 <% end %>
 
 <ul id="gallery_list" class="grid">

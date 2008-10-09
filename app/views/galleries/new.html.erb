@@ -14,8 +14,9 @@
       <%= f.text_area :description, :rows => 5 %>
     <div>
 
-    <p>
+    <div class="form_row">
       <%= f.submit "Create", :class => "button" %>
-    </p>
+      <%= link_to "Cancel", person_galleries_path(current_person) %>
+    </div>
   <%- end -%>
 <%- end -%>
