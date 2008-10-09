@@ -67,7 +67,19 @@ class BidsController < ApplicationController
       end
     when Bid::ACCEPTED
       unless current_person?(@bid.person)
-        flash[:error] = 'Nothing to see here. Move along'
+        if current_person?(@req.person)
+          # check for approval
+          if Bid::SATISFIED != status.to_i
+            flash[:error] = 'Unexpected state change'
+            logger.warn "Error. Bad state change: #{status}. expecting satisfied"
+            redirect_to(@req)
+            return
+          end
+          process_approval
+          redirect_to(@req)
+        else
+          flash[:error] = 'Nothing to see here. Move along'
+        end
       else
         if Bid::COMMITTED != status.to_i
           flash[:error] = 'Unexpected state change'
@@ -93,7 +105,19 @@ class BidsController < ApplicationController
       end
     when Bid::COMMITTED
       unless current_person?(@bid.person)
-        flash[:error] = 'Nothing to see here. Move along'
+        if current_person?(@req.person)
+          # check for approval
+          if Bid::SATISFIED != status.to_i
+            flash[:error] = 'Unexpected state change'
+            logger.warn "Error. Bad state change: #{status}. expecting satisfied"
+            redirect_to(@req)
+            return
+          end
+          @bid.approved_at = Time.now
+          @bid.status_id = Bid::SATISFIED
+        else
+          flash[:error] = 'Nothing to see here. Move along'
+        end
       else
         if Bid::COMPLETED != status.to_i
           flash[:error] = 'Unexpected state change'
@@ -118,6 +142,18 @@ class BidsController < ApplicationController
         end
       end
     when Bid::COMPLETED
+      unless current_person?(@req.person)
+        flash[:error] = 'Nothing to see here. Move along'
+      else
+        if Bid::SATISFIED != status.to_i
+          flash[:error] = 'Unexpected state change'
+          logger.warn "Error. Bad state change: #{status}. expecting satisfied"
+          redirect_to(@req)
+          return
+        end
+        process_approval
+        redirect_to(@req)
+      end
     else
       logger.warn "Error.  Unexpected bid status: #{@bid.status_id}"
     end
@@ -142,5 +178,21 @@ class BidsController < ApplicationController
   def setup
     @req = Req.find(params[:req_id])
     @body = "req"
+  end
+
+  def process_approval
+    @bid.approved_at = Time.now
+    @bid.status_id = Bid::SATISFIED
+    if @bid.save!
+      flash[:notice] = 'Work marked satisfied. Approval notification sent'
+      bid_note = Message.new()
+      bid_note.subject = "Confirmed work for " + @req.name # XXX make sure length does not exceed 40 chars
+      bid_note.content = "Work confirmed for <a href=\"" + req_path(@req) + "\">request</a>. This is an automated message"
+      bid_note.sender = @req.person
+      bid_note.recipient = @bid.person
+      bid_note.save!
+    else
+      # XXX handle error
+    end
   end
 end

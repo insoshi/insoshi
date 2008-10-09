@@ -16,4 +16,10 @@ module ReqsHelper
     completed_time = time_ago_in_words(bid.completed_at)
     "Marked completed by #{person_link bid.person} #{completed_time} ago"
   end
+
+  def approved_message(req)
+    bid = req.committed_bid
+    approved_time = time_ago_in_words(bid.approved_at)
+    "Confirmed completed by #{person_link bid.req.person} #{approved_time} ago"
+  end
 end
