@@ -337,6 +337,7 @@ p.welcome {
   float: left;
   width: 200px;
   line-height: 1.6;
+  margin-left: 1em;
 }
 .gallery_title {
   font-size: 146%;

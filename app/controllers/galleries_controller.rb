@@ -20,14 +20,14 @@ class GalleriesController < ApplicationController
   
   def create
     @gallery = Gallery.new(params[:gallery].merge(:person => current_person))
-     respond_to do |format|
-        if @gallery.save
-          flash[:success] = "Gallery successfully created"
-          format.html { redirect_to gallery_path(@gallery) }
-        else
-          format.html { render :action => "new" }
-        end
+    respond_to do |format|
+      if @gallery.save
+        flash[:success] = "Gallery successfully created"
+        format.html { redirect_to gallery_path(@gallery) }
+      else
+        format.html { render :action => "new" }
       end
+    end
   end
   
   def edit
@@ -37,13 +37,13 @@ class GalleriesController < ApplicationController
   def update
     @gallery = Gallery.find(params[:id])
     respond_to do |format|
-        if @gallery.update_attributes(params[:gallery])
-          flash[:success] = "Gallery successfully updated"
-          format.html { redirect_to gallery_path(@gallery) }
-        else
-          format.html { render :action => "new" }
-        end
+      if @gallery.update_attributes(params[:gallery])
+        flash[:success] = "Gallery successfully updated"
+        format.html { redirect_to gallery_path(@gallery) }
+      else
+        format.html { render :action => "new" }
       end
+    end
   end
   
   def destroy
