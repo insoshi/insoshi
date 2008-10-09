@@ -1,5 +1,6 @@
 class ReqsController < ApplicationController
   before_filter :login_required, :only => [ :new, :edit, :create, :update ]
+  before_filter :correct_user_required, :only => [ :edit, :update ]
 
   # GET /reqs
   # GET /reqs.xml
@@ -66,7 +67,7 @@ class ReqsController < ApplicationController
   def update
     @req = Req.find(params[:id])
 
-    @req.person_id = current_person.id
+#    @req.person_id = current_person.id
 
     respond_to do |format|
       if @req.update_attributes(params[:req])
@@ -90,5 +91,11 @@ class ReqsController < ApplicationController
       format.html { redirect_to(reqs_url) }
       format.xml  { head :ok }
     end
+  end 
+
+  private
+
+  def correct_user_required
+    redirect_to home_url unless Person.find(params[:id]) == current_person
   end
 end
