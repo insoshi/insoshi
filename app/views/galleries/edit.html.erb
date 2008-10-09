@@ -9,14 +9,13 @@
 
     <div class="form_row">
     <%= f.label :description %>
-      <%= fckeditor_textarea("gallery", :description, 
-      :toolbarSet => 'InsoshiBase', :width => '98%', 
-      :height => RICH_TEXT_HEIGHT) %>
-      <%# f.text_area :description, :rows => 5 %>
+    <p><%= formatting_note %></p>
+    <%= f.text_area :description, :rows => 5 %>
   </div>
 
     <div class="form_row">
       <%= f.submit "Update", :class => 'button' %>
+      <%= link_to "Cancel", @gallery, :class => "button" %>
   </div>
   <%- end -%>
 <%- end -%>
