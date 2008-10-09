@@ -1,9 +1,9 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 20080916002106
 #
 # Table name: conversations
 #
-#  id :integer(11)     not null, primary key
+#  id :integer(4)      not null, primary key
 #
 
 class Conversation < ActiveRecord::Base

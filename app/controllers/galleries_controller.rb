@@ -19,7 +19,7 @@ class GalleriesController < ApplicationController
   end
   
   def create
-    @gallery = Gallery.new(params[:gallery].merge(:person => current_person))
+    @gallery = current_person.galleries.build(params[:galleries])
     respond_to do |format|
       if @gallery.save
         flash[:success] = "Gallery successfully created"

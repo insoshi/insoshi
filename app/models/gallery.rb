@@ -1,21 +1,23 @@
 # == Schema Information
-# Schema version: 28
-# Schema version: 17
+# Schema version: 20080916002106
 #
 # Table name: galleries
 #
-#  id               :integer(11)     not null, primary key
-#  person_id        :integer(11)     
+#  id               :integer(4)      not null, primary key
+#  person_id        :integer(4)      
 #  title            :string(255)     
 #  description      :string(255)     
-#  photos_count     :integer(11)     default(0), not null
-#  primary_photo_id :integer(11)     
+#  photos_count     :integer(4)      default(0), not null
+#  primary_photo_id :integer(4)      
 #  created_at       :datetime        
 #  updated_at       :datetime        
 #
 
 class Gallery < ActiveRecord::Base
   include ActivityLogger
+  
+  attr_accessible :title, :description
+  
   belongs_to :person
   has_many :photos, :dependent => :destroy, :order => :position
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy

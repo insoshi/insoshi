@@ -1,5 +1,25 @@
+# == Schema Information
+# Schema version: 20080916002106
+#
+# Table name: events
+#
+#  id                    :integer(4)      not null, primary key
+#  title                 :string(255)     default(""), not null
+#  description           :string(255)     
+#  person_id             :integer(4)      not null
+#  start_time            :datetime        not null
+#  end_time              :datetime        
+#  reminder              :boolean(1)      
+#  created_at            :datetime        
+#  updated_at            :datetime        
+#  event_attendees_count :integer(4)      default(0)
+#  privacy               :integer(4)      not null
+#
+
 class Event < ActiveRecord::Base
   include ActivityLogger
+
+  attr_accessible :title, :description
 
   MAX_DESCRIPTION_LENGTH = MAX_STRING_LENGTH
   MAX_TITLE_LENGTH = 40
