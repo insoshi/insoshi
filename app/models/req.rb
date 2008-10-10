@@ -3,7 +3,7 @@ class Req < ActiveRecord::Base
 
   has_and_belongs_to_many :categories
   belongs_to :person
-  has_many :bids
+  has_many :bids, :order => 'created_at DESC'
 
   attr_protected :person_id, :created_at, :updated_at
 
