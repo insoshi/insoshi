@@ -25,7 +25,8 @@
       <%- unless current_person?(@person) -%>
         <ul class="tools">
          <%- if logged_in? -%>
-          <li><%= email_link @person %></li>
+         <li><%= email_link @person %></li>
+         <li><%= account_link @person %></li>
           <%- end -%>
           <%- if current_person.admin? -%>
           <li>
@@ -36,7 +37,7 @@
           </li>
           <%- end -%>
         </ul>
-      <%- end -%>
+        <%- end -%>
     </div>
     <%= display @person.description %>
   </div>

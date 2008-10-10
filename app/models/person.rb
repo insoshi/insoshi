@@ -94,6 +94,7 @@ class Person < ActiveRecord::Base
   has_many :events
   has_many :event_attendees
   has_many :attendee_events, :through => :event_attendees, :source => :event
+  has_many :accounts
 
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
@@ -111,6 +112,7 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of   :identity_url, :allow_nil => true
 
   before_create :create_blog, :check_config_for_deactivation
+  after_create :create_account
   before_save :encrypt_password
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
@@ -231,6 +233,19 @@ class Person < ActiveRecord::Base
     Message.count(:all,
                   :conditions => [%(recipient_id = ? AND
                                     recipient_read_at IS NULL), id]) > 0
+  end
+
+  ## Account helpers
+
+  def create_account
+    account = Account.new( :name => 'personal' )
+    account.balance = Account::INITIAL_BALANCE 
+    account.person = self
+    account.save
+  end
+
+  def account
+    accounts.first
   end
 
   ## Photo helpers
