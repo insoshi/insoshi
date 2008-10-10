@@ -109,6 +109,16 @@ module ApplicationHelper
     concat(content, block.binding)
   end
 
+  def account_link(person, options = {})
+    path = person_path(person) # XXX link to transactions
+    img = image_tag("icons/bargraph.gif")
+    action = "Balance: #{person.account.balance} hours"
+    opts = {}
+    str = link_to(img,path, opts)
+    str << "&nbsp;"
+    str << link_to_unless_current(action, path, opts)
+  end
+
   def email_link(person, options = {})
     reply = options[:replying_to]
     if reply
