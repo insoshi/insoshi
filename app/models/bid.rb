@@ -1,6 +1,8 @@
 class Bid < ActiveRecord::Base
   belongs_to :req
   belongs_to :person
+  validates_presence_of :estimated_hours
+  attr_readonly :estimated_hours
 
   attr_protected :person_id, :status_id, :created_at, :updated_at
 
