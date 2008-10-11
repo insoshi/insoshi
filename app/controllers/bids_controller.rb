@@ -186,10 +186,10 @@ class BidsController < ApplicationController
     Account.transfer(@req.person.account,@bid.person.account,@bid.estimated_hours)
 
     if @bid.save!
-      flash[:notice] = 'Work marked satisfied. Approval notification sent'
+      flash[:notice] = 'Work marked verified. Approval notification sent'
       bid_note = Message.new()
-      bid_note.subject = "Confirmed work for " + @req.name # XXX make sure length does not exceed 40 chars
-      bid_note.content = "Work confirmed for <a href=\"" + req_path(@req) + "\">request</a>. This is an automated message"
+      bid_note.subject = "Verified work for " + @req.name + " (#{@bid.estimated_hours} earned)" # XXX make sure length does not exceed 40 chars
+      bid_note.content = "#{@req.person.name} has verified your work for <a href=\"" + req_path(@req) + "\">#{@req.name}</a>. This is an automated message"
       bid_note.sender = @req.person
       bid_note.recipient = @bid.person
       bid_note.save!
