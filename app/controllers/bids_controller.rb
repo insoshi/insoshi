@@ -188,7 +188,7 @@ class BidsController < ApplicationController
     if @bid.save!
       flash[:notice] = 'Work marked verified. Approval notification sent'
       bid_note = Message.new()
-      bid_note.subject = "Verified work for " + @req.name + " (#{@bid.estimated_hours} earned)" # XXX make sure length does not exceed 40 chars
+      bid_note.subject = "Verified work for " + @req.name + " (#{@bid.estimated_hours} hours earned)" # XXX make sure length does not exceed 40 chars
       bid_note.content = "#{@req.person.name} has verified your work for <a href=\"" + req_path(@req) + "\">#{@req.name}</a>. This is an automated message"
       bid_note.sender = @req.person
       bid_note.recipient = @bid.person
