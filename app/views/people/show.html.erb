@@ -22,22 +22,26 @@
       <%= image_tag @person.main_photo, :class => "profile-image photo",
                                         :alt => h(@person.name) %>
 
-      <%- unless current_person?(@person) -%>
-        <ul class="tools">
-         <%- if logged_in? -%>
-         <li><%= email_link @person %></li>
-         <li><%= account_link @person %></li>
+      <ul class="tools">
+        <%- unless current_person?(@person) -%>
+          <%- if logged_in? -%>
+            <li><%= email_link @person %></li>
+            <li><%= account_link @person %></li>
           <%- end -%>
           <%- if current_person.admin? -%>
-          <li>
-          <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
-          <%= link_to activity, 
-                      admin_person_path(@person, :task => "deactivated"),
-                      :method => :put %>
-          </li>
+            <li>
+            <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
+            <%= link_to activity, 
+                        admin_person_path(@person, :task => "deactivated"),
+                        :method => :put %>
+            </li>
           <%- end -%>
-        </ul>
+        <% else -%>
+          <%- if logged_in? -%>
+            <li><%= account_link @person %></li>
+          <%- end -%>
         <%- end -%>
+      </ul>
     </div>
     <%= display @person.description %>
   </div>
