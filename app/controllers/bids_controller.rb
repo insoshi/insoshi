@@ -183,7 +183,7 @@ class BidsController < ApplicationController
   def process_approval
     @bid.approved_at = Time.now
     @bid.status_id = Bid::SATISFIED
-    Account.transfer(@req.person.account,@bid.person.account,@bid.estimated_hours)
+    Account.transfer(@req.person.account,@bid.person.account,@bid.estimated_hours,@req)
 
     if @bid.save!
       flash[:notice] = 'Work marked verified. Approval notification sent'
