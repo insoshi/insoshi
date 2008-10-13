@@ -27,6 +27,12 @@ class Req < ActiveRecord::Base
     return a
   end
 
+  def has_approved?
+    a = false
+    bids.each {|bid| a = true if bid.approved_at != nil }
+    return a
+  end
+
   def committed_bid
     cbid = nil
     bids.each {|bid| cbid = bid if bid.status_id > Bid::ACCEPTED }

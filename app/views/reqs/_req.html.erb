@@ -25,10 +25,10 @@
     Created by <%= person_link req.person %>
     <%= time_ago_in_words(req.created_at) %> ago
     <% if current_person?(req.person) -%>
-    | <%= link_to "Edit", edit_req_path(req) %>
+    | <%= link_to "Edit", edit_req_path(req) unless req.has_accepted_bid? %>
     <% end -%>
     <% if admin? || current_person?(req.person) -%>
-    | <%= link_to "Delete", req, :confirm => 'Are you sure?', :method => :delete %>
+    | <%= link_to "Delete", req, :confirm => 'Are you sure?', :method => :delete unless (req.has_commitment? || req.has_approved?) %>
     <% end -%>
   </p>
 </li>

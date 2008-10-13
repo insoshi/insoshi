@@ -1,7 +1,7 @@
 class ReqsController < ApplicationController
-  before_filter :login_required, :only => [ :new, :edit, :create, :update ]
-  before_filter :correct_user_required, :only => [ :edit, :update ]
-
+  before_filter :login_required, :only => [ :new, :edit, :create, :update, :destroy ]
+  before_filter :correct_person_and_no_accept_required, :only => [ :edit, :update ]
+  before_filter :correct_person_and_no_commitment_required, :only => [ :destroy ]
   # GET /reqs
   # GET /reqs.xml
   def index
@@ -95,7 +95,15 @@ class ReqsController < ApplicationController
 
   private
 
-  def correct_user_required
-    redirect_to home_url unless Person.find(params[:id]) == current_person
+  def correct_person_and_no_accept_required
+    request = Req.find(params[:id])
+    redirect_to home_url unless request.person == current_person
+    redirect_to home_url if request.has_accepted_bid?
+  end
+
+  def correct_person_and_no_commitment_required
+    request = Req.find(params[:id])
+    redirect_to home_url unless request.person == current_person
+    redirect_to home_url if request.has_commitment? || request.has_approved?
   end
 end
