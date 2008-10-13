@@ -95,6 +95,7 @@ class Person < ActiveRecord::Base
   has_many :event_attendees
   has_many :attendee_events, :through => :event_attendees, :source => :event
   has_many :accounts
+  has_many :exchanges, :foreign_key => :worker_id, :order => "created_at DESC"
 
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?

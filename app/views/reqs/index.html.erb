@@ -8,11 +8,10 @@
     <%= render :partial => 'req', :collection => @reqs %>
   </ul>
 <%- end -%>
-<br />
-
-<%= link_to 'New req', new_req_path %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/add_req_button' %>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>

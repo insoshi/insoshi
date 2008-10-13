@@ -3,7 +3,7 @@ class CreateReqs < ActiveRecord::Migration
     create_table :reqs do |t|
       t.string :name
       t.text :description
-      t.decimal :estimated_hours
+      t.decimal :estimated_hours, :precision => 8, :scale => 2, :default => 0
       t.datetime :due_date
       t.integer :person_id
 

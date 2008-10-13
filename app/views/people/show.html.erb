@@ -46,11 +46,13 @@
     <%= display @person.description %>
   </div>
 
+  <%= render :partial => 'recent_exchanges' %>
   <%= render :partial => 'recent_activity' %>
   <%= render :partial => 'wall' %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
+  <%= render :partial => 'searches/box' %>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>
 

@@ -1,0 +1,13 @@
+<li>
+  <div class="profile-image">
+    <%= image_link exchange.customer, :image => :thumbnail %>
+    <%= image_tag "icons/switch.gif", :class => "icon", :alt => "Street Cred" %>
+  </div>
+  <p>
+  <%= person_link exchange.customer %><%= " paid #{exchange.amount.to_s} hours for " %><%= link_to h(exchange.req.name), exchange.req %>
+  </p>
+  <p class="meta published">
+    <%= time_ago_in_words(exchange.created_at).capitalize %> ago
+  </p>
+
+</li>

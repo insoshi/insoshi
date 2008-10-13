@@ -11,6 +11,7 @@
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => "searches/box" %>
+  <%= render :partial => 'shared/add_req_button' %>
   <%- if logged_in? -%>
     <%= render :partial => 'messages_preview' %>
   <%- else -%>
