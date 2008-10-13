@@ -12,6 +12,7 @@
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <h2>Add new category</h2>
-  <%= link_to "Add", new_category_path %>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/add_category_button' %>
+  <%= render :partial => 'shared/minifeed' %>
 <%- end -%>
