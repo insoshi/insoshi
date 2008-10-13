@@ -5,6 +5,11 @@
   <div class="clear"></div>
 <% end %>
 
+<% tabs.create('tWall', 'Wall') do %>
+  <%= render :partial => 'wall' %>
+  <div class="clear"></div>
+<% end %>
+
 <% tabs.create('tRecentActivity', 'Recent Activity') do %>
   <%= render :partial => 'recent_activity' %>
   <div class="clear"></div>
@@ -17,11 +22,6 @@
 
 <% tabs.create('tBlog', 'Blog') do %>
   <%= render :partial => 'shared/blog' %>
-  <div class="clear"></div>
-<% end %>
-
-<% tabs.create('tWall', 'Wall') do %>
-  <%= render :partial => 'wall' %>
   <div class="clear"></div>
 <% end %>
 
