@@ -8,11 +8,11 @@
     <%= render :partial => "accepted_bid", :object => req.accepted_bid %>
   <% end -%>
   <p>
-    <%= link_to h(req.name), req, :class => "show-follow" %>
-    Due at: <%= req.due_date.to_s :short %>
+  <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h req.estimated_hours %> hrs)
+    Due: <%= req.due_date.to_s :short %>
   </p>
-  <p>
-    Estimated hours: <%= h req.estimated_hours %>
+  <p class="meta">
+    <%= h req.categories[0].long_name unless req.categories.empty? %>
   </p>
   <p>
     <%= h req.description %>
