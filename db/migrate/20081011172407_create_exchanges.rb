@@ -4,7 +4,7 @@ class CreateExchanges < ActiveRecord::Migration
       t.integer :customer_id
       t.integer :worker_id
       t.integer :req_id
-      t.decimal :amount
+      t.decimal :amount, :precision => 8, :scale => 2, :default => 0
 
       t.timestamps
     end

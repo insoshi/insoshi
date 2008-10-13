@@ -18,6 +18,17 @@ body {
   width: 744px;
   float: left;
 }
+
+.status-btn {
+  padding: 10px 10px 0px 0px;
+  text-align: center;
+}
+
+input.update-button {background-color:#f2f2f2;color:#FFF;font-size:1em;font-weight:bold;border: 1px solid black;cursor:pointer;margin-top:10px;padding:3px;float:right;margin-right:12px}
+div.status-btn input.round-btn {background:url('../images/round-btn.gif');width:115px;height:32px;border:0;color:#666;font-size:14px;margin-left:3px;}
+div.status-btn input.round-btn:hover {background:url('../images/round-btn-hover.gif');width:115px;height:32px;border:0;color:#444;font-size:14px;margin-left:3px;}
+div.status-btn input.disabled, div.status-btn input.disabled:hover { background:url('../images/round-btn.gif'); color: #aaa; cursor:default;}
+
 .col1 {
   float: left;
   width: 490px;
