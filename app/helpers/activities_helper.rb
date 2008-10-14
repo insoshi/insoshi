@@ -119,7 +119,7 @@ module ActivitiesHelper
     when "BlogPost"
       post = activity.item
       blog = post.blog
-      %(#{person_link_with_image(person)} made a
+      %(#{person_link(person)} made a
         #{post_link("new blog post", blog, post)})
     when "Comment"
       parent = activity.item.commentable
@@ -128,46 +128,46 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        %(#{person_link_with_image(person)} made a comment on
+        %(#{person_link(person)} made a comment on
           #{someones(blog.person, person)} 
           #{post_link("blog post", post.blog, post)})
       when "Person"
-        %(#{person_link_with_image(activity.item.commenter)} commented on 
+        %(#{person_link(activity.item.commenter)} commented on 
           #{wall(activity)}.)
       when "Event"
         event = activity.item.commentable
-        %(#{person_link_with_image(activity.item.commenter)} commented on 
+        %(#{person_link(activity.item.commenter)} commented on 
           #{someones(event.person, activity.item.commenter)} #{event_link("event", event)}.)
       end
     when "Connection"
       if activity.item.contact.admin?
-        %(#{person_link_with_image(person)} has joined the system)
+        %(#{person_link(person)} has joined the system)
       else
-        %(#{person_link_with_image(person)} and
-          #{person_link_with_image(activity.item.contact)} have connected)
+        %(#{person_link(person)} and
+          #{person_link(activity.item.contact)} have connected)
       end
     when "ForumPost"
       topic = activity.item.topic
-      %(#{person_link_with_image(person)} made a
+      %(#{person_link(person)} made a
         #{topic_link("forum post", topic)})
     when "Topic"
-      %(#{person_link_with_image(person)} created a 
+      %(#{person_link(person)} created a 
         #{topic_link("new discussion topic", activity.item)})
     when "Person"
-      %(#{person_link_with_image(person)}'s description changed)
+      %(#{person_link(person)}'s description changed)
     when "Gallery"
-      %(#{person_link_with_image(person)} added a new gallery
+      %(#{person_link(person)} added a new gallery
         #{gallery_link(activity.item)})
     when "Photo"
-      %(#{person_link_with_image(person)} added new
+      %(#{person_link(person)} added new
         #{photo_link(activity.item)} #{to_gallery_link(activity.item.gallery)})
-      %(#{person_link_with_image(person)}'s description has changed.)
+      %(#{person_link(person)}'s description has changed.)
     when "Event"
-      %(#{person_link_with_image(person)}'s has created a new
+      %(#{person_link(person)}'s has created a new
         #{event_link("event", activity.item)}.)
     when "EventAttendee"
       event = activity.item.event
-      %(#{person_link_with_image(person)} is attending
+      %(#{person_link(person)} is attending
         #{someones(event.person, person)} #{event_link("event", event)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
