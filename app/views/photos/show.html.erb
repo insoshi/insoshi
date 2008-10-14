@@ -1,17 +1,18 @@
 <%- column_div :type => :primary do -%>
-  <% if !@photo.title.nil?%>
-    <h2> <%= h(@photo.title)%></h2>
+  <% unless @photo.title.nil?%>
+    <h2><%= h(@photo.title)%></h2>
   <% end %>
+  <%= raise %>
   <div class="pagination">
-    <% if !@photo.first? %>
-      <%= link_to h("Previous"), photo_path(@photo.higher_item)%>
-    <% else %>
+    <% if @photo.first? %>
       <span class="disabled"> Previous </span>
-    <% end %>
-    <% if !@photo.last? %>
-      <%= link_to h("Next"), photo_path(@photo.lower_item) %>
     <% else %>
+      <%= link_to h("Previous"), photo_path(@photo.higher_item)%>
+    <% end %>
+    <% if @photo.last? %>
       <span class="disabled"> Next </span>
+    <% else %>
+      <%= link_to h("Next"), photo_path(@photo.lower_item) %>
     <% end %>
   </div>
   <div class = "photo">
@@ -25,7 +26,7 @@
     <ul>
       <% if current_person?(@photo.person)%>
         <% if @photo.gallery.primary_photo != @photo%>
-          <li><%=link_to "Set as primary photo of the gallery", set_primary_photo_path(@photo), :confirm => "Do you really want to set this photo as primary?", :method => :put %> </li>
+          <li><%= link_to "Set as primary photo of the gallery", set_primary_photo_path(@photo), :confirm => "Do you really want to set this photo as primary?", :method => :put %> </li>
         <% end %>
         <% if @photo.person.photo != @photo%>
           <li><%=link_to "Set as profile photo", set_avatar_photo_path(@photo), :confirm => "Do you really want to set this as your profile photo?", :method => :put %> </li>
