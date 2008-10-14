@@ -1,32 +1,24 @@
-<%- column_div :type => :primary, :id => 'photos' do -%>
+<div id="photos">
   <h2>Photos in <%= h(@gallery.title) %> Gallery</h2>
-  <% unless @gallery.description.nil? %>
-  <div class="gallery-description">
-    <p><strong>Description:</strong> <%= @gallery.description %></p>
-  </div>
-  <% end %>
-  <%- unless @photos.empty? -%>
-    <ul>
-      <%= render :partial=>"shared/photo", :collection => @photos %>
-    </ul>
-    <%= will_paginate(@photos) %>
-  <%- end -%>
-<%-end-%>
-
-<%- column_div :type => :secondary, :class => 'toolbox' do -%>
-  <h2>Toolbox</h2>
-  <div>
-    <ul>
+    <% unless @gallery.description.nil? %>
+    <div class="gallery-description">
+      <p><strong>Description:</strong> <%= @gallery.description %></p>
+    </div>
+    <% end %>
+  
+    <p>
       <% if current_person?(@gallery.person)%>
-        <li class='button'><%= link_to "Add photo", 
-      new_gallery_photo_path(@gallery) %></li>
-        <li class='button'><%= link_to "Edit gallery", 
-      edit_gallery_path %></li>
+        <%= link_to "Add photo", new_gallery_photo_path(@gallery) %> |
+        <%= link_to "Edit gallery", edit_gallery_path %> |
       <% end %>
-      <li class='button'>
-    <%= link_to "#{h(@gallery.person.name)}'s galleries", 
-      person_path(@gallery.person, :anchor => 'tGalleries') %>
-    </li>
-    </ul>
-  </div>
-<%- end-%>
+      <%= link_to "All galleries", person_path(@gallery.person,
+                                   :anchor => 'tGalleries') %>
+    </p>
+  
+    <%- unless @photos.empty? -%>
+      <ul>
+        <%= render :partial=>"shared/photo", :collection => @photos %>
+      </ul>
+      <%= will_paginate(@photos) %>
+    <%- end -%>
+</div>
