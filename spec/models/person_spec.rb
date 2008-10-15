@@ -198,7 +198,17 @@ describe Person do
         @contact.email_verified = false; @contact.save!
         common_contacts = @person.common_contacts_with(@kelly)
         common_contacts.should be_empty
-      end      
+      end
+      
+      it "should exclude the person being viewed" do
+        Connection.connect(@person, @kelly)
+        @person.common_contacts_with(@kelly).should_not contain(@kelly)
+      end
+      
+      it "should exclude the person doing the viewing" do
+        Connection.connect(@person, @kelly)
+        @person.common_contacts_with(@kelly).should_not contain(@person)
+      end
     end
   end
 
