@@ -206,8 +206,10 @@ module ActivitiesHelper
             when "Photo"
               "photo.png"
             when "Event"
+              # TODO: replace with a png icon
               "time.gif"
             when "EventAttendee"
+              # TODO: replace with a png icon
               "check.gif"
             else
               raise "Invalid activity type #{activity_type(activity).inspect}"
