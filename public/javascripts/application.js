@@ -2,10 +2,6 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 $(document).ready(function() {
-  // sets up the Profile page tabs
-  $("#tabCol > ul").tabs();
-  $("#profile").show()
-
   // sets up the hover image for activity feed items  
   $(".imgHoverMarker").tooltip({
   showURL: false,
