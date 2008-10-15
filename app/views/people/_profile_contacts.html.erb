@@ -6,7 +6,7 @@
     </div>
   <% end %>
   <%= render :partial => 'shared/contacts_grid',
-             :locals => { :contacts => @person.contacts } %>
+             :locals => { :contacts => @person.some_contacts } %>
   <%= render :partial => 'common_contacts' %>
 <%- end -%>
 
