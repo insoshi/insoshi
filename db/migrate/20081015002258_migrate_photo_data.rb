@@ -5,7 +5,8 @@ class MigratePhotoData < ActiveRecord::Migration
     Person.find(:all).each do |person|
       gallery = person.galleries.new
       gallery.title = "Primary gallery"
-      gallery.primary_photo_id = person.photo.id unless person.photo.nil?
+      primary_photo = person.photos.detect(&:primary?)
+      gallery.primary_photo_id = primary_photo.id unless primary_photo.nil?
       Gallery.skip_callback(:log_activity) do
         gallery.save!
       end
