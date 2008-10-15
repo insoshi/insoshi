@@ -250,7 +250,6 @@ describe PeopleController do
       @contact = people(:aaron)
       conn = Connection.connect(@person, @contact)
       get :show, :id => @contact.reload
-      response.should have_tag("a", :text => "Remove Connection")
       response.should have_tag("a[href=?]", connection_path(conn))
     end
     
