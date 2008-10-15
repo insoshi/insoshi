@@ -35,7 +35,7 @@ class Person < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications,
-                  :blog_comment_notifications
+                  :blog_comment_notifications, :identity_url
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',
                           'email_verified'],
@@ -84,10 +84,17 @@ class Person < ActiveRecord::Base
                     :conditions => "recipient_deleted_at IS NULL"
   end
   has_many :feeds
-  has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE
+  has_many :activities, :through => :feeds, :order => 'activities.created_at DESC',
+                                            :limit => FEED_SIZE,
+                                            :conditions => ["people.deactivated = ?", false],
+                                            :include => :person
+
   has_many :page_views, :order => 'created_at DESC'
-  
+
+  has_many :events
+  has_many :event_attendees
+  has_many :attendee_events, :through => :event_attendees, :source => :event
+
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
@@ -101,8 +108,9 @@ class Person < ActiveRecord::Base
                             :with => EMAIL_REGEX,
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
+  validates_uniqueness_of   :identity_url, :allow_nil => true
 
-  before_create :create_blog
+  before_create :create_blog, :check_config_for_deactivation
   before_save :encrypt_password
   before_validation :prepare_email, :handle_nil_description
   after_create :connect_to_admin
@@ -219,6 +227,12 @@ class Person < ActiveRecord::Base
                  :limit => NUM_RECENT_MESSAGES)
   end
 
+  def has_unread_messages?
+    Message.count(:all,
+                  :conditions => [%(recipient_id = ? AND
+                                    recipient_read_at IS NULL), id]) > 0
+  end
+
   ## Photo helpers
 
   def photo
@@ -261,7 +275,7 @@ class Person < ActiveRecord::Base
   # Authenticates a user by their email address and unencrypted password.
   # Returns the user or nil.
   def self.authenticate(email, password)
-    u = find_by_email(email.downcase.strip) # need to get the salt
+    u = find_by_email_and_identity_url(email.downcase.strip, nil) # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
 
@@ -386,6 +400,12 @@ class Person < ActiveRecord::Base
       self.crypted_password = encrypt(password)
     end
 
+    def check_config_for_deactivation
+      if Person.global_prefs.whitelist?
+        self.deactivated = true
+      end
+    end
+
     def set_old_description
       @old_description = Person.find(self).description
     end
@@ -418,7 +438,8 @@ class Person < ActiveRecord::Base
     ## Other private method(s)
 
     def password_required?
-      crypted_password.blank? || !password.blank? || !verify_password.nil?
+      (crypted_password.blank? && identity_url.nil?) || !password.blank? ||
+      !verify_password.nil?
     end
     
     class << self

@@ -1,0 +1,17 @@
+<li>
+  <div class="profile-image">
+    <%= image_link comment.commenter, :image => :thumbnail %>
+    <%= image_tag "icons/comment.gif", :class => "icon", :alt => "Comment" %>
+  </div>
+  <p class="meta">
+    <%= person_link comment.commenter %> posted a comment
+    <%= time_ago_in_words(comment.created_at) %> ago:
+  </p>
+  <%= display comment.body %>
+  <%- if current_person?(comment.commentable.person) -%>
+  <div>
+    <%= link_to "delete", event_comment_path(@event, comment),
+                          :method => :delete %>
+  </div>
+  <%- end -%>
+</li>
