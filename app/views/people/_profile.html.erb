@@ -3,12 +3,11 @@
   <div class="button_container">
 <%- end -%>
 <%- if current_person.admin? -%>
-    <div class="button">
-      <%- activity = activated_status(@person)  -%>
-      <%= link_to activity,
-                  admin_person_path(@person, :task => "deactivated"),
-                  :method => :put %>
-    </div>
+  <%- activity = activated_status(@person)  -%>
+  <%= link_to activity,
+              admin_person_path(@person, :task => "deactivated"),
+              :method => :put %>
+  <%= "|" if current_person?(@person) %>
 <%- end -%>
 <%- if current_person?(@person) -%>
   <%= link_to "Edit profile", edit_person_path(@person) %> |
@@ -33,7 +32,7 @@
   <%= image_tag @person.main_photo, :class => "profile-image photo",
                                     :alt => h(@person.name) %>
   <%- unless current_person?(@person) -%>
-    <h3><%= @person.name %> Toolbox</h3>
+    <h3><%= @person.name %></h3>
     <ul class="tools">
       <%- if logged_in? -%>
         <%- unless Connection.exists?(@person, current_person) -%>
