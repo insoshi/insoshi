@@ -95,7 +95,7 @@ module ActivitiesHelper
         %(added new #{photo_link(activity.item)}
           #{to_gallery_link(activity.item.gallery)})
       else
-        %(#{person_link_with_image(person)} added new
+        %(#{person_link_with_image(person)} added a new
           #{photo_link(activity.item)}
           #{to_gallery_link(activity.item.gallery)})
       end
