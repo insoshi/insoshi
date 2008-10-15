@@ -36,8 +36,6 @@ module ActivitiesHelper
           %(#{person_link_with_image(activity.item.commenter)}
             commented on #{wall(activity)})
         end
-        %(#{person_link_with_image(activity.item.commenter)} commented on 
-          #{wall(activity)}.)
       end
     when "Event"
       # TODO: make recent/long versions for this
