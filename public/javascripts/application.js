@@ -4,22 +4,23 @@
 $(document).ready(function() {
   // sets up the Profile page tabs
   $("#tabCol > ul").tabs();
+  $("#profile").show()
 
-  // sets up the hover image for activity feed items	
+  // sets up the hover image for activity feed items  
   $(".imgHoverMarker").tooltip({
-	showURL: false,
-	bodyHandler: function() {
-	  var i = $(this).children()[0]
-	  var imgsrc = $(i).attr('src');
-	  return $('<img src="'+imgsrc+'" />');
-	}
+  showURL: false,
+  bodyHandler: function() {
+    var i = $(this).children()[0]
+    var imgsrc = $(i).attr('src');
+    return $('<img src="'+imgsrc+'" />');
+  }
   });
 
   $('input,textarea').focus( function() {
-	$(this).css('border-color', '#006699');
+  $(this).css('border-color', '#006699');
   });
   $('input,textarea').blur( function() {
-	$(this).css('border-color','#ccc');
+  $(this).css('border-color','#ccc');
   });
 
   // facebox popups

@@ -1,35 +1,35 @@
-<div>
-<% tabs = TabsRenderer.new(self, :id => "tabCol") %>
-<% tabs.create('tProfile', 'Profile', :class => "profile vcard") do %>
-  <%= render :partial => 'profile' %>
-  <div class="clear"></div>
-<% end %>
+<div id="profile" style="display: none;">
+  <% tabs = TabsRenderer.new(self, :id => "tabCol") %>
+  <% tabs.create('tProfile', 'Profile', :class => "profile vcard") do %>
+    <%= render :partial => 'profile' %>
+    <div class="clear"></div>
+  <% end %>
 
-<% tabs.create('tWall', 'Wall') do %>
-  <%= render :partial => 'wall' %>
-  <div class="clear"></div>
-<% end %>
+  <% tabs.create('tWall', 'Wall') do %>
+    <%= render :partial => 'wall' %>
+    <div class="clear"></div>
+  <% end %>
 
-<% tabs.create('tRecentActivity', 'Recent Activity') do %>
-  <%= render :partial => 'recent_activity' %>
-  <div class="clear"></div>
-<% end %>
+  <% tabs.create('tRecentActivity', 'Recent Activity') do %>
+    <%= render :partial => 'recent_activity' %>
+    <div class="clear"></div>
+  <% end %>
 
-<% tabs.create('tContacts', 'Contacts') do %>
-  <%= render :partial => 'profile_contacts' %>
-  <div class="clear"></div>
-<% end %>
+  <% tabs.create('tContacts', 'Contacts') do %>
+    <%= render :partial => 'profile_contacts' %>
+    <div class="clear"></div>
+  <% end %>
 
-<% tabs.create('tBlog', 'Blog') do %>
-  <%= render :partial => 'shared/blog' %>
-  <div class="clear"></div>
-<% end %>
+  <% tabs.create('tBlog', 'Blog') do %>
+    <%= render :partial => 'shared/blog' %>
+    <div class="clear"></div>
+  <% end %>
 
-<% tabs.create('tGalleries', 'Galleries') do %>
-  <%= render :partial => "shared/galleries",
-             :locals => { :galleries => @galleries } %>
-  <div class="clear"></div>
-<% end %>
+  <% tabs.create('tGalleries', 'Galleries') do %>
+    <%= render :partial => "shared/galleries",
+               :locals => { :galleries => @galleries } %>
+    <div class="clear"></div>
+  <% end %>
 
-<%= tabs.render %>
+  <%= tabs.render %>
 </div>
