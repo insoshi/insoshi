@@ -3,7 +3,7 @@
     <%= link_to photo.label, '#gpu' + photo_id(photo), :rel => 'facebox' %>
     <div style="display: none;" id="gpu<%= photo_id(photo) -%>">
       <%= image_tag photo.public_filename %> 
-      <div class="gpuTitle"><%= photo.label %> </div>
+      <div class="gpuTitle"><%= photo.label %></div>
     </div>
   </div>
   <div class='gallPhoto'>

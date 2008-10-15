@@ -2,7 +2,9 @@
   <h2>Photos in <%= h(@gallery.title) %> Gallery</h2>
     <% unless @gallery.description.nil? %>
     <div class="gallery-description">
+      <%- unless @gallery.description.blank? -%>
       <p><strong>Description:</strong> <%= @gallery.description %></p>
+      <%- end -%>
     </div>
     <% end %>
   
@@ -15,7 +17,9 @@
                                    :anchor => 'tGalleries') %>
     </p>
   
-    <%- unless @photos.empty? -%>
+    <%- if @photos.empty? -%>
+    <h3>No photos (yet)
+    <%- else -%>
       <ul>
         <%= render :partial=>"shared/photo", :collection => @photos %>
       </ul>

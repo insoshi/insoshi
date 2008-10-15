@@ -2,8 +2,9 @@
 
 <%- if @posts.empty? -%>
   <h3 class="blankslate">
+    No blog posts (yet)
     <%- if current_person?(@blog.person) -%>
-      <%= link_to "New blog post", new_blog_post_path(@blog) %>
+      | <%= link_to "New blog post", new_blog_post_path(@blog) %>
     <%- end -%>
   </h3>
 <%- else -%>
