@@ -20,7 +20,8 @@ class Gallery < ActiveRecord::Base
   
   belongs_to :person
   has_many :photos, :dependent => :destroy, :order => :position
-  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
+  has_many :activities, :foreign_key => "item_id", :dependent => :destroy,
+                        :conditions => "item_type = 'Gallery'"
   
 
   validates_length_of :title, :maximum => 255, :allow_nil => true

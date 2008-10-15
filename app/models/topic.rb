@@ -24,7 +24,8 @@ class Topic < ActiveRecord::Base
   belongs_to :person
   has_many :posts, :order => :created_at, :dependent => :destroy,
                    :class_name => "ForumPost"
-  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
+  has_many :activities, :foreign_key => "item_id", :dependent => :destroy,
+                        :conditions => "item_type = 'Topic'"
   validates_presence_of :name, :forum, :person
   validates_length_of :name, :maximum => MAX_NAME
   

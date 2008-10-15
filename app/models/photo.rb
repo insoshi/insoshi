@@ -42,7 +42,9 @@ class Photo < ActiveRecord::Base
 
   belongs_to :gallery, :counter_cache => true
   acts_as_list :scope => :gallery_id  
-  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
+  has_many :activities, :foreign_key => "item_id",
+                        :conditions => "item_type = 'Photo'",
+                        :dependent => :destroy
     
   validates_length_of :title, :maximum => 255, :allow_nil => true
   validates_presence_of :person_id
