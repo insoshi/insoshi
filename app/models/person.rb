@@ -360,20 +360,11 @@ class Person < ActiveRecord::Base
   end
 
   # Return the common connections with the given person.
-  def common_contacts_with(contact, page = 1)
-    sql = %(SELECT DISTINCT contact_id FROM connections
-            INNER JOIN people contact ON connections.contact_id = contact.id
-            WHERE ((person_id = ? OR person_id = ?)
-                   AND status = ? AND
-                   contact.deactivated = ? AND
-                   (contact.email_verified IS NULL
-                    OR contact.email_verified = ?)))
-    conditions = [sql, id, contact.id, Connection::ACCEPTED, false, true]
-    opts = { :page => page, :per_page => RASTER_PER_PAGE }
-    connections = 
-    @common_contacts ||= Person.find(Connection.
-                                     paginate_by_sql(conditions, opts).
-                                     map(&:contact_id)).paginate
+
+  def common_contacts_with(contact, options = {})
+    # I tried to do this in SQL for efficiency, but failed miserably.
+    # Horrifyingly, MySQL lacks support for the INTERSECT keyword.
+    (contacts & contact.contacts).paginate(options)
   end
   
   protected
