@@ -1,5 +1,7 @@
 class CreateForums < ActiveRecord::Migration
   
+  # Declare the Forum model here so that the code below works even if you
+  # change app/models/forum.rb by (say) adding validations.
   class Forum < ActiveRecord::Base
   end
   
