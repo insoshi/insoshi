@@ -1,5 +1,3 @@
-<p><%= formatting_note %></p>
-
 <% form_for :post, :url => url, 
                    :html => { :method => method,
                               :id => "blogpost" }  do |f| %>
@@ -10,6 +8,8 @@
   </div>
 
   <%= set_focus_to('post_title') %>
+
+  <p><%= formatting_note %></p>
 
   <div class="form_row">
     <%= f.label :body, "Post" %>

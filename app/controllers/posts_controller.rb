@@ -2,6 +2,7 @@
 # There is some trickery to handle the two in a unified manner.
 class PostsController < ApplicationController
   include ApplicationHelper
+  include BlogsHelper
   
   before_filter :login_required
   before_filter :get_instance_vars
@@ -196,7 +197,8 @@ class PostsController < ApplicationController
       if forum?
        forum_topic_url(@forum, @topic)
       elsif blog?
-        blog_url(@blog)
+        blog_tab_url(@blog)
+        # person_url(@blog.person, :anchor => "tBlog")
       end      
     end
 

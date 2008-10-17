@@ -1,24 +1,12 @@
 <%- column_div :type => :primary do -%>
 
-  <h2><%= link_to "Blog for #{h @blog.person.name}", @blog %></h2>
+  <h2>
+  <%= link_to "Blog for #{h @blog.person.name}", blog_tab_path(@blog) %>
+  </h2>
 
-  <h3>
-  <%= sanitize @post.title %>
-  <%- if current_person?(@blog.person) -%>
-    <%= link_to "Edit", edit_blog_post_path(@blog, @post) %>
-    | <%= link_to "Delete", blog_post_path(@blog, @post),
-                            :method => :delete %>
-  <%- end -%>
-  </h3>
-
-  <%= display @post.body %>
-
-  <p class="meta">
-  Posted <%= time_ago_in_words(@post.created_at) %> ago
-  by <%= person_link @blog.person %>
-  </p>
-
-
+  <ul class="list blog full">
+    <%= render :partial => 'posts/blog_post', :object => @post %>
+  </ul>
 
   <%- unless @post.comments.empty? -%>
   <h4 id="comments">Comments</h4>

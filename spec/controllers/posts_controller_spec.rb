@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PostsController do
+  include BlogsHelper
 
   describe "forum posts" do
     integrate_views
@@ -144,7 +145,7 @@ describe PostsController do
     it "should destroy a post" do
       delete :destroy, :blog_id => @blog, :id => @post
       @post.should_not exist_in_database
-      response.should redirect_to(blog_url(@blog))
+      response.should redirect_to(blog_tab_url(@blog))
     end
     
     it "should require the right user for destroying" do
