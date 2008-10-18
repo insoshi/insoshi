@@ -1,3 +1,12 @@
+<% content_for(:jquery_support) do %>
+<%= stylesheet_link_tag 'ui.datepicker' %>
+<%= javascript_include_tag 'jquery-1.2.6' %>
+<%= javascript_include_tag 'jquery-ui-personalized-1.5.1.min' %>
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
+<%= javascript_include_tag 'req_form' %>
+<% end -%>
 <%- column_div :type => :primary do -%>
 
 <h2>New request</h2>
@@ -9,20 +18,20 @@
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
-  <div class="form_row full">
-    <%= render :partial => "select_categories" %>
-  </div>
-  <div class="form_row">
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
   <div class="form_row">
     <%= f.label :estimated_hours %>
-    <%= f.text_field :estimated_hours %>
+    <%= f.text_field :estimated_hours, :size => 5 %>
   </div>
   <div class="form_row">
     <%= f.label :due_date %>
-    <%= f.datetime_select :due_date %>
+    <%= f.text_field :due_date, :size => 8 %>
+  </div>
+  <div class="form_row">
+    <%= f.label :description %>
+    <%= f.text_area :description, :rows => 5 %>
+  </div>
+  <div class="form_row full">
+    <%= render :partial => "select_categories" %>
   </div>
   <div class="form_row">
     <%= f.submit "Create" %>
