@@ -1,3 +1,12 @@
+<% content_for(:jquery_support) do %>
+<%= stylesheet_link_tag 'ui.datepicker' %>
+<%= javascript_include_tag 'jquery-1.2.6' %>
+<%= javascript_include_tag 'jquery-ui-personalized-1.5.1.min' %>
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
+<%= javascript_include_tag 'bid_form' %>
+<% end -%>
 <% column_div :type => :primary do -%>
   <h2>Request</h2>
   <ul class="list full">
@@ -5,8 +14,10 @@
   </ul>
   <h2>Bids:</h2>
   <ul class="list full">
-  <% unless @req.bids.empty? -%>
-    <%= render :partial => "/bids/bid", :collection => @req.bids %>
+    <% if @req.bids.empty? -%>
+      <h3 class="blankslate">No bids (yet!)</h3>
+    <% else %>
+      <%= render :partial => "/bids/bid", :collection => @req.bids %>
     <%- end -%>
   </ul>
 
@@ -22,7 +33,7 @@
         </div>
         <div class="form_row">
           <%= f.label :expiration_date %>
-          <%= f.datetime_select :expiration_date %>
+          <%= f.text_field :expiration_date, :size => 8 %>
         </div>
         <div class="form_row">
           <%= f.submit "Submit" %>
