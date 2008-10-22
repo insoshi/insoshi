@@ -97,6 +97,8 @@ class Person < ActiveRecord::Base
   has_many :accounts
   has_many :exchanges, :foreign_key => :worker_id, :order => "created_at DESC"
 
+  has_and_belongs_to_many :categories
+
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
