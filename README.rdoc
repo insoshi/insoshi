@@ -29,6 +29,24 @@ For more detailed information, check out our guide for Installing Git under Git 
 
   http://docs.insoshi.com
 
+== Setting up your local Git repository
+
+  The Git Guides also detail our recommended setup for your local repository:
+
+    * Clone of the official repository
+      git://github.com/insoshi/insoshi.git
+    * Your GitHub fork added as a remote repository
+    * Local tracking branches for official 'master' and 'edge' branches
+    * Local development branch based off 'edge' and pushed to your GitHub fork
+
+  A shell script is available to automate this repository configuration:
+
+    http://gist.github.com/18772
+
+  and is run using the command-line
+
+    configure_insoshi_local.sh [GitHub Account Name]
+
 == Install libraries and gems
 
 === Libraries
