@@ -35,7 +35,7 @@ class Person < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications,
-                  :blog_comment_notifications, :identity_url, :category_ids
+                  :blog_comment_notifications, :identity_url, :category_ids, :address_ids
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',
                           'email_verified'],
@@ -96,6 +96,7 @@ class Person < ActiveRecord::Base
   has_many :attendee_events, :through => :event_attendees, :source => :event
   has_many :accounts
   has_many :exchanges, :foreign_key => :worker_id, :order => "created_at DESC"
+  has_many :addresses
 
   has_and_belongs_to_many :categories
 
