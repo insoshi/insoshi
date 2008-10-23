@@ -35,7 +35,7 @@ class Person < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications,
-                  :blog_comment_notifications, :identity_url
+                  :blog_comment_notifications, :identity_url, :category_ids
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',
                           'email_verified'],
@@ -236,6 +236,10 @@ class Person < ActiveRecord::Base
     Message.count(:all,
                   :conditions => [%(recipient_id = ? AND
                                     recipient_read_at IS NULL), id]) > 0
+  end
+
+  def formatted_categories
+    categories.collect { |cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
   end
 
   ## Account helpers
