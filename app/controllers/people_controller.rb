@@ -95,6 +95,7 @@ class PeopleController < ApplicationController
 
   def edit
     @person = Person.find(params[:id])
+    @all_categories = Category.find(:all, :order => "parent_id, name")
 
     respond_to do |format|
       format.html

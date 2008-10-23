@@ -1,9 +1,5 @@
 <li class="message">
   <p>
-    <%= category.long_name %>
-  </p>
-  <p class="tools meta">
-    <%= link_to "View", category %> |
-    <%= link_to("Delete", category, :method => :delete) %>
+    <%= link_to category.long_name, category %>
   </p>
 </li>

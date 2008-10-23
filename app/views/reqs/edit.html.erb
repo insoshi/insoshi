@@ -1,3 +1,4 @@
+<%= render :partial => 'jscript', :locals => { :jscript_file_name => 'req_form' } %>
 <%- column_div :type => :primary do -%>
 <h2>Edit request</h2>
 
@@ -10,18 +11,21 @@
   </div>
 
   <div class="form_row">
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
-  <div class="form_row">
     <%= f.label :estimated_hours %>
-    <%= f.text_field :estimated_hours %>
+    <%= f.text_field :estimated_hours, :size => 5 %>
   </div>
   <div class="form_row">
     <%= f.label :due_date %>
-    <%= f.datetime_select :due_date %>
+    <%= f.text_field :due_date, :size => 7 %>
   </div>
 
+  <div class="form_row">
+    <%= f.label :description %>
+    <%= f.text_area :description, :rows => 5 %>
+  </div>
+  <div class="form_row full">
+    <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
+  </div>
     <%= f.submit "Update" %>
 <% end %>
 

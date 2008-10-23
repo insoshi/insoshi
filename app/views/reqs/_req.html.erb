@@ -9,7 +9,7 @@
   <% end -%>
   <p>
   <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h req.estimated_hours %> hrs)
-    Due: <%= req.due_date.to_s :short %>
+    Due: in <%= time_ago_in_words(req.due_date) %>
   </p>
   <p class="meta">
     <%= h req.categories[0].long_name unless req.categories.empty? %>

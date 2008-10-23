@@ -4,7 +4,7 @@
 <%- if @categories.empty? -%>
     <h3 class="blankslate">No categories (yet!)</h3>
 <%- else -%>
-    <ul class="list categories full">
+    <ul class="list categories">
       <%= render :partial => @categories %>
     </ul>
 <%- end -%>
@@ -14,5 +14,4 @@
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'searches/box' %>
   <%= render :partial => 'shared/add_category_button' %>
-  <%= render :partial => 'shared/minifeed' %>
 <%- end -%>
