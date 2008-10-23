@@ -1,8 +1,6 @@
 <%- column_div :type => :primary do -%>
   <h2><%=h @category.long_name %></h2>
-  <p>
-  <%=h @category.description %>
-  </p>
+  <h3>Requests</h3>
   <ul class="list full">
     <%= render :partial => 'reqs/req', :collection => @reqs %>
   </ul>
@@ -12,5 +10,5 @@
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <%= render :partial => 'shared/minifeed' %>
+  <%= render :partial => 'providers', :locals => { :category => @category }  %>
 <%- end -%>
