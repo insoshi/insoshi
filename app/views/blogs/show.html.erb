@@ -1,5 +1,9 @@
 <%- column_div :type => :primary do -%>
-  <h2>Blog for <%= h @blog.person.name %></h2>
+<%- unless global_prefs.app_name.blank? -%>
+<h2><%= global_prefs.app_name %> Blog</h2>
+<%- else -%>
+<h2><%= Blog %></h2>
+<%- end -%>
 
   <%- if @posts.empty? -%>
     <h3 class="blankslate">
