@@ -50,7 +50,7 @@ class Admin::BroadcastEmailsController < ApplicationController
         flash[:notice] = 'Admin::BroadcastEmail was successfully created.'
 
         peeps = Person.find(:all)
-        peeps.each |peep| do
+        peeps.each do |peep|
           email = BroadcastMailer.create_spew(peep, @broadcast_email.subject, @broadcast_email.message)
           email.set_content_type("text/html")
           BroadcastMailer.deliver(email)

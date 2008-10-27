@@ -1,3 +1,5 @@
+Capfile
+config/deploy.rb
 log/*.log
 log/*.out
 log/*.pid
