@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :broadcast_emails
+
   map.resources :bids
 
   map.resources :reqs do |req|
@@ -34,7 +36,7 @@ ActionController::Routing::Routes.draw do |map|
      person.resources :comments
   end
   map.namespace :admin do |admin|
-    admin.resources :people, :preferences
+    admin.resources :people, :preferences, :broadcast_emails
     admin.resources :forums do |forums|
       forums.resources :topics do |topic|
         topic.resources :posts

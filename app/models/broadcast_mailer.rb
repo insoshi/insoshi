@@ -1,26 +1,25 @@
-class ListingsMailer < ActionMailer::Base
+class BroadcastMailer < ActionMailer::Base
   extend PreferencesHelper 
-
-  helper :people
-  helper :reqs
-
-  def updates(person,reqs)
-    subject    formatted_subject("Latest Requests")
+  
+  def spew(person, subject, message, sent_at = Time.now)
+    subject    subject
     recipients person.email
-    from       "New request summary <requests@#{domain}>"
-    body       "reqs" => reqs,
+    from       "Time Exchange Notes <notes@#{domain}>"
+    sent_on    sent_at
+    
+    body       "message" => message,
                "person" => person,
                "preferences_note" => preferences_note(person)
   end
 
-  private
+private
 
     def domain
-      @domain ||= ListingsMailer.global_prefs.domain
+      @domain ||= BroadcastMailer.global_prefs.domain
     end
 
     def server
-      @server_name ||= ListingsMailer.global_prefs.server_name
+      @server_name ||= BroadcastMailer.global_prefs.server_name
     end
 
     # Prepend the application name to subjects if present in preferences.
@@ -35,5 +34,4 @@ class ListingsMailer < ActionMailer::Base
       
 http://#{server}/people/#{person.to_param}/edit)
     end
-  
 end
