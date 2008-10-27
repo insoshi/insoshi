@@ -2,7 +2,7 @@ class BroadcastMailer < ActionMailer::Base
   extend PreferencesHelper 
   
   def spew(person, subject, message, sent_at = Time.now)
-    subject    subject
+    subject    formatted_subject(subject)
     recipients person.email
     from       "Time Exchange Notes <notes@#{domain}>"
     sent_on    sent_at
