@@ -1,4 +1,7 @@
 class Category < ActiveRecord::Base
+
+  is_indexed :fields => ['name', 'description']
+
   has_and_belongs_to_many :reqs
   has_and_belongs_to_many :people
   acts_as_tree
