@@ -56,6 +56,23 @@ echo
 #
 cd insoshi
 
+# Create a local branch that tracks the forked master branch
+#
+echo "Creating local tracking branch for edge..."
+git branch --track edge origin/edge
+catch_error $? "creating local tracking branch for edge"
+
+# Create a local branch based off edge
+#
+echo "Creating local branch $BRANCH..."
+git branch $BRANCH edge
+catch_error $? "creating local branch $BRANCH"
+
+git checkout $BRANCH
+catch_error $? "checking out local branch $BRANCH"
+
+echo
+
 # Add forked repository as a remote repository connection
 #
 # The GitHub account name will be used to refer to this repository
@@ -71,17 +88,6 @@ echo
 echo "Fetching remote branch information..."
 git fetch $REMOTE
 catch_error $? "fetching branches from remote $REMOTE"
-
-echo
-
-# Create a local branch that tracks the forked master branch
-#
-echo "Creating local branch $BRANCH..."
-git branch --track $BRANCH $REMOTE/master
-catch_error $? "creating local branch $BRANCH"
-
-git checkout $BRANCH
-catch_error $? "checking out local branch $BRANCH"
 
 echo
 
