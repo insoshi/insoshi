@@ -5,7 +5,7 @@
     <%= image_tag "icons/new.gif", :class => "icon", :alt => "Request" %>
   </div>
   <% if req.has_accepted_bid? %>
-    <%= render :partial => "accepted_bid", :object => req.accepted_bid %>
+    <%= render :partial => "shared/accepted_bid", :object => req.accepted_bid %>
   <% end -%>
   <p>
   <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h req.estimated_hours %> hrs)
