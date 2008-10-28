@@ -112,25 +112,31 @@
 
   <br />
 
-  <% form_for @person, :html => { :id => "change_password" } do |f| %>
+<%- end -%>
 
-    <h3>Change Password</h3>
+<%- column_div :type => :secondary do -%>
+  <h2>Change Your Password</h2>
+
+  <% form_for @person, :html => { :id => "change_password" } do |f| %>
 
     <div class="form_row">
       <label for="password">Current Password</label>
       <%= f.password_field :verify_password,
+                           :size => 34,
                            :maxlength => Person::MAX_PASSWORD %>
     </div>
 
     <div class="form_row">
       <label for="password">New Password</label>
       <%= f.password_field :new_password,
+                           :size => 34,
                            :maxlength => Person::MAX_PASSWORD %>
     </div>
 
     <div class="form_row">
       <label for="password_confirmation">Confirm Password</label>
-      <%= f.password_field :password_confirmation, 
+      <%= f.password_field :password_confirmation,
+                           :size => 34,
                            :maxlength => Person::MAX_PASSWORD,
                            :value => "" %>
     </div>
@@ -139,8 +145,4 @@
     </div>
     <input type="hidden" name="type" value="password_edit" />
   <% end %>
-<%- end -%>
-
-<%- column_div :type => :secondary do -%>
-  <%= render :partial => 'searches/box' %>
 <%- end -%>
