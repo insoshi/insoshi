@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
 
   before_filter :login_required, :only => [ :show, :new, :edit, :create, :update ]
+  before_filter :authorize_change, :only => :update 
 
   # GET /categories
   # GET /categories.xml
@@ -88,4 +89,13 @@ class CategoriesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+
+  def authorize_change
+    authorized = current_person.admin?
+    flash[:error] = 'Authorization required to edit category'
+    redirect_to home_url unless authorized
+  end
+
 end
