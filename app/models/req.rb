@@ -1,6 +1,8 @@
 class Req < ActiveRecord::Base
   include ActivityLogger
 
+  is_indexed :fields => ['name', 'description']
+
   has_and_belongs_to_many :categories
   belongs_to :person
   has_many :bids, :order => 'created_at DESC'
