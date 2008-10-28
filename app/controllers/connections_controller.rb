@@ -11,6 +11,11 @@ class ConnectionsController < ApplicationController
                                           :per_page => RASTER_PER_PAGE)
   end
   
+  def show
+    # We never use this, but render "" for the bots' sake.
+    render :text => ""
+  end
+  
   def edit
     @contact = @connection.contact
   end

@@ -373,10 +373,10 @@ class Person < ActiveRecord::Base
   end
 
   # Return the common connections with the given person.
-  def common_contacts_with(person, options = {})
+  def common_contacts_with(other_person, options = {})
     # I tried to do this in SQL for efficiency, but failed miserably.
     # Horrifyingly, MySQL lacks support for the INTERSECT keyword.
-    (contacts & person.contacts).paginate(options)
+    (contacts & other_person.contacts).paginate(options)
   end
   
   protected

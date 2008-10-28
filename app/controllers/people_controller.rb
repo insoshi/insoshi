@@ -23,9 +23,9 @@ class PeopleController < ApplicationController
     end
     if logged_in?
       @some_contacts = @person.some_contacts
+      page = params[:page]
       @common_contacts = current_person.common_contacts_with(@person,
-                                                             :page => 
-                                                                params[:page])
+                                                             :page => page)
       # Use the same max number as in basic contacts list.
       num_contacts = Person::MAX_DEFAULT_CONTACTS
       @some_common_contacts = @common_contacts[0...num_contacts]
