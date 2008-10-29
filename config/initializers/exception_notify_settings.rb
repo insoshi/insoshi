@@ -12,7 +12,8 @@ begin
 
       ExceptionNotifier.exception_recipients = global_prefs.exception_notification.split
     end
-  rescue
+  end
+rescue
     # Rescue from the error raised upon first migrating
     nil
 end
