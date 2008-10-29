@@ -31,5 +31,8 @@
              :locals => { :url => blog_posts_path(@blog),
                           :method => :post } %>
   <%- end -%>
+  <% unless global_prefs.gmail.blank? -%>
+  <%= render :partial => 'shared/calendar', :object => global_prefs.gmail %>
+  <%- end -%>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>
