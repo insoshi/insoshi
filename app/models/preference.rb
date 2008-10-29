@@ -19,6 +19,7 @@
 
 class Preference < ActiveRecord::Base
   attr_accessible :app_name, :server_name, :domain, :smtp_server, 
+                  :exception_notification,
                   :email_notifications, :email_verifications, :analytics,
                   :about, :demo, :whitelist
 
