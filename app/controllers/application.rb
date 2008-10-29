@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include SharedHelper
   include PreferencesHelper
-  include ExceptionNotifiable
   
   before_filter :create_page_view, :require_activation, :tracker_vars,
                 :admin_warning
