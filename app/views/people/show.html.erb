@@ -44,7 +44,7 @@
       </ul>
     </div>
     <%= display @person.formatted_categories, :class => "meta" %>
-    <%= display @person.description %>
+    <%= display simple_format_without_paragraph @person.description %>
   </div>
 
   <%= render :partial => 'recent_exchanges' %>
