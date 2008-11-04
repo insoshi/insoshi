@@ -1,0 +1,61 @@
+= acts_as_audited
+
+acts_as_audited is an ActiveRecord extension that logs all changes to your models in an audits table.
+
+== Installation
+
+* Install the plugin into your rails app
+  If you are using Rails 2.1:
+
+    script/plugin install git://github.com/collectiveidea/acts_as_audited.git
+
+  For versions prior to 2.1:
+
+    git clone git://github.com/collectiveidea/acts_as_audited.git vendor/plugins/acts_as_audited
+
+* Generate the migration
+    script/generate audited_migration add_audits_table
+    rake db:migrate
+
+== Auditing in Rails
+
+If you're using acts_as_audited within Rails, you can simply declare which models should be audited.  acts_as_audited can also automatically record the user that made the change if your controller has a <tt>current_user</tt> method.
+
+  class ApplicationController < ActionController::Base
+    audit User, List, Item
+  protected
+    def current_user
+      @user ||= User.find(session[:user])
+    end
+  end
+
+== Customizing
+
+To get auditing outside of Rails, or to customize which fields are audited within Rails, you can explicitly declare <tt>acts_as_audited</tt> on your models:
+
+    class User < ActiveRecord::Base
+      acts_as_audited :except => [:password, :mistress]
+    end
+
+See http://opensoul.org/2006/07/21/acts_as_audited for more information.
+
+== Caveats
+
+If your model declares +attr_accessible+ after +acts_as_audited+, you need to set +:protect+ to false. acts_as_audited uses +attr_protected+ internally to prevent malicious users from unassociating your audits, and Rails does not allow both +attr_protected+ and +attr_accessible+. It will default to false if +attr_accessible+ is called before +acts_as_audited+, but needs to be explicitly set if it is called after.
+
+  class User < ActiveRecord::Base
+    acts_as_audited :protect => false
+    attr_accessible :name
+  end
+
+=== ActiveScaffold
+
+Many users have also reported problems with acts_as_audited and ActiveScaffold, which appears to be caused by a limitation in ActiveScaffold not supporting polymorphic associations. To get it to work with ActiveScaffold:
+
+  class ApplicationController < ActionController::Base
+    audit MyModel, :only => [:create, :update, :destroy]
+  end
+
+== Compatability
+
+acts_as_audited works with Rails 2.0 or later.

@@ -11,9 +11,16 @@ class ApplicationController < ActionController::Base
   before_filter :create_page_view, :require_activation, :tracker_vars,
                 :admin_warning
 
+  audit Req, Bid, Exchange, Account, Person
+
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '71a8c82e6d248750397d166001c5e308'
+
+  protected
+    def current_user
+      current_person 
+    end
 
   private
 
