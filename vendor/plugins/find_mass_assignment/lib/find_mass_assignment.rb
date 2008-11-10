@@ -46,14 +46,15 @@ class String
     end
   end
   
-  # Returnt true if a model does not define attr_accessible.
+  # Return true if a model does not define attr_accessible.
   def problem?
     not attr_accessible?
   end
   
   # Return true if a line has a problem model (no attr_accessible).
   def problem_model?
-    mass_assignment_models.find { |model| model.problem? }
+    problem = mass_assignment_models.find { |model| model.problem? }
+    not problem.nil?
   end
   
   # Return true if a controller string has a (likely) mass assignment problem.
@@ -61,7 +62,9 @@ class String
   #   (1) Has a likely mass assignment
   #   (2) The corresponding model doesn't define attr_accessible
   def mass_assignment_problem?
-    File.open(self).find { |l| l.mass_assignment? and l.problem_model? }
+    c = File.open(self)
+    problem = c.find { |line| line.mass_assignment? and line.problem_model? }
+    not problem.nil?
   end
 end
 
