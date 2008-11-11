@@ -115,6 +115,7 @@ class PeopleController < ApplicationController
           flash[:success] = 'Profile updated!'
           format.html { redirect_to(@person) }
         else
+          @all_categories = Category.find(:all, :order => "parent_id, name")
           if preview?
             @preview = @person.description = params[:person][:description]
           end
