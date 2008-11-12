@@ -27,6 +27,7 @@ class Admin::BroadcastEmailsController < ApplicationController
   # GET /admin_broadcast_emails/new
   # GET /admin_broadcast_emails/new.xml
   def new
+    @body = "yui-skin-sam"
     @broadcast_email = BroadcastEmail.new
 
     respond_to do |format|
