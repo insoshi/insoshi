@@ -6,7 +6,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.xml
   def index
-    @categories = Category.find(:all)
+    @categories = Category.find(:all).sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.html # index.html.erb
