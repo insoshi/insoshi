@@ -161,19 +161,20 @@ module ApplicationHelper
 # YUI
 def yui_headers  
     @yui_head = capture do
-         content_for (:head) {'           
+         content_for(:head) {'           
         <!-- Combo-handled YUI CSS files: -->
         <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.6.0/build/assets/skins/sam/skin.css">
         <!-- Combo-handled YUI JS files: -->
         <script type="text/javascript" src="http://yui.yahooapis.com/combo?2.6.0/build/yahoo-dom-event/yahoo-dom-event.js&2.6.0/build/container/container_core-min.js&2.6.0/build/menu/menu-min.js&2.6.0/build/element/element-beta-min.js&2.6.0/build/button/button-min.js&2.6.0/build/editor/editor-min.js"></script>
 '}
-  end
 
+  end
+  
 end
 
 def yui_headers_debug  
     @yui_head = capture do
-         content_for (:head) {'           
+         content_for(:head) {'           
            <!-- Combo-handled YUI CSS files: -->
            <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.6.0/build/menu/assets/skins/sam/menu.css&2.6.0/build/button/assets/skins/sam/button.css&2.6.0/build/editor/assets/skins/sam/editor.css&2.6.0/build/logger/assets/skins/sam/logger.css">
            <!-- Combo-handled YUI JS files: -->
@@ -185,7 +186,7 @@ end
 
 def yui_headers_raw
     @yui_head = capture do
-         content_for (:head) {'           
+         content_for(:head) {'           
            <!-- Combo-handled YUI CSS files: -->
            <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.6.0/build/menu/assets/skins/sam/menu.css&2.6.0/build/button/assets/skins/sam/button.css&2.6.0/build/editor/assets/skins/sam/editor.css">
            <!-- Combo-handled YUI JS files: -->
