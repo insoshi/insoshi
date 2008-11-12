@@ -30,7 +30,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new.xml
   def new
     @category = Category.new
-    @all_categories = Category.find(:all, :order => "parent_id, name")
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,7 +41,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1/edit
   def edit
     @category = Category.find(params[:id])
-    @all_categories = Category.find(:all, :order => "parent_id, name")
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
   end
 
   # POST /categories

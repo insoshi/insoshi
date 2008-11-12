@@ -30,7 +30,7 @@ class ReqsController < ApplicationController
   # GET /reqs/new.xml
   def new
     @req = Req.new
-    @all_categories = Category.find(:all, :order => "parent_id, name")
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,7 +41,7 @@ class ReqsController < ApplicationController
   # GET /reqs/1/edit
   def edit
     @req = Req.find(params[:id])
-    @all_categories = Category.find(:all, :order => "parent_id, name")
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
   end
 
   # POST /reqs
@@ -57,7 +57,7 @@ class ReqsController < ApplicationController
         format.html { redirect_to(@req) }
         format.xml  { render :xml => @req, :status => :created, :location => @req }
       else
-        @all_categories = Category.find(:all, :order => "parent_id, name")
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { render :action => "new" }
         format.xml  { render :xml => @req.errors, :status => :unprocessable_entity }
       end
