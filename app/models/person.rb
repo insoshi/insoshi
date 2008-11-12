@@ -117,6 +117,7 @@ class Person < ActiveRecord::Base
 
   before_create :create_blog, :check_config_for_deactivation
   after_create :create_account
+  after_create :create_address
   before_save :encrypt_password
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
@@ -241,6 +242,16 @@ class Person < ActiveRecord::Base
 
   def formatted_categories
     categories.collect { |cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
+  end
+
+  def create_address
+    address = Address.new( :name => 'personal' )
+    address.person = self
+    address.save
+  end
+
+  def address
+    addresses.first
   end
 
   ## Account helpers

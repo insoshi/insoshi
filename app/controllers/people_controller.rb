@@ -47,6 +47,10 @@ class PeopleController < ApplicationController
       @person.save
       if @person.errors.empty?
         session[:verified_identity_url] = nil
+        if global_prefs.can_send_email? && global_prefs.registration_notification?
+          admin = Person.find_first_admin
+          PersonMailer.deliver_registration_notification(admin,@person)
+        end
         if global_prefs.email_verifications?
           @person.email_verifications.create
           flash[:notice] = %(Thanks for signing up! Check your email
@@ -111,6 +115,7 @@ class PeopleController < ApplicationController
           flash[:success] = 'Profile updated!'
           format.html { redirect_to(@person) }
         else
+          @all_categories = Category.find(:all, :order => "parent_id, name")
           if preview?
             @preview = @person.description = params[:person][:description]
           end
