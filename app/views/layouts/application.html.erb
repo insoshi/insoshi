@@ -13,6 +13,7 @@
     <%= calendar_date_select_includes :default %>
     <%= stylesheet_link_tag 'calendar/blue/style' %>
     <%= yield :jquery_support %>
+    <%= yield :head %>    
   </head>
   <body class="<%= @body %>">
     <div id="header-wrap">
