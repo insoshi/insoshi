@@ -1,4 +1,4 @@
-<%= yui_headers %>
+<%= yui_headers('broadcast_email_message')  %>
 
 <h2>New broadcast_email</h2>
 
@@ -21,14 +21,3 @@
 
 <%= link_to 'Back', admin_broadcast_emails_path %>
 
-
-<script type="text/javascript">
-var myEditor = new YAHOO.widget.Editor('broadcast_email_message', {
-    height: '300px',
-    handleSubmit: true,
-    width: '522px',
-    dompath: true, //Turns on the bar at the bottom
-    animate: true //Animates the opening, closing and moving of Editor windows
-});
-myEditor.render();
-</script>

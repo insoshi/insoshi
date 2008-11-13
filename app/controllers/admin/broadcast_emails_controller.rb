@@ -38,6 +38,7 @@ class Admin::BroadcastEmailsController < ApplicationController
 
   # GET /admin_broadcast_emails/1/edit
   def edit
+    @body = "yui-skin-sam"
     @broadcast_email = BroadcastEmail.find(params[:id])
   end
 
