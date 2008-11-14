@@ -55,6 +55,9 @@ module ActivitiesHelper
     when "Req"
       req = activity.item
       %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+    when "Exchange"
+      exchange = activity.item
+      %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -110,6 +113,9 @@ module ActivitiesHelper
     when "Req"
       req = activity.item
       %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+    when "Exchange"
+      exchange = activity.item
+      %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -146,6 +152,8 @@ module ActivitiesHelper
               "check.gif"
             when "Req"
               "new.gif"
+            when "Exchange"
+              "favorite.gif"
             else
               raise "Invalid activity type #{activity_type(activity).inspect}"
             end
