@@ -1,21 +1,8 @@
 class Admin::PeopleController < ApplicationController
-
   before_filter :login_required, :admin_required
+  active_scaffold :person
 
-  def index
-    @people = Person.paginate(:all, :page => params[:page], :order => :name)
-  end
-
-  def update
-    @person = Person.find(params[:id])
-    if current_person?(@person)
-      flash[:error] = "Action failed."
-    else
-      @person.toggle!(params[:task])
-      flash[:success] = "#{CGI.escapeHTML @person.name} updated."
-    end
-    respond_to do |format|
-      format.html { redirect_to :back }
-    end
+  ActiveScaffold.set_defaults do |config|
+    config.ignore_columns.add [:created_at, :updated_at, :addresses, :accounts, :activities, :attendee_events, :audits, :blog, :blog_comment_notifications, :categories, :comments, :connection_notifications, :connections, :contacts, :crypted_password, :description, :email_verifications, :event_attendees, :events, :exchanges, :feeds, :identity_url, :last_contacted_at, :message_notifications, :page_views, :photos, :remember_token, :remember_token_expires_at, :requested_contacts, :wall_comment_notifications]
   end
 end

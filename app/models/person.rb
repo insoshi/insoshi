@@ -70,19 +70,19 @@ class Person < ActiveRecord::Base
                       :limit => NUM_WALL_COMMENTS
   has_many :connections
   has_many :contacts, :through => :connections,
-                      :conditions => ACCEPTED_AND_ACTIVE,
+                      #:conditions => ACCEPTED_AND_ACTIVE,
                       :order => 'people.created_at DESC'
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
-           :source => :contact,
-           :conditions => REQUESTED_AND_ACTIVE
-  with_options :class_name => "Message", :dependent => :destroy,
-               :order => 'created_at DESC' do |person|
-    person.has_many :_sent_messages, :foreign_key => "sender_id",
-                    :conditions => "sender_deleted_at IS NULL"
-    person.has_many :_received_messages, :foreign_key => "recipient_id",
-                    :conditions => "recipient_deleted_at IS NULL"
-  end
+           :source => :contact
+           #:conditions => REQUESTED_AND_ACTIVE
+  #with_options :class_name => "Message", :dependent => :destroy,
+  #             :order => 'created_at DESC' do |person|
+  #  person.has_many :_sent_messages, :foreign_key => "sender_id",
+  #                  :conditions => "sender_deleted_at IS NULL"
+  #  person.has_many :_received_messages, :foreign_key => "recipient_id",
+  #                  :conditions => "recipient_deleted_at IS NULL"
+  #end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'activities.created_at DESC',
                                             :limit => FEED_SIZE,

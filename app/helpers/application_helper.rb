@@ -30,13 +30,11 @@ module ApplicationHelper
     elsif logged_in? and admin_view?
       home =    menu_element("Home", home_path)
       spam = menu_element("Spam", admin_broadcast_emails_path)
-      categories = menu_element("Categories", categories_path)
       people =  menu_element("People", admin_people_path)
-      events   = menu_element("Events", events_path)
       forums =  menu_element(inflect("Forum", Forum.count),
                              admin_forums_path)
       preferences = menu_element("Prefs", admin_preferences_path)
-      links = [home, spam, categories, people, forums, preferences]
+      links = [home, spam, people, forums, preferences]
     else
       links = [home, people]
     end
