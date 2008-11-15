@@ -130,6 +130,7 @@ class PeopleController < ApplicationController
           flash[:success] = 'Password changed.'
           format.html { redirect_to(@person) }
         else
+          @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           format.html { render :action => "edit" }
         end
       end
