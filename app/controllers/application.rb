@@ -11,7 +11,11 @@ class ApplicationController < ActionController::Base
   before_filter :create_page_view, :require_activation, :tracker_vars,
                 :admin_warning
 
-  audit Req, Bid, Exchange, Account, Person
+  ActiveScaffold.set_defaults do |config|
+    config.ignore_columns.add [ :created_at, :updated_at ]
+  end
+
+  audit Req, Bid, Exchange, Account, Person, :only => [:create, :update, :destroy]
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
