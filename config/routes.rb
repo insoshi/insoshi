@@ -62,6 +62,12 @@ ActionController::Routing::Routes.draw do |map|
   #map.home '/', :controller => 'home'
   map.home '/', :controller => 'blogs', :action => 'show', :id => 1
   map.about '/about', :controller => 'home', :action => 'about'
+  map.practice '/practice', :controller => 'home', :action => 'practice'
+  map.steps '/steps', :controller => 'home', :action => 'steps'
+  map.questions '/questions', :controller => 'home', :action => 'questions'
+  map.memberships '/memberships', :controller => 'home', :action => 'memberships'
+  map.contact '/contact', :controller => 'home', :action => 'contact'
+
   map.admin_home '/admin/home', :controller => 'home'
 
   # The priority is based upon order of creation: first created -> highest priority.

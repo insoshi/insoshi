@@ -36,13 +36,29 @@ module ApplicationHelper
       preferences = menu_element("Prefs", admin_preferences_path)
       links = [home, spam, people, forums, preferences]
     else
-      links = [home, people]
+      #links = [home, people]
+      links = [home]
+      if !global_prefs.about.blank?
+        links.push(menu_element("About", about_url))
+      end
+      if !global_prefs.practice.blank?
+        links.push(menu_element("Practice", practice_url))
+      end
+      if !global_prefs.steps.blank?
+        links.push(menu_element("Steps", steps_url))
+      end
+      if !global_prefs.questions.blank?
+        links.push(menu_element("Q/A", questions_url))
+      end
+      if !global_prefs.memberships.blank?
+        links.push(menu_element("Memberships", memberships_url))
+      end
+      if !global_prefs.contact.blank?
+        links.push(menu_element("Contact", contact_url))
+      end
     end
-    if global_prefs.about.blank?
-      links
-    else
-      links.push(menu_element("About", about_url))
-    end
+
+    links
   end
   
   def menu_element(content, address)

@@ -98,6 +98,25 @@ div.status-btn input.disabled, div.status-btn input.disabled:hover { background:
   width: 74px;
 }
 
+#nav li.n-about {
+  width: 56px;
+}
+
+#nav li.n-steps {
+  width: 54px;
+}
+
+#nav li.n-q\/a {
+  width: 36px;
+}
+
+#nav li.n-memberships {
+  width: 102px;
+}
+
+#nav li.n-contact {
+  width: 64px;
+}
 
 #footer {
   border-top: 1px solid #ccc;
