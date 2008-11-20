@@ -1,14 +1,25 @@
 /* YUI */
 
 .yui-toolbar-group-insertitem{
-	display:none;
+
 }
 
+
+span.yui-toolbar-insertimage{
+	display:none ! important;
+}
 .yui-toolbar-group{
 	line-height:auto;
 }
 
 .yui-editor-container{
 	margin-bottom:10px;
+	
 }
 
+.yui-toolbar-titlebar h2 a{
+	display:none;
+}
+.yui-toolbar-titlebar h2{
+	height:auto;
+}
