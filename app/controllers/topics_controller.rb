@@ -26,7 +26,7 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @body = “yui-skin-sam” 
+    @body = "yui-skin-sam" 
     @topic = @forum.topics.new(params[:topic])
     @topic.person = current_person
 
