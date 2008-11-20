@@ -98,6 +98,7 @@ class PeopleController < ApplicationController
   end
 
   def edit
+    @body = "yui-skin-sam"
     @person = Person.find(params[:id])
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
