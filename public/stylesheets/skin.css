@@ -9,16 +9,33 @@ body {
   float: left;
   width: 100%;
 }
-#header, #wrap, #footer {
+#header, #footer {
   margin: 0 auto;
   text-align: left;
   width: 744px;
 }
+
+#wrap{
+  margin: 0 auto;
+  text-align: left;
+  width: 844px;
+	
+}
+
 #content {
   width: 744px;
   float: left;
 }
 
+div#atenroot img{
+	width:100px;
+}
+
+div#atenroot{
+	margin-left:-100px;
+	width:100px;
+	float:left;
+}
 .status-btn {
   padding: 10px 10px 0px 0px;
   text-align: center;

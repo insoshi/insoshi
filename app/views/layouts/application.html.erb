@@ -18,11 +18,6 @@
   <body class="<%= @body %>">
     <div id="header-wrap">
       <div id="header">
-        <!--h1>
-          <a href="/" title="Return to Insoshi homepage">
-            <%= image_tag "logo-insoshi.png" %>
-          </a>
-        </h1-->
         <ul id="nav">
           <%- menu.each do |link| -%>
             <%= menu_li link %>
@@ -53,9 +48,14 @@
           </p>
       </div>
     </div>
-    
+
     <div id="wrap">
+
       <div id="content">
+      <div id="atenroot">
+        <%=  image_tag "aten/aten_root100.png", :alt => "Grass Roots Logo"  %>
+
+      </div>
         <%- if global_prefs.demo? -%>
           <p class="error" style="font-weight: bold;">
             This is a demonstration site. 
@@ -66,6 +66,8 @@
           <%= content_tag :p, msg, :class => "flash #{key}" %>
         <% end %>     
         <%= yield %>
+
+        
         <div id="footer">
           <p id="footer-nav">
             <a href="/">Home</a> | <a href="/messages">Messages</a> | <a href="/people">People</a> | <a href="/forums">Forum</a>
