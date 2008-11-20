@@ -9,18 +9,20 @@ body {
   float: left;
   width: 100%;
 }
-#header, #footer {
+#wrap, #header, #footer {
   margin: 0 auto;
   text-align: left;
   width: 744px;
 }
 
+/*
 #wrap{
   margin: 0 auto;
   text-align: left;
   width: 844px;
 	
 }
+*/
 
 #content {
   width: 744px;
