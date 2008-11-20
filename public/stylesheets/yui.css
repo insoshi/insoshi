@@ -1,0 +1,13 @@
+/* YUI */
+
+.yui-toolbar-group-insertitem{
+	display:none;
+}
+
+.yui-toolbar-group{
+	line-height:auto;
+}
+
+.yui-editor-container{
+	margin-bottom:10px;
+}
