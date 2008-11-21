@@ -6,6 +6,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.xml
   def index
+    @top_level_categories = Category.find(:all, :conditions => "parent_id is NULL").sort_by {|a| a.name}
     @categories = Category.find(:all).sort_by { |a| a.long_name }
 
     respond_to do |format|

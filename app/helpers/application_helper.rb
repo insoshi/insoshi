@@ -5,6 +5,7 @@ module ApplicationHelper
   
   def menu
     home     = menu_element("Home",   home_path)
+    categories = menu_element("Services", categories_path)
     people   = menu_element("People", people_path)
     if Forum.count == 1
       forum = menu_element("Forum", forum_path(Forum.find(:first)))
@@ -15,7 +16,6 @@ module ApplicationHelper
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
       requests = menu_element("Requests", reqs_path)
-      categories = menu_element("Categories", categories_path)
       messages = menu_element("Messages", messages_path)
 #      blog     = menu_element("Blog",     blog_path(current_person.blog))
       photos   = menu_element("Photos",   photos_path)
@@ -23,7 +23,7 @@ module ApplicationHelper
 #                              person_connections_path(current_person))
 #      links = [home, profile, contacts, messages, blog, people, forum]
       events   = menu_element("Events", events_path)
-      links = [home, profile, requests, people, messages, forum, categories]
+      links = [home, profile, categories, requests, people, messages, forum]
       # TODO: remove 'unless production?' once events are ready.
       links.push(events) #unless production?
       
@@ -37,7 +37,7 @@ module ApplicationHelper
       links = [home, spam, people, forums, preferences]
     else
       #links = [home, people]
-      links = [home]
+      links = [home, categories]
       if !global_prefs.about.blank?
         links.push(menu_element("About", about_url))
       end
