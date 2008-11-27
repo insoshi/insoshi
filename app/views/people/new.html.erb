@@ -10,7 +10,7 @@
   <% form_for @person do |f| -%>
 
   <div class="form_row">
-    <label for="email">
+    <label for="person_email">
       Email address <span class="small">(never made
       public<%= ", will be verified" if global_prefs.email_verifications? %>)
       </span>
@@ -20,18 +20,18 @@
   </div>
 
   <div class="form_row">
-    <label for="name">Name 
+    <label for="person_name">Name 
       <span class="small">(will be displayed)</span></label>
     <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
   </div>
 
   <div class="form_row">
-    <label for="password">Password</label>
+    <label for="person_password">Password</label>
     <%= f.password_field :password, :maxlength => Person::MAX_PASSWORD %>
   </div>
 
   <div class="form_row">
-    <label for="password_confirmation">Confirm Password</label>
+    <label for="person_password_confirmation">Confirm Password</label>
     <%= f.password_field :password_confirmation, 
                          :maxlength => Person::MAX_PASSWORD,
                          :value => "" %>
