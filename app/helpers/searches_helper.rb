@@ -20,7 +20,7 @@ module SearchesHelper
     elsif params[:controller] == "categories" or params[:model] == "Category"
       "Category"
     else
-      "Reqs"
+      "Requests"
     end
   end
   
