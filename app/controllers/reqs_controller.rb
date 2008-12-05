@@ -77,6 +77,7 @@ class ReqsController < ApplicationController
         format.html { redirect_to(@req) }
         format.xml  { head :ok }
       else
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { render :action => "edit" }
         format.xml  { render :xml => @req.errors, :status => :unprocessable_entity }
       end
