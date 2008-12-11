@@ -1,5 +1,5 @@
 class ReqsController < ApplicationController
-  before_filter :login_required, :only => [ :new, :edit, :create, :update, :destroy ]
+  before_filter :login_required
   before_filter :correct_person_and_no_accept_required, :only => [ :edit, :update ]
   before_filter :correct_person_and_no_commitment_required, :only => [ :destroy ]
   # GET /reqs
