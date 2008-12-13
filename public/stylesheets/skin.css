@@ -383,3 +383,9 @@ form, div, h2, ul, li {zoom: 1;}
 p.poweredby{
 	float:right;
 }
+
+div.desc-message{
+ 	position: relative;
+	width:500px;	
+	margin-bottom:20px;
+}

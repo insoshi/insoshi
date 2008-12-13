@@ -7,6 +7,11 @@
 
   <%= error_messages_for :person %>
 
+  <div class="desc-message">
+    <p>We verify member information and require new members attend one orientation before participating, so that everyone understands how the Time Exchange works.</p>
+    <p>Please check the calendar on the front page for dates.  You can fill out the form now and it will be approved after you attend an orientation. More information may be <a href="/steps">required</a>.</p>
+  </div>
+
   <% form_for @person do |f| -%>
 
   <div class="form_row">
@@ -27,13 +32,13 @@
   
 
   <div class="form_row full">
-        <label for="person_categories">Services Offered
+        <label for="person_categories">Which services would you be willing to offer?
         </label>
         <%= render :partial => "shared/select_categories", :locals => { :model_name => 'person' } %>
   </div>
   
   <div class="form_row">
-    <label for="person_description">Description
+    <label for="person_description">Let the other members know something about yourself or the skills you bring to the community.
     </label>
 
     <%- unless @preview.nil? -%>
