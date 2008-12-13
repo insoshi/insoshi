@@ -24,6 +24,24 @@
       <span class="small">(will be displayed)</span></label>
     <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
   </div>
+  
+
+  <div class="form_row full">
+        <label for="person_categories">Services Offered
+        </label>
+        <%= render :partial => "shared/select_categories", :locals => { :model_name => 'person' } %>
+  </div>
+  
+  <div class="form_row">
+    <label for="person_description">Description
+    </label>
+
+    <%- unless @preview.nil? -%>
+      <%= display @preview %>
+    <%- end -%>
+    
+    <%= f.text_area :description %>
+  </div>  
 
   <div class="form_row">
     <label for="password">Password</label>
@@ -41,3 +59,4 @@
   </div>
   <% end %>
 <%- end -%>
+<%= yui_headers('person_description') %>
