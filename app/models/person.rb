@@ -246,6 +246,7 @@ class Person < ActiveRecord::Base
 
   def create_address
     address = Address.new( :name => 'personal' )
+    address.zipcode_plus_4 = '78701'
     address.person = self
     address.save
   end
