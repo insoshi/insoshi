@@ -19,5 +19,9 @@ Hours bid: <%= h bid.estimated_hours %>
     <% if admin? || current_person?(bid.person) -%>
     | <%= link_to "Delete", req_bid_path(bid.req,bid), :confirm => 'Are you sure?', :method => :delete %>
     <% end -%>
+    <br>
+    <% if current_person?(bid.req.person) && !current_person.address.nil? && !bid.person.address.nil? && !current_person?(bid.person) -%>
+      <%= number_with_precision(bid.person.address.distance_to(current_person.address)).to_s %> miles away
+    <% end -%>
   </p>
 </li>

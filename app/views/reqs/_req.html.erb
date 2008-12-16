@@ -30,5 +30,9 @@
     <% if admin? || current_person?(req.person) -%>
     | <%= link_to "Delete", req, :confirm => 'Are you sure?', :method => :delete unless (req.has_commitment? || req.has_approved?) %>
     <% end -%>
+    <br>
+    <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>
+      <%= number_with_precision(req.person.address.distance_to(current_person.address)).to_s %> miles away
+    <% end -%>
   </p>
 </li>
