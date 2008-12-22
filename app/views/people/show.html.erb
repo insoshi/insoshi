@@ -24,7 +24,8 @@
 
       <ul class="tools">
         <%- unless current_person?(@person) -%>
-          <%- if logged_in? -%>
+        <%- if logged_in? -%>
+            <li><%= exchange_link @person %></li>
             <li><%= email_link @person %></li>
             <li><%= account_link @person %></li>
           <%- end -%>

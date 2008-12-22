@@ -7,9 +7,19 @@ class Exchange < ActiveRecord::Base
 
   validates_presence_of :customer, :worker, :amount, :req
 
+  attr_accessible :amount
+
   after_create :log_activity
 
   def log_activity
     add_activities(:item => self, :person => self.worker)
+  end
+
+  private
+
+  def validate
+    unless amount > 0
+      errors.add(:amount, "must be greater than zero")
+    end
   end
 end

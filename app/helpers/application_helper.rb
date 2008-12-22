@@ -142,6 +142,16 @@ module ApplicationHelper
     str << link_to_unless_current(action, path, opts)
   end
 
+  def exchange_link(person, options = {})
+    img = image_tag("icons/switch.gif")
+    path = new_person_exchange_path(person)
+    opts = {}
+    action = "Transfer hours"
+    str = link_to(img,path,opts)
+    str << "&nbsp;"
+    str << link_to_unless_current(action, path, opts)
+  end
+
   def email_link(person, options = {})
     reply = options[:replying_to]
     if reply

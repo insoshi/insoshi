@@ -4,16 +4,18 @@
   <ul class="list full">
     <%= render :partial => @req %>
   </ul>
+  <% if @req.active? %>
   <h2>Bids:</h2>
   <ul class="list full">
     <% if @req.bids.empty? -%>
-      <h3 class="blankslate">No bids (yet!)</h3>
+        <h3 class="blankslate">No bids (yet!)</h3>
     <% else %>
       <%= render :partial => "/bids/bid", :collection => @req.bids %>
     <%- end -%>
   </ul>
+  <%- end -%>
 
-    <% unless current_person?(@req.person) -%>
+    <% unless ( current_person?(@req.person) || !@req.active ) -%>
       <h2>New bid</h2>
 
       <%= error_messages_for :req %>
