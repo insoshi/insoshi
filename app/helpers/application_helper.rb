@@ -180,7 +180,13 @@ module ApplicationHelper
     end
   end
 
-
+def relative_time_ago_in_words(time)
+  if time > Time.now
+  "in " + time_ago_in_words(time)
+  else
+    time_ago_in_words(time) + " ago"
+  end
+end
 
 # YUI
 def yui_headers(textspace)  
