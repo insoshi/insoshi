@@ -2,14 +2,28 @@ class ExchangesController < ApplicationController
   before_filter :login_required
   before_filter :find_worker
 
+  def index
+    @exchanges = Exchange.find(:all, :order => 'created_at DESC')
+    respond_to do |format|
+      format.xml { render :xml => @exchanges }
+    end
+  end
+
+  def show
+    @exchange = Exchange.find(params[:id])
+    respond_to do |format|
+      format.xml { render :xml => @exchange }
+    end
+  end
+
   def new
     @exchange = Exchange.new
   end
 
   def create
+    @exchange = Exchange.new(params[:exchange]) # amount is the only accessible field
     begin
       Exchange.transaction do
-        @exchange = Exchange.new(params[:exchange]) # amount is the only accessible field
         @exchange.worker = @worker
         @exchange.customer = current_person
 
@@ -25,8 +39,11 @@ class ExchangesController < ApplicationController
         current_person.account.withdraw(@exchange.amount)
       end
     rescue
-      flash[:error] = "Error with transfer."
-      render :action => "new" and return
+      respond_to do |format|
+        flash[:error] = "Error with transfer."
+        format.html { render :action => "new" and return }
+        format.xml { render :xml => @exchange.errors, :status => :unprocessable_entity }
+      end
     end
 
     exchange_note = Message.new()
@@ -36,8 +53,11 @@ class ExchangesController < ApplicationController
     exchange_note.recipient = @worker
     exchange_note.save!
 
-    flash[:notice] = "Transfer succeeded."
-    redirect_to person_path(@worker) and return
+    respond_to do |format|
+      flash[:notice] = "Transfer succeeded."
+      format.html { redirect_to person_path(@worker) and return }
+      format.xml { render :xml => @exchange, :status => :created, :location => [@worker, @exchange] }
+    end
   end
 
 private

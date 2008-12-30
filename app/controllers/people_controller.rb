@@ -26,6 +26,7 @@ class PeopleController < ApplicationController
     end
     respond_to do |format|
       format.html
+      format.xml { render :xml => @person }
     end
   end
   
