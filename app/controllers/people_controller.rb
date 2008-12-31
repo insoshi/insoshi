@@ -26,7 +26,7 @@ class PeopleController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.xml { render :xml => @person }
+      format.xml { render :xml => @person.to_xml(:only => [:id, :name, :description, :created_at, :identity_url]) }
     end
   end
   
