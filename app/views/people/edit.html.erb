@@ -110,7 +110,12 @@
   </div>
 
   <br />
-
+  <h3>Addresses</h3>
+  <%= render :partial => 'address', :collection => @person.addresses %>
+  <div class="status-btn" style="float: left">
+    <input type="button" name="update" value="Add address" id="update-submit" onclick="document.location='<%= new_person_address_path(@person) %>';" />
+  </div>
+  <br />
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>

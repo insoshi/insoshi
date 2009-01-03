@@ -32,6 +32,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :people do |person|
      person.resources :messages
      person.resources :exchanges
+     person.resources :addresses
      person.resources :photos
      person.resources :connections
      person.resources :comments
