@@ -8,6 +8,12 @@
       <%= f.label :amount %>
       <%= f.text_field :amount, :size => 2 %>
     </div>
+    <% fields_for :req do |r| %>
+      <div class="form_row">
+        <%= r.label 'Service provided' %>
+        <%= r.text_field :name %>
+      </div>
+    <% end %>
     <div class="form_row">
       <%= f.submit "Submit" %>
     </div>

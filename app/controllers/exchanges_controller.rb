@@ -17,17 +17,25 @@ class ExchangesController < ApplicationController
   end
 
   def new
+    @req = Req.new
+    @req.name = 'Gift transfer'
     @exchange = Exchange.new
   end
 
   def create
     @exchange = Exchange.new(params[:exchange]) # amount is the only accessible field
+    @req = Req.new(params[:req])
+
     begin
       Exchange.transaction do
         @exchange.worker = @worker
         @exchange.customer = current_person
 
-        @req = Req.new( {:name => "Gift transfer", :estimated_hours => @exchange.amount, :due_date => Time.now } )
+        if @req.name.blank?
+          @req.name = 'Gift transfer' # XML creation might not set this
+        end
+        @req.estimated_hours = @exchange.amount
+        @req.due_date = Time.now
         @req.person = current_person
         @req.active = false
         @req.save!
