@@ -6,7 +6,7 @@
 <% unless address.address_line_3.blank? %>
 <%= h address.address_line_3 %><br/>
 <% end %>
-<%= h address.city %>, <%= h address.state.abbreviation %> <%= h address.zipcode_plus_4 %><br/>
+<%= h address.city %>, <%- unless address.state.blank? -%><%= h address.state.abbreviation %><%- end -%> <%= h address.zipcode_plus_4 %><br/>
 <%= link_to "Edit", edit_person_address_path(address.person,address) %>
 <br/>
 </li>
