@@ -1,12 +1,12 @@
 <li>
-<%= address.address_line_1 %><br/>
+<%= h address.address_line_1 %><br/>
 <% unless address.address_line_2.blank? %>
-<%= address.address_line_2 %><br/>
+<%= h address.address_line_2 %><br/>
 <% end %>
 <% unless address.address_line_3.blank? %>
-<%= address.address_line_3 %><br/>
+<%= h address.address_line_3 %><br/>
 <% end %>
-<%= address.city %>, <%= address.state.abbreviation %> <%= address.zipcode_plus_4 %><br/>
+<%= h address.city %>, <%= h address.state.abbreviation %> <%= h address.zipcode_plus_4 %><br/>
 <%= link_to "Edit", edit_person_address_path(address.person,address) %>
 <br/>
 </li>
