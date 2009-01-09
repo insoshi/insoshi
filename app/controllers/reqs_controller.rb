@@ -1,5 +1,6 @@
 class ReqsController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => [:show, :index]
+  before_filter :login_or_oauth_required, :only => [:show, :index]
   before_filter :correct_person_and_no_accept_required, :only => [ :edit, :update ]
   before_filter :correct_person_and_no_commitment_required, :only => [ :destroy ]
   # GET /reqs

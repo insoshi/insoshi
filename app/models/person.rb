@@ -97,6 +97,8 @@ class Person < ActiveRecord::Base
   has_many :accounts
   has_many :exchanges, :foreign_key => :worker_id, :order => "created_at DESC"
   has_many :addresses
+  has_many :client_applications
+  has_many :tokens, :class_name => "OauthToken", :order => "authorized_at DESC", :include => [:client_application]
 
   has_and_belongs_to_many :categories
 
