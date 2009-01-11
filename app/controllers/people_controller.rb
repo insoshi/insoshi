@@ -65,6 +65,7 @@ class PeopleController < ApplicationController
         end
       else
         @body = "register single-col"
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { if @person.identity_url.blank? 
                         render :action => 'new'
                       else
