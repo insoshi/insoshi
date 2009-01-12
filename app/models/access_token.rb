@@ -1,5 +1,5 @@
 class AccessToken<OauthToken
-  validates_presence_of :user
+  validates_presence_of :person
   before_create :set_authorized_at
   
   protected 
