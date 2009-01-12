@@ -86,7 +86,7 @@ module OAuth
       def current_token=(token)
         @current_token=token
         if @current_token
-          @current_user=@current_token.person # XXX changed to person for insoshi
+          @current_person=@current_token.person # XXX changed to person for insoshi
           @current_client_application=@current_token.client_application 
         end
         @current_token
