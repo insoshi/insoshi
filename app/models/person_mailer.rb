@@ -67,7 +67,9 @@ class PersonMailer < ActionMailer::Base
     from         "Registration notification <registration@#{domain}>"
     recipients   admin.email
     subject      formatted_subject("New registration")
-    body         "domain" => server,
+    body         "email" => new_peep.email,
+                  "name" => new_peep.name,
+                  "domain" => server,
                  "url" => person_path(new_peep)
   end
   
