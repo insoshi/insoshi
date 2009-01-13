@@ -9,7 +9,11 @@ class BidsController < ApplicationController
     @bid = @req.bids.new(params[:bid])
     @bid.person = current_person
     @bid.status_id = Bid::OFFERED
-    @bid.expiration_date += 1.day - 1.second # make expiration date at end of day
+    if @bid.expiration_date.blank?
+      @bid.expiration_date = 7.days.from_now
+    else
+      @bid.expiration_date += 1.day - 1.second # make expiration date at end of day
+    end
 
     respond_to do |format|
       if @bid.save
