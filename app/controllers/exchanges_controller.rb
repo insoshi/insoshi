@@ -1,5 +1,6 @@
 class ExchangesController < ApplicationController
-  before_filter :login_required
+  skip_before_filter :require_activation
+  before_filter :login_or_oauth_required
   before_filter :find_worker
 
   def index
