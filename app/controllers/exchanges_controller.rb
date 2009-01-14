@@ -7,6 +7,7 @@ class ExchangesController < ApplicationController
     @exchanges = @worker.exchanges.find(:all, :order => 'created_at DESC')
     respond_to do |format|
       format.xml { render :xml => @exchanges }
+      format.json { render :json => @exchanges.to_json( :include => :req ) }
     end
   end
 
@@ -14,6 +15,7 @@ class ExchangesController < ApplicationController
     @exchange = Exchange.find(params[:id])
     respond_to do |format|
       format.xml { render :xml => @exchange }
+      format.json { render :json => @exchange.to_json( :include => :req ) }
     end
   end
 

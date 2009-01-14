@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     # Create a Scribd-style PageView.
     # See http://www.scribd.com/doc/49575/Scaling-Rails-Presentation
     def create_page_view
-      unless request.format.xml?
+      if request.format.html?
         PageView.create(:person_id => session[:person_id],
                         :request_url => request.request_uri,
                         :ip_address => request.remote_ip,
@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
     
     # A tracker to tell us about the activity of Insoshi installs.
     def tracker_vars
-      unless request.format.xml?
+      if request.format.html?
         File.open("identifier", "w") do |f|
           f.write UUID.new
         end unless File.exist?("identifier")
@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
     
     # Warn the admin if his email address or password is still the default.
     def admin_warning
-      unless request.format.xml?
+      if request.format.html?
         default_domain = "example.com"
         default_password = "admin"
         if logged_in? and current_person.admin? 
