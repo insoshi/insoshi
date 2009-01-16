@@ -54,6 +54,8 @@ class ExchangesController < ApplicationController
         flash[:error] = "Error with transfer."
         format.html { render :action => "new" and return }
         format.xml { render :xml => @exchange.errors, :status => :unprocessable_entity }
+        format.json { render :json => @exchange.errors, :status => :unprocessable_entity }
+        return
       end
     end
 
@@ -68,6 +70,7 @@ class ExchangesController < ApplicationController
       flash[:notice] = "Transfer succeeded."
       format.html { redirect_to person_path(@worker) and return }
       format.xml { render :xml => @exchange, :status => :created, :location => [@worker, @exchange] }
+      format.json { render :json => @exchange, :status => :created, :location => [@worker, @exchange] }
     end
   end
 
