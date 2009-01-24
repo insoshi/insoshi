@@ -14,7 +14,7 @@ class ExchangesController < ApplicationController
   def show
     @exchange = Exchange.find(params[:id])
     respond_to do |format|
-      format.xml { render :xml => @exchange }
+      format.xml { render :xml => @exchange.to_xml( :include => :req ) }
       format.json { render :json => @exchange.to_json( :include => :req ) }
     end
   end
