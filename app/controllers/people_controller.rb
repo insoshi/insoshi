@@ -26,8 +26,8 @@ class PeopleController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.json { render :json => @person.to_json(:only => [:id, :name, :description, :created_at, :identity_url]) { |js| js.balance @person.account.balance } }
-      format.xml { render :xml => @person.to_xml( :only => [:id, :name, :description, :created_at, :identity_url]) { |xml| xml.balance @person.account.balance } }
+      format.json { render :json => @person.to_json(:only => [:id, :name, :description, :created_at, :identity_url], :include => {:accounts => {:only => :balance}}) }
+      format.xml { render :xml => @person.to_xml( :only => [:id, :name, :description, :created_at, :identity_url], :include => {:accounts => {:only => :balance}}) }
     end
   end
   
