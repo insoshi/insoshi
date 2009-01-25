@@ -113,6 +113,18 @@ class PeopleController < ApplicationController
 
   def update
     @person = Person.find(params[:id])
+
+    unless(params[:task].blank?)
+      if current_person.admin?
+        @person.toggle!(params[:task])
+        respond_to do |format|
+          flash[:success] = "#{CGI.escapeHTML @person.name} updated."
+          format.html { redirect_to :back }
+        end
+        return
+      end
+    end
+
     respond_to do |format|
       case params[:type]
       when 'info_edit'
@@ -156,9 +168,9 @@ class PeopleController < ApplicationController
     def setup
       @body = "person"
     end
-  
+
     def correct_person_required
-      redirect_to home_url unless Person.find(params[:id]) == current_person
+      redirect_to home_url unless ( current_person.admin? or Person.find(params[:id]) == current_person )
     end
     
     def preview?

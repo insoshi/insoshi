@@ -9,6 +9,9 @@ class Admin::PeopleController < ApplicationController
     config.nested.add_link('Addresses', [:addresses])
   end
 
+  # NOTE: index was removed from original insoshi to allow active scaffold to be default index
+  #       and update was moved into app people controller  
+
   protected
 
   def before_create_save(record)
