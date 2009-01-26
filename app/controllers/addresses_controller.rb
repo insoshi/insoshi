@@ -22,20 +22,32 @@ class AddressesController < ApplicationController
 
   def create
     @address = Address.new(params[:address])
-    if @person.addresses << @address
-      redirect_to person_url(@person)
-    else
+    begin
+      if @person.addresses << @address
+        redirect_to person_url(@person)
+      else
+        @states = State.find(:all, :order => "name").collect {|s| [s.name, s.id]}
+        render :action => :new
+      end
+    rescue
       @states = State.find(:all, :order => "name").collect {|s| [s.name, s.id]}
+      flash[:error] = "Geocoding failed."
       render :action => :new
     end
   end
 
   def update
     @address = @person.addresses.find(params[:id])
-    if @address.update_attributes(params[:address])
-      redirect_to person_url(@person)
-    else
+    begin
+      if @address.update_attributes(params[:address])
+        redirect_to person_url(@person)
+      else
+        @states = State.find(:all, :order => "name").collect {|s| [s.name, s.id]}
+        render :action => :edit
+      end
+    rescue
       @states = State.find(:all, :order => "name").collect {|s| [s.name, s.id]}
+      flash[:error] = "Geocoding failed."
       render :action => :edit
     end
   end
