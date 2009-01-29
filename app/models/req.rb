@@ -11,6 +11,15 @@ class Req < ActiveRecord::Base
   validates_presence_of :name, :due_date
   after_create :log_activity
 
+  class << self
+
+    def current_and_active
+      today = DateTime.now
+      @reqs = Req.find(:all, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
+      @reqs.delete_if { |req| req.has_approved? }
+    end
+  end
+
   def has_approved?
     a = false
     bids.each {|bid| a = true if bid.status_id == Bid::SATISFIED }

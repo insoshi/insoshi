@@ -7,7 +7,7 @@ class ReqsController < ApplicationController
   # GET /reqs
   # GET /reqs.xml
   def index
-    @reqs = Req.find(:all, :conditions => "active = 1", :order => 'created_at DESC')
+    @reqs = Req.current_and_active
 
     respond_to do |format|
       format.html # index.html.erb
