@@ -35,8 +35,16 @@ class Preference < ActiveRecord::Base
   def can_send_email?
     not (domain.blank? or smtp_server.blank?)
   end
-  
+
+  def plaintext_twitter_password
+    decrypt(crypted_twitter_password)
+  end
+
   private
+    def decrypt(password)
+      Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key").decrypt(password)
+    end
+
     def self.encrypt(password)
       Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key.pub").encrypt(password)
     end

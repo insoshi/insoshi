@@ -1,5 +1,6 @@
 class Req < ActiveRecord::Base
   include ActivityLogger
+  extend PreferencesHelper 
 
   is_indexed :fields => ['name', 'description']
 
@@ -18,6 +19,14 @@ class Req < ActiveRecord::Base
       @reqs = Req.find(:all, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
       @reqs.delete_if { |req| req.has_approved? }
     end
+  end
+
+  def tweet(url)
+    twitter_name = Req.global_prefs.twitter_name
+    twitter_password = Req.global_prefs.plaintext_twitter_password
+
+    twit = Twitter::Base.new(twitter_name,twitter_password)
+    twit.update("#{name}: #{url}")
   end
 
   def has_approved?
