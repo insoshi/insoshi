@@ -23,8 +23,8 @@
                                         :alt => h(@person.name) %>
 
         <ul class="tools">
-        <% unless current_person.twitter_name.blank? %>
-          <a href="http://www.twitter.com/<%= h current_person.twitter_name %>" title="<%= h current_person.twitter_name %>" target="top"><img style="float:right;" src="/images/twitter_481.png"></a>
+        <% unless @person.twitter_name.blank? %>
+          <a href="http://www.twitter.com/<%= h @person.twitter_name %>" title="<%= h @person.twitter_name %>" target="top"><img style="float:right;" src="/images/twitter_481.png"></a>
         <% end %>
         <%- unless current_person?(@person) -%>
         <%- if logged_in? -%>
