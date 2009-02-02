@@ -22,6 +22,11 @@ class Req < ActiveRecord::Base
   end
 
   def tweet(url)
+    if !twitter?
+      logger.info "No twitter requested for [#{id}:#{name}]"
+      return
+    end
+
     twitter_name = Req.global_prefs.twitter_name
     twitter_password = Req.global_prefs.plaintext_twitter_password
 
@@ -29,7 +34,7 @@ class Req < ActiveRecord::Base
     begin
       twit.update("#{name}: #{url}")
     rescue Twitter::CantConnect => e
-      logger.info "ERROR Twitter::CantConnect (" + e.to_s + ")"
+      logger.info "ERROR Twitter::CantConnect for [#{id}:#{name}] (" + e.to_s + ")"
     end
   end
 

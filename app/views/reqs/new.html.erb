@@ -25,6 +25,13 @@
   <div class="form_row full">
     <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
   </div>
+<% unless global_prefs.twitter_name.blank? %>
+    <div class="form_row">
+      <label for="twitter"
+        class="checkbox">Notify members in real time on <a href="http://www.twitter.com/<%= global_prefs.twitter_name %>" target="top">Twitter</a>?</label>
+      <%= check_box_tag 'req[twitter]', '1', true %>
+    </div>
+<% end %>
   <div class="form_row">
     <%= f.submit "Create" %>
   </div>

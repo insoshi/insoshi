@@ -51,7 +51,11 @@ class ReqsController < ApplicationController
   def create
     @req = Req.new(params[:req])
 
-    @req.due_date += 1.day - 1.second # make due date at end of day
+    if @req.due_date.blank?
+      @req.due_date = 7.days.from_now
+    else
+      @req.due_date += 1.day - 1.second # make due date at end of day
+    end
     @req.person_id = current_person.id
 
     respond_to do |format|
