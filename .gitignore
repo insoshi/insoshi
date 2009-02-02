@@ -31,3 +31,4 @@ rsa_key*
 sphinx/*
 sphinx_test/*
 config/ultrasphinx/*.conf
+*.swp
