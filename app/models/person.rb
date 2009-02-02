@@ -35,13 +35,15 @@ class Person < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications,
-                  :blog_comment_notifications, :identity_url, :category_ids, :address_ids
+                  :blog_comment_notifications, :identity_url, :category_ids, :address_ids,
+                  :twitter_name
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',
                           'email_verified'],
              :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
   MAX_EMAIL = MAX_PASSWORD = 40
   MAX_NAME = 40
+  MAX_TWITTER_NAME = 15
   MAX_DESCRIPTION = 5000
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
   TRASH_TIME_AGO = 1.month.ago
@@ -126,6 +128,7 @@ class Person < ActiveRecord::Base
 
   before_update :set_old_description
   after_update :log_activity_description_changed
+  after_update :follow_if_twitter_name_changed
   before_destroy :destroy_activities, :destroy_feeds
 
   class << self
@@ -444,12 +447,32 @@ class Person < ActiveRecord::Base
     end
 
     def set_old_description
-      @old_description = Person.find(self).description
+      p = Person.find(self)
+      @old_description = p.description
+      @old_twitter_name = p.twitter_name
+    end
+
+    def follow_if_twitter_name_changed
+      unless @old_twitter_name == twitter_name or twitter_name.blank?
+        follow(twitter_name)
+      end
     end
 
     def log_activity_description_changed
       unless @old_description == description or description.blank?
         add_activities(:item => self, :person => self)
+      end
+    end
+
+    def follow(twitter_id)
+      twitter_name = Person.global_prefs.twitter_name
+      twitter_password = Person.global_prefs.plaintext_twitter_password
+
+      twit = Twitter::Base.new(twitter_name,twitter_password)
+      begin
+        twit.create_friendship(twitter_id)
+      rescue Twitter::CantConnect => e
+        logger.info "ERROR Twitter::CantConnect for [#{twitter_id}] (" + e.to_s + ")"
       end
     end
     
