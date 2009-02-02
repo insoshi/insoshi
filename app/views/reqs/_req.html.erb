@@ -32,7 +32,7 @@
     <% end -%>
     <br>
     <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>
-      <%= number_with_precision(req.person.address.distance_to(current_person.address)).to_s %> miles away
+      <%= number_with_precision(req.person.address.distance_to(current_person.address), 1).to_s %> miles away
     <% end -%>
   </p>
 </li>
