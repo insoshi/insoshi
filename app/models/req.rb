@@ -26,7 +26,11 @@ class Req < ActiveRecord::Base
     twitter_password = Req.global_prefs.plaintext_twitter_password
 
     twit = Twitter::Base.new(twitter_name,twitter_password)
-    twit.update("#{name}: #{url}")
+    begin
+      twit.update("#{name}: #{url}")
+    rescue Twitter::CantConnect => e
+      logger.info "ERROR Twitter::CantConnect (" + e.to_s + ")"
+    end
   end
 
   def has_approved?

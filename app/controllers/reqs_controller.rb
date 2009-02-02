@@ -57,7 +57,9 @@ class ReqsController < ApplicationController
     respond_to do |format|
       if @req.save
         flash[:notice] = 'Request was successfully created.'
-        @req.tweet(req_url(@req))
+        unless global_prefs.twitter_name.blank?
+          @req.tweet(req_url(@req))
+        end
         format.html { redirect_to(@req) }
         format.xml  { render :xml => @req, :status => :created, :location => @req }
       else
