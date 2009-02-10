@@ -24,12 +24,14 @@ class Preference < ActiveRecord::Base
                   :email_notifications, :email_verifications, :analytics,
                   :about, :demo, :whitelist, :gmail, :registration_notification,
                   :practice, :steps, :questions, :memberships, :contact,
-                  :twitter_name, :twitter_password
+                  :twitter_name, :twitter_password, :twitter_api
 
   validates_presence_of :domain,       :if => :using_email?
   validates_presence_of :smtp_server,  :if => :using_email?
+  validates_presence_of :twitter_api,  :if => :using_twitter?
   
   before_save :encrypt_twitter_password
+  before_validation :set_default_twitter_api_if_using_twitter
 
   # Can we send mail with the present configuration?
   def can_send_email?
@@ -58,7 +60,15 @@ class Preference < ActiveRecord::Base
       return if twitter_password.blank?
       self.crypted_twitter_password = encrypt(twitter_password)
     end
-  
+
+    def set_default_twitter_api_if_using_twitter
+      self.twitter_api = 'twitter.com' if self.twitter_api.blank?
+    end
+ 
+    def using_twitter?
+      twitter_name?
+    end
+
     def using_email?
       email_notifications? or email_verifications?
     end

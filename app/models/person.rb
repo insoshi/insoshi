@@ -467,8 +467,9 @@ class Person < ActiveRecord::Base
     def follow(twitter_id)
       twitter_name = Person.global_prefs.twitter_name
       twitter_password = Person.global_prefs.plaintext_twitter_password
+      twitter_api = Person.global_prefs.twitter_api
 
-      twit = Twitter::Base.new(twitter_name,twitter_password)
+      twit = Twitter::Base.new(twitter_name,twitter_password, :api_host => twitter_api )
       begin
         twit.create_friendship(twitter_id)
       rescue Twitter::CantConnect => e

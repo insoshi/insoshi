@@ -29,8 +29,9 @@ class Req < ActiveRecord::Base
 
     twitter_name = Req.global_prefs.twitter_name
     twitter_password = Req.global_prefs.plaintext_twitter_password
+    twitter_api = Req.global_prefs.twitter_api
 
-    twit = Twitter::Base.new(twitter_name,twitter_password)
+    twit = Twitter::Base.new(twitter_name,twitter_password, :api_host => twitter_api )
     begin
       twit.update("#{name}: #{url}")
     rescue Twitter::CantConnect => e
