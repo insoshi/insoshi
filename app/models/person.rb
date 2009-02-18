@@ -128,7 +128,7 @@ class Person < ActiveRecord::Base
 
   before_update :set_old_description
   after_update :log_activity_description_changed
-  after_update :follow_if_twitter_name_changed
+  #after_update :follow_if_twitter_name_changed
   before_destroy :destroy_activities, :destroy_feeds
 
   class << self
