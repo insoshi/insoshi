@@ -5,7 +5,7 @@ body {
 }
 #header-wrap {
   /* background: #009908; */
-  background: #009908 url('/images/aten_header_background.png');
+  background: #009908 url('/images/forest_header.jpg') no-repeat top center;
   float: left;
   width: 100%;
 }

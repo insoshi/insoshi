@@ -5,7 +5,7 @@ module ApplicationHelper
   
   def menu
     home     = menu_element("Home",   home_path)
-    categories = menu_element("Services", categories_path)
+    categories = menu_element("SkillBank", categories_path)
     people   = menu_element("People", people_path)
     if Forum.count == 1
       forum = menu_element("Forum", forum_path(Forum.find(:first)))
