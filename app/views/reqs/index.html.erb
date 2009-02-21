@@ -1,5 +1,5 @@
 <%- column_div :type => :primary do -%>
-<% if global_prefs.twitter_name.blank? %>
+<% if global_prefs.twitter_name.blank? || global_prefs.twitter_oauth_consumer_key.blank? %>
 <h2>Requests</h2>
 <% else %>
   <h2>Requests &nbsp;&nbsp;<%= link_to( image_tag("twitter.gif", :border => 0, :title => "follow me"), twitter_oauth_client_path ) %></h2>
