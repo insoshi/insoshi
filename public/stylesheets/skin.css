@@ -78,13 +78,17 @@ div.status-btn input.disabled, div.status-btn input.disabled:hover { background:
   float: left;
   margin-top: 12px;
   margin-bottom: 12px;
-  width: 144px;
+  width: 344px;
+color:#fff;
+font-weight:bold;
+font-family:Trebuchet MS;
+font-size:1.3em;
 }
 
 
 /* Header-nav */
 #nav {
-  margin: 44px 0 0 0;
+  margin: 14px 0 0 0;
   width: 576px;
   float: right;
 }
