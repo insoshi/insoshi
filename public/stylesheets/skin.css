@@ -118,14 +118,19 @@ font-size:1.3em;
 }
 #nav li.n-home {
   margin-left: 0;
+  width: 64px;
 }
 
-#nav li.n-categories {
+#nav li.n-skillbank {
   width: 82px;
 }
 
-#nav li.n-messages {
+#nav li.n-requests {
   width: 74px;
+}
+
+#nav li.n-inbox {
+  width: 64px;
 }
 
 #nav li.n-about {
