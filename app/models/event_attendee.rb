@@ -1,3 +1,13 @@
+# == Schema Information
+# Schema version: 20090216032013
+#
+# Table name: event_attendees
+#
+#  id        :integer(4)      not null, primary key
+#  person_id :integer(4)      
+#  event_id  :integer(4)      
+#
+
 class EventAttendee < ActiveRecord::Base
   include ActivityLogger
 

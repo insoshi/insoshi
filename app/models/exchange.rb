@@ -1,3 +1,17 @@
+# == Schema Information
+# Schema version: 20090216032013
+#
+# Table name: exchanges
+#
+#  id          :integer(4)      not null, primary key
+#  customer_id :integer(4)      
+#  worker_id   :integer(4)      
+#  req_id      :integer(4)      
+#  amount      :decimal(8, 2)   default(0.0)
+#  created_at  :datetime        
+#  updated_at  :datetime        
+#
+
 class Exchange < ActiveRecord::Base
   include ActivityLogger
 

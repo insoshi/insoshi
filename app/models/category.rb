@@ -1,3 +1,16 @@
+# == Schema Information
+# Schema version: 20090216032013
+#
+# Table name: categories
+#
+#  id          :integer(4)      not null, primary key
+#  name        :string(255)     
+#  description :text            
+#  parent_id   :integer(4)      
+#  created_at  :datetime        
+#  updated_at  :datetime        
+#
+
 class Category < ActiveRecord::Base
 
   is_indexed :fields => ['name', 'description']

@@ -1,3 +1,20 @@
+# == Schema Information
+# Schema version: 20090216032013
+#
+# Table name: client_applications
+#
+#  id           :integer(4)      not null, primary key
+#  name         :string(255)     
+#  url          :string(255)     
+#  support_url  :string(255)     
+#  callback_url :string(255)     
+#  key          :string(50)      
+#  secret       :string(50)      
+#  person_id    :integer(4)      
+#  created_at   :datetime        
+#  updated_at   :datetime        
+#
+
 require 'oauth'
 class ClientApplication < ActiveRecord::Base
   extend PreferencesHelper 

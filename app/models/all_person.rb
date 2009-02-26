@@ -1,9 +1,9 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 20090216032013
 #
 # Table name: people
 #
-#  id                         :integer(11)     not null, primary key
+#  id                         :integer(4)      not null, primary key
 #  email                      :string(255)     
 #  name                       :string(255)     
 #  remember_token             :string(255)     
@@ -12,9 +12,9 @@
 #  remember_token_expires_at  :datetime        
 #  last_contacted_at          :datetime        
 #  last_logged_in_at          :datetime        
-#  forum_posts_count          :integer(11)     default(0), not null
-#  blog_post_comments_count   :integer(11)     default(0), not null
-#  wall_comments_count        :integer(11)     default(0), not null
+#  forum_posts_count          :integer(4)      default(0), not null
+#  blog_post_comments_count   :integer(4)      default(0), not null
+#  wall_comments_count        :integer(4)      default(0), not null
 #  created_at                 :datetime        
 #  updated_at                 :datetime        
 #  admin                      :boolean(1)      not null
@@ -24,6 +24,9 @@
 #  wall_comment_notifications :boolean(1)      default(TRUE)
 #  blog_comment_notifications :boolean(1)      default(TRUE)
 #  email_verified             :boolean(1)      
+#  identity_url               :string(255)     
+#  phone                      :string(255)     
+#  twitter_name               :string(255)     
 #
 
 class AllPerson < Person

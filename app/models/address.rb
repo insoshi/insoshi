@@ -1,3 +1,24 @@
+# == Schema Information
+# Schema version: 20090216032013
+#
+# Table name: addresses
+#
+#  id             :integer(4)      not null, primary key
+#  person_id      :integer(4)      
+#  name           :string(50)      
+#  address_line_1 :string(50)      
+#  address_line_2 :string(50)      
+#  address_line_3 :string(50)      
+#  city           :string(50)      
+#  county_id      :string(255)     
+#  state_id       :integer(4)      
+#  zipcode_plus_4 :string(10)      
+#  latitude       :decimal(12, 8)  not null
+#  longitude      :decimal(12, 8)  not null
+#  created_at     :datetime        
+#  updated_at     :datetime        
+#
+
 class Address < ActiveRecord::Base
   belongs_to :person
   belongs_to :state
