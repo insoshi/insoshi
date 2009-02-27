@@ -1,0 +1,7 @@
+  <h2>Your Recent Payments</h2>
+  
+
+  <ul class="list activity full">
+     <%= render :partial => 'shared/sent_exchange',
+                :collection => @person.sent_exchanges %>
+  </ul>

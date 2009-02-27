@@ -51,9 +51,12 @@
     <%= display simple_format_without_paragraph @person.description %>
   </div>
 
-  <%= render :partial => 'recent_exchanges' %>
-  <%= render :partial => 'recent_activity' %>
   <%= render :partial => 'wall' %>
+  <%= render :partial => 'recent_exchanges' %>
+  <%- if current_person?(@person) -%>
+  <%= render :partial => 'recent_sent_exchanges' %>
+  <%- end -%>
+  <%= render :partial => 'recent_activity' %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>

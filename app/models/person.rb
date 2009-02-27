@@ -53,6 +53,7 @@ class Person < ActiveRecord::Base
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
   MESSAGES_PER_PAGE = 5
+  EXCHANGES_PER_PAGE = 10
   NUM_RECENT_MESSAGES = 4
   NUM_WALL_COMMENTS = 10
   NUM_RECENT = 8
@@ -81,12 +82,14 @@ class Person < ActiveRecord::Base
   has_many :requested_contacts, :through => :connections,
            :source => :contact
            #:conditions => REQUESTED_AND_ACTIVE
-  with_options :class_name => "Message", :dependent => :destroy,
+  with_options :dependent => :destroy,
                :order => 'created_at DESC' do |person|
     person.has_many :_sent_messages, :foreign_key => "sender_id",
-                    :conditions => "communications.sender_deleted_at IS NULL"
+                    :conditions => "communications.sender_deleted_at IS NULL", :class_name => "Message"
     person.has_many :_received_messages, :foreign_key => "recipient_id",
-                    :conditions => "communications.recipient_deleted_at IS NULL"
+                    :conditions => "communications.recipient_deleted_at IS NULL", :class_name => "Message"
+    person.has_many :_sent_exchanges, :foreign_key => "customer_id", :class_name => "Exchange"
+    person.has_many :_received_exchanges, :foreign_key => "worker_id", :class_name => "Exchange"
   end
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'activities.created_at DESC',
@@ -100,7 +103,6 @@ class Person < ActiveRecord::Base
   has_many :event_attendees
   has_many :attendee_events, :through => :event_attendees, :source => :event
   has_many :accounts
-  has_many :exchanges, :foreign_key => :worker_id, :order => "created_at DESC"
   has_many :addresses
   has_many :client_applications
   has_many :tokens, :class_name => "OauthToken", :order => "authorized_at DESC", :include => [:client_application]
@@ -221,6 +223,16 @@ class Person < ActiveRecord::Base
 
   def sent_messages(page = 1)
     _sent_messages.paginate(:page => page, :per_page => MESSAGES_PER_PAGE)
+  end
+
+  ## Exchange methods
+ 
+  def received_exchanges(page = 1)
+    _received_exchanges.paginate(:page => page, :per_page => EXCHANGES_PER_PAGE)
+  end
+
+  def sent_exchanges(page = 1)
+    _sent_exchanges.paginate(:page => page, :per_page => EXCHANGES_PER_PAGE)
   end
 
   def trashed_messages(page = 1)
