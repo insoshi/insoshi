@@ -18,7 +18,8 @@ class BidsController < ApplicationController
     respond_to do |format|
       if @bid.save
         bid_note = Message.new()
-        bid_note.subject = "BID: " + @bid.estimated_hours.to_s + " hours - " + @req.name 
+        subject = "BID: " + @bid.estimated_hours.to_s + " hours - " + @req.name 
+        bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
         bid_note.content = "See your <a href=\"" + req_path(@req) + "\">request</a> to consider bid"
         bid_note.sender = @bid.person
         bid_note.recipient = @req.person
@@ -59,7 +60,8 @@ class BidsController < ApplicationController
         if @bid.save!
           flash[:notice] = 'Bid accepted. Message sent to bidder to commit'
           bid_note = Message.new()
-          bid_note.subject = "Bid accepted for " + @req.name # XXX make sure length does not exceed 40 chars
+          subject = "Bid accepted for " + @req.name
+          bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
           bid_note.content = "See the <a href=\"" + req_path(@req) + "\">request</a> to commit to bid"
           bid_note.sender = @req.person
           bid_note.recipient = @bid.person
@@ -97,7 +99,8 @@ class BidsController < ApplicationController
         if @bid.save!
           flash[:notice] = 'Bid committed. Notification sent to requestor'
           bid_note = Message.new()
-          bid_note.subject = "Bid committed for " + @req.name # XXX make sure length does not exceed 40 chars
+          subject = "Bid committed for " + @req.name
+          bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
           bid_note.content = "Commitment made for your <a href=\"" + req_path(@req) + "\">request</a>. This is an automated message"
           bid_note.sender = @bid.person
           bid_note.recipient = @req.person
@@ -135,7 +138,8 @@ class BidsController < ApplicationController
         if @bid.save!
           flash[:notice] = 'Work marked completed. Notification sent to requestor'
           bid_note = Message.new()
-          bid_note.subject = "Work completed for " + @req.name # XXX make sure length does not exceed 40 chars
+          subject = "Work completed for " + @req.name
+          bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
           bid_note.content = "Work completed for your <a href=\"" + req_path(@req) + "\">request</a>. Please approve transaction! This is an automated message"
           bid_note.sender = @bid.person
           bid_note.recipient = @req.person
@@ -193,7 +197,8 @@ class BidsController < ApplicationController
     if @bid.save!
       flash[:notice] = 'Work marked verified. Approval notification sent'
       bid_note = Message.new()
-      bid_note.subject = "Verified work for " + @req.name + " (#{@bid.estimated_hours} hours earned)" # XXX make sure length does not exceed 40 chars
+      subject = "Verified work for " + @req.name + " (#{@bid.estimated_hours} hours earned)"
+      bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
       bid_note.content = "#{@req.person.name} has verified your work for <a href=\"" + req_path(@req) + "\">#{@req.name}</a>. This is an automated message"
       bid_note.sender = @req.person
       bid_note.recipient = @bid.person
