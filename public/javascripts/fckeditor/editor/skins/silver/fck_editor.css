@@ -57,7 +57,8 @@ body
 .TB_ToolbarSet
 {
 	padding: 1px;
-	border-top: #000 1px outset;
+	border-top: #efefde 1px outset;
+	border-bottom: #efefde 1px outset;
 }
 
 .TB_ToolbarSet TD
@@ -120,7 +121,7 @@ body
 
 .TB_Collapse
 {
-	border: 1px solid #000;
+	border: #efefde 1px outset;
 	width: 5px;
 }
 
