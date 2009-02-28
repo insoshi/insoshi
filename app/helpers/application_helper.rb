@@ -116,8 +116,7 @@ module ApplicationHelper
     klass = options.delete(:type) == :primary ? "col1" : "col2"
     # Allow callers to pass in additional classes.
     options[:class] = "#{klass} #{options[:class]}".strip
-    content = content_tag(:div, capture(&block), options)
-    concat(content, block.binding)
+    concat(content_tag(:div, capture(&block), options))
   end
 
   def email_link(person, options = {})
