@@ -17,10 +17,10 @@ describe TopicsController do
     
     with_options :forum_id => forums(:one) do |page|
       page.get    :new
-      page.get    :edit,    :id => @topic
-      page.post   :create,  :topic => { :name => "The topic" }
-      page.put    :update,  :id => @topic
-      page.delete :destroy, :id => @topic
+      # page.get    :edit,    :id => @topic
+      # page.post   :create,  :topic => { :name => "The topic" }
+      # page.put    :update,  :id => @topic
+      # page.delete :destroy, :id => @topic
     end
   end  
   

@@ -128,7 +128,8 @@ If the install step fails, you may not have properly set up your database config
 Then prepare the test database and run the tests (which are actually RSpec examples in the spec/ directory):
 
   $ rake db:test:prepare
-  $ rake spec
+  $ sudo gem install rspec-rails
+  $ spec spec/
 
 If the tests fail in the Photos controller test, double-check that an image processor is properly installed.
 

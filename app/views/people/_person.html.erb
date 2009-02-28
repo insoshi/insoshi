@@ -3,6 +3,7 @@
     <%= image_link person, :class => "photo", :image => :thumbnail %>
   </div>
   <p><%= person_link person, :class => "url fn" %></p>
-  <%= display(truncate(person.description, 150), :class => "note") %>
+  <%= display(truncate(person.description, :length => 150),
+              :class => "note") %>
   <div class="clear"></div>
 </li>
