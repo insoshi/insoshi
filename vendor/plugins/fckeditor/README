@@ -72,6 +72,10 @@ Then instead of the normal textarea helper from Rails use this one
 
 <%= fckeditor_textarea("object", "field", :toolbarSet => 'Simple', :width => '100%', :height => '200px') %>
 
+Unless if you are using a model-less form. If so, then you should use 'modelless' as object's name. So, use this one
+
+<%= fckeditor_textarea('modelless', "field", :toolbarSet => 'Simple', :width => '100%', :height => '200px') %>
+
 Thats it unless you are using AJAX
 
 AJAX
@@ -114,5 +118,4 @@ Basically ensure you have aspell installed and available in your path. If runnin
 If you install elsewhere then you will need to update spell_check.rb in the plugin to mirror your path. Also make sure you have this line in your fckcustom.js file:
 
 FCKConfig.SpellChecker = 'SpellerPages';
-
 
