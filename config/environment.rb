@@ -45,7 +45,7 @@ Rails::Initializer.run do |config|
   if File.exist?(secret_file)
     secret = File.read(secret_file)
   else
-    secret = Rails::SecretKeyGenerator.new("insoshi").generate_secret
+    secret = ActiveSupport::SecureRandom.hex(64)
     File.open(secret_file, 'w') { |f| f.write(secret) }
   end
   config.action_controller.session = {
