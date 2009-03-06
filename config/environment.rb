@@ -74,6 +74,7 @@ Rails::Initializer.run do |config|
   #                                    :lib => 'will_paginate',
   #                                    :source => 'http://gems.github.com'
   config.gem 'chronic'
+  config.gem 'rubyist-aasm', :lib => 'aasm'
   config.gem 'twitter'
 end
 # Set INLINEDIR to override default location for ruby_inline directory

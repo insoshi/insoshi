@@ -56,9 +56,9 @@ class Req < ActiveRecord::Base
     end
   end
 
-  def has_approved?
+  def has_accepted_bid?
     a = false
-    bids.each {|bid| a = true if bid.status_id == Bid::SATISFIED }
+    bids.each {|bid| a = true if bid.accepted_at != nil }
     return a
   end
 
@@ -78,24 +78,6 @@ class Req < ActiveRecord::Base
     a = false
     bids.each {|bid| a = true if bid.approved_at != nil }
     return a
-  end
-
-  def committed_bid
-    cbid = nil
-    bids.each {|bid| cbid = bid if bid.status_id > Bid::ACCEPTED }
-    return cbid
-  end
-
-  def has_accepted_bid?
-    a = false
-    bids.each {|bid| a = true if bid.status_id > Bid::OFFERED }
-    return a
-  end
-
-  def accepted_bid
-    abid = nil
-    bids.each {|bid| abid = bid if bid.status_id > Bid::OFFERED }
-    return abid
   end
 
   def log_activity
