@@ -87,14 +87,4 @@ class BidsController < ApplicationController
     @req = Req.find(params[:req_id])
     @body = "req"
   end
-
-  def process_approval
-    @bid.approved_at = Time.now
-    @bid.status_id = Bid::SATISFIED
-
-    if @bid.save!
-    else
-      # XXX handle error
-    end
-  end
 end
