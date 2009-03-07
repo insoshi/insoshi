@@ -5,26 +5,11 @@ class BidsController < ApplicationController
   # POST /bids
   # POST /bids.xml
   def create
-    #@bid = Bid.new(params[:bid])
     @bid = @req.bids.new(params[:bid])
     @bid.person = current_person
-    @bid.status_id = Bid::OFFERED
-    if @bid.expiration_date.blank?
-      @bid.expiration_date = 7.days.from_now
-    else
-      @bid.expiration_date += 1.day - 1.second # make expiration date at end of day
-    end
 
     respond_to do |format|
       if @bid.save
-        bid_note = Message.new()
-        subject = "BID: " + @bid.estimated_hours.to_s + " hours - " + @req.name 
-        bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
-        bid_note.content = "See your <a href=\"" + req_path(@req) + "\">request</a> to consider bid"
-        bid_note.sender = @bid.person
-        bid_note.recipient = @req.person
-        bid_note.save!
-
         flash[:notice] = 'Bid was successfully created.'
         format.html { redirect_to req_path(@req) }
         #format.xml  { render :xml => @bid, :status => :created, :location => @bid }

@@ -20,6 +20,9 @@
 #
 
 class Bid < ActiveRecord::Base
+  before_validation_on_create :setup_estimated_hours
+  after_validation_on_create :trigger_offered
+
   include ActionController::UrlWriter
   include AASM
 
@@ -78,6 +81,24 @@ class Bid < ActiveRecord::Base
   end
 
   private
+
+  def setup_estimated_hours
+    if self.expiration_date.blank?
+      self.expiration_date = 7.days.from_now
+    else
+      self.expiration_date += 1.day - 1.second # make expiration date at end of day
+    end
+  end
+
+  def trigger_offered
+    bid_note = Message.new()
+    subject = "BID: " + self.estimated_hours.to_s + " hours - " + self.req.name 
+    bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
+    bid_note.content = "See your <a href=\"" + req_path(self.req) + "\">request</a> to consider bid"
+    bid_note.sender = self.person
+    bid_note.recipient = self.req.person
+    bid_note.save!
+  end
 
   def trigger_accepted
     self.accepted_at = Time.now
