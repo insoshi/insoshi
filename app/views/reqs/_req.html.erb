@@ -24,8 +24,8 @@
     <% if current_person?(req.person) -%>
     | <%= link_to "Edit", edit_req_path(req) unless req.has_accepted_bid? %>
     <% end -%>
-    <% if admin? || current_person?(req.person) -%>
-    | <%= link_to "Delete", req, :confirm => 'Are you sure?', :method => :delete unless (req.has_commitment? || req.has_approved?) %>
+    <% if req.active? && ( admin? || current_person?(req.person) ) -%>
+    | <%= link_to "Delete", req, :confirm => 'Are you sure?', :method => :delete unless (req.has_commitment? || req.has_approved? ) %>
     <% end -%>
     <br>
     <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>
