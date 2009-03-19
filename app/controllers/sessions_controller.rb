@@ -8,14 +8,14 @@ class SessionsController < ApplicationController
   end
 
   def create
-    # Protect against bots hitting us.
-    if params[:email].nil? or params[:password].nil?
-      render :text => "" and return
-    end
     if using_open_id?
       open_id_authentication(params[:openid_url])
     else
       password_authentication(params[:email], params[:password])
+      # Protect against bots hitting us.
+      if params[:email].nil? or params[:password].nil?
+        render :text => "" and return
+      end
     end
   end
 
