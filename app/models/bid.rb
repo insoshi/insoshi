@@ -140,12 +140,5 @@ class Bid < ActiveRecord::Base
     self.approved_at = Time.now
     save
     Account.transfer(self.req.person.account,self.person.account,self.estimated_hours,self.req)
-    bid_note = Message.new()
-    subject = "Verified work for " + self.req.name + " (#{self.estimated_hours} hours earned)"
-    bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
-    bid_note.content = "#{self.req.person.name} has verified your work for <a href=\"" + req_path(self.req) + "\">#{self.req.name}</a>. This is an automated message"
-    bid_note.sender = self.req.person
-    bid_note.recipient = self.person
-    bid_note.save!
   end
 end

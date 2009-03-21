@@ -20,3 +20,6 @@ RASTER_PER_PAGE = 3 * N_COLUMNS
 # Demo user's id
 # The admin must create a demo user in demo mode with id = 2.
 DEMO_USER_ID = 2
+
+# The number of days allowed to suspend a payment
+MAX_DAYS_SUSPEND_PAYMENT = 2

@@ -59,19 +59,43 @@ class ExchangesController < ApplicationController
       end
     end
 
-    exchange_note = Message.new()
-    subject = "TRANSFER: " + @exchange.amount.to_s + " hours - " + @req.name 
-    exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
-    exchange_note.content = "This is an automatically generated system notice. " + current_person.name + " has gifted you " + @exchange.amount.to_s + " hours."
-    exchange_note.sender = current_person
-    exchange_note.recipient = @worker
-    exchange_note.save!
-
     respond_to do |format|
       flash[:notice] = "Transfer succeeded."
       format.html { redirect_to person_path(@worker) and return }
       format.xml { render :xml => @exchange, :status => :created, :location => [@worker, @exchange] }
       format.json { render :json => @exchange, :status => :created, :location => [@worker, @exchange] }
+    end
+  end
+
+  def destroy
+    @exchange = Exchange.find(params[:id])
+    @req = @exchange.req
+
+    if @req.active?
+      flash[:error] = "Payment could not be suspended"
+      redirect_to person_url(current_person) and return
+    end
+
+    begin
+      Exchange.transaction do
+        @worker.account.withdraw(@exchange.amount)
+        current_person.account.deposit(@exchange.amount)
+      end
+    rescue
+      respond_to do |format|
+        flash[:error] = "Error with suspension of payment."
+        format.html { redirect_to person_path(@worker) and return }
+      end
+    end
+
+    # we can safely destroy the req since this is a direct payment
+    #
+    @exchange.destroy
+    @req.destroy
+    flash[:success] = "Payment suspended."
+
+    respond_to do |format|
+      format.html { redirect_to person_url(current_person) }
     end
   end
 

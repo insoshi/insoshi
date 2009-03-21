@@ -24,6 +24,8 @@ class Exchange < ActiveRecord::Base
   attr_accessible :amount
 
   after_create :log_activity
+  after_save :send_payment_notification_to_worker
+  before_destroy :send_suspend_payment_notification_to_worker
 
   def log_activity
     add_activities(:item => self, :person => self.worker)
@@ -35,5 +37,25 @@ class Exchange < ActiveRecord::Base
     unless amount > 0
       errors.add(:amount, "must be greater than zero")
     end
+  end
+
+  def send_payment_notification_to_worker
+    exchange_note = Message.new()
+    subject = "PAYMENT: " + self.amount.to_s + " hours - from " + self.req.name 
+    exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
+    exchange_note.content = "This is an automatically generated system notice: " + self.customer.name + " paid you " + self.amount.to_s + " hours."
+    exchange_note.sender = self.customer
+    exchange_note.recipient = self.worker
+    exchange_note.save!
+  end
+
+  def send_suspend_payment_notification_to_worker
+    exchange_note = Message.new()
+    subject = "PAYMENT SUSPENDED: " + self.amount.to_s + " hours - by " + self.req.name
+    exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
+    exchange_note.content = "This is an automatically generated system notice: " + self.customer.name + " suspended payment of " + self.amount.to_s + " hours."
+    exchange_note.sender = self.customer
+    exchange_note.recipient = self.worker
+    exchange_note.save!
   end
 end
