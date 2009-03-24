@@ -45,7 +45,7 @@ class Person < ActiveRecord::Base
   MAX_EMAIL = MAX_PASSWORD = 40
   MAX_NAME = 40
   MAX_DESCRIPTION = 5000
-  EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
+  EMAIL_REGEX = /\A[A-Z0-9\._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
   TRASH_TIME_AGO = 1.month.ago
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8

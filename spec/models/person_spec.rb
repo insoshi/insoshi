@@ -44,6 +44,10 @@ describe Person do
       create_person(:email => 'example@example.com ').should be_valid
     end
     
+    it "should allow a plus sign in the email address" do
+      create_person(:email => 'foo+bar@example.com').should be_valid
+    end
+    
     it "should be valid even with a nil description" do
       p = create_person(:description => nil)
       p.should be_valid
