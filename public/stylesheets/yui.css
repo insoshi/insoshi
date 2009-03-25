@@ -23,3 +23,7 @@ span.yui-toolbar-insertimage{
 .yui-toolbar-titlebar h2{
 	height:auto;
 }
+
+div#broadcast_email_message_container{
+	width:740px ! important;
+}
