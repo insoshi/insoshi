@@ -1,19 +1,12 @@
 = Insoshi social software
 
+Insoshi is a social networking platform in Ruby on Rails. You can use Insoshi to make custom social networks. Follow the steps below to get Insoshi running on your local machine.
+
 NOTE: If you downloaded a zipped archive of Insoshi, we strongly encourage you to clone the Insoshi Git repository instead.  See the instructions below, and also see
 
   http://sites.google.com/a/insoshi.com/insoshi-guides/Installation
 
 for more details.
-
-To follow our progress, join the Insoshi developer community site at 
-
-  http://dogfood.insoshi.com/signup
-
-and join the Insoshi Google group at
-
-  http://groups.google.com/group/insoshi/subscribe
-
 
 == Get Git
 
@@ -182,22 +175,6 @@ To sign in as the pre-configured admin user, use
 You should update the email address and password.  Insoshi will display warning messages to remind you to do that.
 
 To see site preferences such as email settings, click on the "Admin view" and the click on "Prefs" in the menu.  Click the "Edit" link to customize the preferences for your particular site.
-
-=== Start hacking
-
-Now open the source code with your favorite editor and start hacking!
-
-Check out our Git Guides for information on how to manage your local development and how you can contribute your updates back to us:
-
-  http://docs.insoshi.com
-
-== Stat tracker
-
-Note that there is a minimalist stat tracker that lets us keep track of how many different installs of Isoshi are out there.  We don't collect any personal information, but if you don't want to be tracked just open application.html.erb and comment out the line after this one:
-
-  <%# A tracker to tell us about the activity of Insoshi installs %>
-
-The tracker works by hitting an external URL, so you should comment out this linem if working offline.
 
 == License
 
