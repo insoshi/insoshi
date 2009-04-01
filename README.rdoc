@@ -1,6 +1,14 @@
 = Insoshi social software
 
-Insoshi is a social networking platform in Ruby on Rails. You can use Insoshi to make custom social networks. Follow the steps below to get Insoshi running on your local machine.
+Insoshi is a social networking platform in Ruby on Rails. You can use Insoshi to make custom social networks; a demo is up at
+
+http://dogfood.insoshi.com/
+
+The Insoshi Google group is at
+
+http://groups.google.com/group/insoshi/
+
+Follow the steps below to get Insoshi running on your local machine. 
 
 NOTE: If you downloaded a zipped archive of Insoshi, we strongly encourage you to clone the Insoshi Git repository instead.  See the instructions below, and also see
 
