@@ -33,26 +33,28 @@ module WillPaginate
   # 
   # If you are writing a library that provides a collection which you would like
   # to conform to this API, you don't have to copy these methods over; simply
-  # make your plugin/gem dependant on the "will_paginate" gem:
+  # make your plugin/gem dependant on the "mislav-will_paginate" gem:
   #
-  #   gem 'will_paginate'
+  #   gem 'mislav-will_paginate'
   #   require 'will_paginate/collection'
   #   
-  #   # now use WillPaginate::Collection directly or subclass it
+  #   # WillPaginate::Collection is now available for use
   class Collection < Array
-    attr_reader :current_page, :per_page, :total_entries, :total_pages
+    attr_reader :current_page, :per_page, :total_entries, :total_pages, :links
+    attr_writer :links
 
     # Arguments to the constructor are the current page number, per-page limit
     # and the total number of entries. The last argument is optional because it
     # is best to do lazy counting; in other words, count *conditionally* after
     # populating the collection using the +replace+ method.
-    def initialize(page, per_page, total = nil)
+    def initialize(page, per_page, total = nil, links = nil)
       @current_page = page.to_i
       raise InvalidPage.new(page, @current_page) if @current_page < 1
       @per_page = per_page.to_i
       raise ArgumentError, "`per_page` setting cannot be less than 1 (#{@per_page} given)" if @per_page < 1
       
       self.total_entries = total if total
+      self.links = links if links
     end
 
     # Just like +new+, but yields the object after instantiation and returns it
@@ -82,8 +84,8 @@ module WillPaginate
     #
     # The Array#paginate API has since then changed, but this still serves as a
     # fine example of WillPaginate::Collection usage.
-    def self.create(page, per_page, total = nil, &block)
-      pager = new(page, per_page, total)
+    def self.create(page, per_page, total = nil, links = nil, &block)
+      pager = new(page, per_page, total, links)
       yield pager
       pager
     end
@@ -98,7 +100,7 @@ module WillPaginate
     # Current offset of the paginated collection. If we're on the first page,
     # it is always 0. If we're on the 2nd page and there are 30 entries per page,
     # the offset is 30. This property is useful if you want to render ordinals
-    # besides your records: simply start with offset + 1.
+    # side by side with records in the view: simply start with offset + 1.
     def offset
       (current_page - 1) * per_page
     end
@@ -112,7 +114,8 @@ module WillPaginate
     def next_page
       current_page < total_pages ? (current_page + 1) : nil
     end
-
+    
+    # sets the <tt>total_entries</tt> property and calculates <tt>total_pages</tt>
     def total_entries=(number)
       @total_entries = number.to_i
       @total_pages   = (@total_entries / per_page.to_f).ceil
@@ -141,5 +144,25 @@ module WillPaginate
 
       result
     end
+    
+    # Ensure that everything in array is present in the links. For each entry which
+    # is missing, create a link with no page number (which will cause it to be rendered
+    # without a link).
+    def add_missing_links(a)
+      a.each_with_index do |k,i|
+        @links.insert(i, { :value => k }) unless contains_group(k)
+      end
+    end
+    
+protected
+
+    # Return true if the links array contains an element where the :value entry matches a
+    # particular value.
+    def contains_group(a)
+      @links.each do |l|
+        return true if l[:value] == a
+      end
+      false
+    end  
   end
 end

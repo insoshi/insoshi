@@ -58,12 +58,15 @@ module WillPaginate
       # * <tt>:total_entries</tt> -- use only if you manually count total entries
       # * <tt>:count</tt> -- additional options that are passed on to +count+
       # * <tt>:finder</tt> -- name of the ActiveRecord finder used (default: "find")
+      # * <tt>:group_by</tt> -- name of an attribute to use to construct a group links array
       #
       # All other options (+conditions+, +order+, ...) are forwarded to +find+
       # and +count+ calls.
       def paginate(*args, &block)
         options = args.pop
-        page, per_page, total_entries = wp_parse_options(options)
+        options = options.dup unless options.nil?
+
+        page, per_page, total_entries, group_by = wp_parse_options(options)
         finder = (options[:finder] || 'find').to_s
 
         if finder == 'find'
@@ -74,12 +77,17 @@ module WillPaginate
         end
 
         WillPaginate::Collection.create(page, per_page, total_entries) do |pager|
-          count_options = options.except :page, :per_page, :total_entries, :finder
+          count_options = options.except :page, :per_page, :total_entries, :finder, :group_by
           find_options = count_options.except(:count).update(:offset => pager.offset, :limit => pager.per_page) 
           
           args << find_options
           # @options_from_last_find = nil
           pager.replace send(finder, *args, &block)
+          
+          if group_by
+            pager.links, total = wp_calc_links(args, finder, group_by, pager.per_page)
+            pager.total_entries = total unless pager.total_entries
+          end
           
           # magic counting for user convenience:
           pager.total_entries = wp_count(count_options, args, finder) unless pager.total_entries
@@ -94,8 +102,8 @@ module WillPaginate
       # You can specify a starting page with <tt>:page</tt> (default is 1). Default
       # <tt>:order</tt> is <tt>"id"</tt>, override if necessary.
       #
-      # See http://weblog.jamisbuck.org/2007/4/6/faking-cursors-in-activerecord where
-      # Jamis Buck describes this and also uses a more efficient way for MySQL.
+      # See {Faking Cursors in ActiveRecord}[http://weblog.jamisbuck.org/2007/4/6/faking-cursors-in-activerecord]
+      # where Jamis Buck describes this and a more efficient way for MySQL.
       def paginated_each(options = {}, &block)
         options = { :order => 'id', :page => 1 }.merge options
         options[:page] = options[:page].to_i
@@ -127,7 +135,7 @@ module WillPaginate
       # 
       def paginate_by_sql(sql, options)
         WillPaginate::Collection.create(*wp_parse_options(options)) do |pager|
-          query = sanitize_sql(sql)
+          query = sanitize_sql(sql.dup)
           original_query = query.dup
           # add limit, offset
           add_limit! query, :offset => pager.offset, :limit => pager.per_page
@@ -177,11 +185,74 @@ module WillPaginate
         paginate(*args, &block)
       end
 
+      # Calculate a set of direct links for each distinct value of group_by. It does this
+      # by issuing a "SELECT #{group_by},COUNT(*) FROM ... GROUP BY #{group_by}" statement.
+      # Most of the work in this method is reconstructing the '...' part of the statement from
+      # the criteria parameters.
+      def wp_calc_links(args, finder, group_by, per_page)
+        options = args.slice(-1)
+
+        # Note: we assume that args is :all
+
+        find_options = options.except *[:count, :group, :limit, :offset, :select]
+        find_options[:select] = "COUNT(*), #{group_by}"
+        find_options[:group] = group_by
+
+        results = wp_query_counts_by_group find_options
+        
+        total = 0
+        links = []
+        results.each do |r| 
+          page = (total / per_page) + 1
+          total += r[0].to_i 
+          links << { :value => r[1], :page => page }
+        end
+        [links, total]
+      end
+
+      # Generate a query against the database which includes the "COUNT(*)" in the SELECT. This is a little
+      # tricky because we have to support the case where you're paginating through an association. Unfortunately,
+      # the standard ActiveRecord code doesn't support that so we end up generating the correct SQL here.
+      def wp_query_counts_by_group(options)
+        scope = scope(:find)
+        if options.has_key? :include
+          join_dependency = ActiveRecord::Associations::ClassMethods::JoinDependency.new(self, merge_includes(scope(:find, :include), options[:include]), options[:joins])
+          sql = "SELECT #{options[:select]} FROM #{(scope && scope[:from]) || options[:from] || quoted_table_name} "
+          sql << join_dependency.join_associations.collect{|join| join.association_join }.join
+          add_joins!(sql, options[:joins], scope)
+          add_conditions!(sql, options[:conditions], scope)
+          add_limited_ids_condition!(sql, options, join_dependency) if !using_limitable_reflections?(join_dependency.reflections) && ((scope && scope[:limit]) || options[:limit])
+
+          add_group!(sql, options[:group], scope)
+          add_order!(sql, options[:order], scope)
+          add_limit!(sql, options, scope) if using_limitable_reflections?(join_dependency.reflections)
+          add_lock!(sql, options, scope)
+
+          sql = sanitize_sql(sql)
+        else
+          sql = construct_finder_sql(options)
+        end
+
+        connection.execute(sql)
+      end
+
       # Does the not-so-trivial job of finding out the total number of entries
       # in the database. It relies on the ActiveRecord +count+ method.
       def wp_count(options, args, finder)
         excludees = [:count, :order, :limit, :offset, :readonly]
-        unless options[:select] and options[:select] =~ /^\s*DISTINCT\b/i
+
+        # we may be in a model or an association proxy
+        klass = (@owner and @reflection) ? @reflection.klass : self
+
+        # Use :select from scope if it isn't already present.
+        options[:select] = scope(:find, :select) unless options[:select]
+
+        if options[:select] and options[:select] =~ /^\s*DISTINCT\b/i
+          # Remove quoting and check for table_name.*-like statement.
+          if options[:select].gsub('`', '') =~ /\w+\.\*/
+            options[:select] = "DISTINCT #{klass.table_name}.#{klass.primary_key}"
+          end
+        else
           excludees << :select # only exclude the select param if it doesn't begin with DISTINCT
         end
 
@@ -191,10 +262,7 @@ module WillPaginate
         # merge the hash found in :count
         # this allows you to specify :select, :order, or anything else just for the count query
         count_options.update options[:count] if options[:count]
-        
-        # we may be in a model or an association proxy
-        klass = (@owner and @reflection) ? @reflection.klass : self
-        
+
         # forget about includes if they are irrelevant (Rails 2.1)
         if count_options[:include] and
             klass.private_methods.include?('references_eager_loaded_tables?') and
@@ -209,9 +277,9 @@ module WillPaginate
                   # scope_out adds a 'with_finder' method which acts like with_scope, if it's present
                   # then execute the count with the scoping provided by the with_finder
                   send(scoper, &counter)
-                elsif match = /^find_(all_by|by)_([_a-zA-Z]\w*)$/.match(finder)
+                elsif finder =~ /^find_(all_by|by)_([_a-zA-Z]\w*)$/
                   # extract conditions from calls like "paginate_by_foo_and_bar"
-                  attribute_names = extract_attribute_names_from_match(match)
+                  attribute_names = $2.split('_and_')
                   conditions = construct_attributes_from_arguments(attribute_names, args)
                   with_scope(:find => { :conditions => conditions }, &counter)
                 else
@@ -233,7 +301,8 @@ module WillPaginate
         page     = options[:page] || 1
         per_page = options[:per_page] || self.per_page
         total    = options[:total_entries]
-        [page, per_page, total]
+        group_by = options[:group_by]
+        [page, per_page, total, group_by]
       end
 
     private

@@ -58,7 +58,7 @@ class Person < ActiveRecord::Base
   NUM_WALL_COMMENTS = 10
   NUM_RECENT = 8
   FEED_SIZE = 10
-  TIME_AGO_FOR_MOSTLY_ACTIVE = 1.month.ago
+  TIME_AGO_FOR_MOSTLY_ACTIVE = 3.months.ago
   # These constants should be methods, but I couldn't figure out how to use
   # methods in the has_many associations.  I hope you can do better.
   ACCEPTED_AND_ACTIVE =  [%(status = ? AND
@@ -128,6 +128,7 @@ class Person < ActiveRecord::Base
   after_create :create_account
   after_create :create_address
   before_save :encrypt_password
+  before_save :update_group_letter
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
 
@@ -150,8 +151,10 @@ class Person < ActiveRecord::Base
     def mostly_active(page = 1)
       paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
+                     :group_by => 'first_letter',
                      :conditions => conditions_for_mostly_active,
-                     :order => "created_at DESC")
+                     #:order => "created_at DESC")
+                     :order => "name ASC")
     end
     
     # Return *all* the active users.
@@ -453,6 +456,10 @@ class Person < ActiveRecord::Base
     def encrypt_password
       return if password.blank?
       self.crypted_password = encrypt(password)
+    end
+
+    def update_group_letter
+      self.first_letter = name[0,1].capitalize
     end
 
     def check_config_for_deactivation

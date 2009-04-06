@@ -8,7 +8,8 @@ Array.class_eval do
     WillPaginate::Collection.create(
         options[:page] || 1,
         options[:per_page] || 30,
-        options[:total_entries] || self.length
+        options[:total_entries] || self.length,
+        options[:links]
     ) { |pager|
       pager.replace self[pager.offset, pager.per_page].to_a
     }

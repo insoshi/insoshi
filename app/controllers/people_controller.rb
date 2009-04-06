@@ -8,6 +8,7 @@ class PeopleController < ApplicationController
   
   def index
     @people = Person.mostly_active(params[:page])
+    @people.add_missing_links(('A'..'Z').to_a)
 
     respond_to do |format|
       format.html

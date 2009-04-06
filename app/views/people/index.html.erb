@@ -1,11 +1,11 @@
 <%- column_div :type => :primary do -%>
   <% unless @people.empty? -%>
     <h2>People</h2>
-    <%= will_paginate %>
+    <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
     <ul class="list people">
       <%= render :partial => @people %>
     </ul>
-    <%= will_paginate %>
+    <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
   <% end -%>
 <%- end -%>
 
