@@ -72,6 +72,16 @@ class PersonMailer < ActionMailer::Base
                   "domain" => server,
                  "url" => person_path(new_peep)
   end
+
+  def req_notification(req, recipient)
+    from         "Request notification <request@#{domain}>"
+    recipients   recipient.email
+    subject      formatted_subject("New request matches your profile")
+    body         "name" => req.name,
+                 "description" => req.description,
+                 "domain" => server,
+                 "url" => req_path(req)
+  end
   
   private
   

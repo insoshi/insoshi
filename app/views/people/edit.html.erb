@@ -56,6 +56,11 @@
       
         <div class="form_row">
           <p>
+          <label for="req_notifications"
+                 class="checkbox">Requests in my service categories:</label>
+          <%= f.check_box :connection_notifications %>
+          </p>
+          <p>
           <label for="message_notifications"
                  class="checkbox">Messages:</label>
           <%= f.check_box :message_notifications %>
