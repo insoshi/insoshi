@@ -25,6 +25,7 @@
   <div class="form_row full">
     <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
   </div>
+  <div id="providersDisplay" style="height: 80px;" class="form_row full"><label>People to be notified:</label><div id="followMe"></div></div>
 <% unless global_prefs.twitter_name.blank? %>
     <div class="form_row">
       <label for="twitter"
