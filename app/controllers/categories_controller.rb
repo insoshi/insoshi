@@ -23,7 +23,8 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @category }
+      format.json { render :json => @category.to_json(:only => [:id,:name], :include => {:people => {:methods => :icon, :only => [:id,:name,:icon]}}) }
+      format.xml  { render :xml => @category.to_xml(:only => [:id,:name], :include => {:people => {:methods => :icon, :only => [:id,:name,:icon]}}) }
     end
   end
 
