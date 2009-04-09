@@ -186,4 +186,4 @@ To see site preferences such as email settings, click on the "Admin view" and th
 
 == License
 
-See the file LICENSE.
+Insoshi is released under the MIT License. See the LICENSE file for details.
