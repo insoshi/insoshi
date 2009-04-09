@@ -1,25 +1,60 @@
 /*
  *
  */
+var OSCURRENCY = {};
 
 jQuery(function($) { 
 
   function processPerson( n, peep ) {
+    // make sure this peep isn't already on list
+    //
+    for(var k = 0; k < OSCURRENCY.peeps.length; k++)
+    {
+      if(peep.id == OSCURRENCY.peeps[k].id)
+      {
+        return;
+      }
+    }
+
+    OSCURRENCY.peeps.push(peep);
+
     var previous_node_id = ( n == 0 ) ? "#followMe" : "#peep" + (n-1);
     if( "default_icon.png" == peep.icon )
     {
       peep.icon = "/images/" + peep.icon;
     }
-    $("<div id=\"peep" + n + "\" style=\"float: left;\"></div>").insertAfter(previous_node_id);
+    $("<div id=\"peep" + n + "\" class=\"peepnode\" style=\"float: left;\"></div>").insertAfter(previous_node_id);
     $('#peep' + n).html("<img src=\"" + peep.icon + "\" title=\"" + peep.name + "\"</>");
+  }
+
+  function processJSONResponse(data) {
+    OSCURRENCY.category_people[OSCURRENCY.i] = data.category.people;
+    OSCURRENCY.i++;
+    if( OSCURRENCY.category_ids.length == OSCURRENCY.i )
+    {
+      for(var j = 0; j < OSCURRENCY.category_ids.length; j++)
+      {
+        $.each(OSCURRENCY.category_people[j],processPerson);
+      }
+    }
+    else
+    {
+      $.getJSON( '/categories/' + OSCURRENCY.category_ids[OSCURRENCY.i], '', processJSONResponse);
+    }
   }
 
   $("#req_due_date").datepicker({
 buttonImage: "/images/calendar.gif",
 buttonImageOnly: true
     });
+
   $("#req_category_ids").change( 
-    function(){ var category_id = $(this).val();
-                $.getJSON( '/categories/' + category_id, '', function(data){peeps = data.category.people;$.each(peeps,processPerson);});
+    function(){ OSCURRENCY.category_ids = $(this).val();
+                OSCURRENCY.category_people = [];
+                $('.peepnode').remove();
+                OSCURRENCY.i = 0; // category counter
+                OSCURRENCY.j = 0; // people counter
+                OSCURRENCY.peeps = [];
+                $.getJSON( '/categories/' + OSCURRENCY.category_ids[OSCURRENCY.i], '', processJSONResponse);
               });
 });
