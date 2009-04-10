@@ -36,6 +36,7 @@ jQuery(function($) {
     OSCURRENCY.i++;
     if( OSCURRENCY.category_ids.length == OSCURRENCY.i )
     {
+      $('.thinking').remove();
       for(var j = 0; j < OSCURRENCY.category_ids.length; j++)
       {
         $.each(OSCURRENCY.category_people[j],processPerson);
@@ -53,11 +54,11 @@ buttonImageOnly: true
     });
 
   $("#req_category_ids").change( 
-    function(){ OSCURRENCY.category_ids = $(this).val();
+    function(){ $("<div class=\"thinking\"></div>").insertAfter("#followMe");
+                OSCURRENCY.category_ids = $(this).val();
                 OSCURRENCY.category_people = [];
                 $('.peepnode').remove();
                 OSCURRENCY.i = 0; // category counter
-                OSCURRENCY.j = 0; // people counter
                 OSCURRENCY.peeps = [];
                 $.getJSON( '/categories/' + OSCURRENCY.category_ids[OSCURRENCY.i], '', processJSONResponse);
               });

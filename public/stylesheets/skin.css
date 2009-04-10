@@ -422,3 +422,9 @@ p.formatting span
     font-size:12px;
     color:#777;
 }
+
+.thinking {
+  width: 16px;
+  height: 16px;
+  background-image: url(/images/loading.gif);
+}
