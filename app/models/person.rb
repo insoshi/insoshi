@@ -291,6 +291,10 @@ class Person < ActiveRecord::Base
     accounts.first
   end
 
+  def notifications
+    connection_notifications
+  end
+
   ## Photo helpers
 
   def photo
