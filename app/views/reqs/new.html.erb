@@ -25,7 +25,11 @@
   <div class="form_row full">
     <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
   </div>
-  <div id="providersDisplay" style="height: 80px;" class="form_row full"><label>People to be notified:</label><div id="followMe"></div></div>
+  <div id="providersDisplay" style="height: 95px;" class="form_row full"><label>People to be notified:</label><div id="followMe"></div></div>
+  <div class="form_row">
+    <label for="notifications" class="checkbox">Notify members shown above?</label>
+    <%= check_box_tag 'req[notifications]', '1', true %>
+  </div>
 <% unless global_prefs.twitter_name.blank? %>
     <div class="form_row">
       <label for="twitter"

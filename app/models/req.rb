@@ -28,7 +28,7 @@ class Req < ActiveRecord::Base
   attr_protected :person_id, :created_at, :updated_at
   validates_presence_of :name, :due_date
   after_create :log_activity
-  after_save :notify_workers
+  after_save :notify_workers, :if => :notifications
 
   class << self
 
