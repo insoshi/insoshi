@@ -39,6 +39,10 @@ class Req < ActiveRecord::Base
     end
   end
 
+  def formatted_categories
+    categories.collect {|cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
+  end
+
   def tweet(url)
     if !twitter?
       logger.info "No twitter requested for [#{id}:#{name}]"
