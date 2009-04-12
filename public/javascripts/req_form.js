@@ -6,6 +6,11 @@ var OSCURRENCY = {};
 jQuery(function($) { 
 
   function processPerson( n, peep ) {
+    if( peep.deactivated )
+    {
+      return;
+    }
+
     // make sure this peep isn't already on list
     //
     for(var k = 0; k < OSCURRENCY.peeps.length; k++)

@@ -102,7 +102,9 @@ class Req < ActiveRecord::Base
       workers.flatten!
       workers.uniq!
       workers.each do |worker|
-        PersonMailer.deliver_req_notification(self, worker) if worker.connection_notifications?
+        if worker.active?
+          PersonMailer.deliver_req_notification(self, worker) if worker.connection_notifications?
+        end
       end
     end
   end
