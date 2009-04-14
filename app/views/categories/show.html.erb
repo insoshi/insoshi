@@ -16,5 +16,5 @@
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-    <%= render :partial => 'providers', :locals => { :category => @category }  %>
+    <%= render :partial => 'providers', :locals => { :active_people => @category.active_people }  %>
 <%- end -%>

@@ -31,6 +31,10 @@ class Category < ActiveRecord::Base
     ancestors_name + name
   end
 
+  def active_people
+    active_people = self.people.find(:all, :conditions => Person.conditions_for_active)
+  end
+
   def current_and_active_reqs
     today = DateTime.now
     reqs = self.reqs.find(:all, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
