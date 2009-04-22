@@ -18,10 +18,8 @@
       <p class="meta">This is what other users of the system see as your 
         description.</p>
       <div class="form_row">
-      <%= fckeditor_textarea("person", :description, 
-                                       :toolbarSet => 'InsoshiBase',
-                                       :width => '100%',
-                                       :height => RICH_TEXT_HEIGHT) %>
+        <p><%= formatting_note %></p>
+        <%= f.text_area :description  %>
       </div>
 
       <br />

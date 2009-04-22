@@ -2,8 +2,6 @@
 
 <%- column_div :type => :primary do -%>
 
-  <p><%= formatting_note %></p>
-
   <%= error_messages_for :message %>
   
   <%- unless @preview.nil? -%>
@@ -27,6 +25,7 @@
     </div>
     <div class="form_row">
       <label for="message_body">Message</label>
+      <p><%= formatting_note %></p>
       <%= f.text_area :content, :id => "message_body" %>
       <%- if @message.reply? -%>
         <%= f.hidden_field :parent_id %>
