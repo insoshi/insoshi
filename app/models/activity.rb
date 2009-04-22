@@ -30,7 +30,8 @@ class Activity < ActiveRecord::Base
     find(:all, 
          :joins => "INNER JOIN people p ON activities.person_id = p.id",
          :conditions => [%(p.deactivated = ? AND
-                           (p.email_verified IS NULL OR p.email_verified = ?)), 
+                           (p.email_verified IS NULL OR 
+                            p.email_verified = ?)), 
                          false, true], 
          :order => 'activities.created_at DESC',
          :limit => GLOBAL_FEED_SIZE)
