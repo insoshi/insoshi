@@ -1,4 +1,10 @@
 module ReqsHelper
+  def list_link_with_active(name, options = {}, html_options = {}, &block)
+    opts = {}
+    opts.merge!(:class => "active") if current_page?(options)
+    content_tag(:li, link_to(name, options, html_options, &block), opts)
+  end
+
   def accepted_messages(req)
     bids = req.bids.find_all {|bid| bid.accepted_at != nil}
     messages = bids.map {|bid| "Accepted bid from #{person_link bid.person} at #{time_ago_in_words(bid.accepted_at)} ago"}

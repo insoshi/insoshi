@@ -3,13 +3,18 @@
 <h2>Requests</h2>
 <% else %>
   <h2>Requests &nbsp;&nbsp;<%= link_to( image_tag("twitter.gif", :border => 0, :title => "follow me"), twitter_oauth_client_path ) %></h2>
-<%- end -%>
-
+  <%- end -%>
+  <ul id="message-nav">
+  <%= list_link_with_active "Current", reqs_path %>
+  <%= list_link_with_active "All", reqs_path(:filter => 'all') %>
+  </ul>
 <%- if @reqs.empty? -%>
     <h3 class="blankslate">No requests (yet!)</h3>
 <%- else -%>
-  <ul class="list full">
+<ul class="list full">
+    <%= will_paginate %>
     <%= render :partial => 'req', :collection => @reqs %>
+    <%= will_paginate %>
   </ul>
 <%- end -%>
 <%- end -%>

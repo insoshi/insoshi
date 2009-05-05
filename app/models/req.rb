@@ -32,11 +32,12 @@ class Req < ActiveRecord::Base
 
   class << self
 
-    def current_and_active
+    def current_and_active(page=1)
       today = DateTime.now
-      @reqs = Req.find(:all, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
+      @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
       @reqs.delete_if { |req| req.has_approved? }
     end
+
   end
 
   def formatted_categories
