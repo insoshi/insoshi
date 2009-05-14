@@ -49,6 +49,7 @@
 
 
 <%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/add_group_button' %>
   <%= render :partial => 'searches/box' %>
   <%= render :partial => "people", 
              :locals => {:members => @group.people, :title => "members"} %>
