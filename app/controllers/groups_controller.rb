@@ -70,7 +70,9 @@ class GroupsController < ApplicationController
   
   def join
     @group = Group.find(params[:id])
-    current_person.groups << @group
+    if !current_person.groups.include?(@group)
+      current_person.groups << @group
+    end
     respond_to do |format|
       flash[:notice] = 'Joined to group.'
       format.html { redirect_to(group_path(@group)) }
