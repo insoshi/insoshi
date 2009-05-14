@@ -5,7 +5,10 @@ class CommentsController < ApplicationController
   before_filter :login_required
   before_filter :get_instance_vars
   before_filter :authorize_destroy, :only => [:destroy]
-  before_filter :connection_required
+
+  def index
+    redirect_to comments_url
+  end
 
   def show
     redirect_to comments_url
@@ -22,8 +25,8 @@ class CommentsController < ApplicationController
 
   # Used for both wall and blog comments.
   def create
-    @comment = parent.comments.new(params[:comment].
-                                   merge(:commenter => current_person))
+    @comment = parent.comments.build(params[:comment])
+    @comment.commenter = current_person
     
     respond_to do |format|
       if @comment.save
@@ -53,11 +56,19 @@ class CommentsController < ApplicationController
       elsif blog?
         @blog = Blog.find(params[:blog_id])
         @post = Post.find(params[:post_id])
+      elsif event?
+        @event = Event.find(params[:event_id])
       end
     end
   
     def person
-      @person || @blog.person
+      if wall?
+        @person
+      elsif blog?
+        @blog.person 
+      elsif event?
+        @event.person
+      end
     end
     
     # Require the users to be connected.
@@ -91,6 +102,8 @@ class CommentsController < ApplicationController
         @person.comments
       elsif blog?
         @post.comments.paginate(:page => params[:page])
+      elsif
+        @event.comments
       end  
     end
     
@@ -100,6 +113,8 @@ class CommentsController < ApplicationController
         @person
       elsif blog?
         @post
+      elsif event?
+        @event
       end
     end
     
@@ -115,6 +130,8 @@ class CommentsController < ApplicationController
         "wall"
       elsif blog?
         "blog_post"
+      elsif event?
+        "event"
       end
     end
     
@@ -124,6 +141,8 @@ class CommentsController < ApplicationController
         @person
       elsif blog?
         blog_post_url(@blog, @post)
+      elsif event?
+        @event
       end
     end
 
@@ -135,5 +154,9 @@ class CommentsController < ApplicationController
     # True if resource lives in a blog.
     def blog?
       !params[:blog_id].nil?
+    end
+
+    def event?
+      !params[:event_id].nil?
     end
 end

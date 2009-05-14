@@ -1,9 +1,9 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 20090216032013
 #
 # Table name: people
 #
-#  id                         :integer(11)     not null, primary key
+#  id                         :integer(4)      not null, primary key
 #  email                      :string(255)     
 #  name                       :string(255)     
 #  remember_token             :string(255)     
@@ -12,9 +12,9 @@
 #  remember_token_expires_at  :datetime        
 #  last_contacted_at          :datetime        
 #  last_logged_in_at          :datetime        
-#  forum_posts_count          :integer(11)     default(0), not null
-#  blog_post_comments_count   :integer(11)     default(0), not null
-#  wall_comments_count        :integer(11)     default(0), not null
+#  forum_posts_count          :integer(4)      default(0), not null
+#  blog_post_comments_count   :integer(4)      default(0), not null
+#  wall_comments_count        :integer(4)      default(0), not null
 #  created_at                 :datetime        
 #  updated_at                 :datetime        
 #  admin                      :boolean(1)      not null
@@ -24,6 +24,9 @@
 #  wall_comment_notifications :boolean(1)      default(TRUE)
 #  blog_comment_notifications :boolean(1)      default(TRUE)
 #  email_verified             :boolean(1)      
+#  identity_url               :string(255)     
+#  phone                      :string(255)     
+#  twitter_name               :string(255)     
 #
 
 class Person < ActiveRecord::Base
@@ -35,24 +38,27 @@ class Person < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications,
-                  :blog_comment_notifications
+                  :blog_comment_notifications, :identity_url, :category_ids, :address_ids,
+                  :twitter_name
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',
                           'email_verified'],
              :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
   MAX_EMAIL = MAX_PASSWORD = 40
   MAX_NAME = 40
+  MAX_TWITTER_NAME = 15
   MAX_DESCRIPTION = 5000
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
   TRASH_TIME_AGO = 1.month.ago
   SEARCH_LIMIT = 20
   SEARCH_PER_PAGE = 8
   MESSAGES_PER_PAGE = 5
+  EXCHANGES_PER_PAGE = 10
   NUM_RECENT_MESSAGES = 4
   NUM_WALL_COMMENTS = 10
   NUM_RECENT = 8
   FEED_SIZE = 10
-  TIME_AGO_FOR_MOSTLY_ACTIVE = 1.month.ago
+  TIME_AGO_FOR_MOSTLY_ACTIVE = 3.months.ago
   # These constants should be methods, but I couldn't figure out how to use
   # methods in the has_many associations.  I hope you can do better.
   ACCEPTED_AND_ACTIVE =  [%(status = ? AND
@@ -70,27 +76,42 @@ class Person < ActiveRecord::Base
                       :limit => NUM_WALL_COMMENTS
   has_many :connections
   has_many :contacts, :through => :connections,
-                      :conditions => ACCEPTED_AND_ACTIVE,
+                      #:conditions => ACCEPTED_AND_ACTIVE,
                       :order => 'people.created_at DESC'
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
-           :source => :contact,
-           :conditions => REQUESTED_AND_ACTIVE
-  with_options :class_name => "Message", :dependent => :destroy,
+           :source => :contact
+           #:conditions => REQUESTED_AND_ACTIVE
+  with_options :dependent => :destroy,
                :order => 'created_at DESC' do |person|
     person.has_many :_sent_messages, :foreign_key => "sender_id",
-                    :conditions => "sender_deleted_at IS NULL"
+                    :conditions => "communications.sender_deleted_at IS NULL", :class_name => "Message"
     person.has_many :_received_messages, :foreign_key => "recipient_id",
-                    :conditions => "recipient_deleted_at IS NULL"
+                    :conditions => "communications.recipient_deleted_at IS NULL", :class_name => "Message"
+    person.has_many :_sent_exchanges, :foreign_key => "customer_id", :class_name => "Exchange"
+    person.has_many :_received_exchanges, :foreign_key => "worker_id", :class_name => "Exchange"
   end
   has_many :feeds
-  has_many :activities, :through => :feeds, :order => 'created_at DESC',
-                                            :limit => FEED_SIZE
+  has_many :activities, :through => :feeds, :order => 'activities.created_at DESC',
+                                            :limit => FEED_SIZE,
+                                            :conditions => ["people.deactivated = ?", false],
+                                            :include => :person
+
   has_many :page_views, :order => 'created_at DESC'
   
   has_many :own_groups, :class_name => "Group", :foreign_key => "person_id"
   has_and_belongs_to_many :groups, :order => "name DESC"
   
+  has_many :events
+  has_many :event_attendees
+  has_many :attendee_events, :through => :event_attendees, :source => :event
+  has_many :accounts
+  has_many :addresses
+  has_many :client_applications
+  has_many :tokens, :class_name => "OauthToken", :order => "authorized_at DESC", :include => [:client_application]
+
+  has_and_belongs_to_many :categories
+
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
   validates_presence_of     :password_confirmation, :if => :password_required?
@@ -104,14 +125,19 @@ class Person < ActiveRecord::Base
                             :with => EMAIL_REGEX,
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
+  validates_uniqueness_of   :identity_url, :allow_nil => true
 
-  before_create :create_blog
+  before_create :create_blog, :check_config_for_deactivation
+  after_create :create_account
+  after_create :create_address
   before_save :encrypt_password
+  before_save :update_group_letter
   before_validation :prepare_email, :handle_nil_description
-  after_create :connect_to_admin
+  #after_create :connect_to_admin
 
   before_update :set_old_description
   after_update :log_activity_description_changed
+  #after_update :follow_if_twitter_name_changed
   before_destroy :destroy_activities, :destroy_feeds
 
   class << self
@@ -128,8 +154,10 @@ class Person < ActiveRecord::Base
     def mostly_active(page = 1)
       paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
+                     :group_by => 'first_letter',
                      :conditions => conditions_for_mostly_active,
-                     :order => "created_at DESC")
+                     #:order => "created_at DESC")
+                     :order => "name ASC")
     end
     
     # Return *all* the active users.
@@ -203,6 +231,16 @@ class Person < ActiveRecord::Base
     _sent_messages.paginate(:page => page, :per_page => MESSAGES_PER_PAGE)
   end
 
+  ## Exchange methods
+ 
+  def received_exchanges(page = 1)
+    _received_exchanges.paginate(:page => page, :per_page => EXCHANGES_PER_PAGE)
+  end
+
+  def sent_exchanges(page = 1)
+    _sent_exchanges.paginate(:page => page, :per_page => EXCHANGES_PER_PAGE)
+  end
+
   def trashed_messages(page = 1)
     conditions = [%((sender_id = :person AND sender_deleted_at > :t) OR
                     (recipient_id = :person AND recipient_deleted_at > :t)),
@@ -220,6 +258,44 @@ class Person < ActiveRecord::Base
                                    recipient_deleted_at IS NULL), id],
                  :order => "created_at DESC",
                  :limit => NUM_RECENT_MESSAGES)
+  end
+
+  def has_unread_messages?
+    Message.count(:all,
+                  :conditions => [%(recipient_id = ? AND
+                                    recipient_read_at IS NULL), id]) > 0
+  end
+
+  def formatted_categories
+    categories.collect { |cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
+  end
+
+  def create_address
+    address = Address.new( :name => 'personal' )
+    address.zipcode_plus_4 = '78701'
+    address.person = self
+    address.save
+  end
+
+  def address
+    addresses.first
+  end
+
+  ## Account helpers
+
+  def create_account
+    account = Account.new( :name => 'personal' )
+    account.balance = Account::INITIAL_BALANCE 
+    account.person = self
+    account.save
+  end
+
+  def account
+    accounts.first
+  end
+
+  def notifications
+    connection_notifications
   end
 
   ## Photo helpers
@@ -264,7 +340,7 @@ class Person < ActiveRecord::Base
   # Authenticates a user by their email address and unencrypted password.
   # Returns the user or nil.
   def self.authenticate(email, password)
-    u = find_by_email(email.downcase.strip) # need to get the salt
+    u = find_by_email_and_identity_url(email.downcase.strip, nil) # need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
 
@@ -389,13 +465,44 @@ class Person < ActiveRecord::Base
       self.crypted_password = encrypt(password)
     end
 
+    def update_group_letter
+      self.first_letter = name[0,1].capitalize
+    end
+
+    def check_config_for_deactivation
+      if Person.global_prefs.whitelist?
+        self.deactivated = true
+      end
+    end
+
     def set_old_description
-      @old_description = Person.find(self).description
+      p = Person.find(self)
+      @old_description = p.description
+      @old_twitter_name = p.twitter_name
+    end
+
+    def follow_if_twitter_name_changed
+      unless @old_twitter_name == twitter_name or twitter_name.blank?
+        follow(twitter_name)
+      end
     end
 
     def log_activity_description_changed
       unless @old_description == description or description.blank?
         add_activities(:item => self, :person => self)
+      end
+    end
+
+    def follow(twitter_id)
+      twitter_name = Person.global_prefs.twitter_name
+      twitter_password = Person.global_prefs.plaintext_twitter_password
+      twitter_api = Person.global_prefs.twitter_api
+
+      twit = Twitter::Base.new(twitter_name,twitter_password, :api_host => twitter_api )
+      begin
+        twit.create_friendship(twitter_id)
+      rescue Twitter::CantConnect => e
+        logger.info "ERROR Twitter::CantConnect for [#{twitter_id}] (" + e.to_s + ")"
       end
     end
     
@@ -421,7 +528,8 @@ class Person < ActiveRecord::Base
     ## Other private method(s)
 
     def password_required?
-      crypted_password.blank? || !password.blank? || !verify_password.nil?
+      (crypted_password.blank? && identity_url.nil?) || !password.blank? ||
+      !verify_password.nil?
     end
     
     class << self

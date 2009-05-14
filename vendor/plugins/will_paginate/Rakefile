@@ -1,6 +1,6 @@
 require 'rubygems'
 begin
-  hanna_dir = '/home/mislav/projects/hanna/lib'
+  hanna_dir = '/Users/mislav/Projects/Hanna/lib'
   $:.unshift hanna_dir if File.exists? hanna_dir
   require 'hanna/rdoctask'
 rescue LoadError
@@ -14,7 +14,7 @@ task :default => :test
 
 desc 'Generate RDoc documentation for the will_paginate plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
-  rdoc.rdoc_files.include('README.rdoc', 'LICENSE', 'CHANGELOG').
+  rdoc.rdoc_files.include('README.rdoc', 'LICENSE', 'CHANGELOG.rdoc').
     include('lib/**/*.rb').
     exclude('lib/will_paginate/named_scope*').
     exclude('lib/will_paginate/array.rb').

@@ -2,6 +2,7 @@
   <h2>Sign in</h2>
 
   <% form_tag session_path do -%>
+<span id="standard">
     <div class="form_row">
       <label for="email">Email address</label>
       <%= text_field_tag 'email', params[:email],
@@ -14,6 +15,11 @@
       <%= password_field_tag 'password', params[:password],
                                          :maxlength => Person::MAX_PASSWORD %>
     </div>
+</span>
+    <div class="form_row" id="openid">
+      <label for="openid_url">OpenID</label>
+      <%= text_field_tag "openid_url" %>
+    </div>
 
     <div class="form_row">
       <label for="remember_me" class="checkbox">Remember me:</label>
@@ -22,11 +28,68 @@
 
     <div class="form_row">
       <%= submit_tag 'Sign in', :class => "button" %>
-      <p>or <%= link_to "Sign up", signup_path %></p>
     </div>
 
-    <p class="form_row">
-      <%= link_to "I forgot my password!", new_password_reminder_path %>
-    </p>
+<div style="text-align: center; font-size: 12px; padding: 10px;">
+  <%= link_to "or Sign up", signup_path %> <br />
+  <%- if global_prefs.can_send_email? -%>
+    <%= link_to "I forgot my password!", new_password_reminder_path %> ::
+  <%- end -%>
+    <span id="noscript" style="display:none;">
+        <span id="openid_link"><a href="#" onclick="show_openid(); return false;">Login using OpenID</a></span>
+        <span id="standard_link"><a href="#" onclick="show_standard(); return false;">Back to Regular Login</a></span>
+    </span>
+
+</div>
   <% end -%>
 <%- end -%>
+<script type='text/javascript'>
+show_openid = function() {
+    $('openid').show();
+    $('standard').hide();
+    $('openid_link').hide();
+    $('standard_link').show();
+    createCookie('use_openid', 1, 30);
+    $('openid_url').value = 'http://';
+}
+show_standard = function() {
+    $('openid').hide();
+    $('standard').show();
+    $('openid_link').show();
+    $('standard_link').hide();
+    eraseCookie('use_openid');
+    $('openid_url').value = '';
+}
+$('openid').hide();
+$('standard_link').hide();
+$('noscript').show();
+
+if (readCookie('use_openid')){
+    show_openid();
+}
+
+function createCookie(name,value,days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+    }
+    else var expires = "";
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+function eraseCookie(name) {
+    createCookie(name,"",-1);
+}
+</script>

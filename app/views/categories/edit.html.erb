@@ -1,0 +1,25 @@
+<%- column_div :type => :primary do %>
+<h2>Editing category</h2>
+
+  <%= error_messages_for :category %>
+
+<% form_for(@category) do |f| %>
+
+  <div class="form_row">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="form_row full">
+    <label for="parent_id">Parent Category</label>
+    <%= render(:partial => "select_categories") %>
+  </div>
+  <div class="form_row">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

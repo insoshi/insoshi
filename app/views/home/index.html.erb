@@ -1,14 +1,19 @@
 <%- column_div :type => :primary do -%>
+  <%- if logged_in? && current_person.has_unread_messages? -%>
+    <div class="notice">
+      You have unread messages in your mailbox.
+      <%= link_to "Click here to see your messages",
+                  messages_path %>
+    </div>
+  <%- end -%>
   <%= render :partial => 'feed' %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => "searches/box" %>
+  <%= render :partial => 'shared/add_req_button' %>
   <%- if logged_in? -%>
-    <%= render :partial => 'requested_contacts' %>
     <%= render :partial => 'messages_preview' %>
-    <%= render :partial => 'shared/contacts_preview',
-               :locals => { :person => current_person } %>
     <%= render :partial => 'people/groups', 
                :locals => {:groups => current_person.own_groups,
                :title => "Admin Groups", :link => "admin"} %>

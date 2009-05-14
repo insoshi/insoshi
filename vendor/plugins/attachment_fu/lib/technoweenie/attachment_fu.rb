@@ -244,12 +244,11 @@ module Technoweenie # :nodoc:
       def create_or_update_thumbnail(temp_file, file_name_suffix, *size)
         thumbnailable? || raise(ThumbnailError.new("Can't create a thumbnail if the content type is not an image or there is no parent_id column"))
         returning find_or_initialize_thumbnail(file_name_suffix) do |thumb|
-          thumb.attributes = {
-            :content_type             => content_type,
-            :filename                 => thumbnail_name_for(file_name_suffix),
-            :temp_path                => temp_file,
-            :thumbnail_resize_options => size
-          }
+          thumb.content_type = content_type
+          thumb.filename = thumbnail_name_for(file_name_suffix)
+          thumb.temp_path = temp_file
+          thumb.thumbnail_resize_options = size
+
           callback_with_args :before_thumbnail_saved, thumb
           thumb.save!
         end

@@ -1,0 +1,21 @@
+<%- column_div :type => :primary do -%>
+  <h2>Transfer Hours</h2>
+
+  <%= error_messages_for :exchange %>
+
+  <% form_for :exchange, :url => person_exchanges_path(@worker) do |f| %>
+    <div class="form_row">
+      <%= f.label :amount %>
+      <%= f.text_field :amount, :size => 2 %>
+    </div>
+    <% fields_for :req do |r| %>
+      <div class="form_row">
+        <%= r.label 'Service provided' %>
+        <%= r.text_field :name %>
+      </div>
+    <% end %>
+    <div class="form_row">
+      <%= f.submit "Submit" %>
+    </div>
+  <% end %>
+<%- end -%>

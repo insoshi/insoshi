@@ -1,0 +1,59 @@
+<% column_div :type => :primary do -%>
+  <h2>Event</h2>
+  <ul class="list full">
+    <%= render :partial => @event %>
+  </ul>
+
+  <h2>People attending this event</h2>
+  <% unless @attendees.empty? -%>
+    <% paginated_section @attendees do  %>
+    <ul class="grid contacts medium">
+    <%- @attendees.each do |attendee| -%>
+      <li class="vcard attendee">
+      <%= image_link attendee, :image_options => { :class => "photo" },
+                               :link_options => { :class => "url" },
+                               :vcard => true,
+                               :image => :bounded_icon %>
+      </li>
+    <%- end -%>
+    </ul>
+    <% end -%>
+  <% else -%>
+  <p>
+    This event doesn't have any attendees yet.
+  </p>
+  <% end -%>
+
+  <%- unless @event.comments.empty? -%>
+  <h2 id="comments">Comments</h4>
+    <ul class="list comments full">
+      <%= render :partial => 'comment', :collection => @event.comments %>
+    </ul>
+  <%- end -%>
+
+  <%- if logged_in? -%>
+    <h4>Leave a comment</h4>
+
+    <% form_for :comment, :url => event_comments_path(@event),
+                          :html => { :id => "eventcomment" } do |f| %>
+      <div class="form_row">
+        <%= f.text_area :body, :rows => 10 %>
+      </div>
+  
+      <div class="form_row">
+        <%= submit_tag "Submit", :class => "button" %>
+      </div>
+    <% end %>
+
+  <%- end -%>
+
+<% end -%>
+
+<% column_div :type => :secondary do -%>
+  <%= render :partial => 'calendar',
+             :locals => { :events => @month_events, :date => @date } %>
+
+  <h2>Add new event</h2>
+  <%= link_to "Click here", new_event_path %>
+<% end -%>
+

@@ -8,12 +8,31 @@ ActionController::Routing::Routes.draw do |map|
                  :save_photo => :post,
                  :delete_photo => :delete
                  }
+  map.resources :broadcast_emails
+
+  map.resources :bids
+
+  map.twitter_oauth_client '/reqs/twitter_oauth_client', :controller => "reqs", :action => "twitter_oauth_client"
+  map.twitter_oauth_callback '/reqs/twitter_oauth_callback', :controller => "reqs", :action => "twitter_oauth_callback"
+
+  map.resources :reqs do |req|
+    req.resources :bids
+  end
+
+  map.resources :categories
+
+  map.resources :events, :member => { :attend => :get, 
+                                      :unattend => :get } do |event|
+    event.resources :comments
+  end
+
   map.resources :preferences
   map.resources :searches
   map.resources :activities
   map.resources :connections
   map.resources :password_reminders
   map.resources :photos
+  map.open_id_complete 'session', :controller => "sessions", :action => "create", :requirements => { :method => :get }
   map.resource :session
   map.resources :messages, :collection => { :sent => :get, :trash => :get },
                            :member => { :reply => :get, :undestroy => :put }
@@ -24,12 +43,16 @@ ActionController::Routing::Routes.draw do |map|
                                     :action => 'verify_email'
   map.resources :people, :member => {:groups => :get, :admin_groups => :get} do |person|
      person.resources :messages
+     person.resources :exchanges
+     person.resources :addresses
      person.resources :photos
      person.resources :connections
      person.resources :comments
   end
   map.namespace :admin do |admin|
-    admin.resources :people, :preferences, :groups
+    admin.resources :people, :active_scaffold => true
+    admin.resources :preferences, :broadcast_emails
+    admin.resources :groups
     admin.resources :forums do |forums|
       forums.resources :topics do |topic|
         topic.resources :posts
@@ -51,9 +74,22 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'people', :action => 'new'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  map.home '/', :controller => 'home'
+  #map.home '/', :controller => 'home'
+  map.home '/', :controller => 'blogs', :action => 'show', :id => 1
   map.about '/about', :controller => 'home', :action => 'about'
+  map.practice '/practice', :controller => 'home', :action => 'practice'
+  map.steps '/steps', :controller => 'home', :action => 'steps'
+  map.questions '/questions', :controller => 'home', :action => 'questions'
+  map.memberships '/memberships', :controller => 'home', :action => 'memberships'
+  map.contact '/contact', :controller => 'home', :action => 'contact'
+
   map.admin_home '/admin/home', :controller => 'home'
+
+  map.resources :oauth_clients
+  map.authorize '/oauth/authorize', :controller => 'oauth', :action => 'authorize'
+  map.request_token '/oauth/request_token', :controller => 'oauth', :action => 'request_token'
+  map.access_token '/oauth/access_token', :controller => 'oauth', :action => 'access_token'
+  map.test_request '/oauth/test_request', :controller => 'oauth', :action => 'test_request'
 
   # The priority is based upon order of creation: first created -> highest priority.
 

@@ -1,11 +1,11 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 20090216032013
 #
 # Table name: comments
 #
-#  id               :integer(11)     not null, primary key
-#  commenter_id     :integer(11)     
-#  commentable_id   :integer(11)     
+#  id               :integer(4)      not null, primary key
+#  commenter_id     :integer(4)      
+#  commentable_id   :integer(4)      
 #  commentable_type :string(255)     default(""), not null
 #  body             :text            
 #  created_at       :datetime        
@@ -17,13 +17,16 @@ class Comment < ActiveRecord::Base
   extend PreferencesHelper
   
   attr_accessor :commented_person, :send_mail
+
+  attr_accessible :body
   
   belongs_to :commentable, :polymorphic => true
   belongs_to :commenter, :class_name => "Person",
                          :foreign_key => "commenter_id"
 
   belongs_to :person, :counter_cache => true
-  belongs_to :post, :counter_cache => true, :foreign_key => "blog_post_id"
+  belongs_to :post
+  belongs_to :event
 
   has_many :activities, :foreign_key => "item_id", :dependent => :destroy
 
@@ -43,6 +46,8 @@ class Comment < ActiveRecord::Base
                             commentable
                           when "BlogPost"
                             commentable.blog.person
+                          when "Event"
+                            commentable.person
                           end
   end
   
@@ -54,6 +59,10 @@ class Comment < ActiveRecord::Base
   
     def blog_post_comment?
       commentable.class.to_s == "BlogPost"
+    end
+
+    def event_comment?
+      commentable.class.to_s == "Event"
     end
     
     def notifications?

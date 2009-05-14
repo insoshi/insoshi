@@ -1,0 +1,50 @@
+<%= render :partial => 'jscript', :locals => { :jscript_file_name => 'req_form' } %>
+<%- column_div :type => :primary do -%>
+
+<h2>New request</h2>
+
+<%= error_messages_for :req %>
+
+<% form_for(@req) do |f| %>
+  <div class="form_row">
+    <%= f.label 'Title' %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="form_row">
+    <%= f.label :estimated_hours %>
+    <%= f.text_field :estimated_hours, :size => 5 %>
+  </div>
+  <div class="form_row">
+    <%= f.label :due_date %>
+    <%= f.text_field :due_date, :size => 7 %>
+  </div>
+  <div class="form_row">
+    <%= f.label :description %>
+    <%= f.text_area :description, :rows => 5 %>
+  </div>
+  <div class="form_row full">
+    <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
+  </div>
+  <div id="providersDisplay" style="height: 95px;" class="form_row full"><label>People to be notified:</label><div id="followMe"></div></div>
+  <div class="form_row">
+    <label for="notifications" class="checkbox">Notify members shown above?</label>
+    <%= check_box_tag 'req[notifications]', '1', true %>
+  </div>
+<% unless global_prefs.twitter_name.blank? %>
+    <div class="form_row">
+      <label for="twitter"
+        class="checkbox">Notify members in real time on <a href="http://www.twitter.com/<%= global_prefs.twitter_name %>" target="top">Twitter</a>?</label>
+      <%= check_box_tag 'req[twitter]', '1', true %>
+    </div>
+<% end %>
+  <div class="form_row">
+    <%= f.submit "Create" %>
+  </div>
+<% end %>
+
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

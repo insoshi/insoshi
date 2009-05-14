@@ -61,7 +61,6 @@ describe Message do
   
   it "should handle replies" do
     @message.save!
-    # raise @message.id.inspect
     @reply = create_message(:sender    => @message.recipient,
                             :recipient => @message.sender,
                             :parent    => @message)
@@ -136,14 +135,14 @@ describe Message do
 
   private
 
-    def new_message(options = { :sender => @sender, :recipient => @recipient })   
-      Message.new({ :subject => "The subject",
-                    :content => "Lorem ipsum" }.merge(options))
+    def new_message(options = { :sender => @sender, :recipient => @recipient })
+      Message.unsafe_build({ :subject => "The subject",
+                             :content => "Lorem ipsum" }.merge(options))
     end
   
     def create_message(options = { :sender => @sender,
                                    :recipient => @recipient })   
-      Message.create({ :subject => "The subject",
-                       :content => "Lorem ipsum" }.merge(options))
+      Message.unsafe_create({ :subject => "The subject",
+                              :content => "Lorem ipsum" }.merge(options))
     end
 end

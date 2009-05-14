@@ -1,0 +1,14 @@
+<h2>Calendar</h2>
+<% special_days = events.collect { |x| x.start_time.to_date }.uniq -%>
+<%= 
+  calendar(:year => date.year, :month => date.month, 
+           :next_month_text => (link_to "Next", events_path(:month => date.month+1, :year => date.year)), 
+           :previous_month_text => (link_to "Previous", events_path(:month => date.month-1, :year => date.year)),
+           :month_url => events_url(:year => date.year, :month => date.month)) do |d|
+    if special_days.include?(d)
+      [link_to(d.mday, events_path(:year => d.year, :month => d.month, :day => d.mday)), { :class => "specialDay" }]
+    else
+      [d.mday]
+    end
+  end
+%>

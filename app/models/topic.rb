@@ -1,13 +1,13 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 20090216032013
 #
 # Table name: topics
 #
-#  id                :integer(11)     not null, primary key
-#  forum_id          :integer(11)     
-#  person_id         :integer(11)     
+#  id                :integer(4)      not null, primary key
+#  forum_id          :integer(4)      
+#  person_id         :integer(4)      
 #  name              :string(255)     
-#  forum_posts_count :integer(11)     default(0), not null
+#  forum_posts_count :integer(4)      default(0), not null
 #  created_at        :datetime        
 #  updated_at        :datetime        
 #
@@ -17,6 +17,8 @@ class Topic < ActiveRecord::Base
   
   MAX_NAME = 100
   NUM_RECENT = 6
+  
+  attr_accessible :name
   
   belongs_to :forum, :counter_cache => true
   belongs_to :person

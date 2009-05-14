@@ -26,15 +26,15 @@ h6 {
   margin-bottom: 1em;
 }
 h2 {
-  background: url(/images/yellow-grad.jpg) 30px 10px repeat-x;
+  background: url(/images/green-grad.jpg) 30px 10px repeat-x;
   border-bottom: 1px solid #ccc;
-  color: #069;
+  color: #009908;
   clear: both;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 22px;
   font-weight: normal;
   line-height: 1.4em;
-  margin-top: 24px;
+  margin-top: 10px;
   padding-left: 6px;
 }
 li h2 {font-size: 1em;}
@@ -98,7 +98,7 @@ pre {
   padding: 1em;
 }
 a:link,a:visited {
-  color: #069;
+  color: #009908;
   font-weight: bold;
   text-decoration: none;
 }
@@ -208,7 +208,14 @@ a.show-follow:visited {
 form {
   border-bottom: 1px solid #ccc;
   padding-bottom: 1em;
-  margin-bottom: 2em;
+  margin-bottom: 2em; 
+}
+li form {
+  float: right;
+  margin-right: 1em;
+  border-bottom: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
 }
 input, textarea {
   font-family: Helvetica, Arial, Univers, sans-serif;

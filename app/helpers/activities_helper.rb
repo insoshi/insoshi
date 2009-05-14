@@ -23,6 +23,12 @@ module ActivitiesHelper
       when "Person"
         %(#{person_link(activity.item.commenter)} commented on 
           #{wall(activity)}.)
+      when "Event"
+        event = activity.item.commentable
+        commenter = activity.item.commenter
+        %(#{person_link(commenter)} commented on 
+          #{someones(event.person, commenter)} event: 
+          #{event_link(event.title, event)}.)
       end
     when "Connection"
       %(#{person_link(activity.item.person)} and
@@ -41,6 +47,19 @@ module ActivitiesHelper
       %(#{person_link(person)}'s description has changed.)
     when "Group"
       %(#{person_link(person)} created the new group '#{group_link(Group.find(activity.item))}')
+    when "Event"
+      event = activity.item
+      %(#{person_link(person)} has created a new event: #{event_link(event.title, event)}.)
+    when "EventAttendee"
+      event = activity.item.event
+      %(#{person_link(person)} is attending #{someones(event.person, person)} event: 
+        #{event_link(event.title, event)}.) 
+    when "Req"
+      req = activity.item
+      %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+    when "Exchange"
+      exchange = activity.item
+      %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -70,6 +89,10 @@ module ActivitiesHelper
       when "Person"
         %(#{person_link(activity.item.commenter)} commented on 
           #{wall(activity)}.)
+      when "Event"
+        event = activity.item.commentable
+        %(#{person_link(activity.item.commenter)} commented on 
+          #{someones(event.person, activity.item.commenter)} #{event_link("event", event)}.)
       end
     when "Connection"
       %(#{person_link(person)} and #{person_link(activity.item.contact)}
@@ -86,6 +109,17 @@ module ActivitiesHelper
       %(#{person_link(person)}'s description has changed.)
     when "Group"
       %(#{person_link(person)} created the new group '#{group_link(Group.find(activity.item))}')
+    when "Event"
+      %(#{person_link(person)}'s has created a new #{event_link("event", activity.item)}.)
+    when "EventAttendee"
+      event = activity.item.event
+      %(#{person_link(person)} is attending #{someones(event.person, person)} #{event_link("event", event)}.)
+    when "Req"
+      req = activity.item
+      %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+    when "Exchange"
+      exchange = activity.item
+      %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -101,6 +135,8 @@ module ActivitiesHelper
               case parent_type
               when "BlogPost"
                 "comment.gif"
+              when "Event"
+                "comment.gif"
               when "Person"
                 "signal.gif"
               end
@@ -113,9 +149,17 @@ module ActivitiesHelper
             when "Photo"
               "camera.gif"
             when "Person"
-                "edit.gif"
+              "edit.gif"
             when "Group"
               "add.gif"
+            when "Event"
+              "time.gif"
+            when "EventAttendee"
+              "check.gif"
+            when "Req"
+              "new.gif"
+            when "Exchange"
+              "favorite.gif"
             else
               raise "Invalid activity type #{activity_type(activity).inspect}"
             end
@@ -145,6 +189,14 @@ module ActivitiesHelper
       text = topic.name
     end
     link_to(text, forum_topic_path(topic.forum, topic))
+  end
+
+  def event_link(text, event)
+    link_to(text, event_path(event))
+  end
+
+  def req_link(text, req)
+    link_to(text, req_path(req))
   end
 
   # Return a link to the wall.

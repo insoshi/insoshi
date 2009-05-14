@@ -1,0 +1,25 @@
+<% content_for(:jquery_support) do %>
+<%= javascript_include_tag 'jquery-1.2.6' %>
+<%= javascript_include_tag 'jquery-ui-personalized-1.6rc2.min' %>
+<script type="text/javascript">
+  jQuery.noConflict();
+</script>
+<%= javascript_include_tag 'cat_accordion' %>
+<% end -%>  
+<%- column_div :type => :primary do -%>
+<h2>Services</h2>
+
+<%- if @top_level_categories.empty? -%>
+    <h3 class="blankslate">No categories (yet!)</h3>
+<%- else -%>
+    <ul id="categoryMenu" class="categories">
+      <%= render :partial => 'category', :collection => @top_level_categories %>
+    </ul>
+<%- end -%>
+
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/add_category_button' %>
+<%- end -%>

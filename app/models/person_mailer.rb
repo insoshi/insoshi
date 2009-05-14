@@ -62,6 +62,26 @@ class PersonMailer < ActionMailer::Base
     body         "server_name" => server,
                  "code" => ev.code
   end
+
+  def registration_notification(admin, new_peep)
+    from         "Registration notification <registration@#{domain}>"
+    recipients   admin.email
+    subject      formatted_subject("New registration")
+    body         "email" => new_peep.email,
+                  "name" => new_peep.name,
+                  "domain" => server,
+                 "url" => person_path(new_peep)
+  end
+
+  def req_notification(req, recipient)
+    from         "Request notification <request@#{domain}>"
+    recipients   recipient.email
+    subject      formatted_subject("New request matches your profile")
+    body         "name" => req.name,
+                 "description" => req.description,
+                 "domain" => server,
+                 "url" => req_path(req)
+  end
   
   private
   

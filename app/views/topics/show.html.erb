@@ -7,8 +7,6 @@
 
   <h3>Add new post</h3>
 
-  <p><%= formatting_note %></p>
-
   <%= error_messages_for :post %>
 
   <% form_for :post,
@@ -27,3 +25,5 @@
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>
+
+<%= yui_headers('post_body') %>

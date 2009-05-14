@@ -155,10 +155,12 @@ class PostsController < ApplicationController
     # Return a new post for the given resource.
     def new_resource_post
       if forum?
-        @post = @topic.posts.new(params[:post].merge(:person => current_person))
+        post = @topic.posts.build(params[:post])
+        post.person = current_person
       elsif blog?
-        @post = @blog.posts.new(params[:post])
-      end      
+        post = @blog.posts.new(params[:post])
+      end
+      post
     end
     
     # Return the template for the current resource given the name.

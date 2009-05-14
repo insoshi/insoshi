@@ -1,0 +1,39 @@
+<li class="event">
+  <a name="event_<%= event.id %>"></a>
+  <div class="profile-image">
+    <%= image_link event.person, :image => :thumbnail %>
+    <%= image_tag "icons/new.gif", :class => "icon", :alt => "Event" %>
+  </div>
+  <p>
+    <%= link_to h(event.title), event, :class => "show-follow" %>
+    Starts at: <%= event.start_time.to_s :short %>
+    <% unless event.end_time.nil? -%>
+    / Ends at: <%= event.end_time.to_s :short %>
+    <% end -%>
+  </p>
+  <p>
+    <%=h event.description %>
+  </p>
+  <p class="meta">
+    Created by <%= person_link event.person %>
+    <%= time_ago_in_words(event.created_at) %> ago
+    <% if current_person?(event.person) -%>
+    | <%= link_to "Edit",  edit_event_path(event) %>
+    <% end -%>
+    <% if admin? || current_person?(event.person) -%>
+    | <%= link_to "Destroy",  event, :confirm => 'Are you sure?', :method  => :delete %>
+    <% end -%>
+  </p>
+  <% unless event.event_attendees_count == 0 -%>
+  <p>
+    <%= pluralize(event.event_attendees_count, 'Person') %> attending this event
+  </p>
+  <% end -%>
+  <p>
+    <% unless event.attending?(current_person) -%>
+    <%= link_to "I will attend", attend_event_path(event) %>
+    <% else -%>
+    <%= link_to "I won't attend", unattend_event_path(event) %>
+    <% end -%>
+  </p>
+</li>

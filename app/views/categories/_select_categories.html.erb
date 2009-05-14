@@ -1,0 +1,9 @@
+<%=
+    collection_select('category',
+                      'parent_id',
+                      @all_categories,
+                      :id,
+                      :long_name,
+                      { :include_blank => true }
+                    )
+%>

@@ -7,21 +7,21 @@ describe Activity do
   end
 
   it "should delete a post activity along with its parent item" do
-    @post = ForumPost.create(:body => "Hey there", :topic => topics(:one),
-                             :person => @person)
+    @post = topics(:one).posts.unsafe_create(:body => "Hey there", 
+                                             :person => @person)
     destroy_should_remove_activity(@post)
   end
   
   it "should delete a comment activity along with its parent item" do
-    @comment = @person.comments.create(:body => "Hey there",
-                                       :commenter => @commenter)
+    @comment = @person.comments.unsafe_create(:body => "Hey there",
+                                              :commenter => @commenter)
     destroy_should_remove_activity(@comment)
   end
   
   it "should delete topic & post activities along with the parent items" do
-    @topic = Topic.create(:name => "A topic", :forum => forums(:one),
-                          :person => @person)
-    @topic.posts.create(:body => "body", :person => @person)
+    @topic = forums(:one).topics.unsafe_create(:name => "A topic",
+                                               :person => @person)
+    post = @topic.posts.unsafe_create(:body => "body", :person =>  @person)
     @topic.posts.each do |post|
       destroy_should_remove_activity(post)
     end
@@ -38,8 +38,8 @@ describe Activity do
   
   before(:each) do
     # Create an activity.
-    @person.comments.create(:body => "Hey there",
-                            :commenter => @commenter)    
+    @person.comments.unsafe_create(:body => "Hey there",
+                                   :commenter => @commenter)
   end
   
   it "should have a nonempty global feed" do
@@ -47,9 +47,12 @@ describe Activity do
   end
   
   it "should not show activities for users who are inactive" do
+    @person.activities.collect(&:person).should include(@commenter)
     @commenter.toggle!(:deactivated)
     @commenter.should be_deactivated
     Activity.global_feed.should be_empty
+    @person.reload
+    @person.activities.collect(&:person).should_not include(@commenter)
   end
   
   it "should not show activities for users who are email unverified" do

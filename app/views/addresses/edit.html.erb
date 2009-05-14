@@ -1,0 +1,16 @@
+<%- column_div :type => :primary do -%>
+  <h2>Edit address</h2>
+
+  <%= error_messages_for :address %>
+
+  <% form_for :address, :url => person_address_path(@person,@address), :html => {:method => :put} do |form| %>
+    <%= render :partial => 'form', :object => form %>
+    <div class="form_row">
+      <%= form.submit "Update" %>
+    </div>
+  <% end %>
+<% end %>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+<% end %>

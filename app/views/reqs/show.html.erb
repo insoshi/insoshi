@@ -1,0 +1,43 @@
+<%= render :partial => 'jscript', :locals => { :jscript_file_name => 'bid_form' } %>
+<% column_div :type => :primary do -%>
+  <h2>Request</h2>
+  <ul class="list full">
+    <%= render :partial => @req %>
+  </ul>
+  <% if @req.active? %>
+  <h2>Bids:</h2>
+  <ul class="list full">
+    <% if @req.bids.empty? -%>
+        <h3 class="blankslate">No bids (yet!)</h3>
+    <% else %>
+      <%= render :partial => "/bids/bid", :collection => @req.bids %>
+    <%- end -%>
+  </ul>
+  <%- end -%>
+
+    <% unless ( current_person?(@req.person) || !@req.active ) -%>
+      <h2>New bid</h2>
+
+      <%= error_messages_for :req %>
+
+      <% form_for :bid, :url => req_bids_path(@req) do |f| %>
+        <div class="form_row">
+          <%= f.label :hours %>
+          <%= f.text_field :estimated_hours, :size => 2 %>
+        </div>
+        <div class="form_row">
+          <%= f.label :expiration_date %>
+          <%= f.text_field :expiration_date, :size => 8 %>
+        </div>
+        <div class="form_row">
+          <%= f.submit "Submit" %>
+        </div>
+      <% end %>
+    <%- end -%>
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/add_req_button' %>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

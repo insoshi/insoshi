@@ -22,73 +22,49 @@
       <%= image_tag @person.main_photo, :class => "profile-image photo",
                                         :alt => h(@person.name) %>
 
-      <%- unless current_person?(@person) -%>
         <ul class="tools">
-         <%- if logged_in? -%>
-          <%- unless Connection.exists?(@person, current_person) -%>
+        <% unless @person.twitter_name.blank? %>
+          <a href="http://www.twitter.com/<%= h @person.twitter_name %>" title="<%= h @person.twitter_name %>" target="top"><img style="float:right;" src="/images/twitter_481.png"></a>
+        <% end %>
+        <%- unless current_person?(@person) -%>
+        <%- if logged_in? -%>
+            <li><%= exchange_link @person %></li>
+            <li><%= email_link @person %></li>
+            <li><%= account_link @person %></li>
+          <%- end -%>
+          <%- if current_person.admin? -%>
             <li>
-            <%= link_to "Connect with #{h @person.name}!",
-                        person_connections_path(@person), :method => :post %>
+            <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
+            <%= link_to activity, 
+                        person_path(@person, :task => "deactivated"),
+                        :method => :put %>
             </li>
           <%- end -%>
-          <%- if Connection.connected?(@person, current_person) -%>
-          <li>
-            <%= h @person.name %> is one of your contacts
-            <br />
-           (<%= link_to "end connection", 
-               connection_path(Connection.conn(current_person, @person)), 
-               :method => :delete,
-               :confirm => 
-         "Are you sure you want to end connection with #{h @person.name}?" %>)
-          
-          </li>
+        <% else -%>
+          <%- if logged_in? -%>
+            <li><%= account_link @person %></li>
           <%- end -%>
-          <%- if Connection.pending?(current_person, @person) -%>
-          <li>
-            <%= h @person.name %> has contacted you
-            <br />
-            (<%= link_to "respond to contact request", 
-                         edit_connection_path(Connection.conn(current_person,
-                                                              @person)) %>)
-          </li>
-          <%- end -%>
-          <%- if Connection.pending?(@person, current_person) -%>
-          <li>
-            You've contacted <%= h @person.name %>
-          </li>
-          <%- end -%>          
-          <li><%= email_link @person %></li>
         <%- end -%>
-          <li><%= link_to "#{h @person.name}'s blog",
-                  blog_path(@person.blog) %></li>
-          <%- if current_person.admin? -%>
-          <li>
-          <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
-          <%= link_to activity, 
-                      admin_person_path(@person, :task => "deactivated"),
-                      :method => :put %>
-          </li>
-          <%- end -%>
-        </ul>
-      <%- end -%>
+      </ul>
     </div>
-    <%= display @person.description %>
+    <%= display @person.formatted_categories, :class => "meta" %>
+    <%= display simple_format_without_paragraph @person.description %>
   </div>
 
-  <%= render :partial => 'recent_activity' %>
   <%= render :partial => 'wall' %>
+  <%= render :partial => 'recent_exchanges' %>
+  <%- if current_person?(@person) -%>
+  <%= render :partial => 'recent_sent_exchanges' %>
+  <%- end -%>
+  <%= render :partial => 'recent_activity' %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <%= render :partial => 'shared/minifeed' %>
-  <%- unless current_person?(@person) -%>
-    <%= render :partial => 'shared/contacts_preview',
-               :locals => { :person => @person } %>
-    <%= render :partial => 'common_contacts' %>
-  <%- end -%>
   <%= render :partial => 'groups', 
              :locals => {:groups => @own_groups, :title => "Admin Groups", :link => "admin"} %>
   <%= render :partial => 'groups', 
              :locals => {:groups => @groups, :title => "Groups", :link => "groups"} %>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/minifeed' %>
 <%- end -%>
 

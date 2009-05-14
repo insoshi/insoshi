@@ -1,0 +1,14 @@
+<li>
+  <a class="categoryMenuItem" href="#<%= category_counter + 1  %>" title="" name="<%= category_counter + 1 %>"><%= category.name %></a>
+  <div>
+    <ul>
+    <% if category.children.empty? -%>
+      <li><%= link_to 'General', category %></li>
+      <br>
+    <% else -%>
+      <li><%= link_to 'General', category %></li>
+      <%= render :partial => 'subcategory', :collection => category.children %>
+    <% end -%>
+    </ul>
+  </div>
+</li>

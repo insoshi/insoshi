@@ -45,6 +45,7 @@ class PhotosController < ApplicationController
     end
     person_data = { :person => current_person,
                     :primary => current_person.photos.empty? }
+    # raise params.inspect
     @photo = Photo.new(params[:photo].merge(person_data))
   
     respond_to do |format|
