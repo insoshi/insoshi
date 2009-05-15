@@ -40,6 +40,7 @@ class Preference < ActiveRecord::Base
                   :about, :demo, :whitelist, :gmail, :registration_notification,
                   :practice, :steps, :questions, :memberships, :contact,
                   :twitter_name, :twitter_password, :twitter_api,
+                  :group_option,
                   :twitter_oauth_consumer_key, :twitter_oauth_consumer_secret
 
   validates_presence_of :domain,       :if => :using_email?

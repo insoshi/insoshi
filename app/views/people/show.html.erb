@@ -60,10 +60,12 @@
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
+  <% if global_prefs.group_option? %>
   <%= render :partial => 'groups', 
              :locals => {:groups => @own_groups, :title => "Admin Groups", :link => "admin"} %>
   <%= render :partial => 'groups', 
              :locals => {:groups => @groups, :title => "Groups", :link => "groups"} %>
+  <%- end -%>
   <%= render :partial => 'searches/box' %>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>

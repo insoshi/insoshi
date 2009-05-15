@@ -13,6 +13,7 @@
 
 class Account < ActiveRecord::Base
   belongs_to :person
+  belongs_to :group
 
   INITIAL_BALANCE = 0
 

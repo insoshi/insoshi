@@ -18,12 +18,14 @@ class Exchange < ActiveRecord::Base
   belongs_to :customer, :class_name => "Person", :foreign_key => "customer_id"
   belongs_to :worker, :class_name => "Person", :foreign_key => "worker_id"
   belongs_to :req
+  belongs_to :group
 
   validates_presence_of :customer, :worker, :amount, :req
 
-  attr_accessible :amount
+  attr_accessible :amount, :group_id
 
   after_create :log_activity
+  before_save :calculate_account_balances
   after_save :send_payment_notification_to_worker
   before_destroy :send_suspend_payment_notification_to_worker
 
@@ -36,6 +38,31 @@ class Exchange < ActiveRecord::Base
   def validate
     unless amount > 0
       errors.add(:amount, "must be greater than zero")
+    end
+
+    unless self.group.nil?
+      unless worker.groups.include?(self.group)
+        errors.add(:group_id, "does not include recipient as a member")
+      end
+      unless customer.groups.include?(self.group)
+        errors.add(:group_id, "does not include you as a member")
+      end
+    end
+  end
+
+  def calculate_account_balances
+    begin
+      Account.transaction do
+        if group.nil?
+          worker.account.deposit(amount)
+          customer.account.withdraw(amount)
+        else
+          worker.accounts.find(:first, :conditions => ["group_id = ?",group.id]).deposit(amount)
+          customer.accounts.find(:first, :conditions => ["group_id = ?",group.id]).withdraw(amount)
+        end
+      end
+    rescue
+      self.req.destroy
     end
   end
 

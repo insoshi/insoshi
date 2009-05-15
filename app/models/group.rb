@@ -5,6 +5,7 @@ class Group < ActiveRecord::Base
   
   has_many :photos, :dependent => :destroy, :order => "created_at"
   has_and_belongs_to_many :people, :order => "name DESC"
+  has_many :exchanges
   
   belongs_to :owner, :class_name => "Person", :foreign_key => "person_id"
   

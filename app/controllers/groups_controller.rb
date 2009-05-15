@@ -72,6 +72,14 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     if !current_person.groups.include?(@group)
       current_person.groups << @group
+
+      if current_person.accounts.find(:first,:conditions => ["group_id = ?",@group.id]).nil?
+        account = Account.new( :name => @group.name ) # group name can change
+        account.balance = Account::INITIAL_BALANCE 
+        account.person = current_person
+        account.group = @group
+        account.save
+      end
     end
     respond_to do |format|
       flash[:notice] = 'Joined to group.'

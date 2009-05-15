@@ -22,48 +22,43 @@ class ExchangesController < ApplicationController
   def new
     @req = Req.new
     @req.name = 'Gift transfer'
+    @groups = Person.find(params[:person_id]).groups
     @exchange = Exchange.new
   end
 
   def create
-    @exchange = Exchange.new(params[:exchange]) # amount is the only accessible field
+    @exchange = Exchange.new(params[:exchange]) # amount and group_id are the only accessible fields
     @req = Req.new(params[:req])
 
-    begin
-      Exchange.transaction do
-        @exchange.worker = @worker
-        @exchange.customer = current_person
+    @req.name = 'Gift transfer' if @req.name.blank? # XML creation might not set this
+    @req.estimated_hours = @exchange.amount
+    @req.due_date = Time.now
+    @req.person = current_person
+    @req.active = false
+    @req.save!
 
-        if @req.name.blank?
-          @req.name = 'Gift transfer' # XML creation might not set this
-        end
-        @req.estimated_hours = @exchange.amount
-        @req.due_date = Time.now
-        @req.person = current_person
-        @req.active = false
-        @req.save!
+    @exchange.worker = @worker
+    @exchange.customer = current_person
+    @exchange.req = @req
 
-        @exchange.req = @req
-        @exchange.save!
-
-        @worker.account.deposit(@exchange.amount)
-        current_person.account.withdraw(@exchange.amount)
-      end
-    rescue
-      respond_to do |format|
-        flash[:error] = "Error with transfer."
-        format.html { render :action => "new" and return }
-        format.xml { render :xml => @exchange.errors, :status => :unprocessable_entity }
-        format.json { render :json => @exchange.errors, :status => :unprocessable_entity }
-        return
-      end
-    end
 
     respond_to do |format|
-      flash[:notice] = "Transfer succeeded."
-      format.html { redirect_to person_path(@worker) and return }
-      format.xml { render :xml => @exchange, :status => :created, :location => [@worker, @exchange] }
-      format.json { render :json => @exchange, :status => :created, :location => [@worker, @exchange] }
+      if @exchange.save
+        flash[:notice] = "Transfer succeeded."
+        format.html { redirect_to person_path(@worker) and return }
+        format.xml { render :xml => @exchange, :status => :created, :location => [@worker, @exchange] }
+        format.json { render :json => @exchange, :status => :created, :location => [@worker, @exchange] }
+      else
+        flash[:error] = "Error with transfer."
+        @groups = Person.find(params[:person_id]).groups
+        req_name = @req.name
+        @req.destroy
+        @req = Req.new
+        @req.name = req_name
+        format.html { render :action => "new" }
+        format.xml { render :xml => @exchange.errors, :status => :unprocessable_entity }
+        format.json { render :json => @exchange.errors, :status => :unprocessable_entity }
+      end
     end
   end
 

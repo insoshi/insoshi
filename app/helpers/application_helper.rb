@@ -19,12 +19,16 @@ module ApplicationHelper
       messages = menu_element("Inbox", messages_path)
 #      blog     = menu_element("Blog",     blog_path(current_person.blog))
       photos   = menu_element("Photos",   photos_path)
-      groups = menu_element("Groups", groups_path())
+      if global_prefs.group_option?
+        groups = menu_element("Groups", groups_path())
 #      contacts = menu_element("Contacts",
 #                              person_connections_path(current_person))
 #      links = [home, profile, contacts, messages, blog, people, forum]
       #events   = menu_element("Events", events_path)
-      links = [home, profile, categories, requests, people, messages, groups, forum]
+        links = [home, profile, categories, requests, people, messages, groups, forum]
+      else
+        links = [home, profile, categories, requests, people, messages, forum]
+      end
       # TODO: remove 'unless production?' once events are ready.
       #links.push(events) #unless production?
       
@@ -35,8 +39,12 @@ module ApplicationHelper
       forums =  menu_element(inflect("Forum", Forum.count),
                              admin_forums_path)
       preferences = menu_element("Prefs", admin_preferences_path)
-      groups = menu_element("Groups", admin_groups_path)
-      links = [home, spam, people, groups, forums, preferences]
+      if global_prefs.group_option?
+        groups = menu_element("Groups", admin_groups_path)
+        links = [home, spam, people, forums, groups, preferences]
+      else
+        links = [home, spam, people, forums, preferences]
+      end
     else
       #links = [home, people]
       links = [home, categories]

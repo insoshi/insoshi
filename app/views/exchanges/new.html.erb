@@ -8,6 +8,12 @@
       <%= f.label :amount %>
       <%= f.text_field :amount, :size => 2 %>
     </div>
+  <% if global_prefs.group_option? %>
+    <div class="form_row">
+      <label for="group_id">Group</label>
+      <%= collection_select( 'exchange', 'group_id', @groups, :id, :name, { :include_blank => true } ) %>
+    </div>
+  <%- end -%>
     <% fields_for :req do |r| %>
       <div class="form_row">
         <%= r.label 'Service provided' %>
