@@ -20,6 +20,9 @@
                                         :alt => h(@group.name) %>
       <ul class="tools">
         <li>
+          Currency Unit: <%= @group.unit %>
+        </li>
+        <li>
           <%- unless group_owner?(current_person,@group) -%>
             <%- unless current_person.groups.include?(@group) -%>
               <%= link_to "Join to group",

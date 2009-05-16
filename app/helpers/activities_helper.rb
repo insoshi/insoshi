@@ -59,7 +59,11 @@ module ActivitiesHelper
       %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
     when "Exchange"
       exchange = activity.item
-      %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
+      if exchange.group.nil?
+        %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
+      else
+        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{req_link(exchange.req.name,exchange.req)}.)
+      end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -119,7 +123,11 @@ module ActivitiesHelper
       %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
     when "Exchange"
       exchange = activity.item
-      %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
+      if exchange.group.nil?
+        %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
+      else
+        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{req_link(exchange.req.name,exchange.req)}.)
+      end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
