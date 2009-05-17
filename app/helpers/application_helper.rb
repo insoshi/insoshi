@@ -142,10 +142,14 @@ module ApplicationHelper
     concat(content, block.binding)
   end
 
-  def account_link(person, options = {})
-    path = person_path(person) # XXX link to transactions
+  def account_link(account, options = {})
+    path = person_account_path(account.person,account) # XXX link to transactions
     img = image_tag("icons/bargraph.gif")
-    action = "Balance: #{person.account.balance} hours"
+    if account.group.nil?
+      action = "Main Account: #{account.balance} hours"
+    else
+      action = "Acct ##{account.id}: #{account.balance} #{account.group.unit}"
+    end
     opts = {}
     str = link_to(img,path, opts)
     str << "&nbsp;"

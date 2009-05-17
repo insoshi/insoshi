@@ -43,6 +43,7 @@ ActionController::Routing::Routes.draw do |map|
                                     :action => 'verify_email'
   map.resources :people, :member => {:groups => :get, :admin_groups => :get} do |person|
      person.resources :messages
+     person.resources :accounts
      person.resources :exchanges
      person.resources :addresses
      person.resources :photos

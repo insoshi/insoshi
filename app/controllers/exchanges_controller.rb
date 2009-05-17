@@ -4,7 +4,7 @@ class ExchangesController < ApplicationController
   before_filter :find_worker
 
   def index
-    @exchanges = @worker.received_exchanges.find(:all, :order => 'created_at DESC')
+    @exchanges = @worker.received_exchanges # created_at DESC
     respond_to do |format|
       format.xml { render :xml => @exchanges }
       format.json { render :json => @exchanges.to_json( :include => :req ) }

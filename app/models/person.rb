@@ -234,11 +234,19 @@ class Person < ActiveRecord::Base
   ## Exchange methods
  
   def received_exchanges(page = 1)
-    _received_exchanges.paginate(:page => page, :per_page => EXCHANGES_PER_PAGE)
+    _received_exchanges.paginate(:page => page, :per_page => EXCHANGES_PER_PAGE, :conditions => "group_id is NULL")
+  end
+
+  def received_group_exchanges(group_id, page = 1)
+    _received_exchanges.paginate(:page => page, :per_page => EXCHANGES_PER_PAGE, :conditions => ["group_id = ?", group_id])
   end
 
   def sent_exchanges(page = 1)
     _sent_exchanges.paginate(:page => page, :per_page => EXCHANGES_PER_PAGE)
+  end
+
+  def sent_group_exchanges(group_id, page = 1)
+    _sent_exchanges.paginate(:page => page, :per_page => EXCHANGES_PER_PAGE, :conditions => ["group_id = ?", group_id])
   end
 
   def trashed_messages(page = 1)
