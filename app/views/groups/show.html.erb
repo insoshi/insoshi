@@ -46,7 +46,10 @@
     </div>
     <%= display @group.description %>
   </div>
-  
+  <h2>Recent Exchanges</h2>
+  <ul class="list activity full">
+    <%= render :partial => 'exchange', :collection => @group.exchanges %>
+  </ul>
   
 <%- end -%>
 

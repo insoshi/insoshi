@@ -1,0 +1,17 @@
+<li>
+  <div class="profile-image">
+    <%= image_link exchange.worker, :image => :thumbnail %>
+    <%= image_tag "icons/switch.gif", :class => "icon", :alt => "Street Cred" %>
+  </div>
+  <p>
+  <% if exchange.group.nil? %>
+    <%= person_link exchange.worker %><%= " earned #{exchange.amount.to_s} hours for " %><%= link_to h(exchange.req.name), exchange.req %>
+  <% else %>
+    <%= person_link exchange.worker %><%= " earned #{exchange.amount.to_s} #{exchange.group.unit} for " %><%= link_to h(exchange.req.name), exchange.req %>
+  <%- end -%>
+  </p>
+  <p class="meta published">
+    <%= time_ago_in_words(exchange.created_at).capitalize %> ago
+  </p>
+
+</li>
