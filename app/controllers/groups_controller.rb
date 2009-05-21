@@ -37,6 +37,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
+        add_account
         flash[:notice] = 'Group was successfully created.'
         format.html { redirect_to(group_path(@group)) }
       else
@@ -70,17 +71,7 @@ class GroupsController < ApplicationController
   
   def join
     @group = Group.find(params[:id])
-    if !current_person.groups.include?(@group)
-      current_person.groups << @group
-
-      if current_person.accounts.find(:first,:conditions => ["group_id = ?",@group.id]).nil?
-        account = Account.new( :name => @group.name ) # group name can change
-        account.balance = Account::INITIAL_BALANCE 
-        account.person = current_person
-        account.group = @group
-        account.save
-      end
-    end
+    add_account
     respond_to do |format|
       flash[:notice] = 'Joined to group.'
       format.html { redirect_to(group_path(@group)) }
@@ -165,6 +156,19 @@ class GroupsController < ApplicationController
   end
   
   private
+
+  def add_account
+    if !current_person.groups.include?(@group)
+      current_person.groups << @group
+      if current_person.accounts.find(:first,:conditions => ["group_id = ?",@group.id]).nil?
+        account = Account.new( :name => @group.name ) # group name can change
+        account.balance = Account::INITIAL_BALANCE 
+        account.person = current_person
+        account.group = @group
+        account.save
+      end
+    end
+  end
   
   def group_owner
     redirect_to home_url unless current_person == Group.find(params[:id]).owner
