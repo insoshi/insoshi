@@ -23,19 +23,20 @@
           Currency Unit: <%= @group.unit %>
         </li>
         <li>
-          <%- unless group_owner?(current_person,@group) -%>
-            <%- unless current_person.groups.include?(@group) -%>
-              <%= link_to "Join to group",
-                      join_group_path(@group), :method => :post %>
-            <%- else -%>
-              <%= link_to "Leave group",
-                      leave_group_path(@group), :method => :post %>
-            <%- end -%>
+          <%- unless current_person.groups.include?(@group) -%>
+            <%= link_to "Join to group",
+                    join_group_path(@group), :method => :post %>
           <%- else -%>
-            You are group's admin
-            <%= link_to "(delete it)", group_path(@group), :confirm => 'Are you sure?', :method => :delete %>
+            <%= link_to "Leave group",
+                    leave_group_path(@group), :method => :post %>
           <%- end -%>
         </li>
+        <%- if group_owner?(current_person,@group) -%>
+          <li>
+            You are group's admin
+            <%= link_to "(delete it)", group_path(@group), :confirm => 'Are you sure?', :method => :delete %>
+          </li>
+        <%- end -%>
         <%- if current_person.admin? -%>
           <li>
           <%= link_to "delete group",
