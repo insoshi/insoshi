@@ -34,6 +34,7 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(params[:group])
+    @group.owner = current_person
 
     respond_to do |format|
       if @group.save
