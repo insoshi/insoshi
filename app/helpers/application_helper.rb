@@ -149,9 +149,9 @@ module ApplicationHelper
       action = "Main Account: #{account.balance} hours"
     else
       if  not account.group.unit.nil?
-        action = "#{account.name}: #{account.balance} #{account.group.unit}"
+        action = "#{account.group.name}: #{account.balance} #{account.group.unit}"
       else
-        action = "#{account.name}: #{account.balance} hours"
+        action = "#{account.group.name}: #{account.balance} hours"
       end
       
     end
