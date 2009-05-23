@@ -148,7 +148,12 @@ module ApplicationHelper
     if account.group.nil?
       action = "Main Account: #{account.balance} hours"
     else
-      action = "Acct ##{account.id}: #{account.balance} #{account.group.unit}"
+      if  not account.group.unit.nil?
+        action = "Acct ##{account.id}: #{account.balance} #{account.group.unit}"
+      else
+        action = "Acct ##{account.id}: #{account.balance} hours"
+      end
+      
     end
     opts = {}
     str = link_to(img,path, opts)
