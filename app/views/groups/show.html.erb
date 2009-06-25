@@ -22,20 +22,44 @@
         <li>
           Currency Unit: <%= @group.unit %>
         </li>
-        <li>
-          <%- unless current_person.groups.include?(@group) -%>
+        <%- unless Membership.exist?(current_person,@group) -%>
+          <li>
             <%= link_to "Join to group",
-                    join_group_path(@group), :method => :post %>
-          <%- else -%>
-            <%= link_to "Leave group",
-                    leave_group_path(@group), :method => :post %>
-          <%- end -%>
-        </li>
+                      group_memberships_path(@group), :method => :post %>
+          </li>
+        <%- else -%>
+            <%- if @group.has_invited?(current_person) -%>
+                <li>You have been invited <%= link_to "(respond)", invitations_person_path(current_person)+"#group_#{@group.id}" %></li>
+            <%- end -%>
+        <%- end -%>
+        <%- if Membership.connected?(current_person,@group) -%>
+          <li>You are <strong><%= h @group.name%></strong>'s member
+              <br />
+              (<%= link_to "Leave group",
+                      membership_path(Membership.mem(current_person, @group)), 
+                      :method => :delete,
+                      :confirm => 
+                      "Are you sure you want to leave #{h @group.name}?" %>)
+          </li>
+        <%- end -%>
+        <%- if Membership.pending?(current_person, @group) -%>
+          <li>
+            You have requested to be member of <strong><%= h @group.name%></strong>
+          </li>
+        <%- end -%>
         <%- if group_owner?(current_person,@group) -%>
           <li>
             You are group's admin
             <%= link_to "(delete it)", group_path(@group), :confirm => 'Are you sure?', :method => :delete %>
           </li>
+          <li>
+            Mode: <%= get_groups_modes[@group.mode][0] %>
+          </li>
+          <% if @group.hidden? %>
+              <li>
+                  <%= link_to "Invite contacts", invite_group_path(@group) %>
+              </li>
+          <% end %>
         <%- end -%>
         <%- if current_person.admin? -%>
           <li>
@@ -58,8 +82,14 @@
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'shared/add_group_button' %>
   <%= render :partial => 'searches/box' %>
-  <%= render :partial => "people", 
-             :locals => {:members => @group.people, :title => "members"} %>
+  <% if @group.pending_request.length > 0 and @group.owner?(current_person) %>
+    <%= render :partial => "people", 
+               :locals => {:members => (@group.pending_request), :title => "pending request"} %>
+  <% end %>
+  <% if @group.public? or @group.owner?(current_person) or current_person.admin? %>
+    <%= render :partial => "people", 
+               :locals => {:members => @group.people, :title => "members"} %>
+  <% end %>
   <%= render :partial => "people", 
              :locals => {:members => ([] << @group.owner), :title => "admin"} %>
 <%- end -%>

@@ -32,4 +32,12 @@ module GroupsHelper
     link_to(group.name, group_path(group))
   end
   
+  def get_groups_modes
+    modes = []
+    modes << ["Public",0]
+    modes << ["Private",1]
+    modes << ["Hidden", 2]
+    return modes
+  end
+  
 end

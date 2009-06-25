@@ -19,7 +19,12 @@
       <label for="description">Description</label>
       <%= f.text_area :description %>
     </div>
-      <%= f.hidden_field :person_id, :value => current_person.id %>
+
+    <div class="form_row">
+      <label for="mode">Mode</label>
+      <%= f.select :mode, get_groups_modes %>
+    </div>  
+    
     <div class="form_row">
       <%= f.submit "Update", :class => "button" %>
     </div>

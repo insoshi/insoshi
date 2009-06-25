@@ -10,6 +10,8 @@ class HomeController < ApplicationController
       @feed = current_person.feed
       @some_contacts = current_person.some_contacts
       @requested_contacts = current_person.requested_contacts
+      @requested_memberships = current_person.requested_memberships
+      @invitations = current_person.invitations
     else
       @feed = Activity.global_feed
     end    

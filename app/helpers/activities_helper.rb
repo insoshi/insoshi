@@ -46,7 +46,9 @@ module ActivitiesHelper
     when "Person"
       %(#{person_link(person)}'s description has changed.)
     when "Group"
-      %(#{person_link(person)} created the new group '#{group_link(Group.find(activity.item))}')
+      %(#{person_link(person)} created the group '#{group_link(Group.find(activity.item))}')
+    when "Membership"
+      %(#{person_link(person)} joined the group '#{group_link(Group.find(activity.item.group))}')
     when "Event"
       event = activity.item
       %(#{person_link(person)} has created a new event: #{event_link(event.title, event)}.)
@@ -112,7 +114,9 @@ module ActivitiesHelper
     when "Person"
       %(#{person_link(person)}'s description has changed.)
     when "Group"
-      %(#{person_link(person)} created the new group '#{group_link(Group.find(activity.item))}')
+      %(#{person_link(person)} created the group '#{group_link(Group.find(activity.item))}')
+    when "Membership"
+      %(#{person_link(person)} joined the group '#{group_link(Group.find(activity.item.group))}')
     when "Event"
       %(#{person_link(person)}'s has created a new #{event_link("event", activity.item)}.)
     when "EventAttendee"
@@ -159,6 +163,8 @@ module ActivitiesHelper
             when "Person"
               "edit.gif"
             when "Group"
+              "new.gif"
+            when "Membership"
               "add.gif"
             when "Event"
               "time.gif"

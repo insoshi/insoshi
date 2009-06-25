@@ -13,8 +13,11 @@
   <%= render :partial => "searches/box" %>
   <%= render :partial => 'shared/add_req_button' %>
   <%- if logged_in? -%>
+    <%= render :partial => 'requested_memberships' %>
     <%= render :partial => 'messages_preview' %>
     <% if global_prefs.group_option? %>
+    <%= render :partial => 'requested_memberships' %>
+    <%= render :partial => 'invitations' %>
     <%= render :partial => 'people/groups', 
                :locals => {:groups => current_person.own_groups,
                :title => "Admin Groups", :link => "admin"} %>

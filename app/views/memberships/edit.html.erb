@@ -1,0 +1,17 @@
+<h2>Membership request</h2>
+
+<% if params[:invitation] %>
+    <p><%= image_link @membership.person, :image => :thumbnail %></p>
+    <p><%= person_link @membership.person %> wants to join your group <%= group_link @membership.group %></p>
+<% else %>
+    <p><%= image_link @membership.group, :image => :thumbnail %></p>
+    <p>You have been invited to join the group <%= group_link @membership.group %></p>
+<% end %>
+
+<% form_for(@membership) do |f| %>
+  <p>
+    <%= f.submit "Accept", :class => "button" %>
+    <%= f.submit "Decline", :id => nil, :class => "button" %>
+    <%= hidden_field_tag "invitation", params[:invitation]%>
+  </p>
+<% end %>

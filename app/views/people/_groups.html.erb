@@ -9,7 +9,8 @@
     <%- end -%>
     <li class="more">
       <%= link_to "See all &raquo;", 
-          link == "admin" ? admin_groups_person_path(@person) : groups_person_path(@person) %>
+          link == "admin" ? 
+              admin_groups_person_path(@person) : groups_person_path(@person) %>
     </li>
   </ul>
 <%- end -%>

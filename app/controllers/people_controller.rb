@@ -16,7 +16,8 @@ class PeopleController < ApplicationController
   end
   
   def show
-    @person = Person.find(params[:id])
+    person_id = ( 0 == params[:id].to_i ) ? current_person.id : params[:id]
+    @person = Person.find(person_id)
     unless @person.active? or current_person.admin?
       flash[:error] = "That person is not active"
       redirect_to home_url and return
@@ -24,13 +25,18 @@ class PeopleController < ApplicationController
     if logged_in?
       @some_contacts = @person.some_contacts
       @common_contacts = current_person.common_contacts_with(@person)
-      @groups = @person.groups
-      @own_groups = @person.own_groups
+      @groups = current_person == @person ? @person.groups : @person.groups_not_hidden
+      @own_groups = current_person == @person ? @person.own_groups : @person.own_not_hidden_groups
     end
     respond_to do |format|
       format.html
-      format.json { render :json => @person.to_json( :methods => :icon, :only => [:id, :name, :description, :created_at, :identity_url,:icon], :include => {:accounts => {:only => [:balance,:group_id]}, :groups => {:only => [:id,:name]} }) }
-      format.xml { render :xml => @person.to_xml( :methods => :icon, :only => [:id, :name, :description, :created_at, :identity_url,:icon], :include => {:accounts => {:only => [:balance,:group_id]}, :groups => {:only => [:id,:name]} }) }
+      if current_person == @person
+        format.json { render :json => @person.to_json( :methods => :icon, :only => [:id, :name, :description, :created_at, :identity_url,:icon], :include => {:accounts => {:only => [:balance,:group_id]}, :groups => {:only => [:id,:name]}, :own_groups => { :methods => [:icon,:thumbnail], :only => [:id,:name,:mode,:icon,:thumbnail] } }) }
+        format.xml { render :xml => @person.to_xml( :methods => :icon, :only => [:id, :name, :description, :created_at, :identity_url,:icon], :include => {:accounts => {:only => [:balance,:group_id]}, :groups => {:only => [:id,:name]}, :own_groups => { :methods => [:icon,:thumbnail], :only => [:id,:name,:mode,:icon,:thumbnail] }}) }
+      else
+        format.json { render :json => @person.to_json( :methods => :icon, :only => [:id, :name, :description, :created_at, :identity_url,:icon], :include => {:accounts => {:only => [:balance,:group_id]}, :groups_not_hidden => {:only => [:id,:name]}, :own_not_hidden_groups => {:only => [:id,:name] }}) }
+        format.xml { render :xml => @person.to_xml( :methods => :icon, :only => [:id, :name, :description, :created_at, :identity_url,:icon], :include => {:accounts => {:only => [:balance,:group_id]}, :groups_not_hidden => {:only => [:id,:name]}, :own_not_hidden_groups => {:only => [:id,:name] }}) }
+      end
     end
   end
   
@@ -168,7 +174,7 @@ class PeopleController < ApplicationController
   
   def groups
     @person = Person.find(params[:id])
-    @groups = @person.groups
+    @groups = current_person == @person ? @person.groups : @person.groups_not_hidden
     
     respond_to do |format|
       format.html
@@ -179,6 +185,16 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     @groups = @person.own_groups
     render :action => :groups
+  end
+  
+  def request_memberships
+    @person = Person.find(params[:id])
+    @requested_memberships = @person.requested_memberships
+  end
+  
+  def invitations
+    @person = Person.find(params[:id])
+    @invitations = @person.invitations
   end
   
   private

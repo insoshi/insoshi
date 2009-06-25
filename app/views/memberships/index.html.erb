@@ -1,0 +1,26 @@
+<h1>Listing memberships</h1>
+
+<table>
+  <tr>
+    <th>Person</th>
+    <th>Group</th>
+    <th>Status</th>
+    <th>Accepted at</th>
+  </tr>
+
+<% for membership in @memberships %>
+  <tr>
+    <td><%=h membership.person_id %></td>
+    <td><%=h membership.group_id %></td>
+    <td><%=h membership.status %></td>
+    <td><%=h membership.accepted_at %></td>
+    <td><%= link_to 'Show', membership %></td>
+    <td><%= link_to 'Edit', edit_membership_path(membership) %></td>
+    <td><%= link_to 'Destroy', membership, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New membership', new_membership_path %>

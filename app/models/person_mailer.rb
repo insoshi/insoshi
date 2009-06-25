@@ -34,6 +34,56 @@ class PersonMailer < ActionMailer::Base
                  "preferences_note" => preferences_note(connection.person)
   end
   
+  def membership_public_group(membership)
+    from         "Membership done <membership@#{domain}>"
+    recipients   membership.group.owner.email
+    subject      formatted_subject("New member in group #{membership.group.name}")
+    body         "domain" => server,
+                 "membership" => membership,
+                 "url" => members_group_path(membership.group),
+                 "preferences_note" => preferences_note(membership.group.owner)
+  end
+  
+  def membership_request(membership)
+    from         "Membership request <membership@#{domain}>"
+    recipients   membership.group.owner.email
+    subject      formatted_subject("Membership request for group #{membership.group.name}")
+    body         "domain" => server,
+                 "membership" => membership,
+                 "url" => members_group_path(membership.group),
+                 "preferences_note" => preferences_note(membership.group.owner)
+  end
+  
+  def membership_accepted(membership)
+    from         "Membership accepted <membership@#{domain}>"
+    recipients   membership.person.email
+    subject      formatted_subject("You have been accepted to join #{membership.group.name}")
+    body         "domain" => server,
+                 "membership" => membership,
+                 "url" => group_path(membership.group),
+                 "preferences_note" => preferences_note(membership.person)
+  end
+  
+  def invitation_notification(membership)
+    from         "Invitation notification <invitation#{domain}>"
+    recipients   membership.person.email
+    subject      formatted_subject("Invitation from group #{membership.group.name}")
+    body         "domain" => server,
+                 "membership" => membership,
+                 "url" => edit_membership_path(membership),
+                 "preferences_note" => preferences_note(membership.person)
+  end
+  
+  def invitation_accepted(membership)
+    from         "Invitation accepted <invitation@#{domain}>"
+    recipients   membership.group.owner.email
+    subject      formatted_subject("#{membership.person.name} accepted the invitation")
+    body         "domain" => server,
+                 "membership" => membership,
+                 "url" => members_group_path(membership.group),
+                 "preferences_note" => preferences_note(membership.group.owner)
+  end
+  
   def blog_comment_notification(comment)
     from         "Comment notification <comment@#{domain}>"
     recipients   comment.commented_person.email

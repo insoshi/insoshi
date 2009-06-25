@@ -428,3 +428,28 @@ p.formatting span
   height: 16px;
   background-image: url(/images/loading.gif);
 }
+
+div.cancel_membership {
+    float: right;
+    margin: -20px -19px;
+}
+div.accept_or_cancel_membership {
+    float: right;
+    margin: -20px -31px;
+}
+.grid.medium div.accept_or_cancel_membership a, .grid.medium div.cancel_membership a {
+    display:inline;
+}
+
+ul.invite_contacts {
+    height: 200px;
+/*    width: 55%;*/
+    overflow: auto;
+}
+ul.invite_contacts li {
+    background: none;
+}
+
+ul.invite_contacts li input.check{
+    margin-right: 10px;
+}

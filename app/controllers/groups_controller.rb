@@ -1,11 +1,11 @@
 class GroupsController < ApplicationController
-  before_filter :login_required
+  skip_before_filter :require_activation
+  before_filter :login_or_oauth_required
   before_filter :group_owner, :only => [:edit, :update, :destroy, 
     :new_photo, :save_photo, :delete_photo]
   
   def index
-    @groups = Group.paginate(:page => params[:page],
-                                          :per_page => RASTER_PER_PAGE)
+    @groups = Group.not_hidden(params[:page])
 
     respond_to do |format|
       format.html
@@ -14,10 +14,8 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
-
-    respond_to do |format|
-      format.html
-    end
+    @contacts = contacts_to_invite
+    group_redirect_if_not_public 
   end
 
   def new
@@ -38,11 +36,12 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
-        add_account
         flash[:notice] = 'Group was successfully created.'
         format.html { redirect_to(group_path(@group)) }
+        format.xml  { render :xml => @group, :status => :created, :location => @group }
       else
         format.html { render :action => "new" }
+        format.xml { render :xml => @group.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -66,26 +65,37 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       flash[:notice] = 'Group was successfully deleted.'
-      format.html { redirect_to(groups_path()) }
+      format.html { redirect_to(groups_path) }
     end
   end
   
-  def join
+  def invite
     @group = Group.find(params[:id])
-    add_account
+    @contacts = contacts_to_invite
+
     respond_to do |format|
-      flash[:notice] = 'Joined to group.'
-      format.html { redirect_to(group_path(@group)) }
+      if current_person.own_groups.include?(@group) and @group.hidden?
+        if @contacts.length == 0
+          flash[:error] = "You have no contacts or you have invited all of them"
+          format.html { redirect_to(group_path(@group)) }
+        end
+        format.html
+      else
+        format.html { redirect_to(group_path(@group)) }
+      end
     end
   end
   
-  def leave
+  def invite_them
     @group = Group.find(params[:id])
-    if current_person.groups.include?(@group)
-      flash[:notice] = 'You have left the group.'
-      current_person.groups.delete(@group)
+    invitations = params[:checkbox].collect{|x| x if  x[1]=="1" }.compact
+    invitations.each do |invitation|
+      if Membership.find_all_by_group_id(@group, :conditions => ['person_id = ?',invitation[0].to_i]).empty?
+        Membership.invite(Person.find(invitation[0].to_i),@group)
+      end
     end
     respond_to do |format|
+      flash[:notice] = "You have invite some of your contacts to '#{@group.name}'"
       format.html { redirect_to(group_path(@group)) }
     end
   end
@@ -94,10 +104,9 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @members = @group.people.paginate(:page => params[:page],
                                           :per_page => RASTER_PER_PAGE)
-    
-    respond_to do |format|
-      format.html
-    end
+    @pending = @group.pending_request.paginate(:page => params[:page],
+                                          :per_page => RASTER_PER_PAGE)
+    group_redirect_if_not_public
   end
   
   def photos
@@ -157,22 +166,26 @@ class GroupsController < ApplicationController
   end
   
   private
-
-  def add_account
-    if !current_person.groups.include?(@group)
-      current_person.groups << @group
-      if current_person.accounts.find(:first,:conditions => ["group_id = ?",@group.id]).nil?
-        account = Account.new( :name => @group.name ) # group name can change
-        account.balance = Account::INITIAL_BALANCE 
-        account.person = current_person
-        account.group = @group
-        account.save
-      end
-    end
+  
+  def contacts_to_invite
+    current_person.contacts - 
+      Membership.find_all_by_group_id(current_person.own_hidden_groups).collect{|x| x.person}
   end
   
   def group_owner
     redirect_to home_url unless current_person == Group.find(params[:id]).owner
+  end
+  
+  def group_redirect_if_not_public
+    respond_to do |format|
+      if @group.is_viewable?(current_person)
+        format.html
+        format.xml { render :xml => @group.to_xml(:methods => [:icon,:thumbnail], :only => [:id,:name,:description,:mode,:person_id,:created_at,:updated_at,:unit,:icon,:thumbnail]) }
+      else
+        format.html { redirect_to(groups_path) }
+        format.xml { render :nothing => true, :status => :unauthorized }
+      end
+    end
   end
   
 end

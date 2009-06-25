@@ -76,7 +76,7 @@ class Person < ActiveRecord::Base
                       :limit => NUM_WALL_COMMENTS
   has_many :connections
   has_many :contacts, :through => :connections,
-                      #:conditions => ACCEPTED_AND_ACTIVE,
+                      :conditions => ACCEPTED_AND_ACTIVE,
                       :order => 'people.created_at DESC'
   has_many :photos, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections,
@@ -99,8 +99,17 @@ class Person < ActiveRecord::Base
 
   has_many :page_views, :order => 'created_at DESC'
   
-  has_many :own_groups, :class_name => "Group", :foreign_key => "person_id"
-  has_and_belongs_to_many :groups, :order => "name DESC"
+  has_many :own_groups, :class_name => "Group", :foreign_key => "person_id",
+    :order => "name ASC"
+  has_many :own_not_hidden_groups, :class_name => "Group", 
+    :foreign_key => "person_id", :conditions => "mode != 2", :order => "name ASC"
+  has_many :own_hidden_groups, :class_name => "Group", 
+    :foreign_key => "person_id", :conditions => "mode = 2", :order => "name ASC"
+  has_many :memberships
+  has_many :groups, :through => :memberships, :source => :group, 
+    :conditions => "status = 0", :order => "name ASC"
+  has_many :groups_not_hidden, :through => :memberships, :source => :group, 
+    :conditions => "status = 0 and mode != 2", :order => "name ASC"
   
   has_many :events
   has_many :event_attendees
@@ -212,6 +221,16 @@ class Person < ActiveRecord::Base
   def some_contacts
     contacts[(0...12)]
   end
+  
+  def requested_memberships
+    Membership.find(:all, 
+          :conditions => ['status = 2 and group_id in (?)', self.own_group_ids])
+  end
+  
+  def invitations
+    Membership.find_all_by_person_id(self, 
+          :conditions => ['status = 1'], :order => 'created_at DESC')
+  end
 
   # Contact links for the contact image raster.
   def requested_contact_links
@@ -319,19 +338,19 @@ class Person < ActiveRecord::Base
   end
 
   def main_photo
-    photo.nil? ? "default.png" : photo.public_filename
+    photo.nil? ? "/images/default.png" : photo.public_filename
   end
 
   def thumbnail
-    photo.nil? ? "default_thumbnail.png" : photo.public_filename(:thumbnail)
+    photo.nil? ? "/images/default_thumbnail.png" : photo.public_filename(:thumbnail)
   end
 
   def icon
-    photo.nil? ? "default_icon.png" : photo.public_filename(:icon)
+    photo.nil? ? "/images/default_icon.png" : photo.public_filename(:icon)
   end
 
   def bounded_icon
-    photo.nil? ? "default_icon.png" : photo.public_filename(:bounded_icon)
+    photo.nil? ? "/images/default_icon.png" : photo.public_filename(:bounded_icon)
   end
 
   # Return the photos ordered by primary first, then by created_at.

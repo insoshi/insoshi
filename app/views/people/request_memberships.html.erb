@@ -1,0 +1,25 @@
+<%- column_div :type => :primary do -%>
+  <h2>Membership request for your groups</h2>
+  <%- unless @requested_memberships.empty? -%>
+    <ul class="list people">
+      <%- @requested_memberships.each do |membership| -%>
+        <li>
+          <div class="profile-image">
+            <%= image_link membership.person, :class => "photo", :image => :thumbnail%>
+          </div>
+          <p><%= person_link membership.person, :class => "url fn" %> in 
+            <%= group_link membership.group %>
+          </p><br />
+          <p><%= link_to "Respond", edit_membership_path(membership)+'?invitation=true' %></p>
+        </li>
+      <%- end -%>
+    </ul>
+  <%- else -%>
+    <h3>No membership request (yet)</h3>
+  <%- end -%>
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>
