@@ -15,6 +15,15 @@ class AddAuditsTable < ActiveRecord::Migration
     add_index :audits, [:auditable_id, :auditable_type], :name => 'auditable_index'
     add_index :audits, [:user_id, :user_type], :name => 'user_index'
     add_index :audits, :created_at  
+
+    # This was previously in accounts migration but needs to be after audits for new installs and
+    # did not want to create a new migration that would confuse existing installs
+    #
+    person = Person.find(1)
+    account = Account.new( :name => 'personal' )
+    account.balance = 0
+    account.person = person
+    account.save!
   end
 
   def self.down

@@ -8,11 +8,6 @@ class CreateAccounts < ActiveRecord::Migration
       t.timestamps
     end
 
-    person = Person.find(1)
-    account = Account.new( :name => 'personal' )
-    account.balance = 0
-    account.person = person
-    account.save!
   end
 
   def self.down
