@@ -118,6 +118,7 @@ class Person < ActiveRecord::Base
   has_many :addresses
   has_many :client_applications
   has_many :tokens, :class_name => "OauthToken", :order => "authorized_at DESC", :include => [:client_application]
+  has_many :transactions, :class_name=>"Transact", :finder_sql=>'select exchanges.* from exchanges where (customer_id=#{id} or worker_id=#{id}) order by created_at desc'
 
   has_and_belongs_to_many :categories
 
