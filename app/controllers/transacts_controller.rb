@@ -38,10 +38,11 @@ class TransactsController < ApplicationController
     @transact.save_req(@req)
 
     if @transact.save
-      flash[:notice] = "Transfer succeeded."
       if @transact.redirect_url.blank?
+        flash[:notice] = "Transfer succeeded."
         redirect_to person_path(@worker) and return
       else
+        @transact.redirect_url << "?status=ok"
         redirect_to @transact.redirect_url
       end
     else
