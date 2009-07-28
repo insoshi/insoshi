@@ -94,7 +94,9 @@ class Bid < ActiveRecord::Base
     bid_note = Message.new()
     subject = "BID: " + self.estimated_hours.to_s + " hours - " + self.req.name 
     bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
-    bid_note.content = "See your <a href=\"" + req_path(self.req) + "\">request</a> to consider bid"
+    bid_note.content = ""
+    bid_note.content << self.private_message_to_requestor + "\n--\n\n" if self.private_message_to_requestor.length > 0
+    bid_note.content << "See your <a href=\"" + req_path(self.req) + "\">request</a> to consider bid"
     bid_note.sender = self.person
     bid_note.recipient = self.req.person
     bid_note.save!
