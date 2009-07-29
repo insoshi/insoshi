@@ -17,7 +17,7 @@
     <% fields_for :req do |r| %>
       <div class="form_row">
         <%= r.label 'Service provided' %>
-        <%= r.text_field :name %>
+        <%= r.text_field :name, :onclick => "this.value='';" %>
       </div>
     <% end %>
     <div class="form_row">

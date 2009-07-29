@@ -21,7 +21,7 @@ class ExchangesController < ApplicationController
 
   def new
     @req = Req.new
-    @req.name = 'Gift transfer'
+    @req.name = 'Enter description of service here'
     @groups = Person.find(params[:person_id]).groups
     @exchange = Exchange.new
   end
