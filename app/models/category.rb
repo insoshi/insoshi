@@ -19,6 +19,10 @@ class Category < ActiveRecord::Base
   has_and_belongs_to_many :people
   acts_as_tree
 
+  def descendants
+    children.map(&:descendants).flatten + children
+  end
+
   def ancestors_name
     if parent
       parent.ancestors_name + parent.name + ':'
@@ -39,5 +43,9 @@ class Category < ActiveRecord::Base
     today = DateTime.now
     reqs = self.reqs.find(:all, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
     reqs.delete_if { |req| req.has_approved? }
+  end
+
+  def descendants_current_and_active_reqs_count
+    descendants.map {|d| d.current_and_active_reqs.length}.inject(0) {|sum,element| sum + element}
   end
 end
