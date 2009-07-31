@@ -5,13 +5,48 @@
       <%= link_to "Click here to see your messages",
                   messages_path %>
     </div>
+    <%- end -%>
+<%- if logged_in? -%>
+    <h2>Your Active Bids/Work</h2>
+<%- if @bids.empty? -%>
+    <h3 class="blankslate">No active bids</h3>
+<%- else -%>
+<ul class="list full">
+    <%= render :partial => '/shared/bid', :collection => @bids %>
+  </ul>
+<%- end -%>
+    <h2>Your Active Requests</h2>
+<%- if @reqs.empty? -%>
+    <h3 class="blankslate">No active requests</h3>
+<%- else -%>
+<ul class="list full">
+    <%= render :partial => '/reqs/req', :collection => @reqs %>
+  </ul>
   <%- end -%>
-  <%= render :partial => 'feed' %>
+<%- else -%>
+  <%- unless global_prefs.app_name.blank? -%>
+  <h2><%= global_prefs.app_name %> blog</h2>
+  <%- else -%>
+  <h2><%= Blog %></h2>
+<%- end -%>
+  <%- if @posts.empty? -%>
+    <h3 class="blankslate">
+      No posts yet!
+      <%- if current_person?(@blog.person) -%>
+        <%= link_to "Write a post", new_blog_post_path(@blog) %>
+      <%- end -%>
+    </h3>
+  <%- else -%>
+    <ul class="list blog full">
+      <%= render :partial => 'posts/blog_post', :collection => @posts %>
+    </ul>
+  <%- end -%>
+  
+  <%= will_paginate(@posts) %>
+<%- end -%>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <%= render :partial => "searches/box" %>
-  <%= render :partial => 'shared/add_req_button' %>
   <%- if logged_in? -%>
     <%= render :partial => 'requested_memberships' %>
     <%= render :partial => 'messages_preview' %>
@@ -26,22 +61,8 @@
                  :title => "Groups", :link => "groups"} %>
     <%- end -%>
   <%- else -%>
-    <%- unless global_prefs.app_name.blank? -%>
-      <h2>About <%= global_prefs.app_name %></h2>
-    
-      <p>
-        <%= link_to "Click here", about_path %>
-        to learn more about us.
-      </p>
-    <%- end -%>
-    
-    <h2>Join
-      <%= global_prefs.app_name.blank? ? "the site" : global_prefs.app_name %>
-    </h2>
-    
-    <div style="text-align: center;">
-      <%= link_to image_tag("button_signup.png"), signup_path %>
-    </div>
-      
+  <% unless global_prefs.gmail.blank? -%>
+  <%= render :partial => 'shared/calendar', :object => global_prefs.gmail %>
+  <%- end -%>
   <%- end -%>
 <%- end -%>

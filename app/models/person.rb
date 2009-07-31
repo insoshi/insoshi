@@ -54,7 +54,7 @@ class Person < ActiveRecord::Base
   SEARCH_PER_PAGE = 8
   MESSAGES_PER_PAGE = 5
   EXCHANGES_PER_PAGE = 10
-  NUM_RECENT_MESSAGES = 4
+  NUM_RECENT_MESSAGES = 3
   NUM_WALL_COMMENTS = 10
   NUM_RECENT = 8
   FEED_SIZE = 10
@@ -121,6 +121,8 @@ class Person < ActiveRecord::Base
   has_many :transactions, :class_name=>"Transact", :finder_sql=>'select exchanges.* from exchanges where (customer_id=#{id} or worker_id=#{id}) order by created_at desc'
 
   has_and_belongs_to_many :categories
+  has_many :reqs
+  has_many :bids
 
   validates_presence_of     :email, :name
   validates_presence_of     :password,              :if => :password_required?
@@ -296,6 +298,17 @@ class Person < ActiveRecord::Base
 
   def formatted_categories
     categories.collect { |cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
+  end
+
+  def current_and_active_reqs
+    today = DateTime.now
+    reqs = self.reqs.find(:all, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
+    reqs.delete_if { |req| req.has_approved? }
+  end
+
+  def current_and_active_bids
+    today = DateTime.now
+    bids = self.bids.find(:all, :conditions => ["state != ? AND NOT (state = ? AND expiration_date < ?)", 'approved', 'offered', today], :order => 'created_at DESC')
   end
 
   def create_address

@@ -2,21 +2,19 @@ class HomeController < ApplicationController
   skip_before_filter :require_activation
   
   def index
-    @body = "home"
     @topics = Topic.find_recent
     @members = Person.find_recent
     if logged_in?
+      @body = "home"
       @person = current_person
-      @feed = current_person.feed
-      @some_contacts = current_person.some_contacts
-      @requested_contacts = current_person.requested_contacts
+      @reqs = current_person.current_and_active_reqs
+      @bids = current_person.current_and_active_bids
       @requested_memberships = current_person.requested_memberships
       @invitations = current_person.invitations
     else
-      @feed = Activity.global_feed
+      @body = "blog"
+      @blog = Blog.find(1)
+      @posts = @blog.posts.paginate(:page => params[:page])
     end    
-    respond_to do |format|
-      format.html
-    end  
   end
 end
