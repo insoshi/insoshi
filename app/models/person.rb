@@ -163,13 +163,22 @@ class Person < ActiveRecord::Base
     
     # Return the people who are 'mostly' active.
     # People are mostly active if they have logged in recently enough.
-    def mostly_active(page = 1)
-      paginate(:all, :page => page,
-                     :per_page => RASTER_PER_PAGE,
-                     :group_by => 'first_letter',
-                     :conditions => conditions_for_mostly_active,
-                     #:order => "created_at DESC")
-                     :order => "name ASC")
+    def mostly_active(sort_opts, page = 1)
+      opts = { :page => page,
+               :per_page => RASTER_PER_PAGE,
+               :conditions => conditions_for_mostly_active }
+      opts.merge!(sort_opts)
+      paginate(:all, opts)
+    end
+
+    def mostly_active_alpha(page = 1)
+      sort_opts = {:order => "name ASC", :group_by => "first_letter"}
+      mostly_active(sort_opts, page)
+    end
+
+    def mostly_active_newest(page = 1)
+      sort_opts = {:order => "created_at DESC"}
+      mostly_active(sort_opts, page)
     end
 
     def mostly_active_with_zipcode(zipcode, page = 1)
