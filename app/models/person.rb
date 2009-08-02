@@ -171,6 +171,15 @@ class Person < ActiveRecord::Base
                      #:order => "created_at DESC")
                      :order => "name ASC")
     end
+
+    def mostly_active_with_zipcode(zipcode, page = 1)
+      addresses = Address.find(:all, :conditions => ['zipcode_plus_4 = ?', zipcode])
+      people = addresses.map {|a| a.person}.uniq
+      people.paginate(:page => page,
+                      :per_page => RASTER_PER_PAGE,
+                      :conditions => conditions_for_mostly_active,
+                      :order => "name ASC")
+    end
     
     # Return *all* the active users.
     def all_active
@@ -313,7 +322,7 @@ class Person < ActiveRecord::Base
 
   def create_address
     address = Address.new( :name => 'personal' )
-    address.zipcode_plus_4 = '78701'
+    address.zipcode_plus_4 = '89001'
     address.person = self
     address.save
   end

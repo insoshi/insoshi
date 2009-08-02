@@ -1,15 +1,23 @@
 <%- column_div :type => :primary do -%>
   <% unless @people.empty? -%>
-    <h2>People</h2>
+    <h2>People<%= h @zipcode %></h2>
     <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
     <ul class="list people">
       <%= render :partial => @people %>
     </ul>
     <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
+  <% else %>
+    <h2>People</h2>
+    <% if !@zipcode.empty? %>
+      <div class="meta">No results for <%= h @zipcode %></div>
+    <% end %>
   <% end -%>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'searches/box' %>
+  <%- if global_prefs.zipcode_browsing? -%>
+    <%= render :partial => 'zip', :collection => @zips %>
+  <%- end -%>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>

@@ -5,10 +5,17 @@ class PeopleController < ApplicationController
   before_filter :login_or_oauth_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
   before_filter :setup
+  before_filter :setup_zips, :only => [:index, :show]
   
   def index
-    @people = Person.mostly_active(params[:page])
-    @people.add_missing_links(('A'..'Z').to_a)
+    @zipcode = ""
+    if global_prefs.zipcode_browsing? && params[:zipcode]
+      @people = Person.mostly_active_with_zipcode(params[:zipcode],params[:page])
+      @zipcode = "(#{params[:zipcode]})"
+    else
+      @people = Person.mostly_active(params[:page])
+      @people.add_missing_links(('A'..'Z').to_a)
+    end
 
     respond_to do |format|
       format.html
@@ -201,6 +208,14 @@ class PeopleController < ApplicationController
 
     def setup
       @body = "person"
+    end
+
+    def setup_zips
+      @zips = []
+      @zips = Address.find(:all).map {|a| a.zipcode_plus_4}
+      @zips.uniq!
+      @zips.delete_if {|z| z.blank?}
+      @zips.sort!
     end
 
     def correct_person_required
