@@ -47,6 +47,9 @@ class Exchange < ActiveRecord::Base
       unless customer.groups.include?(self.group)
         errors.add(:group_id, "does not include you as a member")
       end
+      unless self.group.adhoc_currency?
+        errors_add(:group_id, "does not have its own currency")
+      end
     end
   end
 

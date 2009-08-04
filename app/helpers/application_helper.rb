@@ -171,7 +171,7 @@ module ApplicationHelper
     img = image_tag("icons/switch.gif")
     path = new_person_exchange_path(person)
     opts = {}
-    action = "Transfer hours"
+    action = "Give credit"
     str = link_to(img,path,opts)
     str << "&nbsp;"
     str << link_to_unless_current(action, path, opts)

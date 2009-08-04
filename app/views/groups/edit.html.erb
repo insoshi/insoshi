@@ -10,10 +10,12 @@
       <%= f.text_field :name %>
     </div>
 
+<%- if @group.adhoc_currency? -%>
     <div class="form_row">
       <label for="unit">Currency unit (plural)</label>
       <%= f.text_field :unit %>
     </div>
+<%- end -%>
 
     <div class="form_row">
       <label for="description">Description</label>

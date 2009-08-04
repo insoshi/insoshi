@@ -1,3 +1,17 @@
+<script type="text/javascript">
+  function toggle_currency_unit(el) {
+    unit_el = document.getElementById('group_unit');
+    if (1 == el.getValue())
+    {
+      unit_el.disabled = false;
+    }
+    else
+    {
+      unit_el.value = '';
+      unit_el.disabled = true;
+    }
+  }
+</script>
 <%- column_div :type => :primary do -%>
   <h2>New group</h2>
 
@@ -10,8 +24,13 @@
     </div>
 
     <div class="form_row">
+      <label for="adhoc_currency" class="checkbox">Create ad-hoc currency</label>
+      <%= f.check_box :adhoc_currency, :onclick => "toggle_currency_unit(this);" %>
+    </div>
+
+    <div class="form_row">
       <label for="unit">Currency unit (plural)</label>
-      <%= f.text_field :unit %>
+      <%= f.text_field :unit, :disabled => true %>
     </div>
 
     <div class="form_row">

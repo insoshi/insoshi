@@ -23,6 +23,7 @@ class ExchangesController < ApplicationController
     @req = Req.new
     @req.name = 'Enter description of service here'
     @groups = Person.find(params[:person_id]).groups
+    @groups.delete_if {|g| !g.adhoc_currency?}
     @exchange = Exchange.new
   end
 

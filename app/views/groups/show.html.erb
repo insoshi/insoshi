@@ -18,10 +18,12 @@
     <div class="toolbox">
       <%= image_tag @group.main_photo, :class => "profile-image photo",
                                         :alt => h(@group.name) %>
-      <ul class="tools">
+        <ul class="tools">
+<%- if @group.adhoc_currency? -%>
         <li>
           Currency Unit: <%= @group.unit %>
         </li>
+<%- end -%>
         <%- unless Membership.exist?(current_person,@group) -%>
           <li>
             <%= link_to "Join to group",
