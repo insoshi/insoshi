@@ -4,18 +4,8 @@
     <%= link_to sanitize(blog_post.title),
                 blog_post_path(@blog, blog_post),
                 :class => "show-follow" %>
-    <%- if current_person?(@blog.person) -%>
-      | <%= link_to "Edit", edit_blog_post_path(@blog, blog_post) %>
-      | <%= link_to "Delete", blog_post_path(@blog, blog_post),
-                              :method => :delete %>
-    <%- end -%>
   </h3>
-  <%= display simple_format_without_paragraph blog_post.body %>
+  <%= display simple_format_without_paragraph blog_post.content %>
   <p class="meta">
-    Posted <%= time_ago_in_words(blog_post.created_at) %> ago
-    by <%= person_link @blog.person %> | 
-    <%- n = blog_post.comments.count -%>
-    <%= link_to pluralize(n, "comment"),
-                blog_post_path(@blog, blog_post, :comments => n),
-                :class => "show-follow" %>    
+    Posted <%= time_ago_in_words(blog_post.date_published) %> ago
   </p>

@@ -5,8 +5,8 @@
       <%= link_to "Click here to see your messages",
                   messages_path %>
     </div>
-    <%- end -%>
-<%- if logged_in? -%>
+  <%- end -%>
+  <%- if logged_in? -%>
     <h2>Your Active Bids/Work</h2>
 <%- if @bids.empty? -%>
     <h3 class="blankslate">No active bids</h3>
@@ -32,9 +32,6 @@
   <%- if @posts.empty? -%>
     <h3 class="blankslate">
       No posts yet!
-      <%- if current_person?(@blog.person) -%>
-        <%= link_to "Write a post", new_blog_post_path(@blog) %>
-      <%- end -%>
     </h3>
   <%- else -%>
     <ul class="list blog full">
@@ -48,6 +45,10 @@
 
 <%- column_div :type => :secondary do -%>
   <%- if logged_in? -%>
+    <%- if current_person.admin? %>
+      <h2>System Blog</h2>
+      <%= link_to "refresh", '/home/refreshblog', :class => "small" %>
+    <%- end -%>
     <%= render :partial => 'messages_preview' %>
     <% if global_prefs.group_option? %>
     <%= render :partial => 'requested_memberships' %>

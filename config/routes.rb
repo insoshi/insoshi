@@ -85,6 +85,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.home '/', :controller => 'home'
+  map.home '/refreshblog', :controller => 'home', :action => 'refreshblog'
   map.about '/about', :controller => 'home', :action => 'about'
   map.practice '/practice', :controller => 'home', :action => 'practice'
   map.steps '/steps', :controller => 'home', :action => 'steps'
