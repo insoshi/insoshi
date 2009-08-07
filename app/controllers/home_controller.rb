@@ -18,8 +18,12 @@ class HomeController < ApplicationController
   end
 
   def refreshblog
-    FeedPost.update_posts
-    flash[:notice] = "Blog updated."
+    new_posts_count = FeedPost.update_posts
+    if nil == new_posts_count
+      flash[:error] = "Blog update failed."
+    else
+      flash[:notice] = "Blog updated #{new_posts_count} entries."
+    end
     redirect_to '/home' 
   end
 end
