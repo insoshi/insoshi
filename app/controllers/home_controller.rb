@@ -13,8 +13,12 @@ class HomeController < ApplicationController
       @invitations = current_person.invitations
     else
       @body = "blog"
-      @posts = FeedPost.find(:all).paginate(:page => params[:page])
+      @posts = FeedPost.paginate(:all, :page => params[:page])
     end    
+  end
+
+  def show
+    @post = FeedPost.find(params[:id])
   end
 
   def refreshblog

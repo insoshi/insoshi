@@ -25,11 +25,11 @@ class FeedPost < ActiveRecord::Base
             post.content = entry.content
             post.authors = entry.authors
             post.date_published = entry.date_published
-            post.last_updated = entry.last_updated
+            #post.last_updated = entry.last_updated
             post.save
           end
         end
-        new_ids.count
+        new_ids.length
       rescue
         nil
       end

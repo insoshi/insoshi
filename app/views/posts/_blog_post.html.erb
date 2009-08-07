@@ -1,11 +1,11 @@
 <li class="post">
   <h3> 
     <a name="post_<%= blog_post.id %>"></a>
-    <%= link_to sanitize(blog_post.title),
-                blog_post_path(@blog, blog_post),
+    <%= link_to sanitize(blog_post.title), {:controller => 'home', :action => 'show', :id => blog_post.id},
                 :class => "show-follow" %>
   </h3>
-  <%= display simple_format_without_paragraph blog_post.content %>
+  <%= blog_post.content %>
   <p class="meta">
     Posted <%= time_ago_in_words(blog_post.date_published) %> ago
   </p>
+</li>
