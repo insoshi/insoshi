@@ -13,7 +13,7 @@ class HomeController < ApplicationController
       @invitations = current_person.invitations
     else
       @body = "blog"
-      @posts = FeedPost.paginate(:all, :page => params[:page])
+      @posts = FeedPost.paginate(:all, :page => params[:page], :order => 'date_published DESC')
     end    
   end
 
