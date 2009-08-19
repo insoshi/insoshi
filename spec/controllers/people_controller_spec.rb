@@ -32,7 +32,7 @@ describe PeopleController do
     end
     
     it "should have a working show page" do
-      get :show, :id => @person
+      get :show, :id => @person.id
       response.should be_success
       response.should render_template("show")
     end
@@ -46,7 +46,7 @@ describe PeopleController do
     
     it "should redirect to home for deactivated users" do
       @person.toggle!(:deactivated)
-      get :show, :id => @person
+      get :show, :id => @person.id
       response.should redirect_to(home_url)
       flash[:error].should =~ /not active/
     end
@@ -55,7 +55,7 @@ describe PeopleController do
       enable_email_notifications
       @person.email_verified = false; @person.save!
       @person.should_not be_active
-      get :show, :id => @person
+      get :show, :id => @person.id
       response.should redirect_to(home_url)
       flash[:error].should =~ /not active/
     end
@@ -223,25 +223,25 @@ describe PeopleController do
     
     it "should display the edit link for current user" do
       login_as @person
-      get :show, :id => @person
+      get :show, :id => @person.id
       response.should have_tag("a[href=?]", edit_person_path(@person))
     end
     
     it "should not display the edit link for other viewers" do
       login_as(:aaron)
-      get :show, :id => @person
+      get :show, :id => @person.id
       response.should_not have_tag("a[href=?]", edit_person_path(@person))
     end
     
     it "should not display the edit link for non-logged-in viewers" do
       logout
-      get :show, :id => @person
+      get :show, :id => @person.id
       response.should_not have_tag("a[href=?]", edit_person_path(@person))
     end
     
     it "should not display a deactivated person" do
       @person.toggle!(:deactivated)
-      get :show, :id => @person
+      get :show, :id => @person.id
       response.should redirect_to(home_url)
     end
     
@@ -249,7 +249,7 @@ describe PeopleController do
       login_as(@person)
       @contact = people(:aaron)
       conn = Connection.connect(@person, @contact)
-      get :show, :id => @contact.reload
+      get :show, :id => @contact.id
       response.should have_tag("a", :text => "end connection")
       response.should have_tag("a[href=?]", connection_path(conn))
     end
@@ -257,7 +257,7 @@ describe PeopleController do
     it "should not display break up link if not connected" do
       login_as(@person)
       @contact = people(:aaron)
-      get :show, :id => @contact.reload
+      get :show, :id => @contact.id
       response.should_not have_tag("a", :text => "end connection")
     end
   end
