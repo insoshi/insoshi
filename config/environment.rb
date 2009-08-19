@@ -74,9 +74,10 @@ Rails::Initializer.run do |config|
   #                                    :lib => 'will_paginate',
   #                                    :source => 'http://gems.github.com'
   config.gem 'chronic'
-  config.gem 'rubyist-aasm', :lib => 'aasm'
+  config.gem 'ttilley-aasm', :lib => 'aasm'
   config.gem 'twitter'
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
+  config.gem 'feed-normalizer'
 end
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation
