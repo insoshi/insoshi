@@ -50,13 +50,7 @@ class Admin::BroadcastEmailsController < ApplicationController
     respond_to do |format|
       if @broadcast_email.save
         flash[:notice] = 'Admin::BroadcastEmail was successfully created.'
-
-        peeps = Person.find(:all)
-        peeps.each do |peep|
-          email = BroadcastMailer.create_spew(peep, @broadcast_email.subject, @broadcast_email.message)
-          email.set_content_type("text/html")
-          BroadcastMailer.deliver(email)
-        end
+        MailingsWorker.async_send_mailing(:mailing_id => @broadcast_email.id)
 
         format.html { redirect_to(admin_broadcast_email_path(@broadcast_email)) }
         format.xml  { render :xml => @broadcast_email, :status => :created, :location => @broadcast_email }
@@ -70,7 +64,6 @@ class Admin::BroadcastEmailsController < ApplicationController
   # PUT /admin_broadcast_emails/1
   # PUT /admin_broadcast_emails/1.xml
   def update
-    logger.warn("XXX fuck")
     @broadcast_email = BroadcastEmail.find(params[:id])
 
     respond_to do |format|
