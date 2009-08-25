@@ -22,7 +22,7 @@ class Topic < ActiveRecord::Base
   
   belongs_to :forum, :counter_cache => true
   belongs_to :person
-  has_many :posts, :order => :created_at, :dependent => :destroy,
+  has_many :posts, :order => 'created_at DESC', :dependent => :destroy,
                    :class_name => "ForumPost"
   has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Topic'", :dependent => :destroy
   validates_presence_of :name, :forum, :person
@@ -33,7 +33,11 @@ class Topic < ActiveRecord::Base
   def self.find_recent
     find(:all, :order => "created_at DESC", :limit => NUM_RECENT)
   end
-  
+
+  def self.find_recently_active(forum, page = 1)
+    forum.topics.sort_by {|t| t.posts.first.created_at}.reverse.paginate( :page => page )
+  end
+
   private
   
     def log_activity
