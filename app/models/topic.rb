@@ -35,7 +35,8 @@ class Topic < ActiveRecord::Base
   end
 
   def self.find_recently_active(forum, page = 1)
-    forum.topics.sort_by {|t| t.posts.first.created_at}.reverse.paginate( :page => page )
+    topics = forum.topics.delete_if {|t| t.posts.length == 0}
+    topics.sort_by {|t| t.posts.first.created_at}.reverse.paginate( :page => page )
   end
 
   private
