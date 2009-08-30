@@ -77,7 +77,9 @@ Rails::Initializer.run do |config|
   config.gem 'ttilley-aasm', :lib => 'aasm'
   config.gem 'twitter'
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
+  config.gem 'starling-starling', :lib => 'starling'
   config.gem 'feed-normalizer'
+  config.gem 'json'
 end
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation

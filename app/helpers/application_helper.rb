@@ -40,7 +40,7 @@ module ApplicationHelper
       
     elsif logged_in? and admin_view?
       home =    menu_element("Home", home_path)
-      spam = menu_element("Spam", admin_broadcast_emails_path)
+      spam = menu_element("eNews", admin_broadcast_emails_path)
       people =  menu_element("People", admin_people_path)
       forums =  menu_element(inflect("Forum", Forum.count),
                              admin_forums_path)

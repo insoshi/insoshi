@@ -15,7 +15,8 @@ class ForumsController < ApplicationController
 
   def show
     @forum = Forum.find(params[:id])
-    @topics = @forum.topics.paginate(:page => params[:page])
+    #@topics = @forum.topics.paginate(:page => params[:page])
+    @topics = Topic.find_recently_active(@forum, params[:page]) 
   end
   
   private
