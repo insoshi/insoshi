@@ -10,7 +10,7 @@
   </p>
     <%= display req.formatted_categories, :class => "meta" %>
   <p>
-    <%= h req.description %>
+    <%= display simple_format_without_paragraph req.description %>
   </p>
   <p class="meta">
     <%= render :partial => "shared/bid_message", :collection => approved_messages(req) %>
