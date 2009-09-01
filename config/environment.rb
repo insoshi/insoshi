@@ -73,8 +73,13 @@ Rails::Initializer.run do |config|
   # config.gem 'mislav-will_paginate', :version => '~> 2.3.2',
   #                                    :lib => 'will_paginate',
   #                                    :source => 'http://gems.github.com'
+  # rake dependencies
+  config.gem 'oauth', :version => '>= 0.2.1'
   config.gem 'chronic'
+  # add source:
+  # `gem sources -a http://gems.github.com`
   config.gem 'ttilley-aasm', :lib => 'aasm'
+  # installed with `rake gems:install`
   config.gem 'twitter'
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
   config.gem 'starling-starling', :lib => 'starling'
