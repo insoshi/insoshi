@@ -13,7 +13,7 @@ module OAuthSpecHelpers
   end
   
   def create_oauth_request
-    @token=AccessToken.create :client_application=>@application,:user=>users(:quentin)
+    @token=AccessToken.create :client_application=>@application,:person=>people(:quentin)
     @request=@consumer.create_signed_request( :get,"/hello",@token)
   end
   
@@ -30,9 +30,9 @@ end
 
 describe ClientApplication do #, :shared=>true do
   include OAuthSpecHelpers
-  fixtures :users,:client_applications,:oauth_tokens
+  fixtures :people,:client_applications,:oauth_tokens
   before(:each) do
-    @application = ClientApplication.create :name=>"Agree2",:url=>"http://agree2.com",:user=>users(:quentin)
+    @application = ClientApplication.create :name=>"Agree2",:url=>"http://agree2.com",:person=>people(:quentin)
     create_consumer
   end
 

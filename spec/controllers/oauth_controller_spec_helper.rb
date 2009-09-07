@@ -1,12 +1,12 @@
 module OAuthControllerSpecHelper
   def login
     controller.stub!(:local_request?).and_return(true)
-    @user=mock_model(User)
+    @user=mock_model(Person)
     controller.stub!(:current_user).and_return(@user)
     @tokens=[]
     @tokens.stub!(:find).and_return(@tokens)
     @user.stub!(:tokens).and_return(@tokens)
-    User.stub!(:find_by_id).and_return(@user)
+    Person.stub!(:find_by_id).and_return(@user)
   end
   
   def login_as_application_owner
@@ -20,9 +20,9 @@ module OAuthControllerSpecHelper
   
   def setup_oauth
     controller.stub!(:local_request?).and_return(true)
-    @user||=mock_model(User)
+    @user||=mock_model(Person)
     
-    User.stub!(:find_by_id).and_return(@user)
+    Person.stub!(:find_by_id).and_return(@user)
     
     @server=OAuth::Server.new "http://test.host"
     @consumer=OAuth::Consumer.new('key','secret',{:site=>"http://test.host"})

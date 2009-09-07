@@ -41,7 +41,7 @@ class Category < ActiveRecord::Base
 
   def current_and_active_reqs
     today = DateTime.now
-    reqs = self.reqs.find(:all, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
+    reqs = self.reqs.find(:all, :conditions => ["active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
     reqs.delete_if { |req| req.has_approved? }
   end
 

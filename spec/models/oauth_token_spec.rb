@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe RequestToken do
-  fixtures :client_applications,:users,:oauth_tokens
+  fixtures :client_applications,:people,:oauth_tokens
   before(:each) do
     @token = RequestToken.create :client_application=>client_applications(:one)
   end
@@ -31,10 +31,10 @@ describe RequestToken do
   end
   
   it "should authorize request" do
-    @token.authorize!(users(:quentin))
+    @token.authorize!(people(:quentin))
     @token.should be_authorized
     @token.authorized_at.should_not be_nil
-    @token.user.should==users(:quentin)
+    @token.person.should==people(:quentin)
   end
   
   it "should not exchange without approval" do
@@ -43,12 +43,12 @@ describe RequestToken do
   end
   
   it "should not exchange without approval" do
-    @token.authorize!(users(:quentin))
+    @token.authorize!(people(:quentin))
     @access=@token.exchange!
     @access.should_not==false
     @token.should be_invalidated
     
-    @access.user.should==users(:quentin)
+    @access.person.should==people(:quentin)
     @access.should be_authorized
   end
   
