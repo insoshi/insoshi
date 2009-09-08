@@ -14,3 +14,6 @@ development:
   
 test:
   listens_on: localhost:12345
+
+cucumber:
+  listens_on: localhost:12345
