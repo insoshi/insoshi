@@ -1,0 +1,73 @@
+<%- column_div :type => :primary do -%>
+  <h2>Editing group</h2>
+  <div id="profile_edit">
+
+  <% form_for(@group) do |f| %>
+    <%= f.error_messages %>
+
+    <div class="form_row">
+      <label for="name">Name</label>
+      <%= f.text_field :name %>
+    </div>
+
+<%- if @group.adhoc_currency? -%>
+    <div class="form_row">
+      <label for="unit">Currency unit (plural)</label>
+      <%= f.text_field :unit %>
+    </div>
+<%- end -%>
+
+    <div class="form_row">
+      <label for="description">Description</label>
+      <%= f.text_area :description %>
+    </div>
+
+    <div class="form_row">
+      <label for="mode">Mode</label>
+      <%= f.select :mode, get_groups_modes %>
+    </div>  
+    
+    <div class="form_row">
+      <%= f.submit "Update", :class => "button" %>
+    </div>
+  <% end %>
+  
+  
+  <h3>Photos</h3>
+  
+    <% if @group.photos.empty? %>
+      <%= image_tag @group.thumbnail %>
+    <% else %>
+    <table>
+      <% @group.sorted_photos.collect_every(N_COLUMNS) do |row| %>
+      <tr>
+      <% row.each do |photo| %>
+        <td  style="padding-left: 1em;">
+          <%= image_tag photo.public_filename(:thumbnail) %>
+        </td>
+      <% end %>
+      </tr>
+      <tr>
+        <% row.each do |photo| %>
+        <td style="padding-left: 1em;">
+          <% if photo.primary? %>
+            primary
+          <% else %>
+            <%= link_to "select", photo_path(photo),
+                                          :method => :put %>
+          <% end %>
+          |
+          <%= link_to image_tag("icons/close.gif"), 
+                      delete_photo_group_path(@group)+"?photo_id=#{photo.id}",
+                      :method => :delete %>
+        </td>
+        <% end %>
+      </tr>
+      <% end %>
+    </table>
+    <% end %>
+    <br />
+    <%= button_to "Add a photo", new_photo_group_path(@group), :class => "button" %>
+  </div>
+
+<%- end -%>

@@ -1,12 +1,12 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 20090216032013
 #
 # Table name: connections
 #
-#  id          :integer(11)     not null, primary key
-#  person_id   :integer(11)     
-#  contact_id  :integer(11)     
-#  status      :integer(11)     
+#  id          :integer(4)      not null, primary key
+#  person_id   :integer(4)      
+#  contact_id  :integer(4)      
+#  status      :integer(4)      
 #  accepted_at :datetime        
 #  created_at  :datetime        
 #  updated_at  :datetime        
@@ -18,7 +18,7 @@ class Connection < ActiveRecord::Base
   
   belongs_to :person
   belongs_to :contact, :class_name => "Person", :foreign_key => "contact_id"
-  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
+  has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Connection'", :dependent => :destroy
   validates_presence_of :person_id, :contact_id
   
   # Status codes.

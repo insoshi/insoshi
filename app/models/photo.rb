@@ -1,17 +1,17 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 20090216032013
 #
 # Table name: photos
 #
-#  id           :integer(11)     not null, primary key
-#  person_id    :integer(11)     
-#  parent_id    :integer(11)     
+#  id           :integer(4)      not null, primary key
+#  person_id    :integer(4)      
+#  parent_id    :integer(4)      
 #  content_type :string(255)     
 #  filename     :string(255)     
 #  thumbnail    :string(255)     
-#  size         :integer(11)     
-#  width        :integer(11)     
-#  height       :integer(11)     
+#  size         :integer(4)      
+#  width        :integer(4)      
+#  height       :integer(4)      
 #  primary      :boolean(1)      
 #  created_at   :datetime        
 #  updated_at   :datetime        
@@ -26,6 +26,7 @@ class Photo < ActiveRecord::Base
   attr_protected :id, :person_id, :parent_id, :created_at, :updated_at
   
   belongs_to :person
+  belongs_to :group
   has_attachment :content_type => :image, 
                  :storage => :file_system, 
                  :max_size => UPLOAD_LIMIT.megabytes,
@@ -35,7 +36,7 @@ class Photo < ActiveRecord::Base
                                   :icon         => '36>',
                                   :bounded_icon => '36x36>' }
   
-  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
+  has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Photo'", :dependent => :destroy
     
   after_save :log_activity
                  
@@ -60,8 +61,10 @@ class Photo < ActiveRecord::Base
   
   def log_activity
     if self.primary?
-      activity = Activity.create!(:item => self, :person => self.person)
-      add_activities(:activity => activity, :person => self.person)
+      unless self.person.nil?
+        activity = Activity.create!(:item => self, :person => self.person)
+        add_activities(:activity => activity, :person => self.person)
+      end
     end
   end
 

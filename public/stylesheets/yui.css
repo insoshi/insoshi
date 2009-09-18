@@ -1,0 +1,29 @@
+/* YUI */
+
+.yui-toolbar-group-insertitem{
+
+}
+
+
+span.yui-toolbar-insertimage{
+	display:none ! important;
+}
+.yui-toolbar-group{
+	line-height:auto;
+}
+
+.yui-editor-container{
+	margin-bottom:10px;
+	
+}
+
+.yui-toolbar-titlebar h2 a{
+	display:none;
+}
+.yui-toolbar-titlebar h2{
+	height:auto;
+}
+
+div#broadcast_email_message_container{
+	width:740px ! important;
+}

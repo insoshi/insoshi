@@ -11,8 +11,14 @@
 
       <div class="form_row">
         <label for="person_name">Name</label>
-        <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
+        <%= f.text_field :name, :maxlength => Person::MAX_NAME,:readonly => true %>
       </div>
+    <% unless global_prefs.twitter_name.blank? %>
+      <div class="form_row">
+        <label for="twitter_name">Twitter ID</label>
+        <%= f.text_field :twitter_name, :maxlength => Person::MAX_TWITTER_NAME %>
+      </div>
+    <% end %>
 
   <div class="form_row full">
         <label for="person_categories">Services Offered
@@ -28,7 +34,6 @@
           <%= display @preview %>
         <%- end -%>
         
-        <p><%= formatting_note %></p>
         <%= f.text_area :description %>
       </div>
 
@@ -50,6 +55,11 @@
         
       
         <div class="form_row">
+          <p>
+          <label for="req_notifications"
+                 class="checkbox">Requests in my service categories:</label>
+          <%= f.check_box :connection_notifications %>
+          </p>
           <p>
           <label for="message_notifications"
                  class="checkbox">Messages:</label>
@@ -111,26 +121,37 @@
   </div>
 
   <br />
+  <h3>Addresses</h3>
+  <%= render :partial => 'address', :collection => @person.addresses %>
+  <div class="status-btn" style="float: left">
+    <input type="button" name="update" value="Add address" id="update-submit" onclick="document.location='<%= new_person_address_path(@person) %>';" />
+  </div>
+  <br />
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <h2>Change Your Password</h2>
 
   <% form_for @person, :html => { :id => "change_password" } do |f| %>
-
-    <h3>Change Password</h3>
 
     <div class="form_row">
       <label for="password">Current Password</label>
       <%= f.password_field :verify_password,
+                           :size => 34,
                            :maxlength => Person::MAX_PASSWORD %>
     </div>
 
     <div class="form_row">
       <label for="password">New Password</label>
       <%= f.password_field :new_password,
+                           :size => 34,
                            :maxlength => Person::MAX_PASSWORD %>
     </div>
 
     <div class="form_row">
       <label for="password_confirmation">Confirm Password</label>
-      <%= f.password_field :password_confirmation, 
+      <%= f.password_field :password_confirmation,
+                           :size => 34,
                            :maxlength => Person::MAX_PASSWORD,
                            :value => "" %>
     </div>
@@ -141,6 +162,4 @@
   <% end %>
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
-  <%= render :partial => 'searches/box' %>
-<%- end -%>
+<%= yui_headers('person_description') %>

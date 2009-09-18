@@ -7,12 +7,16 @@
     <%= person_link comment.commenter %> said
     <%= time_ago_in_words(comment.created_at) %> ago
   </p>
-  <%= display comment.body %>
+  <%= display simple_format_without_paragraph comment.body %>
+
+  <%- if(current_person?(comment.commentable)) -%>
+  <%= link_to "reply on #{comment.commenter.name}'s wall", person_path(comment.commenter, :anchor => 'wall'), :class => "small" %>
+  <%- end -%>
 
   <%- if (current_person?(comment.commentable) or
           current_person?(comment.commenter)) -%>
   <br />
   <%= link_to "delete", person_comment_path(@person, comment),
-                        :method => :delete %>
+    :method => :delete, :class => "small" %>
   <%- end -%>  
 </li>

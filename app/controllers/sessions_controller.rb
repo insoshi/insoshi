@@ -11,6 +11,10 @@ class SessionsController < ApplicationController
     if using_open_id?
       open_id_authentication(params[:openid_url])
     else
+      # Protect against bots hitting us.
+      if params[:email].nil? or params[:password].nil?
+        render :text => "" and return
+      end
       password_authentication(params[:email], params[:password])
     end
   end
@@ -82,7 +86,7 @@ class SessionsController < ApplicationController
     person = Person.authenticate(login, password)
     unless person.nil?
       if person.deactivated?
-        flash[:error] = "Your account has been deactivated"
+        flash[:error] = "Your account is currently deactivated. In order to log in, you must be approved by the administrator.<br />Membership is approved after an orientation has been attended. Read more about <a href='/steps'>membership here</a>.<br />You can also <a href='/contact'>contact</a> the administrators if you think your account should be active."
         redirect_to home_url and return
       elsif global_prefs.email_verifications? and 
             not person.email_verified? and not person.admin?

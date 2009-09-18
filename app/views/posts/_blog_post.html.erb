@@ -1,21 +1,11 @@
 <li class="post">
   <h3> 
     <a name="post_<%= blog_post.id %>"></a>
-    <%= link_to sanitize(blog_post.title),
-                blog_post_path(@blog, blog_post),
+    <%= link_to sanitize(blog_post.title), {:controller => 'home', :action => 'show', :id => blog_post.id},
                 :class => "show-follow" %>
-    <%- if current_person?(@blog.person) -%>
-      | <%= link_to "Edit", edit_blog_post_path(@blog, blog_post) %>
-      | <%= link_to "Delete", blog_post_path(@blog, blog_post),
-                              :method => :delete %>
-    <%- end -%>
   </h3>
-  <%= display blog_post.body %>
+  <%= blog_post.content %>
   <p class="meta">
-    Posted <%= time_ago_in_words(blog_post.created_at) %> ago
-    by <%= person_link @blog.person %> | 
-    <%- n = blog_post.comments.count -%>
-    <%= link_to pluralize(n, "comment"),
-                blog_post_path(@blog, blog_post, :comments => n),
-                :class => "show-follow" %>    
+    Posted <%= time_ago_in_words(blog_post.date_published) %> ago
   </p>
+</li>

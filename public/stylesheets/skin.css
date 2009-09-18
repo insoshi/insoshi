@@ -4,29 +4,55 @@ body {
   text-align: center;
 }
 #header-wrap {
-  /* background: #069; */
-  background: #069 url('/images/header_background.png');
+  /* background: #009908; */
+  background: #009908 url('/images/forest_header.jpg') no-repeat top center;
   float: left;
   width: 100%;
 }
-#header, #wrap, #footer {
+#wrap, #header, #footer {
   margin: 0 auto;
   text-align: left;
   width: 744px;
 }
+
+/*
+#wrap{
+  margin: 0 auto;
+  text-align: left;
+  width: 844px;
+	
+}
+*/
+
 #content {
   width: 744px;
   float: left;
 }
 
+div#atenroot img{
+	width:100px;
+}
+
+div#atenroot{
+	margin-left:-100px;
+	width:100px;
+	float:left;
+}
 .status-btn {
   padding: 10px 10px 0px 0px;
   text-align: center;
+  margin-top:1.5em;
 }
 
 input.update-button {background-color:#f2f2f2;color:#FFF;font-size:1em;font-weight:bold;border: 1px solid black;cursor:pointer;margin-top:10px;padding:3px;float:right;margin-right:12px}
-div.status-btn input.round-btn {background:url('../images/round-btn.gif');width:115px;height:32px;border:0;color:#666;font-size:14px;margin-left:3px;}
-div.status-btn input.round-btn:hover {background:url('../images/round-btn-hover.gif');width:115px;height:32px;border:0;color:#444;font-size:14px;margin-left:3px;}
+div.status-btn input.round-btn {
+    background:url('../images/round-btn.gif');
+    width:115px;height:32px;border:0;
+    color:#fff;font-size:14px;margin-left:3px;
+    font-weight:bold;
+    text-transform:lowercase;
+}
+div.status-btn input.round-btn:hover {background:url('../images/round-btn-hover.gif');width:115px;height:32px;border:0;color:#169A20;font-size:14px;margin-left:3px;}
 div.status-btn input.disabled, div.status-btn input.disabled:hover { background:url('../images/round-btn.gif'); color: #aaa; cursor:default;}
 
 .col1 {
@@ -52,18 +78,22 @@ div.status-btn input.disabled, div.status-btn input.disabled:hover { background:
   float: left;
   margin-top: 12px;
   margin-bottom: 12px;
-  width: 144px;
+  width: 450px;
+color:#fff;
+font-weight:bold;
+font-family:Trebuchet MS;
+font-size:1.3em;
 }
 
 
 /* Header-nav */
 #nav {
-  margin: 44px 0 0 0;
+  margin: 14px 0 0 0;
   width: 576px;
   float: right;
 }
 #nav li {
-  background: #069 url(/images/header-grad.jpg) bottom repeat-x;
+  background: #009908 url(/images/aten_header-grad.jpg) bottom repeat-x;
   float: left;
   height: 36px;
   line-height: 36px;
@@ -80,24 +110,48 @@ div.status-btn input.disabled, div.status-btn input.disabled:hover { background:
   font-size: 12px;
 }
 #nav li a:hover {
-  background: url(/images/header-grad-inv.jpg) top repeat-x;
+  background: url(/images/aten_header-grad-inv.jpg) top repeat-x;
 }
 #nav li.active a, #nav li.active a:hover {
   background: #fff;
-  color: #069;
+  color: #009908;
 }
 #nav li.n-home {
   margin-left: 0;
+  width: 64px;
 }
 
-#nav li.n-categories {
+#nav li.n-skillbank {
   width: 82px;
 }
 
-#nav li.n-messages {
+#nav li.n-requests {
   width: 74px;
 }
 
+#nav li.n-inbox {
+  width: 64px;
+}
+
+#nav li.n-about {
+  width: 56px;
+}
+
+#nav li.n-steps {
+  width: 54px;
+}
+
+#nav li.n-q\/a {
+  width: 36px;
+}
+
+#nav li.n-memberships {
+  width: 102px;
+}
+
+#nav li.n-contact {
+  width: 64px;
+}
 
 #footer {
   border-top: 1px solid #ccc;
@@ -340,4 +394,62 @@ form, div, h2, ul, li {zoom: 1;}
 * html .single-col .col1 {
   margin: 0 105px;
   width: 324px;
+}
+
+p.poweredby{
+	float:right;
+}
+
+div.desc-message{
+ 	position: relative;
+	width:500px;	
+	margin-bottom:20px;
+}
+
+p.formatting
+{
+    color:#333;
+    font-size:11px;
+    padding:3px;
+    border:1px solid #ddd;
+    width:240px;
+}
+
+p.formatting span
+{
+    float:right;
+    text-align:right;
+    font-size:12px;
+    color:#777;
+}
+
+.thinking {
+  width: 16px;
+  height: 16px;
+  background-image: url(/images/loading.gif);
+}
+
+div.cancel_membership {
+    float: right;
+    margin: -20px -19px;
+}
+div.accept_or_cancel_membership {
+    float: right;
+    margin: -20px -31px;
+}
+.grid.medium div.accept_or_cancel_membership a, .grid.medium div.cancel_membership a {
+    display:inline;
+}
+
+ul.invite_contacts {
+    height: 200px;
+/*    width: 55%;*/
+    overflow: auto;
+}
+ul.invite_contacts li {
+    background: none;
+}
+
+ul.invite_contacts li input.check{
+    margin-right: 10px;
 }

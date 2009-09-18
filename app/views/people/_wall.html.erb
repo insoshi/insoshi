@@ -1,8 +1,8 @@
 <%- if logged_in? -%>
   <div class="wall">
-    <h2>Comment Wall</h2>
     <a name="wall"></a>
-    
+    <h2><%= @person.name %>'s Wall</h2>
+    <%- unless current_person?(@person) -%>    
     <p><%= formatting_note %></p>
     
       <% form_for :comment, :url => person_comments_path(@person) do |f| %>
@@ -14,6 +14,7 @@
           <%= submit_tag "Submit", :class => "button" %>
         </div>
       <% end %>
+    <%- end -%>
     <%- unless @person.comments.empty? -%>
       <ul class="list comments full">
         <%= render :partial => 'comment', :collection => @person.comments %>

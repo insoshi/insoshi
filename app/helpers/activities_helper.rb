@@ -45,6 +45,10 @@ module ActivitiesHelper
       %(#{person_link(person)}'s profile picture has changed.)
     when "Person"
       %(#{person_link(person)}'s description has changed.)
+    when "Group"
+      %(#{person_link(person)} created the group '#{group_link(Group.find(activity.item))}')
+    when "Membership"
+      %(#{person_link(person)} joined the group '#{group_link(Group.find(activity.item.group))}')
     when "Event"
       event = activity.item
       %(#{person_link(person)} has created a new event: #{event_link(event.title, event)}.)
@@ -55,6 +59,13 @@ module ActivitiesHelper
     when "Req"
       req = activity.item
       %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+    when "Exchange"
+      exchange = activity.item
+      if exchange.group.nil?
+        %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
+      else
+        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{req_link(exchange.req.name,exchange.req)} in #{group_link(exchange.group)}.)
+      end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -102,6 +113,10 @@ module ActivitiesHelper
       %(#{person_link(person)}'s profile picture has changed.)
     when "Person"
       %(#{person_link(person)}'s description has changed.)
+    when "Group"
+      %(#{person_link(person)} created the group '#{group_link(Group.find(activity.item))}')
+    when "Membership"
+      %(#{person_link(person)} joined the group '#{group_link(Group.find(activity.item.group))}')
     when "Event"
       %(#{person_link(person)}'s has created a new #{event_link("event", activity.item)}.)
     when "EventAttendee"
@@ -110,6 +125,13 @@ module ActivitiesHelper
     when "Req"
       req = activity.item
       %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+    when "Exchange"
+      exchange = activity.item
+      if exchange.group.nil?
+        %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
+      else
+        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{req_link(exchange.req.name,exchange.req)} in #{group_link(exchange.group)}.)
+      end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -140,12 +162,18 @@ module ActivitiesHelper
               "camera.gif"
             when "Person"
               "edit.gif"
+            when "Group"
+              "new.gif"
+            when "Membership"
+              "add.gif"
             when "Event"
               "time.gif"
             when "EventAttendee"
               "check.gif"
             when "Req"
               "new.gif"
+            when "Exchange"
+              "favorite.gif"
             else
               raise "Invalid activity type #{activity_type(activity).inspect}"
             end

@@ -2,12 +2,26 @@ class PeopleController < ApplicationController
   
   skip_before_filter :require_activation, :only => :verify_email
   skip_before_filter :admin_warning, :only => [ :show, :update ]
-  before_filter :login_required, :only => [ :show, :edit, :update ]
-  before_filter :correct_user_required, :only => [ :edit, :update ]
+  before_filter :login_or_oauth_required, :only => [ :index, :show, :edit, :update ]
+  before_filter :correct_person_required, :only => [ :edit, :update ]
   before_filter :setup
+  before_filter :setup_zips, :only => [:index, :show]
   
   def index
-    @people = Person.mostly_active(params[:page])
+    @zipcode = ""
+    if global_prefs.zipcode_browsing? && params[:zipcode]
+      @people = Person.mostly_active_with_zipcode(params[:zipcode],params[:page])
+      @zipcode = "(#{params[:zipcode]})"
+    else
+      if params[:sort]
+        if "newest" == params[:sort]
+          @people = Person.mostly_active_newest(params[:page])
+        end
+      else
+        @people = Person.mostly_active_alpha(params[:page])
+        @people.add_missing_links(('A'..'Z').to_a)
+      end
+    end
 
     respond_to do |format|
       format.html
@@ -15,7 +29,8 @@ class PeopleController < ApplicationController
   end
   
   def show
-    @person = Person.find(params[:id])
+    person_id = ( 0 == params[:id].to_i ) ? current_person.id : params[:id]
+    @person = Person.find(person_id)
     unless @person.active? or current_person.admin?
       flash[:error] = "That person is not active"
       redirect_to home_url and return
@@ -23,16 +38,26 @@ class PeopleController < ApplicationController
     if logged_in?
       @some_contacts = @person.some_contacts
       @common_contacts = current_person.common_contacts_with(@person)
+      @groups = current_person == @person ? @person.groups : @person.groups_not_hidden
+      @own_groups = current_person == @person ? @person.own_groups : @person.own_not_hidden_groups
     end
     respond_to do |format|
       format.html
+      if current_person == @person
+        format.json { render :json => @person.to_json( :methods => :icon, :only => [:id, :name, :description, :created_at, :identity_url,:icon], :include => {:accounts => {:only => [:balance,:group_id]}, :groups => {:only => [:id,:name]}, :own_groups => { :methods => [:icon,:thumbnail], :only => [:id,:name,:mode,:icon,:thumbnail] } }) }
+        format.xml { render :xml => @person.to_xml( :methods => :icon, :only => [:id, :name, :description, :created_at, :identity_url,:icon], :include => {:accounts => {:only => [:balance,:group_id]}, :groups => {:only => [:id,:name]}, :own_groups => { :methods => [:icon,:thumbnail], :only => [:id,:name,:mode,:icon,:thumbnail] }}) }
+      else
+        format.json { render :json => @person.to_json( :methods => :icon, :only => [:id, :name, :description, :created_at, :identity_url,:icon], :include => {:accounts => {:only => [:balance,:group_id]}, :groups_not_hidden => {:only => [:id,:name]}, :own_not_hidden_groups => {:only => [:id,:name] }}) }
+        format.xml { render :xml => @person.to_xml( :methods => :icon, :only => [:id, :name, :description, :created_at, :identity_url,:icon], :include => {:accounts => {:only => [:balance,:group_id]}, :groups_not_hidden => {:only => [:id,:name]}, :own_not_hidden_groups => {:only => [:id,:name] }}) }
+      end
     end
   end
   
   def new
     @body = "register single-col"
+    @body = @body + " yui-skin-sam"
     @person = Person.new
-
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
       format.html
     end
@@ -47,6 +72,10 @@ class PeopleController < ApplicationController
       @person.save
       if @person.errors.empty?
         session[:verified_identity_url] = nil
+        if global_prefs.can_send_email? && global_prefs.registration_notification?
+          admin = Person.find_first_admin
+          PersonMailer.deliver_registration_notification(admin,@person)
+        end
         if global_prefs.email_verifications?
           @person.email_verifications.create
           flash[:notice] = %(Thanks for signing up! Check your email
@@ -59,6 +88,7 @@ class PeopleController < ApplicationController
         end
       else
         @body = "register single-col"
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { if @person.identity_url.blank? 
                         render :action => 'new'
                       else
@@ -94,8 +124,9 @@ class PeopleController < ApplicationController
   end
 
   def edit
+    @body = @body + " yui-skin-sam"
     @person = Person.find(params[:id])
-    @all_categories = Category.find(:all, :order => "parent_id, name")
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.html
@@ -104,6 +135,18 @@ class PeopleController < ApplicationController
 
   def update
     @person = Person.find(params[:id])
+
+    unless(params[:task].blank?)
+      if current_person.admin?
+        @person.toggle!(params[:task])
+        respond_to do |format|
+          flash[:success] = "#{CGI.escapeHTML @person.name} updated."
+          format.html { redirect_to :back }
+        end
+        return
+      end
+    end
+
     respond_to do |format|
       case params[:type]
       when 'info_edit'
@@ -111,6 +154,7 @@ class PeopleController < ApplicationController
           flash[:success] = 'Profile updated!'
           format.html { redirect_to(@person) }
         else
+          @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           if preview?
             @preview = @person.description = params[:person][:description]
           end
@@ -125,6 +169,7 @@ class PeopleController < ApplicationController
           flash[:success] = 'Password changed.'
           format.html { redirect_to(@person) }
         else
+          @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           format.html { render :action => "edit" }
         end
       end
@@ -140,14 +185,47 @@ class PeopleController < ApplicationController
     end
   end
   
+  def groups
+    @person = Person.find(params[:id])
+    @groups = current_person == @person ? @person.groups : @person.groups_not_hidden
+    
+    respond_to do |format|
+      format.html
+    end
+  end
+  
+  def admin_groups
+    @person = Person.find(params[:id])
+    @groups = @person.own_groups
+    render :action => :groups
+  end
+  
+  def request_memberships
+    @person = Person.find(params[:id])
+    @requested_memberships = @person.requested_memberships
+  end
+  
+  def invitations
+    @person = Person.find(params[:id])
+    @invitations = @person.invitations
+  end
+  
   private
 
     def setup
       @body = "person"
     end
-  
-    def correct_user_required
-      redirect_to home_url unless Person.find(params[:id]) == current_person
+
+    def setup_zips
+      @zips = []
+      @zips = Address.find(:all).map {|a| a.zipcode_plus_4}
+      @zips.uniq!
+      @zips.delete_if {|z| z.blank?}
+      @zips.sort!
+    end
+
+    def correct_person_required
+      redirect_to home_url unless ( current_person.admin? or Person.find(params[:id]) == current_person )
     end
     
     def preview?

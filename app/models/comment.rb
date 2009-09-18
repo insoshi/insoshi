@@ -1,11 +1,11 @@
 # == Schema Information
-# Schema version: 28
+# Schema version: 20090216032013
 #
 # Table name: comments
 #
-#  id               :integer(11)     not null, primary key
-#  commenter_id     :integer(11)     
-#  commentable_id   :integer(11)     
+#  id               :integer(4)      not null, primary key
+#  commenter_id     :integer(4)      
+#  commentable_id   :integer(4)      
 #  commentable_type :string(255)     default(""), not null
 #  body             :text            
 #  created_at       :datetime        
@@ -28,7 +28,7 @@ class Comment < ActiveRecord::Base
   belongs_to :post
   belongs_to :event
 
-  has_many :activities, :foreign_key => "item_id", :dependent => :destroy
+  has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Comment'", :dependent => :destroy
 
   validates_presence_of :body, :commenter
   validates_length_of :body, :maximum => MAX_TEXT_LENGTH

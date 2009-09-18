@@ -1,0 +1,21 @@
+<%- column_div :type => :primary do -%>
+  
+  <h2>Invite your contacts to '<%= @group.name %>'</h2>
+  
+  <% form_for("invitations",:url => { :action => "invite_them"}, 
+                    :html => {:id => 'form', :method => "post"}) do -%>
+    <ul class="invite_contacts">
+      <% @contacts.each do |contact| %>
+        <li><%= check_box('checkbox',contact.id.to_s, :class=>'check', :id => "check_#{contact.id}") %><%= contact.name %></li>
+      <% end %>
+    </ul>
+
+    <div><input type='submit' value='Select all' onclick="$$('#form input.check').each(function(box){box.checked=!box.checked});return false;" class="button" />
+    <%= submit_tag "Invite", :class => "button", :id => "button" %></div>
+  <% end %>
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

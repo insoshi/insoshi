@@ -262,6 +262,39 @@ class FinderTest < ActiveRecordTestCase
     end
   end
 
+  ## group links
+  
+  def test_group_links
+    entries = User.paginate :page => nil, :per_page => 10, :order => "name", :group_by => "first_letter"
+    assert_equal 1, entries.current_page
+    assert_equal 2, entries.total_pages
+    assert_equal 13, entries.total_entries
+    assert entries.links
+    assert_equal 5, entries.links.size
+    [['A', 1], ['D', 1], ['F', 1], ['G', 2], ['J', 2]].each_with_index do | d, i |
+      assert_equal d[0], entries.links[i][:value]
+      assert_equal d[1], entries.links[i][:page]
+    end
+  end
+  
+  def test_group_by_associations_with_include
+    project = projects(:active_record)
+
+    entries = project.topics.paginate \
+      :page     => 1, 
+      :include  => :replies,  
+      :conditions => "replies.content LIKE 'Nice%' ", 
+      :per_page => 10,
+      :group_by => "replies.content"
+
+    expected = Topic.find :all, 
+      :include => 'replies', 
+      :conditions => "project_id = #{project.id} AND replies.content LIKE 'Nice%' ", 
+      :limit   => 10
+
+    assert_equal expected, entries.to_a
+  end
+
   ## misc ##
 
   def test_count_and_total_entries_options_are_mutually_exclusive
@@ -340,6 +373,12 @@ class FinderTest < ActiveRecordTestCase
       Developer.paginate :select => 'DISTINCT salary', :page => 2
     end
 
+    def test_count_with_scoped_select_when_distinct
+      Developer.stubs(:find).returns([])
+      Developer.expects(:count).with(:select => 'DISTINCT users.id').returns(0)
+      Developer.distinct.paginate :page => 2
+    end
+
     def test_should_use_scoped_finders_if_present
       # scope-out compatibility
       Topic.expects(:find_best).returns(Array.new(5))
@@ -390,12 +429,20 @@ class FinderTest < ActiveRecordTestCase
 
     def test_paginating_finder_doesnt_mangle_options
       Developer.expects(:find).returns([])
-      options = { :page => 1 }
-      options.expects(:delete).never
+      options = { :page => 1, :per_page => 2, :foo => 'bar' }
       options_before = options.dup
-      
+
       Developer.paginate(options)
-      assert_equal options, options_before
+      assert_equal options_before, options
+    end
+    
+    def test_paginate_by_sql_doesnt_change_original_query
+      query = 'SQL QUERY'
+      original_query = query.dup
+      Developer.expects(:find_by_sql).returns([])
+      
+      Developer.paginate_by_sql query, :page => 1
+      assert_equal original_query, query
     end
 
     def test_paginated_each

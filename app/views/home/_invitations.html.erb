@@ -1,0 +1,27 @@
+<%- unless @invitations.empty? -%>
+  <h2>Invitations for groups</h2>
+  <ul class="list requests small">
+    <%- @invitations.each do |invitation| -%>
+      <%- mem = Membership.mem(current_person, invitation.group) -%>
+      <li>
+        <div class="profile-image">
+          <%= image_link invitation.group %>
+        </div>
+        <p>Invitation for
+        <%= group_link invitation.group %></p>
+        <p class="meta published">
+          <%= time_ago_in_words(invitation.created_at) %> 
+          ago
+        </p>
+        <p>
+          <%= link_to "Respond", edit_membership_path(mem) %> |
+          <%= link_to "View group", group_path(invitation.group) %>
+        </p>
+      </li>
+    <%- end -%>
+    <li class="more">
+      <%= link_to "See all &raquo;", 
+          invitations_person_path(current_person) %>
+    </li>
+  </ul>
+<%- end -%>

@@ -1,25 +1,21 @@
 module ReqsHelper
-  def accepted_message(req)
-    bid = req.accepted_bid
-    accepted_time = time_ago_in_words(bid.accepted_at)
-    "Accepted bid from #{person_link bid.person} at #{accepted_time} ago"
+  def accepted_messages(req)
+    bids = req.bids.find_all {|bid| bid.accepted_at != nil}
+    messages = bids.map {|bid| "Accepted bid from #{person_link bid.person} at #{time_ago_in_words(bid.accepted_at)} ago"}
   end
 
-  def commitment_message(req)
-    bid = req.committed_bid
-    commitment_time = time_ago_in_words(bid.committed_at)
-    "Commitment by #{person_link bid.person} made #{commitment_time} ago"
+  def commitment_messages(req)
+    bids = req.bids.find_all {|bid| bid.committed_at != nil}
+    messages = bids.map {|bid| "Commitment by #{person_link bid.person} made #{time_ago_in_words(bid.committed_at)} ago"}
   end
 
-  def completed_message(req)
-    bid = req.committed_bid
-    completed_time = time_ago_in_words(bid.completed_at)
-    "Marked completed by #{person_link bid.person} #{completed_time} ago"
+  def completed_messages(req)
+    bids = req.bids.find_all {|bid| bid.completed_at != nil}
+    messages = bids.map {|bid| "Marked completed by #{person_link bid.person} #{time_ago_in_words(bid.completed_at)} ago"}
   end
 
-  def approved_message(req)
-    bid = req.committed_bid
-    approved_time = time_ago_in_words(bid.approved_at)
-    "Confirmed completed by #{person_link bid.req.person} #{approved_time} ago"
+  def approved_messages(req)
+    bids = req.bids.find_all {|bid| bid.approved_at != nil}
+    messages = bids.map {|bid| "Confirmed completed by #{person_link req.person} #{time_ago_in_words(bid.approved_at)} ago"}
   end
 end

@@ -1,4 +1,6 @@
-You have a new message at <%= @domain %>! Click here to retrieve it:
+<%= h @message.content %>
+--
+Click here to view this message at <%= @domain %>:
 
 http://<%= @domain %>/messages/<%= @message.to_param %>
 

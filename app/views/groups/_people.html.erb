@@ -1,0 +1,17 @@
+<h2>Group's <%= title %></h2>
+<%- unless members.empty? -%>
+  <ul class="grid contacts small">
+    <%- members.each do |contact| -%>
+      <li class="vcard">
+        <%= image_link(contact, :image_options => { :class => "photo fn" },
+                                :link_options =>  { :class => "url" }) %>
+      </li>
+    <%- end -%>
+    <li class="more">
+      <%= link_to "All members &raquo;",
+            members_group_path(@group) unless title == "admin" %>
+    </li>
+  </ul>
+<%- else -%>
+  <h3>No members (yet)</h3>
+<%- end -%>

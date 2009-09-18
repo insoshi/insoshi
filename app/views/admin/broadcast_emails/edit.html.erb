@@ -1,0 +1,21 @@
+<%= yui_headers('broadcast_email_message')  %>
+<h2>Editing Broadcast Email</h2>
+
+<%= error_messages_for :broadcast_email %>
+
+<% form_for :broadcast_email, :url => admin_broadcast_email_path(@broadcast_email), :html => { :method => :put } do |f| %>
+  <p>
+    <%= f.label :subject %>
+    <%= f.text_field :subject %>
+  </p>
+  <p>
+    <%= f.label :message %>
+    <%= f.text_area :message %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @broadcast_email %> |
+<%= link_to 'Back', broadcast_emails_path %>

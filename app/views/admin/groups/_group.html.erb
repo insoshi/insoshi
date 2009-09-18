@@ -1,0 +1,15 @@
+
+<li class="vcard person">
+  <div class="profile-image">
+    <%= image_link group %>
+  </div>
+  <p>
+    <%= person_link group, :class => "url fn" %>
+    |
+    <%= link_to "members", members_group_path(group) %>
+    |
+    <%= link_to "delete", 
+                admin_group_path(group),:confirm => 'Are you sure?', :method => :delete%>    
+  </p>
+  <%= display group.description %>
+</li>

@@ -1,4 +1,8 @@
-<h2>Providers</h2>
+<h2>Members who Provide this service</h2>
 <ul class="list activity small">
-  <%= render :partial => 'person', :collection => category.people %>
+  <%- if active_people.empty? -%>
+  <h3 class="blankstate">No providers (yet!)</h3>
+  <%- else -%>
+  <%= render :partial => 'person', :collection => active_people %>
+  <%- end -%>
 </ul>

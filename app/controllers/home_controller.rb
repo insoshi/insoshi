@@ -2,18 +2,32 @@ class HomeController < ApplicationController
   skip_before_filter :require_activation
   
   def index
-    @body = "home"
     @topics = Topic.find_recent
     @members = Person.find_recent
     if logged_in?
-      @feed = current_person.feed
-      @some_contacts = current_person.some_contacts
-      @requested_contacts = current_person.requested_contacts
+      @body = "home"
+      @person = current_person
+      @reqs = current_person.current_and_active_reqs
+      @bids = current_person.current_and_active_bids
+      @requested_memberships = current_person.requested_memberships
+      @invitations = current_person.invitations
     else
-      @feed = Activity.global_feed
+      @body = "blog"
+      @posts = FeedPost.paginate(:all, :page => params[:page], :order => 'date_published DESC')
     end    
-    respond_to do |format|
-      format.html
-    end  
+  end
+
+  def show
+    @post = FeedPost.find(params[:id])
+  end
+
+  def refreshblog
+    new_posts_count = FeedPost.update_posts
+    if nil == new_posts_count
+      flash[:error] = "Blog update failed."
+    else
+      flash[:notice] = "Blog updated #{new_posts_count} entries."
+    end
+    redirect_to '/home' 
   end
 end

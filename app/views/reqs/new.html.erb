@@ -7,7 +7,7 @@
 
 <% form_for(@req) do |f| %>
   <div class="form_row">
-    <%= f.label :name %>
+    <%= f.label 'Title' %>
     <%= f.text_field :name %>
   </div>
   <div class="form_row">
@@ -25,6 +25,18 @@
   <div class="form_row full">
     <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
   </div>
+  <div id="providersDisplay" style="height: 95px;" class="form_row full"><label>People to be notified:</label><div id="followMe"></div></div>
+  <div class="form_row">
+    <label for="notifications" class="checkbox">Notify members shown above?</label>
+    <%= check_box_tag 'req[notifications]', '1', true %>
+  </div>
+<% unless global_prefs.twitter_name.blank? %>
+    <div class="form_row">
+      <label for="twitter"
+        class="checkbox">Notify members in real time on <a href="http://www.twitter.com/<%= global_prefs.twitter_name %>" target="top">Twitter</a>?</label>
+      <%= check_box_tag 'req[twitter]', '1', true %>
+    </div>
+<% end %>
   <div class="form_row">
     <%= f.submit "Create" %>
   </div>

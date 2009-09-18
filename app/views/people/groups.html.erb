@@ -1,0 +1,21 @@
+<%- column_div :type => :primary do -%>
+  <h2><%= (params[:action] == 'admin_groups' ? "Admin " : "" ) + "Groups" %> for <%= h @person.name %></h2>
+
+  <% unless @groups.empty? -%>
+    <ul class="list people">
+      <%= render :partial => @groups %>
+    </ul>
+  <% else %>
+    <h3>No groups (yet)</h3>
+  <% end -%>
+  
+  <%- if params[:action] == 'admin_groups' -%>
+    <%= link_to 'New group', new_group_path() %>
+  <%- end -%>
+  
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

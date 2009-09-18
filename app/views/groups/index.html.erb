@@ -1,0 +1,19 @@
+<%- column_div :type => :primary do -%>
+  <h2>Groups</h2>
+  <% unless @groups.empty? -%>
+    <%= will_paginate %>
+    <ul class="list people">
+      <%= render :partial => @groups %>
+    </ul>
+    <%= will_paginate %>
+  <% else %>
+    <h3>No groups (yet)</h3>
+  <% end -%>
+
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/add_group_button' %>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

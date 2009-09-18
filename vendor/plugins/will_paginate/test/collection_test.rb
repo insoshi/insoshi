@@ -125,6 +125,16 @@ class ArrayPaginationTest < Test::Unit::TestCase
     # It's `total_pages` now.
   end
 
+  def test_missing_links
+    collection = WillPaginate::Collection.new(1, 5, nil, [{:value=>"A", :page=>1},{:value=>"B", :page=>1},{:value=>"D", :page=>1},{:value=>"E", :page=>2}])
+    collection.add_missing_links(('A'..'F').to_a)
+    ('A'..'F').to_a.each_with_index do |v,i|
+      assert_equal v, collection.links[i][:value]
+    end
+    assert_equal 1, collection.links[0][:page]
+    assert_nil collection.links[2][:page]
+  end
+  
   private
     def create(page = 2, limit = 5, total = nil, &block)
       if block_given?

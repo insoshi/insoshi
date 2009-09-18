@@ -1,15 +1,26 @@
 <%- column_div :type => :primary do -%>
+  <h2>People<%= h @zipcode %></h2>
+  <ul id="message-nav">
+    <%= list_link_with_active "Alpha", people_path %>
+    <%= list_link_with_active "Newest", people_path(:sort => 'newest') %>
+  </ul>
   <% unless @people.empty? -%>
-    <h2>People</h2>
-    <%= will_paginate %>
+    <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
     <ul class="list people">
       <%= render :partial => @people %>
     </ul>
-    <%= will_paginate %>
+    <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
+  <% else %>
+    <% if !@zipcode.empty? %>
+      <div class="meta">No results for <%= h @zipcode %></div>
+    <% end %>
   <% end -%>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'searches/box' %>
+  <%- if global_prefs.zipcode_browsing? -%>
+    <%= render :partial => 'zip', :collection => @zips %>
+  <%- end -%>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>

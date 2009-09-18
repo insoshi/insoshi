@@ -6,7 +6,8 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.xml
   def index
-    @categories = Category.find(:all)
+    @top_level_categories = Category.find(:all, :conditions => "parent_id is NULL").sort_by {|a| a.name}
+    @categories = Category.find(:all).sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.html # index.html.erb
@@ -18,11 +19,12 @@ class CategoriesController < ApplicationController
   # GET /categories/1.xml
   def show
     @category = Category.find(params[:id])
-    @reqs = @category.reqs
+    @reqs = @category.current_and_active_reqs
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @category }
+      format.json { render :json => @category.to_json(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
+      format.xml  { render :xml => @category.to_xml(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
     end
   end
 
@@ -30,7 +32,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new.xml
   def new
     @category = Category.new
-    @all_categories = Category.find(:all, :order => "parent_id, name")
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,7 +43,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1/edit
   def edit
     @category = Category.find(params[:id])
-    @all_categories = Category.find(:all, :order => "parent_id, name")
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
   end
 
   # POST /categories

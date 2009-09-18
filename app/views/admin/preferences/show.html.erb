@@ -21,6 +21,36 @@
 </p>
 
 <p>
+  <b>Blog Feed Url:</b>
+  <%=h @preferences.blog_feed_url %>
+</p>
+
+<p>
+  <b>Twitter name:</b>
+  <%=h @preferences.twitter_name %>
+</p>
+
+<p>
+  <b>Twitter oauth consumer key:</b>
+  <%=h @preferences.twitter_oauth_consumer_key %>
+</p>
+
+<p>
+  <b>Twitter api:</b>
+  <%=h @preferences.twitter_api %>
+</p>
+
+<p>
+  <b>Exception notify emails (space separated):</b>
+  <%=h @preferences.exception_notification %>
+</p>
+
+<p>
+  <b>Google Calendar src:</b>
+  <%=h @preferences.gmail %>
+</p>
+
+<p>
   <b>Email notifications:</b>
   <%=h @preferences.email_notifications %>
 </p>
@@ -28,6 +58,21 @@
 <p>
   <b>Email verifications:</b>
   <%=h @preferences.email_verifications %>
+</p>
+
+<p>
+  <b>Enable Groups:</b>
+  <%=h @preferences.group_option %>
+</p>
+
+<p>
+  <b>Enable Zipcode Browing:</b>
+  <%=h @preferences.zipcode_browsing %>
+</p>
+
+<p>
+  <b>Notify first admin of registrations:</b>
+  <%=h @preferences.registration_notification %>
 </p>
 
 <p>
@@ -44,6 +89,31 @@
   <b>About text (nonblank text will lead to an 'about' link):</b>
 </p>
 <%= display @preferences.about %>
+
+<p>
+  <b>Practice text (nonblank text will lead to an 'practice' link):</b>
+</p>
+<%= display @preferences.practice %>
+
+<p>
+  <b>Steps text (nonblank text will lead to an 'steps' link):</b>
+</p>
+<%= display @preferences.steps %>
+
+<p>
+  <b>Questions text (nonblank text will lead to an 'questions' link):</b>
+</p>
+<%= display @preferences.questions %>
+
+<p>
+  <b>Memberships text (nonblank text will lead to an 'memberships' link):</b>
+</p>
+<%= display @preferences.memberships %>
+
+<p>
+  <b>Contact text (nonblank text will lead to an 'contact' link):</b>
+</p>
+<%= display @preferences.contact %>
 
 
 <p>

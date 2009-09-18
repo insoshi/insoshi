@@ -1,5 +1,23 @@
+# == Schema Information
+# Schema version: 20090216032013
+#
+# Table name: reqs
+#
+#  id              :integer(4)      not null, primary key
+#  name            :string(255)     
+#  description     :text            
+#  estimated_hours :decimal(8, 2)   default(0.0)
+#  due_date        :datetime        
+#  person_id       :integer(4)      
+#  created_at      :datetime        
+#  updated_at      :datetime        
+#  active          :boolean(1)      default(TRUE)
+#  twitter         :boolean(1)      
+#
+
 class Req < ActiveRecord::Base
   include ActivityLogger
+  extend PreferencesHelper 
 
   is_indexed :fields => ['name', 'description']
 
@@ -10,10 +28,43 @@ class Req < ActiveRecord::Base
   attr_protected :person_id, :created_at, :updated_at
   validates_presence_of :name, :due_date
   after_create :log_activity
+  after_save :notify_workers, :if => :notifications
 
-  def has_approved?
+  class << self
+
+    def current_and_active(page=1)
+      today = DateTime.now
+      @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
+      @reqs.delete_if { |req| req.has_approved? }
+    end
+
+  end
+
+  def formatted_categories
+    categories.collect {|cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
+  end
+
+  def tweet(url)
+    if !twitter?
+      logger.info "No twitter requested for [#{id}:#{name}]"
+      return
+    end
+
+    twitter_name = Req.global_prefs.twitter_name
+    twitter_password = Req.global_prefs.plaintext_twitter_password
+    twitter_api = Req.global_prefs.twitter_api
+
+    twit = Twitter::Base.new(twitter_name,twitter_password, :api_host => twitter_api )
+    begin
+      twit.update("#{name}: #{url}")
+    rescue Twitter::CantConnect => e
+      logger.info "ERROR Twitter::CantConnect for [#{id}:#{name}] (" + e.to_s + ")"
+    end
+  end
+
+  def has_accepted_bid?
     a = false
-    bids.each {|bid| a = true if bid.status_id == Bid::SATISFIED }
+    bids.each {|bid| a = true if bid.accepted_at != nil }
     return a
   end
 
@@ -35,25 +86,31 @@ class Req < ActiveRecord::Base
     return a
   end
 
-  def committed_bid
-    cbid = nil
-    bids.each {|bid| cbid = bid if bid.status_id > Bid::ACCEPTED }
-    return cbid
-  end
-
-  def has_accepted_bid?
-    a = false
-    bids.each {|bid| a = true if bid.status_id > Bid::OFFERED }
-    return a
-  end
-
-  def accepted_bid
-    abid = nil
-    bids.each {|bid| abid = bid if bid.status_id > Bid::OFFERED }
-    return abid
-  end
-
   def log_activity
-    add_activities(:item => self, :person => self.person)
+    if active?
+      add_activities(:item => self, :person => self.person)
+    end
+  end
+
+  private
+
+  def notify_workers
+    workers = []
+    # even though pseudo-reqs created by direct payments do not have associated categories, let's
+    # be extra cautious and check for the active property as well
+    #
+    if self.active? && Req.global_prefs.can_send_email? && Req.global_prefs.email_notifications?
+      self.categories.each do |category|
+        workers << category.people
+      end
+
+      workers.flatten!
+      workers.uniq!
+      workers.each do |worker|
+        if worker.active?
+          PersonMailer.deliver_req_notification(self, worker) if worker.connection_notifications?
+        end
+      end
+    end
   end
 end

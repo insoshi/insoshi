@@ -4,31 +4,30 @@
     <%= image_link req.person, :image => :thumbnail %>
     <%= image_tag "icons/new.gif", :class => "icon", :alt => "Request" %>
   </div>
-  <% if req.has_accepted_bid? %>
-    <%= render :partial => "shared/accepted_bid", :object => req.accepted_bid %>
-  <% end -%>
   <p>
   <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h req.estimated_hours %> hrs)
-    Due: in <%= time_ago_in_words(req.due_date) %>
+    Due: <%= relative_time_ago_in_words(req.due_date) %>
   </p>
-  <p class="meta">
-    <%= h req.categories[0].long_name unless req.categories.empty? %>
-  </p>
+    <%= display req.formatted_categories, :class => "meta" %>
   <p>
-    <%= h req.description %>
+    <%= display simple_format_without_paragraph req.description %>
   </p>
   <p class="meta">
-    <% if req.has_approved? %><%= approved_message(req) %><br><% end -%>
-    <% if req.has_completed? %><%= completed_message(req) %><br><% end -%>
-    <% if req.has_commitment? %><%= commitment_message(req) %><br><% end -%>
-    <% if req.has_accepted_bid? %><%= accepted_message(req) %><br><% end -%>
+    <%= render :partial => "shared/bid_message", :collection => approved_messages(req) %>
+    <%= render :partial => "shared/bid_message", :collection => completed_messages(req) %>
+    <%= render :partial => "shared/bid_message", :collection => commitment_messages(req) %>
+    <%= render :partial => "shared/bid_message", :collection => accepted_messages(req) %>
     Created by <%= person_link req.person %>
     <%= time_ago_in_words(req.created_at) %> ago
     <% if current_person?(req.person) -%>
     | <%= link_to "Edit", edit_req_path(req) unless req.has_accepted_bid? %>
     <% end -%>
-    <% if admin? || current_person?(req.person) -%>
-    | <%= link_to "Delete", req, :confirm => 'Are you sure?', :method => :delete unless (req.has_commitment? || req.has_approved?) %>
+    <% if req.active? && ( admin? || current_person?(req.person) ) -%>
+    | <%= link_to "Delete", req, :confirm => 'Are you sure?', :method => :delete unless (req.has_commitment? || req.has_approved? ) %>
+    <% end -%>
+    <br>
+    <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>
+      <%= number_with_precision(req.person.address.distance_to(current_person.address), 1).to_s %> miles away
     <% end -%>
   </p>
 </li>

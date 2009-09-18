@@ -1,21 +1,20 @@
 class Admin::PeopleController < ApplicationController
-
   before_filter :login_required, :admin_required
-
-  def index
-    @people = Person.paginate(:all, :page => params[:page], :order => :name)
+  active_scaffold :person do |config|
+    config.label = "People"
+    config.columns = [:name, :email, :phone, :admin, :deactivated, :email_verified, :last_logged_in_at]
+    config.list.columns = [:name, :email, :phone, :admin, :deactivated, :email_verified, :last_logged_in_at]
+    config.create.columns = [:name, :email, :phone, :password, :password_confirmation] 
+    config.update.columns = [:name, :admin, :email, :phone, :password, :password_confirmation, :deactivated, :email_verified] 
+    config.nested.add_link('Addresses', [:addresses])
   end
 
-  def update
-    @person = Person.find(params[:id])
-    if current_person?(@person)
-      flash[:error] = "Action failed."
-    else
-      @person.toggle!(params[:task])
-      flash[:success] = "#{CGI.escapeHTML @person.name} updated."
-    end
-    respond_to do |format|
-      format.html { redirect_to :back }
-    end
+  # NOTE: index was removed from original insoshi to allow active scaffold to be default index
+  #       and update was moved into app people controller  
+
+  protected
+
+  def before_create_save(record)
+    record.email_verified = true
   end
 end

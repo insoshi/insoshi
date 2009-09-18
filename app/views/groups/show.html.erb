@@ -1,0 +1,97 @@
+<%- column_div :type => :primary do -%>
+  <div class="profile vcard">
+    <h2>Group: <span class="fn n"><%= h @group.name %></span></h2>
+    <%- if group_owner?(current_person,@group) -%>
+      <%- if @group.description.blank? -%>
+        <div class="error">
+          The group description is blank.
+          <%= link_to "Click here to add a description",
+                      edit_group_path(@group) %>
+        </div>
+      <%- else -%>
+        <div class="notice">
+          You are viewing your group.
+          <%= link_to "Click here to edit it", edit_group_path(@group) %>
+        </div>
+      <%- end -%>
+    <%- end -%>
+    <div class="toolbox">
+      <%= image_tag @group.main_photo, :class => "profile-image photo",
+                                        :alt => h(@group.name) %>
+        <ul class="tools">
+<%- if @group.adhoc_currency? -%>
+        <li>
+          Currency Unit: <%= @group.unit %>
+        </li>
+<%- end -%>
+        <%- unless Membership.exist?(current_person,@group) -%>
+          <li>
+            <%= link_to "Join to group",
+                      group_memberships_path(@group), :method => :post %>
+          </li>
+        <%- else -%>
+            <%- if @group.has_invited?(current_person) -%>
+                <li>You have been invited <%= link_to "(respond)", invitations_person_path(current_person)+"#group_#{@group.id}" %></li>
+            <%- end -%>
+        <%- end -%>
+        <%- if Membership.connected?(current_person,@group) -%>
+          <li>You are <strong><%= h @group.name%></strong>'s member
+              <br />
+              (<%= link_to "Leave group",
+                      membership_path(Membership.mem(current_person, @group)), 
+                      :method => :delete,
+                      :confirm => 
+                      "Are you sure you want to leave #{h @group.name}?" %>)
+          </li>
+        <%- end -%>
+        <%- if Membership.pending?(current_person, @group) -%>
+          <li>
+            You have requested to be member of <strong><%= h @group.name%></strong>
+          </li>
+        <%- end -%>
+        <%- if group_owner?(current_person,@group) -%>
+          <li>
+            You are group's admin
+            <%= link_to "(delete it)", group_path(@group), :confirm => 'Are you sure?', :method => :delete %>
+          </li>
+          <li>
+            Mode: <%= get_groups_modes[@group.mode][0] %>
+          </li>
+          <% if @group.hidden? %>
+              <li>
+                  <%= link_to "Invite contacts", invite_group_path(@group) %>
+              </li>
+          <% end %>
+        <%- end -%>
+        <%- if current_person.admin? -%>
+          <li>
+          <%= link_to "delete group",
+                admin_group_path(@group),:confirm => 'Are you sure?', :method => :delete%> 
+          </li>
+        <%- end -%>
+      </ul>
+    </div>
+    <%= display @group.description %>
+  </div>
+  <h2>Recent Exchanges</h2>
+  <ul class="list activity full">
+    <%= render :partial => 'exchange', :collection => @group.exchanges %>
+  </ul>
+  
+<%- end -%>
+
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/add_group_button' %>
+  <%= render :partial => 'searches/box' %>
+  <% if @group.pending_request.length > 0 and @group.owner?(current_person) %>
+    <%= render :partial => "people", 
+               :locals => {:members => (@group.pending_request), :title => "pending request"} %>
+  <% end %>
+  <% if @group.public? or @group.owner?(current_person) or current_person.admin? %>
+    <%= render :partial => "people", 
+               :locals => {:members => @group.people, :title => "members"} %>
+  <% end %>
+  <%= render :partial => "people", 
+             :locals => {:members => ([] << @group.owner), :title => "admin"} %>
+<%- end -%>

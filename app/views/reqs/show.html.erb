@@ -4,19 +4,19 @@
   <ul class="list full">
     <%= render :partial => @req %>
   </ul>
+  <% if @req.active? %>
   <h2>Bids:</h2>
   <ul class="list full">
     <% if @req.bids.empty? -%>
-      <h3 class="blankslate">No bids (yet!)</h3>
+        <h3 class="blankslate">No bids (yet!)</h3>
     <% else %>
       <%= render :partial => "/bids/bid", :collection => @req.bids %>
     <%- end -%>
   </ul>
-
     <% unless current_person?(@req.person) -%>
       <h2>New bid</h2>
 
-      <%= error_messages_for :req %>
+      <%= error_messages_for :bid %>
 
       <% form_for :bid, :url => req_bids_path(@req) do |f| %>
         <div class="form_row">
@@ -28,14 +28,20 @@
           <%= f.text_field :expiration_date, :size => 8 %>
         </div>
         <div class="form_row">
+          <%= f.label :private_message_to_requestor %>
+          <%= f.text_area :private_message_to_requestor, :rows => 5 %>
+        </div>
+        <div class="form_row">
           <%= f.submit "Submit" %>
         </div>
       <% end %>
     <%- end -%>
+  <%- end -%>
+
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <%= render :partial => 'searches/box' %>
   <%= render :partial => 'shared/add_req_button' %>
+  <%= render :partial => 'searches/box' %>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>

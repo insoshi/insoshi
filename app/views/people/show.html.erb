@@ -22,38 +22,54 @@
       <%= image_tag @person.main_photo, :class => "profile-image photo",
                                         :alt => h(@person.name) %>
 
-      <ul class="tools">
+        <ul class="tools">
+        <% unless @person.twitter_name.blank? %>
+          <a href="http://www.twitter.com/<%= h @person.twitter_name %>" title="<%= h @person.twitter_name %>" target="top"><img style="float:right;" src="/images/twitter_481.png"></a>
+        <% end %>
         <%- unless current_person?(@person) -%>
           <%- if logged_in? -%>
+            <li><%= exchange_link @person %></li>
             <li><%= email_link @person %></li>
-            <li><%= account_link @person %></li>
+            <%= render :partial => 'account', :collection => @person.accounts %>
           <%- end -%>
           <%- if current_person.admin? -%>
             <li>
             <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
             <%= link_to activity, 
-                        admin_person_path(@person, :task => "deactivated"),
+                        person_path(@person, :task => "deactivated"),
                         :method => :put %>
             </li>
           <%- end -%>
         <% else -%>
           <%- if logged_in? -%>
-            <li><%= account_link @person %></li>
+            <%= render :partial => 'account', :collection => @person.accounts %>
           <%- end -%>
         <%- end -%>
       </ul>
     </div>
     <%= display @person.formatted_categories, :class => "meta" %>
-    <%= display @person.description %>
+    <%= display simple_format_without_paragraph @person.description %>
   </div>
 
-  <%= render :partial => 'recent_exchanges' %>
-  <%= render :partial => 'recent_activity' %>
   <%= render :partial => 'wall' %>
+  <%= render :partial => 'recent_exchanges' %>
+  <%- if current_person?(@person) -%>
+  <%= render :partial => 'recent_sent_exchanges' %>
+  <%- end -%>
+  <%= render :partial => 'recent_activity' %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
+  <% if global_prefs.group_option? %>
+  <%= render :partial => 'groups', 
+             :locals => {:groups => @own_groups, :title => "Admin Groups", :link => "admin"} %>
+  <%= render :partial => 'groups', 
+             :locals => {:groups => @groups, :title => "Groups", :link => "groups"} %>
+  <%- end -%>
   <%= render :partial => 'searches/box' %>
+  <%- if global_prefs.zipcode_browsing? -%>
+    <%= render :partial => 'zip', :collection => @zips %>
+  <%- end -%>
   <%= render :partial => 'shared/minifeed' %>
 <%- end -%>
 

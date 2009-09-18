@@ -1,0 +1,16 @@
+<%- unless groups.empty? -%>
+  <h2><%= title %></h2>
+  <ul class="grid contacts small">
+    <%- groups.each do |group| -%>
+      <li class="vcard">
+        <%= image_link(group, :image_options => { :class => "photo fn" },
+                                :link_options =>  { :class => "url" }) %>
+      </li>
+    <%- end -%>
+    <li class="more">
+      <%= link_to "See all &raquo;", 
+          link == "admin" ? 
+              admin_groups_person_path(@person) : groups_person_path(@person) %>
+    </li>
+  </ul>
+<%- end -%>

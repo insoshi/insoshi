@@ -1,3 +1,24 @@
+# == Schema Information
+# Schema version: 20090216032013
+#
+# Table name: bids
+#
+#  id              :integer(4)      not null, primary key
+#  req_id          :integer(4)      
+#  person_id       :integer(4)      
+#  status_id       :integer(4)      
+#  estimated_hours :decimal(8, 2)   default(0.0)
+#  actual_hours    :decimal(8, 2)   default(0.0)
+#  expiration_date :datetime        
+#  created_at      :datetime        
+#  updated_at      :datetime        
+#  accepted_at     :datetime        
+#  committed_at    :datetime        
+#  completed_at    :datetime        
+#  approved_at     :datetime        
+#  rejected_at     :datetime        
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:

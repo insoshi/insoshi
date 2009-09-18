@@ -1,0 +1,27 @@
+<% record_column = column -%>
+<% readonly = (@record.readonly? or not @record.authorized_for?(:action => :update)) -%>
+<% action = @record.new_record? ? :create : (readonly ? :read : nil) -%>
+<% show_actions = false -%>
+<% active_scaffold_config_for(@record.class).subform.columns.each :for => @record.class, :action => action, :flatten => true do |column| %>
+  <%
+  next unless in_subform?(column, parent_record)
+  show_actions = true
+  column = column.clone
+  column.form_ui ||= :select if column.association
+  -%>
+  <td>
+    <% unless readonly and not @record.new_record? -%>
+      <%= render :partial => form_partial_for_column(column), :locals => { :column => column, :scope => scope } -%>
+    <% else -%>
+      <p><%= get_column_value(@record, column) -%></p>
+    <% end -%>
+  </td>
+<% end -%>
+<% if show_actions -%>
+  <td class="actions">
+    <%= link_to_function as_('Remove'), '$(this).up(".association-record").remove()', { :class => "destroy" } if @record.authorized_for?(:action => :destroy) or not [:destroy, :delete_all].include?(record_column.association.options[:dependent]) %>
+    <% unless @record.new_record? %>
+    <input type="hidden" name="<%= "record#{scope}[id]" -%>" value="<%= @record.id -%>" />
+    <% end -%>
+  </td>
+<% end -%>
