@@ -16,7 +16,7 @@ module Crypto
     end
   
     def self.from_file(filename)    
-filename = print <<EOF
+      filename = <<EOF
 -----BEGIN RSA PRIVATE KEY-----
 MIICXQIBAAKBgQCxyp7GituWNhUHa6CZXpo8y4nlh7gohHTHZlP5vVZf9PMCD6/a
 9bnOuS4gMnCcvgIB2bn5Qv6CAsvOF5opB428P8R+b676GrrEUvGLQ0Pm7OMfr7wc
