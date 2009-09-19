@@ -66,13 +66,14 @@ class ApplicationController < ActionController::Base
     # A tracker to tell us about the activity of Insoshi installs.
     def tracker_vars
       # TODO: put this in the DB rather than the filesystem
-      #if request.format.html?
-      #  File.open("identifier", "w") do |f|
-      #    f.write UUID.new
-      #  end unless File.exist?("identifier")
-      #  @tracker_id = File.open("identifier").read rescue nil
-      #  @env = ENV['RAILS_ENV']
-      #end
+      if request.format.html?
+	identifier = "#{RAILS_ROOT}/tmp/identifier_#{Process.pid}"
+        File.open(identifier, "w") do |f|
+          f.write UUID.new
+        end unless File.exist?(identifier)
+        @tracker_id = File.open(identifier).read rescue nil
+        @env = ENV['RAILS_ENV']
+      end
     end
     
     # Warn the admin if his email address or password is still the default.
