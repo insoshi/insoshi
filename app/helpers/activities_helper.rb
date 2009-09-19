@@ -59,6 +59,9 @@ module ActivitiesHelper
     when "Req"
       req = activity.item
       %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+    when "Offer"
+      offer = activity.item
+      %(#{person_link(person)} has created a new offer: #{offer_link(offer.name, offer)}.)
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
@@ -125,6 +128,9 @@ module ActivitiesHelper
     when "Req"
       req = activity.item
       %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+    when "Offer"
+      offer = activity.item
+      %(#{person_link(person)} has created a new offer: #{offer_link(offer.name, offer)}.)
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
@@ -172,6 +178,8 @@ module ActivitiesHelper
               "check.gif"
             when "Req"
               "new.gif"
+            when "Offer"
+              "new.gif"
             when "Exchange"
               "favorite.gif"
             else
@@ -211,6 +219,10 @@ module ActivitiesHelper
 
   def req_link(text, req)
     link_to(text, req_path(req))
+  end
+
+  def offer_link(text, offer)
+    link_to(text, offer_path(offer))
   end
 
   # Return a link to the wall.

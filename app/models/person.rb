@@ -121,6 +121,7 @@ class Person < ActiveRecord::Base
   has_many :transactions, :class_name=>"Transact", :finder_sql=>'select exchanges.* from exchanges where (customer_id=#{id} or worker_id=#{id}) order by created_at desc'
 
   has_and_belongs_to_many :categories
+  has_many :offers
   has_many :reqs
   has_many :bids
 

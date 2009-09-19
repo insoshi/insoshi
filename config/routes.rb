@@ -27,6 +27,8 @@ ActionController::Routing::Routes.draw do |map|
     req.resources :bids
   end
 
+  map.resources :offers
+
   map.resources :categories
 
   map.resources :events, :member => { :attend => :get, 

@@ -20,6 +20,7 @@ class CategoriesController < ApplicationController
   def show
     @category = Category.find(params[:id])
     @reqs = @category.current_and_active_reqs
+    @offers = @category.offers
 
     respond_to do |format|
       format.html # show.html.erb

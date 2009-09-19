@@ -1,0 +1,12 @@
+<% column_div :type => :primary do -%>
+<h2>Offer</h2>
+<ul class="list full">
+<%= render :partial => @offer %>
+</ul>
+<%- end -%>
+
+<% column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/add_button', :locals => { :button_text => "Add Offer", :new_resource_path => new_offer_path } %>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

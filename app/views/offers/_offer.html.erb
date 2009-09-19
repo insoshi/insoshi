@@ -1,0 +1,29 @@
+<li class="offer">
+  <a name="offer_<%= offer.id %>"></a>
+  <div class="profile-image">
+    <%= image_link offer.person, :image => :thumbnail %>
+    <%= image_tag "icons/new.gif", :class => "icon", :alt => "Offer" %>
+  </div>
+  <p>
+  <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h offer.price %>)
+    Expires: <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
+  </p>
+    <%= display offer.formatted_categories, :class => "meta" %>
+  <p>
+    <%= display simple_format_without_paragraph(offer.description) %>
+  </p>
+  <p class="meta">
+    Created by <%= person_link offer.person %>
+    <%= time_ago_in_words(offer.created_at) %> ago
+    <% if current_person?(offer.person) -%>
+    | <%= link_to "Edit", edit_offer_path(offer) %>
+    <% end -%>
+    <% if ( admin? || current_person?(offer.person) ) -%>
+    | <%= link_to "Delete", offer, :confirm => 'Are you sure?', :method => :delete %>
+    <% end -%>
+    <br>
+    <% if !current_person.address.nil? && !offer.person.address.nil? && !current_person?(offer.person) -%>
+      <%= number_with_precision(offer.person.address.distance_to(current_person.address), 1).to_s %> miles away
+    <% end -%>
+  </p>
+</li>
