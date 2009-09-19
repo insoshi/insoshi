@@ -1,0 +1,6 @@
+oauth --version '>= 0.2.1'
+chronic
+rubyist-aasm --source http://gems.github.com
+twitter
+starling-starling --source http://gems.github.com
+feed-normalizer
