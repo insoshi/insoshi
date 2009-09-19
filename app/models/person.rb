@@ -196,8 +196,11 @@ class Person < ActiveRecord::Base
     end
     
     def find_recent
+      # TODO: configure attachment_fu for the S3 backend when deploying to Heroku
       find(:all, :order => "people.created_at DESC",
-                 :include => :photos, :limit => NUM_RECENT)
+                 :limit => NUM_RECENT)
+#      find(:all, :order => "people.created_at DESC",
+#                 :include => :photos, :limit => NUM_RECENT)
     end
 
     # Return the first admin created.
