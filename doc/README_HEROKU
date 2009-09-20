@@ -3,6 +3,7 @@ To install this application in Heroku, follow these steps:
 git checkout --track origin/master
 gem install heroku
 heroku create
+cp config/database.yml.heroku config/database.yml
 rake db:create
 rake db:migrate
 rake install

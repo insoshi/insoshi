@@ -1,0 +1,19 @@
+development:
+  adapter: postgresql
+  database: oscurrency_development
+  hostname: localhost
+  username: root
+  
+test:
+  adapter: postgresql
+  database: oscurrency_test
+  hostname: localhost
+  username: root
+  password: 
+
+production:
+  adapter: postgresql
+  database: oscurrency
+  hostname: localhost
+  username: root
+  password: 
