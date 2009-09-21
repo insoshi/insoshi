@@ -32,9 +32,6 @@ class Account < ActiveRecord::Base
 
   def self.transfer(from, to, amount, req)
     transaction do
-      from.withdraw(amount)
-      to.deposit(amount)
-
       exchange = Exchange.new()
       exchange.customer = from.person
       exchange.worker = to.person

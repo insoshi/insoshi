@@ -65,7 +65,9 @@ class Exchange < ActiveRecord::Base
         end
       end
     rescue
-      self.req.destroy
+      unless self.req.active?
+        self.req.destroy
+      end
     end
   end
 
