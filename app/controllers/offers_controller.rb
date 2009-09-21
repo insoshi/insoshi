@@ -1,6 +1,11 @@
 class OffersController < ApplicationController
   def index
     @offers = Offer.current(params[:page])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml { render :xml => @offers }
+    end
   end
 
   def show
