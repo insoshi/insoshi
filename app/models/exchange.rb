@@ -25,6 +25,7 @@ class Exchange < ActiveRecord::Base
   attr_accessible :amount, :group_id
 
   after_create :log_activity
+  after_create :decrement_offer_available_count
   before_create :calculate_account_balances
   after_create :send_payment_notification_to_worker
   before_destroy :send_suspend_payment_notification_to_worker
@@ -41,6 +42,12 @@ class Exchange < ActiveRecord::Base
         errors.add(:amount, "must be greater than zero")
       end
 
+      if self.metadata.class == Offer
+        if self.metadata.available_count == 0
+          errors.add_to_base('This offer is no longer available')
+        end
+      end
+
       unless self.group.nil?
         unless worker.groups.include?(self.group)
           errors.add(:group_id, "does not include recipient as a member")
@@ -49,9 +56,16 @@ class Exchange < ActiveRecord::Base
           errors.add(:group_id, "does not include you as a member")
         end
         unless self.group.adhoc_currency?
-          errors_add(:group_id, "does not have its own currency")
+          errors.add(:group_id, "does not have its own currency")
         end
       end
+    end
+  end
+
+  def decrement_offer_available_count
+    if self.metadata.class == Offer
+      self.metadata.available_count -= 1
+      self.metadata.save
     end
   end
 

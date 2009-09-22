@@ -11,7 +11,7 @@ class Offer < ActiveRecord::Base
 
     def current(page=1)
       today = DateTime.now
-      @reqs = Offer.paginate(:all, :page => page, :conditions => ["expiration_date >= ?", today], :order => 'created_at DESC')
+      @reqs = Offer.paginate(:all, :page => page, :conditions => ["available_count > ? AND expiration_date >= ?", 0, today], :order => 'created_at DESC')
     end
 
   end

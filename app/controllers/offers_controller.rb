@@ -24,6 +24,7 @@ class OffersController < ApplicationController
 
   def create
     @offer = Offer.new(params[:offer])
+    @offer.available_count = @offer.total_available
     @offer.person_id = current_person.id
 
     respond_to do |format|
