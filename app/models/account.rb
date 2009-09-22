@@ -30,13 +30,13 @@ class Account < ActiveRecord::Base
     save!
   end
 
-  def self.transfer(from, to, amount, req)
+  def self.transfer(from, to, amount, metadata)
     transaction do
       exchange = Exchange.new()
       exchange.customer = from.person
       exchange.worker = to.person
       exchange.amount = amount
-      exchange.req = req
+      exchange.metadata = metadata
       exchange.save!
     end
   end

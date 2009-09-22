@@ -23,3 +23,25 @@ Then /^Green Beans should be in the Vegetables category$/ do
   response.should contain("Green Beans")
 end
 
+Given /^an offer with a price of 5$/ do
+  init_oscurrency
+
+  @offer = Offer.new(:name => "Pizza", :price => 5)
+  @offer.person = Person.find_by_name('Quire')
+  @offer.save!
+end
+
+When /^I make a payment for the offer$/ do
+  visit offers_path
+  click_link "Pizza"
+  click_link "Accept Offer"
+end
+
+Then /^my account balance should decrease by 5$/ do
+  pending
+end
+
+Then /^the provider balance should increase by 5$/ do
+  pending
+end
+

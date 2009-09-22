@@ -19,6 +19,10 @@ class ExchangesController < ApplicationController
     end
   end
 
+  # this form is for a direct payment to a member without an existing req or offer
+  # XXX although, we may like to allow customer to choose from her existing reqs in this form
+  # -a payment associated with a req is initiated through bids/bid partial and made through Bid#update
+  # -a payment associated with an offer is initiated through Offer#show and made through Exchange#create
   def new
     @req = Req.new
     @req.name = 'Enter description of service here'
@@ -27,6 +31,8 @@ class ExchangesController < ApplicationController
     @exchange = Exchange.new
   end
 
+  # this method expects that the form is either referencing an existing offer or accepting a name field for a new req to be created 
+  #
   def create
     @exchange = Exchange.new(params[:exchange]) # amount and group_id are the only accessible fields
     @req = Req.new(params[:req])
@@ -40,7 +46,7 @@ class ExchangesController < ApplicationController
 
     @exchange.worker = @worker
     @exchange.customer = current_person
-    @exchange.req = @req
+    @exchange.metadata = @req
 
 
     respond_to do |format|
@@ -65,12 +71,7 @@ class ExchangesController < ApplicationController
 
   def destroy
     @exchange = Exchange.find(params[:id])
-    @req = @exchange.req
-
-    if @req.active?
-      flash[:error] = "Payment could not be suspended"
-      redirect_to person_url(current_person) and return
-    end
+    @metadata = @exchange.metadata
 
     begin
       Exchange.transaction do
@@ -84,10 +85,12 @@ class ExchangesController < ApplicationController
       end
     end
 
-    # we can safely destroy the req since this is a direct payment
-    #
     @exchange.destroy
-    @req.destroy
+    if @metadata.class == Req
+      unless @metadata.active?
+        @metadata.destroy
+      end
+    end
     flash[:success] = "Payment suspended."
 
     respond_to do |format|

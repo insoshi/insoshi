@@ -65,9 +65,9 @@ module ActivitiesHelper
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
-        %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
+        %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.metadata.name,exchange.metadata)}.)
       else
-        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{req_link(exchange.req.name,exchange.req)} in #{group_link(exchange.group)}.)
+        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{req_link(exchange.metadata.name,exchange.metadata)} in #{group_link(exchange.group)}.)
       end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -134,9 +134,9 @@ module ActivitiesHelper
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
-        %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
+        %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.metadata.name,exchange.metadata)}.)
       else
-        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{req_link(exchange.req.name,exchange.req)} in #{group_link(exchange.group)}.)
+        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{req_link(exchange.metadata.name,exchange.metadata)} in #{group_link(exchange.group)}.)
       end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
