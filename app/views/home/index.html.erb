@@ -15,6 +15,14 @@
     <%= render :partial => '/shared/bid', :collection => @bids %>
   </ul>
 <%- end -%>
+    <h2>Your Active Offers</h2>
+<%- if @offers.empty? -%>
+    <h3 class="blankslate">No active offers</h3>
+<%- else -%>
+<ul class="list full">
+    <%= render :partial => '/offers/offer', :collection => @offers %>
+  </ul>
+<%- end -%>
     <h2>Your Active Requests</h2>
 <%- if @reqs.empty? -%>
     <h3 class="blankslate">No active requests</h3>

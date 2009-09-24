@@ -319,6 +319,11 @@ class Person < ActiveRecord::Base
     categories.collect { |cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
   end
 
+  def current_offers
+    today = DateTime.now
+    offers = self.offers.find(:all, :conditions => ["expiration_date >= ?", today], :order => 'created_at DESC')
+  end
+
   def current_and_active_reqs
     today = DateTime.now
     reqs = self.reqs.find(:all, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
