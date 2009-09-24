@@ -1,4 +1,7 @@
 class OffersController < ApplicationController
+  before_filter :login_required
+  before_filter :correct_person_required, :only => [:edit, :update, :destroy]
+
   def index
     @offers = Offer.current(params[:page])
 
@@ -71,4 +74,9 @@ class OffersController < ApplicationController
     end
   end
 
+private
+
+  def correct_person_required
+    redirect_to home_url unless ( current_person.admin? or Offer.find(params[:id]).person == current_person )
+  end
 end

@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     config.ignore_columns.add [ :created_at, :updated_at ]
   end
 
-  audit Req, Bid, Exchange, Account, Person, :only => [:create, :update, :destroy]
+  audit Req, Offer, Bid, Exchange, Account, Person, :only => [:create, :update, :destroy]
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
