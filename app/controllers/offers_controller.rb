@@ -66,7 +66,11 @@ class OffersController < ApplicationController
 
   def destroy
     @offer = Offer.find(params[:id])
-    @offer.destroy
+    if @offer.can_destroy?
+      @offer.destroy
+    else
+      flash[:error] = 'This offer cannot be deleted as it has been accepted'
+    end
 
     respond_to do |format|
       format.html { redirect_to(offers_url) }

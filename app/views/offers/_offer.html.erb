@@ -6,7 +6,7 @@
   </div>
   <p>
   <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h offer.price %> hrs)
-  <% if offer.available_count > 0 && offer.expiration_date > Time.now %>
+  <% if offer.available_count > 0 && offer.expiration_date > Time.now && !current_person?(offer.person) %>
   <%= link_to 'Accept Offer!', new_person_exchange_path(offer.person, :offer => offer.id) %>
 <% end %>
     Expires: <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
@@ -23,7 +23,7 @@
     <% if current_person?(offer.person) -%>
     | <%= link_to "Edit", edit_offer_path(offer) %>
     <% end -%>
-    <% if ( admin? || current_person?(offer.person) ) -%>
+    <% if ( offer.can_destroy? && ( admin? || current_person?(offer.person) ) ) -%>
     | <%= link_to "Delete", offer, :confirm => 'Are you sure?', :method => :delete %>
     <% end -%>
     <br>

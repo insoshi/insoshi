@@ -2,6 +2,7 @@ class Offer < ActiveRecord::Base
   include ActivityLogger
 
   has_and_belongs_to_many :categories
+  has_many :exchanges, :as => :metadata
   belongs_to :person
   attr_protected :person_id, :created_at, :updated_at
   validates_presence_of :name
@@ -14,6 +15,10 @@ class Offer < ActiveRecord::Base
       @reqs = Offer.paginate(:all, :page => page, :conditions => ["available_count > ? AND expiration_date >= ?", 0, today], :order => 'created_at DESC')
     end
 
+  end
+
+  def can_destroy?
+    self.exchanges.length == 0
   end
 
   def log_activity
