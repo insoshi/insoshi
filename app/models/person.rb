@@ -39,7 +39,7 @@ class Person < ActiveRecord::Base
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications,
                   :blog_comment_notifications, :identity_url, :category_ids, :address_ids,
-                  :twitter_name
+                  :twitter_name, :zipcode
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',
                           'email_verified'],
@@ -47,6 +47,7 @@ class Person < ActiveRecord::Base
   MAX_EMAIL = MAX_PASSWORD = 40
   MAX_NAME = 40
   MAX_TWITTER_NAME = 15
+  MAX_ZIPCODE = 10
   MAX_DESCRIPTION = 5000
   EMAIL_REGEX = /\A[A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i
   TRASH_TIME_AGO = 1.month.ago
@@ -337,7 +338,7 @@ class Person < ActiveRecord::Base
 
   def create_address
     address = Address.new( :name => 'personal' )
-    address.zipcode_plus_4 = '89001'
+    address.zipcode_plus_4 = self.zipcode.blank? ? '89001' : self.zipcode
     address.person = self
     address.save
   end

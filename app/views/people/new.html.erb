@@ -29,6 +29,11 @@
       <span class="small">(will be displayed)</span></label>
     <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
   </div>
+
+  <div class="form_row">
+    <label for="zipcode">Zipcode</label>
+    <%= f.text_field :zipcode, :class => 'buzz' %>
+  </div>
   
 
   <div class="form_row full">
