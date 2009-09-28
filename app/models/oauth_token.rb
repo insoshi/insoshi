@@ -17,7 +17,8 @@
 
 class OauthToken < ActiveRecord::Base
   belongs_to :client_application
-  belongs_to :person
+  #belongs_to :person
+  belongs_to :user, :class_name => "Person" 
   validates_uniqueness_of :token
   validates_presence_of :client_application,:token,:secret
   before_validation_on_create :generate_keys
