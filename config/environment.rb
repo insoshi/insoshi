@@ -74,7 +74,8 @@ Rails::Initializer.run do |config|
   #                                    :lib => 'will_paginate',
   #                                    :source => 'http://gems.github.com'
   # rake dependencies
-  config.gem 'oauth', :version => '>= 0.2.1'
+  config.gem 'oauth', :version => '>= 0.3.6'
+  config.gem 'oauth-plugin', :version => '>= 0.3.11'
   config.gem 'chronic'
   # add source:
   # `gem sources -a http://gems.github.com`
