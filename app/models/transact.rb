@@ -34,6 +34,14 @@ class Transact < Exchange
     end
   end
 
+  def to_xml(options={})
+    results.to_xml(options.merge(:root => "txn"))
+  end
+
+  def to_json(options={})
+    results.to_json
+  end
+
   protected
 
   def callback_uri

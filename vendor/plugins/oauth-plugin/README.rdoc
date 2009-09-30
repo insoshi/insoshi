@@ -1,0 +1,376 @@
+= OAuth Plugin
+
+This is a plugin for implementing OAuth Providers and Consumers in Rails applications.
+
+We support the revised OAuth 1.0a specs at:
+
+http://oauth.net/core/1.0a
+
+and the OAuth site at:
+
+http://oauth.net
+
+For more about the changes made to OAuth1.0a please see Seth's Idiot's Guide to OAuth 1.0a.
+
+http://mojodna.net/2009/05/20/an-idiots-guide-to-oauth-10a.html
+
+== Requirements
+
+You need to install the oauth gem (0.3.5) which is the core OAuth ruby library. It will NOT work on any previous version of the gem.
+  
+  sudo gem install oauth
+
+== Installation
+
+The plugin can now be installed as an gem from github, which is the easiest way to keep it up to date.
+
+  sudo gem install oauth-plugin
+  
+You should add the following in the gem dependency section of environment.rb
+
+  config.gem "oauth"
+  config.gem "oauth-plugin"
+
+Alternatively you can install it in vendors/plugin:
+
+  script/plugin install git://github.com/pelle/oauth-plugin.git
+
+The Generator currently creates code (in particular views) that only work in Rails 2.
+
+It should not be difficult to manually modify the code to work on Rails 1.2.x
+
+I think the only real issue is that the views have .html.erb extensions. So these could theoretically just be renamed to .rhtml.
+
+Please let me know if this works and I will see if I can make the generator conditionally create .rhtml for pre 2.0 versions of RAILS.
+
+== OAuth Provider generator
+
+While it isn't very flexible at the moment there is an oauth_provider generator which you can use like this:
+
+  ./script/generate oauth_provider
+
+This generates OAuth and OAuth client controllers as well as the required models.
+
+It requires an authentication framework such as acts_as_authenticated, restful_authentication or restful_open_id_authentication. It also requires Rails 2.0.
+
+=== Generator Options
+
+By default the generator generates RSpec and ERB templates. The generator can instead create Test::Unit and/or HAML templates. To do this use the following options:
+
+  ./script/generate oauth_provider --test-unit --haml
+  
+These can of course be used individually as well.
+
+=== User Model
+
+Add the following lines to your user model:
+
+  has_many :client_applications
+  has_many :tokens, :class_name=>"OauthToken",:order=>"authorized_at desc",:include=>[:client_application]
+
+=== Migrate database
+
+The database is defined in:
+  
+  db/migrate/XXX_create_oauth_tables.rb
+
+Run them as any other normal migration in rails with:
+
+  rake db:migrate
+
+== Upgrading from OAuth 1.0 to OAuth 1.0a
+
+As the flow has changed slightly and there are a couple of database changes it isn't as simple as just updating the plugin. Please follow these steps closely:
+
+=== Add a migration
+
+You need to add a migration:
+
+  script/generate migration upgrade_oauth
+
+Make it look like this:
+
+  class UpgradeOauth < ActiveRecord::Migration
+    def self.up
+      add_column :oauth_tokens,:callback_url,:string
+      add_column :oauth_tokens,:verifier,:string,:limit => 20
+    end
+
+    def self.down
+      remove_column :oauth_tokens,:callback_url
+      remove_column :oauth_tokens,:verifier
+    end
+  end
+
+=== Change code
+
+There are changes to the following files:
+
+  app/models/client_application.rb
+  app/models/request_token.rb
+  app/controllers/oauth_controller.rb
+
+=== Changes in client_application.rb
+
+Add the following towards the top of the model class
+
+  attr_accessor :token_callback_url
+
+Then change the create_request_token method to the following:
+
+  def create_request_token
+    RequestToken.create :client_application =>self,:callback_url=>token_callback_url
+  end
+
+=== Changes in request_token.rb
+
+The RequestToken contains the bulk of the changes so it's easiest to list it in it's entirety. Mainly we need to add support for the oauth_verifier parameter and also tell the client that we support OAuth 1.0a. 
+
+Make sure it looks like this:
+
+  class RequestToken < OauthToken
+  
+    attr_accessor :provided_oauth_verifier
+  
+    def authorize!(user)
+      return false if authorized?
+      self.user = user
+      self.authorized_at = Time.now
+      self.verifier=OAuth::Helper.generate_key(16)[0,20] unless oauth10?
+      self.save
+    end
+  
+    def exchange!
+      return false unless authorized?
+      return false unless oauth10? || verifier==provided_oauth_verifier
+    
+      RequestToken.transaction do
+        access_token = AccessToken.create(:user => user, :client_application => client_application)
+        invalidate!
+        access_token
+      end
+    end
+  
+    def to_query
+      if oauth10?
+        super
+      else
+        "#{super}&oauth_callback_confirmed=true"
+      end
+    end
+  
+    def oob?
+      self.callback_url=='oob'
+    end
+  
+    def oauth10?
+      (defined? OAUTH_10_SUPPORT) && OAUTH_10_SUPPORT && self.callback_url.blank?
+    end
+
+  end
+
+=== Changes in oauth_controller
+
+All you need to do here is the change the authorize action to use the request_token callback url and add the oauth_verifier to the callback url. 
+
+  def authorize
+    @token = ::RequestToken.find_by_token params[:oauth_token]
+    unless @token.invalidated?    
+      if request.post? 
+        if params[:authorize] == '1'
+          @token.authorize!(current_user)
+          if @token.oauth10?
+            @redirect_url = params[:oauth_callback] || @token.client_application.callback_url
+          else
+            @redirect_url = @token.oob? ? @token.client_application.callback_url : @token.callback_url
+          end
+        
+          if @redirect_url
+            if @token.oauth10?
+              redirect_to "#{@redirect_url}?oauth_token=#{@token.token}"
+            else
+              redirect_to "#{@redirect_url}?oauth_token=#{@token.token}&oauth_verifier=#{@token.verifier}"
+            end
+          else
+            render :action => "authorize_success"
+          end
+        elsif params[:authorize] == "0"
+          @token.invalidate!
+          render :action => "authorize_failure"
+        end
+      end
+    else
+      render :action => "authorize_failure"
+    end
+  end
+
+Alternatively if you haven't customized your controller you can replace the full controller with this:
+
+  require 'oauth/controllers/provider_controller'
+  class OauthController < ApplicationController
+    include OAuth::Controllers::ProviderController
+  end
+
+This way the controller will automatically include bug fixes in future versions of the plugin.
+
+The rest of the changes are in the plugin and will be automatically be included.
+
+*Note* OAuth 1.0a removes support for callback url's passed to the authorize page, clients must either define a callback url in their client application or pass one on the token request page.
+
+=== Supporting old OAuth 1.0 clients
+
+If you absolutely have to support older OAuth 1.0 clients on an optional basis, we now include a switch to turn it back on.
+
+For legacy OAUTH 1.0 support add the following constant in your environment.rb
+
+  OAUTH_10_SUPPORT = true
+
+Note, you should only do this if you really positively require to support old OAuth1.0 clients. There is a serious security issue with this.
+
+== Protecting your actions
+
+I recommend that you think about what your users would want to provide access to and limit oauth for those only. For example in a CRUD controller you may think about if you want to let consumer applications do the create, update or delete actions. For your application this might make sense, but for others maybe not.
+
+If you want to give oauth access to everything a registered user can do, just replace the filter you have in your controllers with:
+
+  before_filter :login_or_oauth_required
+
+If you want to restrict consumers to the index and show methods of your controller do the following:
+
+  before_filter :login_required,:except=>[:show,:index]
+  before_filter :login_or_oauth_required,:only=>[:show,:index]
+
+If you have an action you only want used via oauth:
+
+  before_filter :oauth_required
+
+All of these places the tokens user in current_user as you would expect. It also exposes the following methods:
+
+* current_token - for accessing the token used to authorize the current request
+* current_client_application - for accessing information about which consumer is currently accessing your request
+
+You could add application specific information to the OauthToken and ClientApplication model for such things as object level access control, billing, expiry etc. Be creative and you can create some really cool applications here.
+
+== OAuth Consumer generator
+
+The oauth_consumer generator creates a controller to manage the authentication flow between your application and any number of external OAuth secured applications that you wish to connect to.
+
+To run it simply run:
+
+  ./script/generate oauth_consumer
+
+This generates the OauthConsumerController as well as the ConsumerToken model.
+
+=== Generator Options
+
+By default the generator generates ERB templates. The generator can instead create HAML templates. To do this use the following options:
+
+  ./script/generate oauth_consumer --haml
+
+=== Configuration
+
+All configuration of applications is done in
+
+  config/initializers/oauth_consumers.rb
+
+Add entries to OAUTH_CREDENTIALS for all OAuth Applications you wish to connect to. Get this information by registering your application at the particular applications developer page.
+
+  OAUTH_CREDENTIALS={
+    :twitter=>{
+      :key=>"key",
+      :secret=>"secret"
+    },
+    :agree2=>{
+      :key=>"key",
+      :secret=>"secret"
+    },
+    :hour_feed=>{
+      :key=>"",
+      :secret=>"",
+      :options={
+        :site=>"http://hourfeed.com" 
+      }
+    },
+    :nu_bux=>{
+      :key=>"",
+      :secret=>"",
+      :super_class=>"OpenTransactToken",  # if a OAuth service follows a particular standard 
+                                          # with a token implementation you can set the superclass
+                                          # to use
+      :options=>{
+        :site=>"http://nubux.heroku.com"
+      }
+    }
+  }
+
+You can add any of the options that the OAuth::Consumer.new accepts to the options hash: http://oauth.rubyforge.org/rdoc/classes/OAuth/Consumer.html
+
+:key, :secret are required as well as :options[:site] etc. for non custom ConsumerToken services.
+
+=== ConsumerToken models
+
+For each site setup in the OAUTH_CREDENTIALS hash the plugin goes through and loads or creates a new model class that subclasses ConsumerToken.
+
+eg. If you connect to Yahoo's FireEagle you would add the :fire_eagle entry to OAUTH_CREDENTIALS and a new FireEagleToken model class will be created on the fly.
+
+This allows you to add a has_one association in your user model:
+
+  has_one  :fire_eagle,:class_name=>"FireEagleToken", :dependent=>:destroy
+
+And you could do:
+
+  @location=@user.fire_eagle.client.location
+
+The client method gives you a OAuth::AccessToken which you can use to perform rest operations on the client site - see http://oauth.rubyforge.org/rdoc/classes/OAuth/AccessToken.html
+
+=== Custom ConsumerToken models
+
+Before creating the FireEagleToken model the plugin checks if a class already exists by that name or if we provide an api wrapper for it. This allows you to create a better token model that uses an existing ruby gem.
+
+Currently we provide the following semi tested tokens wrappers:
+
+* FireEagle
+* Twitter
+* Agree2
+
+These can be found in lib/oauth/models/consulers/services. Contributions will be warmly accepted for your favorite OAuth service.
+
+=== The OauthConsumerController
+
+To connect a user to an external service link or redirect them to:
+
+  /oauth_consumers/[SERVICE_NAME]
+  
+Where SERVICE_NAME is the name you set in the OAUTH_CREDENTIALS hash. This will request the request token and redirect the user to the services authorization screen. When the user accepts the get redirected back to:
+
+  /oauth_consumers/[SERVICE_NAME]/callback
+  
+You can specify this url to the service you're calling when you register, but it will automatically be sent along anyway.
+
+=== Migrate database
+
+The database is defined in:
+
+  db/migrate/XXX_create_oauth_consumer_tokens.rb
+
+Run them as any other normal migration in rails with:
+
+  rake db:migrate
+
+== More
+
+The Google Code project is http://code.google.com/p/oauth-plugin/
+
+The Mailing List for all things OAuth in Ruby is:
+
+http://groups.google.com/group/oauth-ruby
+
+The Mailing list for everything else OAuth is:
+
+http://groups.google.com/group/oauth
+
+The OAuth Ruby Gem home page is http://oauth.rubyforge.org
+
+Please help documentation, patches and testing.
+
+Copyright (c) 2007-2009 Pelle Braendgaard, released under the MIT license

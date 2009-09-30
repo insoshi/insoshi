@@ -5,7 +5,7 @@ class TransactsController < ApplicationController
   def index
     @transactions = current_person.transactions
     respond_to do |format|
-      format.xml { render :xml => @transactions }
+      format.xml { render :xml => @transactions.to_xml(:root => "txns") }
       format.json { render :json => @transactions.to_json }
     end
   end
