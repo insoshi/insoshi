@@ -5,8 +5,8 @@ module Oauth
       module Token
         def self.included(model)
           model.class_eval do
-            belongs_to :user
-            validates_presence_of :user, :token, :secret                      
+            belongs_to :person
+            validates_presence_of :person, :token, :secret                      
           end
 
           model.send(:include, InstanceMethods)
@@ -28,13 +28,13 @@ module Oauth
             consumer.get_request_token(:oauth_callback=>callback_url)
           end
 
-          def create_from_request_token(user,token,secret,oauth_verifier)
+          def create_from_request_token(person,token,secret,oauth_verifier)
             logger.info "create_from_request_token"
             request_token=OAuth::RequestToken.new consumer,token,secret
             access_token=request_token.get_access_token :oauth_verifier=>oauth_verifier
             logger.info self.inspect
-            logger.info user.inspect
-            create :user_id=>user.id,:token=>access_token.token,:secret=>access_token.secret
+            logger.info person.inspect
+            create :person_id=>person.id,:token=>access_token.token,:secret=>access_token.secret
           end
           
           protected
