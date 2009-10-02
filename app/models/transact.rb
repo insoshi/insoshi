@@ -27,7 +27,7 @@ class Transact < Exchange
       :from => self.customer.email,
       :amount => self.amount.to_s,
       :txn_date => created_at.iso8601,
-      :memo => self.req.name,
+      :memo => self.metadata.name,
       :txn_id => "http://" + Transact.global_prefs.server_name + "/transacts/#{self.id}",
       :status => 'ok'
     }
