@@ -1,6 +1,7 @@
 class Transact < Exchange
   extend PreferencesHelper
   attr_accessor :to, :memo, :callback_url, :redirect_url
+  attr_accessible :callback_url, :redirect_url
 
   after_create :perform_callback
 
