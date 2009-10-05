@@ -1,0 +1,10 @@
+<%- column_div :type => :primary do -%>
+  <h2>Transaction</h2>
+  <ul class="list activity full">
+    <%= render :partial => 'shared/transact' %> 
+  </ul>
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

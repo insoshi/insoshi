@@ -1,18 +1,18 @@
 class Transact < Exchange
   extend PreferencesHelper
-  attr_accessor :to, :callback_url, :redirect_url
-  attr_accessible :to, :callback_url, :redirect_url
+  attr_accessor :to, :memo, :callback_url, :redirect_url
 
   after_create :perform_callback
 
-  def save_req(req, person = self.customer)
-    req.name = 'miscellaneous' if req.name.blank? # XML creation might not set this
-    req.estimated_hours = self.amount
+  def create_req(memo)
+    req = Req.new
+    req.name = memo.blank? ? 'miscellaneous' : memo 
+    req.person = customer
+    req.estimated_hours = amount
     req.due_date = Time.now
-    req.person = person
     req.active = false
     req.save!
-    self.req = req
+    req
   end
 
   def results
@@ -23,12 +23,12 @@ class Transact < Exchange
     }
     else
     {
-      :to => self.to,
-      :from => self.customer.email,
-      :amount => self.amount.to_s,
+      :to => worker.email,
+      :from => customer.email,
+      :amount => amount.to_s,
       :txn_date => created_at.iso8601,
-      :memo => self.metadata.name,
-      :txn_id => "http://" + Transact.global_prefs.server_name + "/transacts/#{self.id}",
+      :memo => metadata.name,
+      :txn_id => "http://" + Transact.global_prefs.server_name + "/transacts/#{id}",
       :status => 'ok'
     }
     end
@@ -45,7 +45,7 @@ class Transact < Exchange
   protected
 
   def callback_uri
-    @callback_uri ||= URI.parse(self.callback_url) if self.callback_url
+    @callback_uri ||= URI.parse(callback_url) if callback_url
   end
 
   def http
@@ -57,7 +57,7 @@ class Transact < Exchange
   end
 
   def perform_callback
-    if self.callback_url
+    if callback_url
       request = Net::HTTP::Post.new(callback_uri.path+(callback_uri.query || '' ))
       request.set_form_data(results)
       response = http.request(request)

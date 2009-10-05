@@ -1,28 +1,24 @@
 <%- column_div :type => :primary do -%>
   <% if @swp %>
-    <h2><%= @worker.name %> requested <%= @transact.amount %> hours</h2> 
+    <h2><%= h @worker.name %> requested <%= h params[:amount] %> hours</h2> 
   <% else %>
     <h2>Pay someone</h2>
   <% end %>
 
-  <%= error_messages_for :transact %>
-
 <% if @swp %>
   <div class="profile vcard">
-    <% form_for :transact, :url => transacts_path do |f| %>
-      <%= f.hidden_field :to %>
-      <%= f.hidden_field :amount %>
-      <%= f.hidden_field :callback_url %>
-      <%= f.hidden_field :redirect_url %>
-      <% fields_for :req do |r| %>
-        <%= r.hidden_field :name %>
-      <% end %>
+    <% form_tag :action => :create do %>
+      <%= hidden_field_tag(:to,params[:to]) %>
+      <%= hidden_field_tag(:amount,params[:amount]) %>
+      <%= hidden_field_tag(:memo,params[:memo]) %>
+      <%= hidden_field_tag(:callback_url,params[:callback_url]) %>
+      <%= hidden_field_tag(:redirect_url,params[:redirect_url]) %>
     <div class="toolbox">
       <%= image_tag @worker.main_photo, :class => "profile-image photo",
                                         :alt => h(@worker.name) %>
     </div>
     <%= display "This has been requested in return for:", :class => "meta" %> 
-    <%= display @req.name %>
+    <%= display params[:memo] %>
   <div class="status-btn">
     <input type="submit" name="update" value="pay now" id="update-submit" class="round-btn"/>
   </div>
@@ -30,24 +26,22 @@
   <% end %>
   </div>
 <% else %>
-  <% form_for :transact, :url => transacts_path do |f| %>
+  <% form_tag :action => :create do %>
     <div class="form_row">
-      <%= f.label :payee_email_address %>
-      <%= f.text_field :to %>
+      <label for="to">Payee email address</label>
+      <%= text_field_tag(:to,params[:to],:size => 40) %>
     </div>
     <div class="form_row">
-      <%= f.label :amount %>
-      <%= f.text_field :amount, :size => 2 %> hours
+      <label for="amount">Amount</label>
+      <%= text_field_tag(:amount,params[:amount],:size => 3) %> hours
     </div>
-    <% fields_for :req do |r| %>
-      <div class="form_row">
-        <%= r.label 'Service provided' %>
-        <%= r.text_field :name %>
-      </div>
-    <% end %>
     <div class="form_row">
-      <%= f.submit "Submit" %>
+      <label for="memo">Description</label> 
+      <%= text_field_tag(:memo,params[:memo],:size => 40) %>
     </div>
+  <div class="status-btn">
+    <input type="submit" name="update" value="pay now" id="update-submit" class="round-btn"/>
+  </div>
   <% end %>
 <% end %>
 <%- end -%>
