@@ -8,11 +8,11 @@ Given /^a category named Vegetables\:Beans$/ do
 end
 
 When /^I create an offer Green Beans in the Vegetables\:Beans category$/ do
-  current_person = Person.find(:first)
   #visit offers_path
   #click_button "add offer" XXX this button has javascript so webrat won't find it
   visit new_offer_path
   fill_in "offer_name", :with => "Green Beans"
+  fill_in "offer_expiration_date", :with => DateTime.now + 1.day
   select "Vegetables:Beans", :from => "offer_category_ids"
   click_button "Create"
 end
