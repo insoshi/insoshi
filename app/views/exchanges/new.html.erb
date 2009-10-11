@@ -28,7 +28,7 @@
       <% fields_for :offer do |o| %>
         <div class="form_row">
           <%= o.label 'For:' %>
-          <%= o.text_field :name, :value => @offer.name, :disabled => true %>
+          <%= o.text_field :name, :value => @offer.name, :disabled => true %> &nbsp;&nbsp;&nbsp;&nbsp; <%= link_to "...or ask #{@offer.person.name} a question", @offer, :class => "meta" %>
         </div>
         <%= o.hidden_field :id %>
       <% end %>
