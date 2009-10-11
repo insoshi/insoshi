@@ -95,6 +95,12 @@ class Req < ActiveRecord::Base
 
   private
 
+  def validate
+    if self.categories.length > 5
+      errors.add_to_base('Only 5 categories are allowed per request')
+    end
+  end
+
   def notify_workers
     workers = []
     # even though pseudo-reqs created by direct payments do not have associated categories, let's
