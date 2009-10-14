@@ -43,14 +43,15 @@ module ApplicationHelper
       home =    menu_element("Home", home_path)
       spam = menu_element("eNews", admin_broadcast_emails_path)
       people =  menu_element("People", admin_people_path)
+      feed = menu_element("Feed", admin_feed_posts_path)
       forums =  menu_element(inflect("Forum", Forum.count),
                              admin_forums_path)
       preferences = menu_element("Prefs", admin_preferences_path)
       if global_prefs.group_option?
         groups = menu_element("Groups", admin_groups_path)
-        links = [home, spam, people, forums, groups, preferences]
+        links = [home, spam, people, feed, forums, groups, preferences]
       else
-        links = [home, spam, people, forums, preferences]
+        links = [home, spam, people, feed, forums, preferences]
       end
     else
       #links = [home, people]

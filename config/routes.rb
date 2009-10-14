@@ -63,7 +63,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.namespace :admin do |admin|
     admin.resources :people, :active_scaffold => true
-    admin.resources :preferences, :broadcast_emails
+    admin.resources :preferences, :broadcast_emails, :feed_posts
     admin.resources :groups
     admin.resources :forums do |forums|
       forums.resources :topics do |topic|
