@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   include SharedHelper
   include PreferencesHelper
   
+  filter_parameter_logging :password
+  
   before_filter :create_page_view, :require_activation, :tracker_vars,
                 :admin_warning
 
