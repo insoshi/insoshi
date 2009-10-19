@@ -53,6 +53,12 @@
     <%= f.text_area :description %>
   </div>  
 
+  <div class="form_row full">
+        <label for="person_categories">Neighborhood
+        </label>
+        <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'person' } %>
+  </div>
+
   <div class="form_row">
     <label for="password">Password</label>
     <%= f.password_field :password, :maxlength => Person::MAX_PASSWORD %>

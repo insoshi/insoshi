@@ -26,6 +26,12 @@
         <%= render :partial => "shared/select_categories", :locals => { :model_name => 'person' } %>
   </div>
   
+  <div class="form_row full">
+        <label for="person_neighborhoods">Neighborhood
+        </label>
+        <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'person' } %>
+  </div>
+
       <div class="form_row">
         <label for="person_description">Description
         </label>

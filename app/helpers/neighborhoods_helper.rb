@@ -1,0 +1,2 @@
+module NeighborhoodsHelper
+end

@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :neighborhoods
+
   map.resources :memberships, :member => {:unsuscribe => :delete, :suscribe => :post}
 
   map.resources :transacts

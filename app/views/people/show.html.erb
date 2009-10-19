@@ -47,6 +47,9 @@
         <%- end -%>
       </ul>
     </div>
+    <ul>
+      <%= render :partial => 'shared/neighborhood', :collection => @person.neighborhoods %>
+    </ul>
     <%= display @person.formatted_categories, :class => "meta" %>
     <%= display simple_format_without_paragraph @person.description %>
   </div>

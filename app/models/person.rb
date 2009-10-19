@@ -38,7 +38,7 @@ class Person < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications,
-                  :blog_comment_notifications, :identity_url, :category_ids, :address_ids,
+                  :blog_comment_notifications, :identity_url, :category_ids, :address_ids, :neighborhood_ids,
                   :twitter_name, :zipcode
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',
@@ -121,6 +121,7 @@ class Person < ActiveRecord::Base
   has_many :transactions, :class_name=>"Transact", :finder_sql=>'select exchanges.* from exchanges where (customer_id=#{id} or worker_id=#{id}) order by created_at desc'
 
   has_and_belongs_to_many :categories
+  has_and_belongs_to_many :neighborhoods
   has_many :offers
   has_many :reqs
   has_many :bids

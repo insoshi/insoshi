@@ -1,0 +1,11 @@
+<p class='formatting'><span>Select<br />multiple</span>Mac: command <br />Win: control</p>
+<%=
+    collection_select( model_name,
+                      'neighborhood_ids',
+                      @all_neighborhoods,
+                      :id,
+                      :long_name,
+                      {},
+                      {:multiple => true, :size => '10'}
+                      )
+%>

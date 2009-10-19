@@ -58,6 +58,7 @@ class PeopleController < ApplicationController
     @body = @body + " yui-skin-sam"
     @person = Person.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
       format.html
     end
@@ -89,6 +90,7 @@ class PeopleController < ApplicationController
       else
         @body = "register single-col"
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { if @person.identity_url.blank? 
                         render :action => 'new'
                       else
@@ -127,7 +129,7 @@ class PeopleController < ApplicationController
     @body = @body + " yui-skin-sam"
     @person = Person.find(params[:id])
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-
+    @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
       format.html
     end
@@ -155,6 +157,7 @@ class PeopleController < ApplicationController
           format.html { redirect_to(@person) }
         else
           @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           if preview?
             @preview = @person.description = params[:person][:description]
           end
@@ -170,6 +173,7 @@ class PeopleController < ApplicationController
           format.html { redirect_to(@person) }
         else
           @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           format.html { render :action => "edit" }
         end
       end
