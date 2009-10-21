@@ -174,7 +174,7 @@ class Person < ActiveRecord::Base
     end
 
     def mostly_active_alpha(page = 1)
-      sort_opts = {:order => "name ASC", :group_by => "first_letter"}
+      sort_opts = {:order => "name ASC", :group_by => "first_letter,name"}
       mostly_active(sort_opts, page)
     end
 
