@@ -10,8 +10,8 @@ class CreateAddresses < ActiveRecord::Migration
         t.string :county_id, :null => true
         t.integer :state_id, :null => true
         t.string :zipcode_plus_4, :null => true, :limit => 10
-        t.decimal :latitude, :null => false, :precision => 12, :scale => 8
-        t.decimal :longitude, :null => false, :precision => 12, :scale => 8
+        t.decimal :latitude, :precision => 12, :scale => 8
+        t.decimal :longitude, :precision => 12, :scale => 8
       t.timestamps
     end
   end
