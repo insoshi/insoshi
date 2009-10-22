@@ -52,6 +52,20 @@ class AddressesController < ApplicationController
     end
   end
 
+  def destroy
+    if @person.addresses.length > 1
+      @address = @person.addresses.find(params[:id])
+      @address.destroy
+    else
+      flash[:error] = "You must have at least one address"
+    end
+
+    respond_to do |format|
+      format.html { redirect_to(person_url(@person)) }
+      format.xml  { head :ok }
+    end
+  end
+
 private
   def correct_user_required
     redirect_to home_url unless Person.find(params[:person_id]) == current_person
