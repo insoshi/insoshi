@@ -39,6 +39,7 @@ class Preference < ActiveRecord::Base
                   :email_notifications, :email_verifications, :analytics,
                   :about, :demo, :whitelist, :gmail, :registration_notification,
                   :practice, :steps, :questions, :memberships, :contact,
+                  :agreement,
                   :twitter_name, :twitter_password, :twitter_api,
                   :group_option,
                   :zipcode_browsing,

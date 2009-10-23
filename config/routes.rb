@@ -96,6 +96,7 @@ ActionController::Routing::Routes.draw do |map|
   map.questions '/questions', :controller => 'home', :action => 'questions'
   map.memberships '/memberships', :controller => 'home', :action => 'memberships'
   map.contact '/contact', :controller => 'home', :action => 'contact'
+  map.agreement '/agreement', :controller => 'home', :action => 'agreement'
 
   map.admin_home '/admin/home', :controller => 'home'
 

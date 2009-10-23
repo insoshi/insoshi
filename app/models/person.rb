@@ -39,7 +39,8 @@ class Person < ActiveRecord::Base
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications,
                   :blog_comment_notifications, :identity_url, :category_ids, :address_ids, :neighborhood_ids,
-                  :twitter_name, :zipcode
+                  :twitter_name, :zipcode,
+                  :accept_agreement
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',
                           'email_verified'],
@@ -140,6 +141,8 @@ class Person < ActiveRecord::Base
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
   validates_uniqueness_of   :identity_url, :allow_nil => true
+
+  validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
 
   before_create :create_blog, :check_config_for_deactivation
   after_create :create_account
