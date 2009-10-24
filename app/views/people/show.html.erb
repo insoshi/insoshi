@@ -17,6 +17,13 @@
           <%= link_to "Click here to edit it", edit_person_path(@person) %>
         </div>
       <%- end -%>
+      <%- if Person::DEFAULT_ZIPCODE_STRING == current_person.address.zipcode_plus_4 %>
+        <div class="error">
+          <%= link_to "Click here to update your location",
+                      edit_person_path(@person) %>. 
+          (Your address will remain private)
+        </div>
+      <%- end -%>
     <%- end -%>
     <div class="toolbox">
       <%= image_tag @person.main_photo, :class => "profile-image photo",

@@ -60,6 +60,7 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 3.months.ago
+  DEFAULT_ZIPCODE_STRING = '89001'
   # These constants should be methods, but I couldn't figure out how to use
   # methods in the has_many associations.  I hope you can do better.
   ACCEPTED_AND_ACTIVE =  [%(status = ? AND
@@ -341,7 +342,7 @@ class Person < ActiveRecord::Base
 
   def create_address
     address = Address.new( :name => 'personal' )
-    address.zipcode_plus_4 = self.zipcode.blank? ? '89001' : self.zipcode
+    address.zipcode_plus_4 = self.zipcode.blank? ? DEFAULT_ZIPCODE_STRING : self.zipcode
     address.person = self
     address.save
   end
