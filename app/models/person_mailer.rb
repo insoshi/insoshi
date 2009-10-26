@@ -19,7 +19,7 @@ class PersonMailer < ActionMailer::Base
   def message_notification(message)
     from         "Message notification <message@#{domain}>"
     recipients   message.recipient.email
-    subject      formatted_subject("New message")
+    subject      formatted_subject(message.subject)
     body         "domain" => server, "message" => message,
                  "preferences_note" => preferences_note(message.recipient)
   end

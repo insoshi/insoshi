@@ -91,7 +91,7 @@ class Exchange < ActiveRecord::Base
 
   def send_payment_notification_to_worker
     exchange_note = Message.new()
-    subject = "PAYMENT: " + self.amount.to_s + " hours - from " + self.metadata.name 
+    subject = "PAYMENT: " + self.amount.to_s + " hours - for " + self.metadata.name 
     exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
     exchange_note.content = "This is an automatically generated system notice: " + self.customer.name + " paid you " + self.amount.to_s + " hours."
     exchange_note.sender = self.customer
