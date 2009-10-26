@@ -19,6 +19,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1.xml
   def show
     @category = Category.find(params[:id])
+    @people = @category.active_people
     @reqs = @category.current_and_active_reqs
     @offers = @category.offers
 

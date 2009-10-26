@@ -1,8 +1,8 @@
 <li>
-<a class="categoryMenuItem" href="#<%= category_counter + 1  %>" title="" name="<%= category_counter + 1 %>"><%= category.name %></a> (<%= category.descendants_current_and_active_reqs_count + category.current_and_active_reqs.length %>)
+<a class="categoryMenuItem" href="#<%= category_counter + 1  %>" title="" name="<%= category_counter + 1 %>"><%= category.name %></a> (<%= category.descendants_providers_count + category.active_people.length %>)
   <div>
     <ul>
-      <li><%= link_to 'General', category %> (<%= category.current_and_active_reqs.length %>)</li>
+      <li><%= link_to 'General', category %> (<%= category.active_people.length %>)</li>
     <% if category.children.empty? -%>
       <br>
     <% else -%>
