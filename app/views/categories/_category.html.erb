@@ -1,11 +1,8 @@
 <li>
-<a class="categoryMenuItem" href="#<%= category_counter + 1  %>" title="" name="<%= category_counter + 1 %>"><%= category.name %></a> (<%= category.descendants_providers_count + category.active_people.length %>)
+<%= link_to category.name, category, {:class => "categoryMenuItem" } %> (<%= category.active_people.length %>)
   <div>
     <ul>
-      <li><%= link_to 'General', category %> (<%= category.active_people.length %>)</li>
-    <% if category.children.empty? -%>
-      <br>
-    <% else -%>
+    <% unless category.children.empty? -%>
       <%= render :partial => 'subcategory', :collection => category.children %>
     <% end -%>
     </ul>
