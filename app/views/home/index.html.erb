@@ -31,6 +31,7 @@
     <%= render :partial => '/reqs/req', :collection => @reqs %>
   </ul>
   <%- end -%>
+  <%= render :partial => 'shared/recent_sent_exchanges' %>
 <%- else -%>
   <%- unless global_prefs.app_name.blank? -%>
   <h2><%= global_prefs.app_name %> blog</h2>

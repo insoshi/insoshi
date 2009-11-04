@@ -63,9 +63,6 @@
 
   <%= render :partial => 'wall' %>
   <%= render :partial => 'recent_exchanges' %>
-  <%- if current_person?(@person) -%>
-  <%= render :partial => 'recent_sent_exchanges' %>
-  <%- end -%>
   <%= render :partial => 'recent_activity' %>
 <%- end -%>
 
