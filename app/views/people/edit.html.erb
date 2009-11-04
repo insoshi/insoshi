@@ -13,6 +13,10 @@
         <label for="person_name">Name</label>
         <%= f.text_field :name, :maxlength => Person::MAX_NAME,:readonly => true %>
       </div>
+      <div class="form_row">
+        <label for="person_offline_contact"><%= image_tag "icons/phone.gif", :class => "icon", :alt => "Offline" %> Offline Contact Info</label>
+        <%= f.text_field :offline_contact %>
+      </div>
     <% unless global_prefs.twitter_name.blank? %>
       <div class="form_row">
         <label for="twitter_name">Twitter ID</label>

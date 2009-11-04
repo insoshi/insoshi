@@ -58,6 +58,11 @@
       <%= render :partial => 'shared/neighborhood', :collection => @person.neighborhoods %>
     </ul>
     <%= display @person.formatted_categories, :class => "meta" %>
+    <% unless @person.offline_contact.nil? %>
+      <div>
+        <%= image_tag "icons/phone.gif", :class => "icon", :alt => "Offline" %> <span class="small">Alt. contact:</span> <span class="added small"><%= h @person.offline_contact %></span>
+      </div>
+    <%- end -%>
     <%= display simple_format_without_paragraph @person.description %>
   </div>
 
