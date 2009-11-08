@@ -40,7 +40,7 @@ class Person < ActiveRecord::Base
                   :message_notifications, :wall_comment_notifications,
                   :blog_comment_notifications, :identity_url, :category_ids, :address_ids, :neighborhood_ids,
                   :twitter_name, :zipcode,
-                  :offline_contact,
+                  :phone, :phoneprivacy,
                   :accept_agreement
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',

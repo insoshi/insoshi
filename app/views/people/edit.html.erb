@@ -14,8 +14,13 @@
         <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
       </div>
       <div class="form_row">
-        <label for="person_offline_contact"><%= image_tag "icons/phone.gif", :class => "icon", :alt => "Offline" %> Offline Contact Info</label>
-        <%= f.text_field :offline_contact %>
+          <label for="person_phoneprivacy"
+                 class="checkbox">Share phone number:</label>
+          <%= f.check_box :phoneprivacy %>
+      </div>
+      <div class="form_row">
+        <label for="person_phone"><%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> Phone</label>
+        <%= f.text_field :phone %>
       </div>
     <% unless global_prefs.twitter_name.blank? %>
       <div class="form_row">
