@@ -10,11 +10,7 @@ NOTE: If you downloaded a zipped archive of Insoshi, we strongly encourage you t
 
 The source code to Insoshi is managed via Git, a version control system developed by Linus Torvalds to host the Linux kernel.  
 
-The first step is to install it from here:
-
-  [http://git.or.cz/](http://git.or.cz/)
-
-Linux and Mac users should have no problems; Windows users might have to install [Cygwin](http://cygwin.com/) first.
+The first step is to [install Git](http://git.or.cz/). Linux and Mac users should have no problems; Windows users might have to install [Cygwin](http://cygwin.com/) first.
 
 For more detailed information, check out our guide for Installing Git under the [Git Guides](http://docs.insoshi.com).
 
@@ -28,11 +24,7 @@ For more detailed information, check out our guide for Installing Git under the 
 * Local tracking branches for official 'master' and 'edge' branches
 * Local development branch based off 'edge' and pushed to your GitHub fork
 
-A shell script is available to automate this repository configuration:
-
-    [http://gist.github.com/18772](http://gist.github.com/18772)
-
-  and is run using the command-line
+A [shell script](http://gist.github.com/18772) is available to automate this repository configuration. It is run from the command-line as follows:
 
     configure_insoshi_local.sh [GitHub Account Name]
 
@@ -42,30 +34,28 @@ A shell script is available to automate this repository configuration:
 
 You'll need to install FreeImage or some other image processor (such as ImageMagick/RMagick) and a database (MySQL or PostgreSQL).  Install instructions for these are easy to find using Google.  (If you're installing FreeImage on Windows, [this blog post](http://www.thewebfellas.com/blog/2008/2/18/imagescience-on-windows-without-the-pain/comments/931#comment-931) might be helpful.)
 
-To use Insoshi's search capability, you also need Sphinx.  Follow the instructions to [install Sphinx](http://www.sphinxsearch.com/downloads.html) for your platform.  When running Insoshi in a production envinronment, you should also set up a cron job to rotate the search index as described [here](http://blog.evanweaver.com/files/doc/fauna/ultrasphinx/files/DEPLOYMENT_NOTES.html).
-
-This currently works only with MySQL due to a bug in Ultrasphinx.
+To use Insoshi's search capability, you also need Sphinx.  Follow the instructions to [install Sphinx](http://www.sphinxsearch.com/downloads.html) for your platform.  When running Insoshi in a production envinronment, you should also set up a cron job to rotate the search index as described [here](http://blog.evanweaver.com/files/doc/fauna/ultrasphinx/files/DEPLOYMENT_NOTES.html). This currently works only with MySQL due to a bug in Ultrasphinx.
 
 ### Gems
 
 You probably have Rails already, but might not have the others.
 
-  $ sudo gem install rails
-  $ sudo gem install mysql     # for mysql support
-  $ sudo gem install postgres  # for postgres support
-  $ sudo gem install chronic
+    $ sudo gem install rails
+    $ sudo gem install mysql     # for mysql support
+    $ sudo gem install postgres  # for postgres support
+    $ sudo gem install chronic
 
 If you're using FreeImage/ImageScience, you'll also need the image_science gem:
 
-  $ sudo gem install image_science
+    $ sudo gem install image_science
   
 If you want Markdown formatting support you can install either RDiscount (fast but platform-dependent):
 
-$ sudo gem install rdiscount
+    $ sudo gem install rdiscount
 
 or BlueCloth (slower but pure Ruby)
 
-$ sudo gem install BlueCloth
+    $ sudo gem install BlueCloth
 
 
 ## Installing the app
@@ -74,39 +64,31 @@ Here are the steps to get up and running with the Insoshi Rails app.
 
 ### Git steps
 
-Our public Git repository is hosted on GitHub and can be viewed at
+Our [public Git repository](http://github.com/insoshi/insoshi) is hosted on GitHub. You can clone the the repository with the command
 
-  http://github.com/insoshi/insoshi
-
-You can clone the the repository with the command
-
-  $ git clone git://github.com/insoshi/insoshi.git
+    $ git clone git://github.com/insoshi/insoshi.git
 
 The clone make take a moment to complete (mainly due to the frozen Rails gems).
 
 Then make a local Git branch for yourself:
 
-  $ git checkout -b <local_branch>
+    $ git checkout -b <local_branch>
 
 where you should replace <local_branch> with the name of your choice (without angle brackets!).  
 
-For more information on configuring your local clone of our repository, check out our Git Guides at
-
-  http://docs.insoshi.com
-
-which also includes a scripted Quick Local Repository Setup.
+For more information on configuring your local clone of our repository, check out our [Git Guides](http://docs.insoshi.com), which also includes a scripted Quick Local Repository Setup.
 
 ### Install script
 
 To run the install script, you first need to set up your database configuration.  If you're using MySQL, you can just copy the example file as follows:
 
-  $ cp config/database.example config/database.yml
+    $ cp config/database.example config/database.yml
   
 Then open up database.yml and set up the passwords to match your system.
 
 Run the following custom install script
 
-  $ script/install
+    $ script/install
 
 The install script runs the database migration and performs some additional setup tasks (generate an encryption keypair for password management, creating an admin account, etc.)
 
@@ -114,57 +96,57 @@ If the install step fails, you may not have properly set up your database config
 
 Then prepare the test database and run the tests (which are actually RSpec examples in the spec/ directory):
 
-  $ rake db:test:prepare
-  $ sudo gem install rspec-rails
-  $ spec spec/
+    $ rake db:test:prepare
+    $ sudo gem install rspec-rails
+    $ spec spec/
 
 If the tests fail in the Photos controller test, double-check that an image processor is properly installed.
 
 At this point, configure and start the Ultrasphinx daemon for the test runtime
 
-  $ rake ultrasphinx:configure RAILS_ENV#test
-  $ rake ultrasphinx:index RAILS_ENV#test
-  $ rake ultrasphinx:daemon:start RAILS_ENV#test
+    $ rake ultrasphinx:configure RAILS_ENV#test
+    $ rake ultrasphinx:index RAILS_ENV#test
+    $ rake ultrasphinx:daemon:start RAILS_ENV#test
 
 and re-run the tests
 
-  $ rake spec
+    $ rake spec
 
 The search specs detect whether the search daemon is running and weren't performed during the first test run.  An initial test run is needed in order to populate the test database for indexing (search specs would fail on an empty database).
 
 To shut down the Ultrasphinx daemon for test
 
-  $ rake ultrasphinx:daemon:stop RAILS_ENV#test
+    $ rake ultrasphinx:daemon:stop RAILS_ENV#test
 
 ### Loading sample data
 
 Now load the sample data
 
-  $ rake db:sample_data:reload
+    $ rake db:sample_data:reload
 
 configure and start the Ultrasphinx daemon for the development runtime
 
-  $ rake ultrasphinx:configure
-  $ rake ultrasphinx:index
-  $ rake ultrasphinx:daemon:start
+    $ rake ultrasphinx:configure
+    $ rake ultrasphinx:index
+    $ rake ultrasphinx:daemon:start
 
 and start the server
 
-  $ script/server
+    $ script/server
 
 The rake task loads sample data to make developing easier.  All the sample users have email logins <name>@example.com, with password foobar.  
 
-Go to http://localhost:3000 and log in as follows:
+Go to [http://localhost:3000](http://localhost:3000) and log in as follows:
 
-  email: michael@example.com
-  password: foobar
+    email: michael@example.com
+    password: foobar
 
 ### Admin user
 
 To sign in as the pre-configured admin user, use
 
-  email: admin@example.com
-  password: admin
+    email: admin@example.com
+    password: admin
 
 You should update the email address and password.  Insoshi will display warning messages to remind you to do that.
 
