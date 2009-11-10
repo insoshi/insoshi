@@ -73,7 +73,7 @@ class PeopleController < ApplicationController
       @person.save
       if @person.errors.empty?
         session[:verified_identity_url] = nil
-        if global_prefs.can_send_email? && global_prefs.registration_notification?
+        if global_prefs.can_send_email? && !global_prefs.registration_notification.empty?
           PersonMailer.deliver_registration_notification(@person)
         end
         if global_prefs.email_verifications?
