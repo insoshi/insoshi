@@ -46,6 +46,11 @@
 </p>
 
 <p>
+  <b>New member notify emails (space separated):</b>
+  <%=h @preferences.new_member_notification %>
+</p>
+
+<p>
   <b>Google Maps API key:</b>
   <%=h @preferences.googlemap_api_key %>
 </p>
@@ -73,11 +78,6 @@
 <p>
   <b>Enable Zipcode Browing:</b>
   <%=h @preferences.zipcode_browsing %>
-</p>
-
-<p>
-  <b>Notify first admin of registrations:</b>
-  <%=h @preferences.registration_notification %>
 </p>
 
 <p>

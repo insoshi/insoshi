@@ -114,9 +114,9 @@ class PersonMailer < ActionMailer::Base
                  "code" => ev.code
   end
 
-  def registration_notification(admin, new_peep)
+  def registration_notification(new_peep)
     from         "Registration notification <registration@#{domain}>"
-    recipients   admin.email
+    recipients   PersonMailer.global_prefs.new_member_notification.split
     subject      formatted_subject("New registration")
     body         "email" => new_peep.email,
                   "name" => new_peep.name,
