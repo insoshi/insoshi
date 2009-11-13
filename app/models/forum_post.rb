@@ -28,8 +28,13 @@ class ForumPost < Post
   validates_length_of :body, :maximum => 5000
   
   after_create :log_activity
-    
+  after_create :send_forum_notifications
+
   private
+
+    def send_forum_notifications
+      MailingsWorker.async_send_forum_post_mailing(:forum_post_id => self.id)
+    end
   
     def log_activity
       add_activities(:item => self, :person => person)

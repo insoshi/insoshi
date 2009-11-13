@@ -105,7 +105,17 @@ class PersonMailer < ActionMailer::Base
                  "preferences_note" => 
                     preferences_note(comment.commented_person)
   end
-  
+ 
+  def forum_post_notification(subscriber, forum_post)
+    from         "Forum post notification <forum@#{domain}>"
+    recipients   subscriber.email
+    subject      formatted_subject(forum_post.topic.name)
+    content_type "text/html"
+    body         "domain" => server, "forum_post" => forum_post
+                 "preferences_note" => 
+                    preferences_note(subscriber)
+  end
+
   def email_verification(ev)
     from         "Email verification <email@#{domain}>"
     recipients   ev.person.email

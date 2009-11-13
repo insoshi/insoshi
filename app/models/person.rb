@@ -37,7 +37,7 @@ class Person < ActiveRecord::Base
                 :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
-                  :message_notifications, :wall_comment_notifications,
+                  :message_notifications, :wall_comment_notifications, :forum_notifications,
                   :blog_comment_notifications, :identity_url, :category_ids, :address_ids, :neighborhood_ids,
                   :twitter_name, :zipcode,
                   :phone, :phoneprivacy,
@@ -200,6 +200,10 @@ class Person < ActiveRecord::Base
     # Return *all* the active users.
     def all_active
       find(:all, :conditions => conditions_for_active)
+    end
+
+    def all_listening_to_forum_posts
+      find(:all, :conditions => conditions_for_active_and_forum_notifications)
     end
     
     def find_recent
@@ -612,6 +616,14 @@ class Person < ActiveRecord::Base
          false, true]
       end
       
+      # Return the conditions for a user to be active and listening to forum posts.
+      def conditions_for_active_and_forum_notifications
+        [%(deactivated = ? AND 
+           forum_notifications = ? AND
+           (email_verified IS NULL OR email_verified = ?)),
+         false, true, true]
+      end
+
       # Return the conditions for a user to be 'mostly' active.
       def conditions_for_mostly_active
         [%(deactivated = ? AND 
