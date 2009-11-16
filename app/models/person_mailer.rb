@@ -111,7 +111,7 @@ class PersonMailer < ActionMailer::Base
     recipients   subscriber.email
     subject      formatted_subject(forum_post.topic.name)
     content_type "text/html"
-    body         "domain" => server, "forum_post" => forum_post
+    body         "domain" => server, "forum_post" => forum_post,
                  "preferences_note" => 
                     preferences_note(subscriber)
   end
