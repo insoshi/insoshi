@@ -107,7 +107,7 @@ class PersonMailer < ActionMailer::Base
   end
  
   def forum_post_notification(subscriber, forum_post)
-    from         "Forum post notification <forum@#{domain}>"
+    from         "#{forum_post.person.name} <forum@#{domain}>"
     recipients   subscriber.email
     subject      formatted_subject(forum_post.topic.name)
     content_type "text/html"
