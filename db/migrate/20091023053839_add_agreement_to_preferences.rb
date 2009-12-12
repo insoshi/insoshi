@@ -1,11 +1,6 @@
 class AddAgreementToPreferences < ActiveRecord::Migration
   def self.up
-    add_column :preferences, :agreement, :text
-
-    Preference.reset_column_information
-    preference = Preference.find(:first)
-    preference.agreement = "<h2>Member Agreement</h2>Play nice!"
-    preference.save
+    add_column :preferences, :agreement, :text, :default => "<h2>Member Agreement</h2>Play nice!"
   end
 
   def self.down
