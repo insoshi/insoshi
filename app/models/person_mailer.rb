@@ -109,7 +109,7 @@ class PersonMailer < ActionMailer::Base
   def forum_post_notification(subscriber, forum_post)
     from         "#{forum_post.person.name} <forum@#{domain}>"
     recipients   subscriber.email
-    subject      formatted_subject(forum_post.topic.name)
+    subject      formatted_group_subject(forum_post.topic.forum.group, forum_post.topic.name)
     content_type "text/html"
     body         "domain" => server, "forum_post" => forum_post,
                  "preferences_note" => 
@@ -151,6 +151,14 @@ class PersonMailer < ActionMailer::Base
       name = PersonMailer.global_prefs.app_name
       label = name.blank? ? "" : "[#{name}] "
       "#{label}#{text}"
+    end
+
+    def formatted_group_subject(group,text)
+      if !group
+        formatted_subject(text)
+      else
+        "[#{group.name}] #{text}"
+      end
     end
   
     def preferences_note(person)

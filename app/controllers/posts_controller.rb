@@ -83,8 +83,9 @@ class PostsController < ApplicationController
     def get_instance_vars
       @post = model.find(params[:id]) unless params[:id].nil?
       if forum?
-        @forum = Forum.find(:first)
+        #@forum = Forum.find(:first)
         @topic = Topic.find(params[:topic_id])
+        @forum = @topic.forum
         @body = "forum"
       elsif blog?
         @blog = Blog.find(params[:blog_id])

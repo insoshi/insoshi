@@ -4,7 +4,7 @@ class ForumsController < ApplicationController
 
   def index
     @forums = Forum.find(:all)
-    if @forums.length == 1
+    if @forums.length >= 1
       redirect_to forum_url(@forums.first) and return
     end
 

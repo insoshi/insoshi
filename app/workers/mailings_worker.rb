@@ -12,7 +12,15 @@ class MailingsWorker < Workling::Base
 
   def send_forum_post_mailing(options)
     @forum_post = ForumPost.find(options[:forum_post_id])
-    peeps = Person.all_listening_to_forum_posts
+    @group = @forum_post.topic.forum.group
+    if !@group
+      peeps = Person.all_listening_to_forum_posts
+    else
+      # XXX add a notifications boolean to memberships table
+      #
+      peeps = @group.people
+    end
+
     peeps.each do |peep|
       logger.info("MailingsWorker forum_post: sending email to #{peep.id}: #{peep.name}")
       PersonMailer.deliver_forum_post_notification(peep,@forum_post)
