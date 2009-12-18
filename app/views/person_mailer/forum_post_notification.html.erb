@@ -2,6 +2,10 @@
 <%= @forum_post.body %>
 <br>
 <br>
-http://<%= @domain %>/forums/1
+<% if !forum_post.topic.forum.group %>
+  http://<%= @domain %>/forums/1
+<% else %>
+  http://<%= @domain %>/groups/<%= forum_post.topic.forum.group.id %>
+<% end %>
 <br>
 <%= @preferences_note %>
