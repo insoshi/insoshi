@@ -34,10 +34,10 @@
   <%= render :partial => 'shared/recent_sent_exchanges' %>
 <%- else -%>
   <%- unless global_prefs.app_name.blank? -%>
-  <h2><%= global_prefs.app_name %> blog</h2>
+    <h2><%= global_prefs.app_name %> blog</h2>
   <%- else -%>
-  <h2><%= Blog %></h2>
-<%- end -%>
+    <h2>Blog</h2>
+  <%- end -%>
   <%- if @posts.empty? -%>
     <h3 class="blankslate">
       No posts yet!
