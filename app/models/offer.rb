@@ -8,6 +8,7 @@ class Offer < ActiveRecord::Base
   belongs_to :person
   attr_protected :person_id, :created_at, :updated_at
   validates_presence_of :name, :expiration_date
+  validates_presence_of :total_available
   after_create :log_activity
 
   class << self
