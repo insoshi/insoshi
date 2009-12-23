@@ -63,6 +63,16 @@
     </div>
 
     <div class="form_row">
+      <label for="new_member_notification">New Member Notify Emails</label>
+      <%= f.text_field :new_member_notification %>
+    </div>
+
+    <div class="form_row">
+      <label for="googlemap_api_key">Google Maps API key</label>
+      <%= f.text_field :googlemap_api_key %>
+    </div>
+
+    <div class="form_row">
       <label for="gmail">Google Calendar src</label>
       <%= f.text_field :gmail %>
     </div>
@@ -120,13 +130,15 @@
     </div>
 
     <br />
-    <p>Notify first admin for registrations</p>
-    <div class="form_row">
-      <label for="registration_notification"
-             class="checkbox">Registration Notification</label>
-      <%= f.check_box :registration_notification %>
-    </div>
 
+    <div class="form_row">
+      <label for="agreement">Agreement</label>
+      <br />
+      <p><%= formatting_note %></p>
+
+      <%= f.text_area :agreement, :rows => 10 %>
+    </div>
+    
     <br />
 
     <div class="form_row">

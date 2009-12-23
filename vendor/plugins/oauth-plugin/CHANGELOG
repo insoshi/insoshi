@@ -1,3 +1,59 @@
+9/26/2009
+  0.3.11
+  - Moved twitter tokens dependency back to regular twitter gem
+7/29/2009
+  0.3.10
+  - Closed blocks in erb template (jcrosby) while pelle is hiding under his desk
+  - Handled error case on authorize with non existent token
+  - Fixed Agree2 token
+  - Security Fix: Only skip verify_authenticity_token for specific oauth token requests in provider controller
+7/25/2009
+  0.3.9
+  - Added an Index to oauth consumers controller. Rerun generator to create index template
+  - Added invalidate action to provider, which allows a token to invalidate itself /oauth/invalidate
+  - Added capabilities action to provider. Lets you expand to allow auto discovery of permissions and services that token provides.
+  - Can override how authorize form indicates an authorization. To get around ugly checkbox
+  
+    def user_authorizes_token?
+      params[:commit] == 'Authorize'
+    end
+  
+7/23/2009
+  0.3.8
+  - Fixed Gem Plugins Loading
+7/21/2009
+  0.3.7
+  - A blushing Pelle adds a missing file
+  0.3.6
+  - Twitter, Agree2 and FireEagle tokens are working in consumer.
+  0.3.5
+  - made it a gem
+  - more thorough tests of OAuth 1.0 consumer
+  - Add support for a OAUTH_10_SUPPORT constant to switch on support for OAuth 1.0 in provider
+7/19/2009
+  - Added support for OAuth 1.0 consumers (nov)
+7/17/2009
+  - Added back support for OAuth 1.0 for providers (nov)
+7/14/2009
+  - Added OAuth Consumer generator
+  - Moved oauth controller code to a module to make it easier to upgrade in the future
+7/11/2009
+  - Added support for OAuth version 1.0a
+  - Added haml support
+  - Improved OAuth Client Controller gui (alec-c4)
+2/11/2009
+- Fixed escaping error and file path error in the generator simultaneously reported and fixed by Ivan Valdes and Mike Demers thanks
+
+2/9/2009
+- Fixed compatibility issue with OAuth Gem 3.1 (wr0ngway and aeden)
+- Added Test:Unit tests to generator (Ed Hickey)
+- added missing oauth_clients/edit.html.erb view template (Ed Hickey)
+- added missing :oauth_clients resource route in USAGE (Ed Hickey)
+- Don't throw NPE it token is not in db (Haruska)
+- Cleaned up whitespace (bricolage, Nicholas Nam)
+- Fixed bug in default verify_oauth_signature (igrigorik)
+- Doc fixes (skippy)
+
 6/23/2008
 
 - Split OAuth controller into two parts: OAuth and OAuth clients. [jcrosby]

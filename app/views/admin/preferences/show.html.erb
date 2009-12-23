@@ -46,6 +46,16 @@
 </p>
 
 <p>
+  <b>New member notify emails (space separated):</b>
+  <%=h @preferences.new_member_notification %>
+</p>
+
+<p>
+  <b>Google Maps API key:</b>
+  <%=h @preferences.googlemap_api_key %>
+</p>
+
+<p>
   <b>Google Calendar src:</b>
   <%=h @preferences.gmail %>
 </p>
@@ -71,11 +81,6 @@
 </p>
 
 <p>
-  <b>Notify first admin of registrations:</b>
-  <%=h @preferences.registration_notification %>
-</p>
-
-<p>
   <b>Demo site:</b>
   <%=h @preferences.demo %>
 </p>
@@ -84,6 +89,13 @@
   <b>Whitelist:</b>
   <%=h @preferences.whitelist %>
 </p>
+
+
+<p>
+  <b>Agreement text (conditions of use member agrees to):</b>
+</p>
+<%= display @preferences.agreement %>
+
 
 <p>
   <b>About text (nonblank text will lead to an 'about' link):</b>

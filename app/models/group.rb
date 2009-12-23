@@ -2,7 +2,8 @@ class Group < ActiveRecord::Base
   include ActivityLogger
   
   validates_presence_of :name, :person_id
-  
+
+  has_one :forum
   has_many :photos, :dependent => :destroy, :order => "created_at"
   has_many :exchanges, :order => "created_at DESC"
   has_many :memberships, :dependent => :destroy
@@ -16,6 +17,7 @@ class Group < ActiveRecord::Base
   has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Group'", :dependent => :destroy
  
   after_create :create_owner_membership
+  after_create :create_forum
   after_save :log_activity
   
   is_indexed :fields => [ 'name', 'description']

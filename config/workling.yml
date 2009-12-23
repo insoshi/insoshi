@@ -8,9 +8,13 @@
 #
 production:
   listens_on: localhost:15151
+  sleep_time: 60
 
 development:
   listens_on: localhost:22122
   
 test:
+  listens_on: localhost:12345
+
+cucumber:
   listens_on: localhost:12345

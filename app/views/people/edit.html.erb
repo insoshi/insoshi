@@ -11,7 +11,16 @@
 
       <div class="form_row">
         <label for="person_name">Name</label>
-        <%= f.text_field :name, :maxlength => Person::MAX_NAME,:readonly => true %>
+        <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
+      </div>
+      <div class="form_row">
+          <label for="person_phoneprivacy"
+                 class="checkbox">Share phone number:</label>
+          <%= f.check_box :phoneprivacy %>
+      </div>
+      <div class="form_row">
+        <label for="person_phone"><%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> Phone</label>
+        <%= f.text_field :phone %>
       </div>
     <% unless global_prefs.twitter_name.blank? %>
       <div class="form_row">
@@ -26,6 +35,12 @@
         <%= render :partial => "shared/select_categories", :locals => { :model_name => 'person' } %>
   </div>
   
+  <div class="form_row full">
+        <label for="person_neighborhoods">Neighborhood
+        </label>
+        <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'person' } %>
+  </div>
+
       <div class="form_row">
         <label for="person_description">Description
         </label>
@@ -69,6 +84,11 @@
           <label for="wall_comment_notifications"
                  class="checkbox">Wall comments:</label>
           <%= f.check_box :wall_comment_notifications %>
+          </p>
+          <p>
+          <label for="forum_notifications"
+                 class="checkbox">Forum posts:</label>
+          <%= f.check_box :forum_notifications %>
           </p>
         </div>
       <%- end -%>

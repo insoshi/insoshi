@@ -251,6 +251,9 @@ input.button, button, input[submit], input[button] {
 body.single-col .col1 form input {
   width: 312px;
 }
+#person_zipcode {
+  width: 70px;
+}
 label.checkbox {display: inline; float: left;margin-right: 12px;}
 body.single-col .col1 form input.checkbox {
   display: inline;

@@ -1,0 +1,24 @@
+<%- column_div :type => :primary do -%>
+  <h2>New neighborhood</h2>
+
+  <%= error_messages_for :neighborhood %>
+
+<% form_for(@neighborhood) do |f| %>
+  <div class="form_row">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="form_row full">
+    <label for="parent_id">Region</label>
+    <%= render(:partial => "select_neighborhoods") %>
+  </div>
+  <div class="form_row">
+    <%= f.submit "Create" %>
+  </div>
+<% end %>
+
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>

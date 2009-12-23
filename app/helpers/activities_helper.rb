@@ -59,12 +59,15 @@ module ActivitiesHelper
     when "Req"
       req = activity.item
       %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+    when "Offer"
+      offer = activity.item
+      %(#{person_link(person)} has created a new offer: #{offer_link(offer.name, offer)}.)
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
-        %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
+        %(#{person_link(person)} earned #{exchange.amount} hours for #{metadata_link(exchange.metadata.name,exchange.metadata)}.)
       else
-        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{req_link(exchange.req.name,exchange.req)} in #{group_link(exchange.group)}.)
+        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{metadata_link(exchange.metadata.name,exchange.metadata)} in #{group_link(exchange.group)}.)
       end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -125,12 +128,15 @@ module ActivitiesHelper
     when "Req"
       req = activity.item
       %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+    when "Offer"
+      offer = activity.item
+      %(#{person_link(person)} has created a new offer: #{offer_link(offer.name, offer)}.)
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
-        %(#{person_link(person)} earned #{exchange.amount} hours for #{req_link(exchange.req.name,exchange.req)}.)
+        %(#{person_link(person)} earned #{exchange.amount} hours for #{metadata_link(exchange.metadata.name,exchange.metadata)}.)
       else
-        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{req_link(exchange.req.name,exchange.req)} in #{group_link(exchange.group)}.)
+        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{metadata_link(exchange.metadata.name,exchange.metadata)} in #{group_link(exchange.group)}.)
       end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -172,6 +178,8 @@ module ActivitiesHelper
               "check.gif"
             when "Req"
               "new.gif"
+            when "Offer"
+              "new.gif"
             when "Exchange"
               "favorite.gif"
             else
@@ -209,8 +217,20 @@ module ActivitiesHelper
     link_to(text, event_path(event))
   end
 
+  def metadata_link(text, metadata)
+    if metadata.class == Req
+      link_to(text, req_path(metadata))
+    else
+      link_to(text, offer_path(metadata))
+    end
+  end
+
   def req_link(text, req)
     link_to(text, req_path(req))
+  end
+
+  def offer_link(text, offer)
+    link_to(text, offer_path(offer))
   end
 
   # Return a link to the wall.

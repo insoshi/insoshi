@@ -14,6 +14,8 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @forum = @group.forum
+    @topics = Topic.find_recently_active(@forum, params[:page]) 
     @contacts = contacts_to_invite
     group_redirect_if_not_public 
   end

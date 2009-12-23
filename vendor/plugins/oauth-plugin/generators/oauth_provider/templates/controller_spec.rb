@@ -8,6 +8,7 @@ describe OauthController, "getting a request token" do
     setup_oauth
     sign_request_with_oauth
     @client_application.stub!(:create_request_token).and_return(@request_token)
+    @client_application.stub!(:token_callback_url=)
   end
   
   def do_get
@@ -33,7 +34,52 @@ describe OauthController, "getting a request token" do
     do_get
     response.body.should==@request_token_string
   end
+  
+  it "should not set token_callback_url" do
+    @client_application.should_not_receive(:token_callback_url=).with(nil)
+    do_get
+  end
 end
+
+describe OauthController, "getting a request token passing a oauth_callback url" do
+  include OAuthControllerSpecHelper
+  before(:each) do
+    setup_oauth
+    sign_request_with_oauth nil, {:oauth_callback=>"http://test.com/alternative_callback"}
+    @client_application.stub!(:create_request_token).and_return(@request_token)
+    @client_application.stub!(:token_callback_url=)
+  end
+  
+  def do_get
+    get :request_token
+  end
+  
+  it "should be successful" do
+    do_get
+    response.should be_success
+  end
+  
+  it "should query for client_application" do
+    ClientApplication.should_receive(:find_by_key).with('key').and_return(@client_application)
+    do_get
+  end
+  
+  it "should request token from client_application" do
+    @client_application.should_receive(:create_request_token).and_return(@request_token)
+    do_get
+  end
+  
+  it "should return token string" do
+    do_get
+    response.body.should==@request_token_string
+  end
+  
+  it "should set token_callback_url with received oauth_callback" do
+    @client_application.should_receive(:token_callback_url=).with("http://test.com/alternative_callback")
+    do_get
+  end
+end
+
 
 describe OauthController, "token authorization" do
   include OAuthControllerSpecHelper
@@ -41,31 +87,32 @@ describe OauthController, "token authorization" do
     login
     setup_oauth
     RequestToken.stub!(:find_by_token).and_return(@request_token)
+    
   end
   
   def do_get
-    get :authorize,:oauth_token=>@request_token.token
+    get :authorize, :oauth_token => @request_token.token
   end
 
   def do_post
     @request_token.should_receive(:authorize!).with(@user)
-    post :authorize,:oauth_token=>@request_token.token,:authorize=>"1"
+    post :authorize, :oauth_token => @request_token.token, :authorize => "1"
   end
 
   def do_post_without_user_authorization
     @request_token.should_receive(:invalidate!)
-    post :authorize,:oauth_token=>@request_token.token,:authorize=>"0"
+    post :authorize, :oauth_token => @request_token.token, :authorize => "0"
   end
 
   def do_post_with_callback
     @request_token.should_receive(:authorize!).with(@user)
-    post :authorize,:oauth_token=>@request_token.token,:oauth_callback=>"http://application/alternative",:authorize=>"1"
+    post :authorize, :oauth_token => @request_token.token, :oauth_callback => "http://application/alternative", :authorize => "1"
   end
 
   def do_post_with_no_application_callback
     @request_token.should_receive(:authorize!).with(@user)
     @client_application.stub!(:callback_url).and_return(nil)
-    post :authorize,:oauth_token=>@request_token.token,:authorize=>"1"
+    post :authorize, :oauth_token => @request_token.token, :authorize => "1"
   end
   
   it "should be successful" do
@@ -91,13 +138,35 @@ describe OauthController, "token authorization" do
   it "should redirect to default callback" do
     do_post
     response.should be_redirect
+    response.should redirect_to("http://application/callback?oauth_token=#{@request_token.token}&oauth_verifier=verifyme")
+  end
+
+  it "should redirect to default callback without verifier if oauth 1.0" do
+    @request_token.stub!(:oauth10?).and_return(true)
+    do_post
+    response.should be_redirect
     response.should redirect_to("http://application/callback?oauth_token=#{@request_token.token}")
   end
 
-  it "should redirect to callback in query" do
+  it "should redirect to callback in query if oauth 1.0" do
+    @request_token.stub!(:oauth10?).and_return(true)
     do_post_with_callback
     response.should be_redirect
     response.should redirect_to("http://application/alternative?oauth_token=#{@request_token.token}")
+  end
+
+  it "should redirect to request_token callback" do
+    @request_token.stub!(:oob?).and_return(false)
+    @request_token.stub!(:callback_url).and_return("http://alternative/callback")
+    do_post
+    response.should be_redirect
+    response.should redirect_to("http://alternative/callback?oauth_token=#{@request_token.token}&oauth_verifier=verifyme")
+  end
+
+  it "should ignore callback in query but redirect to default" do
+    do_post_with_callback
+    response.should be_redirect
+    response.should redirect_to("http://application/callback?oauth_token=#{@request_token.token}&oauth_verifier=verifyme")
   end
 
   it "should be successful on authorize without any application callback" do
@@ -116,7 +185,8 @@ describe OauthController, "token authorization" do
   end
 
   it "should render failure screen if token is invalidated" do
-    @request_token.should_receive(:invalidated?).and_return(true)
+    @request_token.stub!(:authorized?).and_return(false)
+    @request_token.stub!(:invalidated?).and_return(true)
     do_get
     response.should render_template('authorize_failure')
   end
@@ -154,14 +224,14 @@ describe OauthController, "getting an access token" do
   
   it "should return token string" do
     do_get
-    response.body.should==@access_token_string
+    response.body.should == @access_token_string
   end
 end
 
 class OauthorizedController<ApplicationController
-  before_filter :login_or_oauth_required,:only=>:both
-  before_filter :login_required,:only=>:interactive
-  before_filter :oauth_required,:only=>:token_only
+  before_filter :login_or_oauth_required, :only => :both
+  before_filter :login_required, :only => :interactive
+  before_filter :oauth_required, :only => :token_only
   
   def interactive
   end
@@ -173,7 +243,7 @@ class OauthorizedController<ApplicationController
   end
 end
 
-describe OauthorizedController," access control" do
+describe OauthorizedController, " access control" do
   include OAuthControllerSpecHelper
   
   before(:each) do
@@ -181,15 +251,15 @@ describe OauthorizedController," access control" do
   
   it "should have access_token set up correctly" do
     setup_to_authorize_request
-    @access_token.is_a?(AccessToken).should==true
+    @access_token.is_a?(AccessToken).should == true
     @access_token.should be_authorized
     @access_token.should_not be_invalidated
-    @access_token.user.should==@user
-    @access_token.client_application.should==@client_application
+    @access_token.user.should == @user
+    @access_token.client_application.should == @client_application
   end
   
   it "should return false for oauth? by default" do
-    controller.send(:oauth?).should==false
+    controller.send(:oauth?).should == false
   end
 
   it "should return nil for current_token  by default" do
@@ -201,11 +271,11 @@ describe OauthorizedController," access control" do
     sign_request_with_oauth(@access_token)
     ClientApplication.should_receive(:find_token).with(@access_token.token).and_return(@access_token)
     get :both
-    controller.send(:current_token).should==@access_token
-    controller.send(:current_token).is_a?(AccessToken).should==true 
-    controller.send(:current_user).should==@user
-    controller.send(:current_client_application).should==@client_application
-    response.code.should=='200'
+    controller.send(:current_token).should == @access_token
+    controller.send(:current_token).is_a?(AccessToken).should == true 
+    controller.send(:current_user).should == @user
+    controller.send(:current_client_application).should == @client_application
+    response.code.should == '200'
     response.should be_success
   end
 
@@ -213,7 +283,7 @@ describe OauthorizedController," access control" do
     login
     get :both
     response.should be_success
-    controller.send(:current_user).should==@user
+    controller.send(:current_user).should == @user
     controller.send(:current_token).should be_nil
   end
 
@@ -223,10 +293,10 @@ describe OauthorizedController," access control" do
     sign_request_with_oauth(@access_token)
     ClientApplication.should_receive(:find_token).with(@access_token.token).and_return(@access_token)
     get :token_only
-    controller.send(:current_token).should==@access_token
-    controller.send(:current_client_application).should==@client_application
-    controller.send(:current_user).should==@user 
-    response.code.should=='200' 
+    controller.send(:current_token).should == @access_token
+    controller.send(:current_client_application).should == @client_application
+    controller.send(:current_user).should == @user 
+    response.code.should == '200' 
     response.should be_success 
   end
 
@@ -235,15 +305,15 @@ describe OauthorizedController," access control" do
     ClientApplication.should_receive(:find_token).with(@request_token.token).and_return(@request_token)
     sign_request_with_oauth(@request_token)
     get :token_only
-    response.code.should=='401'
+    response.code.should == '401'
   end
 
   it "should disallow interactive when using oauth_required" do
     login
     get :token_only
-    response.code.should=='401'
+    response.code.should == '401'
     
-    controller.send(:current_user).should==@user
+    controller.send(:current_user).should == @user
     controller.send(:current_token).should be_nil
   end
 
@@ -251,7 +321,7 @@ describe OauthorizedController," access control" do
     setup_to_authorize_request
     sign_request_with_oauth(@access_token)
     get :interactive
-    response.code.should=="302"
+    response.code.should == "302"
     controller.send(:current_user).should be_nil
     controller.send(:current_token).should be_nil
   end
@@ -260,7 +330,7 @@ describe OauthorizedController," access control" do
     login
     get :interactive
     response.should be_success
-    controller.send(:current_user).should==@user
+    controller.send(:current_user).should == @user
     controller.send(:current_token).should be_nil
   end
 
@@ -274,7 +344,7 @@ describe OauthController, "revoke" do
   end
   
   def do_post
-    post :revoke,:token=>"TOKEN STRING"
+    post :revoke, :token => "TOKEN STRING"
   end
   
   it "should redirect to index" do
@@ -294,3 +364,4 @@ describe OauthController, "revoke" do
   end
   
 end
+

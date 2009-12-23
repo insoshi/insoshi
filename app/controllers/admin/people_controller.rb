@@ -16,5 +16,6 @@ class Admin::PeopleController < ApplicationController
 
   def before_create_save(record)
     record.email_verified = true
+    record.accept_agreement = true
   end
 end

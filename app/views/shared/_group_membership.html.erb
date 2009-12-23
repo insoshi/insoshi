@@ -1,0 +1,10 @@
+<% if @group.pending_request.length > 0 and @group.owner?(current_person) %>
+  <%= render :partial => "groups/people", 
+             :locals => {:members => (@group.pending_request), :title => "pending request"} %>
+<% end %>
+<% if @group.public? or @group.owner?(current_person) or current_person.admin? %>
+  <%= render :partial => "groups/people", 
+             :locals => {:members => @group.people, :title => "members"} %>
+<% end %>
+<%= render :partial => "groups/people", 
+           :locals => {:members => ([] << @group.owner), :title => "admin"} %>

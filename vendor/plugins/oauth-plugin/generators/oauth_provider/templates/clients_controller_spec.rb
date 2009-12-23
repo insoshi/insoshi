@@ -40,7 +40,7 @@ describe OauthClientsController, "show" do
   end
   
   def do_get
-    get :show,:id=>'3'
+    get :show, :id => '3'
   end
   
   it "should be successful" do
@@ -101,7 +101,7 @@ describe OauthClientsController, "edit" do
   end
   
   def do_get
-    get :edit,:id=>'3'
+    get :edit, :id => '3'
   end
   
   it "should be successful" do
@@ -138,12 +138,12 @@ describe OauthClientsController, "create" do
   
   def do_valid_post
     @client_application.should_receive(:save).and_return(true)
-    post :create,'client_application'=>{'name'=>'my site'}
+    post :create, 'client_application'=>{'name' => 'my site'}
   end
 
   def do_invalid_post
     @client_application.should_receive(:save).and_return(false)
-    post :create,:client_application=>{:name=>'my site'}
+    post :create, :client_application=>{:name => 'my site'}
   end
   
   it "should query current_users client applications" do
@@ -154,7 +154,7 @@ describe OauthClientsController, "create" do
   it "should redirect to new client_application" do
     do_valid_post
     response.should be_redirect
-    response.should redirect_to(:action=>"show",:id=>@client_application.id)
+    response.should redirect_to(:action => "show", :id => @client_application.id)
   end
   
   it "should assign client_applications" do
@@ -176,7 +176,7 @@ describe OauthClientsController, "destroy" do
   end
   
   def do_delete
-    delete :destroy,:id=>'3'
+    delete :destroy, :id => '3'
   end
     
   it "should query current_users client applications" do
@@ -193,7 +193,7 @@ describe OauthClientsController, "destroy" do
   it "should redirect to list" do
     do_delete
     response.should be_redirect
-    response.should redirect_to(:action=>'index')
+    response.should redirect_to(:action => 'index')
   end
   
 end
@@ -207,12 +207,12 @@ describe OauthClientsController, "update" do
   
   def do_valid_update
     @client_application.should_receive(:update_attributes).and_return(true)
-    put :update,:id=>'1', 'client_application'=>{'name'=>'my site'}
+    put :update, :id => '1', 'client_application'=>{'name' => 'my site'}
   end
 
   def do_invalid_update
     @client_application.should_receive(:update_attributes).and_return(false)
-    put :update,:id=>'1', 'client_application'=>{'name'=>'my site'}
+    put :update, :id => '1', 'client_application'=>{'name' => 'my site'}
   end
   
   it "should query current_users client applications" do
@@ -224,7 +224,7 @@ describe OauthClientsController, "update" do
   it "should redirect to new client_application" do
     do_valid_update
     response.should be_redirect
-    response.should redirect_to(:action=>"show",:id=>@client_application.id)
+    response.should redirect_to(:action => "show", :id => @client_application.id)
   end
   
   it "should assign client_applications" do

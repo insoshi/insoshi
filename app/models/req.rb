@@ -23,18 +23,19 @@ class Req < ActiveRecord::Base
 
   has_and_belongs_to_many :categories
   belongs_to :person
-  has_many :bids, :order => 'created_at DESC'
+  has_many :bids, :order => 'created_at DESC', :dependent => :destroy
+  has_many :exchanges, :as => :metadata
 
   attr_protected :person_id, :created_at, :updated_at
   validates_presence_of :name, :due_date
+  after_create :notify_workers, :if => :notifications
   after_create :log_activity
-  after_save :notify_workers, :if => :notifications
 
   class << self
 
     def current_and_active(page=1)
       today = DateTime.now
-      @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
+      @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
       @reqs.delete_if { |req| req.has_approved? }
     end
 
@@ -93,6 +94,12 @@ class Req < ActiveRecord::Base
   end
 
   private
+
+  def validate
+    if self.categories.length > 5
+      errors.add_to_base('Only 5 categories are allowed per request')
+    end
+  end
 
   def notify_workers
     workers = []

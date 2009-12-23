@@ -82,6 +82,12 @@ class Bid < ActiveRecord::Base
 
   private
 
+  def validate
+    unless estimated_hours > 0
+      errors.add(:estimated_hours, "must be greater than zero")
+    end
+  end
+
   def setup_estimated_hours
     if self.expiration_date.blank?
       self.expiration_date = 7.days.from_now

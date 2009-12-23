@@ -16,6 +16,7 @@
 #
 
 require 'oauth'
+
 class ClientApplication < ActiveRecord::Base
   extend PreferencesHelper 
 
@@ -25,12 +26,21 @@ class ClientApplication < ActiveRecord::Base
   validates_uniqueness_of :key
   before_validation_on_create :generate_keys
   
+  validates_format_of :url, :with => /\Ahttp(s?):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/i
+  validates_format_of :support_url, :with => /\Ahttp(s?):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/i, :allow_blank=>true
+  validates_format_of :callback_url, :with => /\Ahttp(s?):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/i, :allow_blank=>true
+
+  attr_accessor :token_callback_url
+
   def self.find_token(token_key)
     token=OauthToken.find_by_token(token_key, :include => :client_application)
     logger.info "XXX Token key: #{token_key}"
     logger.info "Loaded #{token.token} which was authorized by (person_id=#{token.person_id}) on the #{token.authorized_at}"
-    return token if token.authorized?
-    nil
+    if token && token.authorized?
+      token
+    else
+      nil
+    end
   end
   
   def self.verify_request(request, options = {}, &block)
@@ -58,14 +68,14 @@ class ClientApplication < ActiveRecord::Base
   end
     
   def create_request_token
-    RequestToken.create :client_application=>self
+    RequestToken.create :client_application => self, :callback_url => self.token_callback_url
   end
   
   protected
   
   def generate_keys
-    @oauth_client=oauth_server.generate_consumer_credentials
-    self.key=@oauth_client.key
-    self.secret=@oauth_client.secret
+    oauth_client = oauth_server.generate_consumer_credentials
+    self.key = oauth_client.key[0,20]
+    self.secret = oauth_client.secret[0,40]
   end
 end

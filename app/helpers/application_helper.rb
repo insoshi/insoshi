@@ -21,6 +21,7 @@ module ApplicationHelper
     resources = menu_element("Resources", "http://docs.insoshi.com/")
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
+      offers = menu_element("Offers", offers_path)
       requests = menu_element("Requests", reqs_path)
       messages = menu_element("Inbox", messages_path)
 #      blog     = menu_element("Blog",     blog_path(current_person.blog))
@@ -31,9 +32,9 @@ module ApplicationHelper
 #                              person_connections_path(current_person))
 #      links = [home, profile, contacts, messages, blog, people, forum]
       #events   = menu_element("Events", events_path)
-        links = [home, profile, categories, requests, people, messages, groups, forum]
+        links = [home, profile, categories, offers, requests, people, messages, groups, forum]
       else
-        links = [home, profile, categories, requests, people, messages, forum]
+        links = [home, profile, categories, offers, requests, people, messages, forum]
       end
       # TODO: remove 'unless production?' once events are ready.
       #links.push(events) #unless production?
@@ -42,14 +43,15 @@ module ApplicationHelper
       home =    menu_element("Home", home_path)
       spam = menu_element("eNews", admin_broadcast_emails_path)
       people =  menu_element("People", admin_people_path)
+      feed = menu_element("Feed", admin_feed_posts_path)
       forums =  menu_element(inflect("Forum", Forum.count),
                              admin_forums_path)
       preferences = menu_element("Prefs", admin_preferences_path)
       if global_prefs.group_option?
         groups = menu_element("Groups", admin_groups_path)
-        links = [home, spam, people, forums, groups, preferences]
+        links = [home, spam, people, feed, forums, groups, preferences]
       else
-        links = [home, spam, people, forums, preferences]
+        links = [home, spam, people, feed, forums, preferences]
       end
     else
       #links = [home, people]

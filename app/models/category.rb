@@ -16,6 +16,7 @@ class Category < ActiveRecord::Base
   is_indexed :fields => ['name', 'description']
 
   has_and_belongs_to_many :reqs
+  has_and_belongs_to_many :offers
   has_and_belongs_to_many :people
   acts_as_tree
 
@@ -47,5 +48,10 @@ class Category < ActiveRecord::Base
 
   def descendants_current_and_active_reqs_count
     descendants.map {|d| d.current_and_active_reqs.length}.inject(0) {|sum,element| sum + element}
+  end
+
+  def descendants_providers_count
+    # not going to the trouble of making sure people are counted only once
+    descendants.map {|d| d.active_people.length}.inject(0) {|sum,element| sum + element}
   end
 end

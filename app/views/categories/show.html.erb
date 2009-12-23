@@ -1,20 +1,33 @@
 <%- column_div :type => :primary do -%>
   <h2><%=h @category.long_name %></h2>
-  <%- if @reqs.empty? -%>
-    <h3 class="blankstate">No reqs (yet!)</h3>
+  <% if @people.empty? %>
+    <h3 class="blankstate">No people (yet!)</h3>
   <%- else -%>
-  <h3>Requests</h3>
-  <ul class="list full">
-    <%= render :partial => 'reqs/req', :collection => @reqs %>
+  <ul class="list people">
+    <%= render :partial => @people %>
   </ul>
   <%- end -%>
 
   <%- if admin? -%>
   <%= link_to 'Edit', edit_category_path(@category) if 0 == @reqs.size %>
   <%- end -%>
-
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-    <%= render :partial => 'providers', :locals => { :active_people => @category.active_people }  %>
+  <h2>Offers</h2>
+  <%- if @offers.empty? -%>
+    <h3 class="blankstate">No offers (yet!)</h3>
+  <%- else -%>
+  <ul class="list full">
+    <%= render :partial => 'offers/offer', :collection => @offers %>
+  </ul>
+  <%- end -%>
+  <h2>Requests</h2>
+  <%- if @reqs.empty? -%>
+    <h3 class="blankstate">No reqs (yet!)</h3>
+  <%- else -%>
+  <ul class="list full">
+    <%= render :partial => 'reqs/req', :collection => @reqs %>
+  </ul>
+  <%- end -%>
 <%- end -%>

@@ -1,0 +1,39 @@
+<%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'offer_form' } %>
+<%- column_div :type => :primary do -%>
+
+<h2>New offer</h2>
+
+<%= error_messages_for :offer %>
+
+<% form_for(@offer) do |f| %>
+  <div class="form_row">
+    <%= f.label "Title" -%>
+    <%= f.text_field :name -%>
+  </div>
+  <div class="form_row">
+    <%= f.label :total_available %>
+    <%= f.text_field :total_available, :size => 2, :value => 1 %>
+  </div>
+  <div class="form_row">
+    <%= f.label 'Price (in hours)' %>
+    <%= f.text_field :price, :size => 5 %>
+  </div>
+  <div class="form_row">
+    <%= f.label :expiration_date %>
+    <%= f.text_field :expiration_date, :size => 7 %>
+  </div>
+  <div class="form_row">
+    <%= f.label :description %>
+    <%= f.text_area :description, :rows => 5 %>
+  </div>
+  <div class="form_row full">
+    <%= render :partial => "shared/select_categories", :locals => { :model_name => 'offer' } %>
+  </div>
+  <div class="form_row">
+    <%= f.submit "Create" -%>
+  </div>
+<% end %>
+<%- end -%>
+
+<%- column_div :type => :secondary do -%>
+<%- end -%>

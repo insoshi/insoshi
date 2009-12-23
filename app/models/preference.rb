@@ -35,14 +35,16 @@ class Preference < ActiveRecord::Base
   attr_accessor :twitter_password,
                 :twitter_oauth_consumer_secret
   attr_accessible :app_name, :server_name, :domain, :smtp_server, 
-                  :exception_notification,
+                  :exception_notification, :new_member_notification,
                   :email_notifications, :email_verifications, :analytics,
-                  :about, :demo, :whitelist, :gmail, :registration_notification,
+                  :about, :demo, :whitelist, :gmail,
                   :practice, :steps, :questions, :memberships, :contact,
+                  :agreement,
                   :twitter_name, :twitter_password, :twitter_api,
                   :group_option,
                   :zipcode_browsing,
                   :blog_feed_url,
+                  :googlemap_api_key,
                   :twitter_oauth_consumer_key, :twitter_oauth_consumer_secret
 
   validates_presence_of :domain,       :if => :using_email?

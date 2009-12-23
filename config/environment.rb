@@ -74,11 +74,12 @@ Rails::Initializer.run do |config|
   #                                    :lib => 'will_paginate',
   #                                    :source => 'http://gems.github.com'
   # rake dependencies
-  config.gem 'oauth', :version => '>= 0.2.1'
+
+  config.gem 'oauth', :version => '>= 0.3.6'
   config.gem 'chronic'
   # add source:
   # `gem sources -a http://gems.github.com`
-  config.gem 'ttilley-aasm', :lib => 'aasm'
+  config.gem 'rubyist-aasm', :lib => 'aasm'
   # installed with `rake gems:install`
   config.gem 'twitter'
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
@@ -109,7 +110,11 @@ module ActiveSupport
       message
     end
   end
-end# These defaults are used in GeoKit::Mappable.distance_to and in acts_as_mappable
+end
+
+Workling::Remote.dispatcher = Workling::Remote::Runners::StarlingRunner.new
+
+# These defaults are used in GeoKit::Mappable.distance_to and in acts_as_mappable
 GeoKit::default_units = :miles
 GeoKit::default_formula = :sphere
 
@@ -135,7 +140,7 @@ GeoKit::Geocoders::yahoo = 'REPLACE_WITH_YOUR_YAHOO_KEY'
 # This is your Google Maps geocoder key. 
 # See http://www.google.com/apis/maps/signup.html
 # and http://www.google.com/apis/maps/documentation/#Geocoding_Examples
-GeoKit::Geocoders::google = 'REPLACE_WITH_YOUR_GOOGLE_KEY'
+#GeoKit::Geocoders::google = 'REPLACE_WITH_YOUR_GOOGLE_KEY'
     
 # This is your username and password for geocoder.us.
 # To use the free service, the value can be set to nil or false.  For 

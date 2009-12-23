@@ -1,12 +1,15 @@
 <%- column_div :type => :primary do -%>
   <h2><%= h @topic.name %></h2>
+    <%= link_to "add a new post", forum_topic_path(@forum, @topic, :posts => @topic.posts.count, :anchor => 'forum_post'), :class => 'small' %>
+  <%= will_paginate(@posts) %>
   <ul class="list topic full">
     <%= render :partial => 'forum_post', :collection => @posts %>
   </ul>
+  <%= will_paginate(@posts) %>
 
 
   <h3>Add new post</h3>
-
+  <a name="forum_post">
   <%= error_messages_for :post %>
 
   <% form_for :post,
@@ -23,7 +26,12 @@
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <%= render :partial => 'shared/minifeed' %>
+  <% if !@group %>
+    <%= render :partial => 'shared/minifeed' %>
+  <% else %>
+    <%= render :partial => 'group' %>
+    <%= render :partial => 'shared/group_membership', :locals => {:group => @group} %>
+  <% end %>
 <%- end -%>
 
 <%= yui_headers('post_body') %>

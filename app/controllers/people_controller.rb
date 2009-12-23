@@ -58,6 +58,7 @@ class PeopleController < ApplicationController
     @body = @body + " yui-skin-sam"
     @person = Person.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
       format.html
     end
@@ -72,9 +73,8 @@ class PeopleController < ApplicationController
       @person.save
       if @person.errors.empty?
         session[:verified_identity_url] = nil
-        if global_prefs.can_send_email? && global_prefs.registration_notification?
-          admin = Person.find_first_admin
-          PersonMailer.deliver_registration_notification(admin,@person)
+        if global_prefs.can_send_email? && !global_prefs.new_member_notification.nil?
+          PersonMailer.deliver_registration_notification(@person)
         end
         if global_prefs.email_verifications?
           @person.email_verifications.create
@@ -89,6 +89,7 @@ class PeopleController < ApplicationController
       else
         @body = "register single-col"
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { if @person.identity_url.blank? 
                         render :action => 'new'
                       else
@@ -127,7 +128,7 @@ class PeopleController < ApplicationController
     @body = @body + " yui-skin-sam"
     @person = Person.find(params[:id])
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-
+    @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
       format.html
     end
@@ -155,6 +156,7 @@ class PeopleController < ApplicationController
           format.html { redirect_to(@person) }
         else
           @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           if preview?
             @preview = @person.description = params[:person][:description]
           end
@@ -170,6 +172,7 @@ class PeopleController < ApplicationController
           format.html { redirect_to(@person) }
         else
           @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           format.html { render :action => "edit" }
         end
       end

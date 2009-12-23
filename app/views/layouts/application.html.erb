@@ -31,8 +31,14 @@
             <%- if logged_in? -%>
               Welcome, <%= h current_person.name %>!
               (<%= link_to "Sign out", logout_path %>)
+              <br />
+              <%= link_to "about", about_path if !global_prefs.about.blank? %>
+              <%= link_to "practice", practice_path if !global_prefs.practice.blank? %>
+              <%= link_to "steps", steps_path if !global_prefs.steps.blank? %>
+              <%= link_to "contact", contact_path if !global_prefs.contact.blank? %>
+              <%= link_to "agreement", agreement_path if !global_prefs.agreement.blank? %>
+              <%= link_to "faq", questions_path if !global_prefs.questions.blank? %>
               <%- if current_person.admin? -%>
-                <br />
                 <%- if admin_view? -%>
                   <%= link_to("Standard view", home_path) %>
                 <%- else -%>

@@ -17,6 +17,13 @@
           <%= link_to "Click here to edit it", edit_person_path(@person) %>
         </div>
       <%- end -%>
+      <%- if Person::DEFAULT_ZIPCODE_STRING == current_person.address.zipcode_plus_4 %>
+        <div class="error">
+          <%= link_to "Click here to update your location",
+                      edit_person_path(@person) %>. 
+          (Your address will remain private)
+        </div>
+      <%- end -%>
     <%- end -%>
     <div class="toolbox">
       <%= image_tag @person.main_photo, :class => "profile-image photo",
@@ -47,15 +54,22 @@
         <%- end -%>
       </ul>
     </div>
+    <ul>
+      <%= render :partial => 'shared/neighborhood', :collection => @person.neighborhoods %>
+    </ul>
     <%= display @person.formatted_categories, :class => "meta" %>
+    <% if @person.phoneprivacy? %>
+    <% unless @person.phone.nil? %>
+      <div>
+        <%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> <span class="small">Phone:</span> <span class="added small"><%= h @person.phone %></span>
+      </div>
+      <%- end -%>
+    <%- end -%>
     <%= display simple_format_without_paragraph @person.description %>
   </div>
 
   <%= render :partial => 'wall' %>
   <%= render :partial => 'recent_exchanges' %>
-  <%- if current_person?(@person) -%>
-  <%= render :partial => 'recent_sent_exchanges' %>
-  <%- end -%>
   <%= render :partial => 'recent_activity' %>
 <%- end -%>
 

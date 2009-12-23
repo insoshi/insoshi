@@ -37,9 +37,11 @@ class Person < ActiveRecord::Base
                 :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
-                  :message_notifications, :wall_comment_notifications,
-                  :blog_comment_notifications, :identity_url, :category_ids, :address_ids,
-                  :twitter_name
+                  :message_notifications, :wall_comment_notifications, :forum_notifications,
+                  :blog_comment_notifications, :identity_url, :category_ids, :address_ids, :neighborhood_ids,
+                  :twitter_name, :zipcode,
+                  :phone, :phoneprivacy,
+                  :accept_agreement
   # Indexed fields for Sphinx
   is_indexed :fields => [ 'name', 'description', 'deactivated',
                           'email_verified'],
@@ -59,6 +61,7 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 3.months.ago
+  DEFAULT_ZIPCODE_STRING = '89001'
   # These constants should be methods, but I couldn't figure out how to use
   # methods in the has_many associations.  I hope you can do better.
   ACCEPTED_AND_ACTIVE =  [%(status = ? AND
@@ -121,6 +124,8 @@ class Person < ActiveRecord::Base
   has_many :transactions, :class_name=>"Transact", :finder_sql=>'select exchanges.* from exchanges where (customer_id=#{id} or worker_id=#{id}) order by created_at desc'
 
   has_and_belongs_to_many :categories
+  has_and_belongs_to_many :neighborhoods
+  has_many :offers
   has_many :reqs
   has_many :bids
 
@@ -138,6 +143,8 @@ class Person < ActiveRecord::Base
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
   validates_uniqueness_of   :identity_url, :allow_nil => true
+
+  validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
 
   before_create :create_blog, :check_config_for_deactivation
   after_create :create_account
@@ -193,6 +200,10 @@ class Person < ActiveRecord::Base
     # Return *all* the active users.
     def all_active
       find(:all, :conditions => conditions_for_active)
+    end
+
+    def all_listening_to_forum_posts
+      find(:all, :conditions => conditions_for_active_and_forum_notifications)
     end
     
     def find_recent
@@ -318,9 +329,14 @@ class Person < ActiveRecord::Base
     categories.collect { |cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
   end
 
+  def current_offers
+    today = DateTime.now
+    offers = self.offers.find(:all, :conditions => ["expiration_date >= ?", today], :order => 'created_at DESC')
+  end
+
   def current_and_active_reqs
     today = DateTime.now
-    reqs = self.reqs.find(:all, :conditions => ["active = ? AND due_date >= ?", 1, today], :order => 'created_at DESC')
+    reqs = self.reqs.find(:all, :conditions => ["active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
     reqs.delete_if { |req| req.has_approved? }
   end
 
@@ -331,7 +347,7 @@ class Person < ActiveRecord::Base
 
   def create_address
     address = Address.new( :name => 'personal' )
-    address.zipcode_plus_4 = '89001'
+    address.zipcode_plus_4 = self.zipcode.blank? ? DEFAULT_ZIPCODE_STRING : self.zipcode
     address.person = self
     address.save
   end
@@ -600,6 +616,14 @@ class Person < ActiveRecord::Base
          false, true]
       end
       
+      # Return the conditions for a user to be active and listening to forum posts.
+      def conditions_for_active_and_forum_notifications
+        [%(deactivated = ? AND 
+           forum_notifications = ? AND
+           (email_verified IS NULL OR email_verified = ?)),
+         false, true, true]
+      end
+
       # Return the conditions for a user to be 'mostly' active.
       def conditions_for_mostly_active
         [%(deactivated = ? AND 

@@ -89,7 +89,7 @@ font-size:1.3em;
 /* Header-nav */
 #nav {
   margin: 14px 0 0 0;
-  width: 576px;
+  width: 634px;
   float: right;
 }
 #nav li {
@@ -404,6 +404,67 @@ div.desc-message{
  	position: relative;
 	width:500px;	
 	margin-bottom:20px;
+}
+
+
+
+ul.categories
+{
+}
+ul.categories ul
+{
+    margin-bottom:0px;
+}
+ul.categories li
+{
+    border:1px solid #ddd;
+    padding:5px;
+    margin:0px;
+    margin-left:20px;
+    background: white url("/images/silver-grad-inv.jpg") repeat-x top left;
+    font-size:16px;
+    color:#333;
+}
+ul.categories a
+{
+    color:#333;
+}
+ul.categories li ul li.selected
+{
+    background:white;
+}
+ul.categories li.selected a
+{
+    text-decoration:underline;
+}
+ul.categories a.categoryMenuItem, ul.categories li.selected a.selected
+{
+    color:#777;
+}
+a.categoryMenuItem:hover
+{
+  text-decoration:underline;
+}
+ul.categories li ul li
+{
+    border:0px;
+    list-style-type:disc;
+    background:white;
+}
+
+.categorycol
+{
+  padding-top:20px;
+}
+#categoryMenu
+{
+  float:left;
+  width:370px;
+}
+#categoryMenu2
+{
+  float:left;
+  width:370px;
 }
 
 p.formatting

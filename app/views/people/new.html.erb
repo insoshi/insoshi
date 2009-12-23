@@ -29,6 +29,11 @@
       <span class="small">(will be displayed)</span></label>
     <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
   </div>
+
+  <div class="form_row">
+    <label for="zipcode">Zipcode</label>
+    <%= f.text_field :zipcode %>
+  </div>
   
 
   <div class="form_row full">
@@ -48,6 +53,12 @@
     <%= f.text_area :description %>
   </div>  
 
+  <div class="form_row full">
+        <label for="person_categories">Neighborhood
+        </label>
+        <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'person' } %>
+  </div>
+
   <div class="form_row">
     <label for="password">Password</label>
     <%= f.password_field :password, :maxlength => Person::MAX_PASSWORD %>
@@ -59,6 +70,11 @@
                          :maxlength => Person::MAX_PASSWORD,
                          :value => "" %>
   </div>
+
+  <div class="form_row">
+    <%= f.check_box :accept_agreement, :class => 'checkbox' %> I accept the <%= link_to "member agreement", agreement_path, :target => '_blank', :class => 'small' %>
+  </div>
+
   <div class="form_row">
     <%= submit_tag 'Sign up', :class => "button" %>
   </div>

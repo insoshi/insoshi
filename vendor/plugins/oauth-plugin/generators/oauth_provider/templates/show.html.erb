@@ -1,20 +1,27 @@
-<h1>OAuth details for <%%=@client_application.name%></h1>
+<h1>OAuth details for <%%=@client_application.name %></h1>
 <p>
-	<b>Consumer Key:</b> <%%=@client_application.key%>
+  <strong>Consumer Key:</strong>
+  <code><%%=@client_application.key %></code>
 </p>
 <p>
-	<b>Consumer Secret:</b> <%%=@client_application.secret%>
+  <strong>Consumer Secret:</strong>
+  <code><%%=@client_application.secret %></code>
 </p>
 <p>
-	<b>Request Token URL</b> http<%%='s' if request.ssl?%>://<%%=request.host_with_port%><%%=@client_application.oauth_server.request_token_path%>
+  <strong>Request Token URL</strong>
+  <code>http<%%='s' if request.ssl? %>://<%%= request.host_with_port %><%%=@client_application.oauth_server.request_token_path %></code>
 </p>
 <p>
-	<b>Access Token URL</b> http<%%='s' if request.ssl?%>://<%%=request.host_with_port%><%%=@client_application.oauth_server.access_token_path%>
+  <strong>Access Token URL</strong>
+  <code>http<%%='s' if request.ssl? %>://<%%= request.host_with_port %><%%=@client_application.oauth_server.access_token_path %></code>
 </p>
 <p>
-	<b>Authorize URL</b> http<%%='s' if request.ssl?%>://<%%=request.host_with_port%><%%=@client_application.oauth_server.authorize_path%>
+  <strong>Authorize URL</strong>
+  <code>http<%%='s' if request.ssl? %>://<%%= request.host_with_port %><%%=@client_application.oauth_server.authorize_path %></code>
 </p>
 
 <p>
-	We support hmac-sha1 (recommended) as well as plain text in ssl mode.
+  We support hmac-sha1 (recommended) as well as plain text in ssl mode.
 </p>
+<%%= link_to 'Edit', edit_oauth_client_path(@client_application) %> |
+<%%= link_to 'Back', oauth_clients_path %>

@@ -19,7 +19,8 @@ class PersonMailer < ActionMailer::Base
   def message_notification(message)
     from         "Message notification <message@#{domain}>"
     recipients   message.recipient.email
-    subject      formatted_subject("New message")
+    subject      formatted_subject(message.subject)
+    content_type "text/html"
     body         "domain" => server, "message" => message,
                  "preferences_note" => preferences_note(message.recipient)
   end
@@ -104,7 +105,17 @@ class PersonMailer < ActionMailer::Base
                  "preferences_note" => 
                     preferences_note(comment.commented_person)
   end
-  
+ 
+  def forum_post_notification(subscriber, forum_post)
+    from         "#{forum_post.person.name} <forum@#{domain}>"
+    recipients   subscriber.email
+    subject      formatted_group_subject(forum_post.topic.forum.group, forum_post.topic.name)
+    content_type "text/html"
+    body         "domain" => server, "forum_post" => forum_post,
+                 "preferences_note" => 
+                    preferences_note(subscriber)
+  end
+
   def email_verification(ev)
     from         "Email verification <email@#{domain}>"
     recipients   ev.person.email
@@ -113,9 +124,9 @@ class PersonMailer < ActionMailer::Base
                  "code" => ev.code
   end
 
-  def registration_notification(admin, new_peep)
+  def registration_notification(new_peep)
     from         "Registration notification <registration@#{domain}>"
-    recipients   admin.email
+    recipients   PersonMailer.global_prefs.new_member_notification.split
     subject      formatted_subject("New registration")
     body         "email" => new_peep.email,
                   "name" => new_peep.name,
@@ -140,6 +151,14 @@ class PersonMailer < ActionMailer::Base
       name = PersonMailer.global_prefs.app_name
       label = name.blank? ? "" : "[#{name}] "
       "#{label}#{text}"
+    end
+
+    def formatted_group_subject(group,text)
+      if !group
+        formatted_subject(text)
+      else
+        "[#{group.name}] #{text}"
+      end
     end
   
     def preferences_note(person)

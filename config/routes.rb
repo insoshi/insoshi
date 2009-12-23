@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :neighborhoods
+
   map.resources :memberships, :member => {:unsuscribe => :delete, :suscribe => :post}
 
   map.resources :transacts
@@ -26,6 +28,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :reqs do |req|
     req.resources :bids
   end
+
+  map.resources :offers
 
   map.resources :categories
 
@@ -61,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.namespace :admin do |admin|
     admin.resources :people, :active_scaffold => true
-    admin.resources :preferences, :broadcast_emails
+    admin.resources :preferences, :broadcast_emails, :feed_posts
     admin.resources :groups
     admin.resources :forums do |forums|
       forums.resources :topics do |topic|
@@ -92,6 +96,7 @@ ActionController::Routing::Routes.draw do |map|
   map.questions '/questions', :controller => 'home', :action => 'questions'
   map.memberships '/memberships', :controller => 'home', :action => 'memberships'
   map.contact '/contact', :controller => 'home', :action => 'contact'
+  map.agreement '/agreement', :controller => 'home', :action => 'agreement'
 
   map.admin_home '/admin/home', :controller => 'home'
 
@@ -100,6 +105,7 @@ ActionController::Routing::Routes.draw do |map|
   map.request_token '/oauth/request_token', :controller => 'oauth', :action => 'request_token'
   map.access_token '/oauth/access_token', :controller => 'oauth', :action => 'access_token'
   map.test_request '/oauth/test_request', :controller => 'oauth', :action => 'test_request'
+  map.oauth '/oauth', :controller => 'oauth', :action => 'index'
 
   # The priority is based upon order of creation: first created -> highest priority.
 

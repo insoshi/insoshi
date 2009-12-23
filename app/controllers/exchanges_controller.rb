@@ -20,42 +20,56 @@ class ExchangesController < ApplicationController
   end
 
   def new
-    @req = Req.new
-    @req.name = 'Enter description of service here'
+    @exchange = Exchange.new
+
+    if params[:offer]
+      @offer = Offer.find(params[:offer])
+      if @offer.person != Person.find(params[:person_id])
+        flash[:error] = "Specified offer does not match person"
+      end
+    else
+      @req = Req.new
+      @req.name = 'Enter description of service here'
+    end
+
     @groups = Person.find(params[:person_id]).groups
     @groups.delete_if {|g| !g.adhoc_currency?}
-    @exchange = Exchange.new
   end
 
+  # this method expects that the form is either referencing an existing offer or accepting a name field for a new req to be created 
+  #
   def create
     @exchange = Exchange.new(params[:exchange]) # amount and group_id are the only accessible fields
-    @req = Req.new(params[:req])
-
-    @req.name = 'Gift transfer' if @req.name.blank? # XML creation might not set this
-    @req.estimated_hours = @exchange.amount
-    @req.due_date = Time.now
-    @req.person = current_person
-    @req.active = false
-    @req.save!
-
     @exchange.worker = @worker
     @exchange.customer = current_person
-    @exchange.req = @req
+
+    if params[:offer]
+      @offer = Offer.find(params[:offer][:id])
+      @exchange.amount = @offer.price
+      @exchange.metadata = @offer
+    else
+      @req = Req.new(params[:req])
+
+      @req.name = 'Gift transfer' if @req.name.blank? # XML creation might not set this
+      @req.estimated_hours = @exchange.amount
+      @req.due_date = Time.now
+      @req.person = current_person
+      @req.active = false
+      @req.save!
+
+      @exchange.metadata = @req
+    end
 
 
     respond_to do |format|
       if @exchange.save
-        flash[:notice] = "Transfer succeeded."
+        flash[:notice] = "Credit transfer succeeded."
         format.html { redirect_to person_path(@worker) and return }
         format.xml { render :xml => @exchange, :status => :created, :location => [@worker, @exchange] }
         format.json { render :json => @exchange, :status => :created, :location => [@worker, @exchange] }
       else
-        flash[:error] = "Error with transfer."
+        flash[:error] = "Error with credit transfer."
         @groups = Person.find(params[:person_id]).groups
-        req_name = @req.name
-        @req.destroy
-        @req = Req.new
-        @req.name = req_name
         format.html { render :action => "new" }
         format.xml { render :xml => @exchange.errors, :status => :unprocessable_entity }
         format.json { render :json => @exchange.errors, :status => :unprocessable_entity }
@@ -65,12 +79,7 @@ class ExchangesController < ApplicationController
 
   def destroy
     @exchange = Exchange.find(params[:id])
-    @req = @exchange.req
-
-    if @req.active?
-      flash[:error] = "Payment could not be suspended"
-      redirect_to person_url(current_person) and return
-    end
+    @metadata = @exchange.metadata
 
     begin
       Exchange.transaction do
@@ -84,10 +93,12 @@ class ExchangesController < ApplicationController
       end
     end
 
-    # we can safely destroy the req since this is a direct payment
-    #
     @exchange.destroy
-    @req.destroy
+    if @metadata.class == Req
+      unless @metadata.active?
+        @metadata.destroy
+      end
+    end
     flash[:success] = "Payment suspended."
 
     respond_to do |format|

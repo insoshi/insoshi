@@ -1,7 +1,7 @@
-<%= h @message.content %>
---
-Click here to view this message at <%= @domain %>:
-
-http://<%= @domain %>/messages/<%= @message.to_param %>
-
+<%= @message.content %><br>
+--<br>
+Click here to view this message at <%= @domain %>:<br>
+<br>
+http://<%= @domain %>/messages/<%= @message.to_param %><br>
+<br>
 <%= @preferences_note %>

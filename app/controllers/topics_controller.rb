@@ -9,8 +9,9 @@ class TopicsController < ApplicationController
   end
 
   def show
+    @group = @forum.group
     @topic = Topic.find(params[:id])
-    @posts = @topic.posts
+    @posts = @topic.posts.paginate(:page => params[:page])
   end
 
   def new

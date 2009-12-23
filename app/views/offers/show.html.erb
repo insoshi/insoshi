@@ -1,0 +1,29 @@
+<% column_div :type => :primary do -%>
+<h2>Offer</h2>
+<ul class="list full">
+<%= render :partial => @offer %>
+</ul>
+<% unless current_person?(@offer.person) %>
+  <% form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
+    <% fields_for :offer do |o| %>
+      <%= o.hidden_field :id %>
+    <% end %>
+    <%= f.hidden_field :subject, :id => "message_subject", :value => @offer.name %>
+    <div class="form_row">
+      <label for="message_body">Send <%= h @offer.person.name %> a question</label>
+      <%= f.text_area :content, :id => "message_body", :rows => 5 %>
+      <%= set_focus_to "message_body" %>
+    </div>
+    <div class="form_row">
+      <%= f.submit "Send!", :class => "button", :id => "message_submit" %>
+      <%= f.submit "Cancel", :class => "button", :id => "cancel" %>
+    </div>
+  <% end %>
+<% end %>
+<%- end -%>
+
+<% column_div :type => :secondary do -%>
+  <%= render :partial => 'shared/add_button', :locals => { :button_text => "Add Offer", :new_resource_path => new_offer_path } %>
+  <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/minifeed' %>
+<%- end -%>
