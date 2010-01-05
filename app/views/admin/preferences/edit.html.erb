@@ -132,6 +132,16 @@
     <br />
 
     <div class="form_row">
+      <label for="registration_intro">Registration Form Intro</label>
+      <br />
+      <p><%= formatting_note %></p>
+
+      <%= f.text_area :registration_intro, :rows => 5 %>
+    </div>
+
+    <br />
+
+    <div class="form_row">
       <label for="agreement">Agreement</label>
       <br />
       <p><%= formatting_note %></p>

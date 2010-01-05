@@ -6,12 +6,7 @@
   <%- end -%>
 
   <%= error_messages_for :person %>
-
-  <div class="desc-message">
-    <p>We verify member information and require new members attend one orientation before participating, so that everyone understands how the Time Exchange works.</p>
-    <p>Please check the calendar on the front page for dates.  You can fill out the form now and it will be approved after you attend an orientation. More information may be <a href="/steps">required</a>.</p>
-  </div>
-
+  <%= format global_prefs.registration_intro %>
   <% form_for @person do |f| -%>
 
   <div class="form_row">
