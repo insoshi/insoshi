@@ -8,7 +8,6 @@ class OauthController < ApplicationController
   # skip_before_filter :verify_authenticity_token
   skip_before_filter :create_page_view
   skip_before_filter :require_activation
-  skip_before_filter :tracker_vars
   skip_before_filter :admin_warning
 
   def request_token

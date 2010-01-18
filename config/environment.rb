@@ -9,7 +9,6 @@ RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-require 'rails_generator/secret_key_generator'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -36,22 +35,6 @@ Rails::Initializer.run do |config|
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
-
-  # Your secret key for verifying cookie session data integrity.
-  # If you change this key, all old sessions will become invalid!
-  # Make sure the secret is at least 30 characters and all random, 
-  # no regular words or you'll be exposed to dictionary attacks.
-  secret_file = File.join(RAILS_ROOT, "secret")
-  if File.exist?(secret_file)
-    secret = File.read(secret_file)
-  else
-    secret = Rails::SecretKeyGenerator.new("insoshi").generate_secret
-    #File.open(secret_file, 'w') { |f| f.write(secret) }
-  end
-  config.action_controller.session = {
-    :session_key => '_instant_social_session',
-    :secret      => secret
-  }
 
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information

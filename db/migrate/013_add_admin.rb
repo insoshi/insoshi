@@ -1,4 +1,5 @@
 class AddAdmin < ActiveRecord::Migration
+  include Crypto
 
   class Person < ActiveRecord::Base  
   end
@@ -10,11 +11,12 @@ class AddAdmin < ActiveRecord::Migration
     add_column :people, :admin, :boolean, :default => false, :null => false
     add_column :people, :deactivated, :boolean, 
                         :default => false, :null => false
-    
-    key = Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key.pub")
+   
+    local_encryption_key = LocalEncryptionKey.find(:first)
+    public_key = Crypto::Key.from_local_key_value(local_encryption_key.rsa_public_key)
     person = Person.new(:email => "admin@example.com",
                         :name => "admin",
-                        :crypted_password => key.encrypt("admin"),
+                        :crypted_password => public_key.encrypt("admin"),
                         :description => "")
     person.admin = true
     person.save!

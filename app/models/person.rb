@@ -407,7 +407,8 @@ class Person < ActiveRecord::Base
   end
 
   def self.encrypt(password)
-    Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key.pub").encrypt(password)
+    k = LocalEncryptionKey.find(:first)
+    Crypto::Key.from_local_key_value(k.rsa_public_key).encrypt(password)
   end
 
   # Encrypts the password with the user salt
@@ -416,7 +417,8 @@ class Person < ActiveRecord::Base
   end
 
   def decrypt(password)
-    Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key").decrypt(password)
+    k = LocalEncryptionKey.find(:first)
+    Crypto::Key.from_local_key_value(k.rsa_private_key).decrypt(password)
   end
 
   def authenticated?(password)
