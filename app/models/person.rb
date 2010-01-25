@@ -373,23 +373,19 @@ class Person < ActiveRecord::Base
   end
 
   def main_photo
-    "/images/default.png"
-    #photo.nil? ? "/images/default.png" : photo.public_filename
+    photo.nil? ? "/images/default.png" : photo.public_filename
   end
 
   def thumbnail
-    "/images/default_thumbnail.png"
-    #photo.nil? ? "/images/default_thumbnail.png" : photo.public_filename(:thumbnail)
+    photo.nil? ? "/images/default_thumbnail.png" : photo.public_filename(:thumbnail)
   end
 
   def icon
-    "/images/default_icon.png"
-    #photo.nil? ? "/images/default_icon.png" : photo.public_filename(:icon)
+    photo.nil? ? "/images/default_icon.png" : photo.public_filename(:icon)
   end
 
   def bounded_icon
-    "/images/default_icon.png"
-    #photo.nil? ? "/images/default_icon.png" : photo.public_filename(:bounded_icon)
+    photo.nil? ? "/images/default_icon.png" : photo.public_filename(:bounded_icon)
   end
 
   # Return the photos ordered by primary first, then by created_at.
