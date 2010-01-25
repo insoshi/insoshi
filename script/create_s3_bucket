@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'aws/s3'
+
+unless ENV['AMAZON_ACCESS_KEY_ID'] && ENV['AMAZON_SECRET_ACCESS_KEY']
+  raise "you need to set amazon s3 environment variables"
+end
+
+AWS::S3::Base.establish_connection!(
+  :access_key_id => ENV['AMAZON_ACCESS_KEY_ID'],
+  :secret_access_key => ENV['AMAZON_SECRET_ACCESS_KEY']
+)
+
+AWS::S3::Bucket.create(ARGV[0])
+AWS::S3::Service.buckets.each {|b| puts b.name}
+
