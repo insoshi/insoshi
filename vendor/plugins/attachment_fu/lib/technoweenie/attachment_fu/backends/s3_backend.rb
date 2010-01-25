@@ -138,7 +138,12 @@ module Technoweenie # :nodoc:
           #  raise ConfigFileNotFoundError.new('File %s not found' % @@s3_config_path)
           end
 
-          @@bucket_name = s3_config[:bucket_name]
+          if ENV['AMAZON_ACCESS_KEY_ID'] && ENV['AMAZON_SECRET_ACCESS_KEY']
+            s3_config[:access_key_id] = ENV['AMAZON_ACCESS_KEY_ID']
+            s3_config[:secret_access_key] = ENV['AMAZON_SECRET_ACCESS_KEY']
+          end
+
+          @@bucket_name = ENV['S3_BUCKET_NAME'] || s3_config[:bucket_name]
 
           Base.establish_connection!(s3_config.slice(:access_key_id, :secret_access_key, :server, :port, :use_ssl, :persistent, :proxy))
 
