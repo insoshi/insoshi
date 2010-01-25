@@ -68,9 +68,6 @@ module ApplicationHelper
       if !global_prefs.questions.blank?
         links.push(menu_element("Q/A", questions_url))
       end
-      if !global_prefs.memberships.blank?
-        links.push(menu_element("Memberships", memberships_url))
-      end
       if !global_prefs.contact.blank?
         links.push(menu_element("Contact", contact_url))
       end

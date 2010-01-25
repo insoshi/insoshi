@@ -90,6 +90,10 @@
   <%=h @preferences.whitelist %>
 </p>
 
+<p>
+  <b>Registration Form Intro text:</b>
+</p>
+<%= display @preferences.registration_intro %>
 
 <p>
   <b>Agreement text (conditions of use member agrees to):</b>
@@ -116,11 +120,6 @@
   <b>Questions text (nonblank text will lead to an 'questions' link):</b>
 </p>
 <%= display @preferences.questions %>
-
-<p>
-  <b>Memberships text (nonblank text will lead to an 'memberships' link):</b>
-</p>
-<%= display @preferences.memberships %>
 
 <p>
   <b>Contact text (nonblank text will lead to an 'contact' link):</b>
