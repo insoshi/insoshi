@@ -207,8 +207,11 @@ class Person < ActiveRecord::Base
     end
     
     def find_recent
+      # TODO: configure attachment_fu for the S3 backend when deploying to Heroku
       find(:all, :order => "people.created_at DESC",
-                 :include => :photos, :limit => NUM_RECENT)
+                 :limit => NUM_RECENT)
+#      find(:all, :order => "people.created_at DESC",
+#                 :include => :photos, :limit => NUM_RECENT)
     end
 
     # Return the first admin created.
@@ -420,7 +423,8 @@ class Person < ActiveRecord::Base
   end
 
   def self.encrypt(password)
-    Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key.pub").encrypt(password)
+    k = LocalEncryptionKey.find(:first)
+    Crypto::Key.from_local_key_value(k.rsa_public_key).encrypt(password)
   end
 
   # Encrypts the password with the user salt
@@ -429,7 +433,8 @@ class Person < ActiveRecord::Base
   end
 
   def decrypt(password)
-    Crypto::Key.from_file("#{RAILS_ROOT}/rsa_key").decrypt(password)
+    k = LocalEncryptionKey.find(:first)
+    Crypto::Key.from_local_key_value(k.rsa_private_key).decrypt(password)
   end
 
   def authenticated?(password)

@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password
 
-  before_filter :create_page_view, :require_activation, :tracker_vars,
+  before_filter :create_page_view, :require_activation,
                 :admin_warning
 
   ActiveScaffold.set_defaults do |config|
@@ -62,17 +62,6 @@ class ApplicationController < ActionController::Base
         unless current_person.active? or current_person.admin?
           redirect_to logout_url
         end
-      end
-    end
-    
-    # A tracker to tell us about the activity of Insoshi installs.
-    def tracker_vars
-      if request.format.html?
-        File.open("identifier", "w") do |f|
-          f.write UUID.new
-        end unless File.exist?("identifier")
-        @tracker_id = File.open("identifier").read rescue nil
-        @env = ENV['RAILS_ENV']
       end
     end
     

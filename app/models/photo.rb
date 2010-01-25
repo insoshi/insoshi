@@ -28,7 +28,8 @@ class Photo < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
   has_attachment :content_type => :image, 
-                 :storage => :file_system, 
+                 :storage => :s3,
+                 :processor => 'Rmagick',
                  :max_size => UPLOAD_LIMIT.megabytes,
                  :min_size => 1,
                  :resize_to => '240>',
