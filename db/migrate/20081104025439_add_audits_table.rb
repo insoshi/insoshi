@@ -24,6 +24,10 @@ class AddAuditsTable < ActiveRecord::Migration
     account.balance = 0
     account.person = person
     account.save!
+
+    address = Address.new( :name => 'personal' )
+    address.person = person
+    address.save!
   end
 
   def self.down
