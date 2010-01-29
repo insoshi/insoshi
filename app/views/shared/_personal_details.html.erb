@@ -22,6 +22,10 @@
   </div>
 
   <div class="form_row">
+    <%= f.check_box :accept_agreement, :class => 'checkbox' %> I accept the <%= link_to "member agreement", agreement_path, :target => '_blank', :class => 'small' %>
+  </div>
+
+  <div class="form_row">
     <%= submit_tag 'Sign up', :class => "button" %>
   </div>
   <% end %>
