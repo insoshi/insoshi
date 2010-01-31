@@ -1,0 +1,16 @@
+<%- unless global_prefs.app_name.blank? -%>
+  <h2><%= global_prefs.app_name %> blog</h2>
+<%- else -%>
+  <h2>Blog</h2>
+<%- end -%>
+<%- if @posts.empty? -%>
+  <h3 class="blankslate">
+    No posts yet!
+  </h3>
+<%- else -%>
+  <ul class="list blog full">
+    <%= render :partial => 'posts/blog_post', :collection => @posts %>
+  </ul>
+<%- end -%>
+
+<%= will_paginate(@posts) %>

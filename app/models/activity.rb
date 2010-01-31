@@ -36,4 +36,11 @@ class Activity < ActiveRecord::Base
          :order => 'activities.created_at DESC',
          :limit => GLOBAL_FEED_SIZE)
   end
+
+  def self.exchange_feed
+    find(:all,
+         :conditions => "item_type = 'Exchange'", 
+         :order => 'activities.created_at DESC',
+         :limit => GLOBAL_FEED_SIZE)
+  end
 end

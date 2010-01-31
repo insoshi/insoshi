@@ -7,11 +7,15 @@ class HomeController < ApplicationController
     if logged_in?
       @body = "home"
       @person = current_person
-      @reqs = current_person.current_and_active_reqs
-      @bids = current_person.current_and_active_bids
-      @offers = current_person.current_offers
       @requested_memberships = current_person.requested_memberships
       @invitations = current_person.invitations
+      if params[:mode]
+        @reqs = current_person.current_and_active_reqs
+        @bids = current_person.current_and_active_bids
+        @offers = current_person.current_offers
+      else
+        @feed = Activity.exchange_feed
+      end
     else
       @body = "blog"
       @posts = FeedPost.paginate(:all, :page => params[:page], :order => 'date_published DESC')
