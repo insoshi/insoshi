@@ -64,14 +64,8 @@ module AuthenticatedSystem
       respond_to do |format|
         format.html do
           store_location
-          if global_prefs.demo?
-            self.current_person = Person.find(DEMO_USER_ID)
-            flash[:success] = "You have been logged in as the guest user."
-            redirect_back_or_default(home_url)
-          else
-            flash[:error] = "You must log in to access this page."
-            redirect_to login_url
-          end
+          flash[:error] = "You must log in to access this page."
+          redirect_to login_url
         end
         format.any do
           request_http_basic_authentication 'Web Password'

@@ -17,9 +17,5 @@ N_COLUMNS = 4
 # The number of raster results per page.
 RASTER_PER_PAGE = 3 * N_COLUMNS
 
-# Demo user's id
-# The admin must create a demo user in demo mode with id = 2.
-DEMO_USER_ID = 2
-
 #RICH TEXT EDITOR SIZE (pixels)
 RICH_TEXT_HEIGHT = '350px'
