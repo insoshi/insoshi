@@ -125,10 +125,6 @@ class PeopleController < ApplicationController
           format.html { render :action => "edit" }
         end
       when 'password_edit'
-        if global_prefs.demo?
-          flash[:error] = "Passwords can't be changed in demo mode."
-          redirect_to @person and return
-        end
         if @person.change_password?(params[:person])
           flash[:success] = 'Password changed.'
           format.html { redirect_to(@person) }
