@@ -1,0 +1,11 @@
+<dl>
+<% columns.each :for => @record do |column| %>
+  <% if column.is_a? ActiveScaffold::DataStructures::ActionColumns -%>
+    <dt><%= column.label -%></dt>
+    <dd><%= render :partial => 'show_columns', :locals => {:columns => column} %></dd>
+  <% else -%>
+    <dt><%= column.label -%></dt>
+    <dd><%= show_column_value(@record, column) -%> &nbsp;</dd>
+  <% end -%>
+<% end -%>
+</dl>

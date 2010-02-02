@@ -1,0 +1,42 @@
+<%
+begin
+  remote_controller = active_scaffold_controller_for(column.association.klass)
+rescue ActiveScaffold::ControllerNotFound
+  remote_controller = nil
+end
+
+show_add_existing = (!column.through_association? and options_for_association_count(column.association) > 0)
+
+show_add_new = !column.through_association? and (column.plural_association? or (column.singular_association? and not associated.empty?))
+show_add_new = false unless @record.class.authorized_for?(:action => :create)
+
+edit_associated_url = url_for(:action => 'edit_associated', :id => parent_record.id, :association => column.name, :associated_id => '--ID--', :escape => false, :eid => params[:eid], :parent_controller => params[:parent_controller], :parent_id => params[:parent_id])
+add_new_url = url_for(:action => 'edit_associated', :id => parent_record.id, :association => column.name, :escape => false, :eid => params[:eid], :parent_controller => params[:parent_controller], :parent_id => params[:parent_id]);
+
+return unless show_add_new or show_add_existing
+
+-%>
+<div class="footer-wrapper">
+  <div class="footer">
+    <% if show_add_new -%>
+    <% add_label = column.plural_association? ? as_(:create_another) : as_(:replace_with_new) -%>
+    <%= button_to_function add_label, "new Ajax.Request(#{add_new_url.to_json}, {asynchronous: true, method: 'get', evalScripts: true, onFailure: function(){ActiveScaffold.report_500_response(#{active_scaffold_id.to_json})}})" %>
+    <% end -%>
+
+    <%= '|' if show_add_new and show_add_existing %>
+
+    <% if show_add_existing -%>
+      <% if remote_controller and remote_controller.respond_to? :uses_record_select? and remote_controller.uses_record_select? -%>
+        <%= link_to_record_select as_(:add_existing), remote_controller.controller_path, :onselect => "new Ajax.Request(#{edit_associated_url.to_json}.sub('--ID--', id), {asynchronous: true, evalScripts: true, onFailure: function(){ActiveScaffold.report_500_response(#{active_scaffold_id.to_json})}});" -%>
+      <% else -%>
+        <% select_options = options_for_select(options_for_association(column.association)) unless column.through_association? -%>
+        <%= select_tag 'associated_id', '<option value="">' + as_(:_select_) + '</option>' + select_options %>
+        <%= button_to_function as_(:add_existing), "new Ajax.Request(#{edit_associated_url.to_json}.sub('--ID--', Element.previous(this).value), {asynchronous: true, method: 'get', evalScripts: true, onFailure: function(){ActiveScaffold.report_500_response(#{active_scaffold_id.to_json})}})" %>
+      <% end -%>
+    <% end -%>
+  </div>
+</div>
+
+<script type="text/javascript">
+//Rico.Corner.round($$('#<%= sub_form_id(:association => column.name) %> .footer-wrapper').first(), {color: 'fromElement', bgColor: 'fromParent', compact: false});
+</script>

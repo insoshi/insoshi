@@ -1,0 +1,45 @@
+<%
+# We have to remove search form params before the url_for method call, otherwise it throughs it on
+search_params = params[:search]
+params.merge!(:search => nil)
+href = url_for(params_for(:action => :update_table, :escape => false).delete_if{|k,v| k == 'search'})
+-%>
+<%= form_remote_tag :url => href,
+                    :method => :get,
+                    :before => "addActiveScaffoldPageToHistory('#{href}', '#{params[:controller]}')",
+                    :after => "$('#{loading_indicator_id(:action => :search, :id => params[:id])}').style.visibility = 'visible'; Form.disable('#{search_form_id}');",
+                    :complete => "$('#{loading_indicator_id(:action => :search, :id => params[:id])}').style.visibility = 'hidden'; Form.enable('#{search_form_id}');",
+                    :failure => "ActiveScaffold.report_500_response('#{active_scaffold_id}')",
+                    :update => active_scaffold_content_id,
+                    :html => { :href => href, :id => search_form_id, :class => 'search', :method => :get } %>
+
+  <ol class="form">
+    <% active_scaffold_config.field_search.columns.each do |column| -%>
+      <% next unless column.search_sql -%>
+      <% name = "search[#{column.name}]" %>
+      <% value = nil %>
+      <% value = search_params[column.name] if search_params %>
+      <li class="form-element">
+        <dl>
+          <dt>
+            <label for="<%= "search_#{column.name}" %>"><%= column.label %></label>
+          </dt>
+        <dd>
+        <%= active_scaffold_search_for(column) %>
+        </dd>
+      </dl>
+    </li>
+    <% end -%>
+  </ol>
+  <p class="form-footer">
+    <%= submit_tag as_(:search), :class => "submit" %>
+    <a href="javascript:void(0)" class="cancel" onclick="f = this.up('form'); f.reset(); f.onsubmit();"><%= as_(:reset) -%></a>
+    <%= loading_indicator_tag(:action => :search) %>
+  </p>
+</form>
+
+<script type="text/javascript">
+//<![CDATA[
+  Form.focusFirstElement('<%= search_form_id -%>');
+//]]>
+</script>

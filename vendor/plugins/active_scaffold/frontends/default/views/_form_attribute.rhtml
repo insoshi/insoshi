@@ -1,0 +1,12 @@
+<% scope ||= nil %>
+<dl class="<%= column.css_class unless column.css_class.nil? %>">
+  <dt>
+    <label for="<%= active_scaffold_input_options(column, scope)[:id] %>"><%= column.label %></label>
+  </dt>
+  <dd>
+    <%= active_scaffold_input_for column, scope %>
+    <% if column.description -%>
+      <span class="description"><%= column.description %></span>
+    <% end -%>
+  </dd>
+</dl>
