@@ -1,1 +1,0 @@
-page.replace_html element_messages_id, :partial => 'form_messages'
