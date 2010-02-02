@@ -9,6 +9,8 @@
   <%= format global_prefs.registration_intro %>
   <% form_for @person do |f| -%>
 
+  <%= render :partial => 'language', :locals => {:f => f} %>
+
   <div class="form_row">
     <label for="email">
       Email address <span class="small">(never made

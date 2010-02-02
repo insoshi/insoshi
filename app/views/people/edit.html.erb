@@ -52,6 +52,8 @@
         <%= f.text_area :description %>
       </div>
 
+      <%= render :partial => 'language', :locals => {:f => f} %>
+
       <div class="form_row">
         <label for="person_email">Email</label>
         <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>

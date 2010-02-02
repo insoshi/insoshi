@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
 
   before_filter :create_page_view, :require_activation, :tracker_vars,
-                :admin_warning
+                :admin_warning,
+                :set_person_locale
 
   ActiveScaffold.set_defaults do |config|
     config.ignore_columns.add [ :created_at, :updated_at ]
@@ -26,6 +27,10 @@ class ApplicationController < ActionController::Base
   protected
     def current_user
       current_person 
+    end
+
+    def set_person_locale
+      I18n.locale = current_person.language if logged_in?
     end
 
     def authorized?
