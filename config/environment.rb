@@ -104,7 +104,7 @@ module ActiveSupport
       # Ensures that the original message is not mutated.
       message = "#{message} (pid:#{$$})"
       message = "#{message}\n" unless message[-1] == ?\n
-      @buffer << message
+      buffer << message
       auto_flush
       message
     end
