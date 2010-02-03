@@ -2,7 +2,8 @@ development:
   adapter: postgresql
   database: oscurrency_development
   hostname: localhost
-  username: root
+  username: postgres
+  password: spindreck
   
 test:
   adapter: postgresql

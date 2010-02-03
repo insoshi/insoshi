@@ -2,7 +2,7 @@
 <%= @forum_post.body %>
 <br>
 <br>
-<% if !forum_post.topic.forum.group %>
+<% if !@forum_post.topic.forum.group %>
   http://<%= @domain %>/forums/1
 <% else %>
   http://<%= @domain %>/groups/<%= forum_post.topic.forum.group.id %>

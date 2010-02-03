@@ -121,7 +121,7 @@ module ActivitiesHelper
     when "Membership"
       %(#{person_link(person)} joined the group '#{group_link(Group.find(activity.item.group))}')
     when "Event"
-      %(#{person_link(person)}'s has created a new #{event_link("event", activity.item)}.)
+      %(#{person_link(person)}s has created a new #{event_link("event", activity.item)}.)
     when "EventAttendee"
       event = activity.item.event
       %(#{person_link(person)} is attending #{someones(event.person, person)} #{event_link("event", event)}.)
@@ -207,7 +207,7 @@ module ActivitiesHelper
   
   def topic_link(text, topic = nil)
     if topic.nil?
-      topic = text
+      topic = text              # Eh?  This makes no sense...
       text = topic.name
     end
     link_to(text, forum_topic_path(topic.forum, topic))
