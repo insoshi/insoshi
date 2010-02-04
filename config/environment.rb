@@ -52,6 +52,8 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
   
+  config.time_zone = "Pacific Time (US & Canada)"
+
   # Custom gem requirements
   # config.gem 'mislav-will_paginate', :version => '~> 2.3.2',
   #                                    :lib => 'will_paginate',

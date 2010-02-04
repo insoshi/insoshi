@@ -242,14 +242,16 @@ module Delayed
     # Constantize the object so that ActiveSupport can attempt
     # its auto loading magic. Will raise LoadError if not successful.
     def attempt_to_load(klass)
-       klass.constantize
+      #mt +++ this doesn't work
+      klass.constantize
     end
 
     # Get the current time (GMT or local depending on DB)
     # Note: This does not ping the DB to get the time, so all your clients
     # must have syncronized clocks.
     def self.db_time_now
-#mt Time.zone.now is not valid      (ActiveRecord::Base.default_timezone == :utc) ? Time.now.utc : Time.zone.now
+      # mt change, work without zone
+      (ActiveRecord::Base.default_timezone == :utc || Time.zone == nil) ? Time.now.utc : Time.zone.now
       Time.now.utc
     end
 
