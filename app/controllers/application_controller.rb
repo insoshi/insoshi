@@ -12,8 +12,7 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password
 
-  before_filter :create_page_view, :require_activation,
-                :admin_warning,
+  before_filter :require_activation, :admin_warning,
                 :set_person_locale
 
   ActiveScaffold.set_defaults do |config|
@@ -97,7 +96,8 @@ class ApplicationController < ActionController::Base
         redirect_to home_url
       end
     end
-  
+ 
+    # no longer used
     # Create a Scribd-style PageView.
     # See http://www.scribd.com/doc/49575/Scaling-Rails-Presentation
     def create_page_view

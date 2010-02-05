@@ -13,6 +13,7 @@
 #  person_id   :integer(4)      
 #
 
+# no longer used
 class PageView < ActiveRecord::Base
   belongs_to :person
 end

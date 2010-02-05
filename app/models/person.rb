@@ -111,7 +111,7 @@ class Person < ActiveRecord::Base
                                             :conditions => ["people.deactivated = ?", false],
                                             :include => :person
 
-  has_many :page_views, :order => 'created_at DESC'
+#  has_many :page_views, :order => 'created_at DESC'
   
   has_many :own_groups, :class_name => "Group", :foreign_key => "person_id",
     :order => "name ASC"
