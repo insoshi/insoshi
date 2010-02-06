@@ -60,6 +60,7 @@ Rails::Initializer.run do |config|
   #                                    :source => 'http://gems.github.com'
   # rake dependencies
 
+  config.gem 'texticle'
   config.gem 'oauth', :version => '>= 0.3.6'
   config.gem 'chronic'
   # add source:

@@ -24,9 +24,18 @@ class Message < Communication
   extend PreferencesHelper
   
   attr_accessor :reply, :parent, :send_mail
-  is_indexed :fields => [ 'subject', 'content', 'recipient_id',
-                          'recipient_deleted_at' ],
-             :conditions => "recipient_deleted_at IS NULL"
+
+  index do
+    subject
+    content
+    recipient_id
+  end
+    
+
+# not sure how to do condition in texticle
+#   is_indexed :fields => [ 'subject', 'content', 'recipient_id',
+#                           'recipient_deleted_at' ],
+#              :conditions => "recipient_deleted_at IS NULL"
 
   MAX_CONTENT_LENGTH = 5000
   SEARCH_LIMIT = 20

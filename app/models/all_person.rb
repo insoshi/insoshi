@@ -30,5 +30,8 @@
 #
 
 class AllPerson < Person
-  is_indexed :fields => [ 'name', 'description' ]
+  index do
+    name
+    description
+  end
 end

@@ -20,7 +20,9 @@ class Group < ActiveRecord::Base
   after_create :create_forum
   after_save :log_activity
   
-  is_indexed :fields => [ 'name', 'description']
+  index do 
+    name description
+  end
   
   # GROUP modes
   PUBLIC = 0

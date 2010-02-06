@@ -15,9 +15,14 @@
 #
 
 class ForumPost < Post
-  is_indexed :fields => [ 'body' ],
-  :conditions => "type = 'ForumPost'",
-  :include => [{:association_name => 'topic', :field => 'name'}]
+  index do 
+    body
+  end
+
+# not sure how to do this in texticle
+#   is_indexed :fields => [ 'body' ],
+#              :conditions => "type = 'ForumPost'",
+#              :include => [{:association_name => 'topic', :field => 'name'}]
 
   attr_accessible :body
   

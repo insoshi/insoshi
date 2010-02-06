@@ -43,10 +43,16 @@ class Person < ActiveRecord::Base
                   :phone, :phoneprivacy,
                   :accept_agreement,
                   :language
-  # Indexed fields for Sphinx
-  is_indexed :fields => [ 'name', 'description', 'deactivated',
-                          'email_verified'],
-             :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
+
+  index do
+    name
+    description
+  end
+
+  #is_indexed :fields => [ 'name', 'description', 'deactivated',
+  #                        'email_verified'],
+  #           :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
+
   MAX_EMAIL = MAX_PASSWORD = 40
   MAX_NAME = 40
   MAX_TWITTER_NAME = 15

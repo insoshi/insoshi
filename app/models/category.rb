@@ -13,7 +13,9 @@
 
 class Category < ActiveRecord::Base
 
-  is_indexed :fields => ['name', 'description']
+  index do 
+    name description
+  end
 
   has_and_belongs_to_many :reqs
   has_and_belongs_to_many :offers
