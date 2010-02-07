@@ -21,7 +21,7 @@ class SearchesController < ApplicationController
     else
       klass = model.constantize
       @results = klass.search(query)
-      @page_results = @results.paginate(page, 10)
+      @page_results = @results.paginate(:page=> page, :per_page => 10)
     end
   end
   
