@@ -9,6 +9,9 @@ class FullTextSearch1265516526 < ActiveRecord::Migration
         USING gin((to_tsvector('english', coalesce(people.name, '') || ' ' || coalesce(people.description, ''))))
 
       eosql
+
+
+
       ActiveRecord::Base.connection.execute(<<-'eosql')
         DROP index IF EXISTS categories_fts_idx
       eosql
@@ -34,15 +37,6 @@ class FullTextSearch1265516526 < ActiveRecord::Migration
                 CREATE index groups_fts_idx
         ON groups
         USING gin((to_tsvector('english', coalesce(groups.name, '') || ' ' || coalesce(groups.description, ''))))
-
-      eosql
-      ActiveRecord::Base.connection.execute(<<-'eosql')
-        DROP index IF EXISTS communications_fts_idx
-      eosql
-      ActiveRecord::Base.connection.execute(<<-'eosql')
-                CREATE index communications_fts_idx
-        ON communications
-        USING gin((to_tsvector('english', coalesce(communications.subject, '') || ' ' || coalesce(communications.content, '') || ' ' || coalesce(communications.recipient_id, ''))))
 
       eosql
       ActiveRecord::Base.connection.execute(<<-'eosql')
