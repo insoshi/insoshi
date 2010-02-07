@@ -17,26 +17,11 @@ class SearchesController < ApplicationController
     end
 
     if query.blank?
-      @search  = [].paginate
       @results = []
     else
-      filters = {}
-      if model == "Person" and current_person.admin?
-        # Find all people, including deactivated and email unverified.
-        model = "AllPerson"
-      elsif model == "Message"
-        filters['recipient_id'] = current_person.id
-      end
-      @search = Ultrasphinx::Search.new(:query => query, 
-                                        :filters => filters,
-                                        :page => page,
-                                        :class_names => model)
-      @search.run
-      @results = @search.results
-      if model == "AllPerson"
-        # Convert to people so that the routing works.
-        @results.map!{ |person| Person.find(person) }
-      end
+      klass = model.constantize
+      @results = klass.search(query)
+      @page_results = @results.paginate(page, 10)
     end
   end
   
