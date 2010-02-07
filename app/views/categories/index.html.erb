@@ -1,7 +1,6 @@
 <h2><%= t('categories.index.header') %></h2>
 <%= render :partial => "shared/add_category_button" %>
 <div class="categorycol">
-  <%= display t('categories.index.explanation'), :class => "meta" %>
   <%- if @top_level_categories.empty? -%>
     <h3 class="blankslate"><%= t('categories.index.no_categories') %></h3>
   <%- else -%>
