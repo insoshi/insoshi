@@ -14,7 +14,7 @@ es:
   button_upload: "Descargar"
   button_select: "Seleccionar"
 
-  price: "Precio"
+  estimate: "Estimación"
   title: "Titulo"
   bid: "oferta"
   due_date: "Fecha de vencimiento"

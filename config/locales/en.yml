@@ -14,7 +14,7 @@ en:
   button_upload: "Upload"
   button_select: "Select"
 
-  price: "Price"
+  estimate: "Estimate"
   title: "Title"
   bid: "bid"
   due_date: "Due date"
