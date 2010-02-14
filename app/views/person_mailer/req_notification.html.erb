@@ -1,6 +1,8 @@
-[<%= h @name %>] matches your skill category:
+[<%= h @name %>] matches a skill category you have
 
 http://<%= @server %><%= @url %>
 
 Description:
 <%= h @description %>
+
+Requested by: <%= h(@requestor) %>
