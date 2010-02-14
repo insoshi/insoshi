@@ -5,30 +5,30 @@
     <%= image_tag "icons/new.gif", :class => "icon", :alt => "Offer" %>
   </div>
   <p>
-  <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h offer.price %> hrs)
+  <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h offer.price %> <%= t('currency_unit_plural') %>)
   <% if offer.available_count > 0 && offer.expiration_date > Time.now && !current_person?(offer.person) %>
-  <%= link_to 'Accept Offer!', new_person_exchange_path(offer.person, :offer => offer.id) %>
+    <%= link_to <%= t('offers.partial.accept_offer') %>, new_person_exchange_path(offer.person, :offer => offer.id) %>
 <% end %>
-    Expires: <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
+<%= t('offers.partial.expires') %>: <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
   </p>
     <%= display offer.formatted_categories, :class => "meta" %>
   <p>
     <%= display simple_format_without_paragraph(offer.description) %>
   </p>
   <p class="meta">
-    Available count: <%= offer.available_count %>
+  <%= t('offers.partial.available_count') %>: <%= offer.available_count %>
     <br>
-    Created by <%= person_link offer.person %>
-    <%= time_ago_in_words(offer.created_at) %> ago
+    <%= t('offers.partial.created_by') %> <%= person_link offer.person %>
+    <%= time_ago_in_words(offer.created_at) %> <%= t('ago') %>
     <% if current_person?(offer.person) -%>
-    | <%= link_to "Edit", edit_offer_path(offer) %>
+    | <%= link_to t('button_edit'), edit_offer_path(offer) %>
     <% end -%>
     <% if ( offer.can_destroy? && ( admin? || current_person?(offer.person) ) ) -%>
-    | <%= link_to "Delete", offer, :confirm => 'Are you sure?', :method => :delete %>
+    | <%= link_to t('button_delete'), offer, :confirm => t('are_you_sure'), :method => :delete %>
     <% end -%>
     <br>
     <% if !current_person.address.nil? && !offer.person.address.nil? && !current_person?(offer.person) -%>
-      <%= number_with_precision(offer.person.address.distance_to(current_person.address), 1).to_s %> miles away
+      <%= number_with_precision(offer.person.address.distance_to(current_person.address), 1).to_s %> <%= t('miles_away') %>
     <% end -%>
   </p>
 </li>

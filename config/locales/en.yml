@@ -1,4 +1,75 @@
 
 en:
-  foo:
+  currency_unit_plural: "hrs"
+  twitter: "Twitter"
+  twitter_url: "http://www.twitter.com/"
 
+  button_submit: "Submit"
+  button_delete: "Delete"
+  button_edit: "Edit"
+  button_create: "Create"
+  button_update: "Update"
+  button_cancel: "Cancel"
+  button_send: "Send!"
+
+  price: "Price"
+  title: "Title"
+  due_date: "Due date"
+  expiration_date: "Expiration Date"
+  description: "Description"
+  are_you_sure: "Are you sure?"
+  miles_away: "miles away"
+  ago: "ago"
+  estimated: "Estimated"
+  a_question: "a question"
+  group: "Group"
+
+  offers:
+    partial:
+      accept_offer: "Accept Offer!"
+      expires: "Expires"
+      available_count: "Available count"
+      created_by: "Created by"
+    index:
+      header: "Offers"
+      nooffers: "No offers (yet!)"
+    edit:
+      header: "Edit offer"
+    new:
+      header: "New offer"
+      total_available: "Total available"
+    show:
+      header: "Offer"
+      send: "Send"
+      add_offer: "Add offer!"
+
+  reqs:
+    partial:
+      due: "Due"
+      createdby: "Created By"
+    index:
+      header: "Requests"
+      current: "Current"
+      all: "All"
+      noreqs: "No requests (yet!)"
+    edit:
+      header: "Edit request"
+    new:
+      header: "New request"
+      people_to_be_notified: "People to be notified"
+      notify_members_email: "Notify members shown above?"
+      notify_members_twitter: "Notify members in real time on " 
+    show:
+      header: "Request"
+      bids: "Bids"
+      nobids: "No bids (yet!)"
+      newbid: "New bid"
+      private_message_to_requestor: "Private message to requestor"
+
+  exchanges:
+    new:
+      enter_credit_for: "Enter credit for"
+      amount: "amount"
+      for: "For:"
+      or_ask: "or ask"
+      service_provided: "Service provided"

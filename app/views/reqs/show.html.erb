@@ -1,38 +1,38 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'bid_form' } %>
 <% column_div :type => :primary do -%>
-  <h2>Request</h2>
+  <h2><%= t('reqs.show.header') %></h2>
   <ul class="list full">
     <%= render :partial => @req %>
   </ul>
   <% if @req.active? %>
-  <h2>Bids:</h2>
+    <h2><%= t('reqs.show.bids') %>:</h2>
   <ul class="list full">
     <% if @req.bids.empty? -%>
-        <h3 class="blankslate">No bids (yet!)</h3>
+      <h3 class="blankslate"><%= t('reqs.show.nobids') %></h3>
     <% else %>
       <%= render :partial => "/bids/bid", :collection => @req.bids %>
     <%- end -%>
   </ul>
     <% unless current_person?(@req.person) -%>
-      <h2>New bid</h2>
+      <h2><%= t('reqs.show.newbid') %></h2>
 
       <%= error_messages_for :bid %>
 
       <% form_for :bid, :url => req_bids_path(@req) do |f| %>
         <div class="form_row">
-          <%= f.label :hours %>
+          <%= f.label t('currency_unit_plural') %>
           <%= f.text_field :estimated_hours, :size => 2 %>
         </div>
         <div class="form_row">
-          <%= f.label :expiration_date %>
+          <%= f.label t('expiration_date') %>
           <%= f.text_field :expiration_date, :size => 8 %>
         </div>
         <div class="form_row">
-          <%= f.label :private_message_to_requestor %>
+          <%= f.label t('reqs.show.private_message_to_requestor') %>
           <%= f.text_area :private_message_to_requestor, :rows => 5 %>
         </div>
         <div class="form_row">
-          <%= f.submit "Submit" %>
+          <%= f.submit t.('button_submit') %>
         </div>
       <% end %>
     <%- end -%>

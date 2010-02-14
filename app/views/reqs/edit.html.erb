@@ -1,32 +1,32 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'req_form' } %>
 <%- column_div :type => :primary do -%>
-<h2>Edit request</h2>
+  <h2><%= t('reqs.edit.header') %></h2>
 
 <%= error_messages_for :req %>
 <% form_for(@req) do |f| %>
 
   <div class="form_row">
-    <%= f.label 'title' %>
+    <%= f.label t.('title') %>
     <%= f.text_field :name %>
   </div>
 
   <div class="form_row">
-    <%= f.label :estimated_hours %>
+    <%= f.label t('estimated') + ' ' + t('currency_unit_plural') %>
     <%= f.text_field :estimated_hours, :size => 5 %>
   </div>
   <div class="form_row">
-    <%= f.label :due_date %>
+    <%= f.label t.('due_date') %>
     <%= f.text_field :due_date, :size => 7 %>
   </div>
 
   <div class="form_row">
-    <%= f.label :description %>
+    <%= f.label t.('description') %>
     <%= f.text_area :description, :rows => 5 %>
   </div>
   <div class="form_row full">
     <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
   </div>
-    <%= f.submit "Update" %>
+    <%= f.submit t('button_update') %>
 <% end %>
 
 <%- end -%>

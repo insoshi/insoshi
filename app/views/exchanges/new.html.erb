@@ -8,44 +8,44 @@
     };
     elem = document.getElementById('units');
     if(!i)
-      elem.innerHTML = "hours";
+      elem.innerHTML = "<%= t('currency_unit_plural') %>";
     else
       elem.innerHTML = group_units[i];
 }
 </script>
 <%- end -%>
 <%- column_div :type => :primary do -%>
-  <h2>Enter Credit for <%= h @worker.name %></h2>
+  <h2><%= t('exchanges.new.enter_credit_for') %> <%= h @worker.name %></h2>
 
   <%= error_messages_for :exchange %>
 
   <% form_for :exchange, :url => person_exchanges_path(@worker) do |f| %>
     <% if params[:offer] %>
       <div class="form_row">
-        <%= f.label :amount %>
-        <%= f.text_field :amount, :size => 3, :value => @offer.price, :disabled => true %>&nbsp;<span id="units" class="small">hours</span>
+        <%= f.label t('exchanges.new.amount') %>
+        <%= f.text_field :amount, :size => 3, :value => @offer.price, :disabled => true %>&nbsp;<span id="units" class="small"><%= t.currency_unit_plural %></span>
       </div>
       <% fields_for :offer do |o| %>
         <div class="form_row">
-          <%= o.label 'For:' %>
-          <%= o.text_field :name, :value => @offer.name, :disabled => true %> &nbsp;&nbsp;&nbsp;&nbsp; <%= link_to "...or ask #{@offer.person.name} a question", @offer, :class => "meta" %>
+          <%= o.label t('exchanges.new.for') %>
+          <%= o.text_field :name, :value => @offer.name, :disabled => true %> &nbsp;&nbsp;&nbsp;&nbsp; <%= link_to "...< #{t('or_ask')} #{@offer.person.name} #{t('a_question')}", @offer, :class => "meta" %>
         </div>
         <%= o.hidden_field :id %>
       <% end %>
     <% else %>
     <div class="form_row">
-      <%= f.label :amount %>
-      <%= f.text_field :amount, :size => 2 %>&nbsp;<span id="units" class="small">hours</span>
+      <%= f.label t('exchanges.new.amount') %>
+      <%= f.text_field :amount, :size => 2 %>&nbsp;<span id="units" class="small"><%= t('currency_unit_plural') %></span>
     </div>
   <% if global_prefs.group_option? %>
     <div class="form_row">
-      <label for="group_id">Group</label>
+      <label for="group_id"><%= t('group') %></label>
       <%= collection_select( 'exchange', 'group_id', @groups, :id, :name, { :include_blank => true }, { :onchange => "update_currency_units(this.value);"} ) %>
     </div>
   <%- end -%>
     <% fields_for :req do |r| %>
       <div class="form_row">
-        <%= r.label 'Service provided' %>
+        <%= r.label t('exchanges.new.service_provided') %>
         <%= r.text_field :name, :onclick => "this.value='';" %>
       </div>
     <% end %>
