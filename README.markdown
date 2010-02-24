@@ -2,6 +2,8 @@
 
 Insoshi is a social networking platform in Ruby on Rails. You can use Insoshi to make custom social networks; see the [Insoshi demo site](http://dogfood.insoshi.com/) for an example. For support, join the [Insoshi Google group](http://groups.google.com/group/insoshi/).
 
+Insoshi was originally developed by [Michael Hartl](http://www.michaelhartl.com/) and Long Nguyen, and is presently maintained by [Logical Reality Design](http://lrdesign.com/).
+
 Follow the steps below to get Insoshi running on your local machine. 
 
 NOTE: If you downloaded a zipped archive of Insoshi, we strongly encourage you to clone the Insoshi Git repository instead.  See the instructions below, and also see the [Insoshi installation guide](http://sites.google.com/a/insoshi.com/insoshi-guides/Installation) for more details.
