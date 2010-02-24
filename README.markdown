@@ -2,21 +2,20 @@
 
 Insoshi is a social networking platform in Ruby on Rails. You can use Insoshi to make custom social networks; see the [Insoshi demo site](http://dogfood.insoshi.com/) for an example. For support, join the [Insoshi Google group](http://groups.google.com/group/insoshi/).
 
-Insoshi was originally developed by [Michael Hartl](http://www.michaelhartl.com/) and Long Nguyen, and is presently maintained by [Logical Reality Design](http://lrdesign.com/).
+Insoshi was originally developed by [Michael Hartl](http://www.michaelhartl.com/) and Long Nguyen as part of the [Y Combinator](http://ycombinator.com/) program, and is presently maintained by Evan Dorn and [Logical Reality Design](http://lrdesign.com/).
 
-Follow the steps below to get Insoshi running on your local machine. 
-
-NOTE: If you downloaded a zipped archive of Insoshi, we strongly encourage you to clone the Insoshi Git repository instead.  See the instructions below, and also see the [Insoshi installation guide](http://sites.google.com/a/insoshi.com/insoshi-guides/Installation) for more details.
-
-## Get Git
+## Installation prerequisites
 
 The source code to Insoshi is managed via Git, a version control system developed by Linus Torvalds to host the Linux kernel.  
+
+
+### Get Git
 
 The first step is to [install Git](http://git.or.cz/). Linux and Mac users should have no problems; Windows users might have to install [Cygwin](http://cygwin.com/) first.
 
 For more detailed information, check out our guide for Installing Git under the [Git Guides](http://docs.insoshi.com).
 
-## Setting up your local Git repository
+### Set up your local Git repository
 
   The Git Guides also detail our recommended setup for your local repository:
 
@@ -28,17 +27,19 @@ For more detailed information, check out our guide for Installing Git under the 
 
 A [shell script](http://gist.github.com/18772) is available to automate this repository configuration. It is run from the command-line as follows:
 
-    configure_insoshi_local.sh [GitHub Account Name]
+    $ configure_insoshi_local.sh [GitHub Account Name]
 
-## Install libraries and gems
+### Install libraries and gems
 
-### Libraries
+There are several library and gem dependencies needed to run Insoshi.
+
+#### Libraries
 
 You'll need to install FreeImage or some other image processor (such as ImageMagick/RMagick) and a database (MySQL or PostgreSQL).  Install instructions for these are easy to find using Google.  (If you're installing FreeImage on Windows, [this blog post](http://www.thewebfellas.com/blog/2008/2/18/imagescience-on-windows-without-the-pain/comments/931#comment-931) might be helpful.)
 
 To use Insoshi's search capability, you also need Sphinx.  Follow the instructions to [install Sphinx](http://www.sphinxsearch.com/downloads.html) for your platform.  When running Insoshi in a production envinronment, you should also set up a cron job to rotate the search index as described [here](http://blog.evanweaver.com/files/doc/fauna/ultrasphinx/files/DEPLOYMENT_NOTES.html). This currently works only with MySQL due to a bug in Ultrasphinx.
 
-### Gems
+#### Gems
 
 You probably have Rails already, but might not have the others.
 
@@ -62,7 +63,7 @@ or BlueCloth (slower but pure Ruby)
 
 ## Installing the app
 
-Here are the steps to get up and running with the Insoshi Rails app.
+These are the steps to get up and running with the Insoshi Rails app.
 
 ### Git steps
 
