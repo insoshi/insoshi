@@ -73,3 +73,24 @@ en:
       for: "For:"
       or_ask: "or ask"
       service_provided: "Service provided"
+
+  transacts:
+    index:
+      header: "Transactions"
+    show:
+      header: "Transaction"
+    new:
+      header: "Pay someone"
+      requested: "requested"
+      explanation: "This has been requested in return for:"
+      pay_now: "pay now"
+      to: "Payee email address"
+      amount: "Amount"
+      description: "Description"
+    helper:
+      received_from: "received from"
+      paid_to: "paid to"
+
+  shared:
+    transact:
+      for: "for"
