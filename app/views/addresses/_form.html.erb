@@ -1,24 +1,24 @@
 <div class="form_row">
-  <%= form.label :address_line_1 %>
+  <%= form.label t('addresses.form.address_line_1') %>
   <%= form.text_field :address_line_1 %>
 </div>
 <div class="form_row">
-  <%= form.label :address_line_2 %>
+  <%= form.label t('addresses.form.address_line_2') %>
   <%= form.text_field :address_line_2 %>
 </div>
 <div class="form_row">
-  <%= form.label :address_line_3 %>
+  <%= form.label t('addresses.form.address_line_3') %>
   <%= form.text_field :address_line_3 %>
 </div>
 <div class="form_row">
-  <%= form.label :city %>
+  <%= form.label t('addresses.form.city') %>
   <%= form.text_field :city %>
 </div>
 <div class="form_row">
-  <%= form.label :state %>
+  <%= form.label t('addresses.form.state') %>
   <%= form.select :state_id, @states %>
 </div>
 <div class="form_row">
-  <%= form.label :zipcode %>
+  <%= form.label t('addresses.form.zipcode') %>
   <%= form.text_field :zipcode_plus_4, :size => 10 %>
 </div>

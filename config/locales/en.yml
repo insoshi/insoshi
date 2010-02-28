@@ -14,6 +14,7 @@ en:
 
   price: "Price"
   title: "Title"
+  bid: "bid"
   due_date: "Due date"
   expiration_date: "Expiration Date"
   description: "Description"
@@ -23,6 +24,32 @@ en:
   estimated: "Estimated"
   a_question: "a question"
   group: "Group"
+  recent_street_cred: "Recent Street Cred"
+  last_logged_in: "last logged in"
+
+  accounts:
+    show:
+      header: "Main Account"
+      header_group: "Account for"
+
+  addresses:
+    new:
+      header: "Create a new address"
+    edit:
+      header: "Edit address"
+    form:
+      address_line_1: "Address line 1"
+      address_line_2: "Address line 2"
+      address_line_3: "Address line 3"
+      city: "City"
+      state: "State"
+      zipcode: "Zipcode"
+
+  bids:
+    bid:
+      expires: "expires"    
+      accepted: "Accepted"
+      submitted_by: "Submitted by"
 
   offers:
     partial:

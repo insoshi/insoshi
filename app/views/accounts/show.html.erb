@@ -1,8 +1,8 @@
 <%- column_div :type => :primary do -%>
 <% if @account.group.nil? %>
-  <h2><%= @worker.name %>'s Main Account</h2>
+  <h2><%= @worker.name %>'s <%= t('accounts.show.header') %></h2>
 <% else %>
-  <h2><%= @worker.name %>'s Account for <%= @account.group.name %></h2>
+  <h2><%= @worker.name %>'s <%= t('accounts.show.header_group') %> <%= @account.group.name %></h2>
 <%- end -%>
   <div class="profile vcard">
     <div class="toolbox">
@@ -21,13 +21,13 @@
   </div>
   </div>
 
-  <h2>Recent Street Cred</h2>
+  <h2><%= t('recent_street_cred') %></h2>
   
 <%- unless @worker.recent_activity.empty? -%>
 
   <%- unless @worker.last_logged_in_at.nil? or current_person?(@worker) -%>
     <p class="meta">
-    <%= @worker.name %> last logged in 
+    <%= @worker.name %> <%= t('last_logged_in') %> 
     <%= time_ago_in_words(@worker.last_logged_in_at) %> ago
     </p>    
   <%- end -%>
