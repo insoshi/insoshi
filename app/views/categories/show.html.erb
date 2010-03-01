@@ -1,7 +1,7 @@
 <%- column_div :type => :primary do -%>
   <h2><%=h @category.long_name %></h2>
   <% if @people.empty? %>
-    <h3 class="blankstate">No people (yet!)</h3>
+    <h3 class="blankstate"><%= t('categories.show.no_people') %></h3>
   <%- else -%>
   <ul class="list people">
     <%= render :partial => @people %>
@@ -9,22 +9,22 @@
   <%- end -%>
 
   <%- if admin? -%>
-  <%= link_to 'Edit', edit_category_path(@category) if 0 == @reqs.size %>
+  <%= link_to t('button_edit'), edit_category_path(@category) if 0 == @reqs.size %>
   <%- end -%>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <h2>Offers</h2>
+  <h2><%= t('offers.index.header') %></h2>
   <%- if @offers.empty? -%>
-    <h3 class="blankstate">No offers (yet!)</h3>
+    <h3 class="blankstate"><%= t('categories.show.no_offers') %></h3>
   <%- else -%>
   <ul class="list full">
     <%= render :partial => 'offers/offer', :collection => @offers %>
   </ul>
   <%- end -%>
-  <h2>Requests</h2>
+  <h2><%= t('reqs.index.header') %></h2>
   <%- if @reqs.empty? -%>
-    <h3 class="blankstate">No reqs (yet!)</h3>
+    <h3 class="blankstate"><%= t('categories.show.no_reqs') %></h3>
   <%- else -%>
   <ul class="list full">
     <%= render :partial => 'reqs/req', :collection => @reqs %>

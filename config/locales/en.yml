@@ -51,6 +51,24 @@ en:
       accepted: "Accepted"
       submitted_by: "Submitted by"
 
+  categories:
+    index:
+      header: "Services"
+      no_categories: "No categories (yet!)"
+      explanation: "Number of people shown in parentheses"
+    show:
+      no_people: "No people (yet!)"
+      no_offers: "No offers (yet!)"
+      no_reqs: "No reqs (yet!)"
+    new:
+      header: "New service"
+    edit:
+      header: "Edit service"
+    form:
+      name: "Name"
+      parent_category: "Parent Category"
+
+
   offers:
     partial:
       accept_offer: "Accept Offer!"
