@@ -4,3 +4,11 @@ rubyist-aasm --source http://gems.github.com
 twitter
 starling-starling --source http://gems.github.com
 feed-normalizer
+texticle
+memcache-client '>= 1.7.0'
+eventmachine
+aws-s3
+rmagick
+rack-openid
+system_timer
+heroku

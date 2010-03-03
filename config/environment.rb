@@ -71,6 +71,7 @@ Rails::Initializer.run do |config|
   config.gem 'starling-starling', :lib => 'starling'
   config.gem 'feed-normalizer'
   config.gem 'json'
+  config.gem 'heroku'
 end
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation
