@@ -34,7 +34,7 @@ class ForumPost < Post
 
   def send_forum_notifications
 #    MailingsWorker.async_send_forum_post_mailing(:forum_post_id => self.id)
-    Delayed::Job.enqueue(self)
+    Cheepnis.enqueue(self)
   end
   
   def perform
