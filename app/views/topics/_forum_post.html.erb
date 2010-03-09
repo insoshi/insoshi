@@ -4,16 +4,16 @@
     <%= image_link forum_post.person, :image => :thumbnail %>
     <%= image_tag "icons/comment.gif", :class => "icon" %>
   </div>
-  <p class="meta"><%= person_link forum_post.person %> posted
-      <%= time_ago_in_words(forum_post.created_at) %> ago
+  <p class="meta"><%= person_link forum_post.person %> <%= t('posted') %>
+  <%= time_ago_in_words(forum_post.created_at) %> <%= t('ago') %>
       <%- if current_person?(forum_post.person) or admin? -%>
-        | <%= link_to "Edit",
+        | <%= link_to t('button_edit'),
                 edit_forum_topic_post_path(@forum, @topic, forum_post) %>
       <%- end -%>
       <%- if admin? -%>
-        | <%= link_to "Destroy",
+        | <%= link_to t('button_delete'),
                       forum_topic_post_path(@forum, @topic, forum_post),
-                      :confirm => 'Are you sure?',
+                      :confirm => t('are_you_sure'),
                       :method => :delete %>
       <%- end -%>
   </p>

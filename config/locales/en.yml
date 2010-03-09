@@ -26,6 +26,8 @@ en:
   group: "Group"
   recent_street_cred: "Recent Street Cred"
   last_logged_in: "last logged in"
+  post: "post"
+  posted: "posted"
 
   accounts:
     show:
@@ -68,6 +70,10 @@ en:
       name: "Name"
       parent_category: "Parent Category"
 
+  forums:
+    show:
+      header: "Discussion Topics"
+      add_new_topic: "Add new topic"
 
   offers:
     partial:
@@ -118,6 +124,16 @@ en:
       for: "For:"
       or_ask: "or ask"
       service_provided: "Service provided"
+
+  topics:
+    show:
+      add_a_new_post: "add a new post"
+    new:
+      header: "New topic"
+    edit:
+      header: "Editing topic"
+    partial:
+      created_by: "Created by"
 
   transacts:
     index:

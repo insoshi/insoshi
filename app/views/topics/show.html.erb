@@ -1,6 +1,6 @@
 <%- column_div :type => :primary do -%>
   <h2><%= h @topic.name %></h2>
-    <%= link_to "add a new post", forum_topic_path(@forum, @topic, :posts => @topic.posts.count, :anchor => 'forum_post'), :class => 'small' %>
+    <%= link_to t('topics.show.add_a_new_post'), forum_topic_path(@forum, @topic, :posts => @topic.posts.count, :anchor => 'forum_post'), :class => 'small' %>
   <%= will_paginate(@posts) %>
   <ul class="list topic full">
     <%= render :partial => 'forum_post', :collection => @posts %>
@@ -8,7 +8,7 @@
   <%= will_paginate(@posts) %>
 
 
-  <h3>Add new post</h3>
+  <h3><%= t('topics.show.add_a_new_post').capitalize %></h3>
   <a name="forum_post">
   <%= error_messages_for :post %>
 
@@ -19,7 +19,7 @@
     </div>
 
     <div class="form_row">
-      <%= f.submit "Submit", :class => "button" %>
+      <%= f.submit t('button_submit'), :class => "button" %>
     </div>
   <% end %>
 
