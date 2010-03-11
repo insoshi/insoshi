@@ -1,7 +1,7 @@
 module Cheepnis
 
   # starts up a Heroku worker if none are active
-  # Author: Mike Traver Feb 2010
+  # Author: Mike Travers Feb 2010
 
   # usage: set environment variables HEROKU_USER and HEROKU_PASSWORD
   # Call Cheepnis.enqueue(obj) in place of Delayed::Job.enqueue(obj)
