@@ -11,6 +11,7 @@ en:
   button_update: "Update"
   button_cancel: "Cancel"
   button_send: "Send!"
+  button_upload: "Upload"
 
   price: "Price"
   title: "Title"
@@ -28,6 +29,8 @@ en:
   last_logged_in: "last logged in"
   post: "post"
   posted: "posted"
+  earned: "earned"
+  for: "for"
 
   accounts:
     show:
@@ -70,11 +73,76 @@ en:
       name: "Name"
       parent_category: "Parent Category"
 
+  comments:
+    event_new:
+      header: "Event comment"
+      leave_a_comment: "Leave a comment"
+    wall_new:
+      header: "Wall comment"
+      leave_a_comment: "Leave a comment"
+
   forums:
     show:
       header: "Discussion Topics"
       add_new_topic: "Add new topic"
 
+  groups:
+    index:
+      header: "Groups"
+      no_groups_yet: "No groups (yet)"
+    edit:
+      header: "Editing group"
+      name: "Name"
+      currency_unit_plural: "Currency unit (plural)"
+      description: "Description"
+      mode: "Mode"
+      photos: "Photos"
+      primary: "primary"
+      add_a_photo: "Add a photo"
+    members:
+      pending_request: "Pending request"
+      cancel_membership: "Cancel membership"
+      confirm: "Are you sure you want to unsuscribe this person?"
+      accept_membership: "Accept membership"
+      header: "Members"
+      no_members_yet: "No members (yet)"
+      administrator: "Administrator"
+    new:
+      header: "New group"
+      name: "Name"
+      adhoc_currency: "Create ad-hoc currency"
+      currency_unit_plural: "Currency unit (plural)"
+      description: "Description"
+      mode: "Mode"
+    new_photo:
+      header: "Group photo upload"
+      upload_a_photo: "Upload a photo:"
+    show:
+      header: "Group:"
+      blank_description: "The group description is blank."
+      add_description: "Click here to add a description"
+      you_are_viewing_your_group: "You are viewing your group."
+      click_here_to_edit_it: "Click here to edit it"
+      currency_unit: "Currency Unit:"
+      join_group: "Join group"
+      you_have_been_invited: "You have been invited"
+      respond: "(respond)"
+      you_are_a_member_of: "You are a member of"
+      leave_group: "Leave group"
+      are_you_sure_you_want_to_leave: "Are you sure you want to leave"
+      you_have_requested_to_be_a_member_of: "You have requested to be member of"
+      you_are_group_admin: "You are group's admin"
+      delete_it: "(delete it)"
+      mode: "Mode:"
+      invite_contacts: "Invite contacts"
+      delete_group: "delete group"
+      discussion_topics: "Discussion topics"
+      add_a_new_topic: "Add a new topic"
+      recent_exchanges: "Recent Exchanges"
+    _people:
+      header: "Group's"
+      all_members: "All members"
+      no_members: "No members (yet)"
   offers:
     partial:
       accept_offer: "Accept Offer!"

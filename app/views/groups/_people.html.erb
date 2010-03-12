@@ -1,4 +1,4 @@
-<h2>Group's <%= title %></h2>
+<h2><%= t('groups._people.header') %> <%= title %></h2>
 <%- unless members.empty? -%>
   <ul class="grid contacts small">
     <%- members.each do |contact| -%>
@@ -8,10 +8,10 @@
       </li>
     <%- end -%>
     <li class="more">
-      <%= link_to "All members &raquo;",
+      <%= link_to t('groups._people.all_members') + " &raquo;",
             members_group_path(@group) unless title == "admin" %>
     </li>
   </ul>
 <%- else -%>
-  <h3>No members (yet)</h3>
+  <h3><%= t('groups._people.no_members') %></h3>
 <%- end -%>

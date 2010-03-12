@@ -1,14 +1,14 @@
-<h2>Profile photo upload</h2>
+<h2><%= t('groups.new_photo.header') %></h2>
 <%= error_messages_for :photo %>
 
 <% form_for :photo, @photo, :url => {:action => "save_photo"}, :html => { :multipart => true } do |f| -%>
 
   <div class="form_field">
-    <label for="photo">Upload a photo:</label>
+    <label for="photo"><%= t('groups.new_photo.upload_a_photo') %></label>
     <%= f.file_field :uploaded_data %>
   </div>
   <div class="form_field">
-    <%= submit_tag 'Upload', :class => "button" %>
-    <%= f.submit "Cancel", :id => "cancel", :class => "button" %>
+    <%= submit_tag t('button_upload'), :class => "button" %>
+    <%= f.submit t('button_cancel'), :id => "cancel", :class => "button" %>
   </div>
 <% end -%>
