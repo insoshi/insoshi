@@ -1,27 +1,27 @@
 <%- column_div :type => :primary do -%>
   <div class="profile vcard">
-    <h2>Profile: <span class="fn n"><%= h @person.name %></span></h2>
+    <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.name %></span></h2>
     <%- if admin? and not @person.active? -%>
-      <p class="error">This person is not active</p>
+      <p class="error"><%= t('people.show.not_active') %></p>
     <%- end -%>
     <%- if current_person?(@person) -%>
       <%- if current_person.description.blank? -%>
         <div class="error">
-          Your description is blank.
-          <%= link_to "Click here to add a description",
+          <%= t('people.show.description_blank') %>
+          <%= link_to t('people.show.add_description'),
                       edit_person_path(@person) %>
         </div>
       <%- else -%>
         <div class="notice">
-          You are viewing your own profile.
-          <%= link_to "Click here to edit it", edit_person_path(@person) %>
+          <%= t('people.show.own_profile') %>
+          <%= link_to t('people.show.edit_it'), edit_person_path(@person) %>
         </div>
       <%- end -%>
       <%- if Person::DEFAULT_ZIPCODE_STRING == current_person.address.zipcode_plus_4 %>
         <div class="error">
-          <%= link_to "Click here to update your location",
+          <%= link_to t('people.show.update_location'),
                       edit_person_path(@person) %>. 
-          (Your address will remain private)
+          <%= t('people.show.address_remain_private') %>
         </div>
       <%- end -%>
     <%- end -%>
@@ -31,7 +31,7 @@
 
         <ul class="tools">
         <% unless @person.twitter_name.blank? %>
-          <a href="http://www.twitter.com/<%= h @person.twitter_name %>" title="<%= h @person.twitter_name %>" target="top"><img style="float:right;" src="/images/twitter_481.png"></a>
+          <a href="<%= t('twitter_url') %><%= h @person.twitter_name %>" title="<%= h @person.twitter_name %>" target="top"><img style="float:right;" src="/images/twitter_481.png"></a>
         <% end %>
         <%- unless current_person?(@person) -%>
           <%- if logged_in? -%>
@@ -61,7 +61,7 @@
     <% if @person.phoneprivacy? %>
     <% unless @person.phone.nil? %>
       <div>
-        <%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> <span class="small">Phone:</span> <span class="added small"><%= h @person.phone %></span>
+        <%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> <span class="small"><%= t('people.show.phone') %></span> <span class="added small"><%= h @person.phone %></span>
       </div>
       <%- end -%>
     <%- end -%>
