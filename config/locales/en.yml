@@ -36,6 +36,8 @@ en:
   reply_on: "reply on"
   wall: "wall"
   see_all: "See all"
+  by: "by"
+  from: "from"
 
   accounts:
     show:
@@ -149,6 +151,44 @@ en:
       all_members: "All members"
       no_members: "No members (yet)"
 
+  home:
+    index:
+      header: "Home"
+      tab_exchanges: "Exchanges"
+      tab_your_activity: "Your Activity"
+      unread_messages: "You have unread messages in your mailbox."
+      see_your_messages: "Click here to see your messages"
+    show:
+      header: "blog"
+    _blog:
+      header: "blog"
+    _dashboard:
+      bids: "Your Active Bids/Work"
+      no_active_bids: "No active bids"
+      offers: "Your Active Offers"
+      no_active_offers: "No active offers"
+      requests: "Your Active Requests"
+      no_active_requests: "No active requests"
+    _forum_preview:
+      header: "Discussion Forum"
+      last_post: "Last post"
+    _invitations:
+      header: "Invitations for groups"
+      invitation_for: "Invitation for"
+      respond: "Respond"
+      view_group: "View group"
+    _members_preview:
+      see_all_members: "See all members"
+    _messages_preview:
+      header: "Messages"
+      all_messages: "All messages"
+    _requested_memberships:
+      header: "Membership Requests"
+      requests_membership_for: "requests membership for"
+      view_group: "View group"
+      view_profile: "View profile"
+    _secondary_column:
+      header: "System Blog"
   offers:
     partial:
       accept_offer: "Accept Offer!"
