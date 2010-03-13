@@ -12,7 +12,7 @@
                   messages_path %>
     </div>
   <%- end -%>
-    <% if current_page?(home_path) %>
+    <% if current_page_pre22?(home_path) %>
       <%= render :partial => 'feed' %>
     <% else %>
       <%= render :partial => 'dashboard' %>
