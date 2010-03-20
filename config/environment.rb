@@ -28,9 +28,6 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( #{RAILS_ROOT}/app/sweepers )
-  config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
-    File.directory?(lib = "#{dir}/lib") ? lib : dir
-  end
 
 
   # Force all environments to use the same logger level
@@ -75,7 +72,7 @@ Rails::Initializer.run do |config|
   #                                    :source => 'http://gems.github.com'
   config.gem 'chronic'
   config.gem 'BlueCloth', :lib => 'bluecloth'
-  config.gem 'rack-openid', :version => '>= 1.0.1'
+  # config.gem 'rack-openid', :version => '>= 1.0.1'
 end
 
 require 'vendor/plugins/jquery_ui_rails_helpers/helpers/tabs_renderer'
