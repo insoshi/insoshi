@@ -72,6 +72,7 @@ Rails::Initializer.run do |config|
   config.gem 'feed-normalizer'
   config.gem 'json'
   config.gem 'heroku'
+  config.gem 'rack-openid', :version => '>= 1.0.1'
 end
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation
