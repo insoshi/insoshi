@@ -146,7 +146,7 @@ describe PeopleController do
           
         it "should not have an auth token" do
           create_person
-          response.cookies["auth_token"].should == []
+          response.cookies["auth_token"].should be_blank
         end
         
         it "should verify a person even if they're logged in" do
