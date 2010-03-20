@@ -13,6 +13,7 @@ module ActiveSupport
     #   server goes down, then MemCacheStore will ignore it until it goes back
     #   online.
     # - Time-based expiry support. See #write and the +:expires_in+ option.
+    # - Per-request in memory cache for all communication with the MemCache server(s).
     class MemCacheStore < Store
       module Response # :nodoc:
         STORED      = "STORED\r\n"
@@ -22,7 +23,12 @@ module ActiveSupport
         DELETED     = "DELETED\r\n"
       end
 
-      attr_reader :addresses
+      def self.build_mem_cache(*addresses)
+        addresses = addresses.flatten
+        options = addresses.extract_options!
+        addresses = ["localhost"] if addresses.empty?
+        MemCache.new(addresses, options)
+      end
 
       # Creates a new MemCacheStore object, with the given memcached server
       # addresses. Each address is either a host name, or a host-with-port string
@@ -32,12 +38,24 @@ module ActiveSupport
       #
       # If no addresses are specified, then MemCacheStore will connect to
       # localhost port 11211 (the default memcached port).
+      #
+      # Instead of addresses one can pass in a MemCache-like object. For example:
+      #
+      #   require 'memcached' # gem install memcached; uses C bindings to libmemcached
+      #   ActiveSupport::Cache::MemCacheStore.new(Memcached::Rails.new("localhost:11211"))
       def initialize(*addresses)
-        addresses = addresses.flatten
-        options = addresses.extract_options!
-        addresses = ["localhost"] if addresses.empty?
-        @addresses = addresses
-        @data = MemCache.new(addresses, options)
+        if addresses.first.respond_to?(:get)
+          @data = addresses.first
+        else
+          @data = self.class.build_mem_cache(*addresses)
+        end
+
+        extend Strategy::LocalCache
+      end
+
+      # Reads multiple keys from the cache.
+      def read_multi(*keys)
+        @data.get_multi keys
       end
 
       def read(key, options = nil) # :nodoc:
@@ -80,6 +98,7 @@ module ActiveSupport
       def exist?(key, options = nil) # :nodoc:
         # Doesn't call super, cause exist? in memcache is in fact a read
         # But who cares? Reading is very fast anyway
+        # Local cache is checked first, if it doesn't know then memcache itself is read from
         !read(key, options).nil?
       end
 
@@ -94,7 +113,6 @@ module ActiveSupport
 
       def decrement(key, amount = 1) # :nodoc:
         log("decrement", key, amount)
-
         response = @data.decr(key, amount)
         response == Response::NOT_FOUND ? nil : response
       rescue MemCache::MemCacheError
@@ -102,6 +120,8 @@ module ActiveSupport
       end
 
       def delete_matched(matcher, options = nil) # :nodoc:
+        # don't do any local caching at present, just pass
+        # through and let the error happen
         super
         raise "Not supported by Memcache"
       end
@@ -115,10 +135,6 @@ module ActiveSupport
       end
 
       private
-        def expires_in(options)
-          (options && options[:expires_in]) || 0
-        end
-
         def raw?(options)
           options && options[:raw]
         end

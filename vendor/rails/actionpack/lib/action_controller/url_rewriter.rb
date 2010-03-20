@@ -92,15 +92,12 @@ module ActionController
   #     end
   #   end
   module UrlWriter
-    # The default options for urls written by this writer. Typically a <tt>:host</tt>
-    # pair is provided.
-    mattr_accessor :default_url_options
-    self.default_url_options = {}
-
     def self.included(base) #:nodoc:
       ActionController::Routing::Routes.install_helpers(base)
       base.mattr_accessor :default_url_options
-      base.default_url_options ||= default_url_options
+
+      # The default options for urls written by this writer. Typically a <tt>:host</tt> pair is provided.
+      base.default_url_options ||= {}
     end
 
     # Generate a url based on the options provided, default_url_options and the
@@ -187,7 +184,7 @@ module ActionController
         path = rewrite_path(options)
         rewritten_url << ActionController::Base.relative_url_root.to_s unless options[:skip_relative_url_root]
         rewritten_url << (options[:trailing_slash] ? path.sub(/\?|\z/) { "/" + $& } : path)
-        rewritten_url << "##{options[:anchor]}" if options[:anchor]
+        rewritten_url << "##{CGI.escape(options[:anchor].to_param.to_s)}" if options[:anchor]
 
         rewritten_url
       end

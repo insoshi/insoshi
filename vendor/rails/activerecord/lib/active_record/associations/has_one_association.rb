@@ -8,18 +8,21 @@ module ActiveRecord
 
       def create(attrs = {}, replace_existing = true)
         new_record(replace_existing) do |reflection|
+          attrs = merge_with_conditions(attrs)
           reflection.create_association(attrs)
         end
       end
 
       def create!(attrs = {}, replace_existing = true)
         new_record(replace_existing) do |reflection|
+          attrs = merge_with_conditions(attrs)
           reflection.create_association!(attrs)
         end
       end
 
       def build(attrs = {}, replace_existing = true)
         new_record(replace_existing) do |reflection|
+          attrs = merge_with_conditions(attrs)
           reflection.build_association(attrs)
         end
       end
@@ -29,8 +32,17 @@ module ActiveRecord
 
         unless @target.nil? || @target == obj
           if dependent? && !dont_save
-            @target.destroy unless @target.new_record?
-            @owner.clear_association_cache
+            case @reflection.options[:dependent]
+            when :delete
+              @target.delete unless @target.new_record?
+              @owner.clear_association_cache
+            when :destroy
+              @target.destroy unless @target.new_record?
+              @owner.clear_association_cache
+            when :nullify
+              @target[@reflection.primary_key_name] = nil
+              @target.save unless @owner.new_record? || @target.new_record?
+            end
           else
             @target[@reflection.primary_key_name] = nil
             @target.save unless @owner.new_record? || @target.new_record?
@@ -109,6 +121,12 @@ module ActiveRecord
           end
 
           record
+        end
+
+        def merge_with_conditions(attrs={})
+          attrs ||= {}
+          attrs.update(@reflection.options[:conditions]) if @reflection.options[:conditions].is_a?(Hash)
+          attrs
         end
     end
   end

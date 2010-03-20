@@ -3,9 +3,6 @@
 # Under MIT and/or CC By license.
 #++
 
-require 'rexml/document'
-require 'html/document'
-
 module ActionController
   module Assertions
     unless const_defined?(:NO_STRIP)
@@ -19,7 +16,7 @@ module ActionController
     #
     # Use +css_select+ to select elements without making an assertions, either
     # from the response HTML or elements selected by the enclosing assertion.
-    # 
+    #
     # In addition to HTML responses, you can make the following assertions:
     # * +assert_select_rjs+ - Assertions on HTML content of RJS update and insertion operations.
     # * +assert_select_encoded+ - Assertions on HTML encoded inside XML, for example for dealing with feed item descriptions.
@@ -27,6 +24,12 @@ module ActionController
     #
     # Also see HTML::Selector to learn how to use selectors.
     module SelectorAssertions
+
+      def initialize(*args)
+        super
+        @selected = nil
+      end
+
       # :call-seq:
       #   css_select(selector) => array
       #   css_select(element, selector) => array
@@ -56,8 +59,8 @@ module ActionController
       #   end
       #
       #   # Selects all list items in unordered lists
-      #   items = css_select("ul>li") 
-      #      
+      #   items = css_select("ul>li")
+      #
       #   # Selects all form tags and then all inputs inside the form
       #   forms = css_select("form")
       #   forms.each do |form|
@@ -112,20 +115,27 @@ module ActionController
       # starting from (and including) that element and all its children in
       # depth-first order.
       #
-      # If no element if specified, calling +assert_select+ will select from the
-      # response HTML. Calling #assert_select inside an +assert_select+ block will
-      # run the assertion for each element selected by the enclosing assertion.
+      # If no element if specified, calling +assert_select+ selects from the
+      # response HTML unless +assert_select+ is called from within an +assert_select+ block.
+      #
+      # When called with a block +assert_select+ passes an array of selected elements
+      # to the block. Calling +assert_select+ from the block, with no element specified,
+      # runs the assertion on the complete set of elements selected by the enclosing assertion.
+      # Alternatively the array may be iterated through so that +assert_select+ can be called
+      # separately for each element.
+      #
       #
       # ==== Example
-      #   assert_select "ol>li" do |elements|
+      # If the response contains two ordered lists, each with four list elements then:
+      #   assert_select "ol" do |elements|
       #     elements.each do |element|
-      #       assert_select element, "li"
+      #       assert_select element, "li", 4
       #     end
       #   end
       #
-      # Or for short:
-      #   assert_select "ol>li" do
-      #     assert_select "li"
+      # will pass, as will:
+      #   assert_select "ol" do
+      #     assert_select "li", 8
       #   end
       #
       # The selector may be a CSS selector expression (String), an expression
@@ -208,7 +218,7 @@ module ActionController
           # Otherwise just operate on the response document.
           root = response_from_page_or_rjs
         end
-        
+
         # First or second argument is the selector: string and we pass
         # all remaining arguments. Array and we pass the argument. Also
         # accepts selector itself.
@@ -221,7 +231,7 @@ module ActionController
             selector = arg
           else raise ArgumentError, "Expecting a selector as the first argument"
         end
-        
+
         # Next argument is used for equality tests.
         equals = {}
         case arg = args.shift
@@ -311,10 +321,10 @@ module ActionController
         # Returns all matches elements.
         matches
       end
-      
+
       def count_description(min, max) #:nodoc:
         pluralize = lambda {|word, quantity| word << (quantity == 1 ? '' : 's')}
-        
+
         if min && max && (max != min)
           "between #{min} and #{max} elements"
         elsif min && !(min == 1 && max == 1)
@@ -323,7 +333,7 @@ module ActionController
           "at most #{max} #{pluralize['element', max]}"
         end
       end
-      
+
       # :call-seq:
       #   assert_select_rjs(id?) { |elements| ... }
       #   assert_select_rjs(statement, id?) { |elements| ... }
@@ -340,7 +350,7 @@ module ActionController
       # that update or insert an element with that identifier.
       #
       # Use the first argument to narrow down assertions to only statements
-      # of that type. Possible values are <tt>:replace</tt>, <tt>:replace_html</tt>, 
+      # of that type. Possible values are <tt>:replace</tt>, <tt>:replace_html</tt>,
       # <tt>:show</tt>, <tt>:hide</tt>, <tt>:toggle</tt>, <tt>:remove</tt> and
       # <tt>:insert_html</tt>.
       #
@@ -405,6 +415,7 @@ module ActionController
         if rjs_type
           if rjs_type == :insert
             position  = args.shift
+            id = args.shift
             insertion = "insert_#{position}".to_sym
             raise ArgumentError, "Unknown RJS insertion type #{position}" unless RJS_STATEMENTS[insertion]
             statement = "(#{RJS_STATEMENTS[insertion]})"
@@ -483,7 +494,7 @@ module ActionController
       #       end
       #     end
       #   end
-      #   
+      #
       #
       #   # Selects all paragraph tags from within the description of an RSS feed
       #   assert_select_feed :rss, 2.0 do
@@ -590,7 +601,7 @@ module ActionController
         def response_from_page_or_rjs()
           content_type = @response.content_type
 
-          if content_type && content_type =~ /text\/javascript/
+          if content_type && Mime::JS =~ content_type
             body = @response.body.dup
             root = HTML::Node.new(nil)
 

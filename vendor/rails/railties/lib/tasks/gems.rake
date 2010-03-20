@@ -9,72 +9,70 @@ task :gems => 'gems:base' do
   puts "R = Framework (loaded before rails starts)"
 end
 
-def print_gem_status(gem, indent=1)
-  code = gem.loaded? ? (gem.frozen? ? (gem.framework_gem? ? "R" : "F") : "I") : " "
-  puts "   "*(indent-1)+" - [#{code}] #{gem.name} #{gem.requirement.to_s}"
-  gem.dependencies.each { |g| print_gem_status(g, indent+1)} if gem.loaded?
-end
-
 namespace :gems do
   task :base do
-    $rails_gem_installer = true
+    $gems_rake_task = true
+    require 'rubygems'
+    require 'rubygems/gem_runner'
     Rake::Task[:environment].invoke
   end
 
   desc "Build any native extensions for unpacked gems"
   task :build do
-    $rails_gem_installer = true
-    require 'rails/gem_builder'
-    Dir[File.join(Rails::GemDependency.unpacked_path, '*')].each do |gem_dir|
-      spec_file = File.join(gem_dir, '.specification')
-      next unless File.exists?(spec_file)
-      specification = YAML::load_file(spec_file)
-      next unless ENV['GEM'].blank? || ENV['GEM'] == specification.name
-      Rails::GemBuilder.new(specification, gem_dir).build_extensions
-      puts "Built gem: '#{gem_dir}'"
+    $gems_build_rake_task = true
+    frozen_gems.each { |gem| gem.build }
+  end
+
+  namespace :build do
+    desc "Force the build of all gems"
+    task :force do
+      $gems_build_rake_task = true
+      frozen_gems.each { |gem| gem.build(:force => true) }
     end
   end
 
-  desc "Installs all required gems for this application."
+  desc "Installs all required gems."
   task :install => :base do
-    require 'rubygems'
-    require 'rubygems/gem_runner'
-    Rails.configuration.gems.each { |gem| gem.install unless gem.loaded? }
+    current_gems.each { |gem| gem.install }
   end
 
-  desc "Unpacks the specified gem into vendor/gems."
-  task :unpack => :base do
-    require 'rubygems'
-    require 'rubygems/gem_runner'
-    Rails.configuration.gems.each do |gem|
-      next unless !gem.frozen? && (ENV['GEM'].blank? || ENV['GEM'] == gem.name)
-      gem.unpack_to(Rails::GemDependency.unpacked_path) if gem.loaded?
-    end
+  desc "Unpacks all required gems into vendor/gems."
+  task :unpack => :install do
+    current_gems.each { |gem| gem.unpack }
   end
 
   namespace :unpack do
-    desc "Unpacks the specified gems and its dependencies into vendor/gems"
-    task :dependencies => :unpack do
-      require 'rubygems'
-      require 'rubygems/gem_runner'
-      Rails.configuration.gems.each do |gem|
-        next unless ENV['GEM'].blank? || ENV['GEM'] == gem.name
-        gem.dependencies.each do |dependency|
-          next if dependency.frozen?
-          dependency.unpack_to(Rails::GemDependency.unpacked_path)
-        end
-      end
+    desc "Unpacks all required gems and their dependencies into vendor/gems."
+    task :dependencies => :install do
+      current_gems.each { |gem| gem.unpack(:recursive => true) }
     end
   end
 
   desc "Regenerate gem specifications in correct format."
-  task :refresh_specs => :base do
-    require 'rubygems'
-    require 'rubygems/gem_runner'
-    Rails::VendorGemSourceIndex.silence_spec_warnings = true
-    Rails.configuration.gems.each do |gem|
-      next unless gem.frozen? && (ENV['GEM'].blank? || ENV['GEM'] == gem.name)
-      gem.refresh_spec(Rails::GemDependency.unpacked_path) if gem.loaded?
-    end
+  task :refresh_specs do
+    frozen_gems(false).each { |gem| gem.refresh }
   end
+end
+
+def current_gems
+  gems = Rails.configuration.gems
+  gems = gems.select { |gem| gem.name == ENV['GEM'] } unless ENV['GEM'].blank?
+  gems
+end
+
+def frozen_gems(load_specs=true)
+  Dir[File.join(RAILS_ROOT, 'vendor', 'gems', '*-*')].map do |gem_dir|
+    Rails::GemDependency.from_directory_name(gem_dir, load_specs)
+  end
+end
+
+def print_gem_status(gem, indent=1)
+  code = case
+    when gem.framework_gem? then 'R'
+    when gem.frozen?        then 'F'
+    when gem.installed?     then 'I'
+    else                         ' '
+  end
+  puts "   "*(indent-1)+" - [#{code}] #{gem.name} #{gem.requirement.to_s}"
+  gem.dependencies.each { |g| print_gem_status(g, indent+1) }
 end

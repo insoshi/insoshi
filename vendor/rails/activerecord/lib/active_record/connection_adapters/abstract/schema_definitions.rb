@@ -8,6 +8,7 @@ module ActiveRecord
     # An abstract definition of a column in a table.
     class Column
       TRUE_VALUES = [true, 1, '1', 't', 'T', 'true', 'TRUE'].to_set
+      FALSE_VALUES = [false, 0, '0', 'f', 'F', 'false', 'FALSE'].to_set
 
       module Format
         ISO_DATE = /\A(\d{4})-(\d\d)-(\d\d)\z/
@@ -32,10 +33,12 @@ module ActiveRecord
         @primary = nil
       end
 
+      # Returns +true+ if the column is either of type string or text.
       def text?
         type == :string || type == :text
       end
 
+      # Returns +true+ if the column is either of type integer, float or decimal.
       def number?
         type == :integer || type == :float || type == :decimal
       end
@@ -274,7 +277,6 @@ module ActiveRecord
         add_column_options!(column_sql, column_options) unless type.to_sym == :primary_key
         column_sql
       end
-      alias to_s :to_sql
 
       private
 
@@ -295,7 +297,7 @@ module ActiveRecord
     #         puts t.class  # => "ActiveRecord::ConnectionAdapters::TableDefinition"
     #       end
     #     end
-    #     
+    #
     #     def self.down
     #       ...
     #     end
@@ -313,6 +315,20 @@ module ActiveRecord
         @base = base
       end
 
+      #Handles non supported datatypes - e.g. XML
+      def method_missing(symbol, *args)
+        if symbol.to_s == 'xml'
+          xml_column_fallback(args)
+        end
+      end
+
+      def xml_column_fallback(*args)
+        case @base.adapter_name.downcase
+          when 'sqlite', 'mysql'
+            options = args.extract_options!
+            column(args[0], :text, options)
+          end
+        end
       # Appends a primary key definition to the table definition.
       # Can be called multiple times, but this is probably not a good idea.
       def primary_key(name)
@@ -474,12 +490,12 @@ module ActiveRecord
 
       %w( string text integer float decimal datetime timestamp time date binary boolean ).each do |column_type|
         class_eval <<-EOV
-          def #{column_type}(*args)
-            options = args.extract_options!
-            column_names = args
-
-            column_names.each { |name| column(name, '#{column_type}', options) }
-          end
+          def #{column_type}(*args)                                               # def string(*args)
+            options = args.extract_options!                                       #   options = args.extract_options!
+            column_names = args                                                   #   column_names = args
+                                                                                  #
+            column_names.each { |name| column(name, '#{column_type}', options) }  #   column_names.each { |name| column(name, 'string', options) }
+          end                                                                     # end
         EOV
       end
 
@@ -505,7 +521,7 @@ module ActiveRecord
       # concatenated together. This string can then be prepended and appended to
       # to generate the final SQL to create the table.
       def to_sql
-        @columns * ', '
+        @columns.map(&:to_sql) * ', '
       end
 
       private
@@ -674,24 +690,24 @@ module ActiveRecord
       #  t.string(:goat, :sheep)
       %w( string text integer float decimal datetime timestamp time date binary boolean ).each do |column_type|
         class_eval <<-EOV
-          def #{column_type}(*args)
-            options = args.extract_options!
-            column_names = args
-
-            column_names.each do |name|
-              column = ColumnDefinition.new(@base, name, '#{column_type}')
-              if options[:limit]
-                column.limit = options[:limit]
-              elsif native['#{column_type}'.to_sym].is_a?(Hash)
-                column.limit = native['#{column_type}'.to_sym][:limit]
-              end
-              column.precision = options[:precision]
-              column.scale = options[:scale]
-              column.default = options[:default]
-              column.null = options[:null]
-              @base.add_column(@table_name, name, column.sql_type, options)
-            end
-          end
+          def #{column_type}(*args)                                          # def string(*args)
+            options = args.extract_options!                                  #   options = args.extract_options!
+            column_names = args                                              #   column_names = args
+                                                                             #
+            column_names.each do |name|                                      #   column_names.each do |name|
+              column = ColumnDefinition.new(@base, name, '#{column_type}')   #     column = ColumnDefinition.new(@base, name, 'string')
+              if options[:limit]                                             #     if options[:limit]
+                column.limit = options[:limit]                               #       column.limit = options[:limit]
+              elsif native['#{column_type}'.to_sym].is_a?(Hash)              #     elsif native['string'.to_sym].is_a?(Hash)
+                column.limit = native['#{column_type}'.to_sym][:limit]       #       column.limit = native['string'.to_sym][:limit]
+              end                                                            #     end
+              column.precision = options[:precision]                         #     column.precision = options[:precision]
+              column.scale = options[:scale]                                 #     column.scale = options[:scale]
+              column.default = options[:default]                             #     column.default = options[:default]
+              column.null = options[:null]                                   #     column.null = options[:null]
+              @base.add_column(@table_name, name, column.sql_type, options)  #     @base.add_column(@table_name, name, column.sql_type, options)
+            end                                                              #   end
+          end                                                                # end
         EOV
       end
 
@@ -703,3 +719,4 @@ module ActiveRecord
 
   end
 end
+

@@ -1,4 +1,5 @@
 require "cases/helper"
+require 'models/post'
 require 'models/author'
 require 'models/categorization'
 require 'models/comment'
@@ -7,7 +8,6 @@ require 'models/topic'
 require 'models/reply'
 require 'models/entrant'
 require 'models/developer'
-require 'models/post'
 require 'models/customer'
 require 'models/job'
 require 'models/categorization'
@@ -95,6 +95,15 @@ class FinderTest < ActiveRecord::TestCase
     assert_raise(NoMethodError) { Topic.exists?([1,2]) }
   end
 
+  def test_exists_returns_true_with_one_record_and_no_args
+    assert Topic.exists?
+  end
+
+  def test_does_not_exist_with_empty_table_and_no_args_given
+    Topic.delete_all
+    assert !Topic.exists?
+  end
+
   def test_exists_with_aggregate_having_three_mappings
     existing_address = customers(:david).address
     assert Customer.exists?(:address => existing_address)
@@ -108,6 +117,12 @@ class FinderTest < ActiveRecord::TestCase
       Address.new(existing_address.street, existing_address.city + "1", existing_address.country))
     assert !Customer.exists?(:address =>
       Address.new(existing_address.street + "1", existing_address.city, existing_address.country))
+  end
+
+  def test_exists_with_scoped_include
+    Developer.with_scope(:find => { :include => :projects, :order => "projects.name" }) do
+      assert Developer.exists?
+    end
   end
 
   def test_find_by_array_of_one_id
@@ -137,14 +152,12 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   def test_find_by_ids_missing_one
-    assert_raises(ActiveRecord::RecordNotFound) { Topic.find(1, 2, 45) }
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find(1, 2, 45) }
   end
 
   def test_find_all_with_limit
-    entrants = Entrant.find(:all, :order => "id ASC", :limit => 2)
-
-    assert_equal(2, entrants.size)
-    assert_equal(entrants(:first).name, entrants.first.name)
+    assert_equal(2, Entrant.find(:all, :limit => 2).size)
+    assert_equal(0, Entrant.find(:all, :limit => 0).size)
   end
 
   def test_find_all_with_prepared_limit_and_offset
@@ -153,26 +166,41 @@ class FinderTest < ActiveRecord::TestCase
     assert_equal(2, entrants.size)
     assert_equal(entrants(:second).name, entrants.first.name)
 
+    assert_equal 3, Entrant.count
     entrants = Entrant.find(:all, :order => "id ASC", :limit => 2, :offset => 2)
     assert_equal(1, entrants.size)
     assert_equal(entrants(:third).name, entrants.first.name)
   end
 
-  def test_find_all_with_limit_and_offset_and_multiple_orderings
-    developers = Developer.find(:all, :order => "salary ASC, id DESC", :limit => 3, :offset => 1)
-    assert_equal ["David", "fixture_10", "fixture_9"], developers.collect {|d| d.name}
+  def test_find_all_with_limit_and_offset_and_multiple_order_clauses
+    first_three_posts = Post.find :all, :order => 'author_id, id', :limit => 3, :offset => 0
+    second_three_posts = Post.find :all, :order => ' author_id,id ', :limit => 3, :offset => 3
+    last_posts = Post.find :all, :order => ' author_id, id  ', :limit => 3, :offset => 6
+
+    assert_equal [[0,3],[1,1],[1,2]], first_three_posts.map { |p| [p.author_id, p.id] }
+    assert_equal [[1,4],[1,5],[1,6]], second_three_posts.map { |p| [p.author_id, p.id] }
+    assert_equal [[2,7]], last_posts.map { |p| [p.author_id, p.id] }
   end
 
-  def test_find_with_limit_and_condition
-    developers = Developer.find(:all, :order => "id DESC", :conditions => "salary = 100000", :limit => 3, :offset =>7)
-    assert_equal(1, developers.size)
-    assert_equal("fixture_3", developers.first.name)
-  end
 
   def test_find_with_group
     developers =  Developer.find(:all, :group => "salary", :select => "salary")
     assert_equal 4, developers.size
     assert_equal 4, developers.map(&:salary).uniq.size
+  end
+
+  def test_find_with_group_and_having
+    developers =  Developer.find(:all, :group => "salary", :having => "sum(salary) >  10000", :select => "salary")
+    assert_equal 3, developers.size
+    assert_equal 3, developers.map(&:salary).uniq.size
+    assert developers.all? { |developer|  developer.salary > 10000 }
+  end
+
+  def test_find_with_group_and_sanitized_having
+    developers =  Developer.find(:all, :group => "salary", :having => ["sum(salary) > ?", 10000], :select => "salary")
+    assert_equal 3, developers.size
+    assert_equal 3, developers.map(&:salary).uniq.size
+    assert developers.all? { |developer|  developer.salary > 10000 }
   end
 
   def test_find_with_entire_select_statement
@@ -213,7 +241,7 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   def test_unexisting_record_exception_handling
-    assert_raises(ActiveRecord::RecordNotFound) {
+    assert_raise(ActiveRecord::RecordNotFound) {
       Topic.find(1).parent
     }
 
@@ -222,7 +250,7 @@ class FinderTest < ActiveRecord::TestCase
 
   def test_find_only_some_columns
     topic = Topic.find(1, :select => "author_name")
-    assert_raises(ActiveRecord::MissingAttributeError) {topic.title}
+    assert_raise(ActiveRecord::MissingAttributeError) {topic.title}
     assert_equal "David", topic.author_name
     assert !topic.attribute_present?("title")
     #assert !topic.respond_to?("title")
@@ -244,22 +272,22 @@ class FinderTest < ActiveRecord::TestCase
 
   def test_find_on_array_conditions
     assert Topic.find(1, :conditions => ["approved = ?", false])
-    assert_raises(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => ["approved = ?", true]) }
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => ["approved = ?", true]) }
   end
 
   def test_find_on_hash_conditions
     assert Topic.find(1, :conditions => { :approved => false })
-    assert_raises(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { :approved => true }) }
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { :approved => true }) }
   end
 
   def test_find_on_hash_conditions_with_explicit_table_name
     assert Topic.find(1, :conditions => { 'topics.approved' => false })
-    assert_raises(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { 'topics.approved' => true }) }
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { 'topics.approved' => true }) }
   end
 
   def test_find_on_hash_conditions_with_hashed_table_name
     assert Topic.find(1, :conditions => {:topics => { :approved => false }})
-    assert_raises(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => {:topics => { :approved => true }}) }
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => {:topics => { :approved => true }}) }
   end
 
   def test_find_with_hash_conditions_on_joined_table
@@ -277,7 +305,7 @@ class FinderTest < ActiveRecord::TestCase
   def test_find_on_hash_conditions_with_explicit_table_name_and_aggregate
     david = customers(:david)
     assert Customer.find(david.id, :conditions => { 'customers.name' => david.name, :address => david.address })
-    assert_raises(ActiveRecord::RecordNotFound) {
+    assert_raise(ActiveRecord::RecordNotFound) {
       Customer.find(david.id, :conditions => { 'customers.name' => david.name + "1", :address => david.address })
     }
   end
@@ -288,7 +316,13 @@ class FinderTest < ActiveRecord::TestCase
 
   def test_find_on_hash_conditions_with_range
     assert_equal [1,2], Topic.find(:all, :conditions => { :id => 1..2 }).map(&:id).sort
-    assert_raises(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { :id => 2..3 }) }
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { :id => 2..3 }) }
+  end
+
+  def test_find_on_hash_conditions_with_end_exclusive_range
+    assert_equal [1,2,3], Topic.find(:all, :conditions => { :id => 1..3 }).map(&:id).sort
+    assert_equal [1,2], Topic.find(:all, :conditions => { :id => 1...3 }).map(&:id).sort
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find(3, :conditions => { :id => 2...3 }) }
   end
 
   def test_find_on_hash_conditions_with_multiple_ranges
@@ -298,9 +332,9 @@ class FinderTest < ActiveRecord::TestCase
 
   def test_find_on_multiple_hash_conditions
     assert Topic.find(1, :conditions => { :author_name => "David", :title => "The First Topic", :replies_count => 1, :approved => false })
-    assert_raises(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { :author_name => "David", :title => "The First Topic", :replies_count => 1, :approved => true }) }
-    assert_raises(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { :author_name => "David", :title => "HHC", :replies_count => 1, :approved => false }) }
-    assert_raises(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { :author_name => "David", :title => "The First Topic", :replies_count => 1, :approved => true }) }
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { :author_name => "David", :title => "The First Topic", :replies_count => 1, :approved => true }) }
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { :author_name => "David", :title => "HHC", :replies_count => 1, :approved => false }) }
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find(1, :conditions => { :author_name => "David", :title => "The First Topic", :replies_count => 1, :approved => true }) }
   end
 
   def test_condition_interpolation
@@ -324,7 +358,7 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   def test_hash_condition_find_malformed
-    assert_raises(ActiveRecord::StatementInvalid) {
+    assert_raise(ActiveRecord::StatementInvalid) {
       Company.find(:first, :conditions => { :id => 2, :dhh => true })
     }
   end
@@ -393,10 +427,10 @@ class FinderTest < ActiveRecord::TestCase
     assert_nil Company.find(:first, :conditions => ["name = ?", "37signals!"])
     assert_nil Company.find(:first, :conditions => ["name = ?", "37signals!' OR 1=1"])
     assert_kind_of Time, Topic.find(:first, :conditions => ["id = ?", 1]).written_on
-    assert_raises(ActiveRecord::PreparedStatementInvalid) {
+    assert_raise(ActiveRecord::PreparedStatementInvalid) {
       Company.find(:first, :conditions => ["id=? AND name = ?", 2])
     }
-    assert_raises(ActiveRecord::PreparedStatementInvalid) {
+    assert_raise(ActiveRecord::PreparedStatementInvalid) {
      Company.find(:first, :conditions => ["id=?", 2, 3, 4])
     }
   end
@@ -413,11 +447,11 @@ class FinderTest < ActiveRecord::TestCase
 
   def test_bind_arity
     assert_nothing_raised                                 { bind '' }
-    assert_raises(ActiveRecord::PreparedStatementInvalid) { bind '', 1 }
+    assert_raise(ActiveRecord::PreparedStatementInvalid) { bind '', 1 }
 
-    assert_raises(ActiveRecord::PreparedStatementInvalid) { bind '?' }
+    assert_raise(ActiveRecord::PreparedStatementInvalid) { bind '?' }
     assert_nothing_raised                                 { bind '?', 1 }
-    assert_raises(ActiveRecord::PreparedStatementInvalid) { bind '?', 1, 1  }
+    assert_raise(ActiveRecord::PreparedStatementInvalid) { bind '?', 1, 1  }
   end
 
   def test_named_bind_variables
@@ -500,21 +534,19 @@ class FinderTest < ActiveRecord::TestCase
     assert_equal(2, Entrant.count_by_sql(["SELECT COUNT(*) FROM entrants WHERE id > ?", 1]))
   end
 
-  uses_mocha('test_dynamic_finder_should_go_through_the_find_class_method') do
-    def test_dynamic_finders_should_go_through_the_find_class_method
-      Topic.expects(:find).with(:first, :conditions => { :title => 'The First Topic!' })
-      Topic.find_by_title("The First Topic!")
+  def test_dynamic_finders_should_go_through_the_find_class_method
+    Topic.expects(:find).with(:first, :conditions => { :title => 'The First Topic!' })
+    Topic.find_by_title("The First Topic!")
 
-      Topic.expects(:find).with(:last, :conditions => { :title => 'The Last Topic!' })
-      Topic.find_last_by_title("The Last Topic!")
+    Topic.expects(:find).with(:last, :conditions => { :title => 'The Last Topic!' })
+    Topic.find_last_by_title("The Last Topic!")
 
-      Topic.expects(:find).with(:all, :conditions => { :title => 'A Topic.' })
-      Topic.find_all_by_title("A Topic.")
+    Topic.expects(:find).with(:all, :conditions => { :title => 'A Topic.' })
+    Topic.find_all_by_title("A Topic.")
 
-      Topic.expects(:find).with(:first, :conditions => { :title => 'Does not exist yet for sure!' }).times(2)
-      Topic.find_or_initialize_by_title('Does not exist yet for sure!')
-      Topic.find_or_create_by_title('Does not exist yet for sure!')
-    end
+    Topic.expects(:find).with(:first, :conditions => { :title => 'Does not exist yet for sure!' }).times(2)
+    Topic.find_or_initialize_by_title('Does not exist yet for sure!')
+    Topic.find_or_create_by_title('Does not exist yet for sure!')
   end
 
   def test_find_by_one_attribute
@@ -524,7 +556,7 @@ class FinderTest < ActiveRecord::TestCase
 
   def test_find_by_one_attribute_bang
     assert_equal topics(:first), Topic.find_by_title!("The First Topic")
-    assert_raises(ActiveRecord::RecordNotFound) { Topic.find_by_title!("The First Topic!") }
+    assert_raise(ActiveRecord::RecordNotFound) { Topic.find_by_title!("The First Topic!") }
   end
 
   def test_find_by_one_attribute_caches_dynamic_finder
@@ -605,14 +637,14 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   def test_find_by_one_missing_attribute
-    assert_raises(NoMethodError) { Topic.find_by_undertitle("The First Topic!") }
+    assert_raise(NoMethodError) { Topic.find_by_undertitle("The First Topic!") }
   end
 
   def test_find_by_invalid_method_syntax
-    assert_raises(NoMethodError) { Topic.fail_to_find_by_title("The First Topic") }
-    assert_raises(NoMethodError) { Topic.find_by_title?("The First Topic") }
-    assert_raises(NoMethodError) { Topic.fail_to_find_or_create_by_title("Nonexistent Title") }
-    assert_raises(NoMethodError) { Topic.find_or_create_by_title?("Nonexistent Title") }
+    assert_raise(NoMethodError) { Topic.fail_to_find_by_title("The First Topic") }
+    assert_raise(NoMethodError) { Topic.find_by_title?("The First Topic") }
+    assert_raise(NoMethodError) { Topic.fail_to_find_or_create_by_title("Nonexistent Title") }
+    assert_raise(NoMethodError) { Topic.find_or_create_by_title?("Nonexistent Title") }
   end
 
   def test_find_by_two_attributes
@@ -634,8 +666,8 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   def test_find_last_by_invalid_method_syntax
-    assert_raises(NoMethodError) { Topic.fail_to_find_last_by_title("The First Topic") }
-    assert_raises(NoMethodError) { Topic.find_last_by_title?("The First Topic") }
+    assert_raise(NoMethodError) { Topic.fail_to_find_last_by_title("The First Topic") }
+    assert_raise(NoMethodError) { Topic.find_last_by_title?("The First Topic") }
   end
 
   def test_find_last_by_one_attribute_with_several_options
@@ -643,7 +675,7 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   def test_find_last_by_one_missing_attribute
-    assert_raises(NoMethodError) { Topic.find_last_by_undertitle("The Last Topic!") }
+    assert_raise(NoMethodError) { Topic.find_last_by_undertitle("The Last Topic!") }
   end
 
   def test_find_last_by_two_attributes
@@ -896,50 +928,16 @@ class FinderTest < ActiveRecord::TestCase
   end
 
   def test_find_with_bad_sql
-    assert_raises(ActiveRecord::StatementInvalid) { Topic.find_by_sql "select 1 from badtable" }
+    assert_raise(ActiveRecord::StatementInvalid) { Topic.find_by_sql "select 1 from badtable" }
   end
 
   def test_find_with_invalid_params
-    assert_raises(ArgumentError) { Topic.find :first, :join => "It should be `joins'" }
-    assert_raises(ArgumentError) { Topic.find :first, :conditions => '1 = 1', :join => "It should be `joins'" }
+    assert_raise(ArgumentError) { Topic.find :first, :join => "It should be `joins'" }
+    assert_raise(ArgumentError) { Topic.find :first, :conditions => '1 = 1', :join => "It should be `joins'" }
   end
 
   def test_dynamic_finder_with_invalid_params
-    assert_raises(ArgumentError) { Topic.find_by_title 'No Title', :join => "It should be `joins'" }
-  end
-
-  def test_find_all_with_limit
-    first_five_developers = Developer.find :all, :order => 'id ASC', :limit =>  5
-    assert_equal 5, first_five_developers.length
-    assert_equal 'David', first_five_developers.first.name
-    assert_equal 'fixture_5', first_five_developers.last.name
-
-    no_developers = Developer.find :all, :order => 'id ASC', :limit => 0
-    assert_equal 0, no_developers.length
-  end
-
-  def test_find_all_with_limit_and_offset
-    first_three_developers = Developer.find :all, :order => 'id ASC', :limit => 3, :offset => 0
-    second_three_developers = Developer.find :all, :order => 'id ASC', :limit => 3, :offset => 3
-    last_two_developers = Developer.find :all, :order => 'id ASC', :limit => 2, :offset => 8
-
-    assert_equal 3, first_three_developers.length
-    assert_equal 3, second_three_developers.length
-    assert_equal 2, last_two_developers.length
-
-    assert_equal 'David', first_three_developers.first.name
-    assert_equal 'fixture_4', second_three_developers.first.name
-    assert_equal 'fixture_9', last_two_developers.first.name
-  end
-
-  def test_find_all_with_limit_and_offset_and_multiple_order_clauses
-    first_three_posts = Post.find :all, :order => 'author_id, id', :limit => 3, :offset => 0
-    second_three_posts = Post.find :all, :order => ' author_id,id ', :limit => 3, :offset => 3
-    last_posts = Post.find :all, :order => ' author_id, id  ', :limit => 3, :offset => 6
-
-    assert_equal [[0,3],[1,1],[1,2]], first_three_posts.map { |p| [p.author_id, p.id] }
-    assert_equal [[1,4],[1,5],[1,6]], second_three_posts.map { |p| [p.author_id, p.id] }
-    assert_equal [[2,7]], last_posts.map { |p| [p.author_id, p.id] }
+    assert_raise(ArgumentError) { Topic.find_by_title 'No Title', :join => "It should be `joins'" }
   end
 
   def test_find_all_with_join
@@ -1035,6 +1033,14 @@ class FinderTest < ActiveRecord::TestCase
     posts = Post.find(:all, :include => :author, :select => ' posts.*, authors.id as "author_id"', :limit => 3, :order => 'posts.id')
     assert_equal 3, posts.size
     assert_equal [0, 1, 1], posts.map(&:author_id).sort
+  end
+
+  def test_finder_with_scoped_from
+    all_topics = Topic.all
+
+    Topic.with_scope(:find => { :from => 'fake_topics' }) do
+      assert_equal all_topics, Topic.all(:from => 'topics')
+    end
   end
 
   protected

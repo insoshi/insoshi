@@ -1,4 +1,4 @@
-require 'action_view/helpers/javascript_helper'
+#require 'action_view/helpers/javascript_helper'
 
 module ActionView
   module Helpers #:nodoc:
@@ -219,7 +219,7 @@ module ActionView
         if block_given?
           options      = args.first || {}
           html_options = args.second
-          concat(link_to(capture(&block), options, html_options))
+          concat(link_to(capture(&block), options, html_options).html_safe!)
         else
           name         = args.first
           options      = args.second || {}
@@ -237,7 +237,7 @@ module ActionView
           end
 
           href_attr = "href=\"#{url}\"" unless href
-          "<a #{href_attr}#{tag_options}>#{name || url}</a>"
+          "<a #{href_attr}#{tag_options}>#{name || url}</a>".html_safe!
         end
       end
 
@@ -309,7 +309,7 @@ module ActionView
         html_options.merge!("type" => "submit", "value" => name)
 
         "<form method=\"#{form_method}\" action=\"#{escape_once url}\" class=\"button-to\"><div>" +
-          method_tag + tag("input", html_options) + request_token_tag + "</div></form>"
+          method_tag + tag("input", html_options) + request_token_tag + "</div></form>".html_safe!
       end
 
 
@@ -507,7 +507,30 @@ module ActionView
       #   current_page?(:controller => 'shop', :action => 'checkout')
       #   # => true
       #
-      #   current_page?(:controller => 'shop', :action => 'checkout', :order => 'asc)
+      #   current_page?(:controller => 'shop', :action => 'checkout', :order => 'asc')
+      #   # => false
+      #
+      #   current_page?(:action => 'checkout')
+      #   # => true
+      #
+      #   current_page?(:controller => 'library', :action => 'checkout')
+      #   # => false
+      #
+      # Let's say we're in the <tt>/shop/checkout?order=desc&page=1</tt> action.
+      #
+      #   current_page?(:action => 'process')
+      #   # => false
+      #
+      #   current_page?(:controller => 'shop', :action => 'checkout')
+      #   # => true
+      #
+      #   current_page?(:controller => 'shop', :action => 'checkout', :order => 'desc', :page=>'1')
+      #   # => true
+      #
+      #   current_page?(:controller => 'shop', :action => 'checkout', :order => 'desc', :page=>'2')
+      #   # => false
+      #
+      #   current_page?(:controller => 'shop', :action => 'checkout', :order => 'desc')
       #   # => false
       #
       #   current_page?(:action => 'checkout')
@@ -516,7 +539,7 @@ module ActionView
       #   current_page?(:controller => 'library', :action => 'checkout')
       #   # => false
       def current_page?(options)
-        url_string = CGI.escapeHTML(url_for(options))
+        url_string = CGI.unescapeHTML(url_for(options))
         request = @controller.request
         # We ignore any extra parameters in the request_uri if the 
         # submitted url doesn't have any either.  This lets the function
@@ -545,7 +568,7 @@ module ActionView
             when confirm && popup
               "if (#{confirm_javascript_function(confirm)}) { #{popup_javascript_function(popup)} };return false;"
             when confirm && method
-              "if (#{confirm_javascript_function(confirm)}) { #{method_javascript_function(method)} };return false;"
+              "if (#{confirm_javascript_function(confirm)}) { #{method_javascript_function(method, url, href)} };return false;"
             when confirm
               "return #{confirm_javascript_function(confirm)};"
             when method

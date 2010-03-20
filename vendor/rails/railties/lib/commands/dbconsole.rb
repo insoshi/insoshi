@@ -3,12 +3,23 @@ require 'yaml'
 require 'optparse'
 
 include_password = false
+options = {}
 
 OptionParser.new do |opt|
   opt.banner = "Usage: dbconsole [options] [environment]"
   opt.on("-p", "--include-password", "Automatically provide the password from database.yml") do |v|
     include_password = true
   end
+
+  opt.on("--mode [MODE]", ['html', 'list', 'line', 'column'],
+    "Automatically put the sqlite3 database in the specified mode (html, list, line, column).") do |mode|
+      options['mode'] = mode
+  end
+
+  opt.on("-h", "--header") do |h|
+    options['header'] = h
+  end
+
   opt.parse!(ARGV)
   abort opt.to_s unless (0..1).include?(ARGV.size)
 end
@@ -22,11 +33,15 @@ end
 def find_cmd(*commands)
   dirs_on_path = ENV['PATH'].to_s.split(File::PATH_SEPARATOR)
   commands += commands.map{|cmd| "#{cmd}.exe"} if RUBY_PLATFORM =~ /win32/
-  commands.detect do |cmd|
-    dirs_on_path.detect do |path|
-      File.executable? File.join(path, cmd)
+
+  full_path_command = nil
+  found = commands.detect do |cmd|
+    dir = dirs_on_path.detect do |path|
+      full_path_command = File.join(path, cmd)
+      File.executable? full_path_command
     end
-  end || abort("Couldn't find database client: #{commands.join(', ')}. Check your $PATH and try again.")
+  end
+  found ? full_path_command : abort("Couldn't find database client: #{commands.join(', ')}. Check your $PATH and try again.")
 end
 
 case config["adapter"]
@@ -41,7 +56,7 @@ when "mysql"
 
   if config['password'] && include_password
     args << "--password=#{config['password']}"
-  elsif config['password'] && !config['password'].empty?
+  elsif config['password'] && !config['password'].to_s.empty?
     args << "-p"
   end
 
@@ -60,8 +75,13 @@ when "sqlite"
   exec(find_cmd('sqlite'), config["database"])
 
 when "sqlite3"
-  exec(find_cmd('sqlite3'), config["database"])
+  args = []
 
+  args << "-#{options['mode']}" if options['mode']
+  args << "-header" if options['header']
+  args << config['database']
+
+  exec(find_cmd('sqlite3'), *args)
 else
   abort "Unknown command-line client for #{config['database']}. Submit a Rails patch to add support!"
 end

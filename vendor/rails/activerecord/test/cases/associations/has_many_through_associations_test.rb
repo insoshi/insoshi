@@ -1,11 +1,23 @@
 require "cases/helper"
 require 'models/post'
 require 'models/person'
+require 'models/reference'
+require 'models/job'
 require 'models/reader'
 require 'models/comment'
+require 'models/tag'
+require 'models/tagging'
+require 'models/author'
+require 'models/owner'
+require 'models/pet'
+require 'models/toy'
+require 'models/contract'
+require 'models/company'
+require 'models/developer'
 
 class HasManyThroughAssociationsTest < ActiveRecord::TestCase
-  fixtures :posts, :readers, :people, :comments, :authors
+  fixtures :posts, :readers, :people, :comments, :authors, :owners, :pets, :toys,
+           :companies
 
   def test_associate_existing
     assert_queries(2) { posts(:thinking);people(:david) }
@@ -84,6 +96,24 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     assert posts(:welcome).reload.people(true).empty?
   end
 
+  def test_destroy_association
+    assert_difference "Person.count", -1 do
+      posts(:welcome).people.destroy(people(:michael))
+    end
+
+    assert posts(:welcome).reload.people.empty?
+    assert posts(:welcome).people(true).empty?
+  end
+
+  def test_destroy_all
+    assert_difference "Person.count", -1 do
+      posts(:welcome).people.destroy_all
+    end
+
+    assert posts(:welcome).reload.people.empty?
+    assert posts(:welcome).people(true).empty?
+  end
+
   def test_replace_association
     assert_queries(4){posts(:welcome);people(:david);people(:michael); posts(:welcome).people(true)}
     
@@ -100,6 +130,28 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     
     assert posts(:welcome).reload.people(true).include?(people(:david))
     assert !posts(:welcome).reload.people(true).include?(people(:michael))
+  end
+
+  def test_replace_order_is_preserved
+    posts(:welcome).people.clear
+    posts(:welcome).people = [people(:david), people(:michael)]
+    assert_equal [people(:david).id, people(:michael).id], posts(:welcome).readers.all(:order => 'id').map(&:person_id)
+
+    # Test the inverse order in case the first success was a coincidence
+    posts(:welcome).people.clear
+    posts(:welcome).people = [people(:michael), people(:david)]
+    assert_equal [people(:michael).id, people(:david).id], posts(:welcome).readers.all(:order => 'id').map(&:person_id)
+  end
+
+  def test_replace_by_id_order_is_preserved
+    posts(:welcome).people.clear
+    posts(:welcome).person_ids = [people(:david).id, people(:michael).id]
+    assert_equal [people(:david).id, people(:michael).id], posts(:welcome).readers.all(:order => 'id').map(&:person_id)
+
+    # Test the inverse order in case the first success was a coincidence
+    posts(:welcome).people.clear
+    posts(:welcome).person_ids = [people(:michael).id, people(:david).id]
+    assert_equal [people(:michael).id, people(:david).id], posts(:welcome).readers.all(:order => 'id').map(&:person_id)
   end
 
   def test_associate_with_create
@@ -129,6 +181,30 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     peeps = posts(:thinking).people.count
     posts(:thinking).people.create!(:first_name => 'foo')
     assert_equal peeps + 1, posts(:thinking).people.count
+  end
+
+  def test_associate_with_create_and_invalid_options
+    peeps = companies(:first_firm).developers.count
+    assert_nothing_raised { companies(:first_firm).developers.create(:name => '0') }
+    assert_equal peeps, companies(:first_firm).developers.count
+  end
+
+  def test_associate_with_create_and_valid_options
+    peeps = companies(:first_firm).developers.count
+    assert_nothing_raised { companies(:first_firm).developers.create(:name => 'developer') }
+    assert_equal peeps + 1, companies(:first_firm).developers.count
+  end
+
+  def test_associate_with_create_bang_and_invalid_options
+    peeps = companies(:first_firm).developers.count
+    assert_raises(ActiveRecord::RecordInvalid) { companies(:first_firm).developers.create!(:name => '0') }
+    assert_equal peeps, companies(:first_firm).developers.count
+  end
+
+  def test_associate_with_create_bang_and_valid_options
+    peeps = companies(:first_firm).developers.count
+    assert_nothing_raised { companies(:first_firm).developers.create!(:name => 'developer') }
+    assert_equal peeps + 1, companies(:first_firm).developers.count
   end
 
   def test_clear_associations
@@ -201,6 +277,10 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     assert_equal 2, people(:michael).posts.count(:include => :readers)
   end
 
+  def test_inner_join_with_quoted_table_name
+    assert_equal 2, people(:michael).jobs.size
+  end
+
   def test_get_ids
     assert_equal [posts(:welcome).id, posts(:authorless).id].sort, people(:michael).post_ids.sort
   end
@@ -221,12 +301,10 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     assert !person.posts.loaded?
   end
 
-  uses_mocha 'mocking Tag.transaction' do
-    def test_association_proxy_transaction_method_starts_transaction_in_association_class
-      Tag.expects(:transaction)
-      Post.find(:first).tags.transaction do
-        # nothing
-      end
+  def test_association_proxy_transaction_method_starts_transaction_in_association_class
+    Tag.expects(:transaction)
+    Post.find(:first).tags.transaction do
+      # nothing
     end
   end
 
@@ -243,5 +321,26 @@ class HasManyThroughAssociationsTest < ActiveRecord::TestCase
     author.author_favorites.create(:favorite_author_id => 2)
     author.author_favorites.create(:favorite_author_id => 3)
     assert_equal post.author.author_favorites, post.author_favorites
+  end
+
+  def test_has_many_association_through_a_has_many_association_with_nonstandard_primary_keys
+    assert_equal 1, owners(:blackbeard).toys.count
+  end
+
+  def test_find_on_has_many_association_collection_with_include_and_conditions
+    post_with_no_comments = people(:michael).posts_with_no_comments.first
+    assert_equal post_with_no_comments, posts(:authorless)
+  end
+
+  def test_has_many_through_has_one_reflection
+    assert_equal [comments(:eager_sti_on_associations_vs_comment)], authors(:david).very_special_comments
+  end
+
+  def test_modifying_has_many_through_has_one_reflection_should_raise
+    [
+      lambda { authors(:david).very_special_comments = [VerySpecialComment.create!(:body => "Gorp!", :post_id => 1011), VerySpecialComment.create!(:body => "Eep!", :post_id => 1012)] },
+      lambda { authors(:david).very_special_comments << VerySpecialComment.create!(:body => "Hoohah!", :post_id => 1013) },
+      lambda { authors(:david).very_special_comments.delete(authors(:david).very_special_comments.first) },
+    ].each {|block| assert_raise(ActiveRecord::HasManyThroughCantAssociateThroughHasOneOrManyReflection, &block) }
   end
 end

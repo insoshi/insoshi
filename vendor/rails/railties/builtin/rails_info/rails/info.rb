@@ -20,13 +20,15 @@ module Rails
       rescue Exception
       end
 
-      def components
+      def frameworks
         %w( active_record action_pack active_resource action_mailer active_support )
       end
 
-      def component_version(component)
-        require "#{component}/version"
-        "#{component.classify}::VERSION::STRING".constantize
+      def framework_version(framework)
+        if Object.const_defined?(framework.classify)
+          require "#{framework}/version"
+          "#{framework.classify}::VERSION::STRING".constantize
+        end
       end
 
       def edge_rails_revision(info = git_info)
@@ -85,16 +87,20 @@ module Rails
       Gem::RubyGemsVersion
     end
 
+    property 'Rack version' do
+      ::Rack.release
+    end
+
     # The Rails version.
     property 'Rails version' do
       Rails::VERSION::STRING
     end
 
-    # Versions of each Rails component (Active Record, Action Pack,
+    # Versions of each Rails framework (Active Record, Action Pack,
     # Active Resource, Action Mailer, and Active Support).
-    components.each do |component|
-      property "#{component.titlecase} version" do
-        component_version(component)
+    frameworks.each do |framework|
+      property "#{framework.titlecase} version" do
+        framework_version(framework)
       end
     end
 

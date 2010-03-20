@@ -10,7 +10,7 @@ class CopyTableTest < ActiveRecord::TestCase
     end
   end
 
-  def test_copy_table(from = 'companies', to = 'companies2', options = {})
+  def test_copy_table(from = 'customers', to = 'customers2', options = {})
     assert_nothing_raised {copy_table(from, to, options)}
     assert_equal row_count(from), row_count(to)
 
@@ -24,11 +24,11 @@ class CopyTableTest < ActiveRecord::TestCase
   end
 
   def test_copy_table_renaming_column
-    test_copy_table('companies', 'companies2',
-        :rename => {'client_of' => 'fan_of'}) do |from, to, options|
-      expected = column_values(from, 'client_of')
+    test_copy_table('customers', 'customers2',
+        :rename => {'name' => 'person_name'}) do |from, to, options|
+      expected = column_values(from, 'name')
       assert expected.any?, 'only nils in resultset; real values are needed'
-      assert_equal expected, column_values(to, 'fan_of')
+      assert_equal expected, column_values(to, 'person_name')
     end
   end
 
@@ -44,6 +44,17 @@ class CopyTableTest < ActiveRecord::TestCase
 
   def test_copy_table_without_primary_key
     test_copy_table('developers_projects', 'programmers_projects')
+  end
+
+  def test_copy_table_with_id_col_that_is_not_primary_key
+    test_copy_table('goofy_string_id', 'goofy_string_id2') do |from, to, options|
+      original_id = @connection.columns('goofy_string_id').detect{|col| col.name == 'id' }
+      copied_id = @connection.columns('goofy_string_id2').detect{|col| col.name == 'id' }
+      assert_equal original_id.type, copied_id.type
+      assert_equal original_id.sql_type, copied_id.sql_type
+      assert_equal original_id.limit, copied_id.limit
+      assert_equal original_id.primary, copied_id.primary
+    end
   end
 
 protected

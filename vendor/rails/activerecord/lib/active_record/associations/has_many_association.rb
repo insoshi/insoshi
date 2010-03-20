@@ -56,9 +56,9 @@ module ActiveRecord
           "#{@reflection.name}_count"
         end
 
-        def insert_record(record)
+        def insert_record(record, force = false, validate = true)
           set_belongs_to_association_for(record)
-          record.save
+          force ? record.save! : record.save(validate)
         end
 
         # Deletes the records according to the <tt>:dependent</tt> option.
@@ -74,6 +74,7 @@ module ActiveRecord
                 "#{@reflection.primary_key_name} = NULL", 
                 "#{@reflection.primary_key_name} = #{owner_quoted_id} AND #{@reflection.klass.primary_key} IN (#{ids})"
               )
+              @owner.class.update_counters(@owner.id, cached_counter_attribute_name => -records.size) if has_cached_counter?
           end
         end
 
