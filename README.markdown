@@ -6,6 +6,9 @@ Follow the steps below to get Insoshi running on your local machine.
 
 NOTE: If you downloaded a zipped archive of Insoshi, we strongly encourage you to clone the Insoshi Git repository instead.  See the instructions below, and also see the [Insoshi installation guide](http://sites.google.com/a/insoshi.com/insoshi-guides/Installation) for more details.
 
+Insoshi was originally developed by Michael Hartl and Long Nguyen of Insoshi, Inc.  It is currently maintained by Evan Dorn of
+Logical Reality Design, see http://LRDesign.com/tools.
+
 ## Get Git
 
 The source code to Insoshi is managed via Git, a version control system developed by Linus Torvalds to host the Linux kernel.  
