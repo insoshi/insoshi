@@ -75,6 +75,7 @@ Rails::Initializer.run do |config|
   #                                    :source => 'http://gems.github.com'
   config.gem 'chronic'
   config.gem 'BlueCloth', :lib => 'bluecloth'
+  config.gem 'rack-openid', :version => '>= 1.0.1'
 end
 
 require 'vendor/plugins/jquery_ui_rails_helpers/helpers/tabs_renderer'
