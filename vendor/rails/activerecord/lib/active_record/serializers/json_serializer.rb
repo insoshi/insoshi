@@ -1,12 +1,33 @@
+require 'active_support/json'
+require 'active_support/core_ext/module/model_naming'
+
 module ActiveRecord #:nodoc:
   module Serialization
     def self.included(base)
       base.cattr_accessor :include_root_in_json, :instance_writer => false
-      base.extend ClassMethods
     end
 
     # Returns a JSON string representing the model. Some configuration is
     # available through +options+.
+    #
+    # The option <tt>ActiveRecord::Base.include_root_in_json</tt> controls the
+    # top-level behavior of to_json. In a new Rails application, it is set to 
+    # <tt>true</tt> in initializers/new_rails_defaults.rb. When it is <tt>true</tt>,
+    # to_json will emit a single root node named after the object's type. For example:
+    #
+    #   konata = User.find(1)
+    #   ActiveRecord::Base.include_root_in_json = true
+    #   konata.to_json
+    #   # => { "user": {"id": 1, "name": "Konata Izumi", "age": 16,
+    #                   "created_at": "2006/08/01", "awesome": true} }
+    #
+    #   ActiveRecord::Base.include_root_in_json = false
+    #   konata.to_json
+    #   # => {"id": 1, "name": "Konata Izumi", "age": 16,
+    #         "created_at": "2006/08/01", "awesome": true}
+    #
+    # The remainder of the examples in this section assume include_root_in_json is set to
+    # <tt>false</tt>.
     #
     # Without any +options+, the returned JSON string will include all
     # the model's attributes. For example:
@@ -53,28 +74,18 @@ module ActiveRecord #:nodoc:
     #                   {"comments": [{"body": "Don't think too hard"}],
     #                    "title": "So I was thinking"}]}
     def to_json(options = {})
-      if include_root_in_json
-        "{#{self.class.json_class_name}: #{JsonSerializer.new(self, options).to_s}}"
-      else
-        JsonSerializer.new(self, options).to_s
-      end
+      super
+    end
+
+    def as_json(options = nil) #:nodoc:
+      hash = Serializer.new(self, options).serializable_record
+      hash = { self.class.model_name.element => hash } if include_root_in_json
+      hash
     end
 
     def from_json(json)
       self.attributes = ActiveSupport::JSON.decode(json)
       self
-    end
-
-    class JsonSerializer < ActiveRecord::Serialization::Serializer #:nodoc:
-      def serialize
-        serializable_record.to_json
-      end
-    end
-
-    module ClassMethods
-      def json_class_name
-        @json_class_name ||= name.demodulize.underscore.inspect
-      end
     end
   end
 end

@@ -26,8 +26,10 @@ module ActionView
       #   47 hrs, 59 mins, 29 secs <-> 29 days, 23 hrs, 59 mins, 29 secs            # => [2..29] days
       #   29 days, 23 hrs, 59 mins, 30 secs <-> 59 days, 23 hrs, 59 mins, 29 secs   # => about 1 month
       #   59 days, 23 hrs, 59 mins, 30 secs <-> 1 yr minus 1 sec                    # => [2..12] months
-      #   1 yr <-> 2 yrs minus 1 secs                                               # => about 1 year
-      #   2 yrs <-> max time or date                                                # => over [2..X] years
+      #   1 yr <-> 1 yr, 3 months                                                   # => about 1 year
+      #   1 yr, 3 months <-> 1 yr, 9 months                                         # => over 1 year
+      #   1 yr, 9 months <-> 2 yr minus 1 sec                                       # => almost 2 years
+      #   2 yrs <-> max time or date                                                # => (same rules as 1 yr)
       #
       # With <tt>include_seconds</tt> = true and the difference < 1 minute 29 seconds:
       #   0-4   secs      # => less than 5 seconds
@@ -43,17 +45,18 @@ module ActionView
       #   distance_of_time_in_words(from_time, 50.minutes.from_now)           # => about 1 hour
       #   distance_of_time_in_words(from_time, from_time + 15.seconds)        # => less than a minute
       #   distance_of_time_in_words(from_time, from_time + 15.seconds, true)  # => less than 20 seconds
-      #   distance_of_time_in_words(from_time, 3.years.from_now)              # => over 3 years
+      #   distance_of_time_in_words(from_time, 3.years.from_now)              # => about 3 years
       #   distance_of_time_in_words(from_time, from_time + 60.hours)          # => about 3 days
       #   distance_of_time_in_words(from_time, from_time + 45.seconds, true)  # => less than a minute
       #   distance_of_time_in_words(from_time, from_time - 45.seconds, true)  # => less than a minute
       #   distance_of_time_in_words(from_time, 76.seconds.from_now)           # => 1 minute
       #   distance_of_time_in_words(from_time, from_time + 1.year + 3.days)   # => about 1 year
-      #   distance_of_time_in_words(from_time, from_time + 4.years + 9.days + 30.minutes + 5.seconds) # => over 4 years
+      #   distance_of_time_in_words(from_time, from_time + 3.years + 6.months) # => over 3 years
+      #   distance_of_time_in_words(from_time, from_time + 4.years + 9.days + 30.minutes + 5.seconds) # => about 4 years
       #
       #   to_time = Time.now + 6.years + 19.days
-      #   distance_of_time_in_words(from_time, to_time, true)     # => over 6 years
-      #   distance_of_time_in_words(to_time, from_time, true)     # => over 6 years
+      #   distance_of_time_in_words(from_time, to_time, true)     # => about 6 years
+      #   distance_of_time_in_words(to_time, from_time, true)     # => about 6 years
       #   distance_of_time_in_words(Time.now, Time.now)           # => less than a minute
       #
       def distance_of_time_in_words(from_time, to_time = 0, include_seconds = false, options = {})
@@ -81,12 +84,21 @@ module ActionView
             when 2..44           then locale.t :x_minutes,      :count => distance_in_minutes
             when 45..89          then locale.t :about_x_hours,  :count => 1
             when 90..1439        then locale.t :about_x_hours,  :count => (distance_in_minutes.to_f / 60.0).round
-            when 1440..2879      then locale.t :x_days,         :count => 1
-            when 2880..43199     then locale.t :x_days,         :count => (distance_in_minutes / 1440).round
+            when 1440..2529      then locale.t :x_days,         :count => 1
+            when 2530..43199     then locale.t :x_days,         :count => (distance_in_minutes.to_f / 1440.0).round
             when 43200..86399    then locale.t :about_x_months, :count => 1
-            when 86400..525599   then locale.t :x_months,       :count => (distance_in_minutes / 43200).round
-            when 525600..1051199 then locale.t :about_x_years,  :count => 1
-            else                      locale.t :over_x_years,   :count => (distance_in_minutes / 525600).round
+            when 86400..525599   then locale.t :x_months,       :count => (distance_in_minutes.to_f / 43200.0).round
+            else
+              distance_in_years           = distance_in_minutes / 525600
+              minute_offset_for_leap_year = (distance_in_years / 4) * 1440
+              remainder                   = ((distance_in_minutes - minute_offset_for_leap_year) % 525600)
+              if remainder < 131400
+                locale.t(:about_x_years,  :count => distance_in_years)
+              elsif remainder < 394200
+                locale.t(:over_x_years,   :count => distance_in_years)
+              else
+                locale.t(:almost_x_years, :count => distance_in_years + 1)
+              end
           end
         end
       end
@@ -111,7 +123,7 @@ module ActionView
       #
       # ==== Options
       # * <tt>:use_month_numbers</tt> - Set to true if you want to use month numbers rather than month names (e.g.
-      #    "2" instead of "February").
+      #   "2" instead of "February").
       # * <tt>:use_short_month</tt>   - Set to true if you want to use the abbreviated month name instead of the full
       #   name (e.g. "Feb" instead of "February").
       # * <tt>:add_month_number</tt>  - Set to true if you want to show both, the month's number and name (e.g.
@@ -136,6 +148,10 @@ module ActionView
       #   dates.
       # * <tt>:default</tt>           - Set a default date if the affected date isn't set or is nil.
       # * <tt>:disabled</tt>          - Set to true if you want show the select fields as disabled.
+      # * <tt>:prompt</tt>            - Set to true (for a generic prompt), a prompt string or a hash of prompt strings
+      #   for <tt>:year</tt>, <tt>:month</tt>, <tt>:day</tt>, <tt>:hour</tt>, <tt>:minute</tt> and <tt>:second</tt>.
+      #   Setting this option prepends a select option with a generic prompt  (Day, Month, Year, Hour, Minute, Seconds)
+      #   or the given prompt string.
       #
       # If anything is passed in the +html_options+ hash it will be applied to every select tag in the set.
       #
@@ -170,6 +186,9 @@ module ActionView
       #   # Generates a date select that when POSTed is stored in the credit_card variable, in the bill_due attribute
       #   # that will have a default day of 20.
       #   date_select("credit_card", "bill_due", :default => { :day => 20 })
+      #
+      #   # Generates a date select with custom prompts
+      #   date_select("post", "written_on", :prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' })
       #
       # The selects are prepared for multi-parameter assignment to an Active Record object.
       #
@@ -210,6 +229,11 @@ module ActionView
       #   # You can set the :minute_step to 15 which will give you: 00, 15, 30 and 45.
       #   time_select 'game', 'game_time', {:minute_step => 15}
       #
+      #   # Creates a time select tag with a custom prompt. Use :prompt => true for generic prompts.
+      #   time_select("post", "written_on", :prompt => {:hour => 'Choose hour', :minute => 'Choose minute', :second => 'Choose seconds'})
+      #   time_select("post", "written_on", :prompt => {:hour => true}) # generic prompt for hours
+      #   time_select("post", "written_on", :prompt => true) # generic prompts for all
+      #
       # The selects are prepared for multi-parameter assignment to an Active Record object.
       #
       # Note: If the day is not included as an option but the month is, the day will be set to the 1st to ensure that
@@ -240,6 +264,11 @@ module ActionView
       #   # Generates a datetime select that discards the type that, when POSTed, will be stored in the post variable
       #   # as the written_on attribute.
       #   datetime_select("post", "written_on", :discard_type => true)
+      #
+      #   # Generates a datetime select with a custom prompt. Use :prompt=>true for generic prompts.
+      #   datetime_select("post", "written_on", :prompt => {:day => 'Choose day', :month => 'Choose month', :year => 'Choose year'})
+      #   datetime_select("post", "written_on", :prompt => {:hour => true}) # generic prompt for hours
+      #   datetime_select("post", "written_on", :prompt => true) # generic prompts for all
       #
       # The selects are prepared for multi-parameter assignment to an Active Record object.
       def datetime_select(object_name, method, options = {}, html_options = {})
@@ -285,6 +314,11 @@ module ActionView
       #   # prefixed with 'payday' rather than 'date'
       #   select_datetime(my_date_time, :prefix => 'payday')
       #
+      #   # Generates a datetime select with a custom prompt. Use :prompt=>true for generic prompts.
+      #   select_datetime(my_date_time, :prompt => {:day => 'Choose day', :month => 'Choose month', :year => 'Choose year'})
+      #   select_datetime(my_date_time, :prompt => {:hour => true}) # generic prompt for hours
+      #   select_datetime(my_date_time, :prompt => true) # generic prompts for all
+      #
       def select_datetime(datetime = Time.current, options = {}, html_options = {})
         DateTimeSelector.new(datetime, options, html_options).select_datetime
       end
@@ -321,6 +355,11 @@ module ActionView
       #   # prefixed with 'payday' rather than 'date'
       #   select_date(my_date, :prefix => 'payday')
       #
+      #   # Generates a date select with a custom prompt. Use :prompt=>true for generic prompts.
+      #   select_date(my_date, :prompt => {:day => 'Choose day', :month => 'Choose month', :year => 'Choose year'})
+      #   select_date(my_date, :prompt => {:hour => true}) # generic prompt for hours
+      #   select_date(my_date, :prompt => true) # generic prompts for all
+      #
       def select_date(date = Date.current, options = {}, html_options = {})
         DateTimeSelector.new(date, options, html_options).select_date
       end
@@ -352,6 +391,11 @@ module ActionView
       #   # separated by ':' and includes an input for seconds
       #   select_time(my_time, :time_separator => ':', :include_seconds => true)
       #
+      #   # Generates a time select with a custom prompt. Use :prompt=>true for generic prompts.
+      #   select_time(my_time, :prompt => {:day => 'Choose day', :month => 'Choose month', :year => 'Choose year'})
+      #   select_time(my_time, :prompt => {:hour => true}) # generic prompt for hours
+      #   select_time(my_time, :prompt => true) # generic prompts for all
+      #
       def select_time(datetime = Time.current, options = {}, html_options = {})
         DateTimeSelector.new(datetime, options, html_options).select_time
       end
@@ -372,6 +416,10 @@ module ActionView
       #   # Generates a select field for seconds that defaults to the seconds for the time in my_time
       #   # that is named 'interval' rather than 'second'
       #   select_second(my_time, :field_name => 'interval')
+      #
+      #   # Generates a select field for seconds with a custom prompt.  Use :prompt=>true for a
+      #   # generic prompt.
+      #   select_minute(14, :prompt => 'Choose seconds')
       #
       def select_second(datetime, options = {}, html_options = {})
         DateTimeSelector.new(datetime, options, html_options).select_second
@@ -395,6 +443,10 @@ module ActionView
       #   # that is named 'stride' rather than 'second'
       #   select_minute(my_time, :field_name => 'stride')
       #
+      #   # Generates a select field for minutes with a custom prompt.  Use :prompt=>true for a
+      #   # generic prompt.
+      #   select_minute(14, :prompt => 'Choose minutes')
+      #
       def select_minute(datetime, options = {}, html_options = {})
         DateTimeSelector.new(datetime, options, html_options).select_minute
       end
@@ -416,6 +468,10 @@ module ActionView
       #   # that is named 'stride' rather than 'second'
       #   select_hour(my_time, :field_name => 'stride')
       #
+      #   # Generates a select field for hours with a custom prompt.  Use :prompt => true for a
+      #   # generic prompt.
+      #   select_hour(13, :prompt =>'Choose hour')
+      #
       def select_hour(datetime, options = {}, html_options = {})
         DateTimeSelector.new(datetime, options, html_options).select_hour
       end
@@ -436,6 +492,10 @@ module ActionView
       #   # Generates a select field for days that defaults to the day for the date in my_date
       #   # that is named 'due' rather than 'day'
       #   select_day(my_time, :field_name => 'due')
+      #
+      #   # Generates a select field for days with a custom prompt.  Use :prompt => true for a
+      #   # generic prompt.
+      #   select_day(5, :prompt => 'Choose day')
       #
       def select_day(date, options = {}, html_options = {})
         DateTimeSelector.new(date, options, html_options).select_day
@@ -475,6 +535,10 @@ module ActionView
       #   # will use keys like "Januar", "Marts."
       #   select_month(Date.today, :use_month_names => %w(Januar Februar Marts ...))
       #
+      #   # Generates a select field for months with a custom prompt.  Use :prompt => true for a
+      #   # generic prompt.
+      #   select_month(14, :prompt => 'Choose month')
+      #
       def select_month(date, options = {}, html_options = {})
         DateTimeSelector.new(date, options, html_options).select_month
       end
@@ -501,6 +565,10 @@ module ActionView
       #   # Generates a select field for years that defaults to the year 2006 that
       #   # has ascending year values
       #   select_year(2006, :start_year => 2000, :end_year => 2010)
+      #
+      #   # Generates a select field for years with a custom prompt.  Use :prompt => true for a
+      #   # generic prompt.
+      #   select_year(14, :prompt => 'Choose year')
       #
       def select_year(date, options = {}, html_options = {})
         DateTimeSelector.new(date, options, html_options).select_year
@@ -764,9 +832,28 @@ module ActionView
 
           select_html = "\n"
           select_html << content_tag(:option, '', :value => '') + "\n" if @options[:include_blank]
+          select_html << prompt_option_tag(type, @options[:prompt]) + "\n" if @options[:prompt]
           select_html << select_options_as_html.to_s
 
           content_tag(:select, select_html, select_options) + "\n"
+        end
+
+        # Builds a prompt option tag with supplied options or from default options
+        #  prompt_option_tag(:month, :prompt => 'Select month')
+        #  => "<option value="">Select month</option>"
+        def prompt_option_tag(type, options)
+          default_options = {:year => false, :month => false, :day => false, :hour => false, :minute => false, :second => false}
+
+          case options
+          when Hash
+            prompt = default_options.merge(options)[type.to_sym]
+          when String
+            prompt = options
+          else
+            prompt = I18n.translate(('datetime.prompts.' + type.to_s).to_sym, :locale => @options[:locale])
+          end
+
+          prompt ? content_tag(:option, prompt, :value => '') : ''
         end
 
         # Builds hidden input tag for date part and value
@@ -785,7 +872,7 @@ module ActionView
         #  => post[written_on(1i)]
         def input_name_from_type(type)
           prefix = @options[:prefix] || ActionView::Helpers::DateTimeSelector::DEFAULT_PREFIX
-          prefix += "[#{@options[:index]}]" if @options[:index]
+          prefix += "[#{@options[:index]}]" if @options.has_key?(:index)
 
           field_name = @options[:field_name] || type
           if @options[:include_position]
@@ -801,8 +888,8 @@ module ActionView
           input_name_from_type(type).gsub(/([\[\(])|(\]\[)/, '_').gsub(/[\]\)]/, '')
         end
 
-        # Given an ordering of datetime components, create the selection html
-        # and join them with their appropriate seperators
+        # Given an ordering of datetime components, create the selection HTML
+        # and join them with their appropriate separators.
         def build_selects_from_types(order)
           select = ''
           order.reverse.each do |type|
@@ -829,15 +916,15 @@ module ActionView
 
     class InstanceTag #:nodoc:
       def to_date_select_tag(options = {}, html_options = {})
-        datetime_selector(options, html_options).select_date
+        datetime_selector(options, html_options).select_date.html_safe!
       end
 
       def to_time_select_tag(options = {}, html_options = {})
-        datetime_selector(options, html_options).select_time
+        datetime_selector(options, html_options).select_time.html_safe!
       end
 
       def to_datetime_select_tag(options = {}, html_options = {})
-        datetime_selector(options, html_options).select_datetime
+        datetime_selector(options, html_options).select_datetime.html_safe!
       end
 
       private
@@ -848,7 +935,7 @@ module ActionView
           options[:field_name]           = @method_name
           options[:include_position]     = true
           options[:prefix]             ||= @object_name
-          options[:index]              ||= @auto_index
+          options[:index]                = @auto_index if defined?(@auto_index) && @auto_index && !options.has_key?(:index)
           options[:datetime_separator] ||= ' &mdash; '
           options[:time_separator]     ||= ' : '
 
@@ -856,7 +943,7 @@ module ActionView
         end
 
         def default_datetime(options)
-          return if options[:include_blank]
+          return if options[:include_blank] || options[:prompt]
 
           case options[:default]
             when nil
@@ -886,15 +973,15 @@ module ActionView
 
     class FormBuilder
       def date_select(method, options = {}, html_options = {})
-        @template.date_select(@object_name, method, options.merge(:object => @object), html_options)
+        @template.date_select(@object_name, method, objectify_options(options), html_options)
       end
 
       def time_select(method, options = {}, html_options = {})
-        @template.time_select(@object_name, method, options.merge(:object => @object), html_options)
+        @template.time_select(@object_name, method, objectify_options(options), html_options)
       end
 
       def datetime_select(method, options = {}, html_options = {})
-        @template.datetime_select(@object_name, method, options.merge(:object => @object), html_options)
+        @template.datetime_select(@object_name, method, objectify_options(options), html_options)
       end
     end
   end

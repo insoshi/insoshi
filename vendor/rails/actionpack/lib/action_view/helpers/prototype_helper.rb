@@ -1,4 +1,5 @@
 require 'set'
+require 'active_support/json'
 
 module ActionView
   module Helpers
@@ -106,7 +107,7 @@ module ActionView
     # on the page in an Ajax response.
     module PrototypeHelper
       unless const_defined? :CALLBACKS
-        CALLBACKS    = Set.new([ :uninitialized, :loading, :loaded,
+        CALLBACKS    = Set.new([ :create, :uninitialized, :loading, :loaded,
                          :interactive, :complete, :failure, :success ] +
                          (100..599).to_a)
         AJAX_OPTIONS = Set.new([ :before, :after, :condition, :url,
@@ -392,7 +393,7 @@ module ActionView
 
         concat(form_remote_tag(options))
         fields_for(object_name, *(args << options), &proc)
-        concat('</form>')
+        concat('</form>'.html_safe!)
       end
       alias_method :form_remote_for, :remote_form_for
 
@@ -530,11 +531,6 @@ module ActionView
       #                       is shorthand for
       #                         :with => "'name=' + value"
       #                       This essentially just changes the key of the parameter.
-      # <tt>:on</tt>::        Specifies which event handler to observe. By default,
-      #                       it's set to "changed" for text fields and areas and
-      #                       "click" for radio buttons and checkboxes. With this,
-      #                       you can specify it instead to be "blur" or "focus" or
-      #                       any other event.
       #
       # Additionally, you may specify any of the options documented in the
       # <em>Common options</em> section at the top of this document.
@@ -547,11 +543,6 @@ module ActionView
       #     :url => 'http://example.com/books/edit/1',
       #     :with => 'title'
       #
-      #   # Sends params: {:book_title => 'Title of the book'} when the focus leaves
-      #   # the input field.
-      #   observe_field 'book_title',
-      #     :url => 'http://example.com/books/edit/1',
-      #     :on => 'blur'
       #
       def observe_field(field_id, options = {})
         if options[:frequency] && options[:frequency] > 0
@@ -695,7 +686,7 @@ module ActionView
           # Returns an object whose <tt>to_json</tt> evaluates to +code+. Use this to pass a literal JavaScript
           # expression as an argument to another JavaScriptGenerator method.
           def literal(code)
-            ActiveSupport::JSON::Variable.new(code.to_s)
+            ::ActiveSupport::JSON::Variable.new(code.to_s)
           end
 
           # Returns a collection reference by finding it through a CSS +pattern+ in the DOM. This collection can then be
@@ -982,7 +973,7 @@ module ActionView
             def loop_on_multiple_args(method, ids)
               record(ids.size>1 ?
                 "#{javascript_object_for(ids)}.each(#{method})" :
-                "#{method}(#{ids.first.to_json})")
+                "#{method}(#{::ActiveSupport::JSON.encode(ids.first)})")
             end
 
             def page
@@ -1006,7 +997,7 @@ module ActionView
             end
 
             def javascript_object_for(object)
-              object.respond_to?(:to_json) ? object.to_json : object.inspect
+              ::ActiveSupport::JSON.encode(object)
             end
 
             def arguments_for_call(arguments, block = nil)
@@ -1093,7 +1084,6 @@ module ActionView
         javascript << "#{options[:frequency]}, " if options[:frequency]
         javascript << "function(element, value) {"
         javascript << "#{callback}}"
-        javascript << ", '#{options[:on]}'" if options[:on]
         javascript << ")"
         javascript_tag(javascript)
       end
@@ -1149,7 +1139,7 @@ module ActionView
     class JavaScriptElementProxy < JavaScriptProxy #:nodoc:
       def initialize(generator, id)
         @id = id
-        super(generator, "$(#{id.to_json})")
+        super(generator, "$(#{::ActiveSupport::JSON.encode(id)})")
       end
 
       # Allows access of element attributes through +attribute+. Examples:
@@ -1221,7 +1211,7 @@ module ActionView
           enumerate :eachSlice, :variable => variable, :method_args => [number], :yield_args => %w(value index), :return => true, &block
         else
           add_variable_assignment!(variable)
-          append_enumerable_function!("eachSlice(#{number.to_json});")
+          append_enumerable_function!("eachSlice(#{::ActiveSupport::JSON.encode(number)});")
         end
       end
 
@@ -1242,7 +1232,7 @@ module ActionView
 
       def pluck(variable, property)
         add_variable_assignment!(variable)
-        append_enumerable_function!("pluck(#{property.to_json});")
+        append_enumerable_function!("pluck(#{::ActiveSupport::JSON.encode(property)});")
       end
 
       def zip(variable, *arguments, &block)
@@ -1306,7 +1296,7 @@ module ActionView
 
     class JavaScriptElementCollectionProxy < JavaScriptCollectionProxy #:nodoc:\
       def initialize(generator, pattern)
-        super(generator, "$$(#{pattern.to_json})")
+        super(generator, "$$(#{::ActiveSupport::JSON.encode(pattern)})")
       end
     end
   end

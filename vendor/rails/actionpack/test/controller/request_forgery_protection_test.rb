@@ -5,13 +5,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id'
 end
 
-# simulates cookie session store
-class FakeSessionDbMan
-  def self.generate_digest(data)
-    Digest::SHA1.hexdigest("secure")
-  end
-end
-
 # common controller actions
 module RequestForgeryProtectionActions
   def index
@@ -29,36 +22,17 @@ module RequestForgeryProtectionActions
   def unsafe
     render :text => 'pwn'
   end
-  
+
   def rescue_action(e) raise e end
 end
 
 # sample controllers
 class RequestForgeryProtectionController < ActionController::Base
   include RequestForgeryProtectionActions
-  protect_from_forgery :only => :index, :secret => 'abc'
-end
-
-class RequestForgeryProtectionWithoutSecretController < ActionController::Base
-  include RequestForgeryProtectionActions
-  protect_from_forgery
-end
-
-# no token is given, assume the cookie store is used
-class CsrfCookieMonsterController < ActionController::Base
-  include RequestForgeryProtectionActions
   protect_from_forgery :only => :index
 end
 
-# sessions are turned off
-class SessionOffController < ActionController::Base
-  protect_from_forgery :secret => 'foobar'
-  session :off
-  def rescue_action(e) raise e end
-  include RequestForgeryProtectionActions
-end
-
-class FreeCookieController < CsrfCookieMonsterController
+class FreeCookieController < RequestForgeryProtectionController
   self.allow_forgery_protection = false
   
   def index
@@ -69,6 +43,13 @@ class FreeCookieController < CsrfCookieMonsterController
     render :inline => "<%= button_to('New', '/') {} %>"
   end
 end
+
+class CustomAuthenticityParamController < RequestForgeryProtectionController
+  def form_authenticity_param
+    'foobar'
+  end
+end
+
 
 # common test methods
 
@@ -105,17 +86,17 @@ module RequestForgeryProtectionTests
 
   def test_should_not_allow_html_post_without_token
     @request.env['CONTENT_TYPE'] = Mime::URL_ENCODED_FORM.to_s
-    assert_raises(ActionController::InvalidAuthenticityToken) { post :index, :format => :html }
+    assert_raise(ActionController::InvalidAuthenticityToken) { post :index, :format => :html }
   end
   
   def test_should_not_allow_html_put_without_token
     @request.env['CONTENT_TYPE'] = Mime::URL_ENCODED_FORM.to_s
-    assert_raises(ActionController::InvalidAuthenticityToken) { put :index, :format => :html }
+    assert_raise(ActionController::InvalidAuthenticityToken) { put :index, :format => :html }
   end
   
   def test_should_not_allow_html_delete_without_token
     @request.env['CONTENT_TYPE'] = Mime::URL_ENCODED_FORM.to_s
-    assert_raises(ActionController::InvalidAuthenticityToken) { delete :index, :format => :html }
+    assert_raise(ActionController::InvalidAuthenticityToken) { delete :index, :format => :html }
   end
 
   def test_should_allow_api_formatted_post_without_token
@@ -137,53 +118,49 @@ module RequestForgeryProtectionTests
   end
 
   def test_should_not_allow_api_formatted_post_sent_as_url_encoded_form_without_token
-    assert_raises(ActionController::InvalidAuthenticityToken) do
+    assert_raise(ActionController::InvalidAuthenticityToken) do
       @request.env['CONTENT_TYPE'] = Mime::URL_ENCODED_FORM.to_s
       post :index, :format => 'xml'
     end
   end
 
   def test_should_not_allow_api_formatted_put_sent_as_url_encoded_form_without_token
-    assert_raises(ActionController::InvalidAuthenticityToken) do
+    assert_raise(ActionController::InvalidAuthenticityToken) do
       @request.env['CONTENT_TYPE'] = Mime::URL_ENCODED_FORM.to_s
       put :index, :format => 'xml'
     end
   end
 
   def test_should_not_allow_api_formatted_delete_sent_as_url_encoded_form_without_token
-    assert_raises(ActionController::InvalidAuthenticityToken) do
+    assert_raise(ActionController::InvalidAuthenticityToken) do
       @request.env['CONTENT_TYPE'] = Mime::URL_ENCODED_FORM.to_s
       delete :index, :format => 'xml'
     end
   end
 
   def test_should_not_allow_api_formatted_post_sent_as_multipart_form_without_token
-    assert_raises(ActionController::InvalidAuthenticityToken) do
+    assert_raise(ActionController::InvalidAuthenticityToken) do
       @request.env['CONTENT_TYPE'] = Mime::MULTIPART_FORM.to_s
       post :index, :format => 'xml'
     end
   end
 
   def test_should_not_allow_api_formatted_put_sent_as_multipart_form_without_token
-    assert_raises(ActionController::InvalidAuthenticityToken) do
+    assert_raise(ActionController::InvalidAuthenticityToken) do
       @request.env['CONTENT_TYPE'] = Mime::MULTIPART_FORM.to_s
       put :index, :format => 'xml'
     end
   end
 
   def test_should_not_allow_api_formatted_delete_sent_as_multipart_form_without_token
-    assert_raises(ActionController::InvalidAuthenticityToken) do
+    assert_raise(ActionController::InvalidAuthenticityToken) do
       @request.env['CONTENT_TYPE'] = Mime::MULTIPART_FORM.to_s
       delete :index, :format => 'xml'
     end
   end
-
+  
   def test_should_allow_xhr_post_without_token
     assert_nothing_raised { xhr :post, :index }
-  end
-  def test_should_not_allow_xhr_post_with_html_without_token
-    @request.env['CONTENT_TYPE'] = Mime::URL_ENCODED_FORM.to_s
-    assert_raise(ActionController::InvalidAuthenticityToken) { xhr :post, :index }
   end
   
   def test_should_allow_xhr_put_without_token
@@ -192,6 +169,11 @@ module RequestForgeryProtectionTests
   
   def test_should_allow_xhr_delete_without_token
     assert_nothing_raised { xhr :delete, :index }
+  end
+  
+  def test_should_allow_xhr_post_with_encoded_form_content_type_without_token
+    @request.env['CONTENT_TYPE'] = Mime::URL_ENCODED_FORM.to_s
+    assert_nothing_raised { xhr :post, :index }
   end
   
   def test_should_allow_post_with_token
@@ -230,62 +212,28 @@ end
 
 # OK let's get our test on
 
-class RequestForgeryProtectionControllerTest < Test::Unit::TestCase
+class RequestForgeryProtectionControllerTest < ActionController::TestCase
   include RequestForgeryProtectionTests
   def setup
     @controller = RequestForgeryProtectionController.new
     @request    = ActionController::TestRequest.new
     @request.format = :html
     @response   = ActionController::TestResponse.new
-    class << @request.session
-      def session_id() '123' end
-    end
-    @token = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA1'), 'abc', '123')
+    @token      = "cf50faa3fe97702ca1ae"
+
+    ActiveSupport::SecureRandom.stubs(:base64).returns(@token)
     ActionController::Base.request_forgery_protection_token = :authenticity_token
   end
 end
 
-class RequestForgeryProtectionWithoutSecretControllerTest < Test::Unit::TestCase
-  def setup
-    @controller = RequestForgeryProtectionWithoutSecretController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    class << @request.session
-      def session_id() '123' end
-    end
-    @token = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA1'), 'abc', '123')
-    ActionController::Base.request_forgery_protection_token = :authenticity_token
-  end
-  
-  # def test_should_raise_error_without_secret
-  #   assert_raises ActionController::InvalidAuthenticityToken do
-  #     get :index
-  #   end
-  # end
-end
-
-class CsrfCookieMonsterControllerTest < Test::Unit::TestCase
-  include RequestForgeryProtectionTests
-  def setup
-    @controller = CsrfCookieMonsterController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    class << @request.session
-      attr_accessor :dbman
-    end
-    # simulate a cookie session store
-    @request.session.dbman = FakeSessionDbMan
-    @token = Digest::SHA1.hexdigest("secure")
-    ActionController::Base.request_forgery_protection_token = :authenticity_token
-  end
-end
-
-class FreeCookieControllerTest < Test::Unit::TestCase
+class FreeCookieControllerTest < ActionController::TestCase
   def setup
     @controller = FreeCookieController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
-    @token      = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA1'), 'abc', '123')
+    @token      = "cf50faa3fe97702ca1ae"
+
+    ActiveSupport::SecureRandom.stubs(:base64).returns(@token)
   end
   
   def test_should_not_render_form_with_token_tag
@@ -305,23 +253,13 @@ class FreeCookieControllerTest < Test::Unit::TestCase
   end
 end
 
-class SessionOffControllerTest < Test::Unit::TestCase
+class CustomAuthenticityParamControllerTest < ActionController::TestCase
   def setup
-    @controller = SessionOffController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    @token      = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('SHA1'), 'abc', '123')
+    ActionController::Base.request_forgery_protection_token = :authenticity_token
   end
 
-  # TODO: Rewrite this test.
-  # This test was passing but for the wrong reason.
-  # Sessions aren't really being turned off, so an exception was raised
-  # because sessions weren't on - not because the token didn't match.
-  #
-  # def test_should_raise_correct_exception
-  #   @request.session = {} # session(:off) doesn't appear to work with controller tests
-  #   assert_raises(ActionController::InvalidAuthenticityToken) do
-  #     post :index, :authenticity_token => @token, :format => :html
-  #   end
-  # end
+  def test_should_allow_custom_token
+    post :index, :authenticity_token => 'foobar'
+    assert_response :ok
+  end
 end

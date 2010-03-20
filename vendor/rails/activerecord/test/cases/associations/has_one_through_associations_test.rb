@@ -1,5 +1,6 @@
 require "cases/helper"
 require 'models/club'
+require 'models/member_type'
 require 'models/member'
 require 'models/membership'
 require 'models/sponsor'
@@ -7,7 +8,7 @@ require 'models/organization'
 require 'models/member_detail'
 
 class HasOneThroughAssociationsTest < ActiveRecord::TestCase
-  fixtures :members, :clubs, :memberships, :sponsors, :organizations
+  fixtures :member_types, :members, :clubs, :memberships, :sponsors, :organizations
   
   def setup
     @member = members(:groucho)
@@ -27,6 +28,16 @@ class HasOneThroughAssociationsTest < ActiveRecord::TestCase
     assert_not_nil new_member.current_membership
     assert_not_nil new_member.club
   end
+
+  def test_creating_association_builds_through_record_for_new
+    new_member = Member.new(:name => "Jane")
+    new_member.club = clubs(:moustache_club)
+    assert new_member.current_membership
+    assert_equal clubs(:moustache_club), new_member.current_membership.club
+    assert_equal clubs(:moustache_club), new_member.club
+    assert new_member.save
+    assert_equal clubs(:moustache_club), new_member.club
+  end
   
   def test_replace_target_record
     new_club = Club.create(:name => "Marx Bros")
@@ -42,7 +53,14 @@ class HasOneThroughAssociationsTest < ActiveRecord::TestCase
       @member.reload      
     end
   end
-  
+
+  def test_set_record_to_nil_should_delete_association
+    @member.club = nil
+    @member.reload
+    assert_equal nil, @member.current_membership
+    assert_nil @member.club
+  end
+
   def test_has_one_through_polymorphic
     assert_equal clubs(:moustache_club), @member.sponsor_club
   end
@@ -114,8 +132,8 @@ class HasOneThroughAssociationsTest < ActiveRecord::TestCase
   end
 
   def test_has_one_through_proxy_should_not_respond_to_private_methods
-    assert_raises(NoMethodError) { clubs(:moustache_club).private_method }
-    assert_raises(NoMethodError) { @member.club.private_method }
+    assert_raise(NoMethodError) { clubs(:moustache_club).private_method }
+    assert_raise(NoMethodError) { @member.club.private_method }
   end
 
   def test_has_one_through_proxy_should_respond_to_private_methods_via_send
@@ -158,4 +176,34 @@ class HasOneThroughAssociationsTest < ActiveRecord::TestCase
     assert @new_organization.members.include?(@member)
   end
 
+  def test_preloading_has_one_through_on_belongs_to
+    assert_not_nil @member.member_type
+    @organization = organizations(:nsa)
+    @member_detail = MemberDetail.new
+    @member.member_detail = @member_detail
+    @member.organization = @organization
+    @member_details = assert_queries(3) do
+      MemberDetail.find(:all, :include => :member_type)
+    end
+    @new_detail = @member_details[0]
+    assert @new_detail.loaded_member_type?
+    assert_not_nil assert_no_queries { @new_detail.member_type }
+  end
+
+  def test_save_of_record_with_loaded_has_one_through
+    @club = @member.club
+    assert_not_nil @club.sponsored_member
+
+    assert_nothing_raised do
+      Club.find(@club.id).save!
+      Club.find(@club.id, :include => :sponsored_member).save!
+    end
+
+    @club.sponsor.destroy
+
+    assert_nothing_raised do
+      Club.find(@club.id).save!
+      Club.find(@club.id, :include => :sponsored_member).save!
+    end
+  end
 end

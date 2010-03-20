@@ -4,6 +4,7 @@ require 'models/customer'
 require 'models/company'
 require 'models/company_in_module'
 require 'models/subscriber'
+require 'models/pirate'
 
 class ReflectionTest < ActiveRecord::TestCase
   fixtures :topics, :customers, :companies, :subscribers
@@ -20,25 +21,25 @@ class ReflectionTest < ActiveRecord::TestCase
 
   def test_read_attribute_names
     assert_equal(
-      %w( id title author_name author_email_address bonus_time written_on last_read content approved replies_count parent_id type ).sort,
+      %w( id title author_name author_email_address bonus_time written_on last_read content approved replies_count parent_id parent_title type ).sort,
       @first.attribute_names
     )
   end
 
   def test_columns
-    assert_equal 12, Topic.columns.length
+    assert_equal 13, Topic.columns.length
   end
 
   def test_columns_are_returned_in_the_order_they_were_declared
     column_names = Topic.columns.map { |column| column.name }
-    assert_equal %w(id title author_name author_email_address written_on bonus_time last_read content approved replies_count parent_id type), column_names
+    assert_equal %w(id title author_name author_email_address written_on bonus_time last_read content approved replies_count parent_id parent_title type), column_names
   end
 
   def test_content_columns
     content_columns        = Topic.content_columns
     content_column_names   = content_columns.map {|column| column.name}
-    assert_equal 8, content_columns.length
-    assert_equal %w(title author_name author_email_address written_on bonus_time last_read content approved).sort, content_column_names.sort
+    assert_equal 9, content_columns.length
+    assert_equal %w(title author_name author_email_address written_on bonus_time last_read content approved parent_title).sort, content_column_names.sort
   end
 
   def test_column_string_type_and_limit
@@ -89,6 +90,15 @@ class ReflectionTest < ActiveRecord::TestCase
     assert_equal Address, Customer.reflect_on_aggregation(:address).klass
 
     assert_equal Money, Customer.reflect_on_aggregation(:balance).klass
+  end
+
+  def test_reflect_on_all_autosave_associations
+    expected = Pirate.reflect_on_all_associations.select { |r| r.options[:autosave] }
+    received = Pirate.reflect_on_all_autosave_associations
+
+    assert !received.empty?
+    assert_not_equal Pirate.reflect_on_all_associations.length, received.length
+    assert_equal expected, received
   end
 
   def test_has_many_reflection
@@ -160,9 +170,9 @@ class ReflectionTest < ActiveRecord::TestCase
 
   def test_reflection_of_all_associations
     # FIXME these assertions bust a lot
-    assert_equal 26, Firm.reflect_on_all_associations.size
-    assert_equal 20, Firm.reflect_on_all_associations(:has_many).size
-    assert_equal 6, Firm.reflect_on_all_associations(:has_one).size
+    assert_equal 36, Firm.reflect_on_all_associations.size
+    assert_equal 26, Firm.reflect_on_all_associations(:has_many).size
+    assert_equal 10, Firm.reflect_on_all_associations(:has_one).size
     assert_equal 0, Firm.reflect_on_all_associations(:belongs_to).size
   end
 

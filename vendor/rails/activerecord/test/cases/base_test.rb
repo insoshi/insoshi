@@ -1,4 +1,5 @@
 require "cases/helper"
+require 'models/post'
 require 'models/author'
 require 'models/topic'
 require 'models/reply'
@@ -12,10 +13,10 @@ require 'models/auto_id'
 require 'models/column_name'
 require 'models/subscriber'
 require 'models/keyboard'
-require 'models/post'
 require 'models/comment'
 require 'models/minimalistic'
 require 'models/warehouse_thing'
+require 'models/parrot'
 require 'rexml/document'
 
 class Category < ActiveRecord::Base; end
@@ -423,8 +424,8 @@ class BasicsTest < ActiveRecord::TestCase
   def test_non_attribute_access_and_assignment
     topic = Topic.new
     assert !topic.respond_to?("mumbo")
-    assert_raises(NoMethodError) { topic.mumbo }
-    assert_raises(NoMethodError) { topic.mumbo = 5 }
+    assert_raise(NoMethodError) { topic.mumbo }
+    assert_raise(NoMethodError) { topic.mumbo = 5 }
   end
 
   def test_preserving_date_objects
@@ -473,6 +474,7 @@ class BasicsTest < ActiveRecord::TestCase
     topic = Topic.find(1)
     assert_equal topic, topic.delete, 'topic.delete did not return self'
     assert topic.frozen?, 'topic not frozen after delete'
+    assert topic.destroyed?, 'topic not marked as being destroyed'
     assert_raise(ActiveRecord::RecordNotFound) { Topic.find(topic.id) }
   end
 
@@ -485,11 +487,12 @@ class BasicsTest < ActiveRecord::TestCase
     topic = Topic.find(1)
     assert_equal topic, topic.destroy, 'topic.destroy did not return self'
     assert topic.frozen?, 'topic not frozen after destroy'
+    assert topic.destroyed?, 'topic not marked as being destroyed'
     assert_raise(ActiveRecord::RecordNotFound) { Topic.find(topic.id) }
   end
 
   def test_record_not_found_exception
-    assert_raises(ActiveRecord::RecordNotFound) { topicReloaded = Topic.find(99999) }
+    assert_raise(ActiveRecord::RecordNotFound) { topicReloaded = Topic.find(99999) }
   end
 
   def test_initialize_with_attributes
@@ -638,6 +641,13 @@ class BasicsTest < ActiveRecord::TestCase
     category.reload
     assert_not_nil category.categorizations_count
     assert_equal 4, category.categorizations_count
+
+    category_2 = categories(:technology)
+    count_1, count_2 = (category.categorizations_count || 0), (category_2.categorizations_count || 0)
+    Category.update_counters([category.id, category_2.id], "categorizations_count" => 2)
+    category.reload; category_2.reload
+    assert_equal count_1 + 2, category.categorizations_count
+    assert_equal count_2 + 2, category_2.categorizations_count
   end
 
   def test_update_all
@@ -840,7 +850,7 @@ class BasicsTest < ActiveRecord::TestCase
     client.delete
     assert client.frozen?
     assert_kind_of Firm, client.firm
-    assert_raises(ActiveSupport::FrozenObjectError) { client.name = "something else" }
+    assert_raise(ActiveSupport::FrozenObjectError) { client.name = "something else" }
   end
 
   def test_destroy_new_record
@@ -854,7 +864,7 @@ class BasicsTest < ActiveRecord::TestCase
     client.destroy
     assert client.frozen?
     assert_kind_of Firm, client.firm
-    assert_raises(ActiveSupport::FrozenObjectError) { client.name = "something else" }
+    assert_raise(ActiveSupport::FrozenObjectError) { client.name = "something else" }
   end
 
   def test_update_attribute
@@ -902,8 +912,8 @@ class BasicsTest < ActiveRecord::TestCase
 
   def test_mass_assignment_should_raise_exception_if_accessible_and_protected_attribute_writers_are_both_used
     topic = TopicWithProtectedContentAndAccessibleAuthorName.new
-    assert_raises(RuntimeError) { topic.attributes = { "author_name" => "me" } }
-    assert_raises(RuntimeError) { topic.attributes = { "content" => "stuff" } }
+    assert_raise(RuntimeError) { topic.attributes = { "author_name" => "me" } }
+    assert_raise(RuntimeError) { topic.attributes = { "content" => "stuff" } }
   end
 
   def test_mass_assignment_protection
@@ -941,7 +951,7 @@ class BasicsTest < ActiveRecord::TestCase
   def test_mass_assigning_invalid_attribute
     firm = Firm.new
 
-    assert_raises(ActiveRecord::UnknownAttributeError) do
+    assert_raise(ActiveRecord::UnknownAttributeError) do
       firm.attributes = { "id" => 5, "type" => "Client", "i_dont_even_exist" => 20 }
     end
   end
@@ -1004,13 +1014,58 @@ class BasicsTest < ActiveRecord::TestCase
     assert_date_from_db Date.new(2004, 6, 24), topic.last_read.to_date
   end
 
-  def test_multiparameter_attributes_on_date_with_empty_date
+  def test_multiparameter_attributes_on_date_with_empty_year
+    attributes = { "last_read(1i)" => "", "last_read(2i)" => "6", "last_read(3i)" => "24" }
+    topic = Topic.find(1)
+    topic.attributes = attributes
+    # note that extra #to_date call allows test to pass for Oracle, which
+    # treats dates/times the same
+    assert_date_from_db Date.new(1, 6, 24), topic.last_read.to_date
+  end
+
+  def test_multiparameter_attributes_on_date_with_empty_month
+    attributes = { "last_read(1i)" => "2004", "last_read(2i)" => "", "last_read(3i)" => "24" }
+    topic = Topic.find(1)
+    topic.attributes = attributes
+    # note that extra #to_date call allows test to pass for Oracle, which
+    # treats dates/times the same
+    assert_date_from_db Date.new(2004, 1, 24), topic.last_read.to_date
+  end
+
+  def test_multiparameter_attributes_on_date_with_empty_day
     attributes = { "last_read(1i)" => "2004", "last_read(2i)" => "6", "last_read(3i)" => "" }
     topic = Topic.find(1)
     topic.attributes = attributes
     # note that extra #to_date call allows test to pass for Oracle, which
     # treats dates/times the same
     assert_date_from_db Date.new(2004, 6, 1), topic.last_read.to_date
+  end
+
+  def test_multiparameter_attributes_on_date_with_empty_day_and_year
+    attributes = { "last_read(1i)" => "", "last_read(2i)" => "6", "last_read(3i)" => "" }
+    topic = Topic.find(1)
+    topic.attributes = attributes
+    # note that extra #to_date call allows test to pass for Oracle, which
+    # treats dates/times the same
+    assert_date_from_db Date.new(1, 6, 1), topic.last_read.to_date
+  end
+
+  def test_multiparameter_attributes_on_date_with_empty_day_and_month
+    attributes = { "last_read(1i)" => "2004", "last_read(2i)" => "", "last_read(3i)" => "" }
+    topic = Topic.find(1)
+    topic.attributes = attributes
+    # note that extra #to_date call allows test to pass for Oracle, which
+    # treats dates/times the same
+    assert_date_from_db Date.new(2004, 1, 1), topic.last_read.to_date
+  end
+
+  def test_multiparameter_attributes_on_date_with_empty_year_and_month
+    attributes = { "last_read(1i)" => "", "last_read(2i)" => "", "last_read(3i)" => "24" }
+    topic = Topic.find(1)
+    topic.attributes = attributes
+    # note that extra #to_date call allows test to pass for Oracle, which
+    # treats dates/times the same
+    assert_date_from_db Date.new(1, 1, 24), topic.last_read.to_date
   end
 
   def test_multiparameter_attributes_on_date_with_all_empty
@@ -1107,7 +1162,7 @@ class BasicsTest < ActiveRecord::TestCase
     Time.zone = nil
     Topic.skip_time_zone_conversion_for_attributes = []
   end
-  
+
   def test_multiparameter_attributes_on_time_only_column_with_time_zone_aware_attributes_does_not_do_time_zone_conversion
     ActiveRecord::Base.time_zone_aware_attributes = true
     ActiveRecord::Base.default_timezone = :utc
@@ -1195,6 +1250,11 @@ class BasicsTest < ActiveRecord::TestCase
     assert !b_false.value?
     b_true = Booleantest.find(true_id)
     assert b_true.value?
+  end
+
+  def test_new_record_returns_boolean
+    assert_equal Topic.new.new_record?, true
+    assert_equal Topic.find(1).new_record?, false
   end
 
   def test_clone
@@ -1389,7 +1449,7 @@ class BasicsTest < ActiveRecord::TestCase
   end
 
   def test_sql_injection_via_find
-    assert_raises(ActiveRecord::RecordNotFound, ActiveRecord::StatementInvalid) do
+    assert_raise(ActiveRecord::RecordNotFound, ActiveRecord::StatementInvalid) do
       Topic.find("123456 OR id > 0")
     end
   end
@@ -1426,7 +1486,7 @@ class BasicsTest < ActiveRecord::TestCase
     topic = Topic.create("content" => myobj).reload
     assert_equal(myobj, topic.content)
   end
-  
+
   def test_serialized_string_attribute
     myobj = "Yes"
     topic = Topic.create("content" => myobj).reload
@@ -1742,6 +1802,13 @@ class BasicsTest < ActiveRecord::TestCase
     end
   end
 
+  def test_scoped_find_with_group_and_having
+    developers = Developer.with_scope(:find => { :group => 'developers.salary', :having => "SUM(salary) > 10000", :select => "SUM(salary) as salary" }) do
+      Developer.find(:all)
+    end
+    assert_equal 3, developers.size
+  end
+
   def test_find_last
     last  = Developer.find :last
     assert_equal last, Developer.find(:first, :order => 'id desc')
@@ -1768,6 +1835,11 @@ class BasicsTest < ActiveRecord::TestCase
   def test_find_multiple_ordered_last
     last  = Developer.find :last, :order => 'developers.name, developers.salary DESC'
     assert_equal last, Developer.find(:all, :order => 'developers.name, developers.salary DESC').last
+  end
+
+  def test_find_symbol_ordered_last
+    last  = Developer.find :last, :order => :salary
+    assert_equal last, Developer.find(:all, :order => :salary).last
   end
 
   def test_find_scoped_ordered_last
@@ -1989,7 +2061,7 @@ class BasicsTest < ActiveRecord::TestCase
 
   def test_inspect_instance
     topic = topics(:first)
-    assert_equal %(#<Topic id: 1, title: "The First Topic", author_name: "David", author_email_address: "david@loudthinking.com", written_on: "#{topic.written_on.to_s(:db)}", bonus_time: "#{topic.bonus_time.to_s(:db)}", last_read: "#{topic.last_read.to_s(:db)}", content: "Have a nice day", approved: false, replies_count: 1, parent_id: nil, type: nil>), topic.inspect
+    assert_equal %(#<Topic id: 1, title: "The First Topic", author_name: "David", author_email_address: "david@loudthinking.com", written_on: "#{topic.written_on.to_s(:db)}", bonus_time: "#{topic.bonus_time.to_s(:db)}", last_read: "#{topic.last_read.to_s(:db)}", content: "Have a nice day", approved: false, replies_count: 1, parent_id: nil, parent_title: nil, type: nil>), topic.inspect
   end
 
   def test_inspect_new_instance
@@ -2071,17 +2143,12 @@ class BasicsTest < ActiveRecord::TestCase
     ActiveRecord::Base.logger = original_logger
   end
 
-  private
-    def with_kcode(kcode)
-      if RUBY_VERSION < '1.9'
-        orig_kcode, $KCODE = $KCODE, kcode
-        begin
-          yield
-        ensure
-          $KCODE = orig_kcode
-        end
-      else
-        yield
-      end
+  def test_create_with_custom_timestamps
+    custom_datetime = 1.hour.ago.beginning_of_day
+
+    %w(created_at created_on updated_at updated_on).each do |attribute|
+      parrot = LiveParrot.create(:name => "colombian", attribute => custom_datetime)
+      assert_equal custom_datetime, parrot[attribute]
     end
+  end
 end

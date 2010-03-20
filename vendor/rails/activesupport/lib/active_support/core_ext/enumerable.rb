@@ -55,12 +55,10 @@ module Enumerable
   #  [].sum(Payment.new(0)) { |i| i.amount } # => Payment.new(0)
   #
   def sum(identity = 0, &block)
-    return identity unless size > 0
-
     if block_given?
-      map(&block).sum
+      map(&block).sum(identity)
     else
-      inject { |sum, element| sum + element }
+      inject { |sum, element| sum + element } || identity
     end
   end
 
@@ -104,4 +102,13 @@ module Enumerable
     size = block_given? ? select(&block).size : self.size
     size > 1
   end
+
+  # Returns true if none of the elements match the given block.
+  #
+  #   success = responses.none? {|r| r.status / 100 == 5 }
+  #
+  # This is a builtin method in Ruby 1.8.7 and later.
+  def none?(&block)
+    !any?(&block)
+  end unless [].respond_to?(:none?)
 end

@@ -73,16 +73,7 @@ module ActiveSupport #:nodoc:
       UNICODE_TRAILERS_PAT = /(#{codepoints_to_pattern(UNICODE_LEADERS_AND_TRAILERS)})+\Z/
       UNICODE_LEADERS_PAT = /\A(#{codepoints_to_pattern(UNICODE_LEADERS_AND_TRAILERS)})+/
 
-      # Borrowed from the Kconv library by Shinji KONO - (also as seen on the W3C site)
-      UTF8_PAT = /\A(?:
-                     [\x00-\x7f]                                     |
-                     [\xc2-\xdf] [\x80-\xbf]                         |
-                     \xe0        [\xa0-\xbf] [\x80-\xbf]             |
-                     [\xe1-\xef] [\x80-\xbf] [\x80-\xbf]             |
-                     \xf0        [\x90-\xbf] [\x80-\xbf] [\x80-\xbf] |
-                     [\xf1-\xf3] [\x80-\xbf] [\x80-\xbf] [\x80-\xbf] |
-                     \xf4        [\x80-\x8f] [\x80-\xbf] [\x80-\xbf]
-                    )*\z/xn
+      UTF8_PAT = ActiveSupport::Multibyte::VALID_CHARACTER['UTF-8']
 
       attr_reader :wrapped_string
       alias to_s wrapped_string
@@ -205,7 +196,22 @@ module ActiveSupport #:nodoc:
       #   'Café périferôl'.mb_chars.index('ô') #=> 12
       #   'Café périferôl'.mb_chars.index(/\w/u) #=> 0
       def index(needle, offset=0)
-        index = @wrapped_string.index(needle, offset)
+        wrapped_offset = self.first(offset).wrapped_string.length
+        index = @wrapped_string.index(needle, wrapped_offset)
+        index ? (self.class.u_unpack(@wrapped_string.slice(0...index)).size) : nil
+      end
+
+      # Returns the position _needle_ in the string, counting in
+      # codepoints, searching backward from _offset_ or the end of the
+      # string. Returns +nil+ if _needle_ isn't found.
+      #
+      # Example:
+      #   'Café périferôl'.mb_chars.rindex('é') #=> 6
+      #   'Café périferôl'.mb_chars.rindex(/\w/u) #=> 13
+      def rindex(needle, offset=nil)
+        offset ||= length
+        wrapped_offset = self.first(offset).wrapped_string.length
+        index = @wrapped_string.rindex(needle, wrapped_offset)
         index ? (self.class.u_unpack(@wrapped_string.slice(0...index)).size) : nil
       end
 
@@ -292,31 +298,31 @@ module ActiveSupport #:nodoc:
       def rstrip
         chars(@wrapped_string.gsub(UNICODE_TRAILERS_PAT, ''))
       end
-      
+
       # Strips entire range of Unicode whitespace from the left of the string.
       def lstrip
         chars(@wrapped_string.gsub(UNICODE_LEADERS_PAT, ''))
       end
-      
+
       # Strips entire range of Unicode whitespace from the right and left of the string.
       def strip
         rstrip.lstrip
       end
-      
+
       # Returns the number of codepoints in the string
       def size
         self.class.u_unpack(@wrapped_string).size
       end
       alias_method :length, :size
-      
+
       # Reverses all characters in the string.
       #
       # Example:
       #   'Café'.mb_chars.reverse.to_s #=> 'éfaC'
       def reverse
-        chars(self.class.u_unpack(@wrapped_string).reverse.pack('U*'))
+        chars(self.class.g_unpack(@wrapped_string).reverse.flatten.pack('U*'))
       end
-      
+
       # Implements Unicode-aware slice with codepoints. Slicing on one point returns the codepoints for that
       # character.
       #
@@ -343,6 +349,26 @@ module ActiveSupport #:nodoc:
         result.nil? ? nil : chars(result)
       end
       alias_method :[], :slice
+
+      # Like <tt>String#slice!</tt>, except instead of byte offsets you specify character offsets.
+      #
+      # Example:
+      #   s = 'こんにちは'
+      #   s.mb_chars.slice!(2..3).to_s #=> "にち"
+      #   s #=> "こんは"
+      def slice!(*args)
+        slice = self[*args]
+        self[*args] = ''
+        slice
+      end
+
+      # Returns the codepoint of the first character in the string.
+      #
+      # Example:
+      #   'こんにちは'.mb_chars.ord #=> 12371
+      def ord
+        self.class.u_unpack(@wrapped_string)[0]
+      end
 
       # Convert characters in the string to uppercase.
       #
@@ -424,7 +450,7 @@ module ActiveSupport #:nodoc:
         chars(self.class.tidy_bytes(@wrapped_string))
       end
 
-      %w(lstrip rstrip strip reverse upcase downcase slice tidy_bytes capitalize).each do |method|
+      %w(lstrip rstrip strip reverse upcase downcase tidy_bytes capitalize).each do |method|
         define_method("#{method}!") do |*args|
           unless args.nil?
             @wrapped_string = send(method, *args).to_s
@@ -609,7 +635,9 @@ module ActiveSupport #:nodoc:
         # Replaces all ISO-8859-1 or CP1252 characters by their UTF-8 equivalent resulting in a valid UTF-8 string.
         def tidy_bytes(string)
           string.split(//u).map do |c|
-            if !UTF8_PAT.match(c)
+            c.force_encoding(Encoding::ASCII) if c.respond_to?(:force_encoding)
+
+            if !ActiveSupport::Multibyte::VALID_CHARACTER['UTF-8'].match(c)
               n = c.unpack('C')[0]
               n < 128 ? n.chr :
               n < 160 ? [UCD.cp1252[n] || n].pack('U') :

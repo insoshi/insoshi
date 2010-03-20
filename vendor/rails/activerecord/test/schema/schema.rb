@@ -23,6 +23,7 @@ ActiveRecord::Schema.define do
   # unless the ordering matters.  In which case, define them below
   create_table :accounts, :force => true do |t|
     t.integer :firm_id
+    t.string  :firm_name
     t.integer :credit_limit
   end
 
@@ -55,12 +56,21 @@ ActiveRecord::Schema.define do
     t.binary :data
   end
 
+  create_table :birds, :force => true do |t|
+    t.string :name
+    t.integer :pirate_id
+  end
+
   create_table :books, :force => true do |t|
     t.column :name, :string
   end
 
   create_table :booleantests, :force => true do |t|
     t.boolean :value
+  end
+
+  create_table "CamelCase", :force => true do |t|
+    t.string :name
   end
 
   create_table :categories, :force => true do |t|
@@ -109,11 +119,17 @@ ActiveRecord::Schema.define do
     t.integer :rating, :default => 1
   end
 
+  add_index :companies, [:firm_id, :type, :rating, :ruby_type], :name => "company_index"
+
   create_table :computers, :force => true do |t|
     t.integer :developer, :null => false
     t.integer :extendedWarranty, :null => false
   end
 
+  create_table :contracts, :force => true do |t|
+    t.integer :developer_id
+    t.integer :company_id
+  end
 
   create_table :customers, :force => true do |t|
     t.string  :name
@@ -150,8 +166,23 @@ ActiveRecord::Schema.define do
     t.integer :course_id, :null => false
   end
 
+  create_table :essays, :force => true do |t|
+    t.string :name
+    t.string :writer_id
+    t.string :writer_type
+  end
+
+  create_table :events, :force => true do |t|
+    t.string :title, :limit => 5
+  end
+
   create_table :funny_jokes, :force => true do |t|
     t.string :name
+  end
+
+  create_table :goofy_string_id, :force => true, :id => false do |t|
+    t.string :id, :null => false
+    t.string :info
   end
 
   create_table :items, :force => true do |t|
@@ -195,6 +226,7 @@ ActiveRecord::Schema.define do
 
   create_table :members, :force => true do |t|
     t.string :name
+    t.integer :member_type_id
   end
 
   create_table :member_details, :force => true do |t|
@@ -208,6 +240,10 @@ ActiveRecord::Schema.define do
     t.integer :club_id, :member_id
     t.boolean :favourite, :default => false
     t.string :type
+  end
+
+  create_table :member_types, :force => true do |t|
+    t.string :name
   end
 
   create_table :references, :force => true do |t|
@@ -247,6 +283,7 @@ ActiveRecord::Schema.define do
     t.decimal :world_population, :precision => 10, :scale => 0
     t.decimal :my_house_population, :precision => 2, :scale => 0
     t.decimal :decimal_number_with_default, :precision => 3, :scale => 2, :default => 2.78
+    t.float   :temperature
   end
 
   create_table :orders, :force => true do |t|
@@ -261,6 +298,8 @@ ActiveRecord::Schema.define do
 
   create_table :owners, :primary_key => :owner_id ,:force => true do |t|
     t.string :name
+    t.column :updated_at, :datetime
+    t.column :happy_at,   :datetime
   end
 
 
@@ -293,8 +332,10 @@ ActiveRecord::Schema.define do
   end
 
   create_table :people, :force => true do |t|
-    t.string  :first_name, :null => false
-    t.integer :lock_version, :null => false, :default => 0
+    t.string     :first_name, :null => false
+    t.references :primary_contact
+    t.string     :gender, :limit => 1
+    t.integer    :lock_version, :null => false, :default => 0
   end
 
   create_table :pets, :primary_key => :pet_id ,:force => true do |t|
@@ -343,10 +384,16 @@ ActiveRecord::Schema.define do
 
   create_table :ships, :force => true do |t|
     t.string :name
+    t.integer :pirate_id
     t.datetime :created_at
     t.datetime :created_on
     t.datetime :updated_at
     t.datetime :updated_on
+  end
+
+  create_table :ship_parts, :force => true do |t|
+    t.string :name
+    t.integer :ship_id
   end
 
   create_table :sponsors, :force => true do |t|
@@ -382,6 +429,7 @@ ActiveRecord::Schema.define do
     t.boolean  :approved, :default => true
     t.integer  :replies_count, :default => 0
     t.integer  :parent_id
+    t.string   :parent_title
     t.string   :type
   end
 
@@ -395,6 +443,11 @@ ActiveRecord::Schema.define do
   create_table :tags, :force => true do |t|
     t.column :name, :string
     t.column :taggings_count, :integer, :default => 0
+  end
+
+  create_table :toys, :primary_key => :toy_id ,:force => true do |t|
+    t.string :name
+    t.integer :pet_id, :integer
   end
 
   create_table :treasures, :force => true do |t|
