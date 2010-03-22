@@ -109,7 +109,7 @@ en:
     members:
       pending_request: "Pending request"
       cancel_membership: "Cancel membership"
-      confirm: "Are you sure you want to unsuscribe this person?"
+      confirm: "Are you sure you want to unsubscribe this person?"
       accept_membership: "Accept membership"
       header: "Members"
       no_members_yet: "No members (yet)"
