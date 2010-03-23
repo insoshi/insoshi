@@ -344,5 +344,7 @@ en:
       paid_to: "paid to"
 
   shared:
+    minifeed:
+      whats_going_on: "What's Going On"
     transact:
       for: "for"
