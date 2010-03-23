@@ -30,7 +30,12 @@ class ApplicationController < ActionController::Base
     end
 
     def set_person_locale
-      I18n.locale = current_person.language if logged_in?
+      if logged_in?
+        I18n.locale = current_person.language
+      else
+        session[:locale] = params[:locale] if params[:locale]
+        I18n.locale = session[:locale] || I18n.default_locale
+      end
     end
 
     def authorized?
