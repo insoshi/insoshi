@@ -19,7 +19,7 @@ es:
   bid: "oferta"
   due_date: "Fecha de vencimiento"
   expiration_date: "Fecha de caducidad"
-  description: "Descripcion"
+  description: "Descripción"
   are_you_sure: "Estas seguro?"
   miles_away: "muy lejos"
   ago: "tiempo atras"
@@ -27,7 +27,7 @@ es:
   a_question: "una pregunta"
   group: "Grupo"
   recent_street_cred: "Recent Street Cred"
-  last_logged_in: "ultima sesion de inicio"
+  last_logged_in: "última sesión de inicio"
   post: "anuncio"
   posted: "anunciado"
   earned: "ganado"
@@ -46,16 +46,16 @@ es:
 
   addresses:
     new:
-      header: "Crear una nueva direccion"
+      header: "Crear una nueva dirección"
     edit:
-      header: "Editar la direccion"
+      header: "Editar la dirección"
     form:
-      address_line_1: "Direccion renglon 1"
-      address_line_2: "Direccion renglon 2"
-      address_line_3: "Direccion renglon 3"
+      address_line_1: "Dirección renglon 1"
+      address_line_2: "Dirección renglon 2"
+      address_line_3: "Dirección renglon 3"
       city: "Ciudad"
       state: "Estado"
-      zipcode: "Codigo postal"
+      zipcode: "Código postal"
 
   bids:
     bid:
@@ -66,19 +66,19 @@ es:
   categories:
     index:
       header: "Servicios"
-      no_categories: "No clasificado (todavia no!)"
-      explanation: "Numero de personas dentro del parentesis"
+      no_categories: "No clasificado (todavía no!)"
+      explanation: "Numero de personas dentro del paréntesis"
     show:
-      no_people: "Nadie (todavia no!)"
-      no_offers: "Sin ofertas ( todavia no!)"
-      no_reqs: "Sin peticiones (todavia no!)"
+      no_people: "Nadie (todavía no!)"
+      no_offers: "Sin ofertas ( todavía no!)"
+      no_reqs: "Sin peticiones (todavía no!)"
     new:
       header: "Nuevo servicio"
     edit:
       header: "Redacte el servicio"
     form:
       name: "Nombre"
-      parent_category: "Primera Categoria"
+      parent_category: "Primera Categoría"
 
   comments:
     event_new:
@@ -90,44 +90,44 @@ es:
 
   forums:
     show:
-      header: "Tema de discusion"
+      header: "Tema de discusión"
       add_new_topic: "Agrege un nuevo tema"
 
   groups:
     index:
       header: "Grupos"
-      no_groups_yet: "Ningun grupo (todavia)"
+      no_groups_yet: "Ningún grupo (todavía)"
     edit:
-      header: "Grupo de redaccion"
+      header: "Grupo de redacción"
       name: "Nombre"
       currency_unit_plural: "Unidad monetaria (plural)"
-      description: "Descripcion"
+      description: "Descripción"
       mode: "modalidad"
       photos: "Fotos"
       primary: "principal"
       add_a_photo: "agregar una fotografia"
     members:
       pending_request: "Solicitud  Pendiente"
-      cancel_membership: "Cancelar la membrecia"
+      cancel_membership: "Cancelar la membresía"
       confirm: "Are you sure you want to unsubscribe this person?"
-      accept_membership: "Aceptar la membrecia"
+      accept_membership: "Aceptar la membresía"
       header: "Miembros"
-      no_members_yet: "Sin miembros (todavia)"
+      no_members_yet: "Sin miembros (todavía)"
       administrator: "Administrador"
     new:
       header: "Nuevo grupo"
       name: "Nombre"
       adhoc_currency: "Crear una moneda adecuada"
       currency_unit_plural: "Unidad(es) monetaria(s)"
-      description: "Descripcion"
+      description: "Descripción"
       mode: "Modalidad"
     new_photo:
       header: "Descargar un grupo de fotografias"
       upload_a_photo: "Descargar una foto:"
     show:
       header: "Grupo:"
-      blank_description: "La descripcion del grupo esta en blanco."
-      add_description: "Haga click aqui para agregar una descripcion"
+      blank_description: "La descripción del grupo esta en blanco."
+      add_description: "Haga click aqui para agregar una descripción"
       you_are_viewing_your_group: "Esta usted viendo a su grupo."
       click_here_to_edit_it: "Haga click aqui para redactarlo"
       currency_unit: "Unidad monetaria:"
@@ -143,13 +143,13 @@ es:
       mode: "Modo:"
       invite_contacts: "Invite a sus contactos"
       delete_group: "borre este grupo"
-      discussion_topics: "Temas de discusion"
+      discussion_topics: "Temas de discusión"
       add_a_new_topic: "Agregar un nuevo tema"
       recent_exchanges: "Intercambios recientes"
     _people:
       header: "Del grupo"
       all_members: "Todos los miembros"
-      no_members: "Sin afiliados todavia"
+      no_members: "Sin afiliados todavía"
 
   home:
     index:
@@ -170,7 +170,7 @@ es:
       requests: "Tus ofertas vigentes"
       no_active_requests: "No hay ofertas vigentes"
     _forum_preview:
-      header: "Foro de discusiones"
+      header: "Foro de discusiónes"
       last_post: "Mensajes recientes"
     _invitations:
       header: "Invitaciones de grupo"
@@ -183,8 +183,8 @@ es:
       header: "Mensajes"
       all_messages: "Todos los mensajes"
     _requested_memberships:
-      header: "Peticion de membrecia"
-      requests_membership_for: "Peticiones de membrecia"
+      header: "Peticion de membresía"
+      requests_membership_for: "Peticiones de membresía"
       view_group: "Visite el grupo"
       view_profile: "Vea su perfil"
     _secondary_column:
@@ -197,7 +197,7 @@ es:
       created_by: "Creado por"
     index:
       header: "Ofertas"
-      nooffers: "No hay ofertas (todavia)"
+      nooffers: "No hay ofertas (todavía)"
     edit:
       header: "modifique la oferta"
     new:
@@ -218,10 +218,10 @@ es:
       twitter_id: "Twitter"
       services_offered: "Servicios que ofrece"
       neighborhood: "Vecindario"
-      description: "Descripcion"
+      description: "Descripción"
       email: "Correo electronico"
-      email_notification_preferences: "Notificacion de preferencias en el correo electronico"
-      email_notification_note: "Recibiras notificaciones via email por cada evento que marques."
+      email_notification_preferences: "Notificación de preferencias en el correo electronico"
+      email_notification_note: "Recibiras notificaciónes via email por cada evento que marques."
       requests_in_my_service_categories: "Peticiones en mi categoria de servicios:"
       messages: "Mensajes:"
       wall_comments: "Pared de comentarios:"
@@ -229,14 +229,14 @@ es:
       photos: "Fotos"
       add_a_photo: "Agrege una foto"
       addresses: "Direcciones"
-      add_address: "Agregar una direccion"
-      change_your_password: "Cambiar su contrasena"
-      current_password: "Contrasena actual"
-      new_password: "Nueva contrasena"
-      confirm_password: "Confirme su contrasena"
-      change_password: "Cambiar su contrasena"
+      add_address: "Agregar una dirección"
+      change_your_password: "Cambiar su contraseña"
+      current_password: "Contraseña actual"
+      new_password: "Nueva contraseña"
+      confirm_password: "Confirme su contraseña"
+      change_password: "Cambiar su contraseña"
     groups:
-      no_groups: "Todavia no hay grupos"
+      no_groups: "Todavía no hay grupos"
       new_group: "Grupo Nuevo"
     index:
       header: "Personas"
@@ -246,7 +246,7 @@ es:
     invitations:
       header: "Invitacion de grupo para"
       respond: "Responder"
-      no_invitations: "Todavia no hay invitaciones"
+      no_invitations: "Todavía no hay invitaciones"
     new:
       header: "Enlistarse"
       email_address: "Correo electronico"
@@ -258,23 +258,23 @@ es:
       which_services: "Que tipo de servicios desea ofrecer? (y de manera opcional ser notificado de nuevas peticiones se servicios)"
       something_about_yourself: "Haz saber a otros miembros cuales son las habilidades que tu ofreces a tu comunidad."
       neighborhood: "vecindario"
-      password: "Contrasena"
-      confirm_password: "confirmar su contrasena"
+      password: "Contraseña"
+      confirm_password: "confirmar su contraseña"
       i_accept_the: "Yo acepto"
       member_agreement: "Acuerdo de miembro"
     request_memberships:
-      header: "Peticion de membrecia de grupo"
+      header: "Peticion de membresía de grupo"
       respond: "Responder"
-      no_membership_request: "Todavia no hay peticiones de membrecia"
+      no_membership_request: "Todavía no hay peticiones de membresía"
     show:
       header: "Perfil:"
       not_active: "Esta persona no esta activa"
-      description_blank: "Su descripcion esta en blanco."
-      add_description: "Haz clic aqui para agregar una descripcion"
+      description_blank: "Su descripción esta en blanco."
+      add_description: "Haz clic aqui para agregar una descripción"
       own_profile: "Estas viendo tu propio perfil."
       edit_it: "Haz clic aqui para modificarlo"
-      update_location: "Haz clic aqui para actualizar tu ubicacion"
-      address_remain_private: "(tu direccion permanecera en privado)"
+      update_location: "Haz clic aqui para actualizar tu ubicación"
+      address_remain_private: "(tu dirección permanecera en privado)"
       phone: "Telefono:"
     _language:
       language: "Idioma"
@@ -293,7 +293,7 @@ es:
       header: "Requisiciones"
       current: "Reciente"
       all: "Todo"
-      noreqs: "Todavia no hay peticiones"
+      noreqs: "Todavía no hay peticiones"
     edit:
       header: "Editar la peticion"
     new:
@@ -304,7 +304,7 @@ es:
     show:
       header: "Requisicion"
       bids: "Ofertas"
-      nobids: "No hay ofertas todavia"
+      nobids: "No hay ofertas todavía"
       newbid: "Nueva oferta"
       private_message_to_requestor: "Mensaje privado al solicitante"
 
@@ -314,7 +314,7 @@ es:
       amount: "Cantidad"
       for: "Para:"
       or_ask: "o preguntar"
-      service_provided: "Servicios proveidos"
+      service_provided: "Servicios proveídos"
 
   topics:
     show:
@@ -328,24 +328,24 @@ es:
 
   transacts:
     index:
-      header: "Transacciones"
+      header: "Transacciónes"
     show:
-      header: "Transaccion"
+      header: "Transacción"
     new:
       header: "Pagar a alquien"
       requested: "pedido"
       explanation: "Esta peticion se ha hecho a cambio de:"
       pay_now: "Pagar ahora"
-      to: "Correo del Beneficiaro"
+      to: "Correo del Beneficiario"
       amount: "Cantidad"
-      description: "Descripcion"
+      description: "Descripción"
     helper:
       received_from: "recibido de"
       paid_to: "Paquese a"
 
   shared:
     minifeed:
-      whats_going_on: "What's going on"
+      whats_going_on: "Qué pasa"
     transact:
       for: "por"
 
