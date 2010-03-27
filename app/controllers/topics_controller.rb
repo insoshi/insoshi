@@ -33,7 +33,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.save
-        flash[:success] = 'Topic was successfully created.'
+        flash[:success] = t('success_topic_created')
         format.html { redirect_to forum_topic_path(@forum, @topic) }
       else
         format.html { render :action => "new" }
@@ -46,7 +46,7 @@ class TopicsController < ApplicationController
 
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
-        flash[:success] = 'Topic was successfully updated.'
+        flash[:notice] = t('notice_topic_updated')
         format.html { redirect_to forum_url(@forum) }
       else
         format.html { render :action => "edit" }
@@ -59,7 +59,7 @@ class TopicsController < ApplicationController
     @topic.destroy
 
     respond_to do |format|
-      flash[:success] = 'Topic was successfully destroyed.'
+      flash[:success] = t('success_topic_destroyed')
       format.html { redirect_to forum_url(@forum) }
     end
   end

@@ -32,7 +32,7 @@ class OffersController < ApplicationController
 
     respond_to do |format|
       if @offer.save
-        flash[:notice] = 'Offer was successfully created.'
+        flash[:success] = t('success_offer_created')
         format.html { redirect_to(@offer) }
         format.xml  { render :xml => @offer, :status => :created, :location => @offer }
       else
@@ -53,7 +53,7 @@ class OffersController < ApplicationController
 
     respond_to do |format|
       if @offer.update_attributes(params[:offer])
-        flash[:notice] = 'Offer was successfully updated.'
+        flash[:notice] = t('notice_offer_updated')
         format.html { redirect_to(@offer) }
         format.xml  { head :ok }
       else
@@ -69,7 +69,7 @@ class OffersController < ApplicationController
     if @offer.can_destroy?
       @offer.destroy
     else
-      flash[:error] = 'This offer cannot be deleted as it has been accepted'
+      flash[:error] = t('error_offer_cannot_be_deleted')
     end
 
     respond_to do |format|

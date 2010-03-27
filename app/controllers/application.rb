@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
 
     def admin_required
       unless current_person.admin?
-        flash[:error] = "Admin access required"
+        flash[:error] = t("error_admin_access_required")
         redirect_to home_url
       end
     end
@@ -93,13 +93,13 @@ class ApplicationController < ActionController::Base
         default_password = "admin"
         if logged_in? and current_person.admin? 
           if current_person.email =~ /@#{default_domain}$/
-            flash[:notice] = %(Warning: your email address is still at 
+            flash[:notice] = %(#{t('notice_warning_your_email_address')} 
               #{default_domain}.
-              <a href="#{edit_person_path(current_person)}">Change it here</a>.)
+              <a href="#{edit_person_path(current_person)}"><%= t('notice_change_it_here') %></a>.)
           end
           if current_person.unencrypted_password == default_password
-            flash[:error] = %(Warning: your password is still the default.
-              <a href="#{edit_person_path(current_person)}">Change it here</a>.)          
+            flash[:error] = %(#{t('error_default_password')}
+              <a href="#{edit_person_path(current_person)}"><%= t('notice_change_it_here') %></a>.)          
           end
         end
       end

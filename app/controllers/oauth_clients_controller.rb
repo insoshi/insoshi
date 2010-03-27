@@ -14,7 +14,7 @@ class OauthClientsController < ApplicationController
   def create
     @client_application = current_user.client_applications.build(params[:client_application])
     if @client_application.save
-      flash[:notice] = "Registered the information successfully"
+      flash[:notice] = t('notice_registered_the_information_successfully')
       redirect_to :action => "show", :id => @client_application.id
     else
       render :action => "new"
@@ -29,7 +29,7 @@ class OauthClientsController < ApplicationController
   
   def update
     if @client_application.update_attributes(params[:client_application])
-      flash[:notice] = "Updated the client information successfully"
+      flash[:notice] = t('notice_updated_the_client_information_successfully')
       redirect_to :action => "show", :id => @client_application.id
     else
       render :action => "edit"
@@ -38,14 +38,14 @@ class OauthClientsController < ApplicationController
 
   def destroy
     @client_application.destroy
-    flash[:notice] = "Destroyed the client application registration"
+    flash[:notice] = t('notice_destroyed_the_client_application_registration')
     redirect_to :action => "index"
   end
 
   private
   def get_client_application
     unless @client_application = current_user.client_applications.find(params[:id])
-      flash.now[:error] = "Wrong application id"
+      flash.now[:error] = t('error_wrong_application_id')
       raise ActiveRecord::RecordNotFound
     end
   end
