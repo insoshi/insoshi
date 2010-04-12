@@ -27,7 +27,7 @@
   </div>
   <div id="providersDisplay" style="height: 95px;" class="form_row full"><label><%= t('reqs.new.people_to_be_notified') %>:</label><div id="followMe"></div></div>
   <div class="form_row">
-    <label for="notifications" class="checkbox"><%= t('notify_members_email') %></label>
+    <label for="notifications" class="checkbox"><%= t('reqs.new.notify_members_email') %></label>
     <%= check_box_tag 'req[notifications]', '1', true %>
   </div>
 <% unless global_prefs.twitter_name.blank? %>

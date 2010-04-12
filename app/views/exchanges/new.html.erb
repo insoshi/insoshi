@@ -23,7 +23,7 @@
     <% if params[:offer] %>
       <div class="form_row">
         <%= f.label t('exchanges.new.amount') %>
-        <%= f.text_field :amount, :size => 3, :value => @offer.price, :disabled => true %>&nbsp;<span id="units" class="small"><%= t.currency_unit_plural %></span>
+        <%= f.text_field :amount, :size => 3, :value => @offer.price, :disabled => true %>&nbsp;<span id="units" class="small"><%= t('currency_unit_plural') %></span>
       </div>
       <% fields_for :offer do |o| %>
         <div class="form_row">
