@@ -97,8 +97,6 @@ module ActiveSupport
   end
 end
 
-Workling::Remote.dispatcher = Workling::Remote::Runners::StarlingRunner.new
-
 # These defaults are used in GeoKit::Mappable.distance_to and in acts_as_mappable
 GeoKit::default_units = :miles
 GeoKit::default_formula = :sphere
