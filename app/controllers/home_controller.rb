@@ -33,6 +33,6 @@ class HomeController < ApplicationController
     else
       flash[:notice] = "Blog updated #{new_posts_count} entries."
     end
-    redirect_to '/home' 
+    redirect_to '/' 
   end
 end
