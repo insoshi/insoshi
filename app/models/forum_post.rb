@@ -33,7 +33,6 @@ class ForumPost < Post
 #  private
 
   def send_forum_notifications
-#    MailingsWorker.async_send_forum_post_mailing(:forum_post_id => self.id)
     Cheepnis.enqueue(self)
   end
   
@@ -41,7 +40,6 @@ class ForumPost < Post
     do_send_forum_notifications
   end
 
-  # was in MailingsWorker
   def do_send_forum_notifications
     group = topic.forum.group
     if !group
