@@ -1,8 +1,8 @@
 <%- column_div :type => :primary do -%>
-  <h2>People<%= h @zipcode %></h2>
+  <h2><%= t('people.index.header') %><%= h @zipcode %></h2>
   <ul id="message-nav">
-    <%= list_link_with_active "Alpha", people_path %>
-    <%= list_link_with_active "Newest", people_path(:sort => 'newest') %>
+    <%= list_link_with_active t('people.index.alpha'), people_path %>
+    <%= list_link_with_active t('people.index.newest'), people_path(:sort => 'newest') %>
   </ul>
   <% unless @people.empty? -%>
     <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
@@ -12,7 +12,7 @@
     <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
   <% else %>
     <% if !@zipcode.empty? %>
-      <div class="meta">No results for <%= h @zipcode %></div>
+      <div class="meta"><%= t('people.index.no_results_for') %> <%= h @zipcode %></div>
     <% end %>
   <% end -%>
 <%- end -%>

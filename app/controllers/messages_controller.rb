@@ -70,7 +70,7 @@ class MessagesController < ApplicationController
   
     respond_to do |format|
       if !preview? and @message.save
-        flash[:success] = 'Message sent!'
+        flash[:success] = t('success_message_sent') 
         format.html { redirect_to messages_url }
       else
         @preview = @message.content if preview?
@@ -82,10 +82,10 @@ class MessagesController < ApplicationController
   def destroy
     @message = Message.find(params[:id])
     if @message.trash(current_person)
-      flash[:success] = "Message trashed"
+      flash[:success] = t('success_message_trashed')
     else
       # This should never happen...
-      flash[:error] = "Invalid action"
+      flash[:error] =  t('error_invalid_action')
     end
   
     respond_to do |format|
@@ -96,10 +96,10 @@ class MessagesController < ApplicationController
   def undestroy
     @message = Message.find(params[:id])
     if @message.untrash(current_person)
-      flash[:success] = "Message restored to inbox"
+      flash[:success] = t('success_message_restored_to_inbox')
     else
       # This should never happen...
-      flash[:error] = "Invalid action"
+      flash[:error] = t('error_invalid_action')
     end
     respond_to do |format|
       format.html { redirect_to messages_url }

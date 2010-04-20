@@ -13,15 +13,15 @@ class MembershipsController < ApplicationController
     respond_to do |format|
       if Membership.request(current_person, @group)
         if @group.public?
-          flash[:notice] = "You have joined to '#{@group.name}'"
+          flash[:notice] = t('notice_you_have_joined') + " '#{@group.name}'"
         else
-          flash[:notice] = 'Membership request sent!'
+          flash[:notice] = t('notice_membership_request_sent')
         end
         format.html { redirect_to(home_url) }
       else
         # This should only happen when people do something funky
         # like trying to join a group that has a request pending
-        flash[:notice] = "Invalid membership"
+        flash[:notice] = t('notice_membership_invalid')
         format.html { redirect_to(home_url) }
       end
     end
@@ -36,11 +36,11 @@ class MembershipsController < ApplicationController
       when "Accept"
         @membership.accept
         PersonMailer.deliver_invitation_accepted(@membership)
-        flash[:notice] = %(Accepted membership with
+        flash[:notice] = %(#{t('notice_accepted_membership_with')}
                            <a href="#{group_path(@membership.group)}">#{name}</a>)
       when "Decline"
         @membership.breakup
-        flash[:notice] = "Declined membership for #{name}"
+        flash[:notice] = t('notice_declined_membership_for') + " #{name}"
       end
       format.html { redirect_to(home_url) }
     end
@@ -51,7 +51,7 @@ class MembershipsController < ApplicationController
     @membership.breakup
     
     respond_to do |format|
-      flash[:success] = "You have left the group #{@membership.group.name}"
+      flash[:success] = t('success_you_have_left_the_group') + " #{@membership.group.name}"
       format.html { redirect_to( person_url(current_person)) }
     end
   end
@@ -61,7 +61,7 @@ class MembershipsController < ApplicationController
     @membership.breakup
     
     respond_to do |format|
-      flash[:success] = "You have unsuscribe '#{@membership.person.name}' from group '#{@membership.group.name}'"
+      flash[:success] = t('success_you_have_unsubscribed') + " '#{@membership.person.name}' #{t('success_from_group')} '#{@membership.group.name}'"
       format.html { redirect_to(members_group_path(@membership.group)) }
     end
   end
@@ -72,7 +72,7 @@ class MembershipsController < ApplicationController
     PersonMailer.deliver_membership_accepted(@membership)
 
     respond_to do |format|
-      flash[:success] = "You have accept '#{@membership.person.name}' for group '#{@membership.group.name}'"
+      flash[:success] = t('success_you_have_accepted') + " '#{@membership.person.name}' #{t('success_for_group')} '#{@membership.group.name}'"
       format.html { redirect_to(members_group_path(@membership.group)) }
     end
   end
@@ -85,17 +85,17 @@ class MembershipsController < ApplicationController
                                     :include => [:person, :group])
       if  !params[:invitation].blank? or params[:action] == 'suscribe' or params[:action] == 'unsuscribe'
         unless current_person?(@membership.group.owner)
-          flash[:error] = "Invalid connection."
+          flash[:error] = t('error_invalid_connection')
           redirect_to home_url
         end
       else
         unless current_person?(@membership.person)
-          flash[:error] = "Invalid connection."
+          flash[:error] = t('error_invalid_connection')
           redirect_to home_url
         end
       end
     rescue ActiveRecord::RecordNotFound
-      flash[:error] = "Invalid or expired membership request"
+      flash[:error] = t('error_invalid_or_expired_membership')
       redirect_to home_url
     end
 

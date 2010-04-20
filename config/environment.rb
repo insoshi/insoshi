@@ -5,11 +5,10 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.2.2' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-require 'rails_generator/secret_key_generator'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -45,7 +44,7 @@ Rails::Initializer.run do |config|
   if File.exist?(secret_file)
     secret = File.read(secret_file)
   else
-    secret = Rails::SecretKeyGenerator.new("insoshi").generate_secret
+    secret = ActiveSupport::SecureRandom.hex(64)
     File.open(secret_file, 'w') { |f| f.write(secret) }
   end
   config.action_controller.session = {
@@ -104,7 +103,7 @@ module ActiveSupport
       # Ensures that the original message is not mutated.
       message = "#{message} (pid:#{$$})"
       message = "#{message}\n" unless message[-1] == ?\n
-      @buffer << message
+      buffer << message
       auto_flush
       message
     end

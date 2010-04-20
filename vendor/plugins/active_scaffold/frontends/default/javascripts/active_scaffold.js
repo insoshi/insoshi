@@ -192,6 +192,12 @@ ActiveScaffold.ActionLink.Abstract.prototype = {
   initialize: function(a, target, loading_indicator) {
     this.tag = $(a);
     this.url = this.tag.href;
+    this.method = 'get';
+    if(this.url.match('_method=delete')){
+      this.method = 'delete';
+    } else if(this.url.match('_method=post')){
+      this.method = 'post';
+    }
     this.target = target;
     this.loading_indicator = loading_indicator;
     this.hide_target = false;
@@ -230,7 +236,7 @@ ActiveScaffold.ActionLink.Abstract.prototype = {
 	    new Ajax.Request(this.url, {
 	      asynchronous: true,
 	      evalScripts: true,
-
+              method: this.method,
 	      onSuccess: function(request) {
 	        if (this.position) {
 	          this.insert(request.responseText);
@@ -358,7 +364,7 @@ ActiveScaffold.ActionLink.Record.prototype = Object.extend(new ActiveScaffold.Ac
     new Ajax.Request(this.refresh_url, {
       asynchronous: true,
       evalScripts: true,
-
+      method: this.method,
       onSuccess: function(request) {
         Element.replace(this.target, request.responseText);
         var new_target = $(this.target.id);

@@ -10,8 +10,11 @@
         <div id="<%= active_scaffold_messages_id -%>">
           <%= render :partial => 'messages' %>
         </div>
+        <p class="filtered-message" <%= ' style="display:none;" ' unless @filtered %>>
+          <%= as_(active_scaffold_config.list.filtered_message) %>
+        </p>
         <p id="<%= empty_message_id %>" class="empty-message" <%= ' style="display:none;" ' unless @page.items.empty? %>>
-          <%= as_('No Entries') %>
+          <%= as_(active_scaffold_config.list.no_entries_message) %>
         </p>
       </td>
     </tr>
@@ -26,7 +29,7 @@
   </tbody>
 </table>
 <div class="active-scaffold-footer">
-  <div class="active-scaffold-found"><span class="active-scaffold-records"><%= @page.pager.count -%></span> <%=as_('Found') %></div>
+  <div class="active-scaffold-found"><span class="active-scaffold-records"><%= @page.pager.count -%></span> <%=as_(:found, :count => @page.pager.count) %></div>
   <div class="active-scaffold-pagination">
     <%= render :partial => 'list_pagination_links', :locals => { :current_page => @page } unless @page.pager.number_of_pages < 2 %>
   </div>

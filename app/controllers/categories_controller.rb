@@ -55,7 +55,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        flash[:notice] = 'Category was successfully created.'
+        flash[:success] = t('success_category_created')
         format.html { redirect_to(@category) }
         format.xml  { render :xml => @category, :status => :created, :location => @category }
       else
@@ -72,7 +72,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.update_attributes(params[:category])
-        flash[:notice] = 'Category was successfully updated.'
+        flash[:notice] = t('notice_category_updated')
         format.html { redirect_to(@category) }
         format.xml  { head :ok }
       else
@@ -98,7 +98,7 @@ class CategoriesController < ApplicationController
 
   def authorize_change
     authorized = current_person.admin?
-    flash[:error] = 'Authorization required to edit category'
+    flash[:error] = t('error_category_authorization')
     redirect_to home_url unless authorized
   end
 

@@ -21,16 +21,16 @@
     <%= render :partial => 'form_messages' %>
   <% end -%>
 
-  <label for="<%= "record_#{active_scaffold_config.model}" %>"><%= active_scaffold_config.model %></label>
+  <label for="<%= "record_#{active_scaffold_config.model}" %>"><%= active_scaffold_config.model.human_name %></label>
   <%# select_options = options_for_select(options_for_association(nested_association)) unless column.through_association? -%>
   <% select_options ||= options_for_select(active_scaffold_config.model.find(:all).collect {|c| [h(c.to_label), c.id]}) -%>
   <% unless select_options.empty? -%>
-    <%= select_tag 'associated_id', '<option value="">' + as_('- select -') + '</option>' + select_options %>
+    <%= select_tag 'associated_id', '<option value="">' + as_(:_select_) + '</option>' + select_options %>
   <% end -%>
 
   <p class="form-footer">
-    <%= submit_tag as_('Add'), :class => "submit" %>
-    <%= link_to as_('Cancel'), params_for(:action => 'list'), :class => 'cancel' %>
+    <%= submit_tag as_(:add), :class => "submit" %>
+    <%= link_to as_(:cancel), params_for(:action => 'list'), :class => 'cancel' %>
     <%= loading_indicator_tag(:action => :add_existing, :id => params[:id]) %>
   </p>
 

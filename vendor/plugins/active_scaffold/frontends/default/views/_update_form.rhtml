@@ -5,6 +5,7 @@ if request.xhr?
     form_remote_upload_tag url_options.merge({:iframe => true}),
                            :onsubmit => onsubmit,
                            :id => element_form_id(:action => :update),
+                           :loading => "$('#{loading_indicator_id(:action => :update, :id => params[:id])}').style.visibility = 'visible';",
                            :class => 'update',
                            :method => :put
   else
@@ -30,10 +31,10 @@ else
 end
 %>
 
-  <h4><%= @record.to_label.nil? ? active_scaffold_config.update.label : as_('Update %s', clean_column_value(@record.to_label)) %></h4>
+  <h4><%= @record.to_label.nil? ? active_scaffold_config.update.label : as_(:update_model, :model => clean_column_value(@record.to_label)) %></h4>
 
   <% if request.xhr? -%>
-    <div id="<%= element_messages_id(:action => :update) %>" class="messages-container"><%= error_messages_for :record %></div>
+    <div id="<%= element_messages_id(:action => :update) %>" class="messages-container"><%= error_messages_for :record, :object_name => @record.class.human_name.downcase %></div>
   <% else -%>
     <%= render :partial => 'form_messages' %>
   <% end -%>
@@ -41,8 +42,8 @@ end
   <%= render :partial => 'form', :locals => { :columns => active_scaffold_config.update.columns } %>
 
   <p class="form-footer">
-    <%= submit_tag as_('Update'), :class => "submit" %>
-    <%= link_to as_('Cancel'), params_for(:controller => params[:parent_controller] ? params[:parent_controller] : params[:controller], :action => 'list'), :class => 'cancel' %>
+    <%= submit_tag as_(:update), :class => "submit" %>
+    <%= link_to as_(:cancel), params_for(:controller => params[:parent_controller] ? params[:parent_controller] : params[:controller], :action => 'list'), :class => 'cancel' %>
     <%= loading_indicator_tag(:action => :update, :id => params[:id]) %>
   </p>
 

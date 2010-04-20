@@ -1,7 +1,7 @@
 module ActiveScaffold
   module Helpers
     # Helpers that assist with the rendering of a List Column
-    module ListColumns
+    module ListColumnHelpers
       def active_scaffold_column_download_link_with_filename(column, record)
         return nil if record.send(column.name).nil?
         active_scaffold_column_download_link(column, record, File.basename(record.send(column.name)))
@@ -9,7 +9,7 @@ module ActiveScaffold
       
       def active_scaffold_column_download_link(column, record, label = nil)
         return nil if record.send(column.name).nil?
-        label||=as_("Download")
+        label||=as_(:download)
         link_to( label, url_for_file_column(record, column.name.to_s), :popup => true)
       end
       

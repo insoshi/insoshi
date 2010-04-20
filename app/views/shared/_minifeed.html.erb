@@ -1,4 +1,4 @@
-<h2>What's Going On</h2>
+<h2><%= t('shared.minifeed.whats_going_on') %></h2>
 <ul class="list activity small">
     <%= render :partial => 'shared/minifeed_item',
                :collection => Activity.global_feed %>

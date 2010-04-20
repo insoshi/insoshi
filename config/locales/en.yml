@@ -1,0 +1,480 @@
+
+en:
+  currency_unit_plural: "hrs"
+  twitter: "Twitter"
+  twitter_url: "http://www.twitter.com/"
+
+  button_submit: "Submit"
+  button_delete: "Delete"
+  button_edit: "Edit"
+  button_create: "Create"
+  button_update: "Update"
+  button_cancel: "Cancel"
+  button_send: "Send!"
+  button_upload: "Upload"
+  button_select: "Select"
+
+  price: "Price"
+  title: "Title"
+  bid: "bid"
+  due_date: "Due date"
+  expiration_date: "Expiration Date"
+  description: "Description"
+  are_you_sure: "Are you sure?"
+  miles_away: "miles away"
+  ago: "ago"
+  estimated: "Estimated"
+  a_question: "a question"
+  group: "Group"
+  recent_street_cred: "Recent Street Cred"
+  last_logged_in: "last logged in"
+  post: "post"
+  posted: "posted"
+  earned: "earned"
+  for: "for"
+  said: "said"
+  reply_on: "reply on"
+  wall: "wall"
+  see_all: "See all"
+  by: "by"
+  from: "from"
+
+  accounts:
+    show:
+      header: "Main Account"
+      header_group: "Account for"
+
+  addresses:
+    new:
+      header: "Create a new address"
+    edit:
+      header: "Edit address"
+    form:
+      address_line_1: "Address line 1"
+      address_line_2: "Address line 2"
+      address_line_3: "Address line 3"
+      city: "City"
+      state: "State"
+      zipcode: "Zipcode"
+
+  bids:
+    bid:
+      expires: "expires"    
+      accepted: "Accepted"
+      submitted_by: "Submitted by"
+
+  categories:
+    index:
+      header: "Services"
+      no_categories: "No categories (yet!)"
+      explanation: "Number of people shown in parentheses"
+    show:
+      no_people: "No people (yet!)"
+      no_offers: "No offers (yet!)"
+      no_reqs: "No reqs (yet!)"
+    new:
+      header: "New service"
+    edit:
+      header: "Edit service"
+    form:
+      name: "Name"
+      parent_category: "Parent Category"
+
+  comments:
+    event_new:
+      header: "Event comment"
+      leave_a_comment: "Leave a comment"
+    wall_new:
+      header: "Wall comment"
+      leave_a_comment: "Leave a comment"
+
+  forums:
+    show:
+      header: "Discussion Topics"
+      add_new_topic: "Add new topic"
+
+  groups:
+    index:
+      header: "Groups"
+      no_groups_yet: "No groups (yet)"
+    edit:
+      header: "Editing group"
+      name: "Name"
+      currency_unit_plural: "Currency unit (plural)"
+      description: "Description"
+      mode: "Mode"
+      photos: "Photos"
+      primary: "primary"
+      add_a_photo: "Add a photo"
+    members:
+      pending_request: "Pending request"
+      cancel_membership: "Cancel membership"
+      confirm: "Are you sure you want to unsubscribe this person?"
+      accept_membership: "Accept membership"
+      header: "Members"
+      no_members_yet: "No members (yet)"
+      administrator: "Administrator"
+    new:
+      header: "New group"
+      name: "Name"
+      adhoc_currency: "Create ad-hoc currency"
+      currency_unit_plural: "Currency unit (plural)"
+      description: "Description"
+      mode: "Mode"
+    new_photo:
+      header: "Group photo upload"
+      upload_a_photo: "Upload a photo:"
+    show:
+      header: "Group:"
+      blank_description: "The group description is blank."
+      add_description: "Click here to add a description"
+      you_are_viewing_your_group: "You are viewing your group."
+      click_here_to_edit_it: "Click here to edit it"
+      currency_unit: "Currency Unit:"
+      join_group: "Join group"
+      you_have_been_invited: "You have been invited"
+      respond: "(respond)"
+      you_are_a_member_of: "You are a member of"
+      leave_group: "Leave group"
+      are_you_sure_you_want_to_leave: "Are you sure you want to leave"
+      you_have_requested_to_be_a_member_of: "You have requested to be member of"
+      you_are_group_admin: "You are group's admin"
+      delete_it: "(delete it)"
+      mode: "Mode:"
+      invite_contacts: "Invite contacts"
+      delete_group: "delete group"
+      discussion_topics: "Discussion topics"
+      add_a_new_topic: "Add a new topic"
+      recent_exchanges: "Recent Exchanges"
+    _people:
+      header: "Group's"
+      all_members: "All members"
+      no_members: "No members (yet)"
+
+  home:
+    index:
+      header: "Home"
+      tab_exchanges: "Exchanges"
+      tab_your_activity: "Your Activity"
+      unread_messages: "You have unread messages in your mailbox."
+      see_your_messages: "Click here to see your messages"
+    show:
+      header: "blog"
+    _blog:
+      header: "blog"
+    _dashboard:
+      bids: "Your Active Bids/Work"
+      no_active_bids: "No active bids"
+      offers: "Your Active Offers"
+      no_active_offers: "No active offers"
+      requests: "Your Active Requests"
+      no_active_requests: "No active requests"
+    _forum_preview:
+      header: "Discussion Forum"
+      last_post: "Last post"
+    _invitations:
+      header: "Invitations for groups"
+      invitation_for: "Invitation for"
+      respond: "Respond"
+      view_group: "View group"
+    _members_preview:
+      see_all_members: "See all members"
+    _messages_preview:
+      header: "Messages"
+      all_messages: "All messages"
+    _requested_memberships:
+      header: "Membership Requests"
+      requests_membership_for: "requests membership for"
+      view_group: "View group"
+      view_profile: "View profile"
+    _secondary_column:
+      header: "System Blog"
+  offers:
+    partial:
+      accept_offer: "Accept Offer!"
+      expires: "Expires"
+      available_count: "Available count"
+      created_by: "Created by"
+    index:
+      header: "Offers"
+      nooffers: "No offers (yet!)"
+    edit:
+      header: "Edit offer"
+    new:
+      header: "New offer"
+      total_available: "Total available"
+    show:
+      header: "Offer"
+      send: "Send"
+      add_offer: "Add offer!"
+
+  people:
+    edit:
+      header: "Edit profile"
+      personal_details: "Personal details"
+      name: "Name"
+      share_phone_number: "Share phone number:"
+      phone: "Phone"
+      twitter_id: "Twitter ID"
+      services_offered: "Services Offered"
+      neighborhood: "Neighborhood"
+      description: "Description"
+      email: "Email"
+      email_notification_preferences: "Email notification preferences"
+      email_notification_note: "You will receive email notifications for each event type whose box is checked."
+      requests_in_my_service_categories: "Requests in my service categories:"
+      messages: "Messages:"
+      wall_comments: "Wall comments:"
+      forum_posts: "Forum posts:"
+      photos: "Photos"
+      add_a_photo: "Add a photo"
+      addresses: "Addresses"
+      add_address: "Add address"
+      change_your_password: "Change your password"
+      current_password: "Current Password"
+      new_password: "New Password"
+      confirm_password: "Confirm Password"
+      change_password: "Change Password"
+    groups:
+      no_groups: "No groups (yet)"
+      new_group: "New group"
+    index:
+      header: "People"
+      alpha: "Alpha"
+      newest: "Newest"
+      no_results_for: "No results for"
+    invitations:
+      header: "Groups invitations for"
+      respond: "Respond"
+      no_invitations: "No invitations (yet)"
+    new:
+      header: "Sign up"
+      email_address: "Email address"
+      comma_will_be_verified: ", will be verified"
+      never_made_public: "never made public"
+      name: "Name"
+      will_be_displayed: "(will be displayed)"
+      zipcode: "Zipcode"
+      which_services: "Which services would you be willing to offer? (and optionally receive email notifications for new requests)"
+      something_about_yourself: "Let the other members know something about yourself or the skills you bring to the community."
+      neighborhood: "Neighborhood"
+      password: "Password"
+      confirm_password: "Confirm Password"
+      i_accept_the: "I accept the"
+      member_agreement: "member agreement"
+    request_memberships:
+      header: "Membership request for your groups"
+      respond: "Respond"
+      no_membership_request: "No membership request (yet)"
+    show:
+      header: "Profile:"
+      not_active: "This person is not active"
+      description_blank: "Your description is blank."
+      add_description: "Click here to add a description"
+      own_profile: "You are viewing your own profile."
+      edit_it: "Click here to edit it"
+      update_location: "Click here to update your location"
+      address_remain_private: "(Your address will remain private)"
+      phone: "Phone:"
+    _language:
+      language: "Language"
+      english: "English"
+      spanish: "Spanish"
+    _recent_activity:
+      header: "Recent Activity" 
+    _recent_exchanges:
+      header: "Recent Street Cred (Main Account)"
+
+  reqs:
+    partial:
+      due: "Due"
+      createdby: "Created By"
+    index:
+      header: "Requests"
+      current: "Current"
+      all: "All"
+      noreqs: "No requests (yet!)"
+    edit:
+      header: "Edit request"
+    new:
+      header: "New request"
+      people_to_be_notified: "People to be notified"
+      notify_members_email: "Notify members shown above?"
+      notify_members_twitter: "Notify members in real time on " 
+    show:
+      header: "Request"
+      bids: "Bids"
+      nobids: "No bids (yet!)"
+      newbid: "New bid"
+      private_message_to_requestor: "Private message to requestor"
+
+  exchanges:
+    new:
+      enter_credit_for: "Enter credit for"
+      amount: "amount"
+      for: "For:"
+      or_ask: "or ask"
+      service_provided: "Service provided"
+
+  sessions:
+    new:
+      header: "Sign in"
+      email_address: "Email address"
+      password: "Password"
+      openid: "OpenID"
+      remember_me: "Remember me:"
+      button_signin: "Sign in"
+      or_signup: "or Sign up"
+      i_forgot_my_password: "I forgot my password!"
+      login_using_openid: "Login using OpenID"
+      back_to_regular_login: "Back to Regular Login"
+
+  topics:
+    show:
+      add_a_new_post: "add a new post"
+    new:
+      header: "New topic"
+    edit:
+      header: "Editing topic"
+    partial:
+      created_by: "Created by"
+
+  transacts:
+    index:
+      header: "Transactions"
+    show:
+      header: "Transaction"
+    new:
+      header: "Pay someone"
+      requested: "requested"
+      explanation: "This has been requested in return for:"
+      pay_now: "pay now"
+      to: "Payee email address"
+      amount: "Amount"
+      description: "Description"
+    helper:
+      received_from: "received from"
+      paid_to: "paid to"
+
+  shared:
+    minifeed:
+      whats_going_on: "What's Going On"
+    transact:
+      for: "for"
+
+  notice_warning_your_email_address: "Warning: your email address is still at"
+  notice_change_it_here: "Change it here"
+  notice_bid_accepted: "Bid accepted. Message sent to bidder to commit"
+  notice_bid_committed: "Bid committed. Notification sent to requestor"
+  notice_bid_completed: "Work marked completed. Notification sent to requestor"
+  notice_bid_approved: "Work marked verified. Approval notification sent"
+  notice_bid_invalid: "Invalid bidding event"
+  notice_bid_removed: "Bid was removed."
+  notice_category_updated: "Category was successfully updated."
+  notice_event_updated: "Event was successfully updated."
+  notice_you_are_attending_this_event: "You are attending this event."
+  notice_you_are_not_attending: "You are not attending this event."
+  notice_in_progress: "Work on this feature is in progress."
+  notice_group_updated: "Group was successfully updated."
+  notice_invite_contacts: "You have invite some of your contacts to"
+  notice_upload_canceled: "You have canceled the upload"
+  notice_blog_updated: "Blog updated"
+  notice_entries: "entries."
+  notice_you_have_joined: "You have joined "
+  notice_membership_request_sent: "Membership request sent!"
+  notice_membership_invalid: "Invalid membership"
+  notice_accepted_membership_with: "Accepted membership with"
+  notice_declined_membership_for: "Declined membership for"
+  notice_neighborhood_updated: "Neighborhood was successfully updated."
+  notice_registered_the_information_successfully: "Registered the information successfully"
+  notice_updated_the_client_information_successfully: "Updated the client information successfully"
+  notice_destroyed_the_client_application_registration: "Destroyed the client application registration"
+  notice_offer_updated: "Offer was successfully updated."
+  notice_thanks_for_signing_up_check_email: "Thanks for signing up! Check your email to activate your account."
+  notice_thanks_for_signing_up: "Thanks for signing up!"
+  notice_post_updated: "Post updated"
+  notice_you_are_following_twitter: "You are following requests on Twitter!"
+  notice_request_updated: "Request was successfully updated."
+  notice_your_twitter_name_has_been_set_to: "Your Twitter name has been set to"
+  notice_your_twitter_has_been_changed_from: "Your Twitter has been changed from"
+  notice_logged_in_successfully: "Logged in successfully"
+  notice_unverified_email_address: "Unverified email address. Please check your email for your activation code."
+  notice_topic_updated: "Topic was successfully updated."
+  notice_transfer_succeeded: "Transfer succeeded."
+
+  success_activity_deleted: "Activity deleted"
+  success_bid_created: "Bid was successfully created."
+  success_category_created: "Category was successfully created."
+  success_comment_created: "Comment was successfully created."
+  success_comment_deleted: "Comment deleted"
+  success_event_created: "Event was successfully created."
+  success_credit_transfer_succeeded: "Credit transfer succeeded."
+  success_payment_suspended: "Payment suspended."
+  success_group_created: "Group was successfully created."
+  success_group_deleted: "Group was successfully deleted."
+  success_photo_uploaded: "Photo successfully uploaded"
+  success_photo_deleted_for_group: "Photo deleted for group"
+  success_you_have_left_the_group: "You have left the group"
+  success_you_have_unsubscribed: "You have unsuscribed"
+  success_from_group: "from group"
+  success_you_have_accepted: "You have accepted"
+  success_for_group: "for group"
+  success_message_sent: "Message sent!"
+  success_message_trashed: "Message trashed"
+  success_message_restored_to_inbox: "Message restored to inbox"
+  success_neighborhood_created: "Neighborhood was successfully created."
+  success_offer_created: "Offer was successfully created."
+  success_your_password_has_been_sent: "Your password has been sent"
+  success_email_verified: "Email verified. Your profile is active!"
+  success_updated: "updated."
+  success_profile_updated: "Profile updated!"
+  success_password_changed: "Password changed."
+  success_photo_uploaded: "Photo successfully uploaded"
+  success_photo_deleted: "Photo deleted"
+  success_post_created: 'Post created'
+  success_post_destroyed: "Post destroyed"
+  success_request_created: "Request was successfully created."
+  success_you_have_been_logged_out: "You have been logged out."
+  success_topic_created: "Topic was successfully created."
+  success_topic_destroyed: "Topic was successfully destroyed."
+
+  error_geocoding_failed: "Geocoding failed"
+  error_at_least_one_address: "You must have at least one address"
+  error_admin_access_required: "Admin access required"
+  error_default_password: "Warning: your password is still the default."
+  error_creating_bid: "Error creating bid."
+  error_category_authorization: "Authorization required to edit category"
+  error_you_can_only_attend_once: "You can only attend once."
+  error_you_are_not_attending: "You are not attending this event."
+  error_offer_person_mismatch: "Specified offer does not match person"
+  error_with_credit_transfer: "Error with credit transfer."
+  error_with_suspension: "Error with suspension of payment."
+  error_no_contacts: "You have no contacts or you have invited all of them"
+  error_browser_upload_fail: "Your browser doesn't appear to support file uploading"
+  error_blog_update: "Blog update failed."
+  error_invalid_connection: "Invalid connection."
+  error_invalid_or_expired_membership: "Invalid or expired membership request"
+  error_invalid_action: "Invalid action"
+  error_authorization_required_to_edit_neighborhood: "Authorization required to edit neighborhood"
+  error_wrong_application_id: "Wrong application id"
+  error_offer_cannot_be_deleted: "This offer cannot be deleted as it has been accepted"
+  error_invalid_email_address: "Invalid email address"
+  error_person_inactive: "That person is not active"
+  error_invalid_email_verification_code: "Invalid email verification code"
+  error_password_cant_be_changed: "Passwords can't be changed in demo mode."
+  error_invalid_image: "Invalid image!"
+  error_authentication_failed: "Authentication failed"
+  error_invalid_search: "Invalid search"
+  error_openid_problems: "The following problems exist with your OpenID profile:"
+  error_deactivated_account: "Your account has been deactivated"
+  error_your_account_is_deactivated: "Your account is currently deactivated. In order to log in, you must be approved by the administrator."
+  error_membership_is_approved_after: "Membership is approved after an orientation has been attended. Read more about"
+  error_membership_here: "membership here"
+  error_you_can_also: "You can also"
+  error_contact: "contact"
+  error_the_administrators: "the administrators if you think your account should be active."
+  error_invalid_email_password: "Invalid email/password combination"
+  error_your_account_is_inactive: "Your account is inactive."
+  error_could_not_find_transaction: "could not find transaction"
+  error_could_not_find_payee: "could not find payee"
+  error_with_transfer: "Error with transfer."

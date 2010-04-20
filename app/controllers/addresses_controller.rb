@@ -31,7 +31,7 @@ class AddressesController < ApplicationController
       end
     rescue
       @states = State.find(:all, :order => "name").collect {|s| [s.name, s.id]}
-      flash[:error] = "Geocoding failed."
+      flash[:error] = t("error_geocoding_failed")
       render :action => :new
     end
   end
@@ -47,7 +47,7 @@ class AddressesController < ApplicationController
       end
     rescue
       @states = State.find(:all, :order => "name").collect {|s| [s.name, s.id]}
-      flash[:error] = "Geocoding failed."
+      flash[:error] = t("error_geocoding_failed")
       render :action => :edit
     end
   end
@@ -57,7 +57,7 @@ class AddressesController < ApplicationController
       @address = @person.addresses.find(params[:id])
       @address.destroy
     else
-      flash[:error] = "You must have at least one address"
+      flash[:error] = t("error_at_least_one_address")
     end
 
     respond_to do |format|

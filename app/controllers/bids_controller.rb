@@ -10,11 +10,11 @@ class BidsController < ApplicationController
 
     respond_to do |format|
       if @bid.save
-        flash[:notice] = 'Bid was successfully created.'
+        flash[:success] = t('success_bid_created') 
         format.html { redirect_to req_path(@req) }
         #format.xml  { render :xml => @bid, :status => :created, :location => @bid }
       else
-        flash[:error] = 'Error creating bid.'
+        flash[:error] = t('error_creating_bid') 
         format.html { redirect_to req_path(@req) }
         #format.xml  { render :xml => @bid.errors, :status => :unprocessable_entity }
       end
@@ -29,26 +29,26 @@ class BidsController < ApplicationController
     when 'accept'
       if current_person?(@bid.req.person)
         @bid.accept!
-        flash[:notice] = 'Bid accepted. Message sent to bidder to commit'
+        flash[:notice] = t('notice_bid_accepted')
       end
     when 'commit'
       if current_person?(@bid.person)
         @bid.commit!
-        flash[:notice] = 'Bid committed. Notification sent to requestor'
+        flash[:notice] = t('notice_bid_committed')
       end
     when 'complete'
       if current_person?(@bid.person)
         @bid.complete!
-        flash[:notice] = 'Work marked completed. Notification sent to requestor'
+        flash[:notice] = t('notice_bid_completed')
       end
     when 'pay'
       if current_person?(@bid.req.person)
         @bid.pay!
-        flash[:notice] = 'Work marked verified. Approval notification sent'
+        flash[:notice] = t('notice_bid_approved')
       end
     else
       logger.warn "Error.  Invalid bid event: #{params[:aasm_event]}"
-      flash[:error] = "Invalid bidding event"
+      flash[:error] = t('notice_bid_invalid')
     end
     redirect_to @req
   end
@@ -60,7 +60,7 @@ class BidsController < ApplicationController
     @bid.destroy
 
     respond_to do |format|
-      flash[:success] = 'Bid was removed.'
+      flash[:success] = t('notice_bid_removed')
       format.html { redirect_to req_url(@req) }
       #format.xml  { head :ok }
     end

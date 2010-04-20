@@ -25,7 +25,7 @@ class ExchangesController < ApplicationController
     if params[:offer]
       @offer = Offer.find(params[:offer])
       if @offer.person != Person.find(params[:person_id])
-        flash[:error] = "Specified offer does not match person"
+        flash[:error] = t('error_offer_person_mismatch')
       end
     else
       @req = Req.new
@@ -63,12 +63,12 @@ class ExchangesController < ApplicationController
 
     respond_to do |format|
       if @exchange.save
-        flash[:notice] = "Credit transfer succeeded."
+        flash[:success] = t('success_credit_transfer_succeeded')
         format.html { redirect_to person_path(@worker) and return }
         format.xml { render :xml => @exchange, :status => :created, :location => [@worker, @exchange] }
         format.json { render :json => @exchange, :status => :created, :location => [@worker, @exchange] }
       else
-        flash[:error] = "Error with credit transfer."
+        flash[:error] = t('error_with_credit_transfer')
         @groups = Person.find(params[:person_id]).groups
         format.html { render :action => "new" }
         format.xml { render :xml => @exchange.errors, :status => :unprocessable_entity }
@@ -88,7 +88,7 @@ class ExchangesController < ApplicationController
       end
     rescue
       respond_to do |format|
-        flash[:error] = "Error with suspension of payment."
+        flash[:error] = t('error_with_suspension')
         format.html { redirect_to person_path(@worker) and return }
       end
     end
@@ -99,7 +99,7 @@ class ExchangesController < ApplicationController
         @metadata.destroy
       end
     end
-    flash[:success] = "Payment suspended."
+    flash[:success] = t('success_payment_suspended')
 
     respond_to do |format|
       format.html { redirect_to person_url(current_person) }

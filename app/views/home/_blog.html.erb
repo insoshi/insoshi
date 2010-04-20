@@ -1,7 +1,7 @@
 <%- unless global_prefs.app_name.blank? -%>
-  <h2><%= global_prefs.app_name %> blog</h2>
+  <h2><%= global_prefs.app_name %> <%= t('home._blog.header') %></h2>
 <%- else -%>
-  <h2>Blog</h2>
+  <h2><%= t('home._blog.header').capitalize %></h2>
 <%- end -%>
 <%- if @posts.empty? -%>
   <h3 class="blankslate">

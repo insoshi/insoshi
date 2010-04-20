@@ -121,7 +121,3 @@ module ActiveRecordPermissions
     end
   end
 end
-
-ActionController::Base.class_eval {include ActiveRecordPermissions::ModelUserAccess::Controller}
-ActiveRecord::Base.class_eval {include ActiveRecordPermissions::ModelUserAccess::Model}
-ActiveRecord::Base.class_eval {include ActiveRecordPermissions::Permissions}

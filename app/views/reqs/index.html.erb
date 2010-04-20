@@ -1,15 +1,15 @@
 <%- column_div :type => :primary do -%>
 <% if global_prefs.twitter_name.blank? || global_prefs.twitter_oauth_consumer_key.blank? %>
-<h2>Requests</h2>
+  <h2><%= t('reqs.index.header') %></h2>
 <% else %>
-  <h2>Requests &nbsp;&nbsp;<%= link_to( image_tag("twitter.gif", :border => 0, :title => "follow me"), twitter_oauth_client_path ) %></h2>
+  <h2><%= t('reqs.index.header') %> &nbsp;&nbsp;<%= link_to( image_tag("twitter.gif", :border => 0, :title => "follow me"), twitter_oauth_client_path ) %></h2>
   <%- end -%>
   <ul id="message-nav">
-  <%= list_link_with_active "Current", reqs_path %>
-  <%= list_link_with_active "All", reqs_path(:filter => 'all') %>
+  <%= list_link_with_active t('reqs.index.current'), reqs_path %>
+  <%= list_link_with_active t('reqs.index.all'), reqs_path(:filter => 'all') %>
   </ul>
 <%- if @reqs.empty? -%>
-    <h3 class="blankslate">No requests (yet!)</h3>
+  <h3 class="blankslate"><%= t('reqs.index.noreqs') %></h3>
 <%- else -%>
 <ul class="list full">
     <%= will_paginate %>

@@ -1,0 +1,517 @@
+
+es:
+  currency_unit_plural: "horas"
+  twitter: "Twitter"
+  twitter_url: "http://www.twitter.com/"
+
+  button_submit: "Enviar"
+  button_delete: "Borrar"
+  button_edit: "Editar"
+  button_create: "Crear"
+  button_update: "Actualizar"
+  button_cancel: "Cancelar"
+  button_send: "Enviar"
+  button_upload: "Descargar"
+  button_select: "Seleccionar"
+
+  price: "Precio"
+  title: "Titulo"
+  bid: "oferta"
+  due_date: "Fecha de vencimiento"
+  expiration_date: "Fecha de caducidad"
+  description: "Descripción"
+  are_you_sure: "Estas seguro?"
+  miles_away: "muy lejos"
+  ago: "tiempo atras"
+  estimated: "Estimado"
+  a_question: "una pregunta"
+  group: "Grupo"
+  recent_street_cred: "Recent Street Cred"
+  last_logged_in: "última sesión de inicio"
+  post: "anuncio"
+  posted: "anunciado"
+  earned: "ganado"
+  for: "para"
+  said: "dicho"
+  reply_on: "contestado en"
+  wall: "pared"
+  see_all: "Ver todo"
+  by: "por"
+  from: "de"
+
+  accounts:
+    show:
+      header: "Cuenta principal"
+      header_group: "Cuenta para"
+
+  addresses:
+    new:
+      header: "Crear una nueva dirección"
+    edit:
+      header: "Editar la dirección"
+    form:
+      address_line_1: "Dirección renglon 1"
+      address_line_2: "Dirección renglon 2"
+      address_line_3: "Dirección renglon 3"
+      city: "Ciudad"
+      state: "Estado"
+      zipcode: "Código postal"
+
+  bids:
+    bid:
+      expires: "caduca"    
+      accepted: "aceptado"
+      submitted_by: "Sometido por"
+
+  categories:
+    index:
+      header: "Servicios"
+      no_categories: "No clasificado (todavía no!)"
+      explanation: "Numero de personas dentro del paréntesis"
+    show:
+      no_people: "Nadie (todavía no!)"
+      no_offers: "Sin ofertas ( todavía no!)"
+      no_reqs: "Sin peticiones (todavía no!)"
+    new:
+      header: "Nuevo servicio"
+    edit:
+      header: "Redacte el servicio"
+    form:
+      name: "Nombre"
+      parent_category: "Primera Categoría"
+
+  comments:
+    event_new:
+      header: "Comentario sobre el evento"
+      leave_a_comment: "Dejar un comentario"
+    wall_new:
+      header: "Mural de comentarios"
+      leave_a_comment: "Dejar un comentario"
+
+  forums:
+    show:
+      header: "Tema de discusión"
+      add_new_topic: "Agrege un nuevo tema"
+
+  groups:
+    index:
+      header: "Grupos"
+      no_groups_yet: "Ningún grupo (todavía)"
+    edit:
+      header: "Grupo de redacción"
+      name: "Nombre"
+      currency_unit_plural: "Unidad monetaria (plural)"
+      description: "Descripción"
+      mode: "modalidad"
+      photos: "Fotos"
+      primary: "principal"
+      add_a_photo: "agregar una fotografia"
+    members:
+      pending_request: "Solicitud  Pendiente"
+      cancel_membership: "Cancelar la membresía"
+      confirm: "Are you sure you want to unsubscribe this person?"
+      accept_membership: "Aceptar la membresía"
+      header: "Miembros"
+      no_members_yet: "Sin miembros (todavía)"
+      administrator: "Administrador"
+    new:
+      header: "Nuevo grupo"
+      name: "Nombre"
+      adhoc_currency: "Crear una moneda adecuada"
+      currency_unit_plural: "Unidad(es) monetaria(s)"
+      description: "Descripción"
+      mode: "Modalidad"
+    new_photo:
+      header: "Descargar un grupo de fotografias"
+      upload_a_photo: "Descargar una foto:"
+    show:
+      header: "Grupo:"
+      blank_description: "La descripción del grupo esta en blanco."
+      add_description: "Haga click aqui para agregar una descripción"
+      you_are_viewing_your_group: "Esta usted viendo a su grupo."
+      click_here_to_edit_it: "Haga click aqui para redactarlo"
+      currency_unit: "Unidad monetaria:"
+      join_group: "afiliese a este grupo"
+      you_have_been_invited: "Usted ha sido invitado"
+      respond: "(responder)"
+      you_are_a_member_of: "Eres miembro de"
+      leave_group: "Leave group"
+      are_you_sure_you_want_to_leave: "Estas seguro que quieres abandonar este grupo"
+      you_have_requested_to_be_a_member_of: "Usted a solicitado el estar afiliado con"
+      you_are_group_admin: "Tu eres el administrador de este grupo"
+      delete_it: "(Borrarlo)"
+      mode: "Modo:"
+      invite_contacts: "Invite a sus contactos"
+      delete_group: "borre este grupo"
+      discussion_topics: "Temas de discusión"
+      add_a_new_topic: "Agregar un nuevo tema"
+      recent_exchanges: "Intercambios recientes"
+    _people:
+      header: "Del grupo"
+      all_members: "Todos los miembros"
+      no_members: "Sin afiliados todavía"
+
+  home:
+    index:
+      header: "Pagina Central"
+      tab_exchanges: "Intercambios"
+      tab_your_activity: "Tus actividades"
+      unread_messages: "Tienes mensajes no abiertos en tu buzon."
+      see_your_messages: "Entrar aqui  para ver sus mensajes"
+    show:
+      header: "blog"
+    _blog:
+      header: "blog"
+    _dashboard:
+      bids: "Tus solicitudes y ofertas de trabajo"
+      no_active_bids: "No hay ofertas vigentes"
+      offers: "Tus ofertas vigentes"
+      no_active_offers: "No hay ofertas vigentes"
+      requests: "Tus ofertas vigentes"
+      no_active_requests: "No hay ofertas vigentes"
+    _forum_preview:
+      header: "Foro de discusiónes"
+      last_post: "Mensajes recientes"
+    _invitations:
+      header: "Invitaciones de grupo"
+      invitation_for: "Invitaciones para"
+      respond: "Responder"
+      view_group: "Visite el grupo"
+    _members_preview:
+      see_all_members: "Vea todos los miembros"
+    _messages_preview:
+      header: "Mensajes"
+      all_messages: "Todos los mensajes"
+    _requested_memberships:
+      header: "Peticion de membresía"
+      requests_membership_for: "Peticiones de membresía"
+      view_group: "Visite el grupo"
+      view_profile: "Vea su perfil"
+    _secondary_column:
+      header: "Sistema de blog"
+  offers:
+    partial:
+      accept_offer: "Aceptar la oferta!"
+      expires: "Caduca"
+      available_count: "Conteo disponible"
+      created_by: "Creado por"
+    index:
+      header: "Ofertas"
+      nooffers: "No hay ofertas (todavía)"
+    edit:
+      header: "modifique la oferta"
+    new:
+      header: "Nueva oferta"
+      total_available: "Total disponible"
+    show:
+      header: "Oferta"
+      send: "Enviar"
+      add_offer: "Agregar una oferta!"
+
+  people:
+    edit:
+      header: "Editar el perfil"
+      personal_details: "Detalles personales"
+      name: "Nombre"
+      share_phone_number: "Comparta su numero telefonio:"
+      phone: "Telefono"
+      twitter_id: "Twitter"
+      services_offered: "Servicios que ofrece"
+      neighborhood: "Vecindario"
+      description: "Descripción"
+      email: "Correo electronico"
+      email_notification_preferences: "Notificación de preferencias en el correo electronico"
+      email_notification_note: "Recibiras notificaciónes via email por cada evento que marques."
+      requests_in_my_service_categories: "Peticiones en mi categoria de servicios:"
+      messages: "Mensajes:"
+      wall_comments: "Pared de comentarios:"
+      forum_posts: "Foro publicaciones:"
+      photos: "Fotos"
+      add_a_photo: "Agrege una foto"
+      addresses: "Direcciones"
+      add_address: "Agregar una dirección"
+      change_your_password: "Cambiar su contraseña"
+      current_password: "Contraseña actual"
+      new_password: "Nueva contraseña"
+      confirm_password: "Confirme su contraseña"
+      change_password: "Cambiar su contraseña"
+    groups:
+      no_groups: "Todavía no hay grupos"
+      new_group: "Grupo Nuevo"
+    index:
+      header: "Personas"
+      alpha: "Alfa"
+      newest: "Mas reciente"
+      no_results_for: "No hubo resultados para"
+    invitations:
+      header: "Invitacion de grupo para"
+      respond: "Responder"
+      no_invitations: "Todavía no hay invitaciones"
+    new:
+      header: "Enlistarse"
+      email_address: "Correo electronico"
+      comma_will_be_verified: ", sera verificado"
+      never_made_public: "nunca se publicara"
+      name: "Nombre"
+      will_be_displayed: "(sera mostrado)"
+      zipcode: "Codigo postal"
+      which_services: "Que tipo de servicios desea ofrecer? (y de manera opcional ser notificado de nuevas peticiones se servicios)"
+      something_about_yourself: "Haz saber a otros miembros cuales son las habilidades que tu ofreces a tu comunidad."
+      neighborhood: "vecindario"
+      password: "Contraseña"
+      confirm_password: "confirmar su contraseña"
+      i_accept_the: "Yo acepto"
+      member_agreement: "Acuerdo de miembro"
+    request_memberships:
+      header: "Peticion de membresía de grupo"
+      respond: "Responder"
+      no_membership_request: "Todavía no hay peticiones de membresía"
+    show:
+      header: "Perfil:"
+      not_active: "Esta persona no esta activa"
+      description_blank: "Su descripción esta en blanco."
+      add_description: "Haz clic aqui para agregar una descripción"
+      own_profile: "Estas viendo tu propio perfil."
+      edit_it: "Haz clic aqui para modificarlo"
+      update_location: "Haz clic aqui para actualizar tu ubicación"
+      address_remain_private: "(tu dirección permanecera en privado)"
+      phone: "Telefono:"
+    _language:
+      language: "Idioma"
+      english: "Ingles"
+      spanish: "Espanol"
+    _recent_activity:
+      header: "Actividades recientes" 
+    _recent_exchanges:
+      header: "Recent Street Cred (Cuenta principal)"
+
+  reqs:
+    partial:
+      due: "Vencimiento"
+      createdby: "Creado por"
+    index:
+      header: "Requisiciones"
+      current: "Reciente"
+      all: "Todo"
+      noreqs: "Todavía no hay peticiones"
+    edit:
+      header: "Editar la peticion"
+    new:
+      header: "Nueva peticion"
+      people_to_be_notified: "Personas que deben ser notificadas"
+      notify_members_email: "Notifique a los miembros arriba mencionados?"
+      notify_members_twitter: "Notificar a miembros en tiempo real en " 
+    show:
+      header: "Requisicion"
+      bids: "Ofertas"
+      nobids: "No hay ofertas todavía"
+      newbid: "Nueva oferta"
+      private_message_to_requestor: "Mensaje privado al solicitante"
+
+  exchanges:
+    new:
+      enter_credit_for: "Registrar creditos para"
+      amount: "Cantidad"
+      for: "Para:"
+      or_ask: "o preguntar"
+      service_provided: "Servicios proveídos"
+
+  sessions:
+    new:
+      header: "Sign in"
+      email_address: "Email address"
+      password: "Password"
+      openid: "OpenID"
+      remember_me: "Remember me:"
+      button_signin: "Sign in"
+      or_signup: "or Sign up"
+      i_forgot_my_password: "I forgot my password!"
+      login_using_openid: "Login using OpenID"
+      back_to_regular_login: "Back to Regular Login"
+
+  topics:
+    show:
+      add_a_new_post: "agregar un nuevo mensaje"
+    new:
+      header: "Nuevo Tema"
+    edit:
+      header: "Modificar el tema"
+    partial:
+      created_by: "Creado por"
+
+  transacts:
+    index:
+      header: "Transacciónes"
+    show:
+      header: "Transacción"
+    new:
+      header: "Pagar a alquien"
+      requested: "pedido"
+      explanation: "Esta peticion se ha hecho a cambio de:"
+      pay_now: "Pagar ahora"
+      to: "Correo del Beneficiario"
+      amount: "Cantidad"
+      description: "Descripción"
+    helper:
+      received_from: "recibido de"
+      paid_to: "Paquese a"
+
+  shared:
+    minifeed:
+      whats_going_on: "Qué pasa"
+    transact:
+      for: "por"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "medio minuto" 
+      less_than_x_seconds:
+        one:  "menos de 1 segundo" 
+        other: "menos de {{count}} segundos"
+      x_seconds:
+        one:  "1 segundo" 
+        other: "{{count}} segundos" 
+      less_than_x_minutes:
+        one:  "menos de 1 minuto" 
+        other: "menos de {{count}} minutos" 
+      x_minutes:
+        one:  "1 minuto" 
+        other: "{{count}} minutos" 
+      about_x_hours:
+        one:  "alrededor de 1 hora" 
+        other: "alrededor de {{count}} horas" 
+      x_days:
+        one:  "1 día" 
+        other: "{{count}} días" 
+      about_x_months:
+        one:  "alrededor de 1 mes" 
+        other: "alrededor de {{count}} meses" 
+      x_months:
+        one:  "1 mes" 
+        other: "{{count}} meses" 
+      about_x_years:
+        one:  "alrededor de 1 año" 
+        other: "alrededor de {{count}} años" 
+      over_x_years:
+        one:  "más de 1 año" 
+        other: "más de {{count}} años" 
+      almost_x_years:
+        one: "casi 1 año"
+        other: "casi {{count}} años"
+
+  notice_warning_your_email_address: "Warning: your email address is still at"
+  notice_change_it_here: "Change it here"
+  notice_bid_accepted: "Bid accepted. Message sent to bidder to commit"
+  notice_bid_committed: "Bid committed. Notification sent to requestor"
+  notice_bid_completed: "Work marked completed. Notification sent to requestor"
+  notice_bid_approved: "Work marked verified. Approval notification sent"
+  notice_bid_invalid: "Invalid bidding event"
+  notice_bid_removed: "Bid was removed."
+  notice_category_updated: "Category was successfully updated."
+  notice_event_updated: "Event was successfully updated."
+  notice_you_are_attending_this_event: "You are attending this event."
+  notice_you_are_not_attending: "You are not attending this event."
+  notice_in_progress: "Work on this feature is in progress."
+  notice_group_updated: "Group was successfully updated."
+  notice_invite_contacts: "You have invite some of your contacts to"
+  notice_upload_canceled: "You have canceled the upload"
+  notice_blog_updated: "Blog updated"
+  notice_entries: "entries."
+  notice_you_have_joined: "You have joined "
+  notice_membership_request_sent: "Membership request sent!"
+  notice_membership_invalid: "Invalid membership"
+  notice_accepted_membership_with: "Accepted membership with"
+  notice_declined_membership_for: "Declined membership for"
+  notice_neighborhood_updated: "Neighborhood was successfully updated."
+  notice_registered_the_information_successfully: "Registered the information successfully"
+  notice_updated_the_client_information_successfully: "Updated the client information successfully"
+  notice_destroyed_the_client_application_registration: "Destroyed the client application registration"
+  notice_offer_updated: "Offer was successfully updated."
+  notice_thanks_for_signing_up_check_email: "Thanks for signing up! Check your email to activate your account."
+  notice_thanks_for_signing_up: "Thanks for signing up!"
+  notice_post_updated: "Post updated"
+  notice_you_are_following_twitter: "You are following requests on Twitter!"
+  notice_request_updated: "Request was successfully updated."
+  notice_your_twitter_name_has_been_set_to: "Your Twitter name has been set to"
+  notice_your_twitter_has_been_changed_from: "Your Twitter has been changed from"
+  notice_logged_in_successfully: "Logged in successfully"
+  notice_unverified_email_address: "Unverified email address. Please check your email for your activation code."
+  notice_topic_updated: "Topic was successfully updated."
+  notice_transfer_succeeded: "Transfer succeeded."
+
+  success_activity_deleted: "Activity deleted"
+  success_bid_created: "Bid was successfully created."
+  success_category_created: "Category was successfully created."
+  success_comment_created: "Comment was successfully created."
+  success_comment_deleted: "Comment deleted"
+  success_event_created: "Event was successfully created."
+  success_credit_transfer_succeeded: "Credit transfer succeeded."
+  success_payment_suspended: "Payment suspended."
+  success_group_created: "Group was successfully created."
+  success_group_deleted: "Group was successfully deleted."
+  success_photo_uploaded: "Photo successfully uploaded"
+  success_photo_deleted_for_group: "Photo deleted for group"
+  success_you_have_left_the_group: "You have left the group"
+  success_you_have_unsubscribed: "You have unsuscribed"
+  success_from_group: "from group"
+  success_you_have_accepted: "You have accepted"
+  success_for_group: "for group"
+  success_message_sent: "Message sent!"
+  success_message_trashed: "Message trashed"
+  success_message_restored_to_inbox: "Message restored to inbox"
+  success_neighborhood_created: "Neighborhood was successfully created."
+  success_offer_created: "Offer was successfully created."
+  success_your_password_has_been_sent: "Your password has been sent"
+  success_email_verified: "Email verified. Your profile is active!"
+  success_updated: "updated."
+  success_profile_updated: "Profile updated!"
+  success_password_changed: "Password changed."
+  success_photo_uploaded: "Photo successfully uploaded"
+  success_photo_deleted: "Photo deleted"
+  success_post_created: 'Post created'
+  success_post_destroyed: "Post destroyed"
+  success_request_created: "Request was successfully created."
+  success_you_have_been_logged_out: "You have been logged out."
+  success_topic_created: "Topic was successfully created."
+  success_topic_destroyed: "Topic was successfully destroyed."
+
+  error_geocoding_failed: "Geocoding failed"
+  error_at_least_one_address: "You must have at least one address"
+  error_admin_access_required: "Admin access required"
+  error_default_password: "Warning: your password is still the default."
+  error_creating_bid: "Error creating bid."
+  error_category_authorization: "Authorization required to edit category"
+  error_you_can_only_attend_once: "You can only attend once."
+  error_you_are_not_attending: "You are not attending this event."
+  error_offer_person_mismatch: "Specified offer does not match person"
+  error_with_credit_transfer: "Error with credit transfer."
+  error_with_suspension: "Error with suspension of payment."
+  error_no_contacts: "You have no contacts or you have invited all of them"
+  error_browser_upload_fail: "Your browser doesn't appear to support file uploading"
+  error_blog_update: "Blog update failed."
+  error_invalid_connection: "Invalid connection."
+  error_invalid_or_expired_membership: "Invalid or expired membership request"
+  error_invalid_action: "Invalid action"
+  error_authorization_required_to_edit_neighborhood: "Authorization required to edit neighborhood"
+  error_wrong_application_id: "Wrong application id"
+  error_offer_cannot_be_deleted: "This offer cannot be deleted as it has been accepted"
+  error_invalid_email_address: "Invalid email address"
+  error_person_inactive: "That person is not active"
+  error_invalid_email_verification_code: "Invalid email verification code"
+  error_password_cant_be_changed: "Passwords can't be changed in demo mode."
+  error_invalid_image: "Invalid image!"
+  error_authentication_failed: "Authentication failed"
+  error_invalid_search: "Invalid search"
+  error_openid_problems: "The following problems exist with your OpenID profile:"
+  error_deactivated_account: "Your account has been deactivated"
+  error_your_account_is_deactivated: "Your account is currently deactivated. In order to log in, you must be approved by the administrator."
+  error_membership_is_approved_after: "Membership is approved after an orientation has been attended. Read more about"
+  error_membership_here: "membership here"
+  error_you_can_also: "You can also"
+  error_contact: "contact"
+  error_the_administrators: "the administrators if you think your account should be active."
+  error_invalid_email_password: "Invalid email/password combination"
+  error_your_account_is_inactive: "Your account is inactive."
+  error_could_not_find_transaction: "could not find transaction"
+  error_could_not_find_payee: "could not find payee"
+  error_with_transfer: "Error with transfer."

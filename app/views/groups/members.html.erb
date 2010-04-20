@@ -3,7 +3,7 @@
   <h2><%= link_to h(@group.name), group_path(@group) %></h2>
   
   <% unless @pending.empty? -%>
-    <h3>Pending request</h3>
+    <h3><%= t('groups.members.pending_request') %></h3>
     <%= will_paginate(@pending) %>
     <ul class="grid contacts medium">
       <%- @pending.each do |contact| -%>
@@ -16,11 +16,11 @@
             <div class="accept_or_cancel_membership">
                 <%= link_to image_tag("icons/remove.gif"), 
                   unsuscribe_membership_path(contact.memberships.find(:first, :conditions => ['group_id = ?',@group])), 
-                  :method => "delete", :title => 'Cancel membership', 
-                :confirm => "Are you sure you want to unsuscribe this person?" %>
+                  :method => "delete", :title => t('groups.members.cancel_membership'), 
+                :confirm => t('groups.members.confirm')  %>
                 <%= link_to image_tag("icons/add.gif"), 
                   suscribe_membership_path(contact.memberships.find(:first, :conditions => ['group_id = ?',@group])), 
-                  :method => "post", :title => 'Accept membership' %>
+                  :method => "post", :title => t('groups.members.accept_membership') %>
             </div>
           <% end %>
         </li>
@@ -30,7 +30,7 @@
     <%= will_paginate(@pending) %>
   <% end -%>
 
-  <h3>Members</h3>
+  <h3><%= t('groups.members.header') %></h3>
 
   <% unless @members.empty? -%>
     <%= will_paginate(@members) %>
@@ -46,8 +46,8 @@
                 <%= link_to image_tag("icons/remove.gif"), 
                   unsuscribe_membership_path(contact.memberships.find(:first, :conditions => ['group_id = ?',@group])), 
                   :method => "delete",
-                  :title => 'Delete membership',
-                  :confirm => "Are you sure you want to unsuscribe this person?" %>
+                  :title => t('groups.members.cancel_membership'),
+                  :confirm => t('groups.members.confirm') %>
             </div>
           <% end %>
         </li>
@@ -56,10 +56,10 @@
     </ul>
     <%= will_paginate(@members) %>
   <% else %>
-    <h3>No members (yet)</h3>
+    <h3><%= t('groups.members.no_members_yet') %></h3>
   <% end -%>
 
-  <h2>Administrator</h2>
+  <h2><%= t('groups.members.administrator') %></h2>
   <ul class="grid contacts medium">
     <li class="vcard contact">
       <%= image_link @group.owner, :image_options => { :class => "photo" },

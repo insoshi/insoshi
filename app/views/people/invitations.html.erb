@@ -1,5 +1,5 @@
 <%- column_div :type => :primary do -%>
-  <h2>Groups invitations for <%= h @person.name %></h2>
+  <h2><%= t('people.invitations.header') %> <%= h @person.name %></h2>
   <%- unless @invitations.empty? -%>
     <ul class="list people">
       <%- @invitations.each do |invitation| -%>
@@ -9,12 +9,12 @@
             <%= image_link invitation.group, :class => "photo", :image => :thumbnail%>
           </div>
           <p><%= person_link invitation.group, :class => "url fn" %></p><br />
-          <p><%= link_to "Respond", edit_membership_path(mem) %></p>
+          <p><%= link_to t('people.invitations.respond'), edit_membership_path(mem) %></p>
         </li>
       <%- end -%>
     </ul>
   <%- else -%>
-    <h3>No invitations (yet)</h3>
+    <h3><%= t('people.invitations.no_invitations') %></h3>
   <%- end -%>
 <%- end -%>
 

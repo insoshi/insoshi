@@ -60,4 +60,19 @@ class ActionLinksTest < Test::Unit::TestCase
       assert_equal 'bar', link.action
     end
   end
+  
+  def test_delete
+    @links.add 'foo'
+    @links.add 'bar'
+
+    @links.delete :foo
+    assert @links['foo'].nil?
+    begin
+      @links.delete :foo
+    @links.delete 'foo'
+    rescue
+      assert false, "deleting from action links when item doesn't exist should not throw an error"
+    end
+    assert !@links['bar'].nil?
+  end
 end

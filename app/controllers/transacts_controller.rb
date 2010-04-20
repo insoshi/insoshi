@@ -15,7 +15,7 @@ class TransactsController < ApplicationController
   def show
     @transact = current_person.transactions.find(params[:id])
     if nil == @transact
-        flash[:error] = "could not find transaction"
+        flash[:error] = t('error_could_not_find_transaction')
         redirect_to home_url
         return
     end
@@ -32,7 +32,7 @@ class TransactsController < ApplicationController
       @worker = Person.find_by_email(params[:to])
       if nil == @worker
         @swp = false
-        flash[:error] = "could not find payee"
+        flash[:error] = t('error_could_not_find_payee')
         render :action => "new"
         return
       end
@@ -43,7 +43,7 @@ class TransactsController < ApplicationController
     @worker = Person.find_by_email(params[:to])
     if nil == @worker
       @swp = false
-      flash[:error] = "could not find payee"
+      flash[:error] = t('error_could_not_find_payee')
       render :action => "new"
       return
     end
@@ -58,7 +58,7 @@ class TransactsController < ApplicationController
 
     if @transact.save
       if @transact.redirect_url.blank?
-        flash[:notice] = "Transfer succeeded."
+        flash[:notice] = t('notice_transfer_succeeded')
         respond_to do |format|
           format.html { redirect_to person_path(@worker) }
           format.json { render :json => @transact.to_json }
@@ -69,7 +69,7 @@ class TransactsController < ApplicationController
         redirect_to @transact.redirect_url
       end
     else
-      flash[:error] = "Error with transfer."
+      flash[:error] = t('error_with_transfer')
       @req.destroy
       render :action => "new"
     end

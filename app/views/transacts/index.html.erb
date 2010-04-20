@@ -1,5 +1,5 @@
 <%- column_div :type => :primary do -%>
-  <h2>Transactions</h2>
+  <h2><%= t('transacts.index.header') %></h2>
   <ul class="list activity full">
     <%= render :partial => 'shared/transact', :collection => @transactions %> 
   </ul>

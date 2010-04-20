@@ -1,48 +1,48 @@
 <%- column_div :type => :primary do -%>
-  <h2>Edit profile</h2>
+  <h2><%= t('people.edit.header') %></h2>
 
   <div id="profile_edit">
 
-  <h3>Personal details</h3>
+  <h3><%= t('people.edit.personal_details') %></h3>
 
     <%= error_messages_for :person %>
     
     <% form_for @person do |f| %>
 
       <div class="form_row">
-        <label for="person_name">Name</label>
+        <label for="person_name"><%= t('people.edit.name') %></label>
         <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
       </div>
       <div class="form_row">
           <label for="person_phoneprivacy"
-                 class="checkbox">Share phone number:</label>
+            class="checkbox"><%= t('people.edit.share_phone_number') %></label>
           <%= f.check_box :phoneprivacy %>
       </div>
       <div class="form_row">
-        <label for="person_phone"><%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> Phone</label>
+        <label for="person_phone"><%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> <%= t('people.edit.phone') %></label>
         <%= f.text_field :phone %>
       </div>
     <% unless global_prefs.twitter_name.blank? %>
       <div class="form_row">
-        <label for="twitter_name">Twitter ID</label>
+        <label for="twitter_name"><%= t('people.edit.twitter_id') %></label>
         <%= f.text_field :twitter_name, :maxlength => Person::MAX_TWITTER_NAME %>
       </div>
     <% end %>
 
   <div class="form_row full">
-        <label for="person_categories">Services Offered
+        <label for="person_categories"><%= t('people.edit.services_offered') %>
         </label>
         <%= render :partial => "shared/select_categories", :locals => { :model_name => 'person' } %>
   </div>
   
   <div class="form_row full">
-        <label for="person_neighborhoods">Neighborhood
+        <label for="person_neighborhoods"><%= t('people.edit.neighborhood') %>
         </label>
         <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'person' } %>
   </div>
 
       <div class="form_row">
-        <label for="person_description">Description
+        <label for="person_description"><%= t('people.edit.description') %>
         </label>
     
         <%- unless @preview.nil? -%>
@@ -52,8 +52,10 @@
         <%= f.text_area :description %>
       </div>
 
+      <%= render :partial => 'language', :locals => {:f => f} %>
+
       <div class="form_row">
-        <label for="person_email">Email</label>
+        <label for="person_email"><%= t('people.edit.email') %></label>
         <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
       </div>
       
@@ -61,33 +63,32 @@
       
         <br />
       
-        <h3>Email notification preferences</h3>
+        <h3><%= t('people.edit.email_notification_preferences') %></h3>
       
         <p>
-          You will receive email notifications
-          for each event type whose box is checked.
+          <%= t('people.edit.email_notification_note') %> 
         </p>
         
       
         <div class="form_row">
           <p>
           <label for="req_notifications"
-                 class="checkbox">Requests in my service categories:</label>
+                 class="checkbox"><%= t('people.edit.requests_in_my_service_categories') %></label>
           <%= f.check_box :connection_notifications %>
           </p>
           <p>
           <label for="message_notifications"
-                 class="checkbox">Messages:</label>
+                 class="checkbox"><%= t('people.edit.messages') %></label>
           <%= f.check_box :message_notifications %>
           </p>
           <p>
           <label for="wall_comment_notifications"
-                 class="checkbox">Wall comments:</label>
+                 class="checkbox"><%= t('people.edit.wall_comments') %></label>
           <%= f.check_box :wall_comment_notifications %>
           </p>
           <p>
           <label for="forum_notifications"
-                 class="checkbox">Forum posts:</label>
+                 class="checkbox"><%= t('people.edit.forum_posts') %></label>
           <%= f.check_box :forum_notifications %>
           </p>
         </div>
@@ -96,7 +97,7 @@
       <br />
   
       <div class="form_row">
-        <%= f.submit "Update", :class => "button" %>
+        <%= f.submit t('button_update'), :class => "button" %>
         <%= f.submit "Preview", :id => "preview", :class => "button" %>
       </div>
       <input type="hidden" name="type" value="info_edit" />
@@ -104,7 +105,7 @@
 
   <br />
 
-  <h3>Photos</h3>
+  <h3><%= t('people.edit.photos') %></h3>
   
     <% if @person.photos.empty? %>
       <%= image_tag @person.thumbnail %>
@@ -124,7 +125,7 @@
           <% if photo.primary? %>
             primary
           <% else %>
-            <%= link_to "select", photo_path(photo),
+            <%= link_to t('button_select'), photo_path(photo),
                                           :method => :put %>
           <% end %>
           |
@@ -137,46 +138,46 @@
     </table>
     <% end %>
     <br />
-    <%= button_to "Add a photo", new_photo_path, :class => "button" %>
+    <%= button_to t('people.edit.add_a_photo'), new_photo_path, :class => "button" %>
   </div>
 
   <br />
-  <h3>Addresses</h3>
+  <h3><%= t('people.edit.addresses') %></h3>
   <%= render :partial => 'address', :collection => @person.addresses %>
   <div class="status-btn" style="float: left">
-    <input type="button" name="update" value="Add address" id="update-submit" onclick="document.location='<%= new_person_address_path(@person) %>';" />
+    <input type="button" name="update" value="<%= t('people.edit.add_address') %>" id="update-submit" onclick="document.location='<%= new_person_address_path(@person) %>';" />
   </div>
   <br />
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <h2>Change Your Password</h2>
+  <h2><%= t('people.edit.change_your_password') %></h2>
 
   <% form_for @person, :html => { :id => "change_password" } do |f| %>
 
     <div class="form_row">
-      <label for="password">Current Password</label>
+      <label for="password"><%= t('people.edit.current_password') %></label>
       <%= f.password_field :verify_password,
                            :size => 34,
                            :maxlength => Person::MAX_PASSWORD %>
     </div>
 
     <div class="form_row">
-      <label for="password">New Password</label>
+      <label for="password"><%= t('people.edit.new_password') %></label>
       <%= f.password_field :new_password,
                            :size => 34,
                            :maxlength => Person::MAX_PASSWORD %>
     </div>
 
     <div class="form_row">
-      <label for="password_confirmation">Confirm Password</label>
+      <label for="password_confirmation"><%= t('people.edit.confirm_password') %></label>
       <%= f.password_field :password_confirmation,
                            :size => 34,
                            :maxlength => Person::MAX_PASSWORD,
                            :value => "" %>
     </div>
     <div class="form_row">
-      <%= submit_tag 'Change password', :class => "button" %>
+      <%= submit_tag t('people.edit.change_password'), :class => "button" %>
     </div>
     <input type="hidden" name="type" value="password_edit" />
   <% end %>

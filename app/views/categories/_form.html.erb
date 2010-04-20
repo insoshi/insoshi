@@ -1,0 +1,13 @@
+<% form_for(@category) do |f| %>
+  <div class="form_row">
+    <%= f.label t('categories.form.name') %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="form_row full">
+    <label for="parent_id"><%= t('categories.form.parent_category') %></label>
+    <%= render(:partial => "select_categories") %>
+  </div>
+  <div class="form_row">
+    <%= f.submit t('button_create') %>
+  </div>
+<% end %>

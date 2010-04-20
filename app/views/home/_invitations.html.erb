@@ -1,5 +1,5 @@
 <%- unless @invitations.empty? -%>
-  <h2>Invitations for groups</h2>
+  <h2><%= t('home._invitations.header') %></h2>
   <ul class="list requests small">
     <%- @invitations.each do |invitation| -%>
       <%- mem = Membership.mem(current_person, invitation.group) -%>
@@ -7,20 +7,20 @@
         <div class="profile-image">
           <%= image_link invitation.group %>
         </div>
-        <p>Invitation for
+        <p><%= t('home._invitations.invitation_for') %>
         <%= group_link invitation.group %></p>
         <p class="meta published">
           <%= time_ago_in_words(invitation.created_at) %> 
-          ago
+          <%= t('ago') %>
         </p>
         <p>
-          <%= link_to "Respond", edit_membership_path(mem) %> |
-          <%= link_to "View group", group_path(invitation.group) %>
+          <%= link_to t('home._invitations.respond'), edit_membership_path(mem) %> |
+          <%= link_to t('home._invitations.view_group'), group_path(invitation.group) %>
         </p>
       </li>
     <%- end -%>
     <li class="more">
-      <%= link_to "See all &raquo;", 
+      <%= link_to t('see_all') + " &raquo;", 
           invitations_person_path(current_person) %>
     </li>
   </ul>
