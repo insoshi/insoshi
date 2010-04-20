@@ -1,6 +1,6 @@
   <%- if logged_in? -%>
     <%- if current_person.admin? %>
-      <h2>System Blog</h2>
+      <h2><%= t('home._secondary_column.header') %></h2>
       <%= link_to "refresh", '/home/refreshblog', :class => "small" %>
     <%- end -%>
     <%= render :partial => 'messages_preview' %>

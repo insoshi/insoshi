@@ -36,11 +36,11 @@ module ActionView #:nodoc:
 
         # paths previous to current template_path must be ignored to avoid infinite loops when is called twice or more
         index = 0
-        controller.class.generic_view_paths.each_with_index do |active_scaffold_template_path, i|
+        controller.class.view_paths.each_with_index do |active_scaffold_template_path, i|
           index = i + 1 and break if template_path.include? active_scaffold_template_path
         end
 
-        controller.class.generic_view_paths[index..-1].each do |active_scaffold_template_path|
+        controller.class.view_paths.slice(index..-1).each do |active_scaffold_template_path|
           active_scaffold_template = File.join(active_scaffold_template_path, template)
           return render(:file => active_scaffold_template, :locals => options[:locals]) if File.file? active_scaffold_template
         end

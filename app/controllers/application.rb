@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
 
   before_filter :create_page_view, :require_activation,
-                :admin_warning
+                :admin_warning,
+                :set_person_locale
 
   ActiveScaffold.set_defaults do |config|
     config.ignore_columns.add [ :created_at, :updated_at ]
@@ -28,6 +29,15 @@ class ApplicationController < ActionController::Base
       current_person 
     end
 
+    def set_person_locale
+      if logged_in?
+        I18n.locale = current_person.language
+      else
+        session[:locale] = params[:locale] if params[:locale]
+        I18n.locale = session[:locale] || I18n.default_locale
+      end
+    end
+
     def authorized?
       logged_in? and ( current_person.active? or current_person.admin? )
     end
@@ -35,7 +45,7 @@ class ApplicationController < ActionController::Base
 
     def admin_required
       unless current_person.admin?
-        flash[:error] = "Admin access required"
+        flash[:error] = t("error_admin_access_required")
         redirect_to home_url
       end
     end
@@ -72,13 +82,13 @@ class ApplicationController < ActionController::Base
         default_password = "admin"
         if logged_in? and current_person.admin? 
           if current_person.email =~ /@#{default_domain}$/
-            flash[:notice] = %(Warning: your email address is still at 
+            flash[:notice] = %(#{t('notice_warning_your_email_address')} 
               #{default_domain}.
-              <a href="#{edit_person_path(current_person)}">Change it here</a>.)
+              <a href="#{edit_person_path(current_person)}"><%= t('notice_change_it_here') %></a>.)
           end
           if current_person.unencrypted_password == default_password
-            flash[:error] = %(Warning: your password is still the default.
-              <a href="#{edit_person_path(current_person)}">Change it here</a>.)          
+            flash[:error] = %(#{t('error_default_password')}
+              <a href="#{edit_person_path(current_person)}"><%= t('notice_change_it_here') %></a>.)          
           end
         end
       end

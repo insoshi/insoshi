@@ -1,10 +1,10 @@
-<h2>New topic</h2>
+<h2><%= t('topics.new.header') %></h2>
 
 <%= error_messages_for :topic %>
 
 <% form_for :topic, :url => forum_topics_path(@forum)  do |f| %>
   <div class="form_row">
     <%= f.text_field :name %>
-    <%= f.submit "Submit", :class => "button" %>
+    <%= f.submit t('button_submit'), :class => "button" %>
   </div>
 <% end %>

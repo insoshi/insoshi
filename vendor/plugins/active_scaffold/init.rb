@@ -1,7 +1,9 @@
 ##
 ## Initialize the environment
 ##
-raise "This version of ActiveScaffold requires Rails 2.1 or higher.  Please use an earlier version." unless Rails::VERSION::MAJOR == 2 && Rails::VERSION::MINOR >= 1
+unless Rails::VERSION::MAJOR == 2 && Rails::VERSION::MINOR = 2
+  raise "This version of ActiveScaffold requires Rails 2.2.  Please use an earlier version."
+end
 
 require File.dirname(__FILE__) + '/environment'
 

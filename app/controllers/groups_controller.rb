@@ -38,7 +38,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
-        flash[:notice] = 'Group was successfully created.'
+        flash[:success] = t('success_group_created')
         format.html { redirect_to(group_path(@group)) }
         format.xml  { render :xml => @group, :status => :created, :location => @group }
       else
@@ -53,7 +53,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.update_attributes(params[:group])
-        flash[:notice] = 'Group was successfully updated.'
+        flash[:notice] = t('notice_group_updated')
         format.html { redirect_to(group_path(@group)) }
       else
         format.html { render :action => "edit" }
@@ -66,7 +66,7 @@ class GroupsController < ApplicationController
     @group.destroy
 
     respond_to do |format|
-      flash[:notice] = 'Group was successfully deleted.'
+      flash[:success] = t('success_group_deleted')
       format.html { redirect_to(groups_path) }
     end
   end
@@ -78,7 +78,7 @@ class GroupsController < ApplicationController
     respond_to do |format|
       if current_person.own_groups.include?(@group) and @group.hidden?
         if @contacts.length == 0
-          flash[:error] = "You have no contacts or you have invited all of them"
+          flash[:error] = t('error_no_contacts')
           format.html { redirect_to(group_path(@group)) }
         end
         format.html
@@ -97,7 +97,7 @@ class GroupsController < ApplicationController
       end
     end
     respond_to do |format|
-      flash[:notice] = "You have invite some of your contacts to '#{@group.name}'"
+      flash[:notice] = t('notice_invite_contacts') + " '#{@group.name}'"
       format.html { redirect_to(group_path(@group)) }
     end
   end
@@ -131,11 +131,11 @@ class GroupsController < ApplicationController
     group = Group.find(params[:id])
     if params[:photo].nil?
       # This is mainly to prevent exceptions on iPhones.
-      flash[:error] = "Your browser doesn't appear to support file uploading"
+      flash[:error] = t('error_browser_upload_fail')
       redirect_to(edit_group_path(group)) and return
     end
     if params[:commit] == "Cancel"
-      flash[:notice] = "You have canceled the upload"
+      flash[:notice] = t('notice_upload_canceled')
       redirect_to(edit_group_path(group)) and return
     end
     
@@ -145,7 +145,7 @@ class GroupsController < ApplicationController
     
     respond_to do |format|
       if @photo.save
-        flash[:success] = "Photo successfully uploaded"
+        flash[:success] = t('success_photo_uploaded')
         if group.owner == current_person
           format.html { redirect_to(edit_group_path(group)) }
         else
@@ -161,7 +161,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @photo = Photo.find(params[:photo_id])
     @photo.destroy
-    flash[:success] = "Photo deleted for group '#{@group.name}'"
+    flash[:success] = t('success_photo_deleted_for_group') + " '#{@group.name}'"
     respond_to do |format|
       format.html { redirect_to(edit_group_path(@group)) }
     end

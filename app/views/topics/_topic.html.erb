@@ -9,15 +9,15 @@
   <%= link_to h(topic.name), 
               forum_topic_path(topic.forum, topic, :posts => n),
               :class => "show-follow" %>
-  <span class="meta">(<%= pluralize(n, "post") %>)</span>
+  <span class="meta">(<%= pluralize(n, t('post')) %>)</span>
   </p>
   <p class="meta">
-    Created by <%= person_link topic.person %>
-    <%= time_ago_in_words(topic.created_at) %> ago
+  <%= t('topics.partial.created_by') %> <%= person_link topic.person %>
+  <%= time_ago_in_words(topic.created_at) %> <%= t('ago') %>
     <%- if admin? -%>
-      | <%= link_to "Edit",  edit_forum_topic_path(topic.forum, topic) %>
-      | <%= link_to "Destroy",  forum_topic_path(topic.forum, topic),
-                                :confirm => 'Are you sure?',
+      | <%= link_to t('button_edit'),  edit_forum_topic_path(topic.forum, topic) %>
+      | <%= link_to t('button_delete'),  forum_topic_path(topic.forum, topic),
+                                :confirm => t('are_you_sure'),
                                 :method  => :delete %>
     <%- end -%>
   </p>

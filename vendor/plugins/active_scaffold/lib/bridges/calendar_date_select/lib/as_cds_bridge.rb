@@ -23,10 +23,10 @@ end
 module ActiveScaffold
   module Helpers
     # Helpers that assist with the rendering of a Form Column
-    module FormColumns
+    module FormColumnHelpers
       def active_scaffold_input_calendar_date_select(column, options)
         options[:class] = "#{options[:class]} text-input".strip
-        calendar_date_select("record", column.name, options)
+        calendar_date_select("record", column.name, options.merge(column.options))
       end      
     end
   end

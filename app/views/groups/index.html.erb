@@ -1,5 +1,5 @@
 <%- column_div :type => :primary do -%>
-  <h2>Groups</h2>
+  <h2><%= t('groups.index.header') %></h2>
   <% unless @groups.empty? -%>
     <%= will_paginate %>
     <ul class="list people">
@@ -7,7 +7,7 @@
     </ul>
     <%= will_paginate %>
   <% else %>
-    <h3>No groups (yet)</h3>
+    <h3><%= t('groups.index.no_groups_yet') %></h3>
   <% end -%>
 
 <%- end -%>

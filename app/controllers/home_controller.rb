@@ -29,9 +29,9 @@ class HomeController < ApplicationController
   def refreshblog
     new_posts_count = FeedPost.update_posts
     if nil == new_posts_count
-      flash[:error] = "Blog update failed."
+      flash[:error] = t('error_blog_update')
     else
-      flash[:notice] = "Blog updated #{new_posts_count} entries."
+      flash[:notice] = t('notice_blog_updated') + " #{new_posts_count} " + t('notice_entries')
     end
     redirect_to '/' 
   end

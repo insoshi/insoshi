@@ -50,7 +50,7 @@ class NeighborhoodsController < ApplicationController
 
     respond_to do |format|
       if @neighborhood.save
-        flash[:notice] = 'Neighborhood was successfully created.'
+        flash[:notice] = t('success_neighborhood_created')
         format.html { redirect_to(@neighborhood) }
         format.xml  { render :xml => @neighborhood, :status => :created, :location => @neighborhood }
       else
@@ -67,7 +67,7 @@ class NeighborhoodsController < ApplicationController
 
     respond_to do |format|
       if @neighborhood.update_attributes(params[:neighborhood])
-        flash[:notice] = 'Neighborhood was successfully updated.'
+        flash[:notice] = t('notice_neighborhood_updated')
         format.html { redirect_to(@neighborhood) }
         format.xml  { head :ok }
       else
@@ -93,7 +93,7 @@ class NeighborhoodsController < ApplicationController
 
   def authorize_change
     authorized = current_person.admin?
-    flash[:error] = 'Authorization required to edit neighborhood'
+    flash[:error] = t('error_authorization_required_to_edit_neighborhood')
     redirect_to home_url unless authorized
   end
 end

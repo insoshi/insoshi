@@ -1,8 +1,8 @@
 <%- column_div :type => :primary do -%>
   <%- unless global_prefs.app_name.blank? -%>
-  <h2><%= global_prefs.app_name %> blog</h2>
+  <h2><%= global_prefs.app_name %> <%= t('home.show.header') %></h2>
   <%- else -%>
-  <h2><%= Blog %></h2>
+  <h2><%= t('home.show.header').capitalize %></h2>
   <%- end -%>
   <ul class="list blog full">
     <%= render :partial => 'posts/blog_post', :locals => { :blog_post => @post } %>

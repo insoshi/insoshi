@@ -1,22 +1,22 @@
-    <h2>Your Active Bids/Work</h2>
+<h2><%= t('home._dashboard.bids') %></h2>
 <%- if @bids.empty? -%>
-    <h3 class="blankslate">No active bids</h3>
+  <h3 class="blankslate"><%= t('home._dashboard.no_active_bids') %></h3>
 <%- else -%>
-<ul class="list full">
+  <ul class="list full">
     <%= render :partial => '/shared/bid', :collection => @bids %>
   </ul>
 <%- end -%>
-    <h2>Your Active Offers</h2>
+<h2><%= t('home._dashboard.offers') %></h2>
 <%- if @offers.empty? -%>
-    <h3 class="blankslate">No active offers</h3>
+  <h3 class="blankslate"><%= t('home._dashboard.no_active_offers') %></h3>
 <%- else -%>
 <ul class="list full">
     <%= render :partial => '/offers/offer', :collection => @offers %>
   </ul>
 <%- end -%>
-    <h2>Your Active Requests</h2>
+<h2><%= t('home._dashboard.requests') %></h2>
 <%- if @reqs.empty? -%>
-    <h3 class="blankslate">No active requests</h3>
+  <h3 class="blankslate"><%= t('home._dashboard.no_active_requests') %></h3>
 <%- else -%>
 <ul class="list full">
     <%= render :partial => '/reqs/req', :collection => @reqs %>

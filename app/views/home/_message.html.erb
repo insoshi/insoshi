@@ -7,9 +7,9 @@
       <%= image_tag("icons/reply.gif", :class => "icon" )  %>
     <%- end -%>    
   </div>
-  <p><span class="field">From:</span> <%= person_link message.sender %></p>
+  <p><span class="field"><%= t('from').capitalize %>:</span> <%= person_link message.sender %></p>
   <p class="meta published">
-    <%= time_ago_in_words message.created_at %> ago
+    <%= time_ago_in_words message.created_at %> <%= t('ago') %>
   </p>
   <p title="Subject">
     <%= link_to sanitize(truncate(message.subject, 30)),

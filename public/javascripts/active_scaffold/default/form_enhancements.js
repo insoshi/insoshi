@@ -87,3 +87,28 @@ Form.enable = function(form) {
       Element.removeClassName(element, 'disabled');
     }
   }
+
+DraggableLists = Class.create({
+  initialize: function(list) {
+    list = $(list).addClassName('draggable-list');
+    var list_selected = list.cloneNode(false).addClassName('selected');
+    list_selected.id += '_seleted';
+    list.select('input[type=checkbox]').each(function(item) {
+      var li = item.up('li');
+      li.down('label').htmlFor = null;
+      new Draggable(li, {revert: 'failure', ghosting: true});
+      if (item.checked) list_selected.insert(li.remove());
+    });
+    list.insert({after: list_selected});
+    Droppables.add(list, {hoverclass: 'hover', containment: list_selected.id, onDrop: this.drop_to_list});
+    Droppables.add(list_selected, {hoverclass: 'hover', containment: list.id, onDrop: this.drop_to_list});
+    list.undoPositioned(); // undo positioned to fix dragging from elements with overflow auto
+    list_selected.undoPositioned();
+  },
+
+  drop_to_list: function(draggable, droppable, event) {
+    droppable.insert(draggable.remove());
+    draggable.setStyle({left: '0px', top: '0px'});
+    draggable.down('input').checked = droppable.hasClassName('selected');
+  }
+});

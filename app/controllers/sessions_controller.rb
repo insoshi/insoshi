@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
 
           @person.save
           if !@person.errors.empty?
-            err_message = "The following problems exist with your OpenID profile:<br>"
+            err_message = t('error_openid_problems') + "<br>"
             @person.errors.each do |attr,val|
               logger.warn "open_id_authentication() Error: #{attr}:#{val}"
               err_message += "#{attr}: #{val}<br>"
@@ -44,8 +44,7 @@ class SessionsController < ApplicationController
             render :partial => "shared/personal_details.html.erb", :object => @person, :layout => 'application'
           elsif global_prefs.email_verifications?
             @person.email_verifications.create
-            flash[:notice] = %(Thanks for signing up! Check your email
-                               to activate your account.)
+            flash[:notice] = t('notice_thanks_for_signing_up_check_email')
             redirect_to(home_url)
           else
             successful_login("Thanks for signing up!")
@@ -55,7 +54,7 @@ class SessionsController < ApplicationController
         end # if new record
 
         if @person.deactivated?
-          flash[:error] = "Your account has been deactivated"
+          flash[:error] = t('error_deactivated_account')
           redirect_to home_url and return
         end
 
@@ -64,13 +63,13 @@ class SessionsController < ApplicationController
     end
   end
 
-  def failed_login(message = "Authentication failed.")
+  def failed_login(message = t('error_authentication_failed'))
     @body = "login single-col"
-    flash.now[:error] = message
+    flash[:error] = message
     render :action => 'new'
   end
   
-  def successful_login(message = "Logged in successfully")
+  def successful_login(message = t('notice_logged_in_successfully'))
     self.current_person = @person
     if params[:remember_me] == "1"
       current_person.remember_me
@@ -86,12 +85,11 @@ class SessionsController < ApplicationController
     person = Person.authenticate(login, password)
     unless person.nil?
       if person.deactivated?
-        flash[:error] = "Your account is currently deactivated. In order to log in, you must be approved by the administrator.<br />Membership is approved after an orientation has been attended. Read more about <a href='/steps'>membership here</a>.<br />You can also <a href='/contact'>contact</a> the administrators if you think your account should be active."
+        flash[:error] = t('error_your_account_is_deactivated') + "<br />" + t('error_membership_is_approved_after') + "<a href='/steps'>" + t('error_membership_here') + "</a>.<br />" + t('error_you_can_also') + " <a href='/contact'>" + t('error_contact') + " </a> " + t('error_the_administrators')
         redirect_to home_url and return
       elsif global_prefs.email_verifications? and 
             not person.email_verified? and not person.admin?
-        flash[:notice] = %(Unverified email address. 
-                           Please check your email for your activation code.)
+        flash[:notice] = t('notice_unverified_email_address')
         redirect_to login_url and return
       end
     end
@@ -109,7 +107,7 @@ class SessionsController < ApplicationController
           :value => current_person.remember_token,
           :expires => current_person.remember_token_expires_at }
       end
-      flash[:success] = "Logged in successfully"
+      flash[:success] = t('notice_logged_in_successfully')
       if @first_admin_login
         redirect_to admin_preferences_url
       else
@@ -117,7 +115,7 @@ class SessionsController < ApplicationController
       end
     else
       @body = "login single-col"
-      flash.now[:error] = "Invalid email/password combination"
+      flash[:error] = t('error_invalid_email_password')
       params[:password] = nil
       render :action => 'new'
     end
@@ -128,11 +126,11 @@ class SessionsController < ApplicationController
     cookies.delete :auth_token
     if logged_in? and current_person.deactivated?
       reset_session
-      flash[:error] = "Your account is inactive."
+      flash[:error] = t('error_your_account_is_inactive')
       redirect_to login_url
     else
       reset_session
-      flash[:success] = "You have been logged out."
+      flash[:success] = t('success_you_have_been_logged_out')
       redirect_back_or_default(login_url)
     end
   end

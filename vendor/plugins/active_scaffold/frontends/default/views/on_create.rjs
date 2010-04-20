@@ -1,0 +1,25 @@
+cancel_selector = "##{element_form_id(:action => :create)} a.cancel".to_json
+
+if controller.send :successful?
+  if @insert_row
+    page.insert_html :top, active_scaffold_tbody_id, :partial => 'list_record', :locals => {:record => @record}
+    page << "ActiveScaffold.stripe($('#{active_scaffold_tbody_id}'))"
+    page << "ActiveScaffold.hide_empty_message('#{active_scaffold_tbody_id}','#{empty_message_id}');"
+    page << "ActiveScaffold.increment_record_count('#{active_scaffold_id}');"
+  end
+
+  if (active_scaffold_config.create.persistent)
+    page << "$$(#{cancel_selector}).first().link.reload();"
+  else
+    page << "$$(#{cancel_selector}).first().link.close#{'_with_refresh' unless @insert_row}();"
+  end
+  if (active_scaffold_config.create.edit_after_create)
+    page << "var link = $('#{action_link_id 'edit', @record.id}');"
+    page << "if (link) (function() { link.action_link.open() }).defer();"
+  end
+else
+  page << "l = $$(#{cancel_selector}).first().link;"
+  page.replace element_form_id(:action => :create), :partial => 'create_form'
+  page << "l.register_cancel_hooks();"
+end
+page.replace_html active_scaffold_messages_id, :partial => 'messages'

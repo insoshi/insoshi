@@ -25,19 +25,19 @@
       end
 
       # generate the customized label
-      @label = as_("%s for %s", active_scaffold_config_for(association.klass).label, format_column(@record.to_label))
+      @label = as_(:nested_for_model, :nested_model => active_scaffold_config_for(association.klass).label, :parent_model => format_value(@record.to_label))
 
       begin
         controller = active_scaffold_controller_for(association.klass)
       rescue ActiveScaffold::ControllerNotFound => error
-        concat "#{error.class} - #{error.message}", binding
+        concat "#{error.class} - #{error.message}"
       else
         concat render(:active_scaffold => controller.controller_path,
           :constraints => @constraints,
           :conditions => association.options[:conditions],
           :label => h(@label),
           :params => {:nested => true, :parent_column => column_name, :parent_model => association.active_record}
-        ), binding
+        )
       end
     end
   end

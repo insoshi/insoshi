@@ -14,17 +14,17 @@
   <%- end -%>
 <%- end -%>
   <p>
-  Hours bid: <%= h bid.estimated_hours %> - expires <%= relative_time_ago_in_words(bid.expiration_date) %>
+  <%= t('currency_unit_plural').capitalize %> <%= t('bid') %>: <%= h bid.estimated_hours %> - <%= t('bids.bid.expires') %> <%= relative_time_ago_in_words(bid.expiration_date) %>
   </p>
   <p class="meta">
-<% if bid.state != 'offered' %>Accepted <%= time_ago_in_words(bid.accepted_at) -%> ago<br><% end %>   Submitted by <%= person_link bid.person %>
-    <%= time_ago_in_words(bid.created_at) %> ago
+<% if bid.state != 'offered' %><%= t('bids.bid.accepted') %> <%= time_ago_in_words(bid.accepted_at) -%> <%= t('ago') %><br><% end %>   <%= t('bids.bid.submitted_by') %> <%= person_link bid.person %>
+  <%= time_ago_in_words(bid.created_at) %> <%= t('ago') %> 
     <% if admin? || current_person?(bid.person) -%>
-    | <%= link_to "Delete", req_bid_path(bid.req,bid), :confirm => 'Are you sure?', :method => :delete %>
+      | <%= link_to t('button_delete'), req_bid_path(bid.req,bid), :confirm => t('are_you_sure'), :method => :delete %>
     <% end -%>
     <br>
     <% if current_person?(bid.req.person) && !current_person.address.nil? && !bid.person.address.nil? && !current_person?(bid.person) -%>
-      <%= number_with_precision(bid.person.address.distance_to(current_person.address), 1).to_s %> miles away
+      <%= number_with_precision(bid.person.address.distance_to(current_person.address), 1).to_s %> <%= t('miles_away') %>
     <% end -%>
   </p>
 </li>

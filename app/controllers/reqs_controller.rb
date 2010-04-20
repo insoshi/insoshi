@@ -23,7 +23,7 @@ class ReqsController < ApplicationController
     when Net::HTTPSuccess
       user_info = JSON.parse(@resp.body)
       unless user_info['screen_name']
-        flash[:error] = "Authentication failed"
+        flash[:error] = t('error_authentication_failed')
         redirect_to :action => :index
         return
       end
@@ -35,17 +35,17 @@ class ReqsController < ApplicationController
         case response 
         when Net::HTTPSuccess
           follow(user_info['screen_name'])
-          flash[:notice] = "You are following requests on Twitter!" 
+          flash[:notice] = t('notice_you_are_following_twitter') 
           redirect_to :action => :index
         else
-          flash[:error] = "Authentication failed"
+          flash[:error] = t('error_authentication_failed')
           redirect_to :action => :index
         end
         return
       end
 
     else
-        flash[:error] = "Authentication failed"
+        flash[:error] = t('error_authentication_failed')
         redirect_to :action => :index
         return
     end
@@ -118,7 +118,7 @@ class ReqsController < ApplicationController
 
     respond_to do |format|
       if @req.save
-        flash[:notice] = 'Request was successfully created.'
+        flash[:success] = t('success_request_created')
         unless global_prefs.twitter_name.blank?
           @req.tweet(req_url(@req))
         end
@@ -141,7 +141,7 @@ class ReqsController < ApplicationController
 
     respond_to do |format|
       if @req.update_attributes(params[:req])
-        flash[:notice] = 'Request was successfully updated.'
+        flash[:notice] = t('notice_request_updated')
         format.html { redirect_to(@req) }
         format.xml  { head :ok }
       else
@@ -172,14 +172,14 @@ class ReqsController < ApplicationController
     if current_person.twitter_name.blank?
       current_person.twitter_name = screen_name
       current_person.save!
-      flash[:notice] = "Your Twitter name has been set to #{screen_name}"
+      flash[:notice] = t('notice_your_twitter_name_has_been_set_to') + " #{screen_name}"
       changed = true
     else
       if current_person.twitter_name != screen_name
         current_person.twitter_name = screen_name
         current_person.save!
         logger.info "#{current_person.name} changing twitter from #{current_person.twitter_name} to #{screen_name}"
-        flash[:notice] = "Your Twitter has been changed from #{current_person.twitter_name} to #{screen_name}"
+        flash[:notice] = t('notice_your_twitter_has_been_changed_from') + " #{current_person.twitter_name} to #{screen_name}"
         changed = true
       end
     end

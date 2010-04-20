@@ -9,8 +9,8 @@
         override_formatter = "render_#{column.name}_#{column.calculate}"
         calculation = self.method(override_formatter).call(calculation) if respond_to? override_formatter
 
-        _erbout.concat calculation.to_s
         -%>
+        <%= calculation.to_s %>
       <% else -%>
         &nbsp;
       <% end -%>

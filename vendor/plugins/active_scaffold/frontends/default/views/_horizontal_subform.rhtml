@@ -8,7 +8,7 @@
     <% if @record.errors.count -%>
     <tr class="association-record-errors">
       <td colspan="<%= active_scaffold_config_for(@record.class).subform.columns.length + 1 %>">
-        <%= error_messages_for :record %>
+        <%= error_messages_for :record, :object_name => @record.class.human_name.downcase %>
       </td>
     </tr>
     <% end %>
