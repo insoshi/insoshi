@@ -1,0 +1,1 @@
+page.call 'ActiveScaffold.update_row', element_row_id(:action => 'list', :id => @record.id), render(:partial => 'list_record', :locals => {:record => @record})

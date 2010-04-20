@@ -1,0 +1,19 @@
+<%
+record = list_record if list_record # compat with render :partial :collection
+dont_show_calculations ||= false
+tr_class = cycle("", "even-record")
+tr_class += " #{list_row_class(record)}" if respond_to? :list_row_class
+url_options = params_for(:action => :list, :id => record.id)
+-%>
+
+<tr class="record <%= tr_class %>" id="<%= element_row_id(:action => :list, :id => record.id) %>">
+  <%= render :partial => 'list_record_columns', :locals => {:record => record} %>
+  <%= render :partial => 'list_actions', :locals => {:record => record, :url_options => url_options} if active_scaffold_config.action_links.any? {|link| link.type == :member } %>
+</tr>
+<script type="text/javascript">
+//<![CDATA[
+  <%= update_page do |page|
+        page.replace active_scaffold_calculations_id, :partial => 'list_calculations'
+      end if not dont_show_calculations and active_scaffold_config.list.columns.any? {|c| c.calculation?} %>
+//]]>
+</script>

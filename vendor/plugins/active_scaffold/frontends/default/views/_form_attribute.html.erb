@@ -1,0 +1,15 @@
+<% scope ||= nil %>
+<dl>
+  <dt>
+    <label for="<%= active_scaffold_input_options(column, scope)[:id] %>"><%= column.label %></label>
+  </dt>
+  <dd>
+    <%= active_scaffold_input_for column, scope %>
+    <% if column.options.is_a?(Hash) && column.options[:update_column] -%>
+      <%= loading_indicator_tag(:action => :render_field, :id => params[:id]) %>
+    <% end -%>
+    <% if column.description -%>
+      <span class="description"><%= column.description %></span>
+    <% end -%>
+  </dd>
+</dl>

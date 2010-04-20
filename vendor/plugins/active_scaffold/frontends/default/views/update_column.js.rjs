@@ -1,0 +1,13 @@
+column_span_id = element_cell_id(:id => @record.id.to_s, :action => 'update_column', :name => params[:column])
+unless controller.send :successful?
+  page.alert(@record.errors.full_messages(active_scaffold_config).join("\n"))
+  @record.reload
+end
+column = active_scaffold_config.columns[params[:column]]
+if column.inplace_edit
+  page.replace_html(column_span_id, format_inplace_edit_column(@record, column))
+else
+  formatted_value = get_column_value(@record, column)
+  page.replace_html(column_span_id, formatted_value)
+end
+page.replace_html(active_scaffold_calculations_id(column), render_column_calculation(column)) if column.calculation?

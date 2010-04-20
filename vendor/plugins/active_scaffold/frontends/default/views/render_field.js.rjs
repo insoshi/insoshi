@@ -1,0 +1,14 @@
+@update_columns.each do |update_column|
+  column = update_column
+  while column
+    if column_renders_as(column) == :subform
+      field_id = sub_form_id(:association => column.name)
+      page[field_id].replace_html :partial => form_partial_for_column(column), :locals => { :column => column, :scope => params[:scope] }
+    else
+      field_id = active_scaffold_input_options(column, params[:scope])[:id]
+      page[field_id].up('dl').replace :partial => form_partial_for_column(column), :locals => { :column => column, :scope => params[:scope] }
+    end
+    column = Hash === column.options ? column.options[:update_column] : nil
+    column = active_scaffold_config.columns[column] if column
+  end
+end

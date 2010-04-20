@@ -1,0 +1,40 @@
+<% href_params = params_for(:action => :index, :escape => false, :search => nil) -%>
+<% href = url_for(href_params) -%>
+<%= form_remote_tag :url => href,
+                    :method => :get,
+                    :before => "addActiveScaffoldPageToHistory('#{href}', '#{params[:controller]}')",
+                    :after => "$('#{loading_indicator_id(:action => :search, :id => params[:id])}').style.visibility = 'visible'; Form.disable('#{search_form_id}');",
+                    :complete => "$('#{loading_indicator_id(:action => :search, :id => params[:id])}').style.visibility = 'hidden'; Form.enable('#{search_form_id}');",
+                    :failure => "ActiveScaffold.report_500_response('#{active_scaffold_id}')",
+                    :html => { :action => href, :id => search_form_id, :class => 'search', :method => :get } %>
+
+  <ol class="form">
+    <% active_scaffold_config.field_search.columns.each do |column| -%>
+      <% next unless column.search_sql -%>
+      <% name = "search[#{column.name}]" %>
+      <li class="form-element">
+        <dl>
+          <dt>
+            <label for="<%= "search_#{column.name}" %>"><%= column.label %></label>
+          </dt>
+        <dd>
+        <%= active_scaffold_search_for(column) %>
+        </dd>
+      </dl>
+    </li>
+    <% end -%>
+  </ol>
+  <p class="form-footer">
+    <%= submit_tag as_(:search), :class => "submit" %>
+    <% href = url_for(href_params.merge(:search => '')) -%>
+    <%= link_to_remote as_(:reset), {:url => href, :with => "'search='", :method => :get,
+          :failure => "ActiveScaffold.report_500_response('#{active_scaffold_id}')"}, :class => 'cancel', :href => href %>
+    <%= loading_indicator_tag(:action => :search) %>
+  </p>
+</form>
+
+<script type="text/javascript">
+//<![CDATA[
+  Form.focusFirstElement('<%= search_form_id -%>');
+//]]>
+</script>

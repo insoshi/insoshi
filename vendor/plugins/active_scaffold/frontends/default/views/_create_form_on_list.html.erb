@@ -1,0 +1,38 @@
+<% url_options = params_for(:action => :create) -%>
+<%=
+if active_scaffold_config.create.multipart? # file_uploads
+  form_remote_upload_tag url_options.merge({:iframe => true}),
+                         :onsubmit => onsubmit,
+                         :id => element_form_id(:action => :create),
+                         :class => 'create'
+else
+  form_remote_tag :url => url_options,
+                  :after => "$('#{loading_indicator_id(:action => :create, :id => params[:id])}').style.visibility = 'visible'; Form.disable('#{element_form_id(:action => :create)}');",
+                  :complete => "$('#{loading_indicator_id(:action => :create, :id => params[:id])}').style.visibility = 'hidden'; Form.enable('#{element_form_id(:action => :create)}');",
+                  :failure => "ActiveScaffold.report_500_response('#{active_scaffold_id}')",
+                  :html => {
+                    :href => url_for(url_options),
+                    :onsubmit => onsubmit,
+                    :id => element_form_id(:action => :create),
+                    :class => 'create'
+                  }
+end -%>
+
+  <h4><%= active_scaffold_config.create.label -%></h4>
+
+  <% if request.xhr? -%>
+    <div id="<%= element_messages_id(:action => :create) %>" class="messages-container"><%= error_messages_for :record, :object_name => @record.class.human_name.downcase %></div>
+  <% else -%>
+    <%= render :partial => 'form_messages' %>
+  <% end -%>
+
+  <%= render :partial => 'form', :locals => { :columns => active_scaffold_config.create.columns } %>
+
+  <p class="form-footer">
+    <%= submit_tag as_(:create), :class => "submit" %>
+    <%= loading_indicator_tag(:action => :create, :id => params[:id]) %>
+  </p>
+</form>
+<script type="text/javascript">
+Form.focusFirstElement('<%= element_form_id(:action => :create) -%>');
+</script>

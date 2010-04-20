@@ -1,0 +1,19 @@
+<table cellpadding="0" cellspacing="0">
+  <% @record = column.association.klass.new -%>
+  <%= render :partial => 'horizontal_subform_header', :locals => {:parent_record => parent_record} %>
+
+  <tbody id="<%= sub_form_list_id(:association => column.name) %>">
+    <% associated.each_index do |index| %>
+    <% @record = associated[index] -%>
+    <% if @record.errors.count -%>
+    <tr class="association-record-errors">
+      <td colspan="<%= active_scaffold_config_for(@record.class).subform.columns.length + 1 %>" id="<%= element_messages_id :action => @record.class.name.underscore, :id => "#{parent_record.id}-#{index}" %>">
+        <%= error_messages_for :record, :object_name => @record.class.human_name.downcase %>
+      </td>
+    </tr>
+    <% end %>
+    <%= render :partial => 'horizontal_subform_record', :locals => {:scope => column_scope(column), :parent_record => parent_record, :column => column, :locked => @record.new_record? && @record == associated.last} %>
+    <% end -%>
+  </tbody>
+</table>
+<%= render :partial => 'form_association_footer', :locals => {:parent_record => parent_record, :column => column, :associated => associated} -%>

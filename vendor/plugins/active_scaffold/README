@@ -1,0 +1,32 @@
+**********************************************************************************
+** For all documentation see the project website: http://www.ActiveScaffold.com **
+**********************************************************************************
+
+ActiveScaffold plugin by Scott Rutherford (scott@caronsoftware.com), Richard White (rrwhite@gmail.com), Lance Ivy (lance@cainlevy.net), Ed Moss, Tim Harper and Sergio Cambra (sergio@entrecables.com)
+
+Uses DhtmlHistory by Brad Neuberg (bkn3@columbia.edu)
+http://codinginparadise.org
+
+Uses Querystring by Adam Vandenberg
+http://adamv.com/dev/javascript/querystring
+
+Uses Paginator by Bruce Williams
+http://paginator.rubyforge.org/
+
+Supports RecordSelect by Lance Ivy
+http://code.google.com/p/recordselect/
+
+== Version Information
+
+Please note the following list of Active Scaffold branches and Rails versions. Master will not work with Rails < 2.2
+
+Active Scaffold master currently supports rails-2.3.5, but incompatible changes can be introduced, if you want an stable version, use rails-2.3
+Rails 2.3.*: Active Scaffold rails-2.3
+Rails 2.2.*: Active Scaffold rails-2.2
+Rails 2.1.*: Active Scaffold rails-2.1
+Rails < 2.1: Active Scaffold 1-1-stable (no guarantees)
+
+Since Rails 2.3, render_component plugin is needed for nested and embbeded scaffolds. It works with rails-2.3 branch from ewildgoose repository:
+script/plugin install git://github.com/ewildgoose/render_component.git -r rails-2.3
+
+Released under the MIT license (included)

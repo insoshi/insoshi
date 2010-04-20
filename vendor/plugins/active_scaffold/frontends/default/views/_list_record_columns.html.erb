@@ -1,0 +1,8 @@
+<% active_scaffold_config.list.columns.each do |column| %>
+  <% authorized = record.authorized_for?(:crud_type => :read, :column => column.name) -%>
+  <% column_value = authorized ? get_column_value(record, column) : active_scaffold_config.list.empty_field_text -%>
+
+  <td class="<%= column_class(column, column_value) %>" >
+    <%= authorized ? render_list_column(column_value, column, record) : column_value %>
+  </td>
+<% end -%>
