@@ -1,8 +1,0 @@
-<div class="active-scaffold">
-  <div class="update-view <%= "#{params[:controller]}-view" %> view">
-    <% if active_scaffold_config.update.nested_links and active_scaffold_config.action_links.any? {|link| link.type == :record } -%>
-    <%= render :partial => 'update_actions', :locals => {:record => @record, :url_options => params_for(:action => :list, :id => @record.id)} %>
-    <% end -%>
-    <%= render :partial => 'update_form' -%>
-  </div>
-</div>
