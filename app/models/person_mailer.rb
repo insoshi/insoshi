@@ -6,13 +6,13 @@ class PersonMailer < ActionMailer::Base
   end
   
   def server
-    @server_name ||= PersonMailer.global_prefs.server_name
+    @server ||= PersonMailer.global_prefs.server_name
   end
   
   def password_reset_instructions(person)
-    subject      "Password Reset Instructions"
     from         "Password reset <password_reset@#{domain}>"
     recipients   person.email
+    subject      formatted_subject("Password reset")
     content_type "text/html"
     sent_on      Time.now
     body         :edit_password_reset_url => edit_password_reset_url(person.perishable_token)
@@ -23,7 +23,7 @@ class PersonMailer < ActionMailer::Base
     recipients   message.recipient.email
     subject      formatted_subject(message.subject)
     content_type "text/html"
-    body         "domain" => server, "message" => message,
+    body         "server" => server, "message" => message,
     "preferences_note" => preferences_note(message.recipient)
   end
   
@@ -31,7 +31,7 @@ class PersonMailer < ActionMailer::Base
     from         "Contact request <connection@#{domain}>"
     recipients   connection.person.email
     subject      formatted_subject("New contact request")
-    body         "domain" => server,
+    body         "server" => server,
     "connection" => connection,
     "url" => edit_connection_path(connection),
     "preferences_note" => preferences_note(connection.person)
@@ -40,8 +40,8 @@ class PersonMailer < ActionMailer::Base
   def membership_public_group(membership)
     from         "Membership done <membership@#{domain}>"
     recipients   membership.group.owner.email
-    subject      formatted_subject("New member in group #{membership.group.name}")
-    body         "domain" => server,
+    subject      formatted_subject("#{membership.person.name} joined group #{membership.group.name}")
+    body         "server" => server,
     "membership" => membership,
     "url" => members_group_path(membership.group),
     "preferences_note" => preferences_note(membership.group.owner)
@@ -50,8 +50,8 @@ class PersonMailer < ActionMailer::Base
   def membership_request(membership)
     from         "Membership request <membership@#{domain}>"
     recipients   membership.group.owner.email
-    subject      formatted_subject("Membership request for group #{membership.group.name}")
-    body         "domain" => server,
+    subject      formatted_subject("#{membership.person.name} wants to join group #{membership.group.name}")
+    body         "server" => server,
     "membership" => membership,
     "url" => members_group_path(membership.group),
     "preferences_note" => preferences_note(membership.group.owner)
@@ -61,7 +61,7 @@ class PersonMailer < ActionMailer::Base
     from         "Membership accepted <membership@#{domain}>"
     recipients   membership.person.email
     subject      formatted_subject("You have been accepted to join #{membership.group.name}")
-    body         "domain" => server,
+    body         "server" => server,
     "membership" => membership,
     "url" => group_path(membership.group),
     "preferences_note" => preferences_note(membership.person)
@@ -71,7 +71,7 @@ class PersonMailer < ActionMailer::Base
     from         "Invitation notification <invitation#{domain}>"
     recipients   membership.person.email
     subject      formatted_subject("Invitation from group #{membership.group.name}")
-    body         "domain" => server,
+    body         "server" => server,
     "membership" => membership,
     "url" => edit_membership_path(membership),
     "preferences_note" => preferences_note(membership.person)
@@ -81,7 +81,7 @@ class PersonMailer < ActionMailer::Base
     from         "Invitation accepted <invitation@#{domain}>"
     recipients   membership.group.owner.email
     subject      formatted_subject("#{membership.person.name} accepted the invitation")
-    body         "domain" => server,
+    body         "server" => server,
     "membership" => membership,
     "url" => members_group_path(membership.group),
     "preferences_note" => preferences_note(membership.group.owner)
@@ -91,7 +91,7 @@ class PersonMailer < ActionMailer::Base
     from         "Comment notification <comment@#{domain}>"
     recipients   comment.commented_person.email
     subject      formatted_subject("New blog comment")
-    body         "domain" => server, "comment" => comment,
+    body         "server" => server, "comment" => comment,
     "url" => 
       blog_post_path(comment.commentable.blog, comment.commentable),
     "preferences_note" => 
@@ -102,7 +102,7 @@ class PersonMailer < ActionMailer::Base
     from         "Comment notification <comment@#{domain}>"
     recipients   comment.commented_person.email
     subject      formatted_subject("New wall comment")
-    body         "domain" => server, "comment" => comment,
+    body         "server" => server, "comment" => comment,
     "url" => person_path(comment.commentable, :anchor => "wall"),
     "preferences_note" => 
       preferences_note(comment.commented_person)
@@ -113,7 +113,7 @@ class PersonMailer < ActionMailer::Base
     recipients   subscriber.email
     subject      formatted_group_subject(forum_post.topic.forum.group, forum_post.topic.name)
     content_type "text/html"
-    body         "domain" => server, "forum_post" => forum_post,
+    body         "server" => server, "forum_post" => forum_post,
     "preferences_note" => 
       preferences_note(subscriber)
   end
@@ -132,7 +132,7 @@ class PersonMailer < ActionMailer::Base
     subject      formatted_subject("New registration")
     body         "email" => new_peep.email,
     "name" => new_peep.name,
-    "domain" => server,
+    "server" => server,
     "url" => person_path(new_peep)
   end
 
