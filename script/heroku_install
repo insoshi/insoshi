@@ -29,6 +29,8 @@ AWS::S3::Bucket.create(app_name)
 `heroku config:add GMAIL_SMTP_USER=#{APP_CONFIG['GMAIL_SMTP_USER']}`
 `heroku config:add GMAIL_SMTP_PASSWORD=#{APP_CONFIG['GMAIL_SMTP_PASSWORD']}`
 `heroku config:add S3_BUCKET_NAME=#{app_name}`
+`heroku config:add HEROKU_USER=#{APP_CONFIG['HEROKU_USER']}`
+`heroku config:add HEROKU_PASSWORD=#{APP_CONFIG['HEROKU_PASSWORD']}`
 
 `git push heroku master`
 `heroku rake db:migrate`
