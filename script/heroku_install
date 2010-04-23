@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require 'rubygems'
+require 'aws/s3'
+require 'heroku'
+require 'heroku/command'
+
+APP_CONFIG = YAML.load_file("config/config.yml")
+
+unless APP_CONFIG['AMAZON_ACCESS_KEY_ID'] && APP_CONFIG['AMAZON_SECRET_ACCESS_KEY']
+  raise "you need to set amazon s3 environment variables"
+end
+
+Heroku::Command.run('create',[])
+heroku_client = Heroku::Client.new(APP_CONFIG['HEROKU_USER'], APP_CONFIG['HEROKU_PASSWORD'])
+info = heroku_client.info('')
+app_name = info[:name]
+
+AWS::S3::Base.establish_connection!(
+  :access_key_id => APP_CONFIG['AMAZON_ACCESS_KEY_ID'],
+  :secret_access_key => APP_CONFIG['AMAZON_SECRET_ACCESS_KEY']
+)
+
+AWS::S3::Bucket.create(app_name)
+
+`heroku config:add AMAZON_ACCESS_KEY_ID=#{APP_CONFIG['AMAZON_ACCESS_KEY_ID']}`
+`heroku config:add AMAZON_SECRET_ACCESS_KEY=#{APP_CONFIG['AMAZON_SECRET_ACCESS_KEY']}`
+`heroku config:add GMAIL_SMTP_USER=#{APP_CONFIG['GMAIL_SMTP_USER']}`
+`heroku config:add GMAIL_SMTP_PASSWORD=#{APP_CONFIG['GMAIL_SMTP_PASSWORD']}`
+`heroku config:add S3_BUCKET_NAME=#{app_name}`
+
+`git push heroku master`
+`heroku rake db:migrate`
+`heroku rake install`
