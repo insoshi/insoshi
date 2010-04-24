@@ -71,6 +71,13 @@ Rails::Initializer.run do |config|
   config.gem 'json'
   config.gem 'heroku'
   # config.gem 'rack-openid', :version => '>= 1.0.1'
+
+  secret = ENV['SESSION_SECRET'] || rand(36**64).to_s(36) 
+
+  config.action_controller.session = {
+    :session_key => '_oscurrency_session',
+    :secret      => secret
+  }
 end
 # Set INLINEDIR to override default location for ruby_inline directory
 # The home directory may not be correctly set in an "su"/"sudo" situation

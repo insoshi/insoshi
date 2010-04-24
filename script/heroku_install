@@ -5,6 +5,7 @@ require 'rubygems'
 require 'aws/s3'
 require 'heroku'
 require 'heroku/command'
+require 'active_support/secure_random'
 
 APP_CONFIG = YAML.load_file("config/config.yml")
 
@@ -24,6 +25,9 @@ AWS::S3::Base.establish_connection!(
 
 AWS::S3::Bucket.create(app_name)
 
+session_secret = ActiveSupport::SecureRandom.hex(64)
+
+`heroku config:add SESSION_SECRET=#{session_secret}`
 `heroku config:add AMAZON_ACCESS_KEY_ID=#{APP_CONFIG['AMAZON_ACCESS_KEY_ID']}`
 `heroku config:add AMAZON_SECRET_ACCESS_KEY=#{APP_CONFIG['AMAZON_SECRET_ACCESS_KEY']}`
 `heroku config:add GMAIL_SMTP_USER=#{APP_CONFIG['GMAIL_SMTP_USER']}`

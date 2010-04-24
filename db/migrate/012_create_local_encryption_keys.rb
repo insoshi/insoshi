@@ -8,7 +8,6 @@ class CreateLocalEncryptionKeys < ActiveRecord::Migration
     create_table :local_encryption_keys do |t|
       t.text :rsa_private_key
       t.text :rsa_public_key
-      t.text :session_secret
     end
 
     # RSA keys for user authentication

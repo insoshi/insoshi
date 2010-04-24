@@ -1,5 +1,4 @@
 require 'openssl' 
-require 'rails_generator/secret_key_generator'
 
 class LocalEncryptionKey < ActiveRecord::Base
 end
@@ -13,7 +12,6 @@ module Crypto
     raise "doh!" if nil == local_encryption_key
     local_encryption_key.rsa_private_key = private_key.to_s
     local_encryption_key.rsa_public_key = private_key.public_key.to_s
-    local_encryption_key.session_secret = Rails::SecretKeyGenerator.new("insoshi").generate_secret
     local_encryption_key.save!
     private_key
   end
