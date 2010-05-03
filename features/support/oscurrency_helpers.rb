@@ -13,6 +13,7 @@ module OscurrencyHelpers
                           :password => 'quire',
                           :password_confirmation => 'quire',
                           :name => 'Quire',
+                          :accept_agreement => true,
                           :description => 'A new person' }.merge(options))
     record.valid?
     record.save!
