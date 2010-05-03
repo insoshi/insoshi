@@ -27,7 +27,7 @@ rescue MissingSourceFile
         def initialize(name)
           task name do
             # if rspec-rails is a configured gem, this will output helpful material and exit ...
-            require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
+            require File.expand_path(File.join(File.dirname(__FILE__),"..","..","config","environment"))
 
             # ... otherwise, do this:
             raise <<-MSG
@@ -136,44 +136,6 @@ namespace :spec do
         (ENV['FIXTURES'] ? ENV['FIXTURES'].split(/,/).map {|f| File.join(fixtures_dir, f) } : Dir.glob(File.join(fixtures_dir, '*.{yml,csv}'))).each do |fixture_file|
           Fixtures.create_fixtures(File.dirname(fixture_file), File.basename(fixture_file, '.*'))
         end
-      end
-    end
-  end
-
-  namespace :server do
-    daemonized_server_pid = File.expand_path("#{RAILS_ROOT}/tmp/pids/spec_server.pid")
-
-    desc "start spec_server."
-    task :start do
-      if File.exist?(daemonized_server_pid)
-        $stderr.puts "spec_server is already running."
-      else
-        $stderr.puts %Q{Starting up spec_server ...}
-        FileUtils.mkdir_p('tmp/pids') unless test ?d, 'tmp/pids'
-        system("ruby", "script/spec_server", "--daemon", "--pid", daemonized_server_pid)
-      end
-    end
-
-    desc "stop spec_server."
-    task :stop do
-      unless File.exist?(daemonized_server_pid)
-        $stderr.puts "No server running."
-      else
-        $stderr.puts "Shutting down spec_server ..."
-        system("kill", "-s", "TERM", File.read(daemonized_server_pid).strip) &&
-        File.delete(daemonized_server_pid)
-      end
-    end
-
-    desc "restart spec_server."
-    task :restart => [:stop, :start]
-
-    desc "check if spec server is running"
-    task :status do
-      if File.exist?(daemonized_server_pid)
-        $stderr.puts %Q{spec_server is running (PID: #{File.read(daemonized_server_pid).gsub("\n","")})}
-      else
-        $stderr.puts "No server running."
       end
     end
   end
