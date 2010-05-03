@@ -155,7 +155,7 @@ module ApplicationHelper
     # Allow callers to pass in additional classes.
     options[:class] = "#{klass} #{options[:class]}".strip
     content = content_tag(:div, capture(&block), options)
-    concat(content, block.binding)
+    concat(content)
   end
 
   def account_link(account, options = {})
