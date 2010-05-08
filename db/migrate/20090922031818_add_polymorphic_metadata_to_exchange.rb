@@ -17,9 +17,11 @@ class AddPolymorphicMetadataToExchange < ActiveRecord::Migration
     add_column :exchanges, :req_id, :integer
 
     exchanges = Exchange.find_by_metadata_type('Req')
-    exchanges.each do
-      exchange.req_id = exchange.metadata_id
-      exchange.save!
+    if exchanges
+      exchanges.each do
+        exchange.req_id = exchange.metadata_id
+        exchange.save!
+      end
     end
 
     remove_column :exchanges, :metadata_id
