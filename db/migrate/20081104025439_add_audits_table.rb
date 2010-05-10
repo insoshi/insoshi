@@ -19,15 +19,15 @@ class AddAuditsTable < ActiveRecord::Migration
     # This was previously in accounts migration but needs to be after audits for new installs and
     # did not want to create a new migration that would confuse existing installs
     #
-    person = Person.find(1)
-    account = Account.new( :name => 'personal' )
-    account.balance = 0
-    account.person = person
-    account.save!
+    #person = Person.find(1)
+    #account = Account.new( :name => 'personal' )
+    #account.balance = 0
+    #account.person = person
+    #account.save!
 
-    address = Address.new( :name => 'personal' )
-    address.person = person
-    address.save!
+    #address = Address.new( :name => 'personal' )
+    #address.person = person
+    #address.save!
   end
 
   def self.down

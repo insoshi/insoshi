@@ -44,8 +44,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :connections
   map.resources :password_reminders
   map.resources :photos
-  map.open_id_complete 'session', :controller => "sessions", :action => "create", :requirements => { :method => :get }
-  map.resource :session
+  #map.open_id_complete 'session', :controller => "sessions", :action => "create", :requirements => { :method => :get }
+  #map.resource :session
+  map.resources :person_sessions
   map.resources :messages, :collection => { :sent => :get, :trash => :get },
                            :member => { :reply => :get, :undestroy => :put }
 
@@ -86,8 +87,8 @@ ActionController::Routing::Routes.draw do |map|
   end
   
   map.signup '/signup', :controller => 'people', :action => 'new'
-  map.login '/login', :controller => 'sessions', :action => 'new'
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  map.login '/login', :controller => 'person_sessions', :action => 'new'
+  map.logout '/logout', :controller => 'person_sessions', :action => 'destroy'
   map.home '/', :controller => 'home'
   map.refreshblog '/refreshblog', :controller => 'home', :action => 'refreshblog'
   map.about '/about', :controller => 'home', :action => 'about'

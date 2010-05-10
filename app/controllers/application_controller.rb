@@ -3,10 +3,12 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
-  include AuthenticatedSystem
   include SharedHelper
   include PreferencesHelper
   include ExceptionNotifiable
+
+  helper_method :current_person
+  helper_method :logged_in?
 
   filter_parameter_logging :password
 
@@ -25,6 +27,43 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # :secret => '71a8c82e6d248750397d166001c5e308'
 
   protected
+    def logged_in?
+      !!current_person
+    end
+
+    def authorized?
+      logged_in?
+    end
+
+    def login_required
+      unless current_person
+        store_location
+        flash[:notice] = "You must be logged in to view the page"
+        redirect_to login_url
+        return false
+      end
+    end
+
+    def store_location
+      session[:return_to] = request.request_uri
+    end
+
+    def redirect_back_or_default(default)
+      redirect_to(session[:return_to] || default)
+      session[:return_to] = nil
+    end
+
+    def current_person_session
+      return @current_person_session if defined?(@current_person_session)
+      @current_person_session = PersonSession.find
+    end
+
+    def current_person
+      # login_or_oauth_required sets @current_person to nil
+      return @current_person if defined?(@current_person) && @current_person
+      @current_person = current_person_session && current_person_session.record
+    end
+
     def current_user
       current_person 
     end
@@ -86,10 +125,10 @@ class ApplicationController < ActionController::Base
               #{default_domain}.
               <a href="#{edit_person_path(current_person)}">#{t('notice_change_it_here')}</a>.)
           end
-          if current_person.unencrypted_password == default_password
-            flash[:error] = %(#{t('error_default_password')}
-              <a href="#{edit_person_path(current_person)}">#{t('notice_change_it_here')}</a>.)          
-          end
+          #if current_person.unencrypted_password == default_password
+          #  flash[:error] = %(#{t('error_default_password')}
+          #    <a href="#{edit_person_path(current_person)}">#{t('notice_change_it_here')}</a>.)          
+          #end
         end
       end
     end

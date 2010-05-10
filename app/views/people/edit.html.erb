@@ -156,15 +156,8 @@
   <% form_for @person, :html => { :id => "change_password" } do |f| %>
 
     <div class="form_row">
-      <label for="password"><%= t('people.edit.current_password') %></label>
-      <%= f.password_field :verify_password,
-                           :size => 34,
-                           :maxlength => Person::MAX_PASSWORD %>
-    </div>
-
-    <div class="form_row">
       <label for="password"><%= t('people.edit.new_password') %></label>
-      <%= f.password_field :new_password,
+      <%= f.password_field :password,
                            :size => 34,
                            :maxlength => Person::MAX_PASSWORD %>
     </div>

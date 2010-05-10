@@ -2,10 +2,11 @@ oauth --version '>= 0.3.6'
 chronic
 rubyist-aasm --source http://gems.github.com
 twitter
-starling-starling --source http://gems.github.com
 feed-normalizer
 texticle
 memcache-client '>= 1.7.0'
 eventmachine
 rmagick
-rack-openid
+authlogic
+authlogic-oid
+ruby-openid

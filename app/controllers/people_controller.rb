@@ -83,9 +83,9 @@ class PeopleController < ApplicationController
           flash[:notice] = t('notice_thanks_for_signing_up_check_email')
           format.html { redirect_to(home_url) }
         else
-          self.current_person = @person
+          # XXX self.current_person = @person
           flash[:notice] = t('notice_thanks_for_signing_up')
-          format.html { redirect_back_or_default(home_url) }
+          format.html { redirect_to(home_url) }
         end
       else
         @body = "register single-col"

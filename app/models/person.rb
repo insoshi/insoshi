@@ -33,8 +33,12 @@ class Person < ActiveRecord::Base
   include ActivityLogger
   extend PreferencesHelper
 
-  attr_accessor :password, :verify_password, :new_password,
-                :sorted_photos
+  acts_as_authentic do |c|
+    c.openid_required_fields = [:nickname, :email]
+  end
+
+#  attr_accessor :password, :verify_password, :new_password, :password_confirmation
+  attr_accessor :sorted_photos
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications, :forum_notifications,
@@ -137,11 +141,11 @@ class Person < ActiveRecord::Base
   has_many :bids
 
   validates_presence_of     :email, :name
-  validates_presence_of     :password,              :if => :password_required?
-  validates_presence_of     :password_confirmation, :if => :password_required?
-  validates_length_of       :password, :within => 4..MAX_PASSWORD,
-                                       :if => :password_required?
-  validates_confirmation_of :password, :if => :password_required?
+#  validates_presence_of     :password,              :if => :password_required?
+#  validates_presence_of     :password_confirmation, :if => :password_required?
+#  validates_length_of       :password, :within => 4..MAX_PASSWORD,
+#                                       :if => :password_required?
+#  validates_confirmation_of :password, :if => :password_required?
   validates_length_of       :email, :within => 6..MAX_EMAIL
   validates_length_of       :name,  :maximum => MAX_NAME
   validates_length_of       :description, :maximum => MAX_DESCRIPTION
@@ -149,14 +153,13 @@ class Person < ActiveRecord::Base
                             :with => EMAIL_REGEX,
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
-  validates_uniqueness_of   :identity_url, :allow_nil => true
+#  validates_uniqueness_of   :identity_url, :allow_nil => true
 
   validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
 
   before_create :create_blog, :check_config_for_deactivation
   after_create :create_account
   after_create :create_address
-  before_save :encrypt_password
   before_save :update_group_letter
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
@@ -425,79 +428,13 @@ class Person < ActiveRecord::Base
     @sorted_photos ||= photos.partition(&:primary).flatten
   end
 
-  ## Authentication methods
-
-  # Authenticates a user by their email address and unencrypted password.
-  # Returns the user or nil.
-  def self.authenticate(email, password)
-    u = find_by_email_and_identity_url(email.downcase.strip, nil) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
-  end
-
-  def self.encrypt(password)
-    k = LocalEncryptionKey.find(:first)
-    Crypto::Key.from_local_key_value(k.rsa_public_key).encrypt(password)
-  end
-
-  # Encrypts the password with the user salt
-  def encrypt(password)
-    self.class.encrypt(password)
-  end
-
-  def decrypt(password)
-    k = LocalEncryptionKey.find(:first)
-    Crypto::Key.from_local_key_value(k.rsa_private_key).decrypt(password)
-  end
-
-  def authenticated?(password)
-    unencrypted_password == password
-  end
-
-  def unencrypted_password
-    # The gsub trickery is to unescape the key from the DB.
-    decrypt(crypted_password)#.gsub(/\\n/, "\n")
-  end
-
-  def remember_token?
-    remember_token_expires_at && Time.now.utc < remember_token_expires_at
-  end
-
-  # These create and unset the fields required for remembering users
-  # between browser closes
-  def remember_me
-    remember_me_for 2.years
-  end
-
-  def remember_me_for(time)
-    remember_me_until time.from_now.utc
-  end
-
-  def remember_me_until(time)
-    self.remember_token_expires_at = time
-    key = "#{email}--#{remember_token_expires_at}"
-    self.remember_token = Digest::SHA1.hexdigest(key)
-    save(false)
-  end
-
-  def forget_me
-    self.remember_token_expires_at = nil
-    self.remember_token            = nil
-    save(false)
-  end
-
-
   def change_password?(passwords)
     self.password_confirmation = passwords[:password_confirmation]
-    self.verify_password = passwords[:verify_password]
-    unless verify_password == unencrypted_password
-      errors.add(:password, "is incorrect")
-      return false
-    end
-    unless passwords[:new_password] == password_confirmation
+    unless passwords[:password] == password_confirmation
       errors.add(:password, "does not match confirmation")
       return false
     end
-    self.password = passwords[:new_password]
+    self.password = passwords[:password]
     save
   end
 
@@ -535,6 +472,11 @@ class Person < ActiveRecord::Base
   
   protected
 
+    def map_openid_registration(registration)
+      self.email = registration['email'] if email.blank?
+      self.name = registration['nickname'] if name.blank?
+    end
+
     ## Callbacks
 
     # Prepare email for database insertion.
@@ -550,11 +492,6 @@ class Person < ActiveRecord::Base
     # string if it's nil.
     def handle_nil_description
       self.description = "" if description.nil?
-    end
-
-    def encrypt_password
-      return if password.blank?
-      self.crypted_password = encrypt(password)
     end
 
     def update_group_letter
@@ -620,8 +557,9 @@ class Person < ActiveRecord::Base
     ## Other private method(s)
 
     def password_required?
-      (crypted_password.blank? && identity_url.nil?) || !password.blank? ||
-      !verify_password.nil?
+      true
+      #(crypted_password.blank? && identity_url.nil?) || !password.blank? ||
+      #!verify_password.nil?
     end
     
     class << self

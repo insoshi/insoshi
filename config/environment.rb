@@ -57,6 +57,8 @@ Rails::Initializer.run do |config|
   #                                    :source => 'http://gems.github.com'
   # rake dependencies
 
+  config.gem 'authlogic'
+  config.gem 'authlogic-oid', :lib => 'authlogic_openid'
   config.gem 'texticle'
   config.gem 'oauth', :version => '>= 0.3.6'
   config.gem 'chronic'
@@ -66,7 +68,6 @@ Rails::Initializer.run do |config|
   # installed with `rake gems:install`
   config.gem 'twitter'
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
-  config.gem 'starling-starling', :lib => 'starling'
   config.gem 'feed-normalizer'
   config.gem 'json'
   config.gem 'heroku'

@@ -1,33 +1,26 @@
 <%- column_div :type => :primary do -%>
   <h2><%= t('sessions.new.header') %></h2>
 
-  <% form_tag session_path do -%>
+  <% form_for @person_session do |f| -%>
 <span id="standard">
     <div class="form_row">
       <label for="email"><%= t('sessions.new.email_address') %></label>
-      <%= text_field_tag 'email', params[:email],
-                                  :maxlength => Person::MAX_EMAIL  %>
+      <%= f.text_field :email %>
     </div>
     <%= set_focus_to "email" %>
 
     <div class="form_row">
       <label for="password"><%= t('sessions.new.password') %></label>
-      <%= password_field_tag 'password', params[:password],
-                                         :maxlength => Person::MAX_PASSWORD %>
+      <%= f.password_field :password %>
     </div>
 </span>
     <div class="form_row" id="openid">
       <label for="openid_url"><%= t('sessions.new.openid') %></label>
-      <%= text_field_tag "openid_url" %>
+      <%= f.text_field :openid_identifier %>
     </div>
 
     <div class="form_row">
-      <label for="remember_me" class="checkbox"><%= t('sessions.new.remember_me') %></label>
-      <%= check_box_tag 'remember_me', '1', true, :class => "checkbox" %>
-    </div>
-
-    <div class="form_row">
-      <%= submit_tag t('sessions.new.button_signin'), :class => "button" %>
+      <%= f.submit t('sessions.new.button_signin'), :class => "button" %>
     </div>
 
 <div style="text-align: center; font-size: 12px; padding: 10px;">
