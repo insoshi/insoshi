@@ -9,4 +9,4 @@ eventmachine
 rmagick
 authlogic
 authlogic-oid
-ruby-openid
+rack-openid
