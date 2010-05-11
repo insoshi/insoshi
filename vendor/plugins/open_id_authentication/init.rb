@@ -1,12 +1,18 @@
-if Rails.version < '3'
-  config.gem 'rack-openid', :lib => 'rack/openid', :version => '>=0.2.1'
+if config.respond_to?(:gems)
+  config.gem 'ruby-openid', :lib => 'openid', :version => '>=2.0.4'
+else
+  begin
+    require 'openid'
+  rescue LoadError
+    begin
+      gem 'ruby-openid', '>=2.0.4'
+    rescue Gem::LoadError
+      puts "Install the ruby-openid gem to enable OpenID support"
+    end
+  end
 end
 
-require 'open_id_authentication'
-
-config.middleware.use OpenIdAuthentication
-
-config.after_initialize do
+config.to_prepare do
   OpenID::Util.logger = Rails.logger
   ActionController::Base.send :include, OpenIdAuthentication
 end
