@@ -15,11 +15,12 @@ class PersonSessionsController < ApplicationController
       if result
         flash[:notice] = t('notice_logged_in_successfully')
         redirect_back_or_default root_url
-      else
-        flash[:error] = t('error_authentication_failed')
-        @body = "login single-col"
-        render :action => 'new'
       end
+    end
+    if !performed?
+      #flash[:error] = t('error_authentication_failed')
+      @body = "login single-col"
+      render :action => 'new'
     end
   end
 

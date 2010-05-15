@@ -2,6 +2,7 @@
   <h2><%= t('sessions.new.header') %></h2>
 
   <% form_for @person_session do |f| -%>
+    <%= f.error_messages %>
 <span id="standard">
     <div class="form_row">
       <label for="email"><%= t('sessions.new.email_address') %></label>

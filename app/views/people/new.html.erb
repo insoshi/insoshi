@@ -14,28 +14,6 @@
     <%= f.select :language, [[t('people._language.english'),'en'],[t('people._language.spanish'),'es']], {:selected => params[:locale]}, {:onchange => "document.location='/signup?locale=' + this.value"} %>
   </div>
 
-  <div class="form_row">
-    <label for="email">
-      <%= t('people.new.email_address') %>
-      <span class="small">(<%= t('people.new.never_made_public') %><%= t('people.new.comma_will_be_verified') if global_prefs.email_verifications? %>)
-      </span>
-    </label>
-    <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
-    <%= set_focus_to "person_email" %>  
-  </div>
-
-  <div class="form_row">
-    <label for="name"><%= t('people.new.name') %> 
-      <span class="small"><%= t('people.new.will_be_displayed') %></span></label>
-    <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
-  </div>
-
-  <div class="form_row">
-    <label for="zipcode"><%= t('people.new.zipcode') %></label>
-    <%= f.text_field :zipcode %>
-  </div>
-  
-
   <div class="form_row full">
         <label for="person_categories"><%= t('people.new.which_services') %>
         </label>
@@ -60,24 +38,61 @@
   </div>
 
   <div class="form_row">
-    <label for="password"><%= t('people.new.password') %></label>
-    <%= f.password_field :password, :maxlength => Person::MAX_PASSWORD %>
+    <label for="zipcode"><%= t('people.new.zipcode') %></label>
+    <%= f.text_field :zipcode %>
   </div>
-
-  <div class="form_row">
-    <label for="password_confirmation"><%= t('people.new.confirm_password') %></label>
-    <%= f.password_field :password_confirmation, 
-                         :maxlength => Person::MAX_PASSWORD,
-                         :value => "" %>
-  </div>
-
+  
   <div class="form_row">
     <%= f.check_box :accept_agreement, :class => 'checkbox' %> <%= t('people.new.i_accept_the') %> <%= link_to t('people.new.member_agreement'), agreement_path, :target => '_blank', :class => 'small' %>
   </div>
 
   <div class="form_row">
+    <label for="email">
+      <%= t('people.new.email_address') %>
+      <span class="small">(<%= t('people.new.never_made_public') %><%= t('people.new.comma_will_be_verified') if global_prefs.email_verifications? %>)
+      </span>
+    </label>
+    <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
+    <%= set_focus_to "person_email" %>  
+  </div>
+
+  <div class="form_row">
+    <label for="name"><%= t('people.new.name') %> 
+      <span class="small"><%= t('people.new.will_be_displayed') %></span></label>
+    <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
+  </div>
+
+  <% if @person.openid_identifier.blank? %>
+    <div class="form_row">
+      <label for="password"><%= t('people.new.password') %></label>
+      <%= f.password_field :password, :maxlength => Person::MAX_PASSWORD %>
+    </div>
+
+    <div class="form_row">
+      <label for="password_confirmation"><%= t('people.new.confirm_password') %></label>
+      <%= f.password_field :password_confirmation, 
+                           :maxlength => Person::MAX_PASSWORD,
+                           :value => "" %>
+    </div>
+
+    <div class="form_row">
+      <%= submit_tag 'Sign up', :class => "button" %>
+    </div>
+
+    <div class="openid_registration">
+      <h3><%= t('people.new.or_signup_with_openid') %></h3>
+    </div>
+  <%- end -%>
+
+  <div class="form_row">
+    <label for="openid_identifier"><%= t('people.new.openid_url') %></label>
+    <%= f.text_field :openid_identifier %>
+  </div>
+
+  <div class="form_row">
     <%= submit_tag 'Sign up', :class => "button" %>
   </div>
+
   <% end %>
 <%- end -%>
 <%= yui_headers('person_description') %>

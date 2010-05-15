@@ -42,11 +42,12 @@ class Person < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications, :forum_notifications,
-                  :blog_comment_notifications, :identity_url, :category_ids, :address_ids, :neighborhood_ids,
+                  :blog_comment_notifications, :category_ids, :address_ids, :neighborhood_ids,
                   :twitter_name, :zipcode,
                   :phone, :phoneprivacy,
                   :accept_agreement,
-                  :language
+                  :language,
+                  :openid_identifier
 
   index do
     name

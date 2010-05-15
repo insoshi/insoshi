@@ -514,3 +514,15 @@ ul.invite_contacts li {
 ul.invite_contacts li input.check{
     margin-right: 10px;
 }
+
+.openid_registration {
+  padding-top: 20px;
+}
+
+input#person_openid_identifier, input#person_session_openid_identifier {
+  background: url(http://openid.net/images/login-bg.gif) no-repeat;
+  background-color: #fff;
+  background-position: 0 50%;
+  color: #000;
+  padding-left: 18px;
+}

@@ -262,6 +262,8 @@ es:
       confirm_password: "confirmar su contraseña"
       i_accept_the: "Yo acepto"
       member_agreement: "Acuerdo de miembro"
+      or_signup_with_openid: "or Signup with OpenID"
+      openid_url: "OpenID URL"
     request_memberships:
       header: "Peticion de membresía de grupo"
       respond: "Responder"

@@ -67,36 +67,29 @@ class PeopleController < ApplicationController
   end
 
   def create
-    cookies.delete :auth_token
     @person = Person.new(params[:person])
-    respond_to do |format|
-      @person.email_verified = false if global_prefs.email_verifications?
-      @person.identity_url = session[:verified_identity_url]
-      @person.save
-      if @person.errors.empty?
-        session[:verified_identity_url] = nil
-        if global_prefs.can_send_email? && !global_prefs.new_member_notification.nil?
-          PersonMailer.deliver_registration_notification(@person)
-        end
-        if global_prefs.email_verifications?
-          @person.email_verifications.create
-          flash[:notice] = t('notice_thanks_for_signing_up_check_email')
-          format.html { redirect_to(home_url) }
+    @person.email_verified = false if global_prefs.email_verifications?
+    @person.save do |result|
+      respond_to do |format|
+        if result
+          if global_prefs.can_send_email? && !global_prefs.new_member_notification.nil?
+            PersonMailer.deliver_registration_notification(@person)
+          end
+          if global_prefs.email_verifications?
+            @person.email_verifications.create
+            flash[:notice] = t('notice_thanks_for_signing_up_check_email')
+            format.html { redirect_to(home_url) }
+          else
+            # XXX self.current_person = @person
+            flash[:notice] = t('notice_thanks_for_signing_up')
+            format.html { redirect_to(home_url) }
+          end
         else
-          # XXX self.current_person = @person
-          flash[:notice] = t('notice_thanks_for_signing_up')
-          format.html { redirect_to(home_url) }
+          @body = "register single-col"
+          @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          format.html { render :action => 'new' }
         end
-      else
-        @body = "register single-col"
-        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-        format.html { if @person.identity_url.blank? 
-                        render :action => 'new'
-                      else
-                        render :partial => "shared/personal_details.html.erb", :object => @person, :layout => 'application'
-                      end
-                    }
       end
     end
   rescue ActiveRecord::StatementInvalid
@@ -116,7 +109,6 @@ class PeopleController < ApplicationController
       flash[:error] = t('error_invalid_email_verification_code')
       redirect_to home_url
     else
-      cookies.delete :auth_token
       person = verification.person
       person.email_verified = true; person.save!
       self.current_person = person
