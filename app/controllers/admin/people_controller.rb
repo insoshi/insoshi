@@ -1,6 +1,7 @@
 class Admin::PeopleController < ApplicationController
   before_filter :login_required, :admin_required
   active_scaffold :person do |config|
+    config.actions.exclude :delete
     config.label = "People"
     config.columns = [:name, :email, :phone, :admin, :deactivated, :email_verified, :last_logged_in_at]
     config.list.columns = [:name, :email, :phone, :admin, :deactivated, :email_verified, :last_logged_in_at]
