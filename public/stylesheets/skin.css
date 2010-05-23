@@ -515,6 +515,12 @@ ul.invite_contacts li input.check{
     margin-right: 10px;
 }
 
+fieldset#creds {
+  border: 2px solid #CCC;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
 .openid_registration {
   padding-top: 20px;
 }

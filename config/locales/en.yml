@@ -263,7 +263,9 @@ en:
       i_accept_the: "I accept the"
       member_agreement: "member agreement"
       or_signup_with_openid: "or Signup with OpenID"
+      back_to_regular_signup: "back to regular signup"
       openid_url: "OpenID URL"
+      signup_button: "Sign up"
     request_memberships:
       header: "Membership request for your groups"
       respond: "Respond"
