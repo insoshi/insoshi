@@ -360,6 +360,12 @@ es:
       received_from: "recibido de"
       paid_to: "Paquese a"
 
+  password_resets:
+    new:
+      header: "Reset Password"
+    edit:
+      header: "Update your password"
+
   shared:
     minifeed:
       whats_going_on: "Qué pasa"

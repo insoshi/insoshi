@@ -31,7 +31,7 @@
 <div style="text-align: center; font-size: 12px; padding: 10px;">
   <%= link_to t('sessions.new.or_signup'), signup_path %> <br />
   <%- if global_prefs.can_send_email? -%>
-    <%= link_to t('sessions.new.i_forgot_my_password'), new_password_reminder_path %> ::
+    <%= link_to t('sessions.new.i_forgot_my_password'), new_password_reset_path %> ::
   <%- end -%>
     <span id="noscript" style="display:none;">
       <span id="openid_link"><a href="#" onclick="show_openid(); return false;"><%= t('sessions.new.login_using_openid') %></a></span>

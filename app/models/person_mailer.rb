@@ -9,13 +9,15 @@ class PersonMailer < ActionMailer::Base
     @server_name ||= PersonMailer.global_prefs.server_name
   end
   
-  def password_reminder(person)
-    from         "Password reminder <password-reminder@#{domain}>"
+  def password_reset_instructions(person)
+    subject      "Password Reset Instructions"
+    from         "Password reset <password_reset@#{domain}>"
     recipients   person.email
-    subject      formatted_subject("Password reminder")
-    body         "domain" => server, "person" => person
+    content_type "text/html"
+    sent_on      Time.now
+    body         :edit_password_reset_url => edit_password_reset_url(person.perishable_token)
   end
-  
+
   def message_notification(message)
     from         "Message notification <message@#{domain}>"
     recipients   message.recipient.email

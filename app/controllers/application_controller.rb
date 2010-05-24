@@ -44,6 +44,15 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def require_no_person
+      if current_person
+        store_location
+        flash[:notice] = "You must be logged out to view this page"
+        redirect_to root_url
+        return false
+      end
+    end
+
     def store_location
       session[:return_to] = request.request_uri
     end

@@ -470,6 +470,11 @@ class Person < ActiveRecord::Base
                                      paginate_by_sql(conditions, opts).
                                      map(&:contact_id)).paginate
   end
+
+  def deliver_password_reset_instructions!
+    reset_perishable_token!
+    PersonMailer.deliver_password_reset_instructions(self)
+  end
   
   protected
 
