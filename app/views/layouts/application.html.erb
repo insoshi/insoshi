@@ -9,9 +9,6 @@
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
     <%= stylesheet_link_tag "default" %>
-    <%= javascript_include_tag :defaults %>
-    <%= calendar_date_select_includes :default %>
-    <%= stylesheet_link_tag 'calendar/blue/style' %>
     <%= yield :jquery_support %>
     <%= yield :head %>    
   </head>
@@ -51,7 +48,7 @@
               <%- if global_prefs.can_send_email? -%>
               <br />
               <%= link_to "I forgot my password",
-                           new_password_reminder_path %>
+                           new_password_reset_path %>
               <%- end -%>             
             <%- end -%>
           </p>
