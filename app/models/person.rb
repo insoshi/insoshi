@@ -86,7 +86,6 @@ class Person < ActiveRecord::Base
                           Connection::REQUESTED, false, true]
 
   has_one :blog
-  has_many :email_verifications
   has_many :comments, :as => :commentable, :order => 'created_at DESC',
                       :limit => NUM_WALL_COMMENTS
   has_many :connections
@@ -474,6 +473,11 @@ class Person < ActiveRecord::Base
   def deliver_password_reset_instructions!
     reset_perishable_token!
     PersonMailer.deliver_password_reset_instructions(self)
+  end
+
+  def deliver_email_verification!
+    reset_perishable_token!
+    PersonMailer.deliver_email_verification(self)
   end
   
   protected

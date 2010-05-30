@@ -76,7 +76,7 @@ class PeopleController < ApplicationController
             PersonMailer.deliver_registration_notification(@person)
           end
           if global_prefs.email_verifications?
-            @person.email_verifications.create
+            @person.deliver_email_verification!
             flash[:notice] = t('notice_thanks_for_signing_up_check_email')
             format.html { redirect_to(home_url) }
           else
@@ -104,14 +104,12 @@ class PeopleController < ApplicationController
   end
 
   def verify_email
-    verification = EmailVerification.find_by_code(params[:id])
-    if verification.nil?
+    person = Person.find_using_perishable_token(params[:id])
+    unless person
       flash[:error] = t('error_invalid_email_verification_code')
       redirect_to home_url
     else
-      person = verification.person
       person.email_verified = true; person.save!
-      self.current_person = person
       flash[:success] = t('success_email_verified')
       redirect_to person
     end

@@ -118,12 +118,12 @@ class PersonMailer < ActionMailer::Base
       preferences_note(subscriber)
   end
 
-  def email_verification(ev)
+  def email_verification(person)
     from         "Email verification <email@#{domain}>"
-    recipients   ev.person.email
+    recipients   person.email
     subject      formatted_subject("Email verification")
     body         "server_name" => server,
-    "code" => ev.code
+    "code" => person.perishable_token
   end
 
   def registration_notification(new_peep)
