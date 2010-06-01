@@ -139,25 +139,13 @@ class PeopleController < ApplicationController
       end
     end
 
-    respond_to do |format|
-      case params[:type]
-      when 'info_edit'
-        if !preview? and @person.update_attributes(params[:person])
-          flash[:success] = t('success_profile_updated')
-          format.html { redirect_to(@person) }
-        else
-          @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-          @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-          if preview?
-            @preview = @person.description = params[:person][:description]
-          end
-          format.html { render :action => "edit" }
-        end
-      when 'password_edit'
-        if global_prefs.demo?
-          flash[:error] = t('error_password_cant_be_changed')
-          redirect_to @person and return
-        end
+    case params[:type]
+    when 'password_edit'
+      if global_prefs.demo?
+        flash[:error] = t('error_password_cant_be_changed')
+        redirect_to @person and return
+      end
+      respond_to do |format|
         if @person.change_password?(params[:person])
           flash[:success] = t('success_password_changed')
           format.html { redirect_to(@person) }
@@ -165,6 +153,21 @@ class PeopleController < ApplicationController
           @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           format.html { render :action => "edit" }
+        end
+      end
+    #when 'info_edit'
+    else
+      @person.attributes = params[:person]
+      @person.save do |result|
+        respond_to do |format|
+          if result
+            flash[:success] = t('success_profile_updated')
+            format.html { redirect_to(@person) }
+          else
+            @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+            @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+            format.html { render :action => "edit" }
+          end
         end
       end
     end
@@ -220,9 +223,5 @@ class PeopleController < ApplicationController
 
     def correct_person_required
       redirect_to home_url unless ( current_person.admin? or Person.find(params[:id]) == current_person )
-    end
-    
-    def preview?
-      params["commit"] == "Preview"
     end
 end

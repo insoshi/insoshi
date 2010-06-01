@@ -219,6 +219,7 @@ es:
       services_offered: "Servicios que ofrece"
       neighborhood: "Vecindario"
       description: "Descripción"
+      openid_identifier: "OpenID"
       email: "Correo electronico"
       email_notification_preferences: "Notificación de preferencias en el correo electronico"
       email_notification_note: "Recibiras notificaciónes via email por cada evento que marques."

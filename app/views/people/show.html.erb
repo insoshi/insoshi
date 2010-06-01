@@ -1,6 +1,10 @@
 <%- column_div :type => :primary do -%>
   <div class="profile vcard">
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.name %></span></h2>
+    <%- if @person.openid_identifier.nil? -%>
+      <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.name %></span></h2>
+    <%- else -%>
+    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<img src="http://openid.net/images/login-bg.gif"></h2>
+    <%- end -%>
     <%- if admin? and not @person.active? -%>
       <p class="error"><%= t('people.show.not_active') %></p>
     <%- end -%>
