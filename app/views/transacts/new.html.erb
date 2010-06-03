@@ -1,30 +1,36 @@
 <%- column_div :type => :primary do -%>
-  <% if @swp %>
-    <h2><%= h @worker.name %> <%= t('transacts.new.requested') %> <%= h params[:amount] %> <%= t('currency_unit_plural') %></h2> 
+  <% if @worker %>
+      <h2><%= t('transacts.new.header_simple') %> <%= h @amount %> <%= t('currency_unit_plural') %> <%= t('to') %> <%= h @worker.name %> </h2> 
   <% else %>
     <h2><%= t('transacts.new.header') %></h2>
   <% end %>
 
-<% if @swp %>
+<% if @worker %>
   <div class="profile vcard">
-    <% form_tag :action => :create do %>
-      <%= hidden_field_tag(:to,params[:to]) %>
-      <%= hidden_field_tag(:amount,params[:amount]) %>
-      <%= hidden_field_tag(:memo,params[:memo]) %>
-      <%= hidden_field_tag(:callback_url,params[:callback_url]) %>
-      <%= hidden_field_tag(:redirect_url,params[:redirect_url]) %>
     <div class="toolbox">
       <%= image_tag @worker.main_photo, :class => "profile-image photo",
                                         :alt => h(@worker.name) %>
     </div>
-    <%= display t('transacts.new.explanation'), :class => "meta" %> 
-    <%= display params[:memo] %>
+  </div>
+  <div>
+    <% form_tag :action => :create do %>
+      <div class="form_row">
+        <label for="amount"><%= t('transacts.new.amount') %></label>
+        <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= t('currency_unit_plural') %>
+      </div>
+      <div class="form_row">
+        <label for="memo"><%= t('transacts.new.memo') %></label> 
+        <%= text_field_tag(:memo,params[:memo],:size => 20) %>
+      </div>
+      <%= hidden_field_tag(:to,params[:to]) %>
+      <%= hidden_field_tag(:callback_url,params[:callback_url]) %>
+      <%= hidden_field_tag(:redirect_url,params[:redirect_url]) %>
   <div class="status-btn">
     <input type="submit" name="update" value="<%= t('transacts.new.pay_now') %>" id="update-submit" class="round-btn"/>
   </div>
   <br><br>
+</div>
   <% end %>
-  </div>
 <% else %>
   <% form_tag :action => :create do %>
     <div class="form_row">
@@ -36,7 +42,7 @@
       <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= t('currency_unit_plural') %>
     </div>
     <div class="form_row">
-      <label for="memo"><%= t('transacts.new.description') %></label> 
+      <label for="memo"><%= t('transacts.new.memo') %></label> 
       <%= text_field_tag(:memo,params[:memo],:size => 40) %>
     </div>
   <div class="status-btn">

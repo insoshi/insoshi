@@ -58,7 +58,7 @@ class Transact < Exchange
   end
 
   def perform_callback
-    if callback_url
+    if !callback_url.blank?
       request = Net::HTTP::Post.new(callback_uri.path+(callback_uri.query || '' ))
       request.set_form_data(results)
       response = http.request(request)

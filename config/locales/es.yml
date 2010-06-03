@@ -37,6 +37,7 @@ es:
   wall: "pared"
   see_all: "Ver todo"
   by: "por"
+  to: "a"
   from: "de"
 
   accounts:
@@ -351,12 +352,12 @@ es:
       header: "Transacción"
     new:
       header: "Pagar a alquien"
-      requested: "pedido"
+      header_simple: "Pagar"
       explanation: "Esta peticion se ha hecho a cambio de:"
       pay_now: "Pagar ahora"
       to: "Correo del Beneficiario"
       amount: "Cantidad"
-      description: "Descripción"
+      memo: "Nota"
     helper:
       received_from: "recibido de"
       paid_to: "Paquese a"

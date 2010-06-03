@@ -37,6 +37,7 @@ en:
   wall: "wall"
   see_all: "See all"
   by: "by"
+  to: "to"
   from: "from"
 
   accounts:
@@ -351,12 +352,12 @@ en:
       header: "Transaction"
     new:
       header: "Pay someone"
-      requested: "requested"
+      header_simple: "Pay"
       explanation: "This has been requested in return for:"
       pay_now: "pay now"
       to: "Payee email address"
       amount: "Amount"
-      description: "Description"
+      memo: "Memo"
     helper:
       received_from: "received from"
       paid_to: "paid to"

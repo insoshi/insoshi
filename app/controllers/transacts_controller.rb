@@ -27,11 +27,10 @@ class TransactsController < ApplicationController
   end
 
   def new
-    @swp = params[:to] && params[:amount]
-    if @swp
-      @worker = Person.find_by_email(params[:to])
+    @amount = params[:amount] || ""
+    if params[:to]
+      @worker = opentransact_find_worker(params[:to])
       if nil == @worker
-        @swp = false
         flash[:error] = t('error_could_not_find_payee')
         render :action => "new"
         return
@@ -40,9 +39,8 @@ class TransactsController < ApplicationController
   end
 
   def create
-    @worker = Person.find_by_email(params[:to])
+    @worker = opentransact_find_worker(params[:to])
     if nil == @worker
-      @swp = false
       flash[:error] = t('error_could_not_find_payee')
       render :action => "new"
       return
@@ -74,6 +72,15 @@ class TransactsController < ApplicationController
       render :action => "new"
     end
 
+  end
+
+  def opentransact_find_worker(payee)
+    # assume identifier is either an email address or a url
+    if payee.split('@').size == 2
+      @worker = Person.find_by_email(payee)
+    else
+      @worker = Person.find_by_openid_identifier(OpenIdAuthentication.normalize_identifier(payee))
+    end
   end
 
 end
