@@ -79,7 +79,7 @@ class TransactsController < ApplicationController
     if payee.split('@').size == 2
       @worker = Person.find_by_email(payee)
     else
-      @worker = Person.find_by_openid_identifier(OpenIdAuthentication.normalize_identifier(payee))
+      @worker = Person.find_by_openid_identifier(OpenIdAuthentication.normalize_identifier(CGI.unescape(payee)))
     end
   end
 
