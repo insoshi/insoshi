@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
                 :set_person_locale
 
   ActiveScaffold.set_defaults do |config|
-    config.ignore_columns.add [ :created_at, :updated_at ]
+    config.ignore_columns.add [ :created_at, :updated_at, :audits]
   end
 
   audit Req, Offer, Bid, Exchange, Account, Person, :only => [:create, :update, :destroy]
