@@ -3,7 +3,7 @@
 require 'rubygems'
 require 'aws/s3'
 
-# restore_s3_bundle heroku_app_name YYYY-DD-MM
+# restore_s3_bundle heroku_app_name YYYY-MM-DD
 #
 unless ENV['AMAZON_ACCESS_KEY_ID'] && ENV['AMAZON_SECRET_ACCESS_KEY']
   raise "you need to set amazon s3 environment variables"
