@@ -6,7 +6,6 @@ feed-normalizer
 texticle
 memcache-client '>= 1.7.0'
 eventmachine
-rmagick
 authlogic
 authlogic-oid
 rack-openid
