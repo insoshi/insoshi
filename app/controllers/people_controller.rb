@@ -111,7 +111,7 @@ class PeopleController < ApplicationController
     else
       person.email_verified = true; person.save!
       flash[:success] = t('success_email_verified')
-      redirect_to person
+      redirect_to login_url
     end
   end
 
