@@ -14,12 +14,12 @@ class PeopleController < ApplicationController
       @zipcode = "(#{params[:zipcode]})"
     else
       if params[:sort]
-        if "newest" == params[:sort]
-          @people = Person.mostly_active_newest(params[:page])
+        if "alpha" == params[:sort]
+          @people = Person.mostly_active_alpha(params[:page])
+          @people.add_missing_links(('A'..'Z').to_a)
         end
       else
-        @people = Person.mostly_active_alpha(params[:page])
-        @people.add_missing_links(('A'..'Z').to_a)
+        @people = Person.mostly_active_newest(params[:page])
       end
     end
 

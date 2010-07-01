@@ -1,8 +1,8 @@
 <%- column_div :type => :primary do -%>
   <h2><%= t('people.index.header') %><%= h @zipcode %></h2>
   <ul id="message-nav">
-    <%= list_link_with_active t('people.index.alpha'), people_path %>
-    <%= list_link_with_active t('people.index.newest'), people_path(:sort => 'newest') %>
+    <%= list_link_with_active t('people.index.newest'), people_path %>
+    <%= list_link_with_active t('people.index.alpha'), people_path(:sort => 'alpha') %>
   </ul>
   <% unless @people.empty? -%>
     <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
