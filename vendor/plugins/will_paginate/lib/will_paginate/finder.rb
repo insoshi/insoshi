@@ -199,13 +199,23 @@ module WillPaginate
         find_options[:group] = group_by
 
         results = wp_query_counts_by_group find_options
-        
+       
+        case ActiveRecord::Base.connection.adapter_name
+        when 'PostgreSQL'
+          index0='count'
+          index1=group_by
+        else
+          index0=0
+          index1=1
+        end
         total = 0
         links = []
         results.each do |r| 
           page = (total / per_page) + 1
-          total += r[0].to_i 
-          links << { :value => r[1], :page => page }
+          #total += r[0].to_i 
+          total += r[index0].to_i 
+          #links << { :value => r[1], :page => page }
+          links << { :value => r[index1], :page => page }
         end
         [links, total]
       end
@@ -232,7 +242,7 @@ module WillPaginate
         else
           sql = construct_finder_sql(options)
         end
-
+        
         connection.execute(sql)
       end
 

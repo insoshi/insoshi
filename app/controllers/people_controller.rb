@@ -18,10 +18,8 @@ class PeopleController < ApplicationController
           @people = Person.mostly_active_newest(params[:page])
         end
       else
-        # XXX temp hack for postgresql
-          @people = Person.mostly_active_newest(params[:page])
-        #@people = Person.mostly_active_alpha(params[:page])
-        #@people.add_missing_links(('A'..'Z').to_a)
+        @people = Person.mostly_active_alpha(params[:page])
+        @people.add_missing_links(('A'..'Z').to_a)
       end
     end
 
