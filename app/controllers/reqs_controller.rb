@@ -57,9 +57,7 @@ class ReqsController < ApplicationController
   def index
     if params[:filter]
       if "all" == params[:filter]
-        @reqs = Req.paginate(:all, :page => params[:page], :conditions => ["active = ?", 1], :order => 'created_at DESC')
-      elsif "current" == params[:filter]
-        @reqs = Req.current_and_active(params[:page])
+        @reqs = Req.all_active(params[:page])
       else
         @reqs = Req.current_and_active(params[:page])
       end

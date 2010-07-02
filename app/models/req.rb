@@ -43,6 +43,9 @@ class Req < ActiveRecord::Base
       @reqs.delete_if { |req| req.has_approved? }
     end
 
+    def all_active(page=1)
+      @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ?", true], :order => 'created_at DESC')
+    end
   end
 
   def formatted_categories
