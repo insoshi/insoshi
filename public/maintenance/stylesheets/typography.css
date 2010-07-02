@@ -1,0 +1,328 @@
+body {
+  font-family: Helvetica, Arial, Univers, Tahoma, sans-serif;
+  font-size: 1em;
+  line-height:  1.05em;  
+}
+p,
+li, 
+th, 
+td {
+  font-size:  14px;
+  line-height:  1.4em;
+}
+li li, li p {
+  font-size: 100%;
+}
+p, 
+ul, 
+ol, 
+blockquote, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+  display:  block;
+  margin-bottom: 1em;
+}
+h2 {
+  background: url(/images/green-grad.jpg) 30px 10px repeat-x;
+  border-bottom: 1px solid #ccc;
+  color: #009908;
+  clear: both;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 22px;
+  font-weight: normal;
+  line-height: 1.4em;
+  margin-top: 10px;
+  padding-left: 6px;
+}
+li h2 {font-size: 1em;}
+h2 a, h3 a {
+  font-weight: normal;
+}
+h3 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 20px;
+  font-weight: normal;
+}
+h3.page-title {
+  display: none;
+}
+h4 {
+  border-bottom: 1px solid #eee;
+  clear: both;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1.3em;
+  font-weight: normal;
+  line-height: 1.4em;
+  width: 100%;
+}
+h5 {
+  font-size: 12px;
+  font-weight: bold;
+}
+h6 {
+  font-size: 12px;
+  font-weight: bold;
+  font-style: italic;
+}
+ul li {
+  background: url(/images/bullet.png) top left no-repeat;
+  border: 0;
+  margin: 0 0 .5em 0;
+  padding-left: 24px;
+}
+ol li {
+  list-style: decimal;
+  margin-left: 1.5em;
+}
+
+blockquote {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: #666666;
+  background: #ececec;
+  border: 1px solid #ccc;
+  padding: 12px;
+  margin: 1em;
+  font-style: italic;
+}
+code {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1em;
+}
+pre {
+  border: 1px solid #ccc;
+  background: #efefef;
+  margin: 1em 0;
+  padding: 1em;
+}
+a:link,a:visited {
+  color: #009908;
+  font-weight: bold;
+  text-decoration: none;
+}
+/* Specific elements */
+p.welcome {
+  color: #fff;
+  font-size: 12px
+}
+
+p.welcome a, p.welcome a:visited {
+  color: #fff;
+  text-decoration: underline;
+}
+
+#footer p {
+  font-size: 12px;
+  text-align: center;
+}
+
+#content div li.more {
+  background: none;
+  border: none;
+  clear: both;
+  float: left;
+  font-size: 12px;
+  text-align: right;
+  width: 100%;
+}
+
+.meta {
+  color: #aaa;
+  font-size: 12px;
+  line-height: 1.8em;
+}
+p.meta, li p.meta {
+  font-size: 12px;
+}
+.label {
+  font-weight: normal;
+}
+body.blog .comments p, body.forum .reply p {
+  font-size: 12px;
+}
+
+/* Have followed links change color (e.g., in forums). */
+a.show-follow:visited {
+  color: #309;
+  text-decoration: none;
+}
+
+/* Alerts and notifications */
+.success {
+  border: 1px solid #FFCC66;
+  background-color: #FFFFCC;
+  font-size: 12px;
+  padding: 6px;
+}
+.notice {
+  border: 1px solid #FFCC66;
+  background-color: #FFFFCC;
+  font-size: 12px;
+  padding: 6px;
+}
+.error {
+  border: 1px solid #FFCC66;
+  background-color: #FFFFCC;
+  font-size: 12px;
+  padding: 6px;
+}
+
+.error,
+.notice, 
+.success    { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd;
+              margin-top: 1em; }
+
+.error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
+.notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }
+.success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
+
+
+.errorExplanation {
+  border: 1px solid #FFCC66;
+  background-color: #FFFFCC;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+.errorExplanation h2 {
+  background: 0;
+  border: 0;
+  font-size: 1.2em;
+  margin-top: 0;
+  padding: 0;
+}
+.pagination {
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+
+
+
+
+/* Forms */
+form {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 1em;
+  margin-bottom: 2em; 
+}
+li form {
+  float: right;
+  margin-right: 1em;
+  border-bottom: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+input, textarea {
+  font-family: Helvetica, Arial, Univers, sans-serif;
+  font-size: 12px;
+  padding: 6px 3px
+}
+textarea {
+  line-height: 1.4em;
+}
+label  {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: .5em;
+}
+input, textarea, select {
+  margin-bottom: 1em;
+}
+input.button, button, input[submit], input[button] {
+  background: #e5e5e5;
+  border: 1px solid #ccc;
+  clear: both;
+  cursor: pointer;
+/*  display: block;*/
+  font-family: Helvetica, Arial, Univers, sans-serif;
+  font-size: 12px;
+  height: 32px;
+  padding: 3px 12px;
+}
+.col1 textarea {
+  width: 478px;
+}
+body.single-col .col1 form input {
+  width: 312px;
+}
+#person_zipcode {
+  width: 70px;
+}
+label.checkbox {display: inline; float: left;margin-right: 12px;}
+body.single-col .col1 form input.checkbox {
+  display: inline;
+  width: auto;
+}
+.form_row {
+  position: relative;
+}
+.form_row.full input {
+  width: 478px;
+}
+
+#frmSearch {
+  border: 0;
+  margin: 0 0 0 6px;
+  padding: 0;
+  position: relative;
+  zoom: 1;
+}
+
+#frmSearch input.txt {
+  display: inline;
+  float: left;
+  margin-right: 6px;
+  vertical-align: middle;
+  width: 138px;
+}
+#frmSearch #btnSearch.button {
+  display: inline;
+  clear: none;
+  margin: 0;
+  width: 72px;
+}
+
+form a.add-recipient {
+  position: absolute;
+  right: 12px;
+  top: 30px;
+}
+
+/* Styles for when the site is (nearly) blank, as for new users. */
+
+h3.blankslate {
+  text-align: center;
+}
+
+
+/* Tables
+-------------------------------------------------------------- */
+
+table       { margin-bottom: 1.4em; width:100%; }
+th          { font-weight: bold; background: #C3D9FF; }
+th,td       { padding: 4px 10px 4px 5px; }
+tr.even td  { background: #E5ECF9; }
+tfoot       { font-style: italic; }
+caption     { background: #eee; }
+
+/* Misc classes
+-------------------------------------------------------------- */
+
+em { font-style: italic;}
+strong { font-weight: bold; }
+
+.small      { font-size: .8em; margin-bottom: 1.875em; line-height: 1.875em; }
+.large      { font-size: 1.2em; line-height: 2.5em; margin-bottom: 1.25em; }
+.hide       { display: none; }
+
+.quiet      { color: #666; }
+.loud       { color: #000; }
+.highlight  { background:#ff0; }
+.added      { background:#060; color: #fff; }
+.removed    { background:#900; color: #fff; }
