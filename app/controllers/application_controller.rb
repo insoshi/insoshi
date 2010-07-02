@@ -107,11 +107,6 @@ class ApplicationController < ActionController::Base
         #                :ip_address => request.remote_ip,
         #                :referer => request.env["HTTP_REFERER"],
         #                :user_agent => request.env["HTTP_USER_AGENT"])
-        if logged_in?
-          # last_logged_in_at actually captures site activity, so update it now.
-          current_person.last_logged_in_at = Time.now
-          current_person.save
-        end
       end
     end
   
@@ -120,6 +115,9 @@ class ApplicationController < ActionController::Base
         unless current_person.active? or current_person.admin?
           redirect_to logout_url
         end
+        # last_logged_in_at actually captures site activity, so update it now.
+        current_person.last_logged_in_at = Time.now
+        current_person.save
       end
     end
     
