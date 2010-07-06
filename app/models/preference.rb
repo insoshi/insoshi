@@ -46,6 +46,7 @@ class Preference < ActiveRecord::Base
                   :zipcode_browsing,
                   :blog_feed_url,
                   :googlemap_api_key,
+                  :disqus_shortname,
                   :twitter_oauth_consumer_key, :twitter_oauth_consumer_secret
 
   validates_presence_of :domain,       :if => :using_email?
