@@ -39,8 +39,8 @@ class Transact < Exchange
     results.to_xml(options.merge(:root => "txn"))
   end
 
-  def to_json(options={})
-    results.to_json
+  def as_json(options={})
+    results.as_json
   end
 
   protected

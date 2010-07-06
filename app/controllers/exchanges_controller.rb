@@ -7,7 +7,7 @@ class ExchangesController < ApplicationController
     @exchanges = @worker.received_exchanges # created_at DESC
     respond_to do |format|
       format.xml { render :xml => @exchanges }
-      format.json { render :json => @exchanges.to_json( :include => :req ) }
+      format.json { render :json => @exchanges.as_json( :include => :req ) }
     end
   end
 
@@ -15,7 +15,7 @@ class ExchangesController < ApplicationController
     @exchange = Exchange.find(params[:id])
     respond_to do |format|
       format.xml { render :xml => @exchange.to_xml( :include => :req ) }
-      format.json { render :json => @exchange.to_json( :include => :req ) }
+      format.json { render :json => @exchange.as_json( :include => :req ) }
     end
   end
 

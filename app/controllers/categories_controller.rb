@@ -25,7 +25,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @category.to_json(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
+      format.json { render :json => @category.as_json(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
       format.xml  { render :xml => @category.to_xml(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
     end
   end

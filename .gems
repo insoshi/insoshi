@@ -9,3 +9,7 @@ eventmachine
 authlogic
 authlogic-oid
 rack-openid
+aws-s3
+heroku
+rmagick
+json

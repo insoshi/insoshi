@@ -8,7 +8,7 @@ class TransactsController < ApplicationController
     respond_to do |format|
       format.html
       format.xml { render :xml => @transactions.to_xml(:root => "txns") }
-      format.json { render :json => @transactions.to_json }
+      format.json { render :json => @transactions.as_json }
     end
   end
 
@@ -22,7 +22,7 @@ class TransactsController < ApplicationController
     respond_to do |format|
       format.html
       format.xml { render :xml => @transact.to_xml }
-      format.json { render :json => @transact.to_json }
+      format.json { render :json => @transact.as_json }
     end
   end
 
@@ -59,7 +59,7 @@ class TransactsController < ApplicationController
         flash[:notice] = t('notice_transfer_succeeded')
         respond_to do |format|
           format.html { redirect_to person_path(@worker) }
-          format.json { render :json => @transact.to_json }
+          format.json { render :json => @transact.as_json }
           format.xml { render :xml => @transact.to_xml }
         end
       else

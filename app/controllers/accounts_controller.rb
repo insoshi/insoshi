@@ -15,7 +15,7 @@ class AccountsController < ApplicationController
 
     respond_to do |format|
       format.xml { render :xml => @accounts.to_xml(:include => {:group => {:methods => [:thumbnail, :icon], :only => [:id,:name,:description,:unit,:thumbnail,:icon]} }) }
-      format.json { render :json => @accounts.to_json(:include => {:group => {:methods => [:thumbnail, :icon], :only => [:id,:name,:description,:unit,:thumbnail,:icon]} }) }
+      format.json { render :json => @accounts.as_json(:include => {:group => {:methods => [:thumbnail, :icon], :only => [:id,:name,:description,:unit,:thumbnail,:icon]} }) }
     end
   end
 
