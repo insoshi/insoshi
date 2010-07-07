@@ -4,5 +4,6 @@ class Admin::FeedPostsController < ApplicationController
     config.label = "Posts"
     config.columns = [:title, :feedid, :date_published, :urls, :categories, :content, :authors]
     config.list.columns = [:title, :date_published]
+    config.columns[:date_published].form_ui = :calendar
   end
 end
