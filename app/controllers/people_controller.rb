@@ -138,6 +138,20 @@ class PeopleController < ApplicationController
     end
 
     case params[:type]
+    when 'info_edit'
+      respond_to do |format|
+        if !preview? and @person.update_attributes(params[:person])
+          flash[:success] = t('success_profile_updated')
+          format.html { redirect_to(@person) }
+        else
+          @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          if preview?
+            @preview = @person.description = params[:person][:description]
+          end
+          format.html { render :action => "edit" }
+        end
+      end
     when 'password_edit'
       if global_prefs.demo?
         flash[:error] = t('error_password_cant_be_changed')
@@ -153,7 +167,7 @@ class PeopleController < ApplicationController
           format.html { render :action => "edit" }
         end
       end
-    #when 'info_edit'
+    #when 'openid_edit'
     else
       @person.attributes = params[:person]
       @person.save do |result|
@@ -221,5 +235,9 @@ class PeopleController < ApplicationController
 
     def correct_person_required
       redirect_to home_url unless ( current_person.admin? or Person.find(params[:id]) == current_person )
+    end
+
+    def preview?
+      params["commit"] == "Preview"
     end
 end

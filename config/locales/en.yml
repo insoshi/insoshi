@@ -237,6 +237,7 @@ en:
       new_password: "New Password"
       confirm_password: "Confirm Password"
       change_password: "Change Password"
+      change_openid: "Change OpenID"
     groups:
       no_groups: "No groups (yet)"
       new_group: "New group"
