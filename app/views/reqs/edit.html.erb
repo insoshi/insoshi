@@ -6,7 +6,7 @@
 <% form_for(@req) do |f| %>
 
   <div class="form_row">
-    <%= f.label t.('title') %>
+    <%= f.label t('title') %>
     <%= f.text_field :name %>
   </div>
 
@@ -15,12 +15,12 @@
     <%= f.text_field :estimated_hours, :size => 5 %>
   </div>
   <div class="form_row">
-    <%= f.label t.('due_date') %>
+    <%= f.label t('due_date') %>
     <%= f.text_field :due_date, :size => 7 %>
   </div>
 
   <div class="form_row">
-    <%= f.label t.('description') %>
+    <%= f.label t('description') %>
     <%= f.text_area :description, :rows => 5 %>
   </div>
   <div class="form_row full">
