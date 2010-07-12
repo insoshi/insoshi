@@ -193,7 +193,7 @@ module ActivitiesHelper
   end
   
   def blog_link(text, blog)
-    link_to(text, blog_path(blog))
+    link_to(h(text), blog_path(blog))
   end
   
   def post_link(text, blog, post = nil)
@@ -202,7 +202,7 @@ module ActivitiesHelper
       blog = text
       text = post.title
     end
-    link_to(text, blog_post_path(blog, post))
+    link_to(h(text), blog_post_path(blog, post))
   end
   
   def topic_link(text, topic = nil)
@@ -210,27 +210,27 @@ module ActivitiesHelper
       topic = text              # Eh?  This makes no sense...
       text = topic.name
     end
-    link_to(text, forum_topic_path(topic.forum, topic))
+    link_to(h(text), forum_topic_path(topic.forum, topic))
   end
 
   def event_link(text, event)
-    link_to(text, event_path(event))
+    link_to(h(text), event_path(event))
   end
 
   def metadata_link(text, metadata)
     if metadata.class == Req
-      link_to(text, req_path(metadata))
+      link_to(h(text), req_path(metadata))
     else
-      link_to(text, offer_path(metadata))
+      link_to(h(text), offer_path(metadata))
     end
   end
 
   def req_link(text, req)
-    link_to(text, req_path(req))
+    link_to(h(text), req_path(req))
   end
 
   def offer_link(text, offer)
-    link_to(text, offer_path(offer))
+    link_to(h(text), offer_path(offer))
   end
 
   # Return a link to the wall.

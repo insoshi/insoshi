@@ -28,7 +28,7 @@
       <% fields_for :offer do |o| %>
         <div class="form_row">
           <%= o.label t('exchanges.new.for') %>
-          <%= o.text_field :name, :value => @offer.name, :disabled => true %> &nbsp;&nbsp;&nbsp;&nbsp; <%= link_to "...< #{t('or_ask')} #{@offer.person.name} #{t('a_question')}", @offer, :class => "meta" %>
+          <%= o.text_field :name, :value => @offer.name, :disabled => true %> &nbsp;&nbsp;&nbsp;&nbsp; <%= link_to "...#{t('exchanges.new.or_ask')} #{h @offer.person.name} #{t('a_question')}", @offer, :class => "meta" %>
         </div>
         <%= o.hidden_field :id %>
       <% end %>

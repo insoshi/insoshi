@@ -1,5 +1,5 @@
 <li>
-<%= link_to category.name, category, {:class => "categoryMenuItem" } %> (<%= category.active_people.length %>)
+<%= link_to h(category.name), category, {:class => "categoryMenuItem" } %> (<%= category.active_people.length %>)
   <div>
     <ul>
     <% unless category.children.empty? -%>
