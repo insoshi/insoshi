@@ -3,14 +3,8 @@ class ForumsController < ApplicationController
   before_filter :login_required, :setup
 
   def index
-    @forums = Forum.find(:all)
-    if @forums.length >= 1
-      redirect_to forum_url(@forums.first) and return
-    end
-
-    respond_to do |format|
-      format.html
-    end
+    @forum = Forum.first(:conditions => "group_id is NULL")
+    redirect_to forum_url(@forum) and return
   end
 
   def show
