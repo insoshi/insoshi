@@ -1,0 +1,77 @@
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+          renderTo: "exchanges_chart",
+          zoomType: "x"
+        },
+      title: {
+        text: "<%= t('currency_unit_plural') %> by day"
+      },
+      xAxis: {
+        type: "datetime"
+      },
+      yAxis: {
+        title: {
+          text: "<%= t('currency_unit_plural') %>"
+        }
+        },
+      tooltip: {
+        formatter: function() {
+          return Highcharts.dateFormat("%B %e, %Y", this.x) + ': ' +
+          Highcharts.numberFormat(this.y, 2) + " <%= t('currency_unit_plural') %>";
+        }
+      },
+      series: [<% {"everyone" => Exchange.everyone, "admin" => Exchange.by_customer(1)}. each do |name,exchanges| %>   
+        {
+        name: "<%= name %>",
+        pointStart: <%= @num_months.months.ago.to_i * 1000 %>,
+        pointInterval: <%= 1.day * 1000 %>,
+        data: <%= exchanges_chart_series(exchanges,@num_months.months.ago.to_date) %>
+        },
+      <% end %>
+      ]
+    });
+
+    new Highcharts.Chart({
+      chart: {
+        renderTo: "monthly_chart",
+        defaultSeriesType: "column"
+        },
+      title: {
+        text: "<%= t('currency_unit_plural') %> by month"
+      },
+      xAxis: {
+        categories: [
+            'Jan', 
+            'Feb', 
+            'Mar', 
+            'Apr', 
+            'May', 
+            'Jun', 
+            'Jul', 
+            'Aug', 
+            'Sep', 
+            'Oct', 
+            'Nov', 
+            'Dec']
+      },
+        yAxis: {
+        min: 0,
+        title: {
+          text: "<%= t('currency_unit_plural') %>"
+          }
+        },
+      series: [<% ["2009", "2010"]. each do |year| %>   
+        {
+        name: "<%= year %>",
+          data: <%= monthly_exchanges_for_year(year) %>
+        },
+      <% end %>
+      ]
+    });
+  });
+</script>
+<div id="monthly_chart"></div>
+<div id="exchanges_chart"></div>
+

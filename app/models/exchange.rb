@@ -30,8 +30,20 @@ class Exchange < ActiveRecord::Base
   after_create :send_payment_notification_to_worker
   before_destroy :send_suspend_payment_notification_to_worker
 
+  named_scope :by_customer, lambda {|person_id| {:conditions => ["customer_id = ?", person_id]}}
+  named_scope :everyone, :conditions => {}
+  named_scope :by_month, lambda {|date| {:conditions => ["DATE_TRUNC('month',created_at) = ?", date]}}
+
   def log_activity
     add_activities(:item => self, :person => self.worker)
+  end
+
+  def self.total_on(date)
+    Exchange.sum(:amount, :conditions => ["date(created_at) = ?", date])
+  end
+
+  def self.total_on_month(date)
+    Exchange.sum(:amount, :conditions => ["DATE_TRUNC('month',created_at) = ?", date])
   end
 
   private

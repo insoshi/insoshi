@@ -2,17 +2,18 @@ class HomeController < ApplicationController
   skip_before_filter :require_activation
   
   def index
-    @topics = Topic.find_recent
-    @members = Person.find_recent
     if logged_in?
       @body = "home"
       @person = current_person
       @requested_memberships = current_person.requested_memberships
       @invitations = current_person.invitations
-      if params[:mode]
+      case params[:mode]
+      when 'dashboard'
         @reqs = current_person.current_and_active_reqs
         @bids = current_person.current_and_active_bids
         @offers = current_person.current_offers
+      when 'graphs'
+        @num_months = 20
       else
         @feed = Activity.exchange_feed
       end

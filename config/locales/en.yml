@@ -157,6 +157,7 @@ en:
       header: "Home"
       tab_exchanges: "Exchanges"
       tab_your_activity: "Your Activity"
+      tab_graphs: "Graphs"
       unread_messages: "You have unread messages in your mailbox."
       see_your_messages: "Click here to see your messages"
     show:
@@ -170,6 +171,7 @@ en:
       no_active_offers: "No active offers"
       requests: "Your Active Requests"
       no_active_requests: "No active requests"
+    _graphs:
     _forum_preview:
       header: "Discussion Forum"
       last_post: "Last post"

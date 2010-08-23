@@ -157,6 +157,7 @@ es:
       header: "Pagina Central"
       tab_exchanges: "Intercambios"
       tab_your_activity: "Tus actividades"
+      tab_graphs: "Gráficos"
       unread_messages: "Tienes mensajes no abiertos en tu buzon."
       see_your_messages: "Entrar aqui  para ver sus mensajes"
     show:
@@ -170,6 +171,7 @@ es:
       no_active_offers: "No hay ofertas vigentes"
       requests: "Tus ofertas vigentes"
       no_active_requests: "No hay ofertas vigentes"
+    _graphs:
     _forum_preview:
       header: "Foro de discusiónes"
       last_post: "Mensajes recientes"

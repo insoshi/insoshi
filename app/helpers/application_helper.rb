@@ -29,7 +29,6 @@ module ApplicationHelper
     else
       forum = menu_element("Forums", forums_path)
     end
-    resources = menu_element("Resources", "http://docs.insoshi.com/")
     if logged_in? and not admin_view?
       profile  = menu_element("Profile",  person_path(current_person))
       offers = menu_element("Offers", offers_path)

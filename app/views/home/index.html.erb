@@ -1,8 +1,13 @@
+<% content_for(:jquery_support) do %>
+<%= javascript_include_tag 'jquery-1.4.2.min' %>
+<%= javascript_include_tag 'highcharts' %>
+<% end -%>
 <%- column_div :type => :primary do -%>
   <%- if logged_in? -%>
   <h2><%= t('home.index.header') %></h2>
     <ul id="message-nav">
       <%= list_link_with_active t('home.index.tab_exchanges'), home_path %>
+      <%= list_link_with_active t('home.index.tab_graphs'), home_path(:mode => 'graphs') %>
       <%= list_link_with_active t('home.index.tab_your_activity'), home_path(:mode => 'dashboard') %>
     </ul>
   <%- if logged_in? && current_person.has_unread_messages? -%>
@@ -15,7 +20,11 @@
     <% if current_page_pre22?(home_path) %>
       <%= render :partial => 'feed' %>
     <% else %>
-      <%= render :partial => 'dashboard' %>
+      <% if params[:mode] == 'dashboard' %>
+        <%= render :partial => 'dashboard' %>
+      <% elsif params[:mode] == 'graphs' %>
+        <%= render :partial => 'graphs' %>
+      <% end %>
     <% end %>
   <%- else -%>
     <%= render :partial => 'blog' %>

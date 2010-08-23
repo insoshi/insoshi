@@ -344,7 +344,7 @@ form#blogpost #post_title, form#blogpost #post_body {
   margin: 0;
   text-align: center;
   padding: 0;
-  width: 78px;
+  width: 80px;
 }
 #message-nav li.active a, #message-nav li a:hover {
   background: url(/images/silver-grad-inv.jpg) bottom repeat-x;
@@ -531,4 +531,12 @@ input#person_openid_identifier, input#person_session_openid_identifier {
   background-position: 0 50%;
   color: #000;
   padding-left: 18px;
+}
+
+#exchanges_chart {
+  width: 810px;
+}
+
+#monthly_chart {
+  width: 510px;
 }
