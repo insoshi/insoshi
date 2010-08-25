@@ -22,12 +22,6 @@
         <label for="person_phone"><%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> <%= t('people.edit.phone') %></label>
         <%= f.text_field :phone %>
       </div>
-    <% unless global_prefs.twitter_name.blank? %>
-      <div class="form_row">
-        <label for="twitter_name"><%= t('people.edit.twitter_id') %></label>
-        <%= f.text_field :twitter_name, :maxlength => Person::MAX_TWITTER_NAME %>
-      </div>
-    <% end %>
 
   <div class="form_row full">
         <label for="person_categories"><%= t('people.edit.services_offered') %>

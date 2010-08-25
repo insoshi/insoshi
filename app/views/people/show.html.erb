@@ -34,9 +34,6 @@
                                         :alt => h(@person.name) %>
 
         <ul class="tools">
-        <% unless @person.twitter_name.blank? %>
-          <a href="<%= t('twitter_url') %><%= h @person.twitter_name %>" title="<%= h @person.twitter_name %>" target="top"><img style="float:right;" src="/images/twitter_481.png"></a>
-        <% end %>
         <%- unless current_person?(@person) -%>
           <%- if logged_in? -%>
             <li><%= exchange_link @person %></li>

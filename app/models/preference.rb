@@ -32,8 +32,6 @@
 #
 
 class Preference < ActiveRecord::Base
-  attr_accessor :twitter_password,
-                :twitter_oauth_consumer_secret
   attr_accessible :app_name, :server_name, :domain, :smtp_server, 
                   :exception_notification, :new_member_notification,
                   :email_notifications, :email_verifications, :analytics,
@@ -41,34 +39,19 @@ class Preference < ActiveRecord::Base
                   :practice, :steps, :questions, :contact,
                   :registration_intro,
                   :agreement,
-                  :twitter_name, :twitter_password, :twitter_api,
                   :group_option,
                   :zipcode_browsing,
                   :blog_feed_url,
                   :googlemap_api_key,
-                  :disqus_shortname,
-                  :twitter_oauth_consumer_key, :twitter_oauth_consumer_secret
+                  :disqus_shortname
 
   validates_presence_of :domain,       :if => :using_email?
   validates_presence_of :smtp_server,  :if => :using_email?
-  validates_presence_of :twitter_api,  :if => :using_twitter?
   
-  before_save :encrypt_twitter_password
-  before_save :encrypt_twitter_oauth_consumer_secret
-
-  before_validation :set_default_twitter_api_if_using_twitter
 
   # Can we send mail with the present configuration?
   def can_send_email?
     not (domain.blank? or smtp_server.blank?)
-  end
-
-  def plaintext_twitter_password
-    decrypt(crypted_twitter_password)
-  end
-
-  def plaintext_twitter_oauth_consumer_secret
-    decrypt(crypted_twitter_oauth_consumer_secret)
   end
 
   private
@@ -85,24 +68,6 @@ class Preference < ActiveRecord::Base
     # Encrypts the password with the user salt
     def encrypt(password)
       self.class.encrypt(password)
-    end
-
-    def encrypt_twitter_password
-      return if twitter_password.blank?
-      self.crypted_twitter_password = encrypt(twitter_password)
-    end
-
-    def encrypt_twitter_oauth_consumer_secret
-      return if twitter_oauth_consumer_secret.blank?
-      self.crypted_twitter_oauth_consumer_secret = encrypt(twitter_oauth_consumer_secret)
-    end
-
-    def set_default_twitter_api_if_using_twitter
-      self.twitter_api = 'twitter.com' if self.twitter_api.blank?
-    end
- 
-    def using_twitter?
-      twitter_name?
     end
 
     def using_email?

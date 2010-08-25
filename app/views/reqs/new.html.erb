@@ -30,13 +30,6 @@
     <label for="notifications" class="checkbox"><%= t('reqs.new.notify_members_email') %></label>
     <%= check_box_tag 'req[notifications]', '1', true %>
   </div>
-<% unless global_prefs.twitter_name.blank? %>
-    <div class="form_row">
-      <label for=<%= t('twitter') %>
-        class="checkbox"><%= t('notify_members_twitter') %> <a href="<%= t('twitter_url') %><%= global_prefs.twitter_name %>" target="top"><%= t('twitter') %></a>?</label>
-      <%= check_box_tag 'req[twitter]', '1', true %>
-    </div>
-<% end %>
   <div class="form_row">
     <%= f.submit t('button_create') %>
   </div>

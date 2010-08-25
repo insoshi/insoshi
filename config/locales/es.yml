@@ -1,8 +1,6 @@
 
 es:
   currency_unit_plural: "horas"
-  twitter: "Twitter"
-  twitter_url: "http://www.twitter.com/"
 
   button_submit: "Enviar"
   button_delete: "Borrar"
@@ -218,7 +216,6 @@ es:
       name: "Nombre"
       share_phone_number: "Comparta su numero telefonio:"
       phone: "Telefono"
-      twitter_id: "Twitter"
       services_offered: "Servicios que ofrece"
       neighborhood: "Vecindario"
       description: "Descripción"
@@ -309,7 +306,6 @@ es:
       header: "Nueva peticion"
       people_to_be_notified: "Personas que deben ser notificadas"
       notify_members_email: "Notifique a los miembros arriba mencionados?"
-      notify_members_twitter: "Notificar a miembros en tiempo real en " 
     show:
       header: "Requisicion"
       bids: "Ofertas"
@@ -445,10 +441,7 @@ es:
   notice_thanks_for_signing_up_check_email: "Thanks for signing up! Check your email to activate your account."
   notice_thanks_for_signing_up: "Thanks for signing up!"
   notice_post_updated: "Post updated"
-  notice_you_are_following_twitter: "You are following requests on Twitter!"
   notice_request_updated: "Request was successfully updated."
-  notice_your_twitter_name_has_been_set_to: "Your Twitter name has been set to"
-  notice_your_twitter_has_been_changed_from: "Your Twitter has been changed from"
   notice_logged_in_successfully: "Logged in successfully"
   notice_unverified_email_address: "Unverified email address. Please check your email for your activation code."
   notice_topic_updated: "Topic was successfully updated."

@@ -1,9 +1,5 @@
 <%- column_div :type => :primary do -%>
-<% if global_prefs.twitter_name.blank? || global_prefs.twitter_oauth_consumer_key.blank? %>
   <h2><%= t('reqs.index.header') %></h2>
-<% else %>
-  <h2><%= t('reqs.index.header') %> &nbsp;&nbsp;<%= link_to( image_tag("twitter.gif", :border => 0, :title => "follow me"), twitter_oauth_client_path ) %></h2>
-  <%- end -%>
   <ul id="message-nav">
   <%= list_link_with_active t('reqs.index.current'), reqs_path %>
   <%= list_link_with_active t('reqs.index.all'), reqs_path(:filter => 'all') %>

@@ -22,9 +22,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :bids
 
-  map.twitter_oauth_client '/reqs/twitter_oauth_client', :controller => "reqs", :action => "twitter_oauth_client"
-  map.twitter_oauth_callback '/reqs/twitter_oauth_callback', :controller => "reqs", :action => "twitter_oauth_callback"
-
   map.resources :reqs do |req|
     req.resources :bids
   end

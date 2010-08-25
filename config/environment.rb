@@ -66,7 +66,6 @@ Rails::Initializer.run do |config|
   # `gem sources -a http://gems.github.com`
   config.gem 'rubyist-aasm', :lib => 'aasm'
   # installed with `rake gems:install`
-  config.gem 'twitter'
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
   config.gem 'feed-normalizer'
   config.gem 'json'

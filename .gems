@@ -1,7 +1,6 @@
 oauth --version '>= 0.3.6'
 chronic
 rubyist-aasm --source http://gems.github.com
-twitter
 feed-normalizer
 texticle
 memcache-client '>= 1.7.0'
