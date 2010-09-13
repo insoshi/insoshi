@@ -1,4 +1,4 @@
-rails --version '= 2.3.8'
+rails --version '= 2.3.5'
 oauth --version '>= 0.3.6'
 chronic
 rubyist-aasm --source http://gems.github.com
