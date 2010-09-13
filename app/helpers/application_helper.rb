@@ -113,7 +113,7 @@ module ApplicationHelper
   # Set the input focus for a specific id
   # Usage: <%= set_focus_to 'form_field_label' %>
   def set_focus_to(id)
-    javascript_tag("$('#{id}').focus()");
+    javascript_tag("jQuery('##{id}').focus()");
   end
  
   # Same as Rails' simple_format helper without using paragraphs
