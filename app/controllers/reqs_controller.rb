@@ -31,6 +31,14 @@ class ReqsController < ApplicationController
     @bid = Bid.new
     @bid.estimated_hours = @req.estimated_hours
 
+    unless @req.group.nil?
+      if logged_in?
+        unless Membership.exist?(current_person,@req.group)
+          flash[:notice] = 'Making a bid requires group membership.'
+        end
+      end
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @req }
@@ -42,6 +50,7 @@ class ReqsController < ApplicationController
   def new
     @req = Req.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @groups = current_person.groups.delete_if {|g| !g.adhoc_currency?}
 
     respond_to do |format|
       format.html # new.html.erb
@@ -74,6 +83,7 @@ class ReqsController < ApplicationController
         format.xml  { render :xml => @req, :status => :created, :location => @req }
       else
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @groups = current_person.groups.delete_if {|g| !g.adhoc_currency?}
         format.html { render :action => "new" }
         format.xml  { render :xml => @req.errors, :status => :unprocessable_entity }
       end

@@ -37,6 +37,7 @@ class Account < ActiveRecord::Base
       exchange.worker = to.person
       exchange.amount = amount
       exchange.metadata = metadata
+      exchange.group_id = metadata.group_id
       exchange.save!
     end
   end

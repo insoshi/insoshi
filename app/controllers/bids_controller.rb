@@ -10,13 +10,10 @@ class BidsController < ApplicationController
 
     respond_to do |format|
       if @bid.save
-        flash[:success] = t('success_bid_created') 
-        format.html { redirect_to req_path(@req) }
-        #format.xml  { render :xml => @bid, :status => :created, :location => @bid }
+        flash[:notice] = t('success_bid_created') 
+        format.js
       else
-        flash[:error] = t('error_creating_bid') 
-        format.html { redirect_to req_path(@req) }
-        #format.xml  { render :xml => @bid.errors, :status => :unprocessable_entity }
+        format.js { render :action => 'new' }
       end
     end
   end

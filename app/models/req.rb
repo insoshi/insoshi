@@ -27,10 +27,12 @@ class Req < ActiveRecord::Base
   
   has_and_belongs_to_many :categories
   belongs_to :person
+  belongs_to :group
   has_many :bids, :order => 'created_at DESC', :dependent => :destroy
   has_many :exchanges, :as => :metadata
 
   attr_protected :person_id, :created_at, :updated_at
+  attr_readonly :group_id
   validates_presence_of :name, :due_date
   after_create :notify_workers, :if => :notifications
   after_create :log_activity
@@ -45,6 +47,14 @@ class Req < ActiveRecord::Base
 
     def all_active(page=1)
       @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ?", true], :order => 'created_at DESC')
+    end
+  end
+
+  def unit
+    if group.nil?
+      I18n.translate('currency_unit_plural')
+    else
+      group.unit
     end
   end
 

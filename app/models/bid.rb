@@ -20,19 +20,21 @@
 #
 
 class Bid < ActiveRecord::Base
-  before_validation_on_create :setup_estimated_hours
-  after_validation_on_create :trigger_offered
+  before_validation_on_create :setup
+  after_create :trigger_offered
 
   include ActionController::UrlWriter
   include AASM
 
   belongs_to :req
   belongs_to :person
+  belongs_to :group
   validates_presence_of :estimated_hours, :person_id
   attr_readonly :estimated_hours
 
   attr_protected :person_id, :created_at, :updated_at
   attr_protected :status_id, :state
+  attr_protected :group_id
 
   aasm_column :state
 
@@ -80,15 +82,30 @@ class Bid < ActiveRecord::Base
     b_events.find_all {|event| ['commit','complete'].include? event}
   end
 
+  def unit
+    if group.nil?
+      I18n.translate('currency_unit_plural')
+    else
+      group.unit
+    end
+  end
+
   private
 
   def validate
     unless estimated_hours > 0
       errors.add(:estimated_hours, "must be greater than zero")
     end
+
+    unless self.group.nil?
+      unless self.person.groups.include?(self.group)
+        errors.add(:group_id, "does not include you as a member")
+      end
+    end
   end
 
-  def setup_estimated_hours
+  def setup
+    self.group = self.req.group
     if self.expiration_date.blank?
       self.expiration_date = 7.days.from_now
     else

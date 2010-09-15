@@ -1,0 +1,5 @@
+jQuery('#new_bid').before('<div id="flash_notice"><%= escape_javascript(flash.delete(:notice)) %></div>');
+jQuery('.blankslate').fadeOut();
+jQuery('.bids').append('<%= escape_javascript(render(:partial => @bid)) %>');
+jQuery('#new_bid')[0].reset();
+jQuery('span.wait').hide();

@@ -6,7 +6,7 @@
   </ul>
   <% if @req.active? %>
     <h2><%= t('reqs.show.bids') %>:</h2>
-  <ul class="list full">
+  <ul class="list full bids">
     <% if @req.bids.empty? -%>
       <h3 class="blankslate"><%= t('reqs.show.nobids') %></h3>
     <% else %>
@@ -16,12 +16,10 @@
     <% unless current_person?(@req.person) -%>
       <h2><%= t('reqs.show.newbid') %></h2>
 
-      <%= error_messages_for :bid %>
-
-      <% form_for :bid, :url => req_bids_path(@req) do |f| %>
+      <% form_for :bid, :url => req_bids_path(@req), :html => {:id => 'new_bid'} do |f| %>
         <div class="form_row">
-          <%= f.label t('currency_unit_plural') %>
-          <%= f.text_field :estimated_hours, :size => 2 %>
+          <%= f.label t('estimate') %>
+          <%= f.text_field :estimated_hours, :size => 2 %>&nbsp;<span class="small"><%= @req.unit %>
         </div>
         <div class="form_row">
           <%= f.label t('expiration_date') %>
@@ -32,7 +30,7 @@
           <%= f.text_area :private_message_to_requestor, :rows => 5 %>
         </div>
         <div class="form_row">
-          <%= f.submit t('button_submit') %>
+          <%= f.submit t('button_submit') %><span class='wait' style='display:none'><img alt='wait' class='wait' src='/images/loading.gif'></span>
         </div>
       <% end %>
     <%- end -%>
