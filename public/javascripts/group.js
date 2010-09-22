@@ -27,11 +27,13 @@ $(function() {
   });
 
   $('#new_topic').live('submit',function() {
+    $('span.wait').show();
     $.post($(this).attr('action'),$(this).serialize(),null,'script');
     return false;
     });
 
   $('#new_post').live('submit',function() {
+    $('span.wait').show();
     $.post($(this).attr('action'),$(this).serialize(),null,'script');
     return false;
     });
