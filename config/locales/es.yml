@@ -146,6 +146,9 @@ es:
       discussion_topics: "Temas de discusión"
       add_a_new_topic: "Agregar un nuevo tema"
       recent_exchanges: "Intercambios recientes"
+      home: "Home"
+      forum: "Forum"
+      requests: "Requests"
     _people:
       header: "Del grupo"
       all_members: "Todos los miembros"

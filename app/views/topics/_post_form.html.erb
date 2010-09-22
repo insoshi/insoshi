@@ -1,0 +1,14 @@
+  <h3><%= t('topics.show.add_a_new_post').capitalize %></h3>
+  <a name="forum_post">
+  <%= error_messages_for :post %>
+
+  <% form_for :post,
+      :url => forum_topic_posts_path(@forum, @topic), :html => {:id => 'new_post'}  do |f| %>
+    <div class="form_row">
+      <%= f.text_area :body, :rows => 10 %>
+    </div>
+
+    <div class="form_row">
+      <%= f.submit t('button_submit'), :class => "button" %>
+    </div>
+  <% end %>

@@ -86,7 +86,11 @@ module ApplicationHelper
 
     links
   end
-  
+ 
+  def waiting_image
+    "<span class='wait' style='display:none'><img alt='wait' class='wait' src='/images/loading.gif'></span>"
+  end
+
   def menu_element(content, address)
     { :content => content, :href => address }
   end

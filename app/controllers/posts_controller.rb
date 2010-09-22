@@ -49,6 +49,7 @@ class PostsController < ApplicationController
       if @post.save
         flash[:success] = t('success_post_created')
         format.html { redirect_to post_url }
+        format.js
       else
         format.html { render :action => resource_template("new") }
       end

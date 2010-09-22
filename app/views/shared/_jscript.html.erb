@@ -1,9 +1,5 @@
 <% content_for(:jquery_support) do %>
-<%= stylesheet_link_tag 'le-frog/jquery-ui-1.8.4.custom' %>
 <%= javascript_include_tag 'jquery-ui-1.8.4.custom.min' %>
-<script type="text/javascript">
-  jQuery.noConflict();
-</script>
 <%= javascript_include_tag jscript_file_name %>
 <% end -%>
 

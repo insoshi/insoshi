@@ -47,7 +47,11 @@ class BidsController < ApplicationController
       logger.warn "Error.  Invalid bid event: #{params[:aasm_event]}"
       flash[:error] = t('notice_bid_invalid')
     end
-    redirect_to @req
+
+    respond_to do |format|
+      format.html { redirect_to @req }
+      format.js
+    end
   end
 
   # DELETE /bids/1

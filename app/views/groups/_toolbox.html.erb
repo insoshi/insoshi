@@ -1,0 +1,59 @@
+        <div class="toolbox">
+          <%= image_tag @group.main_photo, :class => "profile-image photo",
+                                        :alt => h(@group.name) %>
+          <ul class="tools">
+            <%- if @group.adhoc_currency? -%>
+              <li>
+                <%= t('groups.show.currency_unit') %> <%= @group.unit %>
+              </li>
+            <%- end -%>
+            <%- unless Membership.exist?(current_person,@group) -%>
+              <li>
+                <%= link_to t('groups.show.join_group'),
+                      group_memberships_path(@group), :method => :post %>
+              </li>
+            <%- else -%>
+              <%- if @group.has_invited?(current_person) -%>
+                <li>
+                  <%= t('groups.show.you_have_been_invited') %> <%= link_to t('groups.show.respond'), invitations_person_path(current_person)+"#group_#{@group.id}" %>
+                </li>
+              <%- end -%>
+            <%- end -%>
+            <%- if Membership.connected?(current_person,@group) -%>
+              <li>
+                <%= t('groups.show.you_are_a_member_of') %> <strong><%= h @group.name%></strong>
+                <br />
+                (<%= link_to t('groups.show.leave_group'),
+                      membership_path(Membership.mem(current_person, @group)), 
+                      :method => :delete,
+                      :confirm => 
+                      t('groups.show.are_you_sure_you_want_to_leave') + "#{h @group.name}?" %>)
+              </li>
+            <%- end -%>
+            <%- if Membership.pending?(current_person, @group) -%>
+              <li>
+                <%= t('groups.show.you_have_requested_to_be_a_member_of') %> <strong><%= h @group.name%></strong>
+              </li>
+            <%- end -%>
+            <%- if group_owner?(current_person,@group) -%>
+              <li>
+                <%= t('groups.show.you_are_group_admin') %>
+                <%= link_to t('groups.show.delete_it'), group_path(@group), :confirm => t('are_you_sure'), :method => :delete %>
+              </li>
+              <li>
+                <%= t('groups.show.mode') %> <%= get_groups_modes[@group.mode][0] %>
+              </li>
+              <% if @group.hidden? %>
+                <li>
+                  <%= link_to t('groups.show.invite_contacts'), invite_group_path(@group) %>
+                </li>
+              <% end %>
+            <%- end -%>
+            <%- if current_person.admin? -%>
+              <li>
+              <%= link_to t('groups.show.delete_group'),
+                    admin_group_path(@group),:confirm => t('are_you_sure'), :method => :delete%> 
+              </li>
+            <%- end -%>
+          </ul>
+        </div>

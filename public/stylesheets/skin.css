@@ -541,6 +541,14 @@ input#person_openid_identifier, input#person_session_openid_identifier {
   width: 510px;
 }
 
+#forum_canvas h2 {
+  background: none;
+}
+
+#reqs_canvas h2 {
+  background: none;
+}
+
 #flash_notice, #flash_error {
   padding: 5px 8px;
   margin: 10px 0;
@@ -555,3 +563,8 @@ input#person_openid_identifier, input#person_session_openid_identifier {
   background-color: #FCC;
   border: solid 1px #C66;
 }
+
+#tabs {
+  height: 860px;
+}
+

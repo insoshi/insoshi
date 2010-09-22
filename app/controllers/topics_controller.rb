@@ -11,7 +11,11 @@ class TopicsController < ApplicationController
   def show
     @group = @forum.group
     @topic = Topic.find(params[:id])
-    @posts = @topic.posts.paginate(:page => params[:page])
+    @posts = @topic.posts.paginate(:page => params[:page], :per_page => 2)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -27,14 +31,16 @@ class TopicsController < ApplicationController
   end
 
   def create
+    sleep 10
     @body = "yui-skin-sam" 
     @topic = @forum.topics.new(params[:topic])
     @topic.person = current_person
 
     respond_to do |format|
       if @topic.save
-        flash[:success] = t('success_topic_created')
-        format.html { redirect_to forum_topic_path(@forum, @topic) }
+        flash[:notice] = t('success_topic_created')
+#        format.html { redirect_to forum_topic_path(@forum, @topic) }
+        format.js
       else
         format.html { render :action => "new" }
       end

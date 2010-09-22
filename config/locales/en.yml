@@ -146,6 +146,9 @@ en:
       discussion_topics: "Discussion topics"
       add_a_new_topic: "Add a new topic"
       recent_exchanges: "Recent Exchanges"
+      home: "Home"
+      forum: "Forum"
+      requests: "Requests"
     _people:
       header: "Group's"
       all_members: "All members"

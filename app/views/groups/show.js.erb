@@ -1,0 +1,9 @@
+<% if params[:tab] == 'forum' %>
+  $('#forum_canvas').html("<%= escape_javascript(render :partial => 'forum_canvas') %>");
+  $('span.wait').hide();
+<% elsif params[:tab] == 'requests' %>
+  $('#reqs_canvas').html("<%= escape_javascript(render :partial => 'reqs_canvas') %>");
+  $('span.wait').hide();
+<% else %>
+  alert('bad request');
+<% end %>

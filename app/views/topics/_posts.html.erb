@@ -1,0 +1,6 @@
+<h2><%= @topic.name %><%= waiting_image %></h2>
+  <%= will_paginate(@posts) %>
+  <ul class="list topic full">
+    <%= render :partial => 'forum_post', :collection => @posts %>
+  </ul>
+  <%= will_paginate(@posts) %>

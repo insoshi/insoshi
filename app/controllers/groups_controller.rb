@@ -110,7 +110,7 @@ class GroupsController < ApplicationController
                                           :per_page => RASTER_PER_PAGE)
     group_redirect_if_not_public
   end
-  
+
   def photos
     @group = Group.find(params[:id])
     @photos = @group.photos
@@ -183,9 +183,11 @@ class GroupsController < ApplicationController
       if @group.is_viewable?(current_person)
         format.html
         format.xml { render :xml => @group.to_xml(:methods => [:icon,:thumbnail], :only => [:id,:name,:description,:mode,:person_id,:created_at,:updated_at,:unit,:icon,:thumbnail]) }
+        format.js
       else
         format.html { redirect_to(groups_path) }
         format.xml { render :nothing => true, :status => :unauthorized }
+        format.js { render :nothing => true, :status => :unauthorized }
       end
     end
   end

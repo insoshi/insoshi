@@ -1,0 +1,5 @@
+$('#forum_canvas').html("<%= escape_javascript(render :partial => 'posts') %>");
+if(0 == $('#forum_form').html().length)
+{
+  $('#forum_form').html("<%= escape_javascript(render :partial => 'post_form') %>");
+}

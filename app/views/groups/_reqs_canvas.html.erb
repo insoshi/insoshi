@@ -1,0 +1,6 @@
+    <div id="reqs_canvas">
+      <h2><%= t('reqs.index.header') %><%= waiting_image %></h2>
+      <ul class="list activity full">
+        <%= render :partial => '/reqs/req', :collection => @group.reqs %>
+      </ul>
+    </div>

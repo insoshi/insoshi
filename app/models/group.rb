@@ -4,6 +4,7 @@ class Group < ActiveRecord::Base
   validates_presence_of :name, :person_id
 
   has_one :forum
+  has_many :reqs, :order => "created_at DESC"
   has_many :photos, :dependent => :destroy, :order => "created_at"
   has_many :exchanges, :order => "created_at DESC"
   has_many :memberships, :dependent => :destroy

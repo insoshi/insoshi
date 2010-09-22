@@ -1,97 +1,39 @@
+<%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'group' } %>
 <%- column_div :type => :primary do -%>
-  <div class="profile vcard">
-    <h2><%= t('groups.show.header') %> <span class="fn n"><%= h @group.name %></span></h2>
-    <%- if group_owner?(current_person,@group) -%>
-      <%- if @group.description.blank? -%>
-        <div class="error">
-          <%= t('groups.show.blank_description') %>
-          <%= link_to t('groups.show.add_description'),
-                      edit_group_path(@group) %>
-        </div>
-      <%- else -%>
-        <div class="notice">
-          <%= t('groups.show.you_are_viewing_your_group') %>
-          <%= link_to t('groups.show.click_here_to_edit_it'), edit_group_path(@group) %>
-        </div>
-      <%- end -%>
-    <%- end -%>
-    <div class="toolbox">
-      <%= image_tag @group.main_photo, :class => "profile-image photo",
-                                        :alt => h(@group.name) %>
-        <ul class="tools">
-<%- if @group.adhoc_currency? -%>
-        <li>
-          <%= t('groups.show.currency_unit') %> <%= @group.unit %>
-        </li>
-<%- end -%>
-        <%- unless Membership.exist?(current_person,@group) -%>
-          <li>
-            <%= link_to t('groups.show.join_group'),
-                      group_memberships_path(@group), :method => :post %>
-          </li>
-        <%- else -%>
-            <%- if @group.has_invited?(current_person) -%>
-              <li><%= t('groups.show.you_have_been_invited') %> <%= link_to t('groups.show.respond'), invitations_person_path(current_person)+"#group_#{@group.id}" %></li>
-            <%- end -%>
-        <%- end -%>
-        <%- if Membership.connected?(current_person,@group) -%>
-          <li><%= t('groups.show.you_are_a_member_of') %> <strong><%= h @group.name%></strong>
-              <br />
-              (<%= link_to t('groups.show.leave_group'),
-                      membership_path(Membership.mem(current_person, @group)), 
-                      :method => :delete,
-                      :confirm => 
-                      t('groups.show.are_you_sure_you_want_to_leave') + "#{h @group.name}?" %>)
-          </li>
-        <%- end -%>
-        <%- if Membership.pending?(current_person, @group) -%>
-          <li>
-            <%= t('groups.show.you_have_requested_to_be_a_member_of') %> <strong><%= h @group.name%></strong>
-          </li>
-        <%- end -%>
+  <h2><%= t('groups.show.header') %> <span class="fn n"><%= h @group.name %></span></h2>
+  <% tabs_for do |tab| %>
+    <% tab.create('tab_one', t('groups.show.home')) do %>
+      <div class="profile vcard">
         <%- if group_owner?(current_person,@group) -%>
-          <li>
-            <%= t('groups.show.you_are_group_admin') %>
-            <%= link_to t('groups.show.delete_it'), group_path(@group), :confirm => t('are_you_sure'), :method => :delete %>
-          </li>
-          <li>
-            <%= t('groups.show.mode') %> <%= get_groups_modes[@group.mode][0] %>
-          </li>
-          <% if @group.hidden? %>
-              <li>
-                  <%= link_to t('groups.show.invite_contacts'), invite_group_path(@group) %>
-              </li>
-          <% end %>
+          <%- if @group.description.blank? -%>
+            <div class="error">
+              <%= t('groups.show.blank_description') %>
+              <%= link_to t('groups.show.add_description'),
+                      edit_group_path(@group) %>
+            </div>
+          <%- else -%>
+            <div class="notice">
+              <%= t('groups.show.you_are_viewing_your_group') %>
+              <%= link_to t('groups.show.click_here_to_edit_it'), edit_group_path(@group) %>
+            </div>
+          <%- end -%>
         <%- end -%>
-        <%- if current_person.admin? -%>
-          <li>
-          <%= link_to t('groups.show.delete_group'),
-                admin_group_path(@group),:confirm => t('are_you_sure'), :method => :delete%> 
-          </li>
-        <%- end -%>
-      </ul>
-    </div>
-    <%= display @group.description %>
-  </div>
-  <h2><%= t('groups.show.discussion_topics') %></h2>
-  
-  <ol class="list forum full">
-    <%= render :partial => 'topics/topic', :collection => @topics %>
-  </ol>
-  <%- if logged_in? -%>
-    <h2><%= t('groups.show.add_a_new_topic') %></h2>
-  
-    <% form_for :topic, :url => forum_topics_path(@forum) do |f| %>
-      <div class="form_row">
-        <%= f.text_field :name %>
-        <%= submit_tag t('button_submit'), :class => "button" %>
+        <%= render :partial => 'toolbox' %>
+        <%= display @group.description %>
       </div>
+      <h2><%= t('groups.show.recent_exchanges') %></h2>
+      <ul class="list activity full">
+        <%= render :partial => 'exchange', :collection => @group.exchanges %>
+      </ul>
     <% end %>
-  <%- end -%>
-  <h2><%= t('groups.show.recent_exchanges') %></h2>
-  <ul class="list activity full">
-    <%= render :partial => 'exchange', :collection => @group.exchanges %>
-  </ul>
+    <% tab.create('forum', t('groups.show.forum')) do %>
+      <%= render :partial => 'forum_canvas' %>
+      <%= render :partial => 'forum_form' %>
+    <% end %>
+    <% tab.create('requests', t('groups.show.requests')) do %>
+      <%= render :partial => 'reqs_canvas' %>
+    <% end %>
+  <% end %>
   
 <%- end -%>
 

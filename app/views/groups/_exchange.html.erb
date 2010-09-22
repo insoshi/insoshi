@@ -5,9 +5,9 @@
   </div>
   <p>
   <% if exchange.group.nil? %>
-    <%= person_link exchange.worker %> <%= t('earned') + exchange.amount.to_s + t('currency_unit_plural') + t('for') %> <%= link_to h(exchange.metadata.name), exchange.metadata %>
+    <%= person_link exchange.worker %> <%= t('earned') + " " + exchange.amount.to_s + " " + t('currency_unit_plural') + " " + t('for') %> <%= link_to h(exchange.metadata.name), exchange.metadata %>
   <% else %>
-    <%= person_link exchange.worker %> <%= t('earned') + exchange.amount.to_s + exchange.group.unit + t('for') %> <%= link_to h(exchange.metadata.name), exchange.metadata %>
+    <%= person_link exchange.worker %> <%= t('earned') + " " + exchange.amount.to_s + " " + exchange.group.unit + " " + t('for') %> <%= link_to h(exchange.metadata.name), exchange.metadata %>
   <%- end -%>
   </p>
   <p class="meta published">

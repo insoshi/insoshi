@@ -3,7 +3,7 @@
  */
 var OSCURRENCY = {};
 
-jQuery(function($) { 
+$(function() { 
 
   function processPerson( n, peep ) {
     if( peep.deactivated )

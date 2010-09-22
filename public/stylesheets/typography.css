@@ -248,6 +248,12 @@ input.button, button, input[submit], input[button] {
 .col1 textarea {
   width: 478px;
 }
+.col1 textarea#post_body {
+  width: 428px;
+}
+.col1 textarea#bid_private_message_to_requestor {
+  width: 428px;
+}
 body.single-col .col1 form input {
   width: 312px;
 }
