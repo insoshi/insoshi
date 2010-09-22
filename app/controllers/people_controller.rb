@@ -107,8 +107,13 @@ class PeopleController < ApplicationController
       flash[:error] = t('error_invalid_email_verification_code')
       redirect_to home_url
     else
-      person.email_verified = true; person.save!
-      flash[:success] = t('success_email_verified')
+      person.email_verified = true
+      person.save!
+      if Person.global_prefs.whitelist?
+        flash[:success] = t('success_email_verified_whitelist')
+      else
+        flash[:success] = t('success_email_verified')
+      end
       redirect_to login_url
     end
   end

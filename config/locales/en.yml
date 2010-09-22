@@ -377,6 +377,16 @@ en:
     transact:
       for: "for"
 
+  person_mailer:
+    email_verification:
+      message_default: "Click here to complete your email verification:"
+      message_whitelist: "Click here to complete your email verification.  Note that access to the exchange requires admin approval (following orientation or other blessing ritual) of your account"
+      thanks: "Thanks!"
+
+  authlogic:
+    error_messages:
+      not_active: "Your account is not active. It may require admin approval."
+
   notice_warning_your_email_address: "Warning: your email address is still at"
   notice_change_it_here: "Change it here"
   notice_bid_accepted: "Bid accepted. Message sent to bidder to commit"
@@ -405,7 +415,7 @@ en:
   notice_updated_the_client_information_successfully: "Updated the client information successfully"
   notice_destroyed_the_client_application_registration: "Destroyed the client application registration"
   notice_offer_updated: "Offer was successfully updated."
-  notice_thanks_for_signing_up_check_email: "Thanks for signing up! Check your email to activate your account."
+  notice_thanks_for_signing_up_check_email: "Thanks for signing up! Check your email to verify your email address."
   notice_thanks_for_signing_up: "Thanks for signing up!"
   notice_post_updated: "Post updated"
   notice_request_updated: "Request was successfully updated."
@@ -438,6 +448,7 @@ en:
   success_offer_created: "Offer was successfully created."
   success_your_password_has_been_sent: "Your password has been sent"
   success_email_verified: "Email verified. Your profile is active!"
+  success_email_verified_whitelist: "Email verified.  Activation of your profile requires admin approval."
   success_updated: "updated."
   success_profile_updated: "Profile updated!"
   success_password_changed: "Password changed."
