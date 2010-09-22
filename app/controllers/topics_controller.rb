@@ -31,7 +31,6 @@ class TopicsController < ApplicationController
   end
 
   def create
-    sleep 10
     @body = "yui-skin-sam" 
     @topic = @forum.topics.new(params[:topic])
     @topic.person = current_person
