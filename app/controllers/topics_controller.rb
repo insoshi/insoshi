@@ -11,7 +11,7 @@ class TopicsController < ApplicationController
   def show
     @group = @forum.group
     @topic = Topic.find(params[:id])
-    @posts = @topic.posts.paginate(:page => params[:page], :per_page => 2)
+    @posts = @topic.posts.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     respond_to do |format|
       format.html
       format.js

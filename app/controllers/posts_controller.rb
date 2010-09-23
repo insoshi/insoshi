@@ -52,6 +52,7 @@ class PostsController < ApplicationController
         format.js
       else
         format.html { render :action => resource_template("new") }
+        format.js {render :action => 'new'}
       end
     end
   end
