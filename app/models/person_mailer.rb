@@ -1,6 +1,7 @@
 class PersonMailer < ActionMailer::Base
   extend PreferencesHelper
-  
+  helper :application
+
   def domain
     @domain ||= PersonMailer.global_prefs.domain
   end

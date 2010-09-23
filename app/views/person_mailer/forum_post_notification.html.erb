@@ -1,5 +1,5 @@
 
-<%= @forum_post.body %>
+<%= display simple_format_without_paragraph @forum_post.body %>
 <br>
 <br>
 <% if !@forum_post.topic.forum.group %>
