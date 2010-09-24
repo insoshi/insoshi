@@ -149,6 +149,7 @@ en:
       home: "Home"
       forum: "Forum"
       requests: "Requests"
+      exchanges: "Exchanges"
     _people:
       header: "Group's"
       all_members: "All members"
