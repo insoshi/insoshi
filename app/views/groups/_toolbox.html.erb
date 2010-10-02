@@ -7,29 +7,7 @@
                 <%= t('groups.show.currency_unit') %> <%= @group.unit %>
               </li>
             <%- end -%>
-            <%- unless Membership.exist?(current_person,@group) -%>
-              <li>
-                <%= link_to t('groups.show.join_group'),
-                      group_memberships_path(@group), :method => :post %>
-              </li>
-            <%- else -%>
-              <%- if @group.has_invited?(current_person) -%>
-                <li>
-                  <%= t('groups.show.you_have_been_invited') %> <%= link_to t('groups.show.respond'), invitations_person_path(current_person)+"#group_#{@group.id}" %>
-                </li>
-              <%- end -%>
-            <%- end -%>
-            <%- if Membership.connected?(current_person,@group) -%>
-              <li>
-                <%= t('groups.show.you_are_a_member_of') %> <strong><%= h @group.name%></strong>
-                <br />
-                (<%= link_to t('groups.show.leave_group'),
-                      membership_path(Membership.mem(current_person, @group)), 
-                      :method => :delete,
-                      :confirm => 
-                      t('groups.show.are_you_sure_you_want_to_leave') + "#{h @group.name}?" %>)
-              </li>
-            <%- end -%>
+            <%= render :partial => 'membership' %>
             <%- if Membership.pending?(current_person, @group) -%>
               <li>
                 <%= t('groups.show.you_have_requested_to_be_a_member_of') %> <strong><%= h @group.name%></strong>

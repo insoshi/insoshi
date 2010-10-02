@@ -11,18 +11,21 @@ class MembershipsController < ApplicationController
     @group = Group.find(params[:group_id])
 
     respond_to do |format|
-      if Membership.request(current_person, @group)
+      @hr = Membership.request(current_person, @group)
+      if @hr
         if @group.public?
           flash[:notice] = t('notice_you_have_joined') + " '#{@group.name}'"
         else
           flash[:notice] = t('notice_membership_request_sent')
         end
         format.html { redirect_to(home_url) }
+        format.js
       else
         # This should only happen when people do something funky
         # like trying to join a group that has a request pending
         flash[:notice] = t('notice_membership_invalid')
         format.html { redirect_to(home_url) }
+        format.js
       end
     end
   end
@@ -51,8 +54,9 @@ class MembershipsController < ApplicationController
     @membership.breakup
     
     respond_to do |format|
-      flash[:success] = t('success_you_have_left_the_group') + " #{@membership.group.name}"
+      flash[:notice] = t('success_you_have_left_the_group') + " #{@membership.group.name}"
       format.html { redirect_to( person_url(current_person)) }
+      format.js
     end
   end
   

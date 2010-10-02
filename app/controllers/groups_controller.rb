@@ -17,6 +17,13 @@ class GroupsController < ApplicationController
     @forum = @group.forum
     @topics = Topic.find_recently_active(@forum, params[:page]) 
     @contacts = contacts_to_invite
+    if Membership.exists?(current_person,@group)
+      @add_membership_display = 'hide'
+      @membership_display = ''
+    else
+      @add_membership_display = ''
+      @membership_display = 'hide'
+    end
     group_redirect_if_not_public 
   end
 

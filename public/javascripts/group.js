@@ -38,6 +38,15 @@ $(function() {
     return false;
     });
 
+  $('.add_to_memberships').live('click', function() {
+      id_name = $(this).children('a').attr('id');
+      $(this).parent().children('.wait').show();
+      $(this).hide();
+      var data = (id_name == 'leave_group') ? {'_method': 'delete'} : {};
+      $.post($(this).children('a').attr('href'),data,null,'script');
+      return false;
+    });
+
   $('.pagination a').live('click',function() {
     $('span.wait').show();
     $.getScript(this.href);

@@ -568,3 +568,9 @@ input#person_openid_identifier, input#person_session_openid_identifier {
   height: 860px;
 }
 
+#memberships_wrapper .add_to_memberships {
+}
+
+#memberships_wrapper .add_to_memberships.hide {
+  display: none;
+}

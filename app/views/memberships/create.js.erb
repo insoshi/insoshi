@@ -1,0 +1,11 @@
+<% flash.each do |key, msg| %>
+  $('#membership_wrapper').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
+  $('#flash_<%= key %>').fadeOut(5000,function() { $(this).remove(); });
+<% end %>
+$('span.wait').hide();
+<% if @hr %>
+$('a#leave_group').attr('href','<%= membership_path(Membership.mem(current_person, @group)) %>');
+$('a#leave_group').parent().show();
+<% else %>
+$('a#join_group').parent().show();
+<% end %>
