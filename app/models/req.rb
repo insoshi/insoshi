@@ -98,6 +98,15 @@ class Req < ActiveRecord::Base
     if self.categories.length > 5
       errors.add_to_base('Only 5 categories are allowed per request')
     end
+
+    unless self.group.nil?
+      unless self.group.adhoc_currency?
+        errors.add(:group_id, "does not have its own currency")
+      end
+      unless person.groups.include?(self.group)
+        errors.add(:group_id, "does not include you as a member")
+      end
+    end
   end
 
   def notify_workers

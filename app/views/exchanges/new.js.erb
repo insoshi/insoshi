@@ -1,0 +1,6 @@
+<% flash.each do |key, msg| %>
+  $('#offers_canvas').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
+  $('#flash_<%= key %>').fadeOut(5000,function() { $(this).remove(); });
+<% end %>
+$('span.wait').hide();
+$('#offers_canvas').html('<h2><%= h @offer.name %></h2><%= escape_javascript(render :partial => "exchange_offer_form") %>');

@@ -1,0 +1,6 @@
+$('#offers_canvas').html('<%= escape_javascript(render :partial => 'new_offer') %>');
+$('#new_offer').before('<div><%= escape_javascript(error_messages_for(:offer)) %></div>');
+<% flash.each do |key, msg| %>
+  $('#offers_canvas').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
+  $('#flash_<%= key %>').fadeOut(5000,function() { $(this).remove(); });
+<% end %>     

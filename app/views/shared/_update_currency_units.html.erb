@@ -1,0 +1,16 @@
+<% unless @groups.nil? %>
+<script type="text/javascript">
+  function update_currency_units(i) {
+    var group_units = {
+      <%- @groups.each do |g| -%>
+        <%= "'#{g.id}': '#{h g.unit}'," %> 
+      <%- end -%>
+    };
+    elem = document.getElementById('units');
+    if(!i)
+      elem.innerHTML = "hours";
+    else
+      elem.innerHTML = group_units[i];
+}
+</script>
+<%- end -%>

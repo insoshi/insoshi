@@ -1,0 +1,31 @@
+      <h2>New Offer</h2>
+      <% form_for :offer, :url => create_offer_group_path(@group), :html => {:id => 'new_offer'} do |f| %>
+        <%= f.hidden_field :group_id, :value => @group.id %>
+        <div class="form_row">
+          <%= f.label 'Title' %>
+          <%= f.text_field :name, :size => 40, :maxlength => 255 %>
+        </div>
+        <div class="form_row">
+          <%= f.label :total_available %>
+          <%= f.text_field :total_available, :size => 2, :value => 1 %>
+        </div>
+        <div class="form_row">
+          <%= f.label 'Estimate' %>
+          <%= f.text_field :price, :size => 5 %>&nbsp;<span class='small'><%= @group.unit %></span>
+        </div>
+        <div class="form_row">
+          <%= f.label :expiration_date %>
+          <%= f.text_field :expiration_date, :size => 7 %>
+        </div>
+        <div class="form_row full">
+          <%= f.label :description %>
+          <p class='formatting'>Be sure to include your preferred means of communication, i.e. email, text, or telephone.</p>
+          <%= f.text_area :description, :rows => 5 %>
+        </div>
+        <div class="form_row full">
+          <%= render :partial => "shared/select_categories", :locals => { :model_name => 'offer' } %>
+        </div>
+        <div class="form_row">
+          <%= f.submit "Create" %><%= waiting_image %>
+        </div>
+      <% end %>

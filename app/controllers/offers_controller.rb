@@ -17,12 +17,14 @@ class OffersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @offer }
+      format.js
     end
   end
 
   def new
     @offer = Offer.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @groups = current_person.groups.delete_if {|g| !g.adhoc_currency?}
   end
 
   def create

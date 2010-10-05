@@ -1,0 +1,4 @@
+      <h2><%= t('groups.show.recent_exchanges') %><%= waiting_image %></h2>
+      <ul class="list activity full">
+        <%= render :partial => 'exchange', :collection => @group.exchanges %>
+      </ul>

@@ -4,6 +4,12 @@
 <% elsif params[:tab] == 'requests' %>
   $('#reqs_canvas').html("<%= escape_javascript(render :partial => 'reqs_canvas') %>");
   $('span.wait').hide();
+<% elsif params[:tab] == 'offers' %>
+  $('#offers_canvas').html("<%= escape_javascript(render :partial => 'offers_canvas') %>");
+  $('span.wait').hide();
+<% elsif params[:tab] == 'exchanges' %>
+  $('#exchanges_canvas').html("<%= escape_javascript(render :partial => 'exchanges_canvas') %>");
+  $('span.wait').hide();
 <% else %>
   alert('bad request');
 <% end %>

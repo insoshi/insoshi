@@ -23,17 +23,23 @@
       </div>
     <% end %>
     <% tab.create('exchanges', t('groups.show.exchanges')) do %>
-      <h2><%= t('groups.show.recent_exchanges') %></h2>
-      <ul class="list activity full">
-        <%= render :partial => 'exchange', :collection => @group.exchanges %>
-      </ul>
+      <div id="exchanges_canvas">
+        <%= render :partial => 'exchanges_canvas' %>
+      </div>
     <% end if @group.adhoc_currency? %>
     <% tab.create('forum', t('groups.show.forum')) do %>
       <%= render :partial => 'forum_canvas' %>
       <%= render :partial => 'forum_form' %>
     <% end %>
     <% tab.create('requests', t('groups.show.requests')) do %>
-      <%= render :partial => 'reqs_canvas' %>
+      <div id="reqs_canvas">
+        <%= render :partial => 'reqs_canvas' %>
+      </div>
+    <% end if @group.adhoc_currency? %>
+    <% tab.create('offers', t('groups.show.offers')) do %>
+      <div id="offers_canvas">
+        <%= render :partial => 'offers_canvas' %>
+      </div>
     <% end if @group.adhoc_currency? %>
   <% end %>
   

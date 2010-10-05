@@ -1,20 +1,4 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'req_form' } %>
-<% if global_prefs.group_option? %>
-<script type="text/javascript">
-  function update_currency_units(i) {
-    var group_units = {
-      <%- @groups.each do |g| -%>
-        <%= "'#{g.id}': '#{h g.unit}'," %> 
-      <%- end -%>
-    };
-    elem = document.getElementById('units');
-    if(!i)
-      elem.innerHTML = "<%= t('currency_unit_plural') %>";
-    else
-      elem.innerHTML = group_units[i];
-}
-</script>
-<%- end  -%>
 <%- column_div :type => :primary do -%>
 
   <h2><%= t('reqs.new.header') %></h2>
@@ -28,7 +12,7 @@
   </div>
   <div class="form_row">
     <%= f.label t('estimated') + ' ' + t('payment') %>
-    <%= f.text_field :estimated_hours, :size => 5 %>&nbsp;<span id="units" class="small"><%= t('currency_unit_plural') %></span>
+    <%= f.text_field :estimated_hours, :size => 5 %>&nbsp;<%= currency_units %>
   </div>
   <% if global_prefs.group_option? and !@groups.empty? %>
     <div class="form_row">

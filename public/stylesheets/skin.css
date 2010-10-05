@@ -549,6 +549,10 @@ input#person_openid_identifier, input#person_session_openid_identifier {
   background: none;
 }
 
+#offers_canvas h2 {
+  background: none;
+}
+
 #flash_notice, #flash_error {
   padding: 5px 8px;
   margin: 10px 0;
@@ -565,7 +569,7 @@ input#person_openid_identifier, input#person_session_openid_identifier {
 }
 
 #tabs {
-  height: 860px;
+  height: 960px;
 }
 
 #memberships_wrapper .add_to_memberships {

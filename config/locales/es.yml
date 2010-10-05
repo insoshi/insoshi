@@ -148,7 +148,8 @@ es:
       recent_exchanges: "Intercambios recientes"
       home: "Home"
       forum: "Forum"
-      requests: "Requests"
+      requests: "Reqs"
+      offers: "Offers"
       exchanges: "Exchanges"
     _people:
       header: "Del grupo"
