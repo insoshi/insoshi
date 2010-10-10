@@ -23,6 +23,8 @@
         <%= render :partial => 'dashboard' %>
       <% elsif params[:mode] == 'graphs' %>
         <%= render :partial => 'graphs' %>
+      <% else %>
+        <%= render :partial => 'feed' %>
       <% end %>
     <% end %>
   <%- else -%>

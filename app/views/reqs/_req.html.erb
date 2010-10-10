@@ -1,4 +1,4 @@
-<li class="req">
+<div class="req">
   <a name="req_<%= req.id %>"></a>
   <div class="profile-image">
     <%= image_link req.person, :image => :thumbnail %>
@@ -30,4 +30,4 @@
       <%= number_with_precision(req.person.address.distance_to(current_person.address), 1).to_s %> <%= t('miles_away') %>
     <% end -%>
   </p>
-</li>
+</div>

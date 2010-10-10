@@ -28,7 +28,7 @@ h6 {
 h2 {
   background: url(/images/green-grad.jpg) 30px 10px repeat-x;
   border-bottom: 1px solid #ccc;
-  color: #009908;
+  color: #4F4F4F;
   clear: both;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 22px;
@@ -104,12 +104,12 @@ a:link,a:visited {
 }
 /* Specific elements */
 p.welcome {
-  color: #fff;
+  color: #4F4F4F;
   font-size: 12px
 }
 
 p.welcome a, p.welcome a:visited {
-  color: #fff;
+  color: #4F4F4F;
   text-decoration: underline;
 }
 

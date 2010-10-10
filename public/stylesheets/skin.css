@@ -4,8 +4,9 @@ body {
   text-align: center;
 }
 #header-wrap {
-  /* background: #009908; */
-  background: #009908 url('/images/forest_header.jpg') no-repeat top center;
+/*  background: #009908; */
+/*  background: #009908 url(images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top; */
+  /* background: #009908 url('/images/forest_header.jpg') no-repeat top center; */
   float: left;
   width: 100%;
 }
@@ -79,7 +80,7 @@ div.status-btn input.disabled, div.status-btn input.disabled:hover { background:
   margin-top: 12px;
   margin-bottom: 12px;
   width: 450px;
-color:#fff;
+  color: #4F4F4F;
 font-weight:bold;
 font-family:Trebuchet MS;
 font-size:1.3em;
@@ -170,7 +171,51 @@ p.welcome {
   top: 12px;
 }
 
+/* Suckerfish dropdown menu */
+#sfmenu {
+  z-index: 10;
+  position: absolute;
+  top: 30px;
+  right: 0;
+}
 
+#sfmenu, #sfmenu ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#sfmenu li {
+  float: left;
+  background: #FFF;
+}
+
+#sfmenu a {
+  display: block;
+  font-size: 12px;
+  text-decoration:underline;
+  color: #4F4F4F;
+  padding: 1px;
+  width: 87px;
+}
+
+ul li.right_item {
+  padding-left: 0px;
+}
+
+#sfmenu li.left_item a {
+  width: 50px;
+}
+
+#sfmenu li ul {
+  position: absolute;
+  left: -999em;
+  width: 88px;
+}
+
+#sfmenu li:hover ul, #sfmenu li ul:hover {
+  left:auto;
+}
 
 /* Site elements */
 
@@ -539,6 +584,10 @@ input#person_openid_identifier, input#person_session_openid_identifier {
 
 #monthly_chart {
   width: 510px;
+}
+
+#exchanges_canvas h2 {
+  background: none;
 }
 
 #forum_canvas h2 {

@@ -1,6 +1,4 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'group' } %>
-<%- column_div :type => :primary do -%>
-  <h2><%= t('groups.show.header') %> <span class="fn n"><%= h @group.name %></span></h2>
   <% tabs_for do |tab| %>
     <% tab.create('tab_one', t('groups.show.home')) do %>
       <div class="profile vcard">
@@ -21,6 +19,7 @@
         <%= render :partial => 'toolbox' %>
         <%= display @group.description %>
       </div>
+      <div style='clear:both;'></div>
     <% end %>
     <% tab.create('exchanges', t('groups.show.exchanges')) do %>
       <div id="exchanges_canvas">
@@ -43,9 +42,3 @@
     <% end if @group.adhoc_currency? %>
   <% end %>
   
-<%- end -%>
-
-
-<%- column_div :type => :secondary do -%>
-  <%= render :partial => 'shared/group_membership', :locals => {:group => @group} %>
-<%- end -%>

@@ -9,8 +9,9 @@
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
     <%= stylesheet_link_tag "default" %>
-    <%= stylesheet_link_tag 'south-street/jquery-ui-1.8.4.custom' %>
+    <%= stylesheet_link_tag 'Aristo/jquery-ui-1.8rc3.custom' %>
     <%= javascript_include_tag 'jquery-1.4.2.min' %>
+    <%= javascript_include_tag 'application' %>
     <%= yield :jquery_support %>
     <%= yield :head %>    
   </head>
@@ -18,25 +19,18 @@
     <div id="header-wrap">
       <div id="header">
         <h1>
-        <%= global_prefs.app_name %>
+        <%- if params[:controller] == 'groups' and params[:action] == 'show' %>
+        <%= h @group.name %>
+        <%- else -%>
+          <%= global_prefs.app_name %>
+        <%- end -%>
         </h1>
-        <ul id="nav">
-          <%- menu.each do |link| -%>
-            <%= menu_li link %>
-          <%- end -%>
-        </ul>
-        
+        <div> 
           <p class="welcome">
             <%- if logged_in? -%>
               Welcome, <%= h current_person.name %>!
               (<%= link_to "Sign out", logout_path %>)
               <br />
-              <%= link_to "about", about_path if !global_prefs.about.blank? %>
-              <%= link_to "practice", practice_path if !global_prefs.practice.blank? %>
-              <%= link_to "steps", steps_path if !global_prefs.steps.blank? %>
-              <%= link_to "contact", contact_path if !global_prefs.contact.blank? %>
-              <%= link_to "agreement", agreement_path if !global_prefs.agreement.blank? %>
-              <%= link_to "faq", questions_path if !global_prefs.questions.blank? %>
               <%- if current_person.admin? -%>
                 <%- if admin_view? -%>
                   <%= link_to("Standard view", home_path) %>
@@ -54,6 +48,29 @@
               <%- end -%>             
             <%- end -%>
           </p>
+        </div>
+          <%- if logged_in? -%>
+            <ul id="sfmenu">
+              <li class="left_item">
+                <a href="#">Help</a>
+                <ul class="active">
+                  <li><%= link_to "about", about_path if !global_prefs.about.blank? %></li>
+                  <li><%= link_to "practice", practice_path if !global_prefs.practice.blank? %></li>
+                  <li><%= link_to "steps", steps_path if !global_prefs.steps.blank? %></li>
+                  <li><%= link_to "contact", contact_path if !global_prefs.contact.blank? %></li>
+                  <li><%= link_to "agreement", agreement_path if !global_prefs.agreement.blank? %></li>
+                  <li><%= link_to "faq", questions_path if !global_prefs.questions.blank? %></li>
+                </ul>
+              </li>
+              <li class="right_item">
+                <a href="#">Your Groups</a>
+                <ul>
+                  <%= render :partial => 'shared/group', :collection => current_person.groups %>
+                </ul>
+              </li>
+            </ul>
+          <%- end -%>
+        </div>
       </div>
     </div>
 
