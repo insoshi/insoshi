@@ -79,6 +79,9 @@ class GroupsController < ApplicationController
     @forum = @group.forum
     @topics = Topic.find_recently_active(@forum, params[:page]) 
     @contacts = contacts_to_invite
+    @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     if Membership.exists?(current_person,@group)
       @add_membership_display = 'hide'
       @membership_display = ''
