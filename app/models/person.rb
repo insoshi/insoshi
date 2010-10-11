@@ -139,6 +139,7 @@ class Person < ActiveRecord::Base
   has_many :offers
   has_many :reqs
   has_many :bids
+  belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
 
   validates_presence_of     :email, :name
 #  validates_presence_of     :password,              :if => :password_required?
