@@ -159,6 +159,7 @@ class Person < ActiveRecord::Base
   validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
 
   before_create :create_blog, :check_config_for_deactivation
+  before_create :set_default_group
   after_create :create_account
   after_create :create_address
   before_save :update_group_letter
@@ -368,6 +369,10 @@ class Person < ActiveRecord::Base
     address.zipcode_plus_4 = self.zipcode.blank? ? DEFAULT_ZIPCODE_STRING : self.zipcode
     address.person = self
     address.save
+  end
+
+  def set_default_group
+    self.default_group_id = 21
   end
 
   def address
