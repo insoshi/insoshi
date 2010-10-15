@@ -39,6 +39,7 @@ class OffersController < ApplicationController
         format.xml  { render :xml => @offer, :status => :created, :location => @offer }
       else
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @groups = current_person.groups.delete_if {|g| !g.adhoc_currency?}
         format.html { render :action => "new" }
         format.xml  { render :xml => @offer.errors, :status => :unprocessable_entity }
       end
