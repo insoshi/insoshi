@@ -18,7 +18,7 @@
     <%= f.label t('estimate') %>
     <%= f.text_field :price, :size => 5 %>&nbsp;<%= currency_units %>
   </div>
-<% if global_prefs.group_option? %>
+<% if global_prefs.group_option? and !@groups.empty? %>
   <div class="form_row">
     <label for="group_id"><%= t('group') %></label>
     <%= collection_select( 'offer', 'group_id', @groups, :id, :name, { :include_blank => true }, { :onchange => "update_currency_units(this.value);"} ) %>
