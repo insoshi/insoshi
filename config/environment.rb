@@ -70,6 +70,7 @@ Rails::Initializer.run do |config|
   config.gem 'feed-normalizer'
   config.gem 'json'
   config.gem 'heroku'
+  config.gem 'cancan'
   # config.gem 'rack-openid', :version => '>= 1.0.1'
 
   secret = ENV['SESSION_SECRET'] || rand(36**64).to_s(36) 

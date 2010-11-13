@@ -164,6 +164,7 @@ class Bid < ActiveRecord::Base
   def trigger_approved
     self.approved_at = Time.now
     save
-    Account.transfer(self.req.person.account,self.person.account,self.estimated_hours,self.req)
+
+    Account.transfer(self.req.person, self.person, self.estimated_hours, self.req)
   end
 end

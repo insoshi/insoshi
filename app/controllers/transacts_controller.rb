@@ -54,7 +54,8 @@ class TransactsController < ApplicationController
 
     @transact.metadata = @transact.create_req(params[:memo])
 
-    if @transact.save
+    # XXX this will fail.
+    if can?(:create, @transact) && @transact.save
       if @transact.redirect_url.blank?
         flash[:notice] = t('notice_transfer_succeeded')
         respond_to do |format|
@@ -68,7 +69,7 @@ class TransactsController < ApplicationController
       end
     else
       flash[:error] = t('error_with_transfer')
-      @req.destroy
+      @transact.metadata.destroy
       render :action => "new"
     end
 

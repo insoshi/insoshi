@@ -25,6 +25,7 @@ Spec::Runner.configure do |config|
   # You can declare fixtures for each example_group like this:
   #   describe "...." do
   #     fixtures :table_a, :table_b
+  config.global_fixtures = :blogs, :client_applications, :comments, :communications, :connections, :conversations, :email_verifications, :events, :feeds, :forums, :neighborhoods, :oauth_nonces, :oauth_tokens, :offers, :people, :posts, :preferences, :topics
   #
   # Alternatively, if you prefer to declare them only once, you can
   # do so right here. Just uncomment the next line and replace the fixture

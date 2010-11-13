@@ -33,8 +33,8 @@ class Account < ActiveRecord::Base
   def self.transfer(from, to, amount, metadata)
     transaction do
       exchange = Exchange.new()
-      exchange.customer = from.person
-      exchange.worker = to.person
+      exchange.customer = from
+      exchange.worker = to
       exchange.amount = amount
       exchange.metadata = metadata
       exchange.group_id = metadata.group_id

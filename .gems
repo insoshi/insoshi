@@ -12,3 +12,4 @@ rack-openid
 aws-s3
 heroku
 rmagick
+cancan

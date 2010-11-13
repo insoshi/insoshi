@@ -105,6 +105,7 @@ class Person < ActiveRecord::Base
     person.has_many :_sent_exchanges, :foreign_key => "customer_id", :class_name => "Exchange"
     person.has_many :_received_exchanges, :foreign_key => "worker_id", :class_name => "Exchange"
   end
+  has_many :exchanges
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'activities.created_at DESC',
                                             :limit => FEED_SIZE,
@@ -388,8 +389,8 @@ class Person < ActiveRecord::Base
     account.save
   end
 
-  def account
-    accounts.first(:conditions => ["group_id IS ?", nil])
+  def account(group)
+    accounts.first(:conditions => ['group_id = ?', group.id])
   end
 
   def notifications

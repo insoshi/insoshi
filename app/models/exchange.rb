@@ -42,6 +42,15 @@ class Exchange < ActiveRecord::Base
     Exchange.sum(:amount, :conditions => ["date(created_at) = ?", date])
   end
 
+  # XXX person_id hacks for cancan's load_and_authorize_resource
+  def person_id
+    self.worker_id
+  end
+
+  def person_id=(worker_id)
+    self.worker_id = worker_id
+  end
+
   def self.total_on_month(date)
     Exchange.sum(:amount, :conditions => ["DATE_TRUNC('month',created_at) = ?", date])
   end
@@ -85,11 +94,11 @@ class Exchange < ActiveRecord::Base
     begin
       Account.transaction do
         if group.nil?
-          worker.account.deposit(amount)
-          customer.account.withdraw(amount)
+          # this should not happen anymore
+          raise "no group specified"
         else
-          worker.accounts.find(:first, :conditions => ["group_id = ?",group.id]).deposit(amount)
-          customer.accounts.find(:first, :conditions => ["group_id = ?",group.id]).withdraw(amount)
+          worker.account(group).deposit(amount)
+          customer.account(group).withdraw(amount)
         end
       end
     rescue
@@ -102,6 +111,8 @@ class Exchange < ActiveRecord::Base
   end
 
   def send_payment_notification_to_worker
+    # XXX fix wierdness related to cancan
+=begin
     exchange_note = Message.new()
     subject = "PAYMENT: " + self.amount.to_s + " hours - for " + self.metadata.name 
     exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
@@ -109,6 +120,7 @@ class Exchange < ActiveRecord::Base
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
     exchange_note.save!
+=end
   end
 
   def send_suspend_payment_notification_to_worker

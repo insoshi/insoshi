@@ -19,7 +19,7 @@
         <%= render :partial => 'toolbox' %>
         <%= display @group.description %>
       </div>
-      <div style='clear:both;'></div>
+      <div id="empty_canvas" style='clear:both;'></div>
     <% end %>
     <% tab.create('exchanges', t('groups.show.exchanges')) do %>
       <div id="exchanges_canvas">
