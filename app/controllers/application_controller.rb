@@ -17,6 +17,24 @@ class ApplicationController < ActionController::Base
 
   layout proc{ |c| c.request.xhr? ? false : "application" }
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    respond_to do |format|
+      format.html {redirect_to @group}
+      format.js do
+        canvas = case params[:action] 
+          when 'new_req','create_req','update' # from bids#update payment denied
+            'reqs_canvas'
+          when 'new_offer','create_offer'
+            'offers_canvas'
+          else
+            'empty_canvas'
+          end
+        render :partial => '/shared/flash_messages', :locals => {:canvas_id => canvas}
+      end
+    end
+  end
+
   ActiveScaffold.set_defaults do |config|
     config.ignore_columns.add [ :created_at, :updated_at, :audits]
   end

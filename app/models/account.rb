@@ -38,7 +38,12 @@ class Account < ActiveRecord::Base
       exchange.amount = amount
       exchange.metadata = metadata
       exchange.group_id = metadata.group_id
-      exchange.save!
+      # permission depends on current_user and policy of group specified in request
+      if metadata.ability.can? :create, exchange
+        exchange.save!
+      else
+        raise CanCan::AccessDenied.new("Payment declined.", :create, Exchange)
+      end
     end
   end
 end

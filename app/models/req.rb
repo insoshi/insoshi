@@ -31,6 +31,8 @@ class Req < ActiveRecord::Base
   has_many :bids, :order => 'created_at DESC', :dependent => :destroy
   has_many :exchanges, :as => :metadata
 
+  attr_accessor :ability
+  attr_protected :ability
   attr_protected :person_id, :created_at, :updated_at
   attr_readonly :group_id
   validates_presence_of :name, :due_date

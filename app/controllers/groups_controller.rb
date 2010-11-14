@@ -3,24 +3,6 @@ class GroupsController < ApplicationController
   skip_before_filter :require_activation
   before_filter :login_or_oauth_required
   
-  rescue_from CanCan::AccessDenied do |exception|
-    flash[:error] = exception.message
-    respond_to do |format|
-      format.html {redirect_to @group}
-      format.js do
-        canvas = case params[:action] 
-          when 'new_req','create_req'
-            'reqs_canvas'
-          when 'new_offer','create_offer'
-            'offers_canvas'
-          else
-            'empty_canvas'
-          end
-        render :partial => 'flash_messages', :locals => {:canvas_id => canvas}
-      end
-    end
-  end
-
   def index
     # XXX can't define abilities w/ blocks (accessible_by) http://github.com/ryanb/cancan/wiki/Upgrading-to-1.4
     @groups = @groups.not_hidden(params[:page])

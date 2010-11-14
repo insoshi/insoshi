@@ -1,6 +1,2 @@
-$('span.wait').hide();
 $('#reqs_canvas').html('<%= escape_javascript(render :partial => '/reqs/req_full') %>');
-<% flash.each do |key, msg| %>
-  $('#reqs_canvas').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
-  $('#flash_<%= key %>').fadeOut(5000);
-<% end %>
+<%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'reqs_canvas'} %>

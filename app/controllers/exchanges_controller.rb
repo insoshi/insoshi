@@ -69,7 +69,6 @@ class ExchangesController < ApplicationController
 
     respond_to do |format|
       if @exchange.save
-        logger.info "XXX exchange succeeded!"
         flash[:notice] = t('success_credit_transfer_succeeded')
         format.html { redirect_to person_path(@person) and return }
         format.xml { render :xml => @exchange, :status => :created, :location => [@person, @exchange] }

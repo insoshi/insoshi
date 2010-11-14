@@ -39,6 +39,7 @@ class BidsController < ApplicationController
         flash[:notice] = t('notice_bid_completed')
       end
     when 'pay'
+      @bid.req.ability = current_ability
       if current_person?(@bid.req.person)
         @bid.pay!
         flash[:notice] = t('notice_bid_approved')
