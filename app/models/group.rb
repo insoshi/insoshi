@@ -2,6 +2,7 @@ class Group < ActiveRecord::Base
   include ActivityLogger
   
   validates_presence_of :name, :person_id
+  attr_protected :mandatory
 
   has_one :forum
   has_many :reqs, :order => "created_at DESC"
