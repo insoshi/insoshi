@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
 
   before_filter :require_activation, :admin_warning,
+                :display_groupy_warning,
                 :set_person_locale
 
   layout proc{ |c| c.request.xhr? ? false : "application" }
@@ -129,7 +130,11 @@ class ApplicationController < ActionController::Base
         #                :user_agent => request.env["HTTP_USER_AGENT"])
       end
     end
-  
+ 
+    def display_groupy_warning
+      flash[:notice] = "This site is running an experimental (groupy) branch of code"
+    end
+
     def require_activation
       if logged_in?
         unless current_person.active? or current_person.admin?
