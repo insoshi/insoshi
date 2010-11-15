@@ -374,7 +374,7 @@ class Person < ActiveRecord::Base
   end
 
   def set_default_group
-    self.default_group_id = 21
+    self.default_group_id = Person.global_prefs.default_group_id
   end
 
   def join_mandatory_groups

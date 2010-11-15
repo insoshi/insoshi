@@ -43,11 +43,13 @@ class Preference < ActiveRecord::Base
                   :zipcode_browsing,
                   :blog_feed_url,
                   :googlemap_api_key,
-                  :disqus_shortname
+                  :disqus_shortname,
+                  :default_group_id
 
   validates_presence_of :domain,       :if => :using_email?
   validates_presence_of :smtp_server,  :if => :using_email?
   
+  belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
 
   # Can we send mail with the present configuration?
   def can_send_email?

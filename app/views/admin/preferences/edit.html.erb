@@ -28,6 +28,11 @@
     </div>
 
     <div class="form_row">
+      <label for="default_group_id">Default group for new registrations</label>
+      <%= f.select :default_group_id, @groups %>
+    </div>
+
+    <div class="form_row">
       <label for="blog_feed_url">Blog Feed URL</label>
       <%= f.text_field :blog_feed_url %>
     </div>

@@ -14,6 +14,7 @@ class Admin::PreferencesController < ApplicationController
   end
 
   def edit
+    @groups = Group.all.map {|g| [g.name,g.id]}
   end
 
   def update

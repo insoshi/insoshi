@@ -21,6 +21,11 @@
 </p>
 
 <p>
+  <b>Default group for new registrations</b>
+  <%=h @preferences.default_group.name if @preferences.default_group %>
+</p>
+
+<p>
   <b>Blog Feed Url:</b>
   <%=h @preferences.blog_feed_url %>
 </p>
