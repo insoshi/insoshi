@@ -18,7 +18,10 @@ class Group < ActiveRecord::Base
   belongs_to :owner, :class_name => "Person", :foreign_key => "person_id"
   
   has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Group'", :dependent => :destroy
- 
+
+  validates_uniqueness_of :name
+  validates_uniqueness_of :unit, :allow_nil => true
+
   after_create :create_owner_membership
   after_create :create_forum
   after_save :log_activity

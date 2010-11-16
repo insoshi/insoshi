@@ -560,7 +560,7 @@ ul.invite_contacts li input.check{
     margin-right: 10px;
 }
 
-fieldset#creds {
+fieldset#creds, fieldset#currency_fields {
   border: 2px solid #CCC;
   padding: 10px;
   margin-bottom: 10px;

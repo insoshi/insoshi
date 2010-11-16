@@ -101,6 +101,7 @@ es:
       header: "Grupo de redacción"
       name: "Nombre"
       currency_unit_plural: "Unidad monetaria (plural)"
+      default_credit_limit: "límite crediticio"
       description: "Descripción"
       mode: "modalidad"
       photos: "Fotos"
@@ -119,6 +120,7 @@ es:
       name: "Nombre"
       adhoc_currency: "Crear una moneda adecuada"
       currency_unit_plural: "Unidad(es) monetaria(s)"
+      default_credit_limit: "límite crediticio"
       description: "Descripción"
       mode: "Modalidad"
     new_photo:

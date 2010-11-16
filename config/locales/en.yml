@@ -101,6 +101,7 @@ en:
       header: "Editing group"
       name: "Name"
       currency_unit_plural: "Currency unit (plural)"
+      default_credit_limit: "Default credit limit"
       description: "Description"
       mode: "Mode"
       photos: "Photos"
@@ -119,6 +120,7 @@ en:
       name: "Name"
       adhoc_currency: "Create ad-hoc currency"
       currency_unit_plural: "Currency unit (plural)"
+      default_credit_limit: "Default credit limit"
       description: "Description"
       mode: "Mode"
     new_photo:

@@ -17,6 +17,10 @@ class Account < ActiveRecord::Base
 
   INITIAL_BALANCE = 0
 
+  def authorized?(amount)
+    credit_limit.nil? or (amount <= account.balance + credit_limit)
+  end
+
   def withdraw(amount)
     adjust_balance_and_save(-amount)
   end

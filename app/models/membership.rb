@@ -150,6 +150,7 @@ class Membership < ActiveRecord::Base
         account.balance = Account::INITIAL_BALANCE 
         account.person = person
         account.group = group
+        account.credit_limit = group.default_credit_limit
         account.save
       end
     end
