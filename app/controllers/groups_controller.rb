@@ -167,8 +167,11 @@ class GroupsController < ApplicationController
   end
   
   def members
-    @members = @group.people.paginate(:page => params[:page],
+    @memberships = @group.memberships.paginate(:page => params[:page],
+                                          :conditions => ['status = ?', Membership::ACCEPTED],
+                                          :include => :person,
                                           :per_page => RASTER_PER_PAGE)
+
     @pending = @group.pending_request.paginate(:page => params[:page],
                                           :per_page => RASTER_PER_PAGE)
     group_redirect_if_not_public

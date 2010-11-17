@@ -535,6 +535,12 @@ p.formatting span
   background-image: url(/images/loading.gif);
 }
 
+div.edit_roles {
+  float: right;
+  margin: -71px -13px;
+  display: inline;
+}
+
 div.cancel_membership {
     float: right;
     margin: -20px -19px;
