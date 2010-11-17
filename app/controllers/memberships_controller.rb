@@ -1,10 +1,15 @@
 class MembershipsController < ApplicationController
   before_filter :login_required
-  before_filter :authorize_person, :only => [:edit, :update, :destroy, :suscribe, :unsuscribe]
+  load_and_authorize_resource 
   
-  
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    respond_to do |format|
+      format.html {redirect_to @membership.group}
+    end
+  end
+
   def edit
-    @membership = Membership.find(params[:id])
   end
   
   def create
@@ -31,11 +36,17 @@ class MembershipsController < ApplicationController
   end
   
   def update
-    
+    respond_to do |format|
+      if @membership.update_attributes(params[:membership])
+        flash[:notice] = 'Membership was successfully updated.'
+        format.html { redirect_to(members_group_path(@membership.group)) }
+      else
+        format.html { render :action => "edit" }
+      end
+    end  
   end
   
   def destroy
-    @membership = Membership.find(params[:id])
     @membership.breakup
     
     respond_to do |format|
@@ -46,7 +57,6 @@ class MembershipsController < ApplicationController
   end
   
   def unsuscribe
-    @membership = Membership.find(params[:id])
     @membership.breakup
     
     respond_to do |format|
@@ -56,7 +66,6 @@ class MembershipsController < ApplicationController
   end
   
   def suscribe
-    @membership = Membership.find(params[:id])
     @membership.accept
     PersonMailer.deliver_membership_accepted(@membership)
 
@@ -66,26 +75,4 @@ class MembershipsController < ApplicationController
     end
   end
   
-  private 
-  
-  # Make sure the current person is correct for this connection.
-    def authorize_person
-      @membership = Membership.find(params[:id],
-                                    :include => [:person, :group])
-      if params[:action] == 'suscribe' or params[:action] == 'unsuscribe'
-        unless current_person?(@membership.group.owner)
-          flash[:error] = t('error_invalid_connection')
-          redirect_to home_url
-        end
-      else
-        unless current_person?(@membership.person)
-          flash[:error] = t('error_invalid_connection')
-          redirect_to home_url
-        end
-      end
-    rescue ActiveRecord::RecordNotFound
-      flash[:error] = t('error_invalid_or_expired_membership')
-      redirect_to home_url
-    end
-
 end

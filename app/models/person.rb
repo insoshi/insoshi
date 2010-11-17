@@ -395,6 +395,11 @@ class Person < ActiveRecord::Base
     connection_notifications
   end
 
+  def is?(role,group)
+    mem = Membership.mem(self,group)
+    mem && mem.is?(role)
+  end
+
   ## Photo helpers
 
   def photo

@@ -114,7 +114,7 @@ es:
       accept_membership: "Aceptar la membresía"
       header: "Miembros"
       no_members_yet: "Sin miembros (todavía)"
-      administrator: "Administrador"
+      created_by: "Created by"
     new:
       header: "Nuevo grupo"
       name: "Nombre"

@@ -1,1 +1,10 @@
 <h2>Edit membership</h2>
+<% form_for(@membership) do |f| %>
+  <%= f.error_messages %>
+  <% for role in Membership::ROLES %>
+    <%= check_box_tag "membership[roles][]", role, @membership.roles.include?(role) %>
+    <%=h role.humanize %><br />
+  <% end %>
+  <%= hidden_field_tag "membership[roles][]", "" %>
+  <%= f.submit "Update" %>
+<% end %>

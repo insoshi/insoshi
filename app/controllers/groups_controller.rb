@@ -207,10 +207,4 @@ class GroupsController < ApplicationController
     end
   end
   
-  private
-  
-  def group_owner
-    redirect_to home_url unless current_person == Group.find(params[:id]).owner
-  end
-  
 end

@@ -12,6 +12,13 @@ class Ability
     can :members, Group
     can [:new_photo,:save_photo,:delete_photo], Group, :owner => person
 
+    can :read, Membership
+    can :create, Membership
+    can :destroy, Membership, :person => person
+    can [:update,:suscribe,:unsuscribe], Membership do |membership|
+      person.is?(:admin,membership.group)
+    end
+
     can :read, Exchange
     can :destroy, Exchange, :customer => person
     can :create, Exchange do |exchange|
