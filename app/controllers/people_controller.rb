@@ -214,16 +214,6 @@ class PeopleController < ApplicationController
     render :action => :groups
   end
   
-  def request_memberships
-    @person = Person.find(params[:id])
-    @requested_memberships = @person.requested_memberships
-  end
-  
-  def invitations
-    @person = Person.find(params[:id])
-    @invitations = @person.invitations
-  end
-  
   private
 
     def setup

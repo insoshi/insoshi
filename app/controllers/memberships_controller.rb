@@ -32,21 +32,6 @@ class MembershipsController < ApplicationController
   
   def update
     
-    respond_to do |format|
-      membership = @membership
-      name = membership.group.name
-      case params[:commit]
-      when "Accept"
-        @membership.accept
-        PersonMailer.deliver_invitation_accepted(@membership)
-        flash[:notice] = %(#{t('notice_accepted_membership_with')}
-                           <a href="#{group_path(@membership.group)}">#{name}</a>)
-      when "Decline"
-        @membership.breakup
-        flash[:notice] = t('notice_declined_membership_for') + " #{name}"
-      end
-      format.html { redirect_to(home_url) }
-    end
   end
   
   def destroy
@@ -87,7 +72,7 @@ class MembershipsController < ApplicationController
     def authorize_person
       @membership = Membership.find(params[:id],
                                     :include => [:person, :group])
-      if  !params[:invitation].blank? or params[:action] == 'suscribe' or params[:action] == 'unsuscribe'
+      if params[:action] == 'suscribe' or params[:action] == 'unsuscribe'
         unless current_person?(@membership.group.owner)
           flash[:error] = t('error_invalid_connection')
           redirect_to home_url

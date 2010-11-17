@@ -35,8 +35,7 @@ module GroupsHelper
   def get_groups_modes
     modes = []
     modes << ["Public",0]
-    modes << ["Private",1]
-    modes << ["Hidden", 2]
+    modes << ["Membership approval required",1]
     return modes
   end
   

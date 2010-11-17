@@ -12,7 +12,7 @@ class Membership < ActiveRecord::Base
   
   # Status codes.
   ACCEPTED  = 0
-  INVITED   = 1
+  INVITED   = 1 # deprecated
   PENDING   = 2
   
   ROLES = %w[individual admin moderator org]
@@ -78,34 +78,13 @@ class Membership < ActiveRecord::Base
       end
     end
     
-    def invite(person, group, send_mail = nil)
-      if send_mail.nil?
-        send_mail = global_prefs.email_notifications? &&
-                    group.owner.connection_notifications?
-      end
-      if person.groups.include?(group) or Membership.exists?(person, group)
-        nil
-      else
-        transaction do
-          create(:person => person, :group => group, :status => INVITED)
-          if send_mail
-            membership = person.memberships.find(:first, :conditions => ['group_id = ?',group])
-            PersonMailer.deliver_invitation_notification(membership)
-          end
-        end
-        true
-      end
-    end
-    
     # Accept a membership request.
     def accept(person, group)
       transaction do
         accepted_at = Time.now
         accept_one_side(person, group, accepted_at)
       end
-      unless Group.find(group).hidden?
-        log_activity(mem(person, group))
-      end
+      log_activity(mem(person, group))
     end
     
     def breakup(person, group)
@@ -128,10 +107,6 @@ class Membership < ActiveRecord::Base
     
     def pending?(person, group)
       exist?(person, group) and mem(person,group).status == PENDING
-    end
-    
-    def invited?(person, group)
-      exist?(person, group) and mem(person,group).status == INVITED
     end
     
   end

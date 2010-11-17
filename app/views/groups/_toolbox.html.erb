@@ -21,11 +21,6 @@
               <li>
                 <%= t('groups.show.mode') %> <%= get_groups_modes[@group.mode][0] %>
               </li>
-              <% if @group.hidden? %>
-                <li>
-                  <%= link_to t('groups.show.invite_contacts'), invite_group_path(@group) %>
-                </li>
-              <% end %>
             <%- end -%>
             <%- if current_person.admin? -%>
               <li>

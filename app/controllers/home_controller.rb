@@ -6,7 +6,6 @@ class HomeController < ApplicationController
       @body = "home"
       @person = current_person
       @requested_memberships = current_person.requested_memberships
-      @invitations = current_person.invitations
       case params[:mode]
       when 'dashboard'
         @reqs = current_person.current_and_active_reqs

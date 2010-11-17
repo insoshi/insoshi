@@ -116,10 +116,6 @@ class Person < ActiveRecord::Base
   
   has_many :own_groups, :class_name => "Group", :foreign_key => "person_id",
     :order => "name ASC"
-  has_many :own_not_hidden_groups, :class_name => "Group", 
-    :foreign_key => "person_id", :conditions => "mode != 2", :order => "name ASC"
-  has_many :own_hidden_groups, :class_name => "Group", 
-    :foreign_key => "person_id", :conditions => "mode = 2", :order => "name ASC"
   has_many :memberships
   has_many :groups, :through => :memberships, :source => :group, 
     :conditions => "status = 0", :order => "name ASC"
@@ -275,11 +271,6 @@ class Person < ActiveRecord::Base
           :conditions => ['status = 2 and group_id in (?)', self.own_group_ids])
   end
   
-  def invitations
-    Membership.find_all_by_person_id(self, 
-          :conditions => ['status = 1'], :order => 'created_at DESC')
-  end
-
   # Contact links for the contact image raster.
   def requested_contact_links
     requested_contacts.map do |p|

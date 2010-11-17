@@ -9,8 +9,6 @@ ActionController::Routing::Routes.draw do |map|
     :member => { :join => :post, 
                  :leave => :post, 
                  :members => :get, 
-                 :invite => :get,
-                 :invite_them => :post,
                  :new_req => :get,
                  :create_req => :post,
                  :new_offer => :get,
@@ -56,7 +54,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'people/verify/:id', :controller => 'people',
                                     :action => 'verify_email'
   map.resources :people, :member => {:groups => :get, 
-    :admin_groups => :get, :request_memberships => :get, :invitations => :get} do |person|
+    :admin_groups => :get} do |person|
      person.resources :messages
      person.resources :accounts
      person.resources :exchanges

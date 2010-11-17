@@ -1,8 +1,3 @@
-<%- if Membership.exist?(current_person,@group) -%>
-  <%- if @group.has_invited?(current_person) -%>
-    <li><%= t('groups.show.you_have_been_invited') %> <%= link_to t('groups.show.respond'), invitations_person_path(current_person)+"#group_#{@group.id}" %></li>
-  <%- end -%>
-<% end %>
 <span id="membership_wrapper">
   <li class="add_to_memberships <%= @add_membership_display %>">
   <%= link_to t('groups.show.join_group'),group_memberships_path(@group), {:id => 'join_group'} %>
