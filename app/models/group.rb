@@ -102,6 +102,7 @@ class Group < ActiveRecord::Base
     mem = Membership.new( :status => Membership::PENDING )
     mem.person = self.owner 
     mem.group = self
+    mem.roles = ['admin']
     mem.save
     Membership.accept(mem.person,mem.group)
   end

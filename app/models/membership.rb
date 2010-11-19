@@ -30,6 +30,12 @@ class Membership < ActiveRecord::Base
     self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
   end
 
+  def add_role(new_role)
+    a = self.roles
+    a << new_role
+    self.roles = a
+  end
+
   def roles
     ROLES.reject do |r|
       ((roles_mask || 0) & 2**ROLES.index(r)).zero?
@@ -117,8 +123,10 @@ class Membership < ActiveRecord::Base
     # Update the db with one side of an accepted connection request.
     def accept_one_side(person, group, accepted_at)
       mem = mem(person, group)
-      mem.update_attributes!(:status => ACCEPTED,
-                              :accepted_at => accepted_at)
+      mem.status = ACCEPTED
+      mem.accepted_at = accepted_at
+      mem.add_role('individual')
+      mem.save
 
       if person.accounts.find(:first,:conditions => ["group_id = ?",group.id]).nil?
         account = Account.new( :name => group.name ) # group name can change
