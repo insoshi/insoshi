@@ -92,6 +92,7 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html
       format.xml { render :xml => @group.to_xml(:methods => [:icon,:thumbnail], :only => [:id,:name,:description,:mode,:person_id,:created_at,:updated_at,:unit,:icon,:thumbnail]) }
+      format.js
     end
 
   end
