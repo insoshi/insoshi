@@ -153,6 +153,7 @@ en:
       requests: "Reqs"
       offers: "Offers"
       exchanges: "Exchanges"
+      people: "People"
     _people:
       header: "Group's"
       all_members: "All members"

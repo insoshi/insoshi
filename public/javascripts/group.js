@@ -118,6 +118,11 @@ $(function() {
     $.getScript(document.location.href+'?tab=exchanges');
     });
 
+  $('a[href=#people]').bind('click',function() {
+    $('span.wait').show();
+    $.getScript(document.location.href+'?tab=people');
+    });
+
   $('.req a.show-follow').live('click',function() {
     $('span.wait').show();
     $.getScript(this.href);

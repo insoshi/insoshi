@@ -10,6 +10,9 @@
 <% elsif params[:tab] == 'exchanges' %>
   $('#exchanges_canvas').html("<%= escape_javascript(render :partial => 'exchanges_canvas') %>");
   $('span.wait').hide();
+<% elsif params[:tab] == 'people' %>
+  $('#people_canvas').html("<%= escape_javascript(render :partial => 'members_canvas') %>");
+  $('span.wait').hide();
 <% else %>
   alert('bad request');
 <% end %>

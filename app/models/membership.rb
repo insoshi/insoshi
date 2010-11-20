@@ -3,6 +3,7 @@ class Membership < ActiveRecord::Base
   extend PreferencesHelper
   
   named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
+  named_scope :active, :include => :person, :conditions => {'people.deactivated' => false}
 
   belongs_to :group
   belongs_to :person

@@ -82,6 +82,11 @@ class GroupsController < ApplicationController
     @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    @memberships = @group.memberships.active.paginate(:page => params[:page],
+                                          :conditions => ['status = ?', Membership::ACCEPTED],
+                                          :order => 'memberships.created_at DESC',
+                                          :include => :person,
+                                          :per_page => AJAX_POSTS_PER_PAGE)
     if Membership.exists?(current_person,@group)
       @add_membership_display = 'hide'
       @membership_display = ''

@@ -40,5 +40,10 @@
         <%= render :partial => 'offers_canvas' %>
       </div>
     <% end if @group.adhoc_currency? %>
+    <% tab.create('people', t('groups.show.people')) do %>
+      <div id="people_canvas">
+        <%= render :partial => 'members_canvas' %>
+      </div>
+    <% end %>
   <% end %>
   

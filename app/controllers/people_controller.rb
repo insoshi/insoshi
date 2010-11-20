@@ -39,7 +39,6 @@ class PeopleController < ApplicationController
       @some_contacts = @person.some_contacts
       @common_contacts = current_person.common_contacts_with(@person)
       @groups = current_person == @person ? @person.groups : @person.groups_not_hidden
-      @own_groups = current_person == @person ? @person.own_groups : @person.own_not_hidden_groups
     end
     respond_to do |format|
       format.html

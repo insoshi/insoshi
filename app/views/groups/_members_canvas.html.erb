@@ -1,0 +1,7 @@
+      <h2><%= t('groups.show.people') %><%= waiting_image %></h2>
+      <%= will_paginate(@memberships) %>
+      <ul class="list activity full">
+        <%= render :partial => 'member', :collection => @memberships, :locals => {:short => true} %>
+      </ul>
+      <div style='clear:both;'></div>
+      <%= will_paginate(@memberships) %>
