@@ -23,8 +23,9 @@ class Ability
     can :destroy, Exchange, :customer => person
     can :create, Exchange do |exchange|
       unless exchange.group
-        # all exchanges are associated with a group
-        false
+        # the presence of group is validated when creating an exchange
+        # group will be nil for the new method, so allow it
+        true
       else
         membership = Membership.mem(person,exchange.group)
         unless membership

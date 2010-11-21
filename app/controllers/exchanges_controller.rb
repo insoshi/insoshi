@@ -3,7 +3,13 @@ class ExchangesController < ApplicationController
   load_and_authorize_resource :exchange, :through => :person
   skip_before_filter :require_activation
   before_filter :login_or_oauth_required
-  before_filter :find_worker
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    respond_to do |format|
+      format.html {redirect_to @person}
+    end
+  end
 
   def index
     #@exchanges = @worker.received_exchanges # created_at DESC

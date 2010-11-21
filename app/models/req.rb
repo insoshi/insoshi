@@ -36,6 +36,8 @@ class Req < ActiveRecord::Base
   attr_protected :person_id, :created_at, :updated_at
   attr_readonly :group_id
   validates_presence_of :name, :due_date
+  validates_presence_of :group_id
+
   after_create :notify_workers, :if => :notifications
   after_create :log_activity
 
@@ -53,11 +55,7 @@ class Req < ActiveRecord::Base
   end
 
   def unit
-    if group.nil?
-      I18n.translate('currency_unit_plural')
-    else
-      group.unit
-    end
+    group.unit
   end
 
   def formatted_categories

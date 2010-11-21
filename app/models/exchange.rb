@@ -21,6 +21,7 @@ class Exchange < ActiveRecord::Base
   belongs_to :group
 
   validates_presence_of :customer, :worker, :amount, :metadata
+  validates_presence_of :group_id
 
   attr_accessible :amount, :group_id
 
@@ -69,16 +70,14 @@ class Exchange < ActiveRecord::Base
         end
       end
 
-      unless self.group.nil?
-        unless worker.groups.include?(self.group)
-          errors.add(:group_id, "does not include recipient as a member")
-        end
-        unless customer.groups.include?(self.group)
-          errors.add(:group_id, "does not include you as a member")
-        end
-        unless self.group.adhoc_currency?
-          errors.add(:group_id, "does not have its own currency")
-        end
+      unless worker.groups.include?(self.group)
+        errors.add(:group_id, "does not include recipient as a member")
+      end
+      unless customer.groups.include?(self.group)
+        errors.add(:group_id, "does not include you as a member")
+      end
+      unless self.group.adhoc_currency?
+        errors.add(:group_id, "does not have its own currency")
       end
     end
   end

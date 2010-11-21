@@ -11,7 +11,7 @@ describe Group do
       :mode => Group::PUBLIC,
       :unit => "value for unit",
       :owner => @p,
-      :adhoc_currency => false
+      :adhoc_currency => true
     }
     @g = Group.create!(@valid_attributes)
   end
@@ -51,7 +51,7 @@ describe Group do
 
     describe 'exchanges made by members' do
       before(:each) do
-        @req = Req.create!(:name => 'Generic',:estimated_hours => 0, :due_date => Time.now, :person => @p2, :active => false)
+        @req = Req.create!(:name => 'Generic',:estimated_hours => 0, :group => @g, :due_date => Time.now, :person => @p2, :active => false)
         @e = Exchange.new
         @e.metadata = @req
         @e.worker = @p

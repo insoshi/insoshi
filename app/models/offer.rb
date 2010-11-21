@@ -14,6 +14,8 @@ class Offer < ActiveRecord::Base
   attr_readonly :group_id
   validates_presence_of :name, :expiration_date
   validates_presence_of :total_available
+  validates_presence_of :group_id
+
   after_create :log_activity
 
   class << self
@@ -34,11 +36,7 @@ class Offer < ActiveRecord::Base
   end
 
   def unit
-    if group.nil?
-      I18n.translate('currency_unit_plural')
-    else
-      group.unit
-    end
+    group.unit
   end
 
   def formatted_categories
