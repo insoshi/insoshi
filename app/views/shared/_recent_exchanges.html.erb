@@ -11,6 +11,6 @@
   
   <ul class="list activity full">
      <%= render :partial => 'shared/exchange',
-                :collection => @person.received_exchanges %>
+                :collection => @person.received_group_exchanges(group) %>
   </ul>
 <%- end -%>

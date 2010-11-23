@@ -35,10 +35,12 @@
         <ul class="tools">
         <%- unless current_person?(@person) -%>
           <%- if logged_in? -%>
-            <li><%= exchange_link @person, @membership.group, :class => 'show-follow' %></li>
+            <%- if @membership.group.adhoc_currency? -%>
+              <li><%= exchange_link @person, @membership.group, :class => 'show-follow' %></li>
+            <%- end -%>
             <li><%= email_link @person %></li>
-            <%- unless @account.group && !@account.group.adhoc_currency? -%>
-            <li><%= account_link @account %></li>
+            <%- if @membership.group.adhoc_currency? -%>
+              <li><%= account_link @account %></li>
             <%- end -%>
           <%- end -%>
           <%- if current_person.admin? -%>
@@ -51,7 +53,9 @@
           <%- end -%>
         <% else -%>
           <%- if logged_in? -%>
-            <%= render :partial => 'account', :collection => @person.accounts %>
+            <%- if @membership.group.adhoc_currency? -%>
+              <li><%= account_link @account %></li>
+            <%- end -%>
           <%- end -%>
         <%- end -%>
       </ul>
@@ -69,3 +73,8 @@
     <%- end -%>
     <%= display simple_format_without_paragraph @person.description %>
   </div>
+
+  <%= render :partial => '/shared/wall' %>
+  <%- if @membership.group.adhoc_currency? -%>
+    <%= render :partial => '/shared/recent_exchanges', :locals => {:group => @account.group} %>
+  <%- end -%>

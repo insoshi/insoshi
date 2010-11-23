@@ -25,7 +25,7 @@ en:
   payment: "payment"
   a_question: "a question"
   group: "Group"
-  recent_street_cred: "Recent Street Cred"
+  recent_street_cred: "Credits"
   last_logged_in: "last logged in"
   post: "post"
   posted: "posted"
@@ -298,7 +298,7 @@ en:
     _recent_activity:
       header: "Recent Activity" 
     _recent_exchanges:
-      header: "Recent Street Cred (Main Account)"
+      header: "Credits"
 
   reqs:
     partial:
