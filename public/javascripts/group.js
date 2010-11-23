@@ -91,12 +91,6 @@ $(function() {
     return false;
     });
 
-  $('.topic a.show-follow').live('click',function() {
-    $('span.wait').show();
-    $.getScript(this.href);
-    return false;
-    });
-
   $('a[href=#forum]').bind('click',function() {
     $('span.wait').show();
     $.getScript(document.location.href+'?tab=forum');

@@ -80,6 +80,7 @@ class GroupsController < ApplicationController
     case params[:tab]
     when 'forum'
       @forum = @group.forum
+      @topics = Topic.find_recently_active(@forum, params[:page]) 
     when 'requests'
       @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     when 'offers'

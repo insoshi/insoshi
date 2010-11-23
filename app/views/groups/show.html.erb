@@ -27,7 +27,9 @@
       </div>
     <% end if @group.adhoc_currency? %>
     <% tab.create('forum', t('groups.show.forum')) do %>
-      <%= render :partial => 'forum_canvas' %>
+      <div id="forum_canvas">
+        <%= render :partial => 'forum_canvas' %>
+      </div>
       <%= render :partial => 'forum_form' %>
     <% end %>
     <% tab.create('requests', t('groups.show.requests')) do %>
