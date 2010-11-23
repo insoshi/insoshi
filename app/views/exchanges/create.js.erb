@@ -1,1 +1,5 @@
-<%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'exchanges_canvas'} %>
+<% if params[:offer] %>
+  <%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'offers_canvas'} %>
+<% else %>
+  <%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'people_canvas'} %>
+<% end %>

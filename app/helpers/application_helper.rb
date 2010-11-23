@@ -185,14 +185,13 @@ module ApplicationHelper
     str << link_to_unless_current(action, path, opts)
   end
 
-  def exchange_link(person, options = {})
+  def exchange_link(person, group, options = {})
     img = image_tag("icons/switch.gif")
-    path = new_person_exchange_path(person)
-    opts = {}
+    path = new_person_exchange_path(person, :group => group.id)
     action = "Give credit"
-    str = link_to(img,path,opts)
+    str = link_to(img,path,options)
     str << " "
-    str << link_to_unless_current(action, path, opts)
+    str << link_to_unless_current(action, path, options)
   end
 
   def email_link(person, options = {})

@@ -123,13 +123,7 @@ $(function() {
     $.getScript(document.location.href+'?tab=people');
     });
 
-  $('.req a.show-follow').live('click',function() {
-    $('span.wait').show();
-    $.getScript(this.href);
-    return false;
-    });
-
-  $('.offer a.show-follow').live('click',function() {
+  $('a.show-follow').live('click',function() {
     $('span.wait').show();
     $.getScript(this.href);
     return false;

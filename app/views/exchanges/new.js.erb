@@ -1,6 +1,7 @@
-<% flash.each do |key, msg| %>
-  $('#offers_canvas').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
-  $('#flash_<%= key %>').fadeOut(5000,function() { $(this).remove(); });
+<% if params[:offer] %>
+  $('#offers_canvas').html('<h2><%= h @offer.name %></h2><%= escape_javascript(render :partial => "exchange_offer_form") %>');
+  <%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'offers_canvas'} %>
+<% else %>
+  $('#people_canvas').html('<%= escape_javascript(render :partial => "exchange_form") %>');
+  <%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'people_canvas'} %>
 <% end %>
-$('span.wait').hide();
-$('#offers_canvas').html('<h2><%= h @offer.name %></h2><%= escape_javascript(render :partial => "exchange_offer_form") %>');

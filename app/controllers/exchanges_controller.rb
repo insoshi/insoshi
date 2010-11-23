@@ -29,15 +29,19 @@ class ExchangesController < ApplicationController
   def new
     if params[:offer]
       @offer = Offer.find(params[:offer])
-      if @offer.person != Person.find(params[:person_id])
+      if @offer.person != @person
         flash[:error] = t('error_offer_person_mismatch')
       end
     else
+      if params[:group]
+        @group = Group.find(params[:group])
+      end
       @req = Req.new
       @req.name = 'Enter description of service here'
     end
 
-    @groups = Person.find(params[:person_id]).groups
+    # XXX @groups not used in new ajax ui
+    @groups = @person.groups
     @groups.delete_if {|g| !g.adhoc_currency?}
 
     respond_to do |format|

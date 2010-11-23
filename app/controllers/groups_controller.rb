@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
 
   def new_req
     @req = Req.new
-    @all_categories = Category.all
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.js
@@ -46,7 +46,7 @@ class GroupsController < ApplicationController
 
   def new_offer
     @offer = Offer.new
-    @all_categories = Category.all
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.js
@@ -77,23 +77,35 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @forum = @group.forum
-    @topics = Topic.find_recently_active(@forum, params[:page]) 
-    @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
-    @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
-    @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
-    @memberships = @group.memberships.active.paginate(:page => params[:page],
-                                          :conditions => ['status = ?', Membership::ACCEPTED],
-                                          :order => 'memberships.created_at DESC',
-                                          :include => :person,
-                                          :per_page => AJAX_POSTS_PER_PAGE)
-    if Membership.exists?(current_person,@group)
-      @add_membership_display = 'hide'
-      @membership_display = ''
+    case params[:tab]
+    when 'forum'
+      @forum = @group.forum
+    when 'requests'
+      @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    when 'offers'
+      @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    when 'exchanges'
+      @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    when 'people'
+      @memberships = @group.memberships.active.paginate(:page => params[:page],
+                                            :conditions => ['status = ?', Membership::ACCEPTED],
+                                            :order => 'memberships.created_at DESC',
+                                            :include => :person,
+                                            :per_page => AJAX_POSTS_PER_PAGE)
     else
-      @add_membership_display = ''
-      @membership_display = 'hide'
+      @forum = @group.forum
+      @topics = Topic.find_recently_active(@forum, params[:page]) 
+      @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+      @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+      @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+      @memberships = @group.memberships.active.paginate(:page => params[:page],
+                                            :conditions => ['status = ?', Membership::ACCEPTED],
+                                            :order => 'memberships.created_at DESC',
+                                            :include => :person,
+                                            :per_page => AJAX_POSTS_PER_PAGE)
+      membership_display(current_person,@group)
     end
+
     respond_to do |format|
       format.html
       format.xml { render :xml => @group.to_xml(:methods => [:icon,:thumbnail], :only => [:id,:name,:description,:mode,:person_id,:created_at,:updated_at,:unit,:icon,:thumbnail]) }
@@ -213,4 +225,15 @@ class GroupsController < ApplicationController
     end
   end
   
+  protected
+
+  def membership_display(p,g)
+    if Membership.exists?(p,g)
+      @add_membership_display = 'hide'
+      @membership_display = ''
+    else
+      @add_membership_display = ''
+      @membership_display = 'hide'
+    end
+  end
 end

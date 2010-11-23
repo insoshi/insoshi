@@ -36,8 +36,6 @@ class PeopleController < ApplicationController
       redirect_to home_url and return
     end
     if logged_in?
-      @some_contacts = @person.some_contacts
-      @common_contacts = current_person.common_contacts_with(@person)
       @groups = current_person == @person ? @person.groups : @person.groups_not_hidden
     end
     respond_to do |format|

@@ -9,6 +9,14 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def show
+    @person = @membership.person
+    @account = @person.account(@membership.group)
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def edit
   end
   
