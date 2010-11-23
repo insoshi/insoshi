@@ -17,7 +17,7 @@
     <%- end -%>
     <%- unless @person.comments.empty? -%>
       <ul class="list comments full">
-        <%= render :partial => 'comment', :collection => @person.comments %>
+        <%= render :partial => '/shared/comment', :collection => @person.comments %>
       </ul>
     <%- end -%>
   </div>
