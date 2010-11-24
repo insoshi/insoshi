@@ -32,8 +32,10 @@ class CommentsController < ApplicationController
       if @comment.save
         flash[:success] = t('success_comment_created')
         format.html { redirect_to comments_url }
+        format.js
       else
         format.html { render :action => resource_template("new") }
+        format.js { render :action => resource_template("new") }
       end
     end
   end

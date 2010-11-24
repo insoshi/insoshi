@@ -74,7 +74,9 @@
     <%= display simple_format_without_paragraph @person.description %>
   </div>
 
-  <%= render :partial => '/shared/wall' %>
+  <div id="wall_canvas">
+    <%= render :partial => '/shared/wall' %>
+  </div>
   <%- if @membership.group.adhoc_currency? -%>
     <%= render :partial => '/shared/recent_exchanges', :locals => {:group => @account.group} %>
   <%- end -%>

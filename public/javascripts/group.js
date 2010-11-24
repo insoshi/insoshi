@@ -40,31 +40,7 @@ $(function() {
     return false;
   });
 
-  $("#new_req").live('submit',function(){
-    $('span.wait').show();
-    $.post($(this).attr('action'),$(this).serialize(),null,'script');
-    return false;
-  });
-
-  $("#new_offer").live('submit',function(){
-    $('span.wait').show();
-    $.post($(this).attr('action'),$(this).serialize(),null,'script');
-    return false;
-  });
-
-  $('#new_topic').live('submit',function() {
-    $('span.wait').show();
-    $.post($(this).attr('action'),$(this).serialize(),null,'script');
-    return false;
-    });
-
-  $('#new_post').live('submit',function() {
-    $('span.wait').show();
-    $.post($(this).attr('action'),$(this).serialize(),null,'script');
-    return false;
-    });
-
-  $('#new_exchange').live('submit',function() {
+  $('#new_req, #new_offer, #new_topic, #new_post, #new_exchange, #new_wall_post').live('submit',function() {
     $('span.wait').show();
     $.post($(this).attr('action'),$(this).serialize(),null,'script');
     return false;
