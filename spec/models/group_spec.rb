@@ -56,7 +56,7 @@ describe Group do
         @e.metadata = @req
         @e.worker = @p
         @e.group = @g
-        @e.amount = 1
+        @e.amount = 1.0
       end
 
       it "should not allow a non-member of a group to make an exchange" do
@@ -66,15 +66,15 @@ describe Group do
         @ability_nonmember.should_not be_able_to(:create,@e)
       end
 
-      # obviously, this spec alone does not prohibit exchanges that result in negative balances
-      it "should allow an individual member to make an exchange that results in a non-negative balance" do
+      it "should not allow an individual member to make an unauthorized payment" do
         @e.customer = @p2
         @membership.roles = ['individual']
         @membership.save
-        account = Account.find_by_person_id_and_group_id(@p2, @g)
-        account.balance = 2.0
+        account = @p2.account(@g)
+        account.balance = 0.0
+        account.credit_limit = 0.5
         account.save!
-        @ability.should be_able_to(:create,@e)
+        @ability.should_not be_able_to(:create,@e)
       end
     end
   end

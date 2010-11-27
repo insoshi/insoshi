@@ -31,7 +31,7 @@ class Ability
         unless membership
           false
         else
-          account = Account.find_by_person_id_and_group_id(person, exchange.group)
+          account = person.account(exchange.group)
           account && (account.authorized? exchange.amount)
         end
       end
