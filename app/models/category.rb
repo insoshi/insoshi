@@ -17,8 +17,8 @@ class Category < ActiveRecord::Base
     name description
   end
 
-  has_and_belongs_to_many :reqs
-  has_and_belongs_to_many :offers
+  has_and_belongs_to_many :reqs, :order => 'created_at DESC'
+  has_and_belongs_to_many :offers, :order => 'created_at DESC'
   has_and_belongs_to_many :people
   acts_as_tree
 

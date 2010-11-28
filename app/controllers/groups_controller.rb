@@ -35,10 +35,11 @@ class GroupsController < ApplicationController
     respond_to do |format|
       if @req.save
         flash[:notice] = 'Request was successfully created.'
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
         format.js
       else
-        @all_categories = Category.all
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.js {render :action => 'new_req'}
       end
     end
@@ -82,7 +83,9 @@ class GroupsController < ApplicationController
       @forum = @group.forum
       @topics = Topic.find_recently_active(@forum, params[:page]) 
     when 'requests'
-      @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+      @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
+      @reqs = Req.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE)
+      @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     when 'offers'
       @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     when 'exchanges'
@@ -94,6 +97,7 @@ class GroupsController < ApplicationController
                                             :include => :person,
                                             :per_page => AJAX_POSTS_PER_PAGE)
     else
+      @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
       @forum = @group.forum
       @topics = Topic.find_recently_active(@forum, params[:page]) 
       @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
