@@ -64,10 +64,11 @@ class GroupsController < ApplicationController
     respond_to do |format|
       if @offer.save
         flash[:notice] = 'Offer was successfully created.'
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
         format.js
       else
-        @all_categories = Category.all
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.js {render :action => 'new_offer'}
       end
     end
@@ -87,7 +88,9 @@ class GroupsController < ApplicationController
       @reqs = Req.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE)
       @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     when 'offers'
-      @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+      @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
+      @offers = Offer.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE)
+      @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     when 'exchanges'
       @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     when 'people'

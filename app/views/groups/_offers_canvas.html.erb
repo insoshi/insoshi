@@ -1,3 +1,4 @@
+<%= render :partial => 'categories', :locals => {:filtered_obj => 'offer', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
 <span class='offer small' style='float:right;'><%= link_to "New offer", new_offer_group_path(@group), {:class => 'show-follow'} %></span>
       <h2><%= t('groups.show.offers') %><%= waiting_image %></h2>
       <%= will_paginate(@offers) %>
