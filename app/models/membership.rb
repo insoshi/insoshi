@@ -4,7 +4,7 @@ class Membership < ActiveRecord::Base
   
   named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
   named_scope :active, :include => :person, :conditions => {'people.deactivated' => false}
-
+  
   belongs_to :group
   belongs_to :person
   has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Membership'" #, :dependent => :destroy
@@ -17,6 +17,28 @@ class Membership < ActiveRecord::Base
   PENDING   = 2
   
   ROLES = %w[individual admin moderator org]
+
+  class << self
+    def categorize(category,group,page,posts_per_page)
+      unless category
+        group.memberships.active.paginate(:page => page,
+                                            :conditions => ['status = ?', Membership::ACCEPTED],
+                                            :order => 'memberships.created_at DESC',
+                                            :include => :person,
+                                            :per_page => posts_per_page)
+      else
+        category.people.all(:joins => :memberships, 
+                            :select => "people.*,memberships.id as categorized_membership", 
+                            :conditions => {:memberships => {:group_id => group.id},
+                                            :people => {:deactivated => false}}
+                           ).map {|p| Membership.find(p.categorized_membership)}.paginate(:page => page, 
+                                                                                          :conditions => ['status = ?', Membership::ACCEPTED],
+                                                                                          :order => 'memberships.created_at DESC',
+                                                                                          :include => :person, 
+                                                                                          :per_page => posts_per_page)
+      end
+    end
+  end
 
   # Accept a membership request (instance method).
   def accept

@@ -94,11 +94,9 @@ class GroupsController < ApplicationController
     when 'exchanges'
       @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     when 'people'
-      @memberships = @group.memberships.active.paginate(:page => params[:page],
-                                            :conditions => ['status = ?', Membership::ACCEPTED],
-                                            :order => 'memberships.created_at DESC',
-                                            :include => :person,
-                                            :per_page => AJAX_POSTS_PER_PAGE)
+      @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
+      @memberships = Membership.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE)
+      @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     else
       @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
       @forum = @group.forum

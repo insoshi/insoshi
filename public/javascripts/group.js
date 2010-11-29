@@ -103,6 +103,11 @@ $(function() {
     $.getScript(document.location.href+'?tab=offers&category_id='+this.value);
     });
 
+  $('.category_filter #person_category_ids').live('change',function() {
+    $('span.wait').show();
+    $.getScript(document.location.href+'?tab=people&category_id='+this.value);
+    });
+
   $('a.show-follow').live('click',function() {
     $('span.wait').show();
     $.getScript(this.href);
