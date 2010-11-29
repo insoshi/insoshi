@@ -42,7 +42,7 @@
                                   :link_options => { :class => "url" },
                                   :vcard => true,
                                   :image => :bounded_icon %>
-          <% if @group.owner?(current_person) %>
+          <% if can? :unsuscribe, membership %>
             <div class="cancel_membership">
                 <%= link_to image_tag("icons/remove.gif"), 
                   unsuscribe_membership_path(membership), 
@@ -50,6 +50,8 @@
                   :title => t('groups.members.cancel_membership'),
                   :confirm => t('groups.members.confirm') %>
             </div>
+          <%- end -%>
+          <% if can? :update, membership %>
             <div class="edit_roles">
               <%= link_to image_tag("icons/edit.gif"), edit_membership_path(membership), :title => 'Edit member roles' %>
             </div>
