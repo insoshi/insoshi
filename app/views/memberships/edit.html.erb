@@ -1,4 +1,4 @@
-<h2>Edit membership</h2>
+<h2>Edit membership for <%= h @membership.person.name %></h2>
 <% form_for(@membership) do |f| %>
   <%= f.error_messages %>
   <% for role in Membership::ROLES %>
@@ -7,4 +7,15 @@
   <% end %>
   <%= hidden_field_tag "membership[roles][]", "" %>
   <%= f.submit "Update" %>
+<% end %>
+<% if @account %>
+  <h2>Edit account for <%= h @membership.person.name %></h2>
+  <% form_for :account, :url => person_account_path(@membership.person,@account), :html => {:method => :put} do |f| %>
+    <%= f.error_messages %>
+      <div class="form_row">
+        <%= f.label "Credit Limit" %>
+        <%= f.text_field :credit_limit, :size => 5 %>&nbsp;<span class="small"><%= @account.group.unit %></span>
+      </div>
+    <%= f.submit "Update" %>
+  <% end %>
 <% end %>

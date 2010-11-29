@@ -40,6 +40,10 @@ class Membership < ActiveRecord::Base
     end
   end
 
+  def account
+    group.adhoc_currency? ? person.account(group) : nil
+  end
+
   # Accept a membership request (instance method).
   def accept
     Membership.accept(person, group)

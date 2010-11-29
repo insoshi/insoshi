@@ -19,6 +19,11 @@ class Ability
       person.is?(:admin,membership.group)
     end
 
+    can :read, Account
+    can :update, Account do |account|
+      person.is?(:admin,account.group)
+    end
+
     can :read, Exchange
     can :destroy, Exchange, :customer => person
     can :create, Exchange do |exchange|

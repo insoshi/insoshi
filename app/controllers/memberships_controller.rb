@@ -18,6 +18,7 @@ class MembershipsController < ApplicationController
   end
 
   def edit
+    @account = @membership.account
   end
   
   def create

@@ -15,7 +15,13 @@ class Account < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
 
+  attr_accessible :credit_limit
+
   INITIAL_BALANCE = 0
+
+  def membership
+    Membership.mem(person,group)
+  end
 
   def authorized?(amount)
     credit_limit.nil? or (amount <= balance + credit_limit)
