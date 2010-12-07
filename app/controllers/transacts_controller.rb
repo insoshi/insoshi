@@ -1,10 +1,11 @@
 class TransactsController < ApplicationController
   skip_before_filter :require_activation
   before_filter :login_or_oauth_required
+  before_filter :find_group_by_asset
   skip_before_filter :verify_authenticity_token, :if => :oauth?
 
   def index
-    @transactions = current_person.transactions
+    @transactions = current_person.transactions.select {|transact| transact.group == @group}
     respond_to do |format|
       format.html
       format.xml { render :xml => @transactions.to_xml(:root => "txns") }
@@ -51,10 +52,10 @@ class TransactsController < ApplicationController
     @transact = Transact.new(:to => params[:to], :memo => params[:memo], :amount => params[:amount], :callback_url => params[:callback_url], :redirect_url => params[:redirect_url])
     @transact.customer = current_person
     @transact.worker = @worker
+    @transact.group = @group
 
     @transact.metadata = @transact.create_req(params[:memo])
 
-    # XXX this will fail.
     if can?(:create, @transact) && @transact.save
       if @transact.redirect_url.blank?
         flash[:notice] = t('notice_transfer_succeeded')
@@ -84,4 +85,9 @@ class TransactsController < ApplicationController
     end
   end
 
+  private
+
+  def find_group_by_asset
+    @group = Group.find_by_asset(params[:asset])
+  end
 end

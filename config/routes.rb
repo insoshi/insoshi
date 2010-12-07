@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :memberships, :member => {:unsuscribe => :delete, :suscribe => :post}
 
-  map.resources :transacts
+  map.resources :transacts, :as => "transacts/:asset"
 
   map.resources :groups, 
     :member => { :join => :post, 

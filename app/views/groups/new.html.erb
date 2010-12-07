@@ -1,16 +1,20 @@
 <script type="text/javascript">
   function toggle_currency_unit(el) {
     unit_el = document.getElementById('group_unit');
+    asset_el = document.getElementById('group_asset');
     credit_limit_el = document.getElementById('group_default_credit_limit');
     if(el.checked)
     {
       unit_el.disabled = false;
+      asset_el.disabled = false;
       credit_limit_el.disabled = false;
     }
     else
     {
       unit_el.value = '';
       unit_el.disabled = true;
+      asset_el.value = '';
+      asset_el.disabled = true;
       credit_limit_el.value = '';
       credit_limit_el.disabled = true;
     }
@@ -35,6 +39,11 @@
     <div class="form_row">
       <label for="unit"><%= t('groups.new.currency_unit_plural') %></label>
       <%= f.text_field :unit, :disabled => true %>
+    </div>
+
+    <div class="form_row">
+      <label for="asset"><%= t('groups.new.asset') %></label>
+      <%= f.text_field :asset, :size => 8, :disabled => true %>
     </div>
 
     <div class="form_row">

@@ -1,9 +1,11 @@
 <%- column_div :type => :primary do -%>
   <% if @worker %>
-      <h2><%= t('transacts.new.header_simple') %> <%= h @amount %> <%= t('currency_unit_plural') %> <%= t('to') %> <%= h @worker.name %> </h2> 
+      <h2><%= t('transacts.new.header_simple') %> <%= h @amount %> <%= h @group.unit %> <%= t('to') %> <%= h @worker.name %> </h2> 
   <% else %>
     <h2><%= t('transacts.new.header') %></h2>
   <% end %>
+
+  <%= error_messages_for :transact %>
 
 <% if @worker %>
   <div class="profile vcard">
@@ -16,7 +18,7 @@
     <% form_tag :action => :create do %>
       <div class="form_row">
         <label for="amount"><%= t('transacts.new.amount') %></label>
-        <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= t('currency_unit_plural') %>
+        <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= h @group.unit %>
       </div>
       <div class="form_row">
         <label for="memo"><%= t('transacts.new.memo') %></label> 
@@ -39,7 +41,7 @@
     </div>
     <div class="form_row">
       <label for="amount"><%= t('transacts.new.amount') %></label>
-      <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= t('currency_unit_plural') %>
+      <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= h @group.unit %>
     </div>
     <div class="form_row">
       <label for="memo"><%= t('transacts.new.memo') %></label> 

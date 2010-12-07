@@ -3,6 +3,7 @@ class Group < ActiveRecord::Base
   
   validates_presence_of :name, :person_id
   attr_protected :mandatory
+  attr_readonly :asset
 
   has_one :forum
   has_many :reqs, :order => "created_at DESC"
@@ -21,7 +22,8 @@ class Group < ActiveRecord::Base
 
   validates_uniqueness_of :name
   validates_uniqueness_of :unit, :allow_nil => true
-
+  validates_uniqueness_of :asset, :allow_nil => true
+  validates_format_of :asset, :with => /^[-\.a-z0-9]+$/i
   after_create :create_owner_membership
   after_create :create_forum
   after_save :log_activity
