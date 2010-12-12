@@ -109,7 +109,7 @@ class GroupsController < ApplicationController
                                             :order => 'memberships.created_at DESC',
                                             :include => :person,
                                             :per_page => AJAX_POSTS_PER_PAGE)
-      membership_display(current_person,@group)
+      membership_display
     end
 
     respond_to do |format|
@@ -233,13 +233,19 @@ class GroupsController < ApplicationController
   
   protected
 
-  def membership_display(p,g)
-    if Membership.exists?(p,g)
+  def membership
+    @membership ||= Membership.mem(current_person,@group)
+  end
+
+  def membership_display
+    if membership
       @add_membership_display = 'hide'
       @membership_display = ''
+      @membership_id = membership.id
     else
       @add_membership_display = ''
       @membership_display = 'hide'
+      @membership_id = ""
     end
   end
 end

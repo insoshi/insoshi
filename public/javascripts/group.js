@@ -40,7 +40,7 @@ $(function() {
     return false;
   });
 
-  $('#new_req, #new_offer, #new_topic, #new_post, #new_exchange, #new_wall_post').live('submit',function() {
+  $('#new_req, #new_offer, #new_topic, #new_post, #new_exchange, #new_wall_post, #new_message').live('submit',function() {
     $('span.wait').show();
     $.post($(this).attr('action'),$(this).serialize(),null,'script');
     return false;
@@ -109,6 +109,12 @@ $(function() {
     });
 
   $('a.show-follow').live('click',function() {
+    $('span.wait').show();
+    $.getScript(this.href);
+    return false;
+    });
+
+  $('a.email-link').live('click',function() {
     $('span.wait').show();
     $.getScript(this.href);
     return false;

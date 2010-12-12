@@ -52,6 +52,19 @@
           <%- if logged_in? -%>
             <ul id="sfmenu">
               <li class="left_item">
+                <a href="#">Your Groups</a>
+                <ul>
+                  <%= render :partial => 'shared/group', :collection => current_person.groups %>
+                </ul>
+              </li>
+              <li class="middle_item">
+              <a href="#">Your Account</a>
+                <ul>
+                  <%= link_to "Profile", edit_person_path(current_person) %>
+                  <%= link_to "Inbox", messages_path %>
+                </ul>
+              </li>
+              <li class="right_item">
                 <a href="#">Help</a>
                 <ul class="active">
                   <li><%= link_to "about", about_path if !global_prefs.about.blank? %></li>
@@ -60,12 +73,6 @@
                   <li><%= link_to "contact", contact_path if !global_prefs.contact.blank? %></li>
                   <li><%= link_to "agreement", agreement_path if !global_prefs.agreement.blank? %></li>
                   <li><%= link_to "faq", questions_path if !global_prefs.questions.blank? %></li>
-                </ul>
-              </li>
-              <li class="right_item">
-                <a href="#">Your Groups</a>
-                <ul>
-                  <%= render :partial => 'shared/group', :collection => current_person.groups %>
                 </ul>
               </li>
             </ul>

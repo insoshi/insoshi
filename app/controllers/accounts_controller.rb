@@ -26,7 +26,10 @@ class AccountsController < ApplicationController
   def show
     @account = Account.find(params[:id])
     @exchanges = @person.received_group_exchanges(@account.group_id)
-    @units = @account.group.unit
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
 end

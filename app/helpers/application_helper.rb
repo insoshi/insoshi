@@ -169,20 +169,14 @@ module ApplicationHelper
   def account_link(account, options = {})
     path = person_account_path(account.person,account) # XXX link to transactions
     img = image_tag("icons/bargraph.gif")
-    if account.group.nil?
-      action = "Main Account: #{account.balance} hours"
+    unless account.group
+      str = ""
     else
-      if  not account.group.unit.nil?
-        action = "#{account.group.name}: #{account.balance} #{account.group.unit}"
-      else
-        action = "#{account.group.name}: #{account.balance} hours"
-      end
-      
+      action = "#{account.group.name}: #{account.balance} #{account.group.unit}"
+      str = link_to(img,path, options)
+      str << " "
+      str << link_to_unless_current(action, path, options)
     end
-    opts = {}
-    str = link_to(img,path, opts)
-    str << " "
-    str << link_to_unless_current(action, path, opts)
   end
 
   def exchange_link(person, group = nil, options = {})

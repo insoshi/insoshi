@@ -1,8 +1,8 @@
   <div class="profile vcard">
     <%- if @person.openid_identifier.nil? -%>
-      <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.name %></span></h2>
+      <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.name %></span><%= waiting_image %></h2>
     <%- else -%>
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<img src="http://openid.net/images/login-bg.gif"></h2>
+      <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<img src="http://openid.net/images/login-bg.gif"><%= waiting_image %></h2>
     <%- end -%>
     <%- if admin? and not @person.active? -%>
       <p class="error"><%= t('people.show.not_active') %></p>
@@ -40,7 +40,7 @@
             <%- end -%>
             <li><%= email_link @person %></li>
             <%- if @membership.group.adhoc_currency? -%>
-              <li><%= account_link @account %></li>
+              <li><%= account_link @account, :class => 'show-follow' %></li>
             <%- end -%>
           <%- end -%>
           <%- if current_person.admin? -%>
@@ -54,7 +54,7 @@
         <% else -%>
           <%- if logged_in? -%>
             <%- if @membership.group.adhoc_currency? -%>
-              <li><%= account_link @account %></li>
+            <li><%= account_link @account, :class => 'show-follow' %></li>
             <%- end -%>
           <%- end -%>
         <%- end -%>

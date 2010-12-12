@@ -1,42 +1,5 @@
 <%- column_div :type => :primary do -%>
-<% if @account.group.nil? %>
-  <h2><%= @worker.name %>'s <%= t('accounts.show.header') %></h2>
-<% else %>
-  <h2><%= @worker.name %>'s <%= t('accounts.show.header_group') %> <%= @account.group.name %></h2>
-<%- end -%>
-  <div class="profile vcard">
-    <div class="toolbox">
-<% if @account.group.nil? %>
-      <%= link_to( image_tag( @worker.main_photo, :class => "profile-image photo",
-                                        :alt => h(@worker.name) ), person_path(@worker) ) %>
-<% else %>
-      <%= link_to( image_tag( @account.group.main_photo, :class => "profile-image photo",
-                                               :alt => h(@account.group.name)), group_path(@account.group)) %>
-<%- end -%>
-    <ul class="tools">
-      <li>
-        <%= account_link @account %>
-      </li>
-    </ul>
-  </div>
-  </div>
-
-  <h2><%= t('recent_street_cred') %></h2>
-  
-<%- unless @worker.recent_activity.empty? -%>
-
-  <%- unless @worker.last_logged_in_at.nil? or current_person?(@worker) -%>
-    <p class="meta">
-    <%= @worker.name %> <%= t('last_logged_in') %> 
-    <%= time_ago_in_words(@worker.last_logged_in_at) %> ago
-    </p>    
-  <%- end -%>
-  
-  <ul class="list activity full">
-     <%= render :partial => 'shared/exchange',
-                :collection => @exchanges %>
-  </ul>
-<%- end -%>
+  <%= render :partial => 'account' %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>

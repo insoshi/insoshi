@@ -1,4 +1,5 @@
 <span id="membership_wrapper">
+  <span class="membership_id"><span class="value"><%= @membership_id %></span></span>
   <li class="add_to_memberships <%= @add_membership_display %>">
   <%= link_to t('groups.show.join_group'),group_memberships_path(@group), {:id => 'join_group'} %>
   </li>

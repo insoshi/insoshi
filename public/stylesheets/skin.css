@@ -204,6 +204,10 @@ ul li.right_item {
 }
 
 #sfmenu li.left_item a {
+  width: 120px;
+}
+
+#sfmenu li.right_item a {
   width: 50px;
 }
 
@@ -625,6 +629,10 @@ input#person_openid_identifier, input#person_session_openid_identifier {
 
 #tabs {
   height: 960px;
+}
+
+.membership_id {
+  display: none;
 }
 
 #memberships_wrapper .add_to_memberships {

@@ -1,0 +1,29 @@
+<h2><%= @person.name %>'s <%= t('accounts.show.header_group') %> <%= @account.group.name %></h2>
+  <div class="profile vcard">
+    <div class="toolbox">
+    <%= link_to( image_tag( @person.main_photo, :class => "profile-image photo",
+                                      :alt => h(@person.name) ), person_path(@person) ) %>
+    <ul class="tools">
+      <li>
+        <%= account_link @account %>
+      </li>
+    </ul>
+  </div>
+  </div>
+
+  <h2><%= t('recent_street_cred') %></h2>
+  
+<%- unless @person.recent_activity.empty? -%>
+
+  <%- unless @person.last_logged_in_at.nil? or current_person?(@person) -%>
+    <p class="meta">
+    <%= @person.name %> <%= t('last_logged_in') %> 
+    <%= time_ago_in_words(@person.last_logged_in_at) %> ago
+    </p>    
+  <%- end -%>
+  
+  <ul class="list activity full">
+     <%= render :partial => 'shared/exchange',
+                :collection => @exchanges %>
+  </ul>
+<%- end -%>

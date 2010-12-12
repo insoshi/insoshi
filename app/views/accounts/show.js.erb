@@ -1,0 +1,2 @@
+$('#people_canvas').html('<%= escape_javascript(render :partial => 'account') %>');
+<%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'people_canvas'} %>
