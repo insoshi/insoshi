@@ -98,6 +98,7 @@ class GroupsController < ApplicationController
       @memberships = Membership.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE)
       @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     else
+      @num_months = 6
       @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
       @forum = @group.forum
       @topics = Topic.find_recently_active(@forum, params[:page]) 

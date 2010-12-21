@@ -589,7 +589,7 @@ input#person_openid_identifier, input#person_session_openid_identifier {
 }
 
 #exchanges_chart {
-  width: 810px;
+  width: 450px;
 }
 
 #monthly_chart {

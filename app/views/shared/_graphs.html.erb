@@ -1,0 +1,38 @@
+<script type="text/javascript" charset="utf-8">
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+          renderTo: "exchanges_chart",
+          zoomType: "x"
+        },
+      title: {
+        text: "<%= @group.unit %> by day"
+      },
+      xAxis: {
+        type: "datetime"
+      },
+      yAxis: {
+        title: {
+          text: "<%= @group.unit %>"
+        }
+        },
+      tooltip: {
+        formatter: function() {
+          return Highcharts.dateFormat("%B %e, %Y", this.x) + ': ' +
+          Highcharts.numberFormat(this.y, 2) + " <%= t('currency_unit_plural') %>";
+        }
+      },
+      series: [<% {"everyone" => Exchange.everyone_by_group(@group.id)}.each do |name,exchanges| %>   
+        {
+        name: "<%= name %>",
+        pointStart: <%= @num_months.months.ago.to_i * 1000 %>,
+        pointInterval: <%= 1.day * 1000 %>,
+        data: <%= exchanges_chart_series(exchanges,@num_months.months.ago.to_date) %>
+        },
+      <% end %>
+      ]
+    });
+  });
+</script>
+<span id="exchanges_chart"></span>
+

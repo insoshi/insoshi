@@ -33,6 +33,7 @@ class Exchange < ActiveRecord::Base
 
   named_scope :by_customer, lambda {|person_id| {:conditions => ["customer_id = ?", person_id]}}
   named_scope :everyone, :conditions => {}
+  named_scope :everyone_by_group, lambda {|group_id| {:conditions => ["group_id = ?", group_id]}}
   named_scope :by_month, lambda {|date| {:conditions => ["DATE_TRUNC('month',created_at) = ?", date]}}
 
   def log_activity
