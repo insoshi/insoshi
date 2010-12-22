@@ -27,9 +27,13 @@ $(function() {
   route(/^#f$/,                              '/groups/[:group_id]?tab=forum');
   route(/^#r$/,                              '/groups/[:group_id]?tab=requests');
   route(/^#r\/category_id=(\d+)$/,           '/groups/[:group_id]?tab=requests&category_id=[:1]');
-  route(/^#r\/category_id=(\d)\/page=(\d+)$/,'/groups/[:group_id]?tab=requests&category_id=[:1]&page=[:2]');
+  route(/^#r\/category_id=(\d+)\/page=(\d+)$/,'/groups/[:group_id]?tab=requests&category_id=[:1]&page=[:2]');
   route(/^#o$/,                              '/groups/[:group_id]?tab=offers');
+  route(/^#o\/category_id=(\d+)$/,           '/groups/[:group_id]?tab=offers&category_id=[:1]');
+  route(/^#o\/category_id=(\d+)\/page=(\d+)$/,'/groups/[:group_id]?tab=offers&category_id=[:1]&page=[:2]');
   route(/^#p$/,                              '/groups/[:group_id]?tab=people');
+  route(/^#p\/category_id=(\d+)$/,           '/groups/[:group_id]?tab=people&category_id=[:1]');
+  route(/^#p\/category_id=(\d+)\/page=(\d+)$/,'/groups/[:group_id]?tab=people&category_id=[:1]&page=[:2]');
 
   function find_group() {
     path = window.location.pathname;
