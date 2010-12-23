@@ -25,14 +25,22 @@ class Activity < ActiveRecord::Base
   # It's hard to do that entirely, but this way deactivated users 
   # won't be the person in "<person> has <done something>".
   #
-  # This is especially useful for sites that require email verifications.
-  # Their 'connected with admin' item won't show up until they verify.
   def self.global_feed
     find(:all, 
          :joins => "INNER JOIN people p ON activities.person_id = p.id",
          :conditions => [%(p.deactivated = ? AND
                            (p.email_verified IS NULL OR p.email_verified = ?)), 
                          false, true], 
+         :order => 'activities.created_at DESC',
+         :limit => GLOBAL_FEED_SIZE)
+  end
+
+  def self.group_feed(group_id)
+    find(:all, 
+         :joins => "INNER JOIN people p ON activities.person_id = p.id",
+         :conditions => [%(p.deactivated = ? AND
+                           (p.email_verified IS NULL OR p.email_verified = ?) AND (group_id IS NULL OR group_id = ?)), 
+                         false, true, group_id], 
          :order => 'activities.created_at DESC',
          :limit => GLOBAL_FEED_SIZE)
   end

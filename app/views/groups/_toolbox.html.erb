@@ -2,14 +2,6 @@
           <%= image_tag @group.main_photo, :class => "profile-image photo",
                                         :alt => h(@group.name) %>
           <ul class="tools">
-            <%- if @group.adhoc_currency? -%>
-              <li>
-                <%= t('groups.show.currency_unit') %> <%= h @group.unit %>
-              </li>
-              <li>
-                <%= t('groups.show.asset') %> <%= h @group.asset %>
-              </li>
-            <%- end -%>
             <%= render :partial => 'membership' %>
             <%- if Membership.pending?(current_person, @group) -%>
               <li>

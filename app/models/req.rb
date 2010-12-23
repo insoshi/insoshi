@@ -98,7 +98,7 @@ class Req < ActiveRecord::Base
 
   def log_activity
     if active?
-      add_activities(:item => self, :person => self.person)
+      add_activities(:item => self, :person => self.person, :group => self.group)
     end
   end
 

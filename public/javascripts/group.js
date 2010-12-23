@@ -113,7 +113,15 @@ $(function() {
     select: function(event, ui) {
       // even if you try calling select, this only gets called if it is not already selected 
       if(ui.tab.hash.slice(0,2) != window.location.hash.slice(0,2)) { 
-        window.location.hash = ui.tab.hash.slice(0,2);
+        if(ui.tab.hash != '#tab_one')
+        {
+          window.location.hash = ui.tab.hash.slice(0,2);
+        }
+        else
+        {
+          // currently not refreshing content in first tab
+          window.location.hash = '';
+        }
         OSCURRENCY.tab = ui.tab.hash.slice(0,2);
       }
     },

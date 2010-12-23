@@ -16,11 +16,12 @@
             </div>
           <%- end -%>
         <%- end -%>
-        <%= render :partial => 'toolbox' %>
+        <%= render :partial => 'shared/minifeed' %>
         <% if @group.adhoc_currency? %>
           <%= render :partial => 'shared/graphs' %>
         <% end %>
         <%= display @group.description %>
+        <%= render :partial => 'toolbox' %>
       </div>
       <div id="empty_canvas" style='clear:both;'></div>
     <% end %>

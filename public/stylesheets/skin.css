@@ -13,7 +13,7 @@ body {
 #wrap, #header, #footer {
   margin: 0 auto;
   text-align: left;
-  width: 744px;
+  width: 844px;
 }
 
 /*
@@ -26,7 +26,7 @@ body {
 */
 
 #content {
-  width: 744px;
+  width: 844px;
   float: left;
 }
 
@@ -159,7 +159,7 @@ font-size:1.3em;
   clear: both;
   margin-top: 48px;
   padding: 24px 0;
-  width: 744px;
+  width: 844px;
   
 }
 

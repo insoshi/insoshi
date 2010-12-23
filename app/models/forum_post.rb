@@ -70,6 +70,6 @@ class ForumPost < Post
   end
 
  def log_activity
-    add_activities(:item => self, :person => person)
+    add_activities(:item => self, :person => person, :group => self.topic.forum.group)
   end
 end

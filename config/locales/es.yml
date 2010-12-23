@@ -380,6 +380,7 @@ es:
 
   shared:
     minifeed:
+      activity: "Actividades" 
       whats_going_on: "Qué pasa"
     transact:
       for: "por"

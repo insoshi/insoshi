@@ -26,7 +26,7 @@ class Group < ActiveRecord::Base
   validates_format_of :asset, :with => /^[-\.a-z0-9]+$/i
   after_create :create_owner_membership
   after_create :create_forum
-  after_save :log_activity
+  after_create :log_activity
   
   index do 
     name description
