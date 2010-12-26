@@ -74,10 +74,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  def show_default
-    redirect_to group_path(current_person.default_group)
-  end
-
   def show
     case params[:tab]
     when 'forum'

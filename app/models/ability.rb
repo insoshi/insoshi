@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
   def initialize(person)
-    can [:read, :show_default, :create], Group
+    can [:read, :create], Group
     can [:new_req,:create_req], Group
     can [:new_offer,:create_offer], Group
     can [:update,:destroy], Group, :owner => person

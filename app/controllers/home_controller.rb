@@ -3,19 +3,7 @@ class HomeController < ApplicationController
   
   def index
     if logged_in?
-      @body = "home"
-      @person = current_person
-      @requested_memberships = current_person.requested_memberships
-      case params[:mode]
-      when 'dashboard'
-        @reqs = current_person.current_and_active_reqs
-        @bids = current_person.current_and_active_bids
-        @offers = current_person.current_offers
-      when 'graphs'
-        @num_months = 20
-      else
-        @feed = Activity.exchange_feed
-      end
+      redirect_to group_path(current_person.default_group)
     else
       @body = "blog"
       @posts = FeedPost.paginate(:all, :page => params[:page], :order => 'date_published DESC')
