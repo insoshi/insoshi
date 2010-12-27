@@ -6,6 +6,28 @@ $(function() {
   OSCURRENCY.routes = [];
   OSCURRENCY.tab = '';
 
+  $("#tabs").tabs({
+    select: function(event, ui) {
+      // even if you try calling select, this only gets called if it is not already selected 
+      if(ui.tab.hash.slice(0,2) != window.location.hash.slice(0,2)) { 
+        if(ui.tab.hash != '#tab_one')
+        {
+          window.location.hash = ui.tab.hash.slice(0,2);
+        }
+        else
+        {
+          // currently not refreshing content in first tab
+          window.location.hash = '';
+        }
+        OSCURRENCY.tab = ui.tab.hash.slice(0,2);
+      }
+    },
+    fx: {}
+    });
+
+  // render jquery tabs - they are created with "display: none" to prevent FOUC
+  $('ul.ui-tabs-nav').show();
+
   route(/^#e\/page=(\d+)/,                   '/groups/[:group_id]?tab=exchanges&page=[:1]');
   route(/^#r\/page=(\d+)/,                   '/groups/[:group_id]?tab=requests&page=[:1]');
   route(/^#o\/page=(\d+)/,                   '/groups/[:group_id]?tab=offers&page=[:1]');
@@ -108,25 +130,6 @@ $(function() {
     }
     return hash;
   }
-
-  $("#tabs").tabs({
-    select: function(event, ui) {
-      // even if you try calling select, this only gets called if it is not already selected 
-      if(ui.tab.hash.slice(0,2) != window.location.hash.slice(0,2)) { 
-        if(ui.tab.hash != '#tab_one')
-        {
-          window.location.hash = ui.tab.hash.slice(0,2);
-        }
-        else
-        {
-          // currently not refreshing content in first tab
-          window.location.hash = '';
-        }
-        OSCURRENCY.tab = ui.tab.hash.slice(0,2);
-      }
-    },
-    fx: {}
-    });
 
   $(window).hashchange( function() {
       var hash = location.hash;

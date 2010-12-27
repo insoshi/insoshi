@@ -30,9 +30,6 @@
         <div> 
           <p class="welcome">
             <%- if logged_in? -%>
-              Welcome, <%= h current_person.name %>!
-              (<%= link_to "Sign out", logout_path %>)
-              <br />
               <%- if current_person.admin? -%>
                 <%- if admin_view? -%>
                   <%= link_to("Standard view", home_path) %>
@@ -60,13 +57,6 @@
                 </ul>
               </li>
               <li class="middle_item">
-              <a href="#">Your Account</a>
-                <ul>
-                  <%= link_to "Profile", edit_person_path(current_person) %>
-                  <%= link_to "Inbox", messages_path %>
-                </ul>
-              </li>
-              <li class="right_item">
                 <a href="#">Help</a>
                 <ul class="active">
                   <li><%= link_to "about", about_path if !global_prefs.about.blank? %></li>
@@ -75,6 +65,17 @@
                   <li><%= link_to "contact", contact_path if !global_prefs.contact.blank? %></li>
                   <li><%= link_to "agreement", agreement_path if !global_prefs.agreement.blank? %></li>
                   <li><%= link_to "faq", questions_path if !global_prefs.questions.blank? %></li>
+                </ul>
+              </li>
+              <li class="profile_icon_item">
+                <%= image_link current_person %>
+              </li>
+              <li class="right_item">
+                <a href="#"><%= h current_person.name %></a>
+                <ul>
+                  <%= link_to "Profile", edit_person_path(current_person) %>
+                  <%= link_to "Inbox", messages_path %>
+                  <%= link_to "Sign out", logout_path %>
                 </ul>
               </li>
             </ul>

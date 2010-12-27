@@ -203,12 +203,22 @@ ul li.right_item {
   padding-left: 0px;
 }
 
+ul li.middle_item {
+  width: 50px;
+  padding-left: 0px;
+}
+
+ul li.profile_icon_item {
+  width: 40px;
+  padding-left: 0px;
+}
+
 #sfmenu li.left_item a {
   width: 120px;
 }
 
 #sfmenu li.right_item a {
-  width: 50px;
+  width: 120px;
 }
 
 #sfmenu li ul {

@@ -30,9 +30,10 @@ module TabsHelper
     end
     
     private #  ---------------------------------------------------------------------------
-    
+
+    # XXX note "display: none" to prevent possible FOUC
     def render_tabs
-      content_tag :ul do
+      content_tag :ul, :style => "display: none;" do
         @tabs.collect do |tab|
           content_tag( :li, link_to( content_tag( :span, tab[1] ), "##{tab[0]}" ) )
         end.join
