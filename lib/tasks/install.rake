@@ -21,11 +21,13 @@ task :install => :environment do |t|
                       :unit => 'hours',
                       :asset => 'hours',
                       :owner => p,
-                      :mandatory => true,
                       :adhoc_currency => true
   }
 
   g = Group.create!(group_attributes)
+  # mandatory is attr protected
+  g.mandatory = true
+  g.save
   pref.default_group_id = g.id
   pref.save!
 
