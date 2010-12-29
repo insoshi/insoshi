@@ -157,7 +157,6 @@ class Person < ActiveRecord::Base
 
   before_create :create_blog, :check_config_for_deactivation
   before_create :set_default_group
-  after_create :create_account
   after_create :create_address
   after_create :join_mandatory_groups
   before_save :update_group_letter
@@ -379,13 +378,6 @@ class Person < ActiveRecord::Base
   end
 
   ## Account helpers
-
-  def create_account
-    account = Account.new( :name => 'personal' )
-    account.balance = Account::INITIAL_BALANCE 
-    account.person = self
-    account.save
-  end
 
   def account(group)
     accounts.first(:conditions => ['group_id = ?', group.id])
