@@ -1,4 +1,5 @@
 class AccountsController < ApplicationController
+  before_filter :login_or_oauth_required
   load_resource :person
   load_and_authorize_resource :account, :through => :person
 
