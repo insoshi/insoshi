@@ -2,12 +2,15 @@ class ReqsController < ApplicationController
   skip_before_filter :require_activation, :only => [:show, :index]
   before_filter :login_required, :except => [:show, :index]
   before_filter :login_or_oauth_required, :only => [:show, :index]
+  load_resource :group
+  load_and_authorize_resource :req, :through => :group, :shallow => true
   before_filter :correct_person_and_no_accept_required, :only => [ :edit, :update ]
   before_filter :correct_person_and_no_commitment_required, :only => [ :destroy ]
 
   # GET /reqs
   # GET /reqs.xml
   def index
+=begin
     if params[:filter]
       if "all" == params[:filter]
         @reqs = Req.all_active(params[:page])
@@ -17,9 +20,14 @@ class ReqsController < ApplicationController
     else
       @reqs = Req.current_and_active(params[:page])
     end
+=end
+    @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
+    @reqs = Req.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE)
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.js
+      # format.html # index.html.erb
       format.xml  { render :xml => @reqs }
     end
   end
@@ -49,12 +57,10 @@ class ReqsController < ApplicationController
   # GET /reqs/new
   # GET /reqs/new.xml
   def new
-    @req = Req.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-    @groups = current_person.groups.delete_if {|g| !g.adhoc_currency?}
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.js
       format.xml  { render :xml => @req }
     end
   end
@@ -68,24 +74,26 @@ class ReqsController < ApplicationController
   # POST /reqs
   # POST /reqs.xml
   def create
-    @req = Req.new(params[:req])
+    #@req = Req.new(params[:req])
+    @req.group = @group
 
     if @req.due_date.blank?
       @req.due_date = 7.days.from_now
     else
       @req.due_date += 1.day - 1.second # make due date at end of day
     end
-    @req.person_id = current_person.id
+    @req.person = current_person
 
     respond_to do |format|
       if @req.save
-        flash[:success] = t('success_request_created')
-        format.html { redirect_to(@req) }
+        flash[:notice] = t('success_request_created')
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+        format.js
         format.xml  { render :xml => @req, :status => :created, :location => @req }
       else
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-        @groups = current_person.groups.delete_if {|g| !g.adhoc_currency?}
-        format.html { render :action => "new" }
+        format.js { render :action => "new" }
         format.xml  { render :xml => @req.errors, :status => :unprocessable_entity }
       end
     end

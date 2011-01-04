@@ -5,19 +5,17 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :transacts, :as => "transacts/:asset"
 
-  map.resources :groups, 
+  map.resources :groups, :has_many => [:offers,:reqs], :shallow => true, 
     :member => { :join => :post, 
                  :leave => :post, 
-                 :members => :get, 
-                 :new_req => :get,
-                 :create_req => :post,
-                 :new_offer => :get,
-                 :create_offer => :post,
+                 :exchanges => :get,
+                 :members => :get,
                  :photos => :get,
                  :new_photo => :post,
                  :save_photo => :post,
                  :delete_photo => :delete } do |group|
     group.resources :memberships
+    group.resource :forum
   end
 
   map.resources :broadcast_emails

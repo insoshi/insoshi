@@ -1,0 +1,11 @@
+<span class='category_filter'>by category
+<%= 
+    collection_select( filtered_obj, 
+                       'category_ids', 
+                       @all_categories, 
+                       :id, 
+                       :long_name, 
+                       { :include_blank => true, :selected => selected_category }
+                     ) 
+%>
+</span>

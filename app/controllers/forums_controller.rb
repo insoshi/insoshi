@@ -1,16 +1,14 @@
 class ForumsController < ApplicationController
+  load_resource :group
   
   before_filter :login_required, :setup
 
-  def index
-    @forum = Forum.first(:conditions => "group_id is NULL")
-    redirect_to forum_url(@forum) and return
-  end
-
   def show
-    @forum = Forum.find(params[:id])
-    #@topics = @forum.topics.paginate(:page => params[:page])
+    @forum = @group.forum
     @topics = Topic.find_recently_active(@forum, params[:page]) 
+    respond_to do |format|
+      format.js
+    end
   end
   
   private

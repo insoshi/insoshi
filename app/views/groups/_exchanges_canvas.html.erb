@@ -1,7 +1,7 @@
       <h2><%= t('groups.show.community_exchanges') %><%= waiting_image %></h2>
-      <%= will_paginate(@exchanges) %>
+      <%= will_paginate(@exchanges, :params => {:action => :exchanges}) %>
       <ul class="list activity full">
         <%= render :partial => 'exchange', :collection => @exchanges %>
       </ul>
       <div style='clear:both;'></div>
-      <%= will_paginate(@exchanges) %>
+      <%= will_paginate(@exchanges, :params => {:action => :exchanges}) %>

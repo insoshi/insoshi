@@ -1,8 +1,0 @@
-<%= render :partial => 'categories', :locals => {:filtered_obj => 'req', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
-<span class='req small' style='float:right;'><%= link_to "New req", new_req_group_path(@group), {:class => 'show-follow'} %></span>
-      <h2><%= t('reqs.index.header') %><%= waiting_image %></h2>
-      <%= will_paginate(@reqs) %>
-      <ul class="list activity full">
-        <%= render :partial => '/reqs/req', :collection => @reqs %>
-      </ul>
-      <%= will_paginate(@reqs) %>

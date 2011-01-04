@@ -9,7 +9,7 @@ class Ability
       membership = Membership.mem(person,group)
       membership && membership.is?(:admin)
     end
-    can :members, Group
+    can [:members,:exchanges], Group
     can [:new_photo,:save_photo,:delete_photo], Group, :owner => person
 
     can :read, Membership
@@ -23,6 +23,18 @@ class Ability
     can :update, Account do |account|
       person.is?(:admin,account.group)
     end
+
+    can :read, Offer
+    can :create, Offer do |offer|
+      Membership.mem(person,offer.group)
+    end
+    can [:update,:destroy], Offer, :person => person
+
+    can :read, Req
+    can :create, Req do |req|
+      Membership.mem(person,req.group)
+    end
+    can [:update,:destroy], Req, :person => person
 
     can :read, Exchange
     can :destroy, Exchange, :customer => person

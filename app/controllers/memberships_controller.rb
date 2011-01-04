@@ -9,6 +9,18 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def index
+    @group = Group.find(params[:group_id])
+
+    @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
+    @memberships = Membership.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE)
+    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def show
     @person = @membership.person
     @account = @person.account(@membership.group)

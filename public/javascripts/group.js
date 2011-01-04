@@ -9,18 +9,7 @@ $(function() {
   $("#tabs").tabs({
     select: function(event, ui) {
       // even if you try calling select, this only gets called if it is not already selected 
-      if(ui.tab.hash.slice(0,2) != window.location.hash.slice(0,2)) { 
-        if(ui.tab.hash != '#tab_one')
-        {
-          window.location.hash = ui.tab.hash.slice(0,2);
-        }
-        else
-        {
-          // currently not refreshing content in first tab
-          window.location.hash = '';
-        }
-        OSCURRENCY.tab = ui.tab.hash.slice(0,2);
-      }
+      OSCURRENCY.tab = ui.tab.hash;
     },
     fx: {}
     });
@@ -28,34 +17,39 @@ $(function() {
   // render jquery tabs - they are created with "display: none" to prevent FOUC
   $('ul.ui-tabs-nav').show();
 
-  route(/^#e\/page=(\d+)/,                   '/groups/[:group_id]?tab=exchanges&page=[:1]');
-  route(/^#r\/page=(\d+)/,                   '/groups/[:group_id]?tab=requests&page=[:1]');
-  route(/^#o\/page=(\d+)/,                   '/groups/[:group_id]?tab=offers&page=[:1]');
-  route(/^#p\/page=(\d+)/,                   '/groups/[:group_id]?tab=people&page=[:1]');
+  route('#exchanges',/^#exchanges\/page=(\d+)/,                     '/groups/[:group_id]/exchanges?page=[:1]');
+  route('#requests', /^#reqs\/page=(\d+)/,                          '/groups/[:group_id]/reqs?page=[:1]');
+  route('#offers',   /^#offers\/page=(\d+)/,                        '/groups/[:group_id]/offers?page=[:1]');
+  route('#people',   /^#memberships\/page=(\d+)/,                   '/groups/[:group_id]/memberships?page=[:1]');
 
-  route(/^#e\/(\d+)$/,                       '/exchanges/[:1]');
-  route(/^#r\/(\d+)$/,                       '/reqs/[:1]');
-  route(/^#new_req$/,                        '/groups/[:group_id]/new_req');
-  route(/^#o\/(\d+)$/,                       '/offers/[:1]');
-  route(/^#new_offer$/,                      '/groups/[:group_id]/new_offer');
-  route(/^#p\/(.+)\/e\/new$/,                '/people/[:1]/exchanges/new?group='+OSCURRENCY.group_id);
-  route(/^#p\/(.+)\/e\/new\/offer=(\d+)$/,   '/people/[:1]/exchanges/new?offer=[:2]');
-  route(/^#p\/(.+)\/m\/new$/,                '/people/[:1]/messages/new');
-  route(/^#p\/(.+)\/a\/(\d+)/,               '/people/[:1]/accounts/[:2]');
-  route(/^#m\/(\d+)$/,                       '/memberships/[:1]');
-  route(/^#f\/(\d+)\/t\/(\d+)$/,             '/forums/[:1]/topics/[:2]');
-  route(/^#f\/(\d+)\/t\/(\d+)\/page=(\d+)$/, '/forums/[:1]/topics/[:2]?page=[:3]');
-  route(/^#e$/,                              '/groups/[:group_id]?tab=exchanges');
-  route(/^#f$/,                              '/groups/[:group_id]?tab=forum');
-  route(/^#r$/,                              '/groups/[:group_id]?tab=requests');
-  route(/^#r\/category_id=(\d+)$/,           '/groups/[:group_id]?tab=requests&category_id=[:1]');
-  route(/^#r\/category_id=(\d+)\/page=(\d+)$/,'/groups/[:group_id]?tab=requests&category_id=[:1]&page=[:2]');
-  route(/^#o$/,                              '/groups/[:group_id]?tab=offers');
-  route(/^#o\/category_id=(\d+)$/,           '/groups/[:group_id]?tab=offers&category_id=[:1]');
-  route(/^#o\/category_id=(\d+)\/page=(\d+)$/,'/groups/[:group_id]?tab=offers&category_id=[:1]&page=[:2]');
-  route(/^#p$/,                              '/groups/[:group_id]?tab=people');
-  route(/^#p\/category_id=(\d+)$/,           '/groups/[:group_id]?tab=people&category_id=[:1]');
-  route(/^#p\/category_id=(\d+)\/page=(\d+)$/,'/groups/[:group_id]?tab=people&category_id=[:1]&page=[:2]');
+  route('#requests', /^#reqs\/(\d+)$/,                              '/reqs/[:1]');
+  route('#requests', /^#reqs\/new$/,                                '/groups/[:group_id]/reqs/new');
+  route('#offers',   /^#offers\/(\d+)$/,                            '/offers/[:1]');
+  route('#offers',   /^#offers\/new$/,                              '/groups/[:group_id]/offers/new');
+
+  route('#people',   /^#people\/(.+)\/exchanges\/new$/,             '/people/[:1]/exchanges/new?group='+OSCURRENCY.group_id);
+  route('#offers',   /^#people\/(.+)\/exchanges\/new\/offer=(\d+)$/,'/people/[:1]/exchanges/new?offer=[:2]');
+  route('#people',   /^#people\/(.+)\/messages\/new$/,              '/people/[:1]/messages/new');
+  route('#people',   /^#people\/(.+)\/accounts\/(\d+)/,             '/people/[:1]/accounts/[:2]');
+
+  route('#people',   /^#memberships\/(\d+)$/,                       '/memberships/[:1]');
+  route('#forum',    /^#forums\/(\d+)\/topics\/(\d+)$/,             '/forums/[:1]/topics/[:2]');
+  route('#forum',    /^#forums\/(\d+)\/topics\/(\d+)\/page=(\d+)$/, '/forums/[:1]/topics/[:2]?page=[:3]');
+  route('#exchanges',/^#exchanges$/,                                '/groups/[:group_id]/exchanges');
+  route('#forum',    /^#forum$/,                                    '/groups/[:group_id]/forum');
+
+  // request hashes are inconsistent since controller is reqs
+  route('#requests', /^#requests$/,                                 '/groups/[:group_id]/reqs');
+  route('#requests', /^#requests\/category_id=(\d+)$/,              '/groups/[:group_id]/reqs?category_id=[:1]');
+  route('#requests', /^#reqs\/category_id=(\d+)\/page=(\d+)$/,      '/groups/[:group_id]/reqs?category_id=[:1]&page=[:2]');
+
+  route('#offers',   /^#offers$/,                                   '/groups/[:group_id]/offers');
+  route('#offers',   /^#offers\/category_id=(\d+)$/,                '/groups/[:group_id]/offers?category_id=[:1]');
+  route('#offers',   /^#offers\/category_id=(\d+)\/page=(\d+)$/,    '/groups/[:group_id]/offers?category_id=[:1]&page=[:2]');
+
+  route('#people',   /^#people$/,                                   '/groups/[:group_id]/memberships');
+  route('#people',   /^#people\/category_id=(\d+)$/,                '/groups/[:group_id]/memberships?category_id=[:1]');
+  route('#people',   /^#people\/category_id=(\d+)\/page=(\d+)$/,    '/groups/[:group_id]/memberships?category_id=[:1]&page=[:2]');
 
   function find_group() {
     path = window.location.pathname;
@@ -74,24 +68,27 @@ $(function() {
     return params_obj;
   }
 
-  function route(path,url) {
-    r = {'path':path,'url':url};
+  function route(tab,path,url) {
+    r = {'tab':tab,'path':path,'url':url};
     OSCURRENCY.routes.push(r);
   }
 
   function resolve(path) {
     var a = [];
     var url = '';
+    var tab = '';
     for(i=0;i<OSCURRENCY.routes.length;i++) {
       r = OSCURRENCY.routes[i];
       if(a = path.match(r['path'])) {
+        tab = r['tab'];
         url = r['url'].replace(/\[:group_id\]/,OSCURRENCY.group_id);
         for(j=1;j<a.length;j++) {
           url = url.replace('[:'+j+']',a[j]);
         }
-        return url;
+        return [tab,url];
       }
     }
+    return ['',''];
   }
 
   function parse_url(url) {
@@ -109,11 +106,11 @@ $(function() {
     hash = '#';
     a = path.split('/');
     for(i=0;i<parseInt(a.length/2);i++) {
-      if(i>0) {
+      if(i>0 && (hash.length > 1)) {
         hash += '/';
       }
       if(a[i*2] != 'groups') {
-        hash += a[i*2].slice(0,1) + '/' + a[i*2+1];
+        hash += a[i*2] + '/' + a[i*2+1];
       }
     }
     if(parseInt(a.length/2) != a.length/2) {
@@ -123,9 +120,11 @@ $(function() {
       hash += a[a.length - 1];
     }
     if(query != undefined) {
-      // XXX assuming there is just one query parameter
-      if(query.split('=')[0] != 'group') {
-        hash += '/' + query;
+      var params = query.split('&');
+      for(i=0;i<params.length;i++) {
+        if(params[i].split('=')[0] != 'group') {
+          hash += '/' + params[i];
+        }
       }
     }
     return hash;
@@ -134,15 +133,15 @@ $(function() {
   $(window).hashchange( function() {
       var hash = location.hash;
       var js_url = "";
+      var tab = "";
       if(hash.length != 0) {
         var t = $("#tabs");
-        var tab = hash.split('/')[0];
+        [tab, js_url] = resolve(hash);
         if(tab != OSCURRENCY.tab) {
           // for responding to back/forward buttons
           t.tabs('select',tab);
         }
         $('span.wait').show();
-        js_url = resolve(hash);
         if(js_url.length != 0) {
           $.getScript(js_url);
         }
@@ -207,61 +206,44 @@ $(function() {
     });
 
   $('.pagination a').live('click',function() {
-    params = get_url_params(this.href);
-    if(params['tab']) {
-      str = '#' + params['tab'].slice(0,1)
-      if(params['category_id']) {
-        str += '/category_id=' + params['category_id'];
-      }
-      str += '/page=' + params['page'];
-    } else {
-      str = url2hash(this.href);
-    }
+    str = url2hash(this.href);
     window.location.hash = str;
     return false;
     });
 
   $('a[href=#forum]').bind('click',function() {
     $('#forum_form').html('');
-    if('#f' == OSCURRENCY.tab) {
-      window.location.hash = '#f';
+    if('#forum' == OSCURRENCY.tab) {
+      window.location.hash = '#forum';
     }
     });
 
   $('a[href=#requests]').bind('click',function() {
-      if('#r' == OSCURRENCY.tab) {
-        window.location.hash = '#r';
-      }
+      window.location.hash = '#requests';
     });
 
   $('a[href=#offers]').bind('click',function() {
-      if('#o' == OSCURRENCY.tab) {
-        window.location.hash = '#o';
-      }
+      window.location.hash = '#offers';
     });
 
   $('a[href=#exchanges]').bind('click',function() {
-      if('#e' == OSCURRENCY.tab) {
-        window.location.hash = '#e';
-      }
+      window.location.hash = '#exchanges';
     });
 
   $('a[href=#people]').bind('click',function() {
-      if('#p' == OSCURRENCY.tab) {
-        window.location.hash = '#p';
-      }
+      window.location.hash = '#people';
     });
 
   $('.category_filter #req_category_ids').live('change',function() {
-    window.location.hash = '#r/category_id=' + this.value;
+    window.location.hash = '#requests/category_id=' + this.value;
     });
 
   $('.category_filter #offer_category_ids').live('change',function() {
-    window.location.hash = '#o/category_id=' + this.value;
+    window.location.hash = '#offers/category_id=' + this.value;
     });
 
   $('.category_filter #person_category_ids').live('change',function() {
-    window.location.hash = '#p/category_id=' + this.value;
+    window.location.hash = '#people/category_id=' + this.value;
     });
 
 

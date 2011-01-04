@@ -622,6 +622,10 @@ input#person_openid_identifier, input#person_session_openid_identifier {
   background: none;
 }
 
+.req, .offer {
+  margin: 10px;
+}
+
 #flash_notice, #flash_error {
   padding: 5px 8px;
   margin: 10px 0;

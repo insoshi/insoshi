@@ -49,6 +49,20 @@ describe Group do
       end
     end
 
+    describe 'offers made by people' do
+      it "should not allow a non-member of a group to create an offer" do
+        @p3 = people(:buzzard)
+        @ability_nonmember = Ability.new(@p3)
+        @offer = Offer.new(:name => "Pizza", :group => @g, :price => 5, :expiration_date => Date.today,:total_available => 1, :person => @p3)
+        @ability_nonmember.should_not be_able_to(:create,@offer)
+      end
+
+      it "should allow a member of a group to create an offer" do
+        @offer = Offer.new(:name => "Pizza", :group => @g, :price => 5, :expiration_date => Date.today,:total_available => 1, :person => @p2)
+        @ability.should be_able_to(:create,@offer)
+      end
+    end
+
     describe 'exchanges made by members' do
       before(:each) do
         @req = Req.create!(:name => 'Generic',:estimated_hours => 0, :group => @g, :due_date => Time.now, :person => @p2, :active => false)
