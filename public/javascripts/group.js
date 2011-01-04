@@ -4,6 +4,7 @@ $(function() {
 
   OSCURRENCY.group_id = find_group();
   OSCURRENCY.routes = [];
+  OSCURRENCY.tab_prefix = '#tab_';
   OSCURRENCY.tab = '';
 
   $("#tabs").tabs({
@@ -17,39 +18,39 @@ $(function() {
   // render jquery tabs - they are created with "display: none" to prevent FOUC
   $('ul.ui-tabs-nav').show();
 
-  route('#exchanges',/^#exchanges\/page=(\d+)/,                     '/groups/[:group_id]/exchanges?page=[:1]');
-  route('#requests', /^#reqs\/page=(\d+)/,                          '/groups/[:group_id]/reqs?page=[:1]');
-  route('#offers',   /^#offers\/page=(\d+)/,                        '/groups/[:group_id]/offers?page=[:1]');
-  route('#people',   /^#memberships\/page=(\d+)/,                   '/groups/[:group_id]/memberships?page=[:1]');
+  route('exchanges',/^#exchanges\/page=(\d+)/,                     '/groups/[:group_id]/exchanges?page=[:1]');
+  route('requests', /^#reqs\/page=(\d+)/,                          '/groups/[:group_id]/reqs?page=[:1]');
+  route('offers',   /^#offers\/page=(\d+)/,                        '/groups/[:group_id]/offers?page=[:1]');
+  route('people',   /^#memberships\/page=(\d+)/,                   '/groups/[:group_id]/memberships?page=[:1]');
 
-  route('#requests', /^#reqs\/(\d+)$/,                              '/reqs/[:1]');
-  route('#requests', /^#reqs\/new$/,                                '/groups/[:group_id]/reqs/new');
-  route('#offers',   /^#offers\/(\d+)$/,                            '/offers/[:1]');
-  route('#offers',   /^#offers\/new$/,                              '/groups/[:group_id]/offers/new');
+  route('requests', /^#reqs\/(\d+)$/,                              '/reqs/[:1]');
+  route('requests', /^#reqs\/new$/,                                '/groups/[:group_id]/reqs/new');
+  route('offers',   /^#offers\/(\d+)$/,                            '/offers/[:1]');
+  route('offers',   /^#offers\/new$/,                              '/groups/[:group_id]/offers/new');
 
-  route('#people',   /^#people\/(.+)\/exchanges\/new$/,             '/people/[:1]/exchanges/new?group='+OSCURRENCY.group_id);
-  route('#offers',   /^#people\/(.+)\/exchanges\/new\/offer=(\d+)$/,'/people/[:1]/exchanges/new?offer=[:2]');
-  route('#people',   /^#people\/(.+)\/messages\/new$/,              '/people/[:1]/messages/new');
-  route('#people',   /^#people\/(.+)\/accounts\/(\d+)/,             '/people/[:1]/accounts/[:2]');
+  route('people',   /^#people\/(.+)\/exchanges\/new$/,             '/people/[:1]/exchanges/new?group='+OSCURRENCY.group_id);
+  route('offers',   /^#people\/(.+)\/exchanges\/new\/offer=(\d+)$/,'/people/[:1]/exchanges/new?offer=[:2]');
+  route('people',   /^#people\/(.+)\/messages\/new$/,              '/people/[:1]/messages/new');
+  route('people',   /^#people\/(.+)\/accounts\/(\d+)/,             '/people/[:1]/accounts/[:2]');
 
-  route('#people',   /^#memberships\/(\d+)$/,                       '/memberships/[:1]');
-  route('#forum',    /^#forums\/(\d+)\/topics\/(\d+)$/,             '/forums/[:1]/topics/[:2]');
-  route('#forum',    /^#forums\/(\d+)\/topics\/(\d+)\/page=(\d+)$/, '/forums/[:1]/topics/[:2]?page=[:3]');
-  route('#exchanges',/^#exchanges$/,                                '/groups/[:group_id]/exchanges');
-  route('#forum',    /^#forum$/,                                    '/groups/[:group_id]/forum');
+  route('people',   /^#memberships\/(\d+)$/,                       '/memberships/[:1]');
+  route('forum',    /^#forums\/(\d+)\/topics\/(\d+)$/,             '/forums/[:1]/topics/[:2]');
+  route('forum',    /^#forums\/(\d+)\/topics\/(\d+)\/page=(\d+)$/, '/forums/[:1]/topics/[:2]?page=[:3]');
+  route('exchanges',/^#exchanges$/,                                '/groups/[:group_id]/exchanges');
+  route('forum',    /^#forum$/,                                    '/groups/[:group_id]/forum');
 
   // request hashes are inconsistent since controller is reqs
-  route('#requests', /^#requests$/,                                 '/groups/[:group_id]/reqs');
-  route('#requests', /^#requests\/category_id=(\d+)$/,              '/groups/[:group_id]/reqs?category_id=[:1]');
-  route('#requests', /^#reqs\/category_id=(\d+)\/page=(\d+)$/,      '/groups/[:group_id]/reqs?category_id=[:1]&page=[:2]');
+  route('requests', /^#requests$/,                                 '/groups/[:group_id]/reqs');
+  route('requests', /^#requests\/category_id=(\d+)$/,              '/groups/[:group_id]/reqs?category_id=[:1]');
+  route('requests', /^#reqs\/category_id=(\d+)\/page=(\d+)$/,      '/groups/[:group_id]/reqs?category_id=[:1]&page=[:2]');
 
-  route('#offers',   /^#offers$/,                                   '/groups/[:group_id]/offers');
-  route('#offers',   /^#offers\/category_id=(\d+)$/,                '/groups/[:group_id]/offers?category_id=[:1]');
-  route('#offers',   /^#offers\/category_id=(\d+)\/page=(\d+)$/,    '/groups/[:group_id]/offers?category_id=[:1]&page=[:2]');
+  route('offers',   /^#offers$/,                                   '/groups/[:group_id]/offers');
+  route('offers',   /^#offers\/category_id=(\d+)$/,                '/groups/[:group_id]/offers?category_id=[:1]');
+  route('offers',   /^#offers\/category_id=(\d+)\/page=(\d+)$/,    '/groups/[:group_id]/offers?category_id=[:1]&page=[:2]');
 
-  route('#people',   /^#people$/,                                   '/groups/[:group_id]/memberships');
-  route('#people',   /^#people\/category_id=(\d+)$/,                '/groups/[:group_id]/memberships?category_id=[:1]');
-  route('#people',   /^#people\/category_id=(\d+)\/page=(\d+)$/,    '/groups/[:group_id]/memberships?category_id=[:1]&page=[:2]');
+  route('people',   /^#people$/,                                   '/groups/[:group_id]/memberships');
+  route('people',   /^#people\/category_id=(\d+)$/,                '/groups/[:group_id]/memberships?category_id=[:1]');
+  route('people',   /^#people\/category_id=(\d+)\/page=(\d+)$/,    '/groups/[:group_id]/memberships?category_id=[:1]&page=[:2]');
 
   function find_group() {
     path = window.location.pathname;
@@ -57,19 +58,8 @@ $(function() {
     return a[2];
   }
 
-  function get_url_params(url) {
-    var query_string = url.split('?')[1];
-    var params = query_string.split('&');
-    var params_obj = {};
-    for(i=0;i<params.length;i++) {
-      a = params[i].split('=');
-      params_obj[a[0]] = a[1];
-    }
-    return params_obj;
-  }
-
   function route(tab,path,url) {
-    r = {'tab':tab,'path':path,'url':url};
+    r = {'tab':OSCURRENCY.tab_prefix+tab,'path':path,'url':url};
     OSCURRENCY.routes.push(r);
   }
 
@@ -211,26 +201,24 @@ $(function() {
     return false;
     });
 
-  $('a[href=#forum]').bind('click',function() {
+  $('a[href=' + OSCURRENCY.tab_prefix + 'forum]').bind('click',function() {
     $('#forum_form').html('');
-    if('#forum' == OSCURRENCY.tab) {
-      window.location.hash = '#forum';
-    }
+    window.location.hash = '#forum';
     });
 
-  $('a[href=#requests]').bind('click',function() {
+  $('a[href=' + OSCURRENCY.tab_prefix + 'requests]').bind('click',function() {
       window.location.hash = '#requests';
     });
 
-  $('a[href=#offers]').bind('click',function() {
+  $('a[href=' + OSCURRENCY.tab_prefix + 'offers]').bind('click',function() {
       window.location.hash = '#offers';
     });
 
-  $('a[href=#exchanges]').bind('click',function() {
+  $('a[href=' + OSCURRENCY.tab_prefix + 'exchanges]').bind('click',function() {
       window.location.hash = '#exchanges';
     });
 
-  $('a[href=#people]').bind('click',function() {
+  $('a[href=' + OSCURRENCY.tab_prefix + 'people]').bind('click',function() {
       window.location.hash = '#people';
     });
 
