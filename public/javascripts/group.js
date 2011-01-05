@@ -124,9 +124,12 @@ $(function() {
       var hash = location.hash;
       var js_url = "";
       var tab = "";
+      var a = [];
       if(hash.length != 0) {
         var t = $("#tabs");
-        [tab, js_url] = resolve(hash);
+        a = resolve(hash);
+        tab = a[0];
+        js_url = a[1];
         if(tab != OSCURRENCY.tab) {
           // for responding to back/forward buttons
           t.tabs('select',tab);
