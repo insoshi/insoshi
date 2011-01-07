@@ -217,6 +217,13 @@ ul li.profile_icon_item {
   width: 120px;
 }
 
+#sfmenu a#moregroups {
+  background: #FFF6BF; 
+  color: #514721; 
+  border: 1px solid #FFD324;
+  width: 45px;
+}
+
 #sfmenu li.right_item a {
   width: 120px;
 }
