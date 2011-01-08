@@ -65,7 +65,19 @@
     <h3><%= t('groups.members.no_members_yet') %></h3>
   <% end -%>
 
-  <h2><%= t('groups.members.created_by') %></h2>
+  <h3><%= t('groups.members.admins') %></h3>
+  <ul class="grid contacts medium">
+    <%- @group.admins.each do |admin| -%>
+      <li class="vcard contact">
+      <%= image_link admin, :image_options => { :class => "photo" },
+                            :link_options => { :class => "url" },
+                            :vcard => true,
+                            :image => :bounded_icon %>
+      </li>
+    <%- end -%>
+  </ul>
+
+  <h3><%= t('groups.members.created_by') %></h3>
   <ul class="grid contacts medium">
     <li class="vcard contact">
       <%= image_link @group.owner, :image_options => { :class => "photo" },
