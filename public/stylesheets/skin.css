@@ -191,12 +191,15 @@ p.welcome {
 }
 
 #sfmenu a {
-  display: block;
+  display: inline-block;
   font-size: 12px;
   text-decoration:underline;
   color: #4F4F4F;
   padding: 1px;
-  width: 87px;
+}
+
+#sfmenu ul li {
+  padding: 4px;
 }
 
 ul li.right_item {
@@ -214,7 +217,11 @@ ul li.profile_icon_item {
 }
 
 #sfmenu li.left_item a {
-  width: 120px;
+  width: 155px;
+}
+
+#sfmenu li.left_item li {
+  width: 180px;
 }
 
 #sfmenu a#moregroups {
@@ -236,6 +243,10 @@ ul li.profile_icon_item {
 
 #sfmenu li:hover ul, #sfmenu li ul:hover {
   left:auto;
+}
+
+.ui-icon {
+  display: inline-block !important;
 }
 
 /* Site elements */
