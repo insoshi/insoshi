@@ -2,7 +2,7 @@
   <% tabs_for do |tab| %>
     <% tab.create('tab_one', t('groups.show.home')) do %>
       <div class="profile vcard">
-        <%- if group_owner?(current_person,@group) -%>
+        <%- if @membership.is?(:admin) -%>
           <%- if @group.description.blank? -%>
             <div class="error">
               <%= t('groups.show.blank_description') %>

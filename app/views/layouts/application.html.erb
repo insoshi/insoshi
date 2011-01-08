@@ -53,7 +53,7 @@
               <li class="left_item">
                 <a href="#">Your Groups</a>
                 <ul>
-                  <%= render :partial => 'shared/group', :collection => current_person.groups %>
+                  <%= render :partial => 'shared/membership', :collection => current_person.memberships.all(:include => 'group', :order => 'groups.name ASC') %>
                   <li><%= link_to "more...", groups_path, :id => 'moregroups' %></li>
                 </ul>
               </li>

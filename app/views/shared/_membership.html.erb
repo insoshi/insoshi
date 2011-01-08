@@ -1,0 +1,2 @@
+<% icon_class = membership.is?(:admin) ? 'ui-icon-wrench' : 'ui-icon-person' %>
+<li><span class='ui-icon <%= icon_class %>'></span><span class='small'><%= group_link(membership.group) %></span></li>
