@@ -65,11 +65,6 @@
       
         <div class="form_row">
           <p>
-          <label for="req_notifications"
-                 class="checkbox"><%= t('people.edit.requests_in_my_service_categories') %></label>
-          <%= f.check_box :connection_notifications %>
-          </p>
-          <p>
           <label for="message_notifications"
                  class="checkbox"><%= t('people.edit.messages') %></label>
           <%= f.check_box :message_notifications %>
@@ -78,11 +73,6 @@
           <label for="wall_comment_notifications"
                  class="checkbox"><%= t('people.edit.wall_comments') %></label>
           <%= f.check_box :wall_comment_notifications %>
-          </p>
-          <p>
-          <label for="forum_notifications"
-                 class="checkbox"><%= t('people.edit.forum_posts') %></label>
-          <%= f.check_box :forum_notifications %>
           </p>
         </div>
       <%- end -%>

@@ -4,12 +4,15 @@ class Membership < ActiveRecord::Base
   
   named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
   named_scope :active, :include => :person, :conditions => {'people.deactivated' => false}
+  named_scope :listening, :include => :member_preference, :conditions => {'member_preferences.forum_notifications' => true}
   
   belongs_to :group
   belongs_to :person
+  has_one :member_preference
   has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Membership'" #, :dependent => :destroy
 
   validates_presence_of :person_id, :group_id
+  after_create :create_member_preference
   
   # Status codes.
   ACCEPTED  = 0
@@ -42,6 +45,10 @@ class Membership < ActiveRecord::Base
 
   def account
     group.adhoc_currency? ? person.account(group) : nil
+  end
+
+  def create_member_preference
+    MemberPreference.create(:membership => self)
   end
 
   # Accept a membership request (instance method).
@@ -85,8 +92,7 @@ class Membership < ActiveRecord::Base
     # Make a pending membership request.
     def request(person, group, send_mail = nil)
       if send_mail.nil?
-        send_mail = global_prefs.email_notifications? &&
-                    group.owner.connection_notifications?
+        send_mail = global_prefs.email_notifications?
       end
       if person.groups.include?(group) or Membership.exists?(person, group)
         nil

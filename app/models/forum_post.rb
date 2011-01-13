@@ -44,14 +44,7 @@ class ForumPost < Post
   end
 
   def do_send_forum_notifications
-    group = topic.forum.group
-    if !group
-      peeps = Person.all_listening_to_forum_posts
-    else
-      # XXX add a notifications boolean to memberships table
-      #
-      peeps = group.people
-    end
+    peeps = topic.forum.group.memberships.listening.map {|m| m.person}
     
     peeps.each do |peep|
       logger.info("forum_post: sending email to #{peep.id}: #{peep.name}")

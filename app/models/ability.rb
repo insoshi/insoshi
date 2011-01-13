@@ -19,6 +19,10 @@ class Ability
       person.is?(:admin,membership.group)
     end
 
+    can :update, MemberPreference do |member_preference|
+      member_preference.membership.person == person
+    end
+
     can :read, Account
     can :update, Account do |account|
       person.is?(:admin,account.group)

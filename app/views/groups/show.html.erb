@@ -1,27 +1,8 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'group' } %>
   <% tabs_for do |tab| %>
-    <% tab.create('tab_one', t('groups.show.home')) do %>
-      <div class="profile vcard">
-        <%- if @membership.is?(:admin) -%>
-          <%- if @group.description.blank? -%>
-            <div class="error">
-              <%= t('groups.show.blank_description') %>
-              <%= link_to t('groups.show.add_description'),
-                      edit_group_path(@group) %>
-            </div>
-          <%- else -%>
-            <div class="notice">
-              <%= t('groups.show.you_are_viewing_your_group') %>
-              <%= link_to t('groups.show.click_here_to_edit_it'), edit_group_path(@group) %>
-            </div>
-          <%- end -%>
-        <%- end -%>
-        <%= render :partial => 'shared/minifeed' %>
-        <% if @group.adhoc_currency? %>
-          <%= render :partial => 'shared/graphs' %>
-        <% end %>
-        <%= display @group.description %>
-        <%= render :partial => 'toolbox' %>
+    <% tab.create('tab_home', t('groups.show.home')) do %>
+      <div id="home_canvas">
+        <%= render :partial => 'home_canvas' %>
       </div>
       <div id="empty_canvas" style='clear:both;'></div>
     <% end %>

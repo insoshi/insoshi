@@ -1,0 +1,12 @@
+<%= render :partial => 'shared/minifeed' %>
+<p>
+  <b>Req notifications:</b>
+  <%=h @member_preference.req_notifications %>
+</p>
+
+<p>
+  <b>Forum notifications:</b>
+  <%=h @member_preference.forum_notifications %>
+</p>
+
+<%= link_to "Edit", edit_member_preference_path(@member_preference) %>

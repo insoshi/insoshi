@@ -1,0 +1,11 @@
+  <div class="profile vcard">
+    <%- if @membership && @membership.is?(:admin) -%>
+      <%= render :partial => 'admin_message' %>
+    <%- end -%>
+    <%= render :partial => 'shared/minifeed' %>
+    <% if @group.adhoc_currency? %>
+      <%= render :partial => 'shared/graphs' %>
+    <% end %>
+    <%= display @group.description %>
+    <%= render :partial => 'toolbox' %>
+  </div>

@@ -18,6 +18,9 @@ $(function() {
   // render jquery tabs - they are created with "display: none" to prevent FOUC
   $('ul.ui-tabs-nav').show();
 
+  route('home',     /^#home$/,                                     '/groups/[:group_id]');
+  route('home',     /^#member_preferences\/(\d+)\/edit$/,          '/member_preferences/[:1]/edit');
+
   route('exchanges',/^#exchanges\/page=(\d+)/,                     '/groups/[:group_id]/exchanges?page=[:1]');
   route('requests', /^#reqs\/page=(\d+)/,                          '/groups/[:group_id]/reqs?page=[:1]');
   route('offers',   /^#offers\/page=(\d+)/,                        '/groups/[:group_id]/offers?page=[:1]');
@@ -166,19 +169,7 @@ $(function() {
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
     });
 
-  $("#new_bid").live('submit',function(){
-    $('span.wait').show();
-    $.post($(this).attr('action'),$(this).serialize(),null,'script');
-    return false;
-  });
-
-  $(".edit_bid").live('submit',function(){
-    $('span.wait').show();
-    $.post($(this).attr('action'),$(this).serialize(),null,'script');
-    return false;
-  });
-
-  $('#new_req, #new_offer, #new_topic, #new_post, #new_exchange, #new_wall_post, #new_message').live('submit',function() {
+  $('.edit_member_preference, #new_bid, .edit_bid, #new_req, #new_offer, #new_topic, #new_post, #new_exchange, #new_wall_post, #new_message').live('submit',function() {
     $('span.wait').show();
     $.post($(this).attr('action'),$(this).serialize(),null,'script');
     return false;
@@ -202,6 +193,10 @@ $(function() {
     str = url2hash(this.href);
     window.location.hash = str;
     return false;
+    });
+
+  $('a[href=' + OSCURRENCY.tab_prefix + 'home]').bind('click',function () {
+      window.location.hash = '#home';
     });
 
   $('a[href=' + OSCURRENCY.tab_prefix + 'forum]').bind('click',function() {
