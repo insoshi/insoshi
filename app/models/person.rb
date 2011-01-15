@@ -210,10 +210,6 @@ class Person < ActiveRecord::Base
       find(:all, :conditions => conditions_for_active)
     end
 
-    def all_listening_to_forum_posts
-      find(:all, :conditions => conditions_for_active_and_forum_notifications)
-    end
-    
     def find_recent
       # TODO: configure attachment_fu for the S3 backend when deploying to Heroku
       find(:all, :order => "people.created_at DESC",
@@ -552,14 +548,6 @@ class Person < ActiveRecord::Base
          false, true]
       end
       
-      # Return the conditions for a user to be active and listening to forum posts.
-      def conditions_for_active_and_forum_notifications
-        [%(deactivated = ? AND 
-           forum_notifications = ? AND
-           (email_verified IS NULL OR email_verified = ?)),
-         false, true, true]
-      end
-
       # Return the conditions for a user to be 'mostly' active.
       def conditions_for_mostly_active
         [%(deactivated = ? AND 

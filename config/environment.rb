@@ -68,7 +68,7 @@ Rails::Initializer.run do |config|
   # installed with `rake gems:install`
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
   config.gem 'feed-normalizer'
-  config.gem 'json'
+  config.gem 'json', :version => '1.2.0' # match version that gets installed on heroku
   config.gem 'heroku'
   config.gem 'cancan'
   # config.gem 'rack-openid', :version => '>= 1.0.1'

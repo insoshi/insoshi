@@ -19,12 +19,13 @@ class CategoriesController < ApplicationController
   # GET /categories/1.xml
   def show
     @category = Category.find(params[:id])
-    @people = @category.active_people
-    @reqs = @category.current_and_active_reqs
-    @offers = @category.offers
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html do
+        @people = @category.people
+        @reqs = @category.current_and_active_reqs
+        @offers = @category.offers
+      end
       format.json { render :json => @category.as_json(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
       format.xml  { render :xml => @category.to_xml(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
     end
