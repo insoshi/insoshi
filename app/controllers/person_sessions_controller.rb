@@ -14,11 +14,17 @@ class PersonSessionsController < ApplicationController
     @person_session.save do |result|
       if result
         flash[:notice] = t('notice_logged_in_successfully')
+        unless params[:person_session].nil?
+          logger.info "OSC LOGIN SUCCESS: #{params[:person_session][:email]} from #{request.remote_ip}"
+        end
         redirect_back_or_default root_url
       end
     end
     if !performed?
       #flash[:error] = t('error_authentication_failed')
+      unless params[:person_session].nil?
+        logger.info "OSC LOGIN FAILURE: #{params[:person_session][:email]} from #{request.remote_ip}"
+      end
       @body = "login single-col"
       render :action => 'new'
     end
