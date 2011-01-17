@@ -16,7 +16,7 @@ class Ability
     can :create, Membership
     can :destroy, Membership, :person => person
     can [:update,:suscribe,:unsuscribe], Membership do |membership|
-      person.is?(:admin,membership.group)
+      person.is?(:admin,membership.group) && !membership.is?(:admin)
     end
 
     can :update, MemberPreference do |member_preference|

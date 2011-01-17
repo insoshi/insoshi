@@ -31,7 +31,7 @@ describe Group do
   describe 'roles' do
     before(:each) do
       Membership.request(@p2,@g,false)
-      @membership = @p2.memberships.first(:conditions => ['group_id = ?',@g.id])
+      @membership = Membership.mem(@p2,@g)
       @ability = Ability.new(@p2)
     end
 
@@ -46,6 +46,19 @@ describe Group do
         @membership.roles = ['individual','admin']
         @membership.save
         @ability.should be_able_to(:update,@g)
+      end
+
+      it "should not allow an admin member to update another admin membership" do
+        @membership.roles = ['individual','admin']
+        @membership.save
+
+        @p3 = people(:buzzard)
+        Membership.request(@p3,@g,false)
+        @membership_sneaky_admin = Membership.mem(@p3,@g)
+        @ability_sneaky_admin = Ability.new(@p3)
+        @membership_sneaky_admin.roles = ['individual','admin']
+        @membership_sneaky_admin.save
+        @ability_sneaky_admin.should_not be_able_to(:update,@membership)
       end
     end
 
