@@ -14,7 +14,6 @@
                :locals => {:groups => current_person.groups,
                  :title => "Groups", :link => "groups"} %>
     <%- else -%>
-      <%= render :partial => 'shared/minifeed' %>
     <%- end -%>
   <%- else -%>
   <% unless global_prefs.gmail.blank? -%>
