@@ -45,7 +45,7 @@ module Cheepnis
   # this needs some experimentation
   def self.maybe_stop
     count = Delayed::Job.count
-    if count == 1
+    if count <= 1
       stop
     else
       # if there are actual jobs, fail so we will run again
