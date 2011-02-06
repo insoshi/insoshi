@@ -198,7 +198,7 @@ es:
       header: "Sistema de blog"
   offers:
     partial:
-      accept_offer: "Aceptar la oferta!"
+      accept_offer: "Paga ahora!"
       expires: "Caduca"
       available_count: "Conteo disponible"
       created_by: "Creado por"
