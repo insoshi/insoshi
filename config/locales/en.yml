@@ -204,7 +204,7 @@ en:
       header: "System Blog"
   offers:
     partial:
-      accept_offer: "Accept Offer!"
+      accept_offer: "Pay now!"
       expires: "Expires"
       available_count: "Available count"
       created_by: "Created by"
