@@ -24,12 +24,13 @@ class Exchange < ActiveRecord::Base
   validates_presence_of :group_id
 
   attr_accessible :amount, :group_id
+  attr_readonly :amount
 
   after_create :log_activity
   after_create :decrement_offer_available_count
   before_create :calculate_account_balances
   after_create :send_payment_notification_to_worker
-  before_destroy :send_suspend_payment_notification_to_worker
+  before_destroy :delete_calculate_account_balances
 
   named_scope :by_customer, lambda {|person_id| {:conditions => ["customer_id = ?", person_id]}}
   named_scope :everyone, :conditions => {}
@@ -108,6 +109,25 @@ class Exchange < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def delete_calculate_account_balances
+    begin
+      Account.transaction do
+        if group.nil?
+          raise "no group specified"
+        else
+          worker.account(group).withdraw(amount)
+          customer.account(group).deposit(amount)
+          if self.metadata.class == Req
+            unless self.metadata.active?
+              self.metadata.destroy
+            end
+          end
+        end
+      end
+    end
+    send_suspend_payment_notification_to_worker
   end
 
   def send_payment_notification_to_worker

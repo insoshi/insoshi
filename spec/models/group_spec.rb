@@ -103,6 +103,30 @@ describe Group do
         account.save!
         @ability.should_not be_able_to(:create,@e)
       end
+
+      describe 'account balances' do
+        before(:each) do
+          @membership.roles = ['individual']
+          @membership.save
+          account = @p2.account(@g)
+          account.balance = 10.0
+          account.save!
+          @e.customer = @p2
+        end
+
+        it "should update account balance when a payment is created" do
+          @e.save!
+          account_after_payment = @p2.account(@g)
+          account_after_payment.balance.should == 9.0
+        end
+
+        it "should update account balance when a payment is deleted" do
+          @e.save!
+          @e.destroy
+          account_after_payment_deletion = @p2.account(@g)
+          account_after_payment_deletion.balance.should == 10.0
+        end
+      end
     end
   end
 end
