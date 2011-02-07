@@ -25,6 +25,7 @@ class Exchange < ActiveRecord::Base
 
   attr_accessible :amount, :group_id
   attr_readonly :amount
+  attr_readonly :customer_id, :worker_id, :group_id
 
   after_create :log_activity
   after_create :decrement_offer_available_count
