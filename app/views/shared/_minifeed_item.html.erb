@@ -1,7 +1,8 @@
 <%- unless minifeed_item.item.nil? -%>
+  <%- member = Membership.mem(minifeed_item.person,minifeed_item.group) -%>
   <li>
   <div class="profile-image">
-    <%= image_link minifeed_item.person %>
+    <%= image_link minifeed_item.person, :link => member, :link_options => {:class => "show-follow"} %>
   </div>
   <p><%= minifeed_message minifeed_item %></p>
   <p class="meta published">
