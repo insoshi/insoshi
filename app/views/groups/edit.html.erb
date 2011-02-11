@@ -77,6 +77,12 @@
 
 <%- end -%>
 <%- column_div :type => :secondary do -%>
+  <h2>Forum</h2>
+  <p>
+  <%= link_to "Edit Forum Preferences", edit_forum_path(@group.forum) %>
+  </p>
   <h2>Members</h2>
-  <%= link_to "Edit Member Roles", members_group_path(@group) %>
+  <p>
+    <%= link_to "Edit Member Roles", members_group_path(@group) %>
+  </p>
 <%- end -%>

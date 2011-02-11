@@ -6,6 +6,8 @@ class PostsController < ApplicationController
   before_filter :login_required
   before_filter :get_instance_vars
   before_filter :check_blog_mismatch, :only => :show
+
+  # authorize filters for blogs only
   before_filter :authorize_new, :only => [:create, :new]
   before_filter :authorize_change, :only => [:edit, :update]
   before_filter :authorize_destroy, :only => :destroy
@@ -44,6 +46,7 @@ class PostsController < ApplicationController
   # Used for both forum and blog posts.
   def create
     @post = new_resource_post
+    authorize! :create, @post
     
     respond_to do |format|
       if @post.save
@@ -70,6 +73,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post = model.find(params[:id])
+    authorize! :destroy, @post
     @post.destroy
     flash[:success] = t('success_post_destroyed')
 
@@ -99,21 +103,14 @@ class PostsController < ApplicationController
       redirect_to home_url unless @post.blog == @blog
     end
 
-    # Verify the person is authorized to create a post.
     def authorize_new
-      if forum?
-        true  # This will change once there are groups
-      elsif blog?
+      if blog?
         redirect_to home_url unless current_person?(@blog.person)
       end
     end
 
-    # Make sure the current user is authorized to edit a post.
     def authorize_change
-      if forum?
-        authorized = current_person?(@post.person) || current_person.admin?
-        redirect_to home_url unless authorized
-      elsif blog?
+      if blog?
         authorized = current_person?(@blog.person) && valid_post?
         redirect_to home_url unless authorized
       end
@@ -124,13 +121,9 @@ class PostsController < ApplicationController
       @post.blog == @blog
     end
     
-    # Authorize post deletions.
-    # Only admin users can destroy forum posts.
     # Only blog owners can destroy blog posts.
     def authorize_destroy
-      if forum?
-        redirect_to home_url unless current_person.admin?
-      elsif blog?
+      if blog?
         authorize_change
       end
     end

@@ -12,7 +12,8 @@
 #
 
 class Forum < ActiveRecord::Base
-  attr_accessible :name, :description
+  attr_accessible :name, :description # XXX these are not used for anything. remove them?
+  attr_accessible :worldwritable
 
   belongs_to :group
   has_many :topics, :order => "created_at DESC", :dependent => :destroy

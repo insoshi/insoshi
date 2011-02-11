@@ -12,6 +12,14 @@ class Ability
     can [:members,:exchanges], Group
     can [:new_photo,:save_photo,:delete_photo], Group, :owner => person
 
+    can :read, ForumPost
+    can :create, ForumPost do |post|
+      post.topic.forum.worldwritable? || Membership.mem(person,post.topic.forum.group)
+    end
+    can :destroy, ForumPost do |post|
+      person.is(:admin,post.topic.forum.group) || post.person == person
+    end
+
     can :read, Membership
     can :create, Membership
     can :destroy, Membership, :person => person

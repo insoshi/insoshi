@@ -62,6 +62,48 @@ describe Group do
       end
     end
 
+    describe 'forum posts made by non-members' do
+      before(:each) do
+        @forum = @g.forum
+        @topic = @forum.topics.new(:name => 'test topic')
+        @topic.person = @p
+        @topic.save!
+      end
+
+      it "should allow a member to make a forum post" do
+        Membership.request(@p2,@g,false)
+        @membership = Membership.mem(@p2,@g)
+        @ability = Ability.new(@p2)
+        @forum_post = @topic.posts.build(:body => "Should we talk about the weather?")
+        @forum_post.person = @p2
+        @ability.should be_able_to(:create,@forum_post)
+      end
+
+      it "should not allow a non-member to make a forum post if forum is not world writable" do
+        @forum.worldwritable = false
+        @forum.save!
+
+        @p3 = people(:buzzard)
+        @ability_nonmember = Ability.new(@p3)
+        @forum_post = @topic.posts.build(:body => "Should we talk about the weather?")
+        @forum_post.person = @p3
+
+        @ability_nonmember.should_not be_able_to(:create,@forum_post)
+      end
+
+      it "should allow a non-member to make a forum post if forum is world writable" do
+        @forum.worldwritable = true
+        @forum.save!
+
+        @p3 = people(:buzzard)
+        @ability_nonmember = Ability.new(@p3)
+        @forum_post = @topic.posts.build(:body => "We have to do it in part as a matter of social responsibility to other people who are going to live in the world that we make.")
+        @forum_post.person = @p3
+
+        @ability_nonmember.should be_able_to(:create,@forum_post)
+      end
+    end
+
     describe 'offers made by people' do
       it "should not allow a non-member of a group to create an offer" do
         @p3 = people(:buzzard)
