@@ -248,3 +248,10 @@ $(function() {
 
   $(window).trigger('hashchange');
 });
+
+function update_topic() {
+  topic_id = $('#topic').attr('data-id');
+  after = $('.forum_post:first-child').attr('data-time');
+  $.getScript('/posts?topic_id=' + topic_id + '&after=' + after);
+}
+

@@ -1,0 +1,4 @@
+<% unless @posts.length == 0 %>
+  $('.topic').prepend("<%= escape_javascript(render :partial => '/topics/forum_post', :collection => @posts) %>");
+<% end %>
+setTimeout(update_topic,<%= @refresh_milliseconds.to_s %>);

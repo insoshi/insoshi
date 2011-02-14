@@ -3,3 +3,4 @@ if(0 == $('#forum_form').html().length)
 {
   $('#forum_form').html("<%= escape_javascript(render :partial => 'post_form') %>");
 }
+setTimeout(update_topic,<%= @refresh_milliseconds %>);

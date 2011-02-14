@@ -1,2 +1,4 @@
 <h2><%= @topic.name %><%= waiting_image %></h2>
-<%= render :partial => 'posts' %>
+<div id="topic" data-id="<%= @topic.id %>">
+  <%= render :partial => 'posts' %>
+</div>

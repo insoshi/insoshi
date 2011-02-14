@@ -17,6 +17,7 @@ class Topic < ActiveRecord::Base
   
   MAX_NAME = 100
   NUM_RECENT = 6
+  DEFAULT_REFRESH_SECONDS = 30
   
   attr_accessible :name
   
@@ -37,6 +38,11 @@ class Topic < ActiveRecord::Base
   def self.find_recently_active(forum, page = 1)
     topics = forum.topics.delete_if {|t| t.posts.length == 0}
     topics.sort_by {|t| t.posts.first.created_at}.reverse.paginate( :page => page )
+  end
+
+  def posts_since_last_refresh(last_refresh_time, person_id)
+    self.posts.all(:conditions => ['created_at > ? and person_id != ?', Time.at(last_refresh_time + 1).utc, person_id], 
+                   :order => 'created_at DESC')
   end
 
   private

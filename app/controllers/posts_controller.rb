@@ -14,7 +14,14 @@ class PostsController < ApplicationController
 
   def index
     redirect_to blog_url(@blog) if blog?
-    redirect_to forum_topic_url(@forum, @topic) if forum?
+    respond_to do |format|
+      format.js do
+        @refresh_milliseconds = global_prefs.topic_refresh_seconds * 1000
+        # Exclude your own to avoid picking up the one you just posted
+        @posts = @topic.posts_since_last_refresh(params[:after].to_i, current_person.id)
+      end
+      format.html { redirect_to forum_topic_url(@forum, @topic) if forum? }
+    end
   end
 
   # Show a blog post.
