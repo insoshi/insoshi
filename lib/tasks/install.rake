@@ -10,8 +10,6 @@ task :install => :environment do |t|
   p.save!
   p.admin = true
   p.save
-  account = Account.new(:name => 'personal', :balance => 0, :person => p)
-  account.save!
   address = Address.new(:name => 'personal', :person => p)
   address.save!
 
