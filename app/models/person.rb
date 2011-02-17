@@ -39,7 +39,7 @@ class Person < ActiveRecord::Base
   end
 
 #  attr_accessor :password, :verify_password, :new_password, :password_confirmation
-  attr_accessor :sorted_photos
+  attr_accessor :sorted_photos, :accept_agreement
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications, :forum_notifications,
@@ -153,8 +153,7 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of   :email
 #  validates_uniqueness_of   :identity_url, :allow_nil => true
 
-  # XXX temp fix. with rails 2.3.11 update, validating accept_agreement breaks openid registration.
-  #validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
+  validates_acceptance_of :accept_agreement, message => "Please accept the agreement to complete registration", :on => :create
 
   before_create :create_blog, :check_config_for_deactivation
   before_create :set_default_group
