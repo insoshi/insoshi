@@ -1,7 +1,8 @@
 rails --version '= 2.3.11'
-oauth --version '>= 0.3.6'
+oauth
+oauth-plugin
 chronic
-rubyist-aasm --source http://gems.github.com
+aasm
 feed-normalizer
 texticle
 memcache-client '>= 1.7.0'
