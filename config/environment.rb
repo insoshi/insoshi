@@ -60,17 +60,20 @@ Rails::Initializer.run do |config|
   config.gem 'authlogic'
   config.gem 'authlogic-oid', :lib => 'authlogic_openid'
   config.gem 'texticle'
-  config.gem 'oauth', :version => '>= 0.3.6'
+  config.gem 'oauth'
+  config.gem 'oauth-plugin'
   config.gem 'chronic'
   # add source:
   # `gem sources -a http://gems.github.com`
-  config.gem 'rubyist-aasm', :lib => 'aasm'
+  config.gem 'aasm', :lib => 'aasm'
   # installed with `rake gems:install`
   config.gem 'ruby-openid', :lib => 'openid', :version => '>= 2.1.6'
   config.gem 'feed-normalizer'
   config.gem 'json', :version => '1.2.0' # match version that gets installed on heroku
   config.gem 'heroku'
   config.gem 'cancan'
+  config.gem 'aws-s3', :lib => 'aws/s3'
+
   # config.gem 'rack-openid', :version => '>= 1.0.1'
 
   secret = ENV['SESSION_SECRET'] || rand(36**64).to_s(36) 
