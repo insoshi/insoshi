@@ -187,6 +187,15 @@ $(function() {
       return false;
     });
 
+  $('.delete_topic').live('click', function() {
+      if(confirm('Delete topic?'))
+      {
+        var data = {'_method': 'delete'}
+        $.post($(this).attr('href'),data,null,'script');
+      }
+      return false;
+    });
+
   $('a.pay_now').live('click', function() {
     window.location.hash = url2hash(this.href);
     return false;

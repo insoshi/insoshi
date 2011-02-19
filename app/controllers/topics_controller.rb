@@ -1,8 +1,7 @@
 class TopicsController < ApplicationController
+  load_resource :forum
   
   before_filter :login_required
-  before_filter :admin_required, :only => [:edit, :update, :destroy]
-  before_filter :setup
   
   def index
     redirect_to forum_url(params[:forum_id])
@@ -28,10 +27,6 @@ class TopicsController < ApplicationController
     end
   end
 
-  def edit
-    @topic = Topic.find(params[:id])
-  end
-
   def create
     @body = "yui-skin-sam" 
     @topic = @forum.topics.new(params[:topic])
@@ -48,34 +43,14 @@ class TopicsController < ApplicationController
     end
   end
 
-  def update
-    @topic = Topic.find(params[:id])
-
-    respond_to do |format|
-      if @topic.update_attributes(params[:topic])
-        flash[:notice] = t('notice_topic_updated')
-        format.html { redirect_to forum_url(@forum) }
-      else
-        format.html { render :action => "edit" }
-      end
-    end
-  end
-
   def destroy
     @topic = Topic.find(params[:id])
     @topic.destroy
+    @topics = Topic.find_recently_active(@forum, params[:page]) 
 
     respond_to do |format|
-      flash[:success] = t('success_topic_destroyed')
-      format.html { redirect_to forum_url(@forum) }
+      flash[:notice] = t('success_topic_destroyed')
+      format.js
     end
   end
-
-  private
-  
-    def setup
-      @forum = Forum.find(params[:forum_id])
-      @body = "forum"
-      @body = "yui-skin-sam "
-    end
 end
