@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
   load_resource :forum
+  load_and_authorize_resource :topic, :through => :forum
   
   before_filter :login_required
   
@@ -9,7 +10,6 @@ class TopicsController < ApplicationController
 
   def show
     @group = @forum.group
-    @topic = Topic.find(params[:id])
     @posts = @topic.posts.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     respond_to do |format|
       format.html
@@ -20,8 +20,6 @@ class TopicsController < ApplicationController
   end
 
   def new
-    @topic = Topic.new
-
     respond_to do |format|
       format.html
     end
@@ -29,7 +27,6 @@ class TopicsController < ApplicationController
 
   def create
     @body = "yui-skin-sam" 
-    @topic = @forum.topics.new(params[:topic])
     @topic.person = current_person
 
     respond_to do |format|
@@ -44,7 +41,6 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    @topic = Topic.find(params[:id])
     @topic.destroy
     @topics = Topic.find_recently_active(@forum, params[:page]) 
 
