@@ -26,7 +26,7 @@ class ForumPost < Post
 
   attr_accessible :body
   
-  belongs_to :topic,  :counter_cache => true
+  belongs_to :topic,  :counter_cache => true, :touch => true
   belongs_to :person, :counter_cache => true
   
   validates_presence_of :body, :person
