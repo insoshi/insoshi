@@ -1,4 +1,5 @@
 <% unless @posts.length == 0 %>
   $('.topic').prepend("<%= escape_javascript(render :partial => '/topics/forum_post', :collection => @posts) %>");
 <% end %>
+$('#viewers').html("<span class='small'><%= pluralize @viewers.length, 'member' %> viewing this topic</span> <%= escape_javascript(render :partial => '/posts/viewer', :collection => @viewers) %>");
 setTimeout(update_topic,<%= @refresh_milliseconds.to_s %>);

@@ -25,6 +25,7 @@ class Topic < ActiveRecord::Base
   belongs_to :person
   has_many :posts, :order => 'created_at DESC', :dependent => :destroy,
                    :class_name => "ForumPost"
+  has_many :viewers, :dependent => :destroy
   has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Topic'", :dependent => :destroy
   validates_presence_of :name, :forum, :person
   validates_length_of :name, :maximum => MAX_NAME
@@ -38,6 +39,15 @@ class Topic < ActiveRecord::Base
   def self.find_recently_active(forum, page = 1)
     topics = forum.topics.delete_if {|t| t.posts.length == 0}
     topics.sort_by {|t| t.posts.first.created_at}.reverse.paginate( :page => page )
+  end
+
+  def update_viewer(person)
+    current_viewer = self.viewers.find_or_create_by_person_id(person.id)
+    current_viewer.update_attributes(:updated_at => Time.now)
+  end
+
+  def current_viewers(seconds_ago)
+    self.viewers.all(:conditions => ['updated_at > ?', Time.now.ago(seconds_ago).utc])
   end
 
   def posts_since_last_refresh(last_refresh_time, person_id)

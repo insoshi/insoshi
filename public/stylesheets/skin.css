@@ -673,3 +673,7 @@ input#person_openid_identifier, input#person_session_openid_identifier {
 #memberships_wrapper .add_to_memberships.hide {
   display: none;
 }
+
+#viewers {
+  padding-left: 250px;
+}
