@@ -46,12 +46,12 @@ class Topic < ActiveRecord::Base
   end
 
   def current_viewers(seconds_ago)
-    self.viewers.all(:conditions => ['updated_at > ?', Time.now.ago(seconds_ago).utc])
+    self.viewers.all(:conditions => ['updated_at > ?', Time.now.ago(seconds_ago).utc], :include => :person)
   end
 
   def posts_since_last_refresh(last_refresh_time, person_id)
     self.posts.all(:conditions => ['created_at > ? and person_id != ?', Time.at(last_refresh_time + 1).utc, person_id], 
-                   :order => 'created_at DESC')
+                   :include => :person, :order => 'created_at DESC')
   end
 
   private
