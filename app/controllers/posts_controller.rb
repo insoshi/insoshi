@@ -85,10 +85,11 @@ class PostsController < ApplicationController
     @post = model.find(params[:id])
     authorize! :destroy, @post
     @post.destroy
-    flash[:success] = t('success_post_destroyed')
+    flash[:notice] = t('success_post_destroyed')
 
     respond_to do |format|
       format.html { redirect_to posts_url }
+      format.js
     end
   end
   

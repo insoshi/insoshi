@@ -199,8 +199,8 @@ $(function() {
       return false;
     });
 
-  $('.delete_topic').live('click', function() {
-      if(confirm('Delete topic?'))
+  $('.delete_topic, .delete_post').live('click', function() {
+      if(confirm('Delete?'))
       {
         var data = {'_method': 'delete'}
         $.post($(this).attr('href'),data,null,'script');
