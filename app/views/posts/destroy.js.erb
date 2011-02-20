@@ -1,0 +1,2 @@
+$('li.post_id_<%= @post.id %>').fadeOut(5000, function() { $(this).remove(); });
+<%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'forum_canvas'} %>
