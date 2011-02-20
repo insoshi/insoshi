@@ -42,7 +42,6 @@ class TopicsController < ApplicationController
 
   def destroy
     @topic.destroy
-    @topics = Topic.find_recently_active(@forum, params[:page]) 
 
     respond_to do |format|
       flash[:notice] = t('success_topic_destroyed')

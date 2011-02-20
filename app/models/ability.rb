@@ -17,7 +17,7 @@ class Ability
       topic.forum.worldwritable? || Membership.mem(person,topic.forum.group)
     end
     can :destroy, Topic do |topic|
-      person.is?(:admin,topic.forum.group)
+      person.is?(:admin,topic.forum.group) || person.admin?
     end
 
     can :read, ForumPost
@@ -25,7 +25,7 @@ class Ability
       post.topic.forum.worldwritable? || Membership.mem(person,post.topic.forum.group)
     end
     can :destroy, ForumPost do |post|
-      person.is?(:admin,post.topic.forum.group) || post.person == person
+      person.is?(:admin,post.topic.forum.group) || post.person == person || person.admin?
     end
 
     can :read, Membership
