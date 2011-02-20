@@ -1,4 +1,5 @@
 class Admin::BroadcastEmailsController < ApplicationController
+  layout "admin/admin"
   before_filter :login_required
   before_filter :correct_person_required
 

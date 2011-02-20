@@ -1,4 +1,5 @@
 class Admin::FeedPostsController < ApplicationController
+  layout "admin/admin"
   before_filter :login_required, :admin_required
   active_scaffold :feed_post do |config|
     config.label = "Posts"

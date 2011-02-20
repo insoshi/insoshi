@@ -1,4 +1,5 @@
 class Admin::PeopleController < ApplicationController
+  layout "admin/admin"
   before_filter :login_required, :admin_required
   active_scaffold :person do |config|
     config.actions.exclude :delete

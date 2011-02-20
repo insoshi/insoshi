@@ -1,5 +1,5 @@
 class Admin::PreferencesController < ApplicationController
-  
+  layout "admin/admin"
   before_filter :login_required, :admin_required
   before_filter :setup
   

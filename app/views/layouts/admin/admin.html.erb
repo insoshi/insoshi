@@ -66,17 +66,8 @@
         <% end %>     
         <%= yield %>
         <div id="footer">
-          <p id="footer-nav">
-            <a href="/">Home</a> | <a href="/messages">Messages</a> | <a href="/people">People</a> | <a href="/forums">Forum</a>
-
-          </p>
           <p>
 		<%= render :partial => 'shared/powered_by' %>
-      <%- unless test? -%>
-        <%# A tracker to tell us about the activity of Insoshi installs %>
-        <img src="http://stats.insoshi.com/<%= @tracker_id %>?env=<%= @env %>" 
-             alt="" width="1" height="1" />
-      <%- end -%>
           </p>
         </div>
       </div>
