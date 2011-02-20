@@ -6,6 +6,7 @@ $(function() {
   OSCURRENCY.routes = [];
   OSCURRENCY.tab_prefix = '#tab_';
   OSCURRENCY.tab = '';
+  OSCURRENCY.post_allowed = true;
 
   $("#tabs").tabs({
     select: function(event, ui) {
@@ -143,8 +144,14 @@ $(function() {
       }
     });
 
-  $(document).bind('ajaxStart', function() { $('span.wait').show();});
-  $(document).bind('ajaxStop', function() { $('span.wait').hide();});
+  $(document).bind('ajaxStart', function() {
+      $('span.wait').show();
+    });
+
+  $(document).bind('ajaxStop', function() { 
+      $('span.wait').hide();
+      OSCURRENCY.post_allowed = true;
+    });
 
   $("input#bid_expiration_date").live('focus', function() {
     $(this).datepicker({
@@ -172,8 +179,13 @@ $(function() {
     });
 
   $('.edit_member_preference, #new_bid, .edit_bid, #new_req, #new_offer, #new_topic, #new_post, #new_exchange, #new_wall_post, #new_message').live('submit',function() {
-    $.post($(this).attr('action'),$(this).serialize(),null,'script');
-    return false;
+      if(OSCURRENCY.post_allowed) {
+        OSCURRENCY.post_allowed = false;
+        $.post($(this).attr('action'),$(this).serialize(),null,'script');
+      } else {
+        alert('request is being processed...');
+      }
+      return false;
     });
 
   $('.add_to_memberships').live('click', function() {
