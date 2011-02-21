@@ -85,12 +85,6 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'person_sessions', :action => 'destroy'
   map.home '/', :controller => 'home'
   map.refreshblog '/refreshblog', :controller => 'feed_posts', :action => 'refresh_blog'
-  map.about '/about', :controller => 'home', :action => 'about'
-  map.practice '/practice', :controller => 'home', :action => 'practice'
-  map.steps '/steps', :controller => 'home', :action => 'steps'
-  map.questions '/questions', :controller => 'home', :action => 'questions'
-  map.memberships '/memberships', :controller => 'home', :action => 'memberships'
-  map.contact '/contact', :controller => 'home', :action => 'contact'
   map.agreement '/agreement', :controller => 'home', :action => 'agreement'
 
   map.admin_home '/admin/home', :controller => 'home'

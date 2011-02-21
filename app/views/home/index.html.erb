@@ -1,5 +1,25 @@
+<%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'home' } %>
 <%- column_div :type => :primary do -%>
-    <%= render :partial => 'blog' %>
+  <% tabs_for do |tab| %>
+    <% tab.create('blog','Blog') do %>
+      <%= render :partial => 'blog' %>
+    <% end unless global_prefs.about.blank? %>
+    <% tab.create('about','About') do %>
+      <%= render :partial => 'about' %>
+    <% end unless global_prefs.about.blank? %>
+    <% tab.create('practice','Practice') do %>
+      <%= render :partial => 'practice' %>
+    <% end unless global_prefs.practice.blank? %>
+    <% tab.create('steps','Steps') do %>
+      <%= render :partial => 'steps' %>
+    <% end unless global_prefs.steps.blank? %>
+    <% tab.create('contact','Contact') do %>
+      <%= render :partial => 'contact' %>
+    <% end unless global_prefs.contact.blank? %>
+    <% tab.create('faq','FAQ') do %>
+      <%= render :partial => 'questions' %>
+    <% end unless global_prefs.questions.blank? %>
+  <% end %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
