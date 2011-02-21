@@ -4,9 +4,6 @@ body {
   text-align: center;
 }
 #header-wrap {
-/*  background: #009908; */
-/*  background: #009908 url(images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top; */
-  /* background: #009908 url('/images/forest_header.jpg') no-repeat top center; */
   float: left;
   width: 100%;
 }
@@ -84,74 +81,6 @@ div.status-btn input.disabled, div.status-btn input.disabled:hover { background:
 font-weight:bold;
 font-family:Trebuchet MS;
 font-size:1.3em;
-}
-
-
-/* Header-nav */
-#nav {
-  margin: 14px 0 0 0;
-  width: 634px;
-  float: right;
-}
-#nav li {
-  background: #009908 url(/images/aten_header-grad.jpg) bottom repeat-x;
-  float: left;
-  height: 36px;
-  line-height: 36px;
-  list-style-type: none;
-  margin: 0 0 0 0;
-  padding: 0;
-  text-align: center;
-  width: 70px;
-}
-#nav li a {
-  color: #fff;
-  display: block;
-  height: 36px;
-  font-size: 12px;
-}
-#nav li a:hover {
-  background: url(/images/aten_header-grad-inv.jpg) top repeat-x;
-}
-#nav li.active a, #nav li.active a:hover {
-  background: #fff;
-  color: #009908;
-}
-#nav li.n-home {
-  margin-left: 0;
-  width: 64px;
-}
-
-#nav li.n-skillbank {
-  width: 82px;
-}
-
-#nav li.n-requests {
-  width: 74px;
-}
-
-#nav li.n-inbox {
-  width: 64px;
-}
-
-#nav li.n-about {
-  width: 56px;
-}
-
-#nav li.n-steps {
-  width: 54px;
-}
-
-#nav li.n-q\/a {
-  width: 36px;
-}
-
-#nav li.n-memberships {
-  width: 102px;
-}
-
-#nav li.n-contact {
-  width: 64px;
 }
 
 #footer {
