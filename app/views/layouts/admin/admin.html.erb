@@ -35,6 +35,7 @@
               <%- if current_person.admin? -%>
                 <br />
                 <%- if admin_view? -%>
+                  <%= link_to("Refresh Blog Feed", '/refreshblog') %> | 
                   <%= link_to("Standard view", home_path) %>
                 <%- else -%>
                   <%= link_to("Admin view", admin_preferences_path) %>

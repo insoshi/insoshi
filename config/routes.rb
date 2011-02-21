@@ -67,12 +67,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :people, :active_scaffold => true
     admin.resources :exchanges, :active_scaffold => true
     admin.resources :preferences, :broadcast_emails, :feed_posts
-    admin.resources :groups
-    admin.resources :forums do |forums|
-      forums.resources :topics do |topic|
-        topic.resources :posts
-      end
-    end    
   end
   map.resources :blogs do |blog|
     blog.resources :posts do |post|
@@ -90,7 +84,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'person_sessions', :action => 'new'
   map.logout '/logout', :controller => 'person_sessions', :action => 'destroy'
   map.home '/', :controller => 'home'
-  map.refreshblog '/refreshblog', :controller => 'home', :action => 'refreshblog'
+  map.refreshblog '/refreshblog', :controller => 'feed_posts', :action => 'refresh_blog'
   map.about '/about', :controller => 'home', :action => 'about'
   map.practice '/practice', :controller => 'home', :action => 'practice'
   map.steps '/steps', :controller => 'home', :action => 'steps'

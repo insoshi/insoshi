@@ -14,13 +14,4 @@ class HomeController < ApplicationController
     @post = FeedPost.find(params[:id])
   end
 
-  def refreshblog
-    new_posts_count = FeedPost.update_posts
-    if nil == new_posts_count
-      flash[:error] = t('error_blog_update')
-    else
-      flash[:notice] = t('notice_blog_updated') + " #{new_posts_count} " + t('notice_entries')
-    end
-    redirect_to '/' 
-  end
 end
