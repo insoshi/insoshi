@@ -83,6 +83,37 @@ font-family:Trebuchet MS;
 font-size:1.3em;
 }
 
+/* Header-nav */
+#nav {
+  margin: 14px 0 0 0;
+  width: 634px;
+  float: right;
+}
+#nav li {
+  background: #4f4f4f;
+  float: left;
+  height: 36px;
+  line-height: 36px;
+  list-style-type: none;
+  margin: 0 0 0 0;
+  padding: 0;
+  text-align: center;
+  width: 70px;
+}
+#nav li a {
+  color: #fff;
+  display: block;
+  height: 36px;
+  font-size: 12px;
+}
+#nav li a:hover {
+  background: #7f7f7f;
+}
+#nav li.active a, #nav li.active a:hover {
+  background: #fff;
+  color: #4f4f4f;
+}
+
 #footer {
   border-top: 1px solid #ccc;
   clear: both;
