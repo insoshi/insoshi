@@ -83,6 +83,14 @@ module ApplicationHelper
     "<span class='wait' style='display:none'><img alt='wait' class='wait' src='/images/loading.gif'></span>"
   end
 
+  def organization_image(person)
+    if person.org?
+      "<img title=\"#{t('people.show.organization_profile')}\" src=\"/images/icons/community_small.png\" />"
+    else
+      ""
+    end
+  end
+
   def currency_units
     "<span id='units' class='small'>#{t('currency_unit_plural')}</span>"
   end

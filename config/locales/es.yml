@@ -289,6 +289,7 @@ es:
       no_membership_request: "Todavía no hay peticiones de membresía"
     show:
       header: "Perfil:"
+      organization_profile: "This is a profile of an organization"
       not_active: "Esta persona no esta activa"
       description_blank: "Su descripción esta en blanco."
       add_description: "Haz clic aqui para agregar una descripción"

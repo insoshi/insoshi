@@ -289,6 +289,7 @@ en:
       no_membership_request: "No membership request (yet)"
     show:
       header: "Profile:"
+      organization_profile: "This is a profile of an organization"
       not_active: "This person is not active"
       description_blank: "Your description is blank."
       add_description: "Click here to add a description"
