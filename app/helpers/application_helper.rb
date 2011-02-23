@@ -78,7 +78,12 @@ module ApplicationHelper
 
     links
   end
- 
+
+  def timeago(time, options = {})
+    options[:class] ||= "timeago"
+    content_tag(:abbr, time.to_s, options.merge(:title => time.getutc.iso8601)) if time
+  end
+
   def waiting_image
     "<span class='wait' style='display:none'><img alt='wait' class='wait' src='/images/loading.gif'></span>"
   end
