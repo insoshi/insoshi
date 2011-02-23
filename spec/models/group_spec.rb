@@ -171,4 +171,24 @@ describe Group do
       end
     end
   end
+
+  describe 'group default credit limit' do
+    before(:each) do
+      @g.default_credit_limit = 40.0
+    end
+
+    it "should set the account balance of a new member" do
+      Membership.request(@p2,@g,false)
+      account = @p2.account(@g)
+      account.credit_limit.should == 40.0
+    end
+
+    it "should update the account balance of an existing member when update" do
+      Membership.request(@p2,@g,false)
+      @g.default_credit_limit = 50.0
+      @g.save
+      account = @p2.account(@g)
+      account.credit_limit.should == 50.0
+    end
+  end
 end

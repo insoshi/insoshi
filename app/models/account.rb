@@ -17,6 +17,8 @@ class Account < ActiveRecord::Base
 
   attr_accessible :credit_limit
 
+  before_update :check_credit_limit
+
   INITIAL_BALANCE = 0
 
   def membership
@@ -54,6 +56,14 @@ class Account < ActiveRecord::Base
       else
         raise CanCan::AccessDenied.new("Payment declined.", :create, Exchange)
       end
+    end
+  end
+
+  private
+
+  def check_credit_limit 
+    if credit_limit + balance < 0
+      raise CanCan::AccessDenied.new("Denied: Updating credit limit for #{person.name} would put account in prohibited state.", :update, Account)
     end
   end
 end

@@ -172,7 +172,8 @@ module ApplicationHelper
     unless account.group
       str = ""
     else
-      action = "#{account.group.name}: #{account.balance} #{account.group.unit}"
+      credit_limit = account.credit_limit.nil? ? "" : "(limit: #{account.credit_limit.to_s})"
+      action = "#{account.balance} #{account.group.unit} #{credit_limit}"
       str = link_to(img,path, options)
       str << " "
       str << link_to_unless_current(action, path, options)

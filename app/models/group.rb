@@ -27,6 +27,7 @@ class Group < ActiveRecord::Base
   after_create :create_owner_membership
   after_create :create_forum
   after_create :log_activity
+  before_update :update_member_credit_limits
   
   index do 
     name description
@@ -107,6 +108,16 @@ class Group < ActiveRecord::Base
     mem.roles = ['admin']
     mem.save
     Membership.accept(mem.person,mem.group)
+  end
+
+  def update_member_credit_limits
+    if default_credit_limit_changed?
+      transaction do
+        memberships.each do |m|
+          m.account.update_attributes!(:credit_limit => default_credit_limit)
+        end
+      end
+    end
   end
 
   def log_activity
