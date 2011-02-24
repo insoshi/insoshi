@@ -149,6 +149,7 @@ en:
       you_are_group_admin: "You are group's admin"
       delete_it: "(delete it)"
       mode: "Mode:"
+      your_activity: "Your Activity"
       asset_name: "Asset Name:"
       invite_contacts: "Invite contacts"
       delete_group: "delete group"
