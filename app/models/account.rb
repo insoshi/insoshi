@@ -62,8 +62,10 @@ class Account < ActiveRecord::Base
   private
 
   def check_credit_limit 
-    if credit_limit + balance < 0
-      raise CanCan::AccessDenied.new("Denied: Updating credit limit for #{person.name} would put account in prohibited state.", :update, Account)
+    if credit_limit_changed?
+      if credit_limit + balance < 0
+        raise CanCan::AccessDenied.new("Denied: Updating credit limit for #{person.name} would put account in prohibited state.", :update, Account)
+      end
     end
   end
 end
