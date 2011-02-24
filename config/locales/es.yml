@@ -1,4 +1,3 @@
-
 es:
   currency_unit_plural: "horas"
 
@@ -149,6 +148,7 @@ es:
       you_are_group_admin: "Tu eres el administrador de este grupo"
       delete_it: "(Borrarlo)"
       mode: "Modo:"
+      asset_name: "Asset Name:"
       invite_contacts: "Invite a sus contactos"
       delete_group: "borre este grupo"
       discussion_topics: "Temas de discusión"
@@ -362,7 +362,10 @@ es:
 
   transacts:
     index:
-      header: "Transacciónes"
+      header: "Su Transacciónes"
+      this_is_a: "Esta es"
+      opentransact: "OpenTransact"
+      url: "URL"
     show:
       header: "Transacción"
     new:

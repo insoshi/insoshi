@@ -149,6 +149,7 @@ en:
       you_are_group_admin: "You are group's admin"
       delete_it: "(delete it)"
       mode: "Mode:"
+      asset_name: "Asset Name:"
       invite_contacts: "Invite contacts"
       delete_group: "delete group"
       discussion_topics: "Discussion topics"
@@ -362,7 +363,10 @@ en:
 
   transacts:
     index:
-      header: "Transactions"
+      header: "Your Transactions"
+      this_is_a: "This is a"
+      opentransact: "OpenTransact"
+      url: "URL"
     show:
       header: "Transaction"
     new:
