@@ -13,7 +13,6 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @num_months = 6
     membership_display
 
     respond_to do |format|
@@ -97,6 +96,13 @@ class GroupsController < ApplicationController
                                           :per_page => RASTER_PER_PAGE)
     respond_to do |format|
       format.html
+    end
+  end
+
+  def graphs
+    @num_months = 6
+    respond_to do |format|
+      format.js
     end
   end
 

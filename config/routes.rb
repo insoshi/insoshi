@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
                  :leave => :post, 
                  :exchanges => :get,
                  :members => :get,
+                 :graphs => :get,
                  :photos => :get,
                  :new_photo => :post,
                  :save_photo => :post,
