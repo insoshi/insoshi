@@ -3,7 +3,6 @@ class Group < ActiveRecord::Base
   
   validates_presence_of :name, :person_id
   attr_protected :mandatory
-  attr_readonly :asset
 
   has_one :forum
   has_many :reqs, :order => "created_at DESC"
@@ -100,6 +99,16 @@ class Group < ActiveRecord::Base
   
   
   private
+
+  def validate
+    unless new_record?
+      if asset_changed?
+        unless asset_was.nil?
+          errors.add(:asset, "cannot be changed unless it is empty")
+        end
+      end
+    end
+  end
 
   def create_owner_membership
     mem = Membership.new( :status => Membership::PENDING )
