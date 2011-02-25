@@ -6,8 +6,14 @@
             <li>
               <%= link_to "Community Exchanges Graph", graphs_group_path(@group), :class => "show-follow" %>
             </li>
-              <%- unless @group.default_credit_limit.nil? %>
-                <li>Default Credit Limit: <%= @group.default_credit_limit %></li>
+              <%- unless @membership.nil? %>
+                <%- unless @membership.account.credit_limit.nil? %>
+                  <li><%= t('groups.show.your_credit_limit') %> <%= @membership.account.credit_limit %> <%= @group.unit %></li>
+                <%- end -%>
+              <%- else -%>
+                <%- unless @group.default_credit_limit.nil? %>
+                  <li><%= t('groups.show.default_credit_limit') %> <%= @group.default_credit_limit %> <%= @group.unit %></li>
+                <%- end -%>
               <%- end -%>
             <%- end -%>
             <%- unless @membership.nil? %>

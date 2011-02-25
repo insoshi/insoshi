@@ -150,6 +150,8 @@ en:
       you_are_group_admin: "You are group's admin"
       delete_it: "(delete it)"
       mode: "Mode:"
+      your_credit_limit: "Your Credit Limit: "
+      default_credit_limit: "Default Credit Limit: "
       your_activity: "Your Activity"
       asset_name: "OpenTransact Asset Name:"
       invite_contacts: "Invite contacts"

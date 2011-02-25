@@ -149,6 +149,8 @@ es:
       you_are_group_admin: "Tu eres el administrador de este grupo"
       delete_it: "(Borrarlo)"
       mode: "Modo:"
+      your_credit_limit: "Su límite crediticio: "
+      default_credit_limit: "Límite crediticio: "
       your_activity: "Tus actividades"
       asset_name: "Nombre del OpenTransact activo:"
       invite_contacts: "Invite a sus contactos"
