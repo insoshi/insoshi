@@ -4,13 +4,11 @@ class Ability
     can [:read, :create], Group
     can [:new_req,:create_req], Group
     can [:new_offer,:create_offer], Group
-    can [:update,:destroy], Group, :owner => person
-    can :update, Group do |group|
+    can [:update,:new_photo,:save_photo,:delete_photo,:destroy], Group do |group|
       membership = Membership.mem(person,group)
       membership && membership.is?(:admin)
     end
     can [:members,:exchanges,:graphs], Group
-    can [:new_photo,:save_photo,:delete_photo], Group, :owner => person
 
     can :read, Topic
     can :create, Topic do |topic|
