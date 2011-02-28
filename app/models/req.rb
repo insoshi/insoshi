@@ -26,6 +26,7 @@ class Req < ActiveRecord::Base
   
   named_scope :active, :conditions => {:active => true}
   named_scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
+  named_scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
 
   has_and_belongs_to_many :categories
   belongs_to :person
@@ -55,9 +56,9 @@ class Req < ActiveRecord::Base
       @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ?", true], :order => 'created_at DESC')
     end
 
-    def categorize(category,group,page,posts_per_page)
+    def categorize(category,group,page,posts_per_page,search=nil)
       unless category
-        group.reqs.active.paginate(:page => page, :per_page => posts_per_page)
+        group.reqs.active.search(search).paginate(:page => page, :per_page => posts_per_page)
       else
         category.reqs.with_group_id(group.id).paginate(:page => page, :per_page => posts_per_page)
       end

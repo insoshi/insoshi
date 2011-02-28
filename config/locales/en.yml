@@ -11,6 +11,7 @@ en:
   button_send: "Send!"
   button_upload: "Upload"
   button_select: "Select"
+  button_search: "Search"
 
   estimate: "Estimate"
   title: "Title"

@@ -1,5 +1,11 @@
 <%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'offer', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
 <span class='offer small' style='float:right;'><%= link_to "New offer", new_group_offer_path(@group), {:class => 'show-follow'} %></span>
+<% form_tag group_offers_path(@group), :method => :get, :class => 'search_form' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag t('button_search'), :name => nil %>
+  </p>
+<% end %>
       <h2><%= t('groups.show.offers') %><%= waiting_image %></h2>
       <%= will_paginate(@offers) %>
       <ul class="list activity full">

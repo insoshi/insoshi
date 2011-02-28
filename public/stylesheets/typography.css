@@ -208,7 +208,7 @@ form {
   padding-bottom: 1em;
   margin-bottom: 2em; 
 }
-li form {
+li form, form.search_form {
   float: right;
   margin-right: 1em;
   border-bottom: 0px;

@@ -6,7 +6,7 @@ class OffersController < ApplicationController
 
   def index
     @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
-    @offers = Offer.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE)
+    @offers = Offer.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE, params[:search])
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|

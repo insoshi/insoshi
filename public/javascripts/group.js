@@ -189,6 +189,11 @@ $(function() {
       return false;
     });
 
+  $('.search_form').live('submit',function() {
+      $.get($(this).attr('action'),$(this).serialize(),null,'script');
+      return false;
+    });
+
   $('.add_to_memberships').live('click', function() {
       if(confirm('Are you sure?'))
       {

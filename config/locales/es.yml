@@ -10,6 +10,7 @@ es:
   button_send: "Enviar"
   button_upload: "Descargar"
   button_select: "Seleccionar"
+  button_search: "Búsqueda"
 
   estimate: "Estimación"
   title: "Titulo"

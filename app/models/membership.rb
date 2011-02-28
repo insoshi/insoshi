@@ -5,7 +5,8 @@ class Membership < ActiveRecord::Base
   named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
   named_scope :active, :include => :person, :conditions => {'people.deactivated' => false}
   named_scope :listening, :include => :member_preference, :conditions => {'member_preferences.forum_notifications' => true}
-  
+  named_scope :search, lambda { |text| {:include => :person, :conditions => ["lower(people.name) LIKE ? OR lower(people.description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
+
   belongs_to :group
   belongs_to :person
   has_one :member_preference
@@ -22,9 +23,9 @@ class Membership < ActiveRecord::Base
   ROLES = %w[individual admin moderator org]
 
   class << self
-    def categorize(category,group,page,posts_per_page)
+    def categorize(category,group,page,posts_per_page,search=nil)
       unless category
-        group.memberships.active.paginate(:page => page,
+          group.memberships.active.search(search).paginate(:page => page,
                                             :conditions => ['status = ?', Membership::ACCEPTED],
                                             :order => 'memberships.created_at DESC',
                                             :include => :person,

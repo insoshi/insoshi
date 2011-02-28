@@ -22,7 +22,7 @@ class ReqsController < ApplicationController
     end
 =end
     @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
-    @reqs = Req.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE)
+    @reqs = Req.categorize(@selected_category, @group, params[:page], AJAX_POSTS_PER_PAGE,params[:search])
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
