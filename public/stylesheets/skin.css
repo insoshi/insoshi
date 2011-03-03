@@ -123,6 +123,10 @@ font-size:1.3em;
   
 }
 
+#license {
+  clear: both;
+}
+
 /* Welcome message */
 p.welcome {
   position: absolute;
