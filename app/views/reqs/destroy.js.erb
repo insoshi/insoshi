@@ -1,0 +1,2 @@
+$('.req_id_<%= @req.id %>').fadeOut(OSCURRENCY.delete_fadeout_time, function() { $(this).remove(); });
+<%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'reqs_canvas'} %>

@@ -7,6 +7,8 @@ $(function() {
   OSCURRENCY.tab_prefix = '#tab_';
   OSCURRENCY.tab = '';
   OSCURRENCY.post_allowed = true;
+  OSCURRENCY.notice_fadeout_time = 8000;
+  OSCURRENCY.delete_fadeout_time = 4000;
 
   $("#tabs").tabs({
     select: function(event, ui) {
@@ -205,7 +207,7 @@ $(function() {
       return false;
     });
 
-  $('.delete_topic, .delete_post').live('click', function() {
+  $('.delete_topic, .delete_post, .delete_req, .delete_offer').live('click', function() {
       if(confirm('Delete?'))
       {
         var data = {'_method': 'delete'}

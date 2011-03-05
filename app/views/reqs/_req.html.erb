@@ -1,4 +1,4 @@
-<div class="req">
+<div class="req req_id_<%= req.id %>">
   <a name="req_<%= req.id %>"></a>
   <div class="profile-image">
     <%= image_link req.person, :image => :thumbnail %>
@@ -22,8 +22,8 @@
     <% if current_person?(req.person) -%>
     | <%= link_to t('button_edit'), edit_req_path(req) unless req.has_accepted_bid? %>
     <% end -%>
-    <% if req.active? && ( admin? || current_person?(req.person) ) -%>
-      | <%= link_to t('button_delete'), req, :confirm => t('are_you_sure'), :method => :delete unless (req.has_commitment? || req.has_approved? ) %>
+    <% if req.active? && can?(:destroy, req) -%>
+      | <%= link_to t('button_delete'), req, :class => 'delete_req' %>
     <% end -%>
     <br>
     <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>

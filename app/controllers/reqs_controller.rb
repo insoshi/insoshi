@@ -123,11 +123,17 @@ class ReqsController < ApplicationController
   # DELETE /reqs/1.xml
   def destroy
     @req = Req.find(params[:id])
-    @req.destroy
+    if can?(:destroy, @req)
+      flash[:notice] = t('success_request_destroyed')
+      @req.destroy
+    else
+      flash[:error] = t('error_request_cannot_be_deleted')
+    end
 
     respond_to do |format|
       format.html { redirect_to(reqs_url) }
       format.xml  { head :ok }
+      format.js
     end
   end 
 
@@ -141,7 +147,6 @@ class ReqsController < ApplicationController
 
   def correct_person_and_no_commitment_required
     request = Req.find(params[:id])
-    redirect_to home_url unless request.person == current_person
     redirect_to home_url if request.has_commitment? || request.has_approved?
   end
 end

@@ -469,6 +469,7 @@ en:
   success_message_restored_to_inbox: "Message restored to inbox"
   success_neighborhood_created: "Neighborhood was successfully created."
   success_offer_created: "Offer was successfully created."
+  success_offer_destroyed: "Offer destroyed"
   success_your_password_has_been_sent: "Your password has been sent"
   success_email_verified: "Email verified. Your profile is active!"
   success_email_verified_whitelist: "Email verified.  Activation of your profile requires admin approval."
@@ -480,6 +481,7 @@ en:
   success_post_created: 'Post created'
   success_post_destroyed: "Post destroyed"
   success_request_created: "Request was successfully created."
+  success_request_destroyed: "Request destroyed"
   success_you_have_been_logged_out: "You have been logged out."
   success_topic_created: "Topic was successfully created."
   success_topic_destroyed: "Topic was successfully destroyed."
@@ -504,6 +506,7 @@ en:
   error_authorization_required_to_edit_neighborhood: "Authorization required to edit neighborhood"
   error_wrong_application_id: "Wrong application id"
   error_offer_cannot_be_deleted: "This offer cannot be deleted as it has been accepted"
+  error_request_cannot_be_deleted: "This request cannot be deleted as it has been accepted"
   error_invalid_email_address: "Invalid email address"
   error_person_inactive: "That person is not active"
   error_invalid_email_verification_code: "Invalid email verification code"

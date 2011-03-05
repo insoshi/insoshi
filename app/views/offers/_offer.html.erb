@@ -1,4 +1,4 @@
-<div class="offer">
+<div class="offer offer_id_<%= offer.id %>">
   <a name="offer_<%= offer.id %>"></a>
   <div class="profile-image">
     <%= image_link offer.person, :image => :thumbnail %>
@@ -23,8 +23,8 @@
     <% if current_person?(offer.person) -%>
     | <%= link_to t('button_edit'), edit_offer_path(offer) %>
     <% end -%>
-    <% if ( offer.can_destroy? && ( admin? || current_person?(offer.person) ) ) -%>
-    | <%= link_to t('button_delete'), offer, :confirm => t('are_you_sure'), :method => :delete %>
+    <% if can?(:destroy, offer) -%>
+      | <%= link_to t('button_delete'), offer, :class => "delete_offer" %>
     <% end -%>
     <br>
     <% if !current_person.address.nil? && !offer.person.address.nil? && !current_person?(offer.person) -%>

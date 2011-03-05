@@ -37,10 +37,6 @@ class Offer < ActiveRecord::Base
     end
   end
 
-  def can_destroy?
-    self.exchanges.length == 0
-  end
-
   def log_activity
     add_activities(:item => self, :person => self.person, :group => self.group)
   end

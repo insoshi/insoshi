@@ -72,7 +72,8 @@ class OffersController < ApplicationController
   end
 
   def destroy
-    if @offer.can_destroy?
+    if can?(:destroy, @offer)
+      flash[:notice] = t('success_offer_destroyed')
       @offer.destroy
     else
       flash[:error] = t('error_offer_cannot_be_deleted')
@@ -80,6 +81,7 @@ class OffersController < ApplicationController
 
     respond_to do |format|
       format.xml  { head :ok }
+      format.js
     end
   end
 

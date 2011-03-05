@@ -46,13 +46,26 @@ class Ability
     can :create, Offer do |offer|
       Membership.mem(person,offer.group)
     end
-    can [:update,:destroy], Offer, :person => person
+    can :update, Offer do |offer|
+      person.is?(:admin,offer.group) || offer.person == person || person.admin?
+    end
+    can :destroy, Offer do |offer|
+      # if an exchange already references an offer, don't allow the offer to be deleted
+      referenced = offer.exchanges.length > 0
+      !referenced && (person.is?(:admin,offer.group) || offer.person == person || person.admin?)
+    end
 
     can :read, Req
     can :create, Req do |req|
       Membership.mem(person,req.group)
     end
-    can [:update,:destroy], Req, :person => person
+    can :update, Req do |req|
+      person.is?(:admin,req.group) || req.person == person || person.admin?
+    end
+    can :destroy, Req do |req|
+      referenced = req.has_commitment? || req.has_approved?
+      !referenced && (person.is?(:admin,req.group) || req.person == person || person.admin?)
+    end
 
     can :read, Exchange
     can :destroy, Exchange, :customer => person
