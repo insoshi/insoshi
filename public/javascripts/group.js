@@ -31,8 +31,10 @@ $(function() {
   route('people',   /^#memberships\/page=(\d+)/,                   '/groups/[:group_id]/memberships?page=[:1]');
 
   route('requests', /^#reqs\/(\d+)$/,                              '/reqs/[:1]');
+  route('requests', /^#reqs\/(\d+)\/edit$/,                        '/reqs/[:1]/edit');
   route('requests', /^#reqs\/new$/,                                '/groups/[:group_id]/reqs/new');
   route('offers',   /^#offers\/(\d+)$/,                            '/offers/[:1]');
+  route('offers',   /^#offers\/(\d+)\/edit$/,                      '/offers/[:1]/edit');
   route('offers',   /^#offers\/new$/,                              '/groups/[:group_id]/offers/new');
 
   route('people',   /^#people\/(.+)\/exchanges\/new$/,             '/people/[:1]/exchanges/new?group='+OSCURRENCY.group_id);
@@ -177,11 +179,7 @@ $(function() {
       });
     });
 
-  $.ajaxSetup({
-    'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
-    });
-
-  $('.edit_member_preference, #new_bid, .edit_bid, #new_req, #new_offer, #new_topic, #new_post, #new_exchange, #new_wall_post, #new_message').live('submit',function() {
+  $('.edit_member_preference, #new_bid, .edit_bid, #new_req, #edit_req, #new_offer, #edit_offer, #new_topic, #new_post, #new_exchange, #new_wall_post, #new_message').live('submit',function() {
       if(OSCURRENCY.post_allowed) {
         OSCURRENCY.post_allowed = false;
         $.post($(this).attr('action'),$(this).serialize(),null,'script');

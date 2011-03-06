@@ -1,8 +1,6 @@
 /*
  *
  */
-var OSCURRENCY = {};
-
 $(function() { 
 
   function processPerson( n, peep ) {

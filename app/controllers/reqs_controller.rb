@@ -68,7 +68,12 @@ class ReqsController < ApplicationController
   # GET /reqs/1/edit
   def edit
     @req = Req.find(params[:id])
+    @group = @req.group
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   # POST /reqs
@@ -103,17 +108,20 @@ class ReqsController < ApplicationController
   # PUT /reqs/1.xml
   def update
     @req = Req.find(params[:id])
-
-#    @req.person_id = current_person.id
+    @group = @req.group
 
     respond_to do |format|
       if @req.update_attributes(params[:req])
         flash[:notice] = t('notice_request_updated')
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
         format.html { redirect_to(@req) }
+        format.js
         format.xml  { head :ok }
       else
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { render :action => "edit" }
+        format.js { render :action => "edit" }
         format.xml  { render :xml => @req.errors, :status => :unprocessable_entity }
       end
     end

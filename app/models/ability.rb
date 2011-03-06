@@ -60,10 +60,11 @@ class Ability
       Membership.mem(person,req.group)
     end
     can :update, Req do |req|
-      person.is?(:admin,req.group) || req.person == person || person.admin?
+      referenced = req.has_accepted_bid? # no update after someone has bid on it
+      !referenced && (person.is?(:admin,req.group) || req.person == person || person.admin?)
     end
     can :destroy, Req do |req|
-      referenced = req.has_commitment? || req.has_approved?
+      referenced = req.has_commitment? || req.has_approved? # no delete after a worker commits
       !referenced && (person.is?(:admin,req.group) || req.person == person || person.admin?)
     end
 

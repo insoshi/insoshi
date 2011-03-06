@@ -20,8 +20,8 @@
     <br>
     <%= t('offers.partial.created_by') %> <%= person_link offer.person %>
     <%= time_ago_in_words(offer.created_at) %> <%= t('ago') %>
-    <% if current_person?(offer.person) -%>
-    | <%= link_to t('button_edit'), edit_offer_path(offer) %>
+    <% if can?(:update, offer) -%>
+      | <%= link_to t('button_edit'), edit_offer_path(offer), :class => 'show-follow' %>
     <% end -%>
     <% if can?(:destroy, offer) -%>
       | <%= link_to t('button_delete'), offer, :class => "delete_offer" %>

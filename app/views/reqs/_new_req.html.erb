@@ -1,26 +1,7 @@
-<%= javascript_include_tag 'req_form' %>
+<%= javascript_include_tag 'req_new_form' %>
 <h2><%= t('reqs.new.header') %></h2>
 <% form_for :req, :url => group_reqs_path(@group), :html => {:id => 'new_req'} do |f| %>
-  <div class="form_row">
-    <%= f.label t('title') %>
-    <%= f.text_field :name, :size => 40, :maxlength => 255 %>
-  </div>
-  <div class="form_row">
-    <%= f.label t('estimated') + ' ' + t('payment') %>
-    <%= f.text_field :estimated_hours, :size => 5 %>&nbsp;<span class='small'><%= @group.unit %></span>
-  </div>
-  <div class="form_row">
-    <%= f.label t('due_date') %>
-    <%= f.text_field :due_date, :size => 7 %>
-  </div>
-  <div class="form_row full">
-    <%= f.label t('description') %>
-    <p class='formatting'>Be sure to include your preferred means of communication, i.e. email, text, or telephone.</p>
-    <%= f.text_area :description, :rows => 5 %>
-  </div>
-  <div class="form_row full">
-    <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
-  </div>
+  <%= render :partial => 'form_fields', :locals => {:f => f} %>
   <div id="providersDisplay" style="height: 95px;" class="form_row full"><label><%= t('reqs.new.people_to_be_notified') %>:</label><div id="followMe"></div></div>
   <div class="form_row">
     <label for="notifications" class="checkbox"><%= t('reqs.new.notify_members_email') %></label>

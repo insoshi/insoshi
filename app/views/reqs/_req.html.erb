@@ -19,8 +19,8 @@
     <%= render :partial => "shared/bid_message", :collection => accepted_messages(req) %>
     <%= t('reqs.partial.createdby') %> <%= person_link req.person %>
     <%= time_ago_in_words(req.created_at) %> <%= t('ago') %>
-    <% if current_person?(req.person) -%>
-    | <%= link_to t('button_edit'), edit_req_path(req) unless req.has_accepted_bid? %>
+    <% if can?(:update, req) -%>
+      | <%= link_to t('button_edit'), edit_req_path(req), :class => 'show-follow' %>
     <% end -%>
     <% if req.active? && can?(:destroy, req) -%>
       | <%= link_to t('button_delete'), req, :class => 'delete_req' %>

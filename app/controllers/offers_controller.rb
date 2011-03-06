@@ -53,19 +53,28 @@ class OffersController < ApplicationController
   end
 
   def edit
+    @group = @offer.group
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    respond_to do |format|
+      format.js
+    end
   end
 
   def update
+    @group = @offer.group
 
     respond_to do |format|
       if @offer.update_attributes(params[:offer])
         flash[:notice] = t('notice_offer_updated')
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
         #format.html { redirect_to(@offer) }
+        format.js
         format.xml  { head :ok }
       else
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         #format.html { render :action => "edit" }
+        format.js {render :action => 'edit'}
         format.xml  { render :xml => @offer.errors, :status => :unprocessable_entity }
       end
     end
