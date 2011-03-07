@@ -4,6 +4,9 @@
     <% tab.create('blog','Blog') do %>
       <%= render :partial => 'blog' %>
     <% end unless global_prefs.about.blank? %>
+    <% tab.create('skillbank','SkillBank') do %>
+      <%= render :partial => 'categories' %>
+    <% end %>
     <% tab.create('about','About') do %>
       <%= render :partial => 'about' %>
     <% end unless global_prefs.about.blank? %>

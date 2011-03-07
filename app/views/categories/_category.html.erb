@@ -3,7 +3,7 @@
   <div>
     <ul>
     <% unless category.children.empty? -%>
-      <%= render :partial => 'subcategory', :collection => category.children %>
+      <%= render :partial => '/categories/subcategory', :collection => category.children %>
     <% end -%>
     </ul>
   </div>

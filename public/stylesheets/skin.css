@@ -55,7 +55,7 @@ div.status-btn input.disabled, div.status-btn input.disabled:hover { background:
 
 .col1 {
   float: left;
-  width: 490px;
+  width: 560px;
 }
 .col2 {
   float: right;
@@ -462,8 +462,7 @@ ul.categories li
     padding:5px;
     margin:0px;
     margin-left:20px;
-    background: white url("/images/silver-grad-inv.jpg") repeat-x top left;
-    font-size:16px;
+    font-size:12px;
     color:#333;
 }
 ul.categories a
@@ -500,12 +499,12 @@ ul.categories li ul li
 #categoryMenu
 {
   float:left;
-  width:370px;
+  width:258px;
 }
 #categoryMenu2
 {
   float:left;
-  width:370px;
+  width:258px;
 }
 
 p.formatting
