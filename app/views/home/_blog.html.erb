@@ -3,6 +3,7 @@
 <%- else -%>
   <h2><%= t('home._blog.header').capitalize %></h2>
 <%- end -%>
+<%- cache('blogfeed',:expires_in => 1.hour) do %>
 <%- if @posts.empty? -%>
   <h3 class="blankslate">
     No posts yet!
@@ -14,6 +15,7 @@
 <%- end -%>
 
 <%= will_paginate(@posts) %>
+<% end %>
 <script type="text/javascript">
 //<![CDATA[
 (function() {

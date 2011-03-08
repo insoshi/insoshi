@@ -73,6 +73,7 @@ Rails::Initializer.run do |config|
   config.gem 'heroku'
   config.gem 'cancan'
   config.gem 'aws-s3', :lib => 'aws/s3'
+  config.gem 'dalli'
 
   # config.gem 'rack-openid', :version => '>= 1.0.1'
 

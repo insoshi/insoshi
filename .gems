@@ -5,7 +5,6 @@ chronic
 aasm
 feed-normalizer
 texticle
-memcache-client '>= 1.7.0'
 eventmachine
 authlogic
 authlogic-oid
@@ -14,3 +13,4 @@ aws-s3
 heroku
 rmagick
 cancan
+dalli
