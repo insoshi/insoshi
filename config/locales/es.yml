@@ -341,6 +341,7 @@ es:
       for: "Para:"
       or_ask: "o preguntar"
       service_provided: "Servicios proveídos"
+      no_currencies: "esta persona no está utilizando ninguna monedas"
 
   sessions:
     new:
