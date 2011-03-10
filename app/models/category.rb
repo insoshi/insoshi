@@ -22,6 +22,10 @@ class Category < ActiveRecord::Base
   has_and_belongs_to_many :people, :conditions => Person.conditions_for_active
   acts_as_tree
 
+  def self.root_nodes
+    all(:conditions => "parent_id is NULL").sort_by {|a| a.name}
+  end
+
   def descendants
     children.map(&:descendants).flatten + children
   end

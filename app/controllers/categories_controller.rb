@@ -1,7 +1,8 @@
 class CategoriesController < ApplicationController
 
   before_filter :login_required, :except => :index
-  before_filter :authorize_change, :only => [:update, :destroy] 
+  before_filter :authorize_change, :only => [:update, :destroy]
+  cache_sweeper :category_sweeper, :only => [:create, :update, :destroy]
 
   # GET /categories
   # GET /categories.xml

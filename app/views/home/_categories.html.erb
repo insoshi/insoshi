@@ -1,15 +1,16 @@
 <% cache('skillbank', :expires_in => 24.hours) do %>
+<%  top_level_categories = Category.root_nodes %>
 <div class="categorycol">
-  <%- if @top_level_categories.empty? -%>
+  <%- if top_level_categories.empty? -%>
     <h3 class="blankslate"><%= t('categories.index.no_categories') %></h3>
   <%- else -%>
-    <% total = @top_level_categories.length %>
+    <% total = top_level_categories.length %>
     <% halfish = (total/2.0).ceil %>
     <ul id="categoryMenu" class="categories">
-      <%= render :partial => '/categories/category', :collection => @top_level_categories[0,halfish] %>
+      <%= render :partial => '/categories/category', :collection => top_level_categories[0,halfish] %>
     </ul>
     <ul id="categoryMenu2" class="categories">
-      <%= render :partial => '/categories/category', :collection => @top_level_categories[-(total-halfish),(total-halfish)] %>
+      <%= render :partial => '/categories/category', :collection => top_level_categories[-(total-halfish),(total-halfish)] %>
     </ul>
   <%- end -%>
 </div>

@@ -3,18 +3,19 @@
 <%- else -%>
   <h2><%= t('home._blog.header').capitalize %></h2>
 <%- end -%>
-<%- cache('blogfeed',:expires_in => 1.hour) do %>
-<%- if @posts.empty? -%>
+<%- cache(:action_suffix => (params[:page] || 1),:expires_in => 24.hours) do %>
+<%- posts = FeedPost.posts(params[:page]) %>
+<%- if posts.empty? -%>
   <h3 class="blankslate">
     No posts yet!
   </h3>
 <%- else -%>
   <ul class="list blog full">
-    <%= render :partial => 'posts/blog_post', :collection => @posts %>
+    <%= render :partial => 'posts/blog_post', :collection => posts %>
   </ul>
 <%- end -%>
 
-<%= will_paginate(@posts) %>
+<%= will_paginate(posts) %>
 <% end %>
 <script type="text/javascript">
 //<![CDATA[
