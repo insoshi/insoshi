@@ -103,7 +103,7 @@ class Group < ActiveRecord::Base
   def validate
     unless new_record?
       if asset_changed?
-        unless asset_was.nil?
+        unless asset_was.blank?
           errors.add(:asset, "cannot be changed unless it is empty")
         end
       end
