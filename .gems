@@ -10,7 +10,7 @@ authlogic
 authlogic-oid
 rack-openid
 aws-s3
-heroku
+heroku --version '= 1.18.2'
 rmagick
 cancan
 dalli
