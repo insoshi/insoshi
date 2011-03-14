@@ -12,5 +12,5 @@ rack-openid
 aws-s3
 heroku --version '= 1.18.2'
 rmagick
-cancan
+cancan --version '= 1.5.1'
 dalli
