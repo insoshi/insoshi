@@ -1,5 +1,15 @@
 var OSCURRENCY = {};
 
+// indexOf for IE http://bit.ly/haIWRa
+[].indexOf || (Array.prototype.indexOf = function(v,n){
+  n = (n==null) ? 0 : n; 
+  var m = this.length;
+  for(var i = n; i < m; i++)
+    if(this[i] == v)
+       return i;
+  return -1;
+});
+
 $(function() {
 
   OSCURRENCY.group_id = find_group();
@@ -84,7 +94,8 @@ $(function() {
         for(j=1;j<a.length;j++) {
           url = url.replace('[:'+j+']',a[j]);
         }
-        return [tab,url];
+        // accomodate internet explorer with js extension
+        return [tab,url + '.js'];
       }
     }
     return ['',''];
@@ -119,10 +130,12 @@ $(function() {
       hash += a[a.length - 1];
     }
     if(query != undefined) {
-      var params = query.split('&');
-      for(i=0;i<params.length;i++) {
-        if(params[i].split('=')[0] != 'group') {
-          hash += '/' + params[i];
+      if(query.length > 0) {
+        var params = query.split('&');
+        for(i=0;i<params.length;i++) {
+          if(params[i].split('=')[0] != 'group') {
+            hash += '/' + params[i];
+          }
         }
       }
     }
