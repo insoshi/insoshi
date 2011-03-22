@@ -1,21 +1,5 @@
 var OSCURRENCY = {};
 
-var ie = (function(){
-
-    var undef,
-        v = 3,
-        div = document.createElement('div'),
-        all = div.getElementsByTagName('i');
-    
-    while (
-        div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
-        all[0]
-    );
-    
-    return v > 4 ? v : undef;
-    
-}());
-
 // indexOf for IE http://bit.ly/haIWRa
 [].indexOf || (Array.prototype.indexOf = function(v,n){
   n = (n==null) ? 0 : n; 
@@ -109,10 +93,6 @@ $(function() {
         url = r['url'].replace(/\[:group_id\]/,OSCURRENCY.group_id);
         for(j=1;j<a.length;j++) {
           url = url.replace('[:'+j+']',a[j]);
-        }
-        // accomodate internet explorer with js extension
-        if(ie) {
-          url += '.js';
         }
         return [tab,url];
       }
