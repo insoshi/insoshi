@@ -1,2 +1,3 @@
 $('#reqs_canvas').html('<%= escape_javascript(render :partial => 'reqs_canvas') %>');
+$('#reqs_canvas').linkify();
 <%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'reqs_canvas'} %>
