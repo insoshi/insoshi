@@ -39,7 +39,6 @@ class Preference < ActiveRecord::Base
                   :practice, :steps, :questions, :contact,
                   :registration_intro,
                   :agreement,
-                  :group_option,
                   :zipcode_browsing,
                   :blog_feed_url,
                   :googlemap_api_key,

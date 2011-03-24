@@ -14,12 +14,10 @@
         <%= f.text_field :amount, :size => 2 %>&nbsp;<span id="units" class="small"><%= @groups[0].unit %></span>
       </div>
 
-      <% if global_prefs.group_option? %>
         <div class="form_row">
           <label for="group_id"><%= t('group') %></label>
           <%= collection_select( 'exchange', 'group_id', @groups, :id, :name, {}, { :onchange => "update_currency_units(this.value);"} ) %>
         </div>
-      <%- end -%>
       <% fields_for :req do |r| %>
         <div class="form_row">
           <%= r.label t('exchanges.new.service_provided') %>

@@ -74,12 +74,10 @@
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <% if global_prefs.group_option? %>
   <%= render :partial => 'groups', 
              :locals => {:groups => @person.own_groups, :title => "Admin Groups", :link => "admin"} %>
   <%= render :partial => 'groups', 
              :locals => {:groups => @groups, :title => "Groups", :link => "groups"} %>
-  <%- end -%>
   <%= render :partial => 'searches/box' %>
   <%- if global_prefs.zipcode_browsing? -%>
     <%= render :partial => 'zip', :collection => @zips %>
