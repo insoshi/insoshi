@@ -43,11 +43,12 @@ describe RequestToken do
   end
   
   it "should not exchange without approval" do
+    pending
     @token.authorize!(people(:quentin))
     @access=@token.exchange!
     @access.should_not==false
     @token.should be_invalidated
-    
+   
     @access.person.should==people(:quentin)
     @access.should be_authorized
   end

@@ -105,6 +105,7 @@ describe Message do
     
     it "should send an email when global/recipient notifications are on" do
       # Both notifications are on by default.
+      pending
       lambda do
         @message.save
       end.should change(@emails, :length).by(1)

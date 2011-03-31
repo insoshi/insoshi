@@ -3,9 +3,16 @@ module OAuthControllerSpecHelper
     controller.stub!(:local_request?).and_return(true)
     @user=mock_model(Person)
     controller.stub!(:current_user).and_return(@user)
+    controller.stub!(:current_person).and_return(@user)
     @tokens=[]
     @tokens.stub!(:find).and_return(@tokens)
     @user.stub!(:tokens).and_return(@tokens)
+    @user.stub!(:language).and_return(nil)
+    @user.stub!(:active?).and_return(true)
+    @user.stub!(:admin?).and_return(true)
+    @user.stub!(:email).and_return('bob@xyz.com')
+    @user.stub!(:last_logged_in_at=).and_return(nil)
+    @user.stub!(:save).and_return(true)
     Person.stub!(:find_by_id).and_return(@user)
   end
   
@@ -40,10 +47,16 @@ module OAuthControllerSpecHelper
     
     @request_token_string="oauth_token=request_token&oauth_token_secret=request_secret"
     @request_token.stub!(:to_query).and_return(@request_token_string)
+    @request_token.stub!(:expired?).and_return(false)
+    @request_token.stub!(:callback_url).and_return(nil)
+    @request_token.stub!(:verifier).and_return("verifyme")
+    @request_token.stub!(:oauth10?).and_return(false)
+    @request_token.stub!(:oob?).and_return(true)
 
     @access_token=mock_model(AccessToken,:token=>'access_token',:client_application=>@client_application,:secret=>"access_secret",:user=>@user)
     @access_token.stub!(:invalidated?).and_return(false)
     @access_token.stub!(:authorized?).and_return(true)
+    @access_token.stub!(:expired?).and_return(false)
     @access_token_string="oauth_token=access_token&oauth_token_secret=access_secret"
     @access_token.stub!(:to_query).and_return(@access_token_string)
 
@@ -60,12 +73,12 @@ module OAuthControllerSpecHelper
     @tokens.stub!(:find_by_token).and_return(@request_token)
     @user.stub!(:tokens).and_return(@tokens)
   end
-  
-  def sign_request_with_oauth(token=nil)
+
+  def sign_request_with_oauth(token=nil,options={})
     ActionController::TestRequest.use_oauth=true
-    @request.configure_oauth(@consumer,token)
+    @request.configure_oauth(@consumer,token,options)
   end
-    
+
   def setup_to_authorize_request
     setup_oauth
     OauthToken.stub!(:find_by_token).with( @access_token.token).and_return(@access_token)
