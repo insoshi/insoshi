@@ -233,6 +233,8 @@ $(function() {
 
   $('.pagination a').live('click',function() {
     str = url2hash(this.href);
+    // XXX hack until hash is renamed to match
+    str = str.replace(/memberships/,'people');
     window.location.hash = str;
     return false;
     });
