@@ -2,7 +2,7 @@ class TransactsController < ApplicationController
   skip_before_filter :require_activation
   before_filter :login_or_oauth_required
   before_filter :find_group_by_asset
-  skip_before_filter :verify_authenticity_token, :if => :oauth?
+  skip_before_filter :verify_authenticity_token, :set_person_locale, :if => :oauth?
 
   def index
     @transactions = current_person.transactions.select {|transact| transact.group == @group}
