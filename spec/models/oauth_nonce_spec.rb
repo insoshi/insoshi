@@ -3,7 +3,7 @@ require 'oauth/helper'
 describe OauthNonce do
   include OAuth::Helper
   before(:each) do
-    @oauth_nonce = OauthNonce.remember(generate_key,Time.now.to_i)
+    @oauth_nonce = OauthNonce.remember(generate_key, Time.now.to_i)
   end
 
   it "should be valid" do
@@ -11,7 +11,7 @@ describe OauthNonce do
   end
   
   it "should not have errors" do
-    @oauth_nonce.errors.full_messages.should==[]
+    @oauth_nonce.errors.full_messages.should == []
   end
   
   it "should not be a new record" do
@@ -19,6 +19,6 @@ describe OauthNonce do
   end
   
   it "should not allow a second one with the same values" do
-    OauthNonce.remember(@oauth_nonce.nonce,@oauth_nonce.timestamp).should==false
+    OauthNonce.remember(@oauth_nonce.nonce,@oauth_nonce.timestamp).should == false
   end
 end
