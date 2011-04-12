@@ -1,0 +1,11 @@
+This creates an OAuth Consumer controller as well as requisite models.
+
+It requires an authentication framework such as acts_as_authenticated, restful_authentication or restful_open_id_authentication that provides the methods "login_required" and "current_user".
+
+See comments in generated controller for more info about overriding these.
+
+If you generated the migration file (true by default), make sure you run
+
+  rake db:migrate
+
+See README.rdoc for more.

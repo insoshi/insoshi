@@ -1,0 +1,21 @@
+A few non backwards compatible changes have been made that are really easy to fix.
+
+If you are upgrading a oauth_consumer from 0.3.x to 0.4.x add the following line to your consumer_token model:
+  
+  belongs_to :user
+
+So it looks like this:
+
+  require 'oauth/models/consumers/token'
+  class ConsumerToken < ActiveRecord::Base
+    include Oauth::Models::Consumers::Token
+    belongs_to :user
+  end
+
+You should also upgrade your oauth_consumer_controller as we no longer call login_required in the library. This should make it easier for implementing it with other authentication frameworks:
+
+  require 'oauth/controllers/consumer_controller'
+  class OauthConsumersController < ApplicationController
+    include Oauth::Controllers::ConsumerController
+    # Replace this with the equivalent for your authentication framework
+    before_filter :login_required, :only=>:index
