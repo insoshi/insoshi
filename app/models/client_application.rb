@@ -1,5 +1,7 @@
 require 'oauth'
 class ClientApplication < ActiveRecord::Base
+  extend PreferencesHelper
+
   belongs_to :person
   has_many :tokens, :class_name => "OauthToken"
   has_many :access_tokens
