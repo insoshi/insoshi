@@ -89,5 +89,8 @@ class TransactsController < ApplicationController
 
   def find_group_by_asset
     @group = Group.find_by_asset(params[:asset])
+    if oauth?
+      invalid_oauth_response unless current_token.group_id == @group.id
+    end
   end
 end

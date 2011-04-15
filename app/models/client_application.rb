@@ -45,9 +45,13 @@ class ClientApplication < ActiveRecord::Base
     @oauth_client ||= OAuth::Consumer.new(key, secret)
   end
     
-  # If your application requires passing in extra parameters handle it here
   def create_request_token(params={}) 
-    RequestToken.create :client_application => self, :callback_url=>self.token_callback_url
+    # valid scope (opentransact asset) is required!
+    group = Group.find_by_asset(params[:scope]) if params[:scope]
+    RequestToken.create(:client_application => self, 
+                        :scope => params[:scope], 
+                        :group_id => group.id, 
+                        :callback_url=>self.token_callback_url) unless group.nil?
   end
   
 protected

@@ -6,7 +6,7 @@
   <%= hidden_field_tag "oauth_callback", params[:oauth_callback] %>
 <%- end -%>
 <p>
-  <%= check_box_tag 'authorize' %> authorize access
+  <%= check_box_tag 'authorize' %> authorize access for <%= @token.scope %>
 </p>
 <p>
   <%= submit_tag %>
