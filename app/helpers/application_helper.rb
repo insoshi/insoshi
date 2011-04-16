@@ -220,9 +220,9 @@ module ApplicationHelper
 
 def relative_time_ago_in_words(time)
   if time > Time.now
-  "in " + time_ago_in_words(time)
+    t('in') + " " + time_ago_in_words(time)
   else
-    time_ago_in_words(time) + " ago"
+    time_ago_in_words(time) + " ago"  # rob young - this needs to be added to the language file!
   end
 end
 

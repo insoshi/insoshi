@@ -39,6 +39,7 @@ en:
   by: "by"
   to: "to"
   from: "from"
+  in: "in"
 
   accounts:
     show:

@@ -39,6 +39,7 @@ fr:
   by: "par"
   to: "à"
   from: "de"
+  in: "dans"
 
   datetime:
     distance_in_words:
@@ -260,7 +261,7 @@ fr:
   offers:
     partial:
       accept_offer: "Payez maintenant"
-      expires: "passé-dû"
+      expires: "Expire"
       available_count: "Available count"
       created_by: "Crée par"
     index:

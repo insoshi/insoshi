@@ -38,6 +38,7 @@ es:
   by: "por"
   to: "a"
   from: "de"
+  in: "dans"
 
   accounts:
     show:
