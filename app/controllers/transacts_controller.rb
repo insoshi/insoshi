@@ -40,16 +40,25 @@ class TransactsController < ApplicationController
   end
 
   def create
-    @worker = opentransact_find_worker(params[:to])
-    if nil == @worker
-      flash[:error] = t('error_could_not_find_payee')
-      render :action => "new"
-      return
-    end
-
     # Transact.to and Transact.memo - makes @transact look opentransacty
     #
     @transact = Transact.new(:to => params[:to], :memo => params[:memo], :amount => params[:amount], :callback_url => params[:callback_url], :redirect_url => params[:redirect_url])
+
+    @worker = opentransact_find_worker(params[:to])
+    if nil == @worker
+      respond_to do |format|
+        format.html do
+          flash[:error] = t('error_could_not_find_payee')
+          render :action => "new"
+        end
+        format.json do
+          @transact.errors.add_to_base(t('error_could_not_find_payee'))
+          render :json => @transact.as_json, :status => :unprocessable_entity
+        end
+      end
+      return
+    end
+
     @transact.customer = current_person
     @transact.worker = @worker
     @transact.group = @group
