@@ -308,6 +308,7 @@ en:
       language: "Language"
       english: "English"
       spanish: "Spanish"
+      french: "French"
     _recent_activity:
       header: "Recent Activity" 
     _recent_exchanges:

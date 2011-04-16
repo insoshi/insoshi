@@ -307,6 +307,7 @@ es:
       language: "Idioma"
       english: "Ingles"
       spanish: "Espanol"
+      french: "Français"
     _recent_activity:
       header: "Actividades recientes" 
     _recent_exchanges:
