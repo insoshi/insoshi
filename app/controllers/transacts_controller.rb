@@ -2,7 +2,7 @@ class TransactsController < ApplicationController
   skip_before_filter :require_activation
   before_filter :login_or_oauth_required
   before_filter :find_group_by_asset
-  skip_before_filter :verify_authenticity_token, :if => :oauth?
+  skip_before_filter :verify_authenticity_token, :set_person_locale, :if => :oauth?
 
   def index
     @transactions = current_person.transactions.select {|transact| transact.group == @group}
@@ -40,16 +40,25 @@ class TransactsController < ApplicationController
   end
 
   def create
-    @worker = opentransact_find_worker(params[:to])
-    if nil == @worker
-      flash[:error] = t('error_could_not_find_payee')
-      render :action => "new"
-      return
-    end
-
     # Transact.to and Transact.memo - makes @transact look opentransacty
     #
     @transact = Transact.new(:to => params[:to], :memo => params[:memo], :amount => params[:amount], :callback_url => params[:callback_url], :redirect_url => params[:redirect_url])
+
+    @worker = opentransact_find_worker(params[:to])
+    if nil == @worker
+      respond_to do |format|
+        format.html do
+          flash[:error] = t('error_could_not_find_payee')
+          render :action => "new"
+        end
+        format.json do
+          @transact.errors.add_to_base(t('error_could_not_find_payee'))
+          render :json => @transact.as_json, :status => :unprocessable_entity
+        end
+      end
+      return
+    end
+
     @transact.customer = current_person
     @transact.worker = @worker
     @transact.group = @group
@@ -89,5 +98,8 @@ class TransactsController < ApplicationController
 
   def find_group_by_asset
     @group = Group.find_by_asset(params[:asset])
+    if oauth?
+      invalid_oauth_response unless current_token.group_id == @group.id
+    end
   end
 end

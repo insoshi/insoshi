@@ -1,11 +1,5 @@
-<%- column_div :type => :primary do -%>
-
-<h2>Register a new application</h2>
-
-<%= error_messages_for :client_application %>
-
-  <% form_for :client_application, :url => { :action => :create } do |f| %>
-       <%= render :partial => "form", :locals => { :f => f } %>
-       <%= submit_tag "Register" %>
-  <% end %>
-<%- end -%>
+<h1>Register a new application</h1>
+<% form_for :client_application, :url => { :action => :create } do |f| %>
+   <%= render :partial => "form", :locals => { :f => f } %>
+   <%= submit_tag "Register" %>
+<% end %>

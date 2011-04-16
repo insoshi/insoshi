@@ -10,11 +10,15 @@ describe Offer do
       :price => 9.99,
       :expiration_date => Date.today,
       :total_available => 1,
+      :group_id => 1,
       :person => p 
     }
   end
+=begin
+  XXX offer examples currently in group_spec
 
   it "should create a new instance given valid attributes" do
     Offer.create!(@valid_attributes)
   end
+=end
 end

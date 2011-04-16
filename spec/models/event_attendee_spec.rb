@@ -17,13 +17,5 @@ describe EventAttendee do
       @event_attendee.save!
       @activity = Activity.find_by_item_id(@event_attendee)
     end
-    
-    it "should have an activity" do
-      @activity.should_not be_nil
-    end
-    
-    it "should add an activity to the attendee" do
-      @event_attendee.person.recent_activity.should contain(@activity)
-    end
   end
 end

@@ -1,0 +1,18 @@
+%h1 Services
+
+-if @consumer_tokens.empty?
+  %p
+    You are currently not connected to any external services.
+-else
+  %p You are connected to the following services:
+  %ul
+    -@consumer_tokens.each do |token|
+      %li
+        =link_to token.class.service_name.to_s.humanize, oauth_consumer_path(token.class.service_name)
+
+-unless @services.empty?
+  %h3 You can connect to the following services:
+  %ul
+    -@services.each do |service|
+      %li
+        =link_to service.to_s.humanize,oauth_consumer_path(service)
