@@ -1,7 +1,8 @@
 class GroupsController < ApplicationController
-  load_and_authorize_resource
+  #before_filter :login_or_oauth_required
+  before_filter :login_required
   skip_before_filter :require_activation
-  before_filter :login_or_oauth_required
+  load_and_authorize_resource
   
   def index
     # XXX can't define abilities w/ blocks (accessible_by) http://github.com/ryanb/cancan/wiki/Upgrading-to-1.4
