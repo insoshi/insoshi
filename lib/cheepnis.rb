@@ -18,7 +18,7 @@ module Cheepnis
     else
 
       if ENV["CHEEPNIS_INDIRECT"] != nil
-        object = Connector.new(object) # +++ conditionalize on something
+        object = Connector.new(object) 
       end
 
       # enqueue the object in the normal way
@@ -76,10 +76,12 @@ module Cheepnis
     end
   end
 
+  # This is an object whose job is to be the object of a Delayed Job task, and points to the real object that implements the perform method
+  # The problem this fixes is that using ActiveRecord objects directly tends to serialize too many related objects.  
   class Connector 
     
     def self.make(object)
-      c = self.new(object)
+      self.new(object)
     end
 
     def initialize(object)
