@@ -72,12 +72,12 @@
                 </ul>
               </li>
               <li class="profile_icon_item">
-                <%= image_link current_person, {:link => edit_person_path(current_person)} %>
+                <%= image_link current_person, {:link => person_path(current_person)} %>
               </li>
               <li class="right_item">
                 <a href="#"><%= h current_person.name %></a>
                 <ul>
-                  <%= link_to "Profile", edit_person_path(current_person) %>
+                  <%= link_to "Profile", person_path(current_person) %>
                   <%= link_to "Inbox", messages_path %>
                   <%= link_to "Sign out", logout_path %>
                 </ul>
