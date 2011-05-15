@@ -56,7 +56,7 @@ Rails::Initializer.run do |config|
   #                                    :lib => 'will_paginate',
   #                                    :source => 'http://gems.github.com'
   # rake dependencies
-
+=begin
   config.gem 'authlogic'
   config.gem 'authlogic-oid', :lib => 'authlogic_openid'
   config.gem 'texticle'
@@ -74,7 +74,7 @@ Rails::Initializer.run do |config|
   config.gem 'cancan'
   config.gem 'aws-s3', :lib => 'aws/s3'
   config.gem 'dalli'
-
+=end
   # config.gem 'rack-openid', :version => '>= 1.0.1'
 
   secret = ENV['SESSION_SECRET'] || rand(36**64).to_s(36) 
