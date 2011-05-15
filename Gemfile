@@ -12,7 +12,7 @@ gem "eventmachine"
 gem "aws-s3"
 gem "rmagick"
 gem "rack-openid"
-gem "heroku", "1.18.2"
+gem "heroku"
 gem "json"
 
 

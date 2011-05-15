@@ -49,13 +49,13 @@ GEM
       simple-rss (>= 1.1)
     gherkin (2.3.7)
       json (>= 1.4.6)
-    heroku (1.18.2)
-      json (~> 1.5.1)
-      launchy (~> 0.3.2)
-      rest-client (>= 1.4.0, < 1.7.0)
+    heroku (2.1.4)
+      launchy (>= 0.3.2)
+      rest-client (~> 1.6.1)
+      term-ansicolor (~> 1.0.5)
     hpricot (0.8.4)
     json (1.5.1)
-    launchy (0.3.7)
+    launchy (0.4.0)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
     mime-types (1.16)
@@ -116,7 +116,7 @@ DEPENDENCIES
   dalli
   eventmachine
   feed-normalizer
-  heroku (= 1.18.2)
+  heroku
   json
   oauth
   oauth-plugin!
