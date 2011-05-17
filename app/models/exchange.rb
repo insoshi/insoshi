@@ -104,11 +104,7 @@ class Exchange < ActiveRecord::Base
         end
       end
     rescue
-      if self.metadata.class == Req
-        unless self.metadata.active?
-          self.metadata.destroy
-        end
-      end
+      false
     end
   end
 

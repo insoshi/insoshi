@@ -78,9 +78,17 @@ class TransactsController < ApplicationController
         redirect_to @transact.redirect_url
       end
     else
-      flash[:error] = t('error_with_transfer')
-      @transact.metadata.destroy
-      render :action => "new"
+      respond_to do |format|
+        format.html do
+          flash[:error] = t('error_with_transfer')
+          @transact.metadata.destroy
+          render :action => "new"
+        end
+        format.json do
+          @transact.errors.add_to_base(t('error_with_credit_transfer'))
+          render :json => @transact.as_json, :status => :unprocessable_entity
+        end
+      end
     end
 
   end
