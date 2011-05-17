@@ -195,6 +195,12 @@ ul li.profile_icon_item {
   width: 45px;
 }
 
+#scope-action {
+  background: #FFF6BF; 
+  color: #514721; 
+  border: 1px solid #FFD324;
+}
+
 #sfmenu li.right_item a {
   width: 120px;
 }

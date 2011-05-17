@@ -1,0 +1,8 @@
+{
+  "action": 
+    {
+    "_id":"recurring_payment",
+    "name":"recurring payment",
+    "icon_uri":"/images/icons/refresh.gif"
+  }
+}
