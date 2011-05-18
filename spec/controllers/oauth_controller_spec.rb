@@ -6,7 +6,7 @@ describe OauthController do
     include Devise::TestHelpers
   end  
   include OAuthControllerSpecHelper
-  fixtures :client_applications, :oauth_tokens, :users
+  fixtures :client_applications, :oauth_tokens, :people
   describe "getting a request token" do
     before(:each) do
       sign_request_with_oauth
@@ -164,8 +164,8 @@ describe OauthController do
       subject { @verification_token }
       
       it { should_not be_nil }
-      it "should set user on verification token" do 
-        @verification_token.user.should==current_user
+      it "should set person on verification token" do 
+        @verification_token.person.should==current_user
       end
       
       it "should set redirect_url" do
@@ -191,8 +191,8 @@ describe OauthController do
           Oauth2Token.count.should==@oauth2_token_count+1
         end
         
-        it "should set user to current user" do
-          @token.user.should==current_user
+        it "should set person to current person" do
+          @token.person.should==current_user
         end
         
         it "should return json token" do
@@ -298,8 +298,8 @@ describe OauthController do
       it { should_not be_nil }
       it { should be_authorized }
       
-      it "should set user to current user" do
-        @token.user.should==current_user
+      it "should set person to current person" do
+        @token.person.should==current_user
       end
       
       it "should have added a new token" do
@@ -333,8 +333,8 @@ describe OauthController do
     
     it { should_not be_nil }
     it { should be_authorized }
-    it "should set user to client_applications user" do
-      @token.user.should==current_client_application.user
+    it "should set person to client_applications person" do
+      @token.person.should==current_client_application.person
     end
     it "should have added a new token" do
       Oauth2Token.count.should==@oauth2_token_count+1
@@ -376,8 +376,8 @@ describe OauthController do
     
     it { should_not be_nil }
     it { should be_authorized }
-    it "should set user to client_applications user" do
-      @token.user.should==current_user
+    it "should set person to client_applications person" do
+      @token.person.should==current_user
     end
     it "should have added a new token" do
       Oauth2Token.count.should==@oauth2_token_count+1
@@ -404,7 +404,7 @@ describe OauthController do
     end
   end
   
-  describe "oauth2 token for basic credentials with unknown user" do
+  describe "oauth2 token for basic credentials with unknown person" do
     before(:each) do
       current_client_application
       @oauth2_token_count = Oauth2Token.count
@@ -461,8 +461,8 @@ describe OauthController do
         access_token=AccessToken.last
       end
       
-      it "should have user set" do
-        access_token.user.should==current_user
+      it "should have person set" do
+        access_token.person.should==current_user
       end
       
       it "should be authorized" do
@@ -529,7 +529,7 @@ class OauthorizedController<ApplicationController
 end
 
 describe OauthorizedController, " access control" do
-  fixtures :client_applications, :oauth_tokens, :users
+  fixtures :client_applications, :oauth_tokens, :people
   if defined?(Devise)
     include Devise::TestHelpers
   end

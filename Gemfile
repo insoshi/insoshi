@@ -25,9 +25,6 @@ gem "cancan", "1.5.1"
 gem "dalli"
 
 group :development, :test do
+  gem "rspec", "1.3.0"
   gem "rspec-rails", "1.3.2" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
-  gem "webrat"  
-  gem "cucumber"
-  gem "cucumber-rails"
-  gem "awesome_print"
 end

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe RequestToken do
-  fixtures :client_applications, :users, :oauth_tokens
+  fixtures :client_applications, :people, :oauth_tokens
   before(:each) do
     @token = RequestToken.create :client_application => client_applications(:one)
   end
@@ -55,7 +55,7 @@ describe RequestToken do
 
       describe "authorize request" do
         before(:each) do
-          @token.authorize!(users(:quentin))      
+          @token.authorize!(people(:quentin))      
         end
 
         it "should be authorized" do
@@ -66,8 +66,8 @@ describe RequestToken do
           @token.authorized_at.should_not be_nil      
         end
 
-        it "should have user set" do
-          @token.user.should == users(:quentin)      
+        it "should have person set" do
+          @token.person.should == people(:quentin)      
         end
 
         it "should have verifier" do
@@ -93,8 +93,8 @@ describe RequestToken do
             @token.should be_invalidated
           end
 
-          it "should set user on access token" do
-            @access.user.should == users(:quentin)        
+          it "should set person on access token" do
+            @access.person.should == people(:quentin)        
           end
           
           it "should authorize accesstoken" do
@@ -155,7 +155,7 @@ describe RequestToken do
 
       describe "authorize request" do
         before(:each) do
-          @token.authorize!(users(:quentin))      
+          @token.authorize!(people(:quentin))      
         end
 
         it "should be authorized" do
@@ -166,8 +166,8 @@ describe RequestToken do
           @token.authorized_at.should_not be_nil      
         end
 
-        it "should have user set" do
-          @token.user.should == users(:quentin)      
+        it "should have person set" do
+          @token.person.should == people(:quentin)      
         end
 
         it "should have verifier" do
@@ -185,8 +185,8 @@ describe RequestToken do
             @token.should be_invalidated
           end
 
-          it "should set user on access token" do
-            @access.user.should == users(:quentin)        
+          it "should set person on access token" do
+            @access.person.should == people(:quentin)        
           end
 
           it "should authorize accesstoken" do
@@ -245,7 +245,7 @@ describe RequestToken do
 
       describe "authorize request" do
         before(:each) do
-          @token.authorize!(users(:quentin))      
+          @token.authorize!(people(:quentin))      
         end
 
         it "should be authorized" do
@@ -256,8 +256,8 @@ describe RequestToken do
           @token.authorized_at.should_not be_nil      
         end
 
-        it "should have user set" do
-          @token.user.should == users(:quentin)      
+        it "should have person set" do
+          @token.person.should == people(:quentin)      
         end
 
         it "should not have verifier" do
@@ -274,8 +274,8 @@ describe RequestToken do
             @token.should be_invalidated
           end
 
-          it "should set user on access token" do
-            @access.user.should == users(:quentin)        
+          it "should set person on access token" do
+            @access.person.should == people(:quentin)        
           end
 
           it "should authorize accesstoken" do

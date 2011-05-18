@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Oauth2Verifier do
-  fixtures :client_applications, :users, :oauth_tokens
+  fixtures :client_applications, :people, :oauth_tokens
   before(:each) do
-    @verifier = Oauth2Verifier.create :client_application => client_applications(:one), :user=>users(:aaron)
+    @verifier = Oauth2Verifier.create :client_application => client_applications(:one), :person=>people(:aaron)
   end
   
   it "should be valid" do
@@ -35,8 +35,8 @@ describe Oauth2Verifier do
       @verifier.should be_invalidated
     end
     
-    it "should set user on token" do
-      @token.user.should==@verifier.user
+    it "should set person on token" do
+      @token.person.should==@verifier.person
     end
     
     it "should set client application on token" do

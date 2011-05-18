@@ -7,7 +7,7 @@ describe OauthClientsController do
     include Devise::TestHelpers
   end  
   include OAuthControllerSpecHelper
-  fixtures :client_applications, :oauth_tokens, :users
+  fixtures :client_applications, :oauth_tokens, :people
   before(:each) do
     login_as_application_owner
   end

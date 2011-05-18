@@ -2,7 +2,7 @@ require 'oauth/client/action_controller_request'
 module OAuthControllerSpecHelper
   
   def current_user
-    @user||=users(:aaron)
+    @user||=people(:aaron)
   end
 
   def current_client_application
@@ -10,7 +10,7 @@ module OAuthControllerSpecHelper
   end
   
   def access_token
-    @access_token||=AccessToken.create :user=>current_user,:client_application=>current_client_application
+    @access_token||=AccessToken.create :person=>current_user,:client_application=>current_client_application
   end
   
   def request_token
@@ -37,7 +37,7 @@ module OAuthControllerSpecHelper
   end
   
   def login_as_application_owner
-    @user = users(:quentin)
+    @user = people(:quentin)
     login
   end
   
