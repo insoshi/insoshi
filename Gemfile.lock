@@ -22,6 +22,7 @@ GEM
       activesupport
     authlogic-oid (1.0.4)
       authlogic
+    awesome_print (0.3.2)
     aws-s3 (0.6.2)
       builder
       mime-types
@@ -79,6 +80,7 @@ DEPENDENCIES
   aasm
   authlogic
   authlogic-oid
+  awesome_print (= 0.3.2)
   aws-s3
   cancan (= 1.5.1)
   chronic

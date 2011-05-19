@@ -3,8 +3,9 @@ class OauthToken < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
   validates_uniqueness_of :token
-  validates_presence_of :client_application, :token
+  validates_presence_of :client_application, :token, :group
   before_validation_on_create :generate_keys
+  before_create :validate_scope
   
   def invalidated?
     invalidated_at != nil
@@ -21,7 +22,38 @@ class OauthToken < ActiveRecord::Base
   def to_query
     "oauth_token=#{token}&oauth_token_secret=#{secret}"
   end
+
+  def validate_scope
+    # make sure there is at most one instance of each query parameter
+    scope_hash.each_value {|v| return false if v.length > 1}
+  end
+
+  def scope_hash
+    scope_uri = URI.parse(self.scope)
+    CGI::parse(scope_uri.query)
+  end
     
+  def asset
+    scope_hash['asset']
+  end
+
+  def amount
+    scope_hash['amount']
+  end
+
+  # XXX assuming just one scope for now
+  def action_name
+    action['name']
+  end
+
+  def action_icon_uri
+    action['icon_uri']
+  end
+
+  def action
+    @action ||= JSON.parse(File.read(RAILS_ROOT + '/public' + URI.parse(self.scope).path))['action']
+  end
+
   protected
   
   def generate_keys

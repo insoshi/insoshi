@@ -5,7 +5,8 @@ one:
   description: MyText
   mode: 1
   unit: MyString
-  adhoc_currency: false
+  asset: hours
+  adhoc_currency: true
   person_id: 1
 
 two:

@@ -1,9 +1,10 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe RequestToken do
-  fixtures :client_applications, :people, :oauth_tokens
+  fixtures :client_applications, :people, :oauth_tokens, :groups
   before(:each) do
     @token = RequestToken.create :client_application => client_applications(:one)
+    @token = RequestToken.create :client_application => client_applications(:one), :group => groups(:one), :scope => "http://localhost/scopes/list_payments.json?asset=hours"
   end
 
   it "should be valid" do

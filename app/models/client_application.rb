@@ -46,17 +46,19 @@ class ClientApplication < ActiveRecord::Base
   end
     
   def create_request_token(params={}) 
-    # valid asset is required
     if params[:scope]
       scope_uri = URI.parse(params[:scope])
       filepath = RAILS_ROOT + '/public' + scope_uri.path
       if File.exist?(filepath)
-        scope_hash = CGI::parse(scope_uri.query)
-        group = Group.find_by_asset(scope_hash['asset'])
-        RequestToken.create(:client_application => self, 
-                            :scope => params[:scope], 
-                            :group_id => group.id, 
-                            :callback_url=>self.token_callback_url) unless group.nil?
+        # valid asset is required
+        asset = CGI::parse(scope_uri.query)['asset'][0]
+        unless asset.blank?
+          group = Group.find_by_asset(asset)
+          RequestToken.create(:client_application => self, 
+                              :scope => params[:scope], 
+                              :group_id => group.id, 
+                              :callback_url=>self.token_callback_url) unless group.nil?
+        end
       else
         logger.info "XXX create_request_token - file not found: #{scope_uri.path}"
       end

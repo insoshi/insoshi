@@ -10,24 +10,6 @@ class RequestToken < OauthToken
     self.save
   end
 
-  def asset
-    scope_uri = URI.parse(self.scope)
-    scope_hash = CGI::parse(scope_uri.query)
-    scope_hash['asset']
-  end
-
-  # XXX assuming just one scope for now
-  def action_name
-    action['action']['name']
-  end
-
-  def action_icon_uri
-    action['action']['icon_uri']
-  end
-
-  def action
-    @action ||= JSON.parse(File.read(RAILS_ROOT + '/public' + URI.parse(self.scope).path))
-  end
 
   def exchange!
     return false unless authorized?
