@@ -50,10 +50,6 @@ class ApplicationController < ActionController::Base
       !!current_person
     end
 
-    def authorized?
-      logged_in?
-    end
-
     def login_required
       unless current_person
         store_location
@@ -94,6 +90,10 @@ class ApplicationController < ActionController::Base
 
     def current_user
       current_person 
+    end
+
+    def current_ability
+      @current_ability ||= Ability.new(current_person, current_token)
     end
 
     def set_person_locale

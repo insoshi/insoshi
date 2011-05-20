@@ -79,6 +79,9 @@ class ExchangesController < ApplicationController
 
     respond_to do |format|
       if @exchange.save
+        if !current_token.nil? && current_token.action_id == 'single_payment'
+          current_token.invalidate!
+        end
         flash[:notice] = t('success_credit_transfer_succeeded')
         format.html { redirect_to person_path(@person) and return }
         format.xml { render :xml => @exchange, :status => :created, :location => [@person, @exchange] }

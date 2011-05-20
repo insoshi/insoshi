@@ -34,14 +34,22 @@ class OauthToken < ActiveRecord::Base
   end
     
   def asset
-    scope_hash['asset']
+    scope_hash['asset'][0]
   end
 
   def amount
-    scope_hash['amount']
+    scope_hash['amount'][0]
+  end
+
+  def authorized_for?(requested_amount)
+    ['single_payment','recurring_payment'].include?(action_id) && requested_amount <= amount.to_f && !invalidated?
   end
 
   # XXX assuming just one scope for now
+  def action_id
+    action['_id']
+  end
+
   def action_name
     action['name']
   end

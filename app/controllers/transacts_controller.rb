@@ -66,6 +66,9 @@ class TransactsController < ApplicationController
     @transact.metadata = @transact.create_req(params[:memo])
 
     if can?(:create, @transact) && @transact.save
+      if !current_token.nil? && current_token.action_id == 'single_payment'
+        current_token.invalidate!
+      end
       if @transact.redirect_url.blank?
         flash[:notice] = t('notice_transfer_succeeded')
         respond_to do |format|

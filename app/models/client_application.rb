@@ -48,6 +48,7 @@ class ClientApplication < ActiveRecord::Base
   def create_request_token(params={}) 
     if params[:scope]
       scope_uri = URI.parse(params[:scope])
+      # XXX ignoring host:port and assuming it's our host:port
       filepath = RAILS_ROOT + '/public' + scope_uri.path
       if File.exist?(filepath)
         # valid asset is required

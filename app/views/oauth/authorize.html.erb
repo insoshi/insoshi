@@ -6,7 +6,7 @@
   <%= hidden_field_tag "oauth_callback", params[:oauth_callback] %>
 <%- end -%>
 <p>
-  <%= check_box_tag 'authorize' %> authorize <span id="scope-action"><%= @token.action_name %></span> <img src="<%= @token.action_icon_uri %>"> in <%= @token.asset %>
+  <%= check_box_tag 'authorize' %> authorize <span id="scope-action"><%= @token.action_name %></span> <img src="<%= @token.action_icon_uri %>"> of <%= @token.amount %> <%= @token.asset %>
 </p>
 <p>
   <%= submit_tag %>

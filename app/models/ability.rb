@@ -1,6 +1,6 @@
 class Ability
   include CanCan::Ability
-  def initialize(person)
+  def initialize(person, access_token = nil)
     can [:read, :create], Group
     can [:new_req,:create_req], Group
     can [:new_offer,:create_offer], Group
@@ -80,8 +80,12 @@ class Ability
         unless membership
           false
         else
-          account = person.account(exchange.group)
-          account && (account.authorized? exchange.amount)
+          unless (access_token.nil? || access_token.authorized_for?(exchange.amount))
+            false
+          else
+            account = person.account(exchange.group)
+            account && (account.authorized? exchange.amount)
+          end
         end
       end
     end
