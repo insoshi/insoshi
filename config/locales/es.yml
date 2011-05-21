@@ -304,6 +304,7 @@ es:
       update_location: "Haz clic aqui para actualizar tu ubicación"
       address_remain_private: "(tu dirección permanecera en privado)"
       phone: "Telefono:"
+      switch_user: "Act as this person"
     _language:
       language: "Idioma"
       english: "Ingles"

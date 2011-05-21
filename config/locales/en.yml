@@ -305,6 +305,7 @@ en:
       update_location: "Click here to update your location"
       address_remain_private: "(Your address will remain private)"
       phone: "Phone:"
+      switch_user: "Act as this person"
     _language:
       language: "Language"
       english: "English"

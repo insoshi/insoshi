@@ -1,6 +1,10 @@
 class Ability
   include CanCan::Ability
   def initialize(person, access_token = nil)
+    can :su, Person do |target_person|
+      person.admin? && !target_person.admin?
+    end
+
     can [:read, :create], Group
     can [:new_req,:create_req], Group
     can [:new_offer,:create_offer], Group

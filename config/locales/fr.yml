@@ -351,6 +351,7 @@ fr:
       update_location: "Cliquez ici pour changer d’endroit"
       address_remain_private: "Votre adresse restera confidentielle"
       phone: "Téléphone"
+      switch_user: "Act as this person"
     _language:
       language: "Langue"
       english: "English"

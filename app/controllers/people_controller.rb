@@ -196,7 +196,7 @@ class PeopleController < ApplicationController
       format.html
     end
   end
-  
+
   def groups
     @person = Person.find(params[:id])
     @groups = current_person == @person ? @person.groups : @person.groups_not_hidden
@@ -212,6 +212,19 @@ class PeopleController < ApplicationController
     render :action => :groups
   end
   
+  def su
+    @person = Person.find(params[:id])
+    if can?(:su, @person)
+      @person_session = PersonSession.create(@person)
+    else
+      flash[:error] = t('error_admin_access_required')
+    end
+
+    respond_to do |format|
+      format.html { redirect_to(@person) }
+    end
+  end
+
   private
 
     def setup
