@@ -1,0 +1,11 @@
+<span class='neighborhood_filter hide'>
+<%= 
+    collection_select( filtered_obj, 
+                       'neighborhood_ids', 
+                       @all_neighborhoods, 
+                       :id, 
+                       :long_name, 
+                       { :include_blank => true, :selected => selected_neighborhood }
+                     ) 
+%>
+</span>

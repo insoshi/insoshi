@@ -18,11 +18,22 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_categories = Category.all(:order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.all(:order => "parent_id, name").sort_by { |a| a.long_name }
         @forum = @group.forum
         @topics = Topic.find_recently_active(@forum, params[:page]) 
-        @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
-        @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+        @reqs = Req.search(nil, 
+                           @group, 
+                           1, # params[:page] 
+                           AJAX_POSTS_PER_PAGE,
+                           nil
+                           )
+        @offers = Offer.search(nil,
+                               @group,
+                               1, #params[:page]
+                               AJAX_POSTS_PER_PAGE,
+                               nil
+                               )
         @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
         @memberships = @group.memberships.active.paginate(:page => params[:page],
                                               :conditions => ['status = ?', Membership::ACCEPTED],

@@ -28,7 +28,7 @@ class Offer < ActiveRecord::Base
       Offer.paginate(:all, :page => page, :conditions => ["available_count > ? AND expiration_date >= ?", 0, today], :order => 'created_at DESC')
     end
 
-    def categorize(category,group,page,posts_per_page,search=nil)
+    def search(category,group,page,posts_per_page,search=nil)
       unless category
         group.offers.search(search).paginate(:page => page, :per_page => posts_per_page)
       else

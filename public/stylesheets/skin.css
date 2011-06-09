@@ -618,7 +618,7 @@ input#person_openid_identifier, input#person_session_openid_identifier {
   margin: 10px 0;
 }
 
-#flash_notice {
+#flash_notice, .filter_selected {
   background-color: #CFC;
   border: solid 1px #6C6;
 }

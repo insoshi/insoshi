@@ -62,14 +62,20 @@ $(function() {
   route('requests', /^#requests$/,                                 '/groups/[:group_id]/reqs');
   route('requests', /^#requests\/category_id=(\d+)$/,              '/groups/[:group_id]/reqs?category_id=[:1]');
   route('requests', /^#reqs\/category_id=(\d+)\/page=(\d+)$/,      '/groups/[:group_id]/reqs?category_id=[:1]&page=[:2]');
+  route('requests', /^#requests\/neighborhood_id=(\d+)$/,          '/groups/[:group_id]/reqs?neighborhood_id=[:1]');
+  route('requests', /^#reqs\/neighborhood_id=(\d+)\/page=(\d+)$/,  '/groups/[:group_id]/reqs?neighborhood_id=[:1]&page=[:2]');
 
   route('offers',   /^#offers$/,                                   '/groups/[:group_id]/offers');
   route('offers',   /^#offers\/category_id=(\d+)$/,                '/groups/[:group_id]/offers?category_id=[:1]');
   route('offers',   /^#offers\/category_id=(\d+)\/page=(\d+)$/,    '/groups/[:group_id]/offers?category_id=[:1]&page=[:2]');
+  route('offers',   /^#offers\/neighborhood_id=(\d+)$/,            '/groups/[:group_id]/offers?neighborhood_id=[:1]');
+  route('offers',   /^#offers\/neighborhood_id=(\d+)\/page=(\d+)$/,'/groups/[:group_id]/offers?neighborhood_id=[:1]&page=[:2]');
 
   route('people',   /^#people$/,                                   '/groups/[:group_id]/memberships');
   route('people',   /^#people\/category_id=(\d+)$/,                '/groups/[:group_id]/memberships?category_id=[:1]');
   route('people',   /^#people\/category_id=(\d+)\/page=(\d+)$/,    '/groups/[:group_id]/memberships?category_id=[:1]&page=[:2]');
+  route('people',   /^#people\/neighborhood_id=(\d+)$/,            '/groups/[:group_id]/memberships?neighborhood_id=[:1]');
+  route('people',   /^#people\/neighborhood_id=(\d+)\/page=(\d+)$/,'/groups/[:group_id]/memberships?neighborhood_id=[:1]&page=[:2]');
 
   function find_group() {
     path = window.location.pathname;
@@ -277,6 +283,18 @@ $(function() {
     });
 
 
+  $('.neighborhood_filter #req_neighborhood_ids').live('change',function() {
+    window.location.hash = '#requests/neighborhood_id=' + this.value;
+    });
+
+  $('.neighborhood_filter #offer_neighborhood_ids').live('change',function() {
+    window.location.hash = '#offers/neighborhood_id=' + this.value;
+    });
+
+  $('.neighborhood_filter #person_neighborhood_ids').live('change',function() {
+    window.location.hash = '#people/neighborhood_id=' + this.value;
+    });
+
   $('a.show-follow').live('click',function() {
     window.location.hash = url2hash(this.href);
     return false;
@@ -285,6 +303,22 @@ $(function() {
   $('a.email-link').live('click',function() {
     window.location.hash = url2hash(this.href);
     return false;
+    });
+
+  $('.toggle-category').live('click',function() {
+      $(this).parent().children().removeClass('filter_selected');
+      $(this).addClass('filter_selected');
+      $('span.category_filter').show();
+      $('span.neighborhood_filter').hide();
+      return false;
+    });
+
+  $('.toggle-neighborhood').live('click',function() {
+      $(this).parent().children().removeClass('filter_selected');
+      $(this).addClass('filter_selected');
+      $('span.category_filter').hide();
+      $('span.neighborhood_filter').show();
+      return false;
     });
 
   $(window).trigger('hashchange');
