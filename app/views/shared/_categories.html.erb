@@ -2,7 +2,7 @@
 <%= 
     collection_select( filtered_obj, 
                        'category_ids', 
-                       @all_categories, 
+                       Category.all(:order => "parent_id, name").sort_by { |a| a.long_name },
                        :id, 
                        :long_name, 
                        { :include_blank => true, :selected => selected_category }

@@ -14,8 +14,6 @@ class OffersController < ApplicationController
                            AJAX_POSTS_PER_PAGE,
                            params[:search]
                            )
-    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-    @all_neighborhoods = Neighborhood.all(:order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.xml { render :xml => @offers }

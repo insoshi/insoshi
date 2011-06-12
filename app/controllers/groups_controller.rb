@@ -18,8 +18,6 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @all_categories = Category.all(:order => "parent_id, name").sort_by { |a| a.long_name }
-        @all_neighborhoods = Neighborhood.all(:order => "parent_id, name").sort_by { |a| a.long_name }
         @forum = @group.forum
         @topics = Topic.find_recently_active(@forum, params[:page]) 
         @reqs = Req.search(nil, 
