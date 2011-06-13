@@ -96,7 +96,7 @@ class PersonMailer < ActionMailer::Base
     content_type "text/html"
     body         "server" => server, "forum_post" => forum_post,
     "preferences_note" => 
-      preferences_note(subscriber)
+      forum_preferences_note(subscriber,forum_post.topic.forum.group)
   end
 
   def email_verification(person)
@@ -149,6 +149,12 @@ class PersonMailer < ActionMailer::Base
     %(To change your email notification preferences, visit
       
 http://#{server}/people/#{person.to_param}/edit)
+  end
+
+  def forum_preferences_note(person,group)
+    %(To change your forum notification preferences for this group, visit
+      
+http://#{server}/groups/#{group.id}#member_preferences/#{Membership.mem(person,group).member_preference.id}/edit)
   end
 
 end
