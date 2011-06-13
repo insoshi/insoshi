@@ -70,9 +70,7 @@ es:
       no_categories: "No clasificado (todavía no!)"
       explanation: "Numero de personas dentro del paréntesis"
     show:
-      no_people: "Nadie (todavía no!)"
-      no_offers: "Sin ofertas ( todavía no!)"
-      no_reqs: "Sin peticiones (todavía no!)"
+      go_back_to_edit_your_profile: "volver a editar su perfil"
     new:
       header: "Nuevo servicio"
     edit:
@@ -238,6 +236,7 @@ es:
       share_phone_number: "Comparta su numero telefonio:"
       phone: "Telefono"
       services_offered: "Servicios que ofrece"
+      add_new_category: "añadir una nueva categoría"
       neighborhood: "Vecindario"
       description: "Descripción"
       openid_identifier: "OpenID"

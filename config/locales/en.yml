@@ -71,9 +71,7 @@ en:
       no_categories: "No categories (yet!)"
       explanation: "Number of people shown in parentheses"
     show:
-      no_people: "No people (yet!)"
-      no_offers: "No offers (yet!)"
-      no_reqs: "No reqs (yet!)"
+      go_back_to_edit_your_profile: "Go back to edit your profile"
     new:
       header: "New service"
     edit:
@@ -239,6 +237,7 @@ en:
       share_phone_number: "Share phone number:"
       phone: "Phone"
       services_offered: "Services Offered"
+      add_new_category: "Add new category"
       neighborhood: "Neighborhood"
       description: "Description"
       openid_identifier: "OpenID"

@@ -513,6 +513,15 @@ ul.categories li ul li
   width:258px;
 }
 
+.categoryAdd
+{
+  float:right;
+  font-size: .8em; 
+  margin-bottom: 1.875em; 
+  line-height: 1.875em;
+  padding-right:85px;
+}
+
 p.formatting
 {
     color:#333;

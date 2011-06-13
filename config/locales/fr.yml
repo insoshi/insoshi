@@ -117,9 +117,7 @@ fr:
       no_categories: "Pas encore de catégories"
       explanation: "Le nombre de personnes est indiqué entre parenthèses"
     show:
-      no_people: "No people (yet!)"                  
-      no_offers: "No offers (yet!)"
-      no_reqs: "No reqs (yet!)"
+      go_back_to_edit_your_profile: "aller mettre à jour votre profil"
     new:
       header: "Nouveau service"
     edit:
@@ -285,6 +283,7 @@ fr:
       share_phone_number: "Partager le numéro de téléphone"
       phone: "Téléphone"
       services_offered: "Les services offerts"
+      add_new_category: "Ajouter une nouvelle catégorie"
       neighborhood: "Quartier"
       description: "Description"
       openid_identifier: "OpenID"
