@@ -47,6 +47,6 @@ session_secret = ActiveSupport::SecureRandom.hex(64)
 `heroku config:add SERVER_NAME=#{app_name + '.' + DOMAIN}`
 `heroku config:add SMTP_SERVER=#{SMTP_SERVER}`
 
-`git push heroku groupy:master`
+`git push heroku master`
 `heroku rake db:migrate`
 `heroku rake install`
