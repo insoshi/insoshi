@@ -1,12 +1,13 @@
 class Admin::PeopleController < ApplicationController
+  layout "admin/admin"
   before_filter :login_required, :admin_required
   active_scaffold :person do |config|
     config.actions.exclude :delete
     config.label = "People"
-    config.columns = [:name, :email, :phone, :admin, :deactivated, :email_verified, :last_logged_in_at]
-    config.list.columns = [:name, :email, :phone, :admin, :deactivated, :email_verified, :last_logged_in_at]
+    config.columns = [:name, :email, :phone, :admin, :org, :deactivated, :email_verified, :last_logged_in_at]
+    config.list.columns = [:name, :email, :phone, :admin, :org, :deactivated, :email_verified, :last_logged_in_at]
     config.create.columns = [:name, :email, :phone, :password, :password_confirmation] 
-    config.update.columns = [:name, :admin, :email, :phone, :password, :password_confirmation, :deactivated, :email_verified] 
+    config.update.columns = [:name, :admin, :org, :email, :phone, :password, :password_confirmation, :deactivated, :email_verified] 
     config.nested.add_link('Addresses', [:addresses])
   end
 

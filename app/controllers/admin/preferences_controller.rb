@@ -1,5 +1,5 @@
 class Admin::PreferencesController < ApplicationController
-  
+  layout "admin/admin"
   before_filter :login_required, :admin_required
   before_filter :setup
   
@@ -14,6 +14,7 @@ class Admin::PreferencesController < ApplicationController
   end
 
   def edit
+    @groups = Group.all.map {|g| [g.name,g.id]}
   end
 
   def update

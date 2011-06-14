@@ -1,4 +1,5 @@
 class Admin::ExchangesController < ApplicationController
+  layout "admin/admin"
   before_filter :login_required, :admin_required
   active_scaffold :exchange do |config|
     config.label = "Exchanges"

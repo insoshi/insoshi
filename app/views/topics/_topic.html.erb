@@ -1,4 +1,4 @@
-<li class="topic">
+<li class="topic topic_id_<%= topic.id %>">
   <a name="topic_<%= topic.id %>"></a>
   <div class="profile-image">
     <%= image_link topic.person, :image => :thumbnail %>
@@ -14,11 +14,8 @@
   <p class="meta">
   <%= t('topics.partial.created_by') %> <%= person_link topic.person %>
   <%= time_ago_in_words(topic.created_at) %> <%= t('ago') %>
-    <%- if admin? -%>
-      | <%= link_to t('button_edit'),  edit_forum_topic_path(topic.forum, topic) %>
-      | <%= link_to t('button_delete'),  forum_topic_path(topic.forum, topic),
-                                :confirm => t('are_you_sure'),
-                                :method  => :delete %>
+    <%- if can? :destroy, topic -%>
+      <%= link_to t('button_delete'), forum_topic_path(topic.forum, topic), :class => "delete_topic" %>
     <%- end -%>
   </p>
 </li>

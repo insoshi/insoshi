@@ -1,11 +1,11 @@
-# Amazingly, the call to 'inspect' makes the db insertion work.
-<% password = Person.encrypt('test').inspect %>
-
 quentin:
   email: quentin@example.com
   name: Quentin
   description: I'm Quentin
-  crypted_password: <%= password %>
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
   created_at: <%= 5.days.ago.to_s :db %>
   last_logged_in_at: <%= 1.day.ago.to_s :db %>
   deactivated: false
@@ -19,7 +19,26 @@ aaron:
   email: aaron@example.com
   name: Aaron
   description: I'm Aaron
-  crypted_password: <%= password %>
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
+  created_at: <%= 1.day.ago.to_s :db %>
+  deactivated: false
+  connection_notifications: true
+  message_notifications: true
+  wall_comment_notifications: true
+  blog_comment_notifications: true
+  email_verified: true
+
+buzzard:
+  email: buzzard@example.com
+  name: Buzzard
+  description: I'm Buzzard
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
   created_at: <%= 1.day.ago.to_s :db %>
   deactivated: false
   connection_notifications: true
@@ -32,7 +51,10 @@ kelly:
   email: kelly@example.com
   name: Kelly
   description: I'm Kelly
-  crypted_password: <%= password %>
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
   created_at: <%= 1.day.ago.to_s :db %>
   deactivated: false
   connection_notifications: true
@@ -44,8 +66,11 @@ admin:
   email: admin@example.com
   name: admin
   description: I'm the admin!
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
   admin: true
-  crypted_password: <%= password %>
   created_at: <%= 5.days.ago.to_s :db %>
   deactivated: false
   connection_notifications: true
@@ -57,7 +82,10 @@ deactivated:
   email: deactivated@example.com
   name: Deactivated Person
   description: I didn't deserve to be deactivated
-  crypted_password: <%= password %>
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
   created_at: <%= 1.day.ago.to_s :db %>
   deactivated: true
 
@@ -65,7 +93,10 @@ email_unverified:
   email: inactive@example.com
   name: Email unverified
   description: Email unverified
-  crypted_password: <%= password %>
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
   created_at: <%= 1.day.ago.to_s :db %>
   email_verified: false 
   

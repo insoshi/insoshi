@@ -1,0 +1,18 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  description: MyText
+  mode: 1
+  unit: MyString
+  asset: hours
+  adhoc_currency: true
+  person_id: 1
+
+two:
+  name: MyString
+  description: MyText
+  mode: 1
+  unit: MyString
+  adhoc_currency: false
+  person_id: 1

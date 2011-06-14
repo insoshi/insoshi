@@ -1,0 +1,8 @@
+{
+  "action": 
+    {
+    "_id":"single_payment",
+    "name":"single payment",
+    "icon_uri":"/images/icons/switch.gif"
+  }
+}

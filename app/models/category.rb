@@ -17,10 +17,14 @@ class Category < ActiveRecord::Base
     name description
   end
 
-  has_and_belongs_to_many :reqs
-  has_and_belongs_to_many :offers
-  has_and_belongs_to_many :people
+  has_and_belongs_to_many :reqs, :order => 'created_at DESC'
+  has_and_belongs_to_many :offers, :order => 'created_at DESC'
+  has_and_belongs_to_many :people, :conditions => Person.conditions_for_active
   acts_as_tree
+
+  def self.root_nodes
+    all(:conditions => "parent_id is NULL").sort_by {|a| a.name}
+  end
 
   def descendants
     children.map(&:descendants).flatten + children
@@ -38,10 +42,6 @@ class Category < ActiveRecord::Base
     ancestors_name + name
   end
 
-  def active_people
-    active_people = self.people.find(:all, :conditions => Person.conditions_for_active)
-  end
-
   def current_and_active_reqs
     today = DateTime.now
     reqs = self.reqs.find(:all, :conditions => ["active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
@@ -54,6 +54,6 @@ class Category < ActiveRecord::Base
 
   def descendants_providers_count
     # not going to the trouble of making sure people are counted only once
-    descendants.map {|d| d.active_people.length}.inject(0) {|sum,element| sum + element}
+    descendants.map {|d| d.people.length}.inject(0) {|sum,element| sum + element}
   end
 end

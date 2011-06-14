@@ -26,7 +26,7 @@ class ForumPost < Post
 
   attr_accessible :body
   
-  belongs_to :topic,  :counter_cache => true
+  belongs_to :topic,  :counter_cache => true, :touch => true
   belongs_to :person, :counter_cache => true
   
   validates_presence_of :body, :person
@@ -44,14 +44,7 @@ class ForumPost < Post
   end
 
   def do_send_forum_notifications
-    group = topic.forum.group
-    if !group
-      peeps = Person.all_listening_to_forum_posts
-    else
-      # XXX add a notifications boolean to memberships table
-      #
-      peeps = group.people
-    end
+    peeps = topic.forum.group.memberships.listening.map {|m| m.person}
     
     peeps.each do |peep|
       logger.info("forum_post: sending email to #{peep.id}: #{peep.name}")
@@ -61,15 +54,7 @@ class ForumPost < Post
 
   private
 
-  def validate
-    unless self.topic.forum.group.nil?
-      unless self.person.groups.include?(self.topic.forum.group)
-        errors.add_to_base("group does not include you as a member")
-      end
-    end
-  end
-
  def log_activity
-    add_activities(:item => self, :person => person)
+    add_activities(:item => self, :person => person, :group => self.topic.forum.group)
   end
 end

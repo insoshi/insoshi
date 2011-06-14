@@ -1,5 +1,0 @@
-<span class='offer small' style='float:right;'><%= link_to "New offer", new_offer_group_path(@group), {:class => 'show-follow'} %></span>
-      <h2><%= t('groups.show.offers') %><%= waiting_image %></h2>
-      <ul class="list activity full">
-        <%= render :partial => '/offers/offer', :collection => @group.offers %>
-      </ul>

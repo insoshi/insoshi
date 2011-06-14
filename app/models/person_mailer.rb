@@ -40,7 +40,7 @@ class PersonMailer < ActionMailer::Base
   
   def membership_public_group(membership)
     from         "Membership done <membership@#{domain}>"
-    recipients   membership.group.owner.email
+    recipients   membership.group.admins.map {|m| m.email}
     subject      formatted_subject("#{membership.person.name} joined group #{membership.group.name}")
     body         "server" => server,
     "membership" => membership,
@@ -50,7 +50,7 @@ class PersonMailer < ActionMailer::Base
   
   def membership_request(membership)
     from         "Membership request <membership@#{domain}>"
-    recipients   membership.group.owner.email
+    recipients   membership.group.admins.map {|m| m.email}
     subject      formatted_subject("#{membership.person.name} wants to join group #{membership.group.name}")
     body         "server" => server,
     "membership" => membership,
@@ -66,26 +66,6 @@ class PersonMailer < ActionMailer::Base
     "membership" => membership,
     "url" => group_path(membership.group),
     "preferences_note" => preferences_note(membership.person)
-  end
-  
-  def invitation_notification(membership)
-    from         "Invitation notification <invitation#{domain}>"
-    recipients   membership.person.email
-    subject      formatted_subject("Invitation from group #{membership.group.name}")
-    body         "server" => server,
-    "membership" => membership,
-    "url" => edit_membership_path(membership),
-    "preferences_note" => preferences_note(membership.person)
-  end
-  
-  def invitation_accepted(membership)
-    from         "Invitation accepted <invitation@#{domain}>"
-    recipients   membership.group.owner.email
-    subject      formatted_subject("#{membership.person.name} accepted the invitation")
-    body         "server" => server,
-    "membership" => membership,
-    "url" => members_group_path(membership.group),
-    "preferences_note" => preferences_note(membership.group.owner)
   end
   
   def blog_comment_notification(comment)
@@ -116,7 +96,7 @@ class PersonMailer < ActionMailer::Base
     content_type "text/html"
     body         "server" => server, "forum_post" => forum_post,
     "preferences_note" => 
-      preferences_note(subscriber)
+      forum_preferences_note(subscriber,forum_post.topic.forum.group)
   end
 
   def email_verification(person)
@@ -169,6 +149,12 @@ class PersonMailer < ActionMailer::Base
     %(To change your email notification preferences, visit
       
 http://#{server}/people/#{person.to_param}/edit)
+  end
+
+  def forum_preferences_note(person,group)
+    %(To change your forum notification preferences for this group, visit
+      
+http://#{server}/groups/#{group.id}#member_preferences/#{Membership.mem(person,group).member_preference.id}/edit)
   end
 
 end

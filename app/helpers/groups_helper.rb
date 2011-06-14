@@ -29,14 +29,13 @@ module GroupsHelper
   
   
   def group_link(group)
-    link_to(group.name, group_path(group))
+    link_to(h(group.name), group_path(group))
   end
   
   def get_groups_modes
     modes = []
     modes << ["Public",0]
-    modes << ["Private",1]
-    modes << ["Hidden", 2]
+    modes << ["Membership approval required",1]
     return modes
   end
   

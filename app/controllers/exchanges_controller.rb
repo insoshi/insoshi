@@ -1,10 +1,18 @@
 class ExchangesController < ApplicationController
+  load_resource :person
+  load_and_authorize_resource :exchange, :through => :person
   skip_before_filter :require_activation
   before_filter :login_or_oauth_required
-  before_filter :find_worker
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    respond_to do |format|
+      format.html {redirect_to @person}
+    end
+  end
 
   def index
-    @exchanges = @worker.received_exchanges # created_at DESC
+    #@exchanges = @worker.received_exchanges # created_at DESC
     respond_to do |format|
       format.xml { render :xml => @exchanges }
       format.json { render :json => @exchanges.as_json( :include => :req ) }
@@ -12,7 +20,6 @@ class ExchangesController < ApplicationController
   end
 
   def show
-    @exchange = Exchange.find(params[:id])
     respond_to do |format|
       format.xml { render :xml => @exchange.to_xml( :include => :req ) }
       format.json { render :json => @exchange.as_json( :include => :req ) }
@@ -20,19 +27,21 @@ class ExchangesController < ApplicationController
   end
 
   def new
-    @exchange = Exchange.new
-
     if params[:offer]
       @offer = Offer.find(params[:offer])
-      if @offer.person != Person.find(params[:person_id])
+      if @offer.person != @person
         flash[:error] = t('error_offer_person_mismatch')
       end
     else
+      if params[:group]
+        @group = Group.find(params[:group])
+      end
       @req = Req.new
       @req.name = 'Enter description of service here'
     end
 
-    @groups = Person.find(params[:person_id]).groups
+    # XXX @groups not used in new ajax ui
+    @groups = @person.groups
     @groups.delete_if {|g| !g.adhoc_currency?}
 
     respond_to do |format|
@@ -45,7 +54,7 @@ class ExchangesController < ApplicationController
   #
   def create
     @exchange = Exchange.new(params[:exchange]) # amount and group_id are the only accessible fields
-    @exchange.worker = @worker
+    @exchange.worker = @person
     @exchange.customer = current_person
 
     if params[:offer]
@@ -57,6 +66,7 @@ class ExchangesController < ApplicationController
       @req = Req.new(params[:req])
 
       @req.name = 'Gift transfer' if @req.name.blank? # XML creation might not set this
+      @req.group = @exchange.group
       @req.estimated_hours = @exchange.amount
       @req.due_date = Time.now
       @req.person = current_person
@@ -69,10 +79,13 @@ class ExchangesController < ApplicationController
 
     respond_to do |format|
       if @exchange.save
+        if !current_token.nil? && current_token.action_id == 'single_payment'
+          current_token.invalidate!
+        end
         flash[:notice] = t('success_credit_transfer_succeeded')
-        format.html { redirect_to person_path(@worker) and return }
-        format.xml { render :xml => @exchange, :status => :created, :location => [@worker, @exchange] }
-        format.json { render :json => @exchange, :status => :created, :location => [@worker, @exchange] }
+        format.html { redirect_to person_path(@person) and return }
+        format.xml { render :xml => @exchange, :status => :created, :location => [@person, @exchange] }
+        format.json { render :json => @exchange, :status => :created, :location => [@person, @exchange] }
         format.js
       else
         flash[:error] = t('error_with_credit_transfer')
@@ -86,27 +99,7 @@ class ExchangesController < ApplicationController
   end
 
   def destroy
-    @exchange = Exchange.find(params[:id])
-    @metadata = @exchange.metadata
-
-    begin
-      Exchange.transaction do
-        @worker.account.withdraw(@exchange.amount)
-        current_person.account.deposit(@exchange.amount)
-      end
-    rescue
-      respond_to do |format|
-        flash[:error] = t('error_with_suspension')
-        format.html { redirect_to person_path(@worker) and return }
-      end
-    end
-
     @exchange.destroy
-    if @metadata.class == Req
-      unless @metadata.active?
-        @metadata.destroy
-      end
-    end
     flash[:success] = t('success_payment_suspended')
 
     respond_to do |format|
@@ -114,10 +107,4 @@ class ExchangesController < ApplicationController
     end
   end
 
-private
-  def find_worker
-    @worker_id = params[:person_id]
-    redirect_to home_url and return unless @worker_id
-    @worker = Person.find(@worker_id)
-  end
 end

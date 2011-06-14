@@ -1,7 +1,8 @@
 class CategoriesController < ApplicationController
 
   before_filter :login_required, :except => :index
-  before_filter :authorize_change, :only => [:update, :destroy] 
+  before_filter :authorize_change, :only => [:update, :destroy]
+  cache_sweeper :category_sweeper, :only => [:create, :update, :destroy]
 
   # GET /categories
   # GET /categories.xml
@@ -19,12 +20,11 @@ class CategoriesController < ApplicationController
   # GET /categories/1.xml
   def show
     @category = Category.find(params[:id])
-    @people = @category.active_people
-    @reqs = @category.current_and_active_reqs
-    @offers = @category.offers
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html do
+        @people = @category.people
+      end
       format.json { render :json => @category.as_json(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
       format.xml  { render :xml => @category.to_xml(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
     end

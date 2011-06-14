@@ -1,0 +1,8 @@
+  <div class="profile vcard">
+    <%- if @membership && @membership.is?(:admin) -%>
+      <%= render :partial => 'admin_message' %>
+    <%- end -%>
+    <%= render :partial => 'shared/minifeed' %>
+    <%= display @group.description %>
+    <%= render :partial => 'toolbox' %>
+  </div>

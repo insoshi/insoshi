@@ -1,17 +1,21 @@
-<h2>Membership request</h2>
-
-<% if params[:invitation] %>
-    <p><%= image_link @membership.person, :image => :thumbnail %></p>
-    <p><%= person_link @membership.person %> wants to join your group <%= group_link @membership.group %></p>
-<% else %>
-    <p><%= image_link @membership.group, :image => :thumbnail %></p>
-    <p>You have been invited to join the group <%= group_link @membership.group %></p>
-<% end %>
-
+<h2>Edit membership for <%= h @membership.person.name %></h2>
 <% form_for(@membership) do |f| %>
-  <p>
-    <%= f.submit "Accept", :class => "button" %>
-    <%= f.submit "Decline", :id => nil, :class => "button" %>
-    <%= hidden_field_tag "invitation", params[:invitation]%>
-  </p>
+  <%= f.error_messages %>
+  <% for role in Membership::ROLES %>
+    <%= check_box_tag "membership[roles][]", role, @membership.roles.include?(role) %>
+    <%=h role.humanize %><br />
+  <% end %>
+  <%= hidden_field_tag "membership[roles][]", "" %>
+  <%= f.submit "Update" %>
+<% end %>
+<% if @account %>
+  <h2>Edit account for <%= h @membership.person.name %></h2>
+  <% form_for :account, :url => person_account_path(@membership.person,@account), :html => {:method => :put} do |f| %>
+    <%= f.error_messages %>
+      <div class="form_row">
+        <%= f.label "Credit Limit" %>
+        <%= f.text_field :credit_limit, :size => 5 %>&nbsp;<span class="small"><%= @account.group.unit %></span>
+      </div>
+    <%= f.submit "Update" %>
+  <% end %>
 <% end %>

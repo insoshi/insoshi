@@ -5,6 +5,8 @@ require 'rubygems'
 require 'aws/s3'
 require 'heroku'
 require 'heroku/command'
+require 'heroku/command/apps'
+require 'heroku/command/run'
 require 'active_support/secure_random'
 
 APP_CONFIG = YAML.load_file("config/config.yml")
@@ -15,7 +17,7 @@ unless APP_CONFIG['AMAZON_ACCESS_KEY_ID'] && APP_CONFIG['AMAZON_SECRET_ACCESS_KE
   raise "you need to set amazon s3 environment variables"
 end
 
-Heroku::Command.run('create',[])
+Heroku::Command.run('apps:create',['--stack','bamboo'])
 heroku_client = Heroku::Client.new(APP_CONFIG['HEROKU_USER'], APP_CONFIG['HEROKU_PASSWORD'])
 info = heroku_client.info('')
 app_name = info[:name]
@@ -29,6 +31,7 @@ AWS::S3::Bucket.create(app_name)
 
 session_secret = ActiveSupport::SecureRandom.hex(64)
 
+`heroku config:add BUNDLE_WITHOUT="development:test"`
 `heroku config:add SESSION_SECRET=#{session_secret}`
 `heroku config:add AMAZON_ACCESS_KEY_ID=#{APP_CONFIG['AMAZON_ACCESS_KEY_ID']}`
 `heroku config:add AMAZON_SECRET_ACCESS_KEY=#{APP_CONFIG['AMAZON_SECRET_ACCESS_KEY']}`
@@ -44,6 +47,6 @@ session_secret = ActiveSupport::SecureRandom.hex(64)
 `heroku config:add SERVER_NAME=#{app_name + '.' + DOMAIN}`
 `heroku config:add SMTP_SERVER=#{SMTP_SERVER}`
 
-`git push heroku master`
+`git push heroku groupy:master`
 `heroku rake db:migrate`
 `heroku rake install`

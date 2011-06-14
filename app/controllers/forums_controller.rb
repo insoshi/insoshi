@@ -1,18 +1,32 @@
 class ForumsController < ApplicationController
+  load_resource :group, :only => [:show]
   
   before_filter :login_required, :setup
 
-  def index
-    @forum = Forum.first(:conditions => "group_id is NULL")
-    redirect_to forum_url(@forum) and return
+  def show
+    @forum = @group.forum
+    @topics = Topic.find_recently_active(@forum, params[:page]) 
+    respond_to do |format|
+      format.js
+    end
   end
 
-  def show
+  def edit
     @forum = Forum.find(params[:id])
-    #@topics = @forum.topics.paginate(:page => params[:page])
-    @topics = Topic.find_recently_active(@forum, params[:page]) 
   end
-  
+
+  def update
+    @forum = Forum.find(params[:id])
+    respond_to do |format|
+      if @forum.update_attributes(params[:forum])
+        flash[:notice] = t('notice_forum_updated')
+        format.html {redirect_to edit_group_path(@forum.group)}
+      else
+        format.html { render :action => "edit" }
+      end
+    end
+  end
+
   private
   
     def setup

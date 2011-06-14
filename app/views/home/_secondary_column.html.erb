@@ -4,7 +4,6 @@
       <%= link_to "refresh", '/home/refreshblog', :class => "small" %>
     <%- end -%>
     <%= render :partial => 'messages_preview' %>
-    <% if global_prefs.group_option? %>
     <%= render :partial => 'requested_memberships' %>
     <%= render :partial => 'invitations' %>
     <%= render :partial => 'people/groups', 
@@ -13,9 +12,6 @@
     <%= render :partial => 'people/groups',
                :locals => {:groups => current_person.groups,
                  :title => "Groups", :link => "groups"} %>
-    <%- else -%>
-      <%= render :partial => 'shared/minifeed' %>
-    <%- end -%>
   <%- else -%>
   <% unless global_prefs.gmail.blank? -%>
   <%= render :partial => 'shared/calendar', :object => global_prefs.gmail %>

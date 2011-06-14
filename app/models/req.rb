@@ -24,16 +24,23 @@ class Req < ActiveRecord::Base
     description
   end
   
-  
+  named_scope :active, :conditions => {:active => true}
+  named_scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
+  named_scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
+
   has_and_belongs_to_many :categories
   belongs_to :person
   belongs_to :group
   has_many :bids, :order => 'created_at DESC', :dependent => :destroy
   has_many :exchanges, :as => :metadata
 
+  attr_accessor :ability
+  attr_protected :ability
   attr_protected :person_id, :created_at, :updated_at
   attr_readonly :group_id
   validates_presence_of :name, :due_date
+  validates_presence_of :group_id
+
   after_create :notify_workers, :if => :notifications
   after_create :log_activity
 
@@ -48,14 +55,18 @@ class Req < ActiveRecord::Base
     def all_active(page=1)
       @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ?", true], :order => 'created_at DESC')
     end
+
+    def search(category,group,page,posts_per_page,search=nil)
+      unless category
+        group.reqs.active.search(search).paginate(:page => page, :per_page => posts_per_page)
+      else
+        category.reqs.active.with_group_id(group.id).paginate(:page => page, :per_page => posts_per_page)
+      end
+    end
   end
 
   def unit
-    if group.nil?
-      I18n.translate('currency_unit_plural')
-    else
-      group.unit
-    end
+    group.unit
   end
 
   def formatted_categories
@@ -88,7 +99,7 @@ class Req < ActiveRecord::Base
 
   def log_activity
     if active?
-      add_activities(:item => self, :person => self.person)
+      add_activities(:item => self, :person => self.person, :group => self.group)
     end
   end
 

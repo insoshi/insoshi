@@ -2,9 +2,9 @@
 one:
   id: 1
   name: MyString
-  url: MyString
-  support_url: MyString
-  callback_url: MyString
+  url: http://test.com
+  support_url: http://test.com/support
+  callback_url: http://test.com/callback
   key: one_key
   secret: MyString
   person_id: 1
@@ -13,9 +13,9 @@ one:
 two:
   id: 2
   name: MyString
-  url: MyString
-  support_url: MyString
-  callback_url: MyString
+  url: http://test.com
+  support_url: http://test.com/support
+  callback_url: http://test.com/callback
   key: two_key
   secret: MyString
   person_id: 1

@@ -2,5 +2,4 @@
   $('#membership_wrapper').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
   $('#flash_<%= key %>').fadeOut(5000,function() { $(this).remove(); });
 <% end %>
-$('span.wait').hide();
 $('a#join_group').parent().show();

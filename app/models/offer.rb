@@ -6,6 +6,9 @@ class Offer < ActiveRecord::Base
     description
   end
 
+  named_scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
+  named_scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
+
   has_and_belongs_to_many :categories
   has_many :exchanges, :as => :metadata
   belongs_to :person
@@ -14,6 +17,8 @@ class Offer < ActiveRecord::Base
   attr_readonly :group_id
   validates_presence_of :name, :expiration_date
   validates_presence_of :total_available
+  validates_presence_of :group_id
+
   after_create :log_activity
 
   class << self
@@ -23,22 +28,21 @@ class Offer < ActiveRecord::Base
       Offer.paginate(:all, :page => page, :conditions => ["available_count > ? AND expiration_date >= ?", 0, today], :order => 'created_at DESC')
     end
 
-  end
-
-  def can_destroy?
-    self.exchanges.length == 0
+    def search(category,group,page,posts_per_page,search=nil)
+      unless category
+        group.offers.search(search).paginate(:page => page, :per_page => posts_per_page)
+      else
+        category.offers.with_group_id(group.id).paginate(:page => page, :per_page => posts_per_page)
+      end
+    end
   end
 
   def log_activity
-    add_activities(:item => self, :person => self.person)
+    add_activities(:item => self, :person => self.person, :group => self.group)
   end
 
   def unit
-    if group.nil?
-      I18n.translate('currency_unit_plural')
-    else
-      group.unit
-    end
+    group.unit
   end
 
   def formatted_categories

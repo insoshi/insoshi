@@ -6,9 +6,7 @@
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>
-  <% if !@group %>
-    <%= render :partial => 'shared/minifeed' %>
-  <% else %>
+  <% if @group %>
     <%= render :partial => 'group' %>
     <%= render :partial => 'shared/group_membership', :locals => {:group => @group} %>
   <% end %>

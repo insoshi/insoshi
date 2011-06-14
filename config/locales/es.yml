@@ -1,4 +1,3 @@
-
 es:
   currency_unit_plural: "horas"
 
@@ -11,6 +10,7 @@ es:
   button_send: "Enviar"
   button_upload: "Descargar"
   button_select: "Seleccionar"
+  button_search: "Búsqueda"
 
   estimate: "Estimación"
   title: "Titulo"
@@ -38,6 +38,7 @@ es:
   by: "por"
   to: "a"
   from: "de"
+  in: "dans"
 
   accounts:
     show:
@@ -69,9 +70,7 @@ es:
       no_categories: "No clasificado (todavía no!)"
       explanation: "Numero de personas dentro del paréntesis"
     show:
-      no_people: "Nadie (todavía no!)"
-      no_offers: "Sin ofertas ( todavía no!)"
-      no_reqs: "Sin peticiones (todavía no!)"
+      go_back_to_edit_your_profile: "volver a editar su perfil"
     new:
       header: "Nuevo servicio"
     edit:
@@ -92,6 +91,9 @@ es:
     show:
       header: "Tema de discusión"
       add_new_topic: "Agrege un nuevo tema"
+    edit:
+      header: "Edit forum preferences"
+      world_writable: "Anyone can post"
 
   groups:
     index:
@@ -101,6 +103,8 @@ es:
       header: "Grupo de redacción"
       name: "Nombre"
       currency_unit_plural: "Unidad monetaria (plural)"
+      asset: "Nombre del OpenTransact activo"
+      default_credit_limit: "límite crediticio"
       description: "Descripción"
       mode: "modalidad"
       photos: "Fotos"
@@ -113,12 +117,15 @@ es:
       accept_membership: "Aceptar la membresía"
       header: "Miembros"
       no_members_yet: "Sin miembros (todavía)"
-      administrator: "Administrador"
+      admins: "Admins"
+      created_by: "Created by"
     new:
       header: "Nuevo grupo"
       name: "Nombre"
       adhoc_currency: "Crear una moneda adecuada"
       currency_unit_plural: "Unidad(es) monetaria(s)"
+      asset: "asset symbol (one word & permanent)"
+      default_credit_limit: "límite crediticio"
       description: "Descripción"
       mode: "Modalidad"
     new_photo:
@@ -131,6 +138,7 @@ es:
       you_are_viewing_your_group: "Esta usted viendo a su grupo."
       click_here_to_edit_it: "Haga click aqui para redactarlo"
       currency_unit: "Unidad monetaria:"
+      asset: "Asset Symbol:"
       join_group: "afiliese a este grupo"
       you_have_been_invited: "Usted ha sido invitado"
       respond: "(responder)"
@@ -141,16 +149,21 @@ es:
       you_are_group_admin: "Tu eres el administrador de este grupo"
       delete_it: "(Borrarlo)"
       mode: "Modo:"
+      your_credit_limit: "Su límite crediticio: "
+      default_credit_limit: "Límite crediticio: "
+      your_activity: "Tus actividades"
+      asset_name: "Nombre del OpenTransact activo:"
       invite_contacts: "Invite a sus contactos"
       delete_group: "borre este grupo"
       discussion_topics: "Temas de discusión"
       add_a_new_topic: "Agregar un nuevo tema"
-      recent_exchanges: "Intercambios recientes"
+      community_exchanges: "Intercambios de la comunidad"
       home: "Home"
       forum: "Forum"
       requests: "Reqs"
       offers: "Offers"
       exchanges: "Exchanges"
+      people: "Personas"
     _people:
       header: "Del grupo"
       all_members: "Todos los miembros"
@@ -223,6 +236,7 @@ es:
       share_phone_number: "Comparta su numero telefonio:"
       phone: "Telefono"
       services_offered: "Servicios que ofrece"
+      add_new_category: "añadir una nueva categoría"
       neighborhood: "Vecindario"
       description: "Descripción"
       openid_identifier: "OpenID"
@@ -280,6 +294,7 @@ es:
       no_membership_request: "Todavía no hay peticiones de membresía"
     show:
       header: "Perfil:"
+      organization_profile: "This is a profile of an organization"
       not_active: "Esta persona no esta activa"
       description_blank: "Su descripción esta en blanco."
       add_description: "Haz clic aqui para agregar una descripción"
@@ -288,10 +303,12 @@ es:
       update_location: "Haz clic aqui para actualizar tu ubicación"
       address_remain_private: "(tu dirección permanecera en privado)"
       phone: "Telefono:"
+      switch_user: "Act as this person"
     _language:
       language: "Idioma"
       english: "Ingles"
       spanish: "Espanol"
+      french: "Français"
     _recent_activity:
       header: "Actividades recientes" 
     _recent_exchanges:
@@ -326,6 +343,7 @@ es:
       for: "Para:"
       or_ask: "o preguntar"
       service_provided: "Servicios proveídos"
+      no_currencies: "esta persona no está utilizando ninguna monedas"
 
   sessions:
     new:
@@ -352,7 +370,10 @@ es:
 
   transacts:
     index:
-      header: "Transacciónes"
+      header: "Su Transacciónes"
+      this_is_a: "Esta es"
+      opentransact: "OpenTransact"
+      url: "URL"
     show:
       header: "Transacción"
     new:
@@ -375,6 +396,7 @@ es:
 
   shared:
     minifeed:
+      activity: "Actividades" 
       whats_going_on: "Qué pasa"
     transact:
       for: "por"
@@ -435,6 +457,7 @@ es:
   notice_bid_invalid: "Invalid bidding event"
   notice_bid_removed: "Bid was removed."
   notice_category_updated: "Category was successfully updated."
+  notice_forum_updated: "Forum was successfully updated."
   notice_event_updated: "Event was successfully updated."
   notice_you_are_attending_this_event: "You are attending this event."
   notice_you_are_not_attending: "You are not attending this event."
@@ -485,6 +508,7 @@ es:
   success_message_restored_to_inbox: "Message restored to inbox"
   success_neighborhood_created: "Neighborhood was successfully created."
   success_offer_created: "Offer was successfully created."
+  success_offer_destroyed: "Offer destroyed"
   success_your_password_has_been_sent: "Your password has been sent"
   success_email_verified: "Email verified. Your profile is active!"
   success_email_verified_whitelist: "Email verified.  Activation of your profile requires admin approval."
@@ -496,6 +520,7 @@ es:
   success_post_created: 'Post created'
   success_post_destroyed: "Post destroyed"
   success_request_created: "Request was successfully created."
+  success_request_destroyed: "Request destroyed"
   success_you_have_been_logged_out: "You have been logged out."
   success_topic_created: "Topic was successfully created."
   success_topic_destroyed: "Topic was successfully destroyed."
@@ -520,6 +545,7 @@ es:
   error_authorization_required_to_edit_neighborhood: "Authorization required to edit neighborhood"
   error_wrong_application_id: "Wrong application id"
   error_offer_cannot_be_deleted: "This offer cannot be deleted as it has been accepted"
+  error_request_cannot_be_deleted: "This request cannot be deleted as it has been accepted"
   error_invalid_email_address: "Invalid email address"
   error_person_inactive: "That person is not active"
   error_invalid_email_verification_code: "Invalid email verification code"

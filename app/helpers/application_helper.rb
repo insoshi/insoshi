@@ -36,34 +36,22 @@ module ApplicationHelper
       messages = menu_element("Inbox", messages_path)
 #      blog     = menu_element("Blog",     blog_path(current_person.blog))
       photos   = menu_element("Photos",   photos_path)
-      if global_prefs.group_option?
         groups = menu_element("Groups", groups_path())
 #      contacts = menu_element("Contacts",
 #                              person_connections_path(current_person))
 #      links = [home, profile, contacts, messages, blog, people, forum]
       #events   = menu_element("Events", events_path)
         links = [home, profile, categories, offers, requests, people, messages, groups, forum]
-      else
-        links = [home, profile, categories, offers, requests, people, messages, forum]
-      end
       # TODO: remove 'unless production?' once events are ready.
       #links.push(events) #unless production?
       
     elsif logged_in? and admin_view?
-      home =    menu_element("Home", home_path)
       spam = menu_element("eNews", admin_broadcast_emails_path)
       people =  menu_element("People", admin_people_path)
       exchanges =  menu_element("Ledger", admin_exchanges_path)
       feed = menu_element("Feed", admin_feed_posts_path)
-      forums =  menu_element(inflect("Forum", Forum.count),
-                             admin_forums_path)
       preferences = menu_element("Prefs", admin_preferences_path)
-      if global_prefs.group_option?
-        groups = menu_element("Groups", admin_groups_path)
-        links = [home, spam, people, exchanges, feed, forums, groups, preferences]
-      else
-        links = [home, spam, people, exchanges, feed, forums, preferences]
-      end
+      links = [spam, people, exchanges, feed, preferences]
     else
       #links = [home, people]
       links = [home, categories]
@@ -86,9 +74,22 @@ module ApplicationHelper
 
     links
   end
- 
+
+  def timeago(time, options = {})
+    options[:class] ||= "timeago"
+    content_tag(:abbr, time.to_s, options.merge(:title => time.getutc.iso8601)) if time
+  end
+
   def waiting_image
     "<span class='wait' style='display:none'><img alt='wait' class='wait' src='/images/loading.gif'></span>"
+  end
+
+  def organization_image(person)
+    if person.org?
+      "<img title=\"#{t('people.show.organization_profile')}\" src=\"/images/icons/community_small.png\" />"
+    else
+      ""
+    end
   end
 
   def currency_units
@@ -169,30 +170,24 @@ module ApplicationHelper
   def account_link(account, options = {})
     path = person_account_path(account.person,account) # XXX link to transactions
     img = image_tag("icons/bargraph.gif")
-    if account.group.nil?
-      action = "Main Account: #{account.balance} hours"
+    unless account.group
+      str = ""
     else
-      if  not account.group.unit.nil?
-        action = "#{account.group.name}: #{account.balance} #{account.group.unit}"
-      else
-        action = "#{account.group.name}: #{account.balance} hours"
-      end
-      
+      credit_limit = account.credit_limit.nil? ? "" : "(limit: #{account.credit_limit.to_s})"
+      action = "#{account.balance} #{account.group.unit} #{credit_limit}"
+      str = link_to(img,path, options)
+      str << " "
+      str << link_to_unless_current(action, path, options)
     end
-    opts = {}
-    str = link_to(img,path, opts)
-    str << " "
-    str << link_to_unless_current(action, path, opts)
   end
 
-  def exchange_link(person, options = {})
+  def exchange_link(person, group = nil, options = {})
     img = image_tag("icons/switch.gif")
-    path = new_person_exchange_path(person)
-    opts = {}
+    path = new_person_exchange_path(person, ({:group => group.id} unless group.nil?))
     action = "Give credit"
-    str = link_to(img,path,opts)
+    str = link_to(img,path,options)
     str << " "
-    str << link_to_unless_current(action, path, opts)
+    str << link_to_unless_current(action, path, options)
   end
 
   def email_link(person, options = {})
@@ -225,9 +220,9 @@ module ApplicationHelper
 
 def relative_time_ago_in_words(time)
   if time > Time.now
-  "in " + time_ago_in_words(time)
+    t('in') + " " + time_ago_in_words(time)
   else
-    time_ago_in_words(time) + " ago"
+    time_ago_in_words(time) + " ago"  # rob young - this needs to be added to the language file!
   end
 end
 

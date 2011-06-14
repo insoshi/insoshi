@@ -26,9 +26,8 @@ h6 {
   margin-bottom: 1em;
 }
 h2 {
-  background: url(/images/green-grad.jpg) 30px 10px repeat-x;
   border-bottom: 1px solid #ccc;
-  color: #009908;
+  color: #4F4F4F;
   clear: both;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 22px;
@@ -68,7 +67,6 @@ h6 {
   font-style: italic;
 }
 ul li {
-  background: url(/images/bullet.png) top left no-repeat;
   border: 0;
   margin: 0 0 .5em 0;
   padding-left: 24px;
@@ -98,18 +96,18 @@ pre {
   padding: 1em;
 }
 a:link,a:visited {
-  color: #009908;
+  color: #4f4f4f;
   font-weight: bold;
   text-decoration: none;
 }
 /* Specific elements */
 p.welcome {
-  color: #fff;
+  color: #4F4F4F;
   font-size: 12px
 }
 
 p.welcome a, p.welcome a:visited {
-  color: #fff;
+  color: #4F4F4F;
   text-decoration: underline;
 }
 
@@ -210,7 +208,7 @@ form {
   padding-bottom: 1em;
   margin-bottom: 2em; 
 }
-li form {
+li form, form.search_form {
   float: right;
   margin-right: 1em;
   border-bottom: 0px;
@@ -246,7 +244,7 @@ input.button, button, input[submit], input[button] {
   padding: 3px 12px;
 }
 .col1 textarea {
-  width: 478px;
+  width: 530px;
 }
 .col1 textarea#post_body {
   width: 428px;

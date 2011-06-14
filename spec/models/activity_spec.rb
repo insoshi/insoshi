@@ -28,14 +28,6 @@ describe Activity do
     destroy_should_remove_activity(@topic)
   end
   
-  it "should delete an associated connection" do
-    @person = people(:quentin)
-    @contact = people(:aaron)
-    Connection.connect(@person, @contact)
-    @connection = Connection.conn(@person, @contact)
-    destroy_should_remove_activity(@connection, :breakup)
-  end
-  
   before(:each) do
     # Create an activity.
     @person.comments.unsafe_create(:body => "Hey there",

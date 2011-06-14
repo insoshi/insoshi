@@ -28,6 +28,11 @@
     </div>
 
     <div class="form_row">
+      <label for="default_group_id">Default group for new registrations</label>
+      <%= f.select :default_group_id, @groups %>
+    </div>
+
+    <div class="form_row">
       <label for="blog_feed_url">Blog Feed URL</label>
       <%= f.text_field :blog_feed_url %>
     </div>
@@ -89,15 +94,6 @@
       <label for="email_verifications"
              class="checkbox">Email verifications</label>
       <%= f.check_box :email_verifications %>
-    </div>
-
-    <br />
-
-    <p>Enable groups</p>
-    <div class="form_row">
-      <label for="group_option"
-             class="checkbox">Group Option</label>
-      <%= f.check_box :group_option %>
     </div>
 
     <br />

@@ -17,6 +17,7 @@ class Topic < ActiveRecord::Base
   
   MAX_NAME = 100
   NUM_RECENT = 6
+  DEFAULT_REFRESH_SECONDS = 30
   
   attr_accessible :name
   
@@ -24,6 +25,7 @@ class Topic < ActiveRecord::Base
   belongs_to :person
   has_many :posts, :order => 'created_at DESC', :dependent => :destroy,
                    :class_name => "ForumPost"
+  has_many :viewers, :dependent => :destroy
   has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Topic'", :dependent => :destroy
   validates_presence_of :name, :forum, :person
   validates_length_of :name, :maximum => MAX_NAME
@@ -35,13 +37,26 @@ class Topic < ActiveRecord::Base
   end
 
   def self.find_recently_active(forum, page = 1)
-    topics = forum.topics.delete_if {|t| t.posts.length == 0}
-    topics.sort_by {|t| t.posts.first.created_at}.reverse.paginate( :page => page )
+    topics = forum.topics.paginate(:page => page)
+  end
+
+  def update_viewer(person)
+    current_viewer = self.viewers.find_or_create_by_person_id(person.id)
+    current_viewer.touch
+  end
+
+  def current_viewers(seconds_ago)
+    self.viewers.all(:conditions => ['updated_at > ?', Time.now.ago(seconds_ago).utc], :include => :person)
+  end
+
+  def posts_since_last_refresh(last_refresh_time, person_id)
+    self.posts.all(:conditions => ['created_at > ? and person_id != ?', Time.at(last_refresh_time + 1).utc, person_id], 
+                   :include => :person, :order => 'created_at DESC')
   end
 
   private
   
     def log_activity
-      add_activities(:item => self, :person => person)
+      add_activities(:item => self, :person => person, :group => self.forum.group)
     end
 end

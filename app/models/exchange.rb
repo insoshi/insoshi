@@ -21,25 +21,38 @@ class Exchange < ActiveRecord::Base
   belongs_to :group
 
   validates_presence_of :customer, :worker, :amount, :metadata
+  validates_presence_of :group_id
 
   attr_accessible :amount, :group_id
+  attr_readonly :amount
+  attr_readonly :customer_id, :worker_id, :group_id
 
   after_create :log_activity
   after_create :decrement_offer_available_count
   before_create :calculate_account_balances
   after_create :send_payment_notification_to_worker
-  before_destroy :send_suspend_payment_notification_to_worker
+  before_destroy :delete_calculate_account_balances
 
   named_scope :by_customer, lambda {|person_id| {:conditions => ["customer_id = ?", person_id]}}
   named_scope :everyone, :conditions => {}
+  named_scope :everyone_by_group, lambda {|group_id| {:conditions => ["group_id = ?", group_id]}}
   named_scope :by_month, lambda {|date| {:conditions => ["DATE_TRUNC('month',created_at) = ?", date]}}
 
   def log_activity
-    add_activities(:item => self, :person => self.worker)
+    add_activities(:item => self, :person => self.worker, :group => self.group)
   end
 
   def self.total_on(date)
     Exchange.sum(:amount, :conditions => ["date(created_at) = ?", date])
+  end
+
+  # XXX person_id hacks for cancan's load_and_authorize_resource
+  def person_id
+    self.worker_id
+  end
+
+  def person_id=(worker_id)
+    self.worker_id = worker_id
   end
 
   def self.total_on_month(date)
@@ -60,16 +73,14 @@ class Exchange < ActiveRecord::Base
         end
       end
 
-      unless self.group.nil?
-        unless worker.groups.include?(self.group)
-          errors.add(:group_id, "does not include recipient as a member")
-        end
-        unless customer.groups.include?(self.group)
-          errors.add(:group_id, "does not include you as a member")
-        end
-        unless self.group.adhoc_currency?
-          errors.add(:group_id, "does not have its own currency")
-        end
+      unless worker.groups.include?(self.group)
+        errors.add(:group_id, "does not include recipient as a member")
+      end
+      unless customer.groups.include?(self.group)
+        errors.add(:group_id, "does not include you as a member")
+      end
+      unless self.group.adhoc_currency?
+        errors.add(:group_id, "does not have its own currency")
       end
     end
   end
@@ -85,23 +96,40 @@ class Exchange < ActiveRecord::Base
     begin
       Account.transaction do
         if group.nil?
-          worker.account.deposit(amount)
-          customer.account.withdraw(amount)
+          # this should not happen anymore
+          raise "no group specified"
         else
-          worker.accounts.find(:first, :conditions => ["group_id = ?",group.id]).deposit(amount)
-          customer.accounts.find(:first, :conditions => ["group_id = ?",group.id]).withdraw(amount)
+          worker.account(group).deposit(amount)
+          customer.account(group).withdraw(amount)
         end
       end
     rescue
-      if self.metadata.class == Req
-        unless self.metadata.active?
-          self.metadata.destroy
-        end
-      end
+      false
     end
   end
 
+  def delete_calculate_account_balances
+    begin
+      Account.transaction do
+        if group.nil?
+          raise "no group specified"
+        else
+          worker.account(group).withdraw(amount)
+          customer.account(group).deposit(amount)
+          if self.metadata.class == Req
+            unless self.metadata.active?
+              self.metadata.destroy
+            end
+          end
+        end
+      end
+    end
+    send_suspend_payment_notification_to_worker
+  end
+
   def send_payment_notification_to_worker
+    # XXX fix wierdness related to cancan
+=begin
     exchange_note = Message.new()
     subject = "PAYMENT: " + self.amount.to_s + " hours - for " + self.metadata.name 
     exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
@@ -109,6 +137,7 @@ class Exchange < ActiveRecord::Base
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
     exchange_note.save!
+=end
   end
 
   def send_suspend_payment_notification_to_worker

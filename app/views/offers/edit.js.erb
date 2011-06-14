@@ -1,0 +1,3 @@
+$('#offers_canvas').html('<%= escape_javascript(render :partial => 'edit_offer') %>');
+$('#edit_offer').before('<div><%= escape_javascript(error_messages_for(:offer)) %></div>');
+<%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'offers_canvas'} %>

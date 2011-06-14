@@ -1,8 +1,8 @@
 class TopicsController < ApplicationController
+  load_resource :forum
+  load_and_authorize_resource :topic, :through => :forum
   
   before_filter :login_required
-  before_filter :admin_required, :only => [:edit, :update, :destroy]
-  before_filter :setup
   
   def index
     redirect_to forum_url(params[:forum_id])
@@ -10,29 +10,23 @@ class TopicsController < ApplicationController
 
   def show
     @group = @forum.group
-    @topic = Topic.find(params[:id])
     @posts = @topic.posts.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        @refresh_milliseconds = global_prefs.topic_refresh_seconds * 1000
+      end
     end
   end
 
   def new
-    @topic = Topic.new
-
     respond_to do |format|
       format.html
     end
   end
 
-  def edit
-    @topic = Topic.find(params[:id])
-  end
-
   def create
     @body = "yui-skin-sam" 
-    @topic = @forum.topics.new(params[:topic])
     @topic.person = current_person
 
     respond_to do |format|
@@ -46,34 +40,12 @@ class TopicsController < ApplicationController
     end
   end
 
-  def update
-    @topic = Topic.find(params[:id])
-
-    respond_to do |format|
-      if @topic.update_attributes(params[:topic])
-        flash[:notice] = t('notice_topic_updated')
-        format.html { redirect_to forum_url(@forum) }
-      else
-        format.html { render :action => "edit" }
-      end
-    end
-  end
-
   def destroy
-    @topic = Topic.find(params[:id])
     @topic.destroy
 
     respond_to do |format|
-      flash[:success] = t('success_topic_destroyed')
-      format.html { redirect_to forum_url(@forum) }
+      flash[:notice] = t('success_topic_destroyed')
+      format.js
     end
   end
-
-  private
-  
-    def setup
-      @forum = Forum.find(params[:forum_id])
-      @body = "forum"
-      @body = "yui-skin-sam "
-    end
 end

@@ -9,7 +9,3 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 
-require 'rubygems'
-
-## Our texticle rake tasks
-require 'texticle/tasks'

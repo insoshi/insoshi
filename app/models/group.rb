@@ -2,6 +2,7 @@ class Group < ActiveRecord::Base
   include ActivityLogger
   
   validates_presence_of :name, :person_id
+  attr_protected :mandatory
 
   has_one :forum
   has_many :reqs, :order => "created_at DESC"
@@ -17,10 +18,15 @@ class Group < ActiveRecord::Base
   belongs_to :owner, :class_name => "Person", :foreign_key => "person_id"
   
   has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Group'", :dependent => :destroy
- 
+
+  validates_uniqueness_of :name
+  validates_uniqueness_of :unit, :allow_nil => true
+  validates_uniqueness_of :asset, :allow_nil => true
+  validates_format_of :asset, :with => /^[-\.a-z0-9]+$/i, :allow_blank => true
   after_create :create_owner_membership
   after_create :create_forum
-  after_save :log_activity
+  after_create :log_activity
+  before_update :update_member_credit_limits
   
   index do 
     name description
@@ -29,19 +35,20 @@ class Group < ActiveRecord::Base
   # GROUP modes
   PUBLIC = 0
   PRIVATE = 1
-  HIDDEN = 2
   
   class << self
 
-    # Return not hidden groups
-    def not_hidden(page = 1)
+    def name_sorted_and_paginated(page = 1)
       paginate(:all, :page => page,
                      :per_page => RASTER_PER_PAGE,
-                     :conditions => ["mode = ? OR mode = ?", PUBLIC,PRIVATE],
                      :order => "name ASC")
     end
   end
-  
+
+  def admins
+    memberships.with_role('admin').map {|m| m.person}
+  end
+
   def public?
     self.mode == PUBLIC
   end
@@ -50,24 +57,10 @@ class Group < ActiveRecord::Base
     self.mode == PRIVATE
   end
   
-  def hidden?
-    self.mode == HIDDEN
-  end
-  
   def owner?(person)
     self.owner == person
   end
   
-  def has_invited?(person)
-    Membership.invited?(person,self)
-  end
- 
-  def is_viewable?(person)
-   self.public? or self.private? or person.admin? or 
-          self.owner?(person) or self.has_invited?(person) or
-          (self.hidden? and self.people.include?(person))
-  end
-
   ## Photo helpers
   def photo
     # This should only have one entry, but be paranoid.
@@ -107,19 +100,38 @@ class Group < ActiveRecord::Base
   
   private
 
+  def validate
+    unless new_record?
+      if asset_changed?
+        unless asset_was.blank?
+          errors.add(:asset, "cannot be changed unless it is empty")
+        end
+      end
+    end
+  end
+
   def create_owner_membership
     mem = Membership.new( :status => Membership::PENDING )
     mem.person = self.owner 
     mem.group = self
+    mem.roles = ['admin']
     mem.save
     Membership.accept(mem.person,mem.group)
   end
 
-  def log_activity
-    if not self.hidden?
-      activity = Activity.create!(:item => self, :person => Person.find(self.person_id))
-      add_activities(:activity => activity, :person => Person.find(self.person_id))
+  def update_member_credit_limits
+    if default_credit_limit_changed?
+      transaction do
+        memberships.each do |m|
+          m.account.update_attributes!(:credit_limit => default_credit_limit)
+        end
+      end
     end
+  end
+
+  def log_activity
+    activity = Activity.create!(:item => self, :person => Person.find(self.person_id))
+    add_activities(:activity => activity, :person => Person.find(self.person_id))
   end
   
 end

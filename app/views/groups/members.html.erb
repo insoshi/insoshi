@@ -32,34 +32,52 @@
 
   <h3><%= t('groups.members.header') %></h3>
 
-  <% unless @members.empty? -%>
-    <%= will_paginate(@members) %>
+  <% unless @memberships.empty? -%>
+    <%= will_paginate(@memberships) %>
     <ul class="grid contacts medium">
-      <%- @members.each do |contact| -%>
+      <%- @memberships.each do |membership| -%>
+        <% contact = membership.person %>
         <li class="vcard contact">
           <%= image_link contact, :image_options => { :class => "photo" },
                                   :link_options => { :class => "url" },
                                   :vcard => true,
                                   :image => :bounded_icon %>
-          <% if @group.owner?(current_person) %>
+          <% if can? :unsuscribe, membership %>
             <div class="cancel_membership">
                 <%= link_to image_tag("icons/remove.gif"), 
-                  unsuscribe_membership_path(contact.memberships.find(:first, :conditions => ['group_id = ?',@group])), 
+                  unsuscribe_membership_path(membership), 
                   :method => "delete",
                   :title => t('groups.members.cancel_membership'),
                   :confirm => t('groups.members.confirm') %>
+            </div>
+          <%- end -%>
+          <% if can? :update, membership %>
+            <div class="edit_roles">
+              <%= link_to image_tag("icons/edit.gif"), edit_membership_path(membership), :title => 'Edit member roles' %>
             </div>
           <% end %>
         </li>
       <%- end -%>
 
     </ul>
-    <%= will_paginate(@members) %>
+    <%= will_paginate(@memberships) %>
   <% else %>
     <h3><%= t('groups.members.no_members_yet') %></h3>
   <% end -%>
 
-  <h2><%= t('groups.members.administrator') %></h2>
+  <h3><%= t('groups.members.admins') %></h3>
+  <ul class="grid contacts medium">
+    <%- @group.admins.each do |admin| -%>
+      <li class="vcard contact">
+      <%= image_link admin, :image_options => { :class => "photo" },
+                            :link_options => { :class => "url" },
+                            :vcard => true,
+                            :image => :bounded_icon %>
+      </li>
+    <%- end -%>
+  </ul>
+
+  <h3><%= t('groups.members.created_by') %></h3>
   <ul class="grid contacts medium">
     <li class="vcard contact">
       <%= image_link @group.owner, :image_options => { :class => "photo" },
@@ -71,6 +89,3 @@
 
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
-  <%= render :partial => 'shared/minifeed' %>
-<%- end -%>

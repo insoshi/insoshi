@@ -80,7 +80,7 @@ module ActivitiesHelper
     when "BlogPost"
       post = activity.item
       blog = post.blog
-      %(#{person_link(person)} made a
+      %(#{person.name} made a
         #{post_link("new blog post", blog, post)}.)
     when "Comment"
       parent = activity.item.commentable
@@ -89,54 +89,54 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        %(#{person_link(person)} made a comment to
+        %(#{person.name} made a comment to
            #{someones(blog.person, person)}
            blog post #{post_link(blog, post)}.)
-        %(#{person_link(person)} made a comment on
+        %(#{person.name} made a comment on
           #{someones(blog.person, person)} 
           #{post_link("blog post", post.blog, post)}.)
       when "Person"
-        %(#{person_link(activity.item.commenter)} commented on 
+        %(#{activity.item.commenter.name} commented on 
           #{wall(activity)}.)
       when "Event"
         event = activity.item.commentable
-        %(#{person_link(activity.item.commenter)} commented on 
+        %(#{activity.item.commenter.name} commented on 
           #{someones(event.person, activity.item.commenter)} #{event_link("event", event)}.)
       end
     when "Connection"
-      %(#{person_link(person)} and #{person_link(activity.item.contact)}
+      %(#{person.name} and #{activity.item.contact.name}
         have connected.)
     when "ForumPost"
       topic = activity.item.topic
-      %(#{person_link(person)} made a #{topic_link("forum post", topic)}.)
+      %(#{person.name} made a #{topic_link("forum post", topic)}.)
     when "Topic"
-      %(#{person_link(person)} created a 
+      %(#{person.name} created a 
         #{topic_link("new discussion topic", activity.item)}.)
     when "Photo"
-      %(#{person_link(person)}'s profile picture has changed.)
+      %(#{person.name}'s profile picture has changed.)
     when "Person"
-      %(#{person_link(person)}'s description has changed.)
+      %(#{person.name}'s description has changed.)
     when "Group"
-      %(#{person_link(person)} created the group '#{group_link(Group.find(activity.item))}')
+      %(#{person.name} created the group '#{group_link(Group.find(activity.item))}')
     when "Membership"
-      %(#{person_link(person)} joined the group '#{group_link(Group.find(activity.item.group))}')
+      %(#{person.name} joined the group '#{group_link(Group.find(activity.item.group))}')
     when "Event"
-      %(#{person_link(person)}s has created a new #{event_link("event", activity.item)}.)
+      %(#{person.name}s has created a new #{event_link("event", activity.item)}.)
     when "EventAttendee"
       event = activity.item.event
-      %(#{person_link(person)} is attending #{someones(event.person, person)} #{event_link("event", event)}.)
+      %(#{person.name} is attending #{someones(event.person, person)} #{event_link("event", event)}.)
     when "Req"
       req = activity.item
-      %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+      %(#{person.name} has created a new request: #{req_link(req.name, req)}.)
     when "Offer"
       offer = activity.item
-      %(#{person_link(person)} has created a new offer: #{offer_link(offer.name, offer)}.)
+      %(#{person.name} has created a new offer: #{offer_link(offer.name, offer)}.)
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
-        %(#{person_link(person)} earned #{exchange.amount} hours for #{metadata_link(exchange.metadata)}.)
+        %(#{person.name} earned #{exchange.amount} hours for #{metadata_link(exchange.metadata)}.)
       else
-        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{metadata_link(exchange.metadata)} in #{group_link(exchange.group)}.)
+        %(#{person.name} earned #{exchange.amount} #{exchange.group.unit} for #{metadata_link(exchange.metadata)} in #{group_link(exchange.group)}.)
       end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -210,7 +210,7 @@ module ActivitiesHelper
       topic = text              # Eh?  This makes no sense...
       text = topic.name
     end
-    link_to(h(text), forum_topic_path(topic.forum, topic))
+    link_to(h(text), forum_topic_path(topic.forum, topic), :class => "show-follow")
   end
 
   def event_link(text, event)
@@ -221,18 +221,18 @@ module ActivitiesHelper
     if metadata.nil?
       "unknown!" # this should never happen.
     elsif metadata.class == Req
-      link_to(h(metadata.name), req_path(metadata))
+      link_to(h(metadata.name), req_path(metadata), :class => "show-follow")
     else
-      link_to(h(metadata.name), offer_path(metadata))
+      link_to(h(metadata.name), offer_path(metadata), :class => "show-follow")
     end
   end
 
   def req_link(text, req)
-    link_to(h(text), req_path(req))
+    link_to(h(text), req_path(req), :class => "show-follow")
   end
 
   def offer_link(text, offer)
-    link_to(h(text), offer_path(offer))
+    link_to(h(text), offer_path(offer), :class => "show-follow")
   end
 
   # Return a link to the wall.

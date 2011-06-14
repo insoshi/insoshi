@@ -1,4 +1,6 @@
 # Settings specified here will take precedence over those in config/environment.rb
+# XXX uncomment this for memcache
+#require 'active_support/cache/dalli_store23'
 
 # In the development environment your application's code is reloaded on
 # every request.  This slows down response time but is perfect for development
@@ -12,6 +14,9 @@ config.whiny_nils = true
 config.action_controller.consider_all_requests_local = true
 config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = false
+# XXX uncomment this for memcache
+#config.action_controller.perform_caching             = true
+#config.cache_store = :dalli_store
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false

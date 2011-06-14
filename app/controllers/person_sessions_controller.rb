@@ -13,7 +13,6 @@ class PersonSessionsController < ApplicationController
     @person_session = PersonSession.new(params[:person_session])
     @person_session.save do |result|
       if result
-        flash[:notice] = t('notice_logged_in_successfully')
         unless params[:person_session].nil?
           logger.info "OSC LOGIN SUCCESS: #{params[:person_session][:email]} from #{request.remote_ip}"
         end

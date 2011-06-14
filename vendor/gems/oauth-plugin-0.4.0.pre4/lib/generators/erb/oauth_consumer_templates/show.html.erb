@@ -1,0 +1,7 @@
+<h1>You are already Connected to <%%=params[:id].humanize%></h1>
+<%% form_tag oauth_consumer_path(params[:id]),:method=>:delete do %>
+  <%%=submit_tag "Disconnect" %>
+  or
+  <%%=submit_tag "Reconnect" %>
+  if you experienced a problem.
+<%% end %>

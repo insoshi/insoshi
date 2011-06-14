@@ -1,33 +1,28 @@
-<% content_for(:jquery_support) do %>
-<%= javascript_include_tag 'highcharts' %>
-<% end -%>
+<%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'home' } %>
 <%- column_div :type => :primary do -%>
-  <%- if logged_in? -%>
-  <h2><%= t('home.index.header') %></h2>
-    <ul id="message-nav">
-      <%= list_link_with_active t('home.index.tab_exchanges'), home_path %>
-      <%= list_link_with_active t('home.index.tab_graphs'), home_path(:mode => 'graphs') %>
-      <%= list_link_with_active t('home.index.tab_your_activity'), home_path(:mode => 'dashboard') %>
-    </ul>
-  <%- if logged_in? && current_person.has_unread_messages? -%>
-    <div class="notice">
-      <%= t('home.index.unread_messages') %>
-      <%= link_to t('home.index.see_your_messages'),
-                  messages_path %>
-    </div>
-  <%- end -%>
-    <% if current_page_pre22?(home_path) %>
-      <%= render :partial => 'feed' %>
-    <% else %>
-      <% if params[:mode] == 'dashboard' %>
-        <%= render :partial => 'dashboard' %>
-      <% elsif params[:mode] == 'graphs' %>
-        <%= render :partial => 'graphs' %>
-      <% end %>
+  <% tabs_for do |tab| %>
+    <% tab.create('blog','Blog') do %>
+      <%= render :partial => 'blog' %>
+    <% end unless global_prefs.about.blank? %>
+    <% tab.create('skillbank','SkillBank') do %>
+      <%= render :partial => 'categories' %>
     <% end %>
-  <%- else -%>
-    <%= render :partial => 'blog' %>
-  <%- end -%>
+    <% tab.create('about','About') do %>
+      <%= render :partial => 'about' %>
+    <% end unless global_prefs.about.blank? %>
+    <% tab.create('practice','Practice') do %>
+      <%= render :partial => 'practice' %>
+    <% end unless global_prefs.practice.blank? %>
+    <% tab.create('steps','Steps') do %>
+      <%= render :partial => 'steps' %>
+    <% end unless global_prefs.steps.blank? %>
+    <% tab.create('contact','Contact') do %>
+      <%= render :partial => 'contact' %>
+    <% end unless global_prefs.contact.blank? %>
+    <% tab.create('faq','FAQ') do %>
+      <%= render :partial => 'questions' %>
+    <% end unless global_prefs.questions.blank? %>
+  <% end %>
 <%- end -%>
 
 <%- column_div :type => :secondary do -%>

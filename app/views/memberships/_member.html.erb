@@ -1,0 +1,14 @@
+<% person = member.person %>
+<li class="vcard person">
+  <div class="profile-image">
+    <%= image_link person, :link => member, :link_options => {:class => "show-follow"}, :image_options => {:class => "photo"}, :image => :thumbnail %>
+  </div>
+  <div class="col_content">
+    <p><%= membership_link member, :class => "url fn show-follow" %>&nbsp;<%= organization_image(person) %></p>
+    <% if defined? short %>
+    <%= display person.listed_categories, :class => "meta" %>
+    <% else %>
+    <%= display person.description, :class => "note" %>
+    <% end %>
+  </div>
+</li>

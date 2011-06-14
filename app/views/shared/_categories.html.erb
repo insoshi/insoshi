@@ -1,0 +1,11 @@
+<span class='category_filter'>
+<%= 
+    collection_select( filtered_obj, 
+                       'category_ids', 
+                       Category.all(:order => "parent_id, name").sort_by { |a| a.long_name },
+                       :id, 
+                       :long_name, 
+                       { :include_blank => true, :selected => selected_category }
+                     ) 
+%>
+</span>

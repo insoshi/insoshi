@@ -14,12 +14,10 @@
     <%= f.label t('estimated') + ' ' + t('payment') %>
     <%= f.text_field :estimated_hours, :size => 5 %>&nbsp;<%= currency_units %>
   </div>
-  <% if global_prefs.group_option? and !@groups.empty? %>
     <div class="form_row">
       <label for="group_id"><%= t('group') %></label>
       <%= collection_select( 'req', 'group_id', @groups, :id, :name, { :include_blank => true }, { :onchange => "update_currency_units(this.value);"} ) %>
     </div>
-  <%- end -%>
   <div class="form_row">
     <%= f.label t('due_date') %>
     <%= f.text_field :due_date, :size => 7 %>
@@ -45,5 +43,4 @@
 
 <%- column_div :type => :secondary do -%>
   <%= render :partial => 'searches/box' %>
-  <%= render :partial => 'shared/minifeed' %>
 <%- end -%>

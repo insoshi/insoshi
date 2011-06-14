@@ -8,6 +8,7 @@ class Transact < Exchange
   def create_req(memo)
     req = Req.new
     req.name = memo.blank? ? 'miscellaneous' : memo 
+    req.group = group
     req.person = customer
     req.estimated_hours = amount
     req.due_date = Time.now

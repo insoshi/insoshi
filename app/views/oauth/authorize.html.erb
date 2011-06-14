@@ -1,14 +1,14 @@
 <h2>Authorize access to your account</h2>
-<p>Would you like to authorize <%=link_to @token.client_application.name,@token.client_application.url%> (<%=link_to @token.client_application.url,@token.client_application.url%>) to access your account?</p>
-<%form_tag authorize_url do %>
-<%=hidden_field_tag "oauth_token",@token.token%>
-<%-if params[:oauth_callback]-%>
-<%=hidden_field_tag "oauth_callback", params[:oauth_callback]%>
-<%-end-%>
+<p>Would you like to authorize <%= link_to @token.client_application.name,@token.client_application.url %> (<%= link_to @token.client_application.url,@token.client_application.url %>) to access your account?</p>
+<% form_tag authorize_url do %>
+  <%= hidden_field_tag "oauth_token", @token.token %>
+  <%- if params[:oauth_callback] -%>
+  <%= hidden_field_tag "oauth_callback", params[:oauth_callback] %>
+<%- end -%>
 <p>
-	<%=check_box_tag 'authorize'%> authorize access
+  <%= check_box_tag 'authorize' %> authorize <span id="scope-action"><%= @token.action_name %></span> <img src="<%= @token.action_icon_uri %>"> of <%= @token.amount %> <%= @token.asset %>
 </p>
 <p>
-	<%=submit_tag%>
+  <%= submit_tag %>
 </p>
-<%end%>
+<% end %>

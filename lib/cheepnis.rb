@@ -5,16 +5,31 @@ module Cheepnis
 
   # usage: set environment variables HEROKU_USER and HEROKU_PASSWORD
   # Call Cheepnis.enqueue(obj) in place of Delayed::Job.enqueue(obj)
+  # A cron job that calls Cheepnis.maybe_stop is a good idea; will terminate workers if the usual method fails .
+
+  # the environment variable CHEEPNIS_NO_DELAY can be set to force jobs to execute directly.
+  # the environment variable CHEEPNIS_INDIRECT can be set to use a connector object which prevents overly aggressive object serialization
+
+  # (hm, should have called this DownSizer, since it kills off workers)
 
   def self.enqueue(object)
-    # enqueue the object in the normal way
-    Delayed::Job.enqueue(object)
-    if on_heroku
-      # start a worker if necessary
-      start
-      # and enqueue something that calls maybe_stop, at low priortity
-      terminator = Terminator.new
-      Delayed::Job.enqueue(terminator, -10)    
+    if ENV["CHEEPNIS_NO_DELAY"] != nil
+      object.perform
+    else
+
+      if ENV["CHEEPNIS_INDIRECT"] != nil
+        object = Connector.new(object) 
+      end
+
+      # enqueue the object in the normal way
+      Delayed::Job.enqueue(object)
+      if on_heroku
+        # start a worker if necessary
+        start
+        # and enqueue something that calls maybe_stop, at low priortity
+        terminator = Terminator.new
+        Delayed::Job.enqueue(terminator, -10)    
+      end
     end
   end
 
@@ -60,5 +75,29 @@ module Cheepnis
       Cheepnis.maybe_stop
     end
   end
+
+  # This is an object whose job is to be the object of a Delayed Job task, and points to the real object that implements the perform method
+  # The problem this fixes is that using ActiveRecord objects directly tends to serialize too many related objects.  
+  class Connector 
+    
+    def self.make(object)
+      self.new(object)
+    end
+
+    def initialize(object)
+      @klass = object.class.name
+      @id = object.id
+    end
+
+    def actual_object
+      @klass.constantize.find(@id)
+    end
+
+    def perform
+      actual_object.perform
+    end
+
+  end
+
 
 end

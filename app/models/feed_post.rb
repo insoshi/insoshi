@@ -5,6 +5,10 @@ class FeedPost < ActiveRecord::Base
   extend PreferencesHelper
 
   class << self
+    def posts(page = 1)
+      paginate(:page => page, :order => 'date_published DESC')
+    end
+
     def update_posts
       posts = find(:all, :select => "feedid") 
       post_ids = posts.map {|p| p.feedid}

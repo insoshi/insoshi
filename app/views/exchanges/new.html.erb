@@ -1,24 +1,23 @@
 <%= render :partial => '/shared/update_currency_units' %>
 <%- column_div :type => :primary do -%>
-  <h2><%= t('exchanges.new.enter_credit_for') %> <%= h @worker.name %></h2>
+  <h2><%= t('exchanges.new.enter_credit_for') %> <%= h @person.name %></h2>
+  <% unless @groups.empty? %>
 
   <%= error_messages_for :exchange %>
 
   <% if params[:offer] %>
     <%= render :partial => 'exchange_offer_form' %>
   <% else %>
-    <% form_for :exchange, :url => person_exchanges_path(@worker) do |f| %>
+    <% form_for :exchange, :url => person_exchanges_path(@person) do |f| %>
       <div class="form_row">
         <%= f.label t('exchanges.new.amount') %>
-        <%= f.text_field :amount, :size => 2 %>&nbsp;<span id="units" class="small"><%= t('currency_unit_plural') %></span>
+        <%= f.text_field :amount, :size => 2 %>&nbsp;<span id="units" class="small"><%= @groups[0].unit %></span>
       </div>
 
-      <% if global_prefs.group_option? %>
         <div class="form_row">
           <label for="group_id"><%= t('group') %></label>
-          <%= collection_select( 'exchange', 'group_id', @groups, :id, :name, { :include_blank => true }, { :onchange => "update_currency_units(this.value);"} ) %>
+          <%= collection_select( 'exchange', 'group_id', @groups, :id, :name, {}, { :onchange => "update_currency_units(this.value);"} ) %>
         </div>
-      <%- end -%>
       <% fields_for :req do |r| %>
         <div class="form_row">
           <%= r.label t('exchanges.new.service_provided') %>
@@ -29,5 +28,8 @@
         <%= f.submit "Submit" %>
       </div>
     <% end %>
+  <% end %>
+  <% else %>
+  <%= t('exchanges.new.no_currencies') %>
   <% end %>
 <%- end -%>

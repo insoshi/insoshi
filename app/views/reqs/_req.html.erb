@@ -1,4 +1,4 @@
-<li class="req">
+<div class="req req_id_<%= req.id %>">
   <a name="req_<%= req.id %>"></a>
   <div class="profile-image">
     <%= image_link req.person, :image => :thumbnail %>
@@ -19,15 +19,15 @@
     <%= render :partial => "shared/bid_message", :collection => accepted_messages(req) %>
     <%= t('reqs.partial.createdby') %> <%= person_link req.person %>
     <%= time_ago_in_words(req.created_at) %> <%= t('ago') %>
-    <% if current_person?(req.person) -%>
-    | <%= link_to t('button_edit'), edit_req_path(req) unless req.has_accepted_bid? %>
+    <% if can?(:update, req) -%>
+      | <%= link_to t('button_edit'), edit_req_path(req), :class => 'show-follow' %>
     <% end -%>
-    <% if req.active? && ( admin? || current_person?(req.person) ) -%>
-      | <%= link_to t('button_delete'), req, :confirm => t('are_you_sure'), :method => :delete unless (req.has_commitment? || req.has_approved? ) %>
+    <% if req.active? && can?(:destroy, req) -%>
+      | <%= link_to t('button_delete'), req, :class => 'delete_req' %>
     <% end -%>
     <br>
     <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>
       <%= number_with_precision(req.person.address.distance_to(current_person.address), 1).to_s %> <%= t('miles_away') %>
     <% end -%>
   </p>
-</li>
+</div>

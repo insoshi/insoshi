@@ -1,0 +1,607 @@
+
+fr:
+  currency_unit_plural: "heures"
+
+  button_submit: "Soumettre"
+  button_delete: "Effacer"
+  button_edit: "Modifier"
+  button_create: "Créer"
+  button_update: "Mettre a jour"
+  button_cancel: "Canceller"
+  button_send: "Envoyer"
+  button_upload: "Rafraîchir"
+  button_select: "Choisir"
+  button_search: "Rechercher"
+
+  estimate: "Estimer"
+  title: "Titre"
+  bid: "Enchère"
+  due_date: "Date d'échéance"          
+  expiration_date: "Date d’expiration"
+  description: "Description"
+  are_you_sure: "Êtes-vous certains "
+  miles_away: "km d'ici"
+  ago: "Il y a"
+  estimated: "Estimated"         
+  payment: "Paiement"
+  a_question: "une question"
+  group: "Groupe"
+  recent_street_cred: "Crédits"
+  last_logged_in: "dernier enregistrement dans"
+  post: "Envoyez"
+  posted: "envoyé"
+  earned: "a gagné"
+  for: "pour"
+  said: "a dit(e)"
+  reply_on: "répondre sur"
+  wall: "mur"
+  see_all: "Tout voir"
+  by: "par"
+  to: "à"
+  from: "de"
+  in: "dans"
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "30 secondes"
+      less_than_x_seconds:
+        zero: "moins d'une seconde"
+        one: "moins d'une seconde"
+        other: "moins de %{count} secondes"
+      x_seconds:
+        one: "1 seconde"
+        other: "%{count} secondes"
+      less_than_x_minutes:
+        zero: "moins d'une minute"
+        one: "moins d'une minute"
+        other: "moins de %{count} minutes"
+      x_minutes:
+        one: "1 minute"
+        other: "%{count} minutes"
+      about_x_hours:
+        one: "environ une heure"
+        other: "environ %{count} heures"
+      x_days:
+        one: "un jour"
+        other: "%{count} jours"
+      about_x_months:
+        one: "environ un mois"
+        other: "environ %{count} mois"
+      x_months:
+        one: "un mois"
+        other: "%{count} mois"
+      about_x_years:
+        one: "environ un an"
+        other: "environ %{count} ans"
+      over_x_years:
+        one: "plus d'un an"
+        other: "plus de %{count} ans"
+      almost_x_years:
+        one: "presqu'un an"
+        other: "presque %{count} ans"
+    prompts:
+      year: "Année"
+      month: "Mois"
+      day: "Jour"
+      hour: "Heure"
+      minute: "Minute"
+      second: "Seconde"
+
+  accounts:
+    show:
+      header: "compte principal"
+      header_group: "compte dédie a"
+
+  adresses:
+    new:
+      header: "créer une nouvelle adresse"
+    edit:
+      header: "Modifier une adresse"
+    form:
+      address_line_1: "Adresse ligne 1"
+      address_line_2: "Adresse ligne 2"
+      address_line_3: "Adresse ligne 3"
+      city: "Ville"
+      state: "Province"
+      zipcode: "Code postal"
+
+  bids:
+    bid:
+      expires: "expires"                              
+      accepted: "Accepté"
+      submitted_by: "proposé par"
+
+  categories:
+    index:
+      header: "Services"
+      no_categories: "Pas encore de catégories"
+      explanation: "Le nombre de personnes est indiqué entre parenthèses"
+    show:
+      go_back_to_edit_your_profile: "aller mettre à jour votre profil"
+    new:
+      header: "Nouveau service"
+    edit:
+      header: "Modifier le service"
+    form:
+      name: "Nom"
+      parent_category: "Parent Category"
+
+  comments:
+    event_new:
+      header: "Commentaire sur l’événement"
+      leave_a_comment: "Laisser un commentaire"
+    wall_new:
+      header: "Wall comment"			
+      leave_a_comment: "Laisser un commentaire"
+
+  forums:
+    show:   
+      header: "Sujet de discussion"
+      add_new_topic: "Ajouter un nouveau sujet"
+    edit:
+      header: "Modifier les préférences du forum"
+      world_writable: "tous peuvent publier"
+
+  groups:
+    index:
+      header: "Groupes"
+      no_groups_yet: "Pas encore de groupes"
+    edit: 
+      header: "Modifier les groupes"
+      name: "Nom"
+      currency_unit_plural: "Currency unit (plural)"
+      asset: "OpenTransact Asset name"
+      default_credit_limit: "Limite de crédit initiale"
+      description: "Description"
+      mode: "mode"
+      photos: "Photos"
+      primary: "primaire"
+      add_a_photo: "ajouter une photo"
+    members:
+      pending_request: "Pending request"                
+      cancel_membership: "Canceller l’abonnement"
+      confirm: "  Êtes-vous certain de vouloir annuler l’abonnement de cette personne"
+      accept_membership: "Accepter l’abonnement"
+      header: "Membres"
+      no_members_yet: "Pas encore de membres"
+      admins: "Admins"
+      created_by: "créer par"
+    new:
+      header: "Nouveau groupe"
+      name: "Nom"
+      adhoc_currency: "Create ad-hoc currency"
+      currency_unit_plural: "Currency unit (plural)"
+      asset: "asset symbol (one word & permanent)"
+      default_credit_limit: "Limite de credit initiale"
+      description: "Description"
+      mode: "Mode"
+    new_photo:
+      header: "Publier une photo de groupe"
+      upload_a_photo: "Publier une photo"
+    show:
+      header: "Groupe"
+      blank_description: "La description du groupe est vide"
+      add_description: "Cliquer ici pour ajouter une description"
+      you_are_viewing_your_group: "Vous regardez votre groupe"
+      click_here_to_edit_it: "Cliquez ici pour le modifier"
+      currency_unit: "Currency Unit:"
+      asset: "Asset Symbol:"
+      join_group: "Join group"
+      you_have_been_invited: "Vous avez été invité"
+      respond: "répondre"
+      you_are_a_member_of: "Vous êtes  membre de"
+      leave_group: "Quittez le groupe"
+      are_you_sure_you_want_to_leave: "Êtes-vous certain de vouloir quitter"
+      you_have_requested_to_be_a_member_of: "Vous désirez devenir membre de"
+      you_are_group_admin: "Vous êtes l’administrateur de ce groupe"
+      delete_it: "Canceller"
+      mode: "Mode"
+      your_credit_limit: "Votre limite de credit"
+      default_credit_limit: "Default Credit Limit:"                                  
+      your_activity: "Votre activité"
+      asset_name: "OpenTransact Asset Name:"
+      invite_contacts: "Invité les contacts"
+      delete_group: "canceller le groupe"
+      discussion_topics: "Sujet de discussion"
+      add_a_new_topic: "Ajouter un nouveau sujet"
+      community_exchanges: "Échanges collectives"
+      home: "Accueil"
+      forum: "Forum"
+      requests: "Requête"
+      offers: "Offres"
+      exchanges: "    Échanges"
+      people: "People"                
+    _people:
+      header: "Groupe"
+      all_members: "tout les membres"
+      no_members: "Pas encore de membres"
+
+  home:
+    index:
+      header: "Home"
+      tab_exchanges: "Exchanges"
+      tab_your_activity: "Votre activité"
+      tab_graphs: "Graphique"
+      unread_messages: "Vous avez des messages non-lus dans votre boîte aux lettres"
+      see_your_messages: "Cliquer ici pour lire vos messages"
+    show:
+      header: "Blog"
+    _blog:
+      header: "blog"
+    _dashboard:
+      bids: "Vos enchères actives"
+      no_active_bids: "Aucune enchère active"
+      offers: "Vous offres en activités"
+      no_active_offers: "Aucune offre active"
+      requests: "Vos requêtes actives"
+      no_active_requests: "Aucune requêtes actives"
+    _graphs:
+    _forum_preview:
+      header: "Forum de discussion"
+      last_post: "Dernière entrée"
+    _invitations:
+      header: "Invitations aux groupes"
+      invitation_for: "Invitation pour"
+      respond: "Répondre"
+      view_group: "Voir les  groupes"
+    _members_preview:
+      see_all_members: "Voir tout les membres"
+    _messages_preview:
+      header: "Messages"
+      all_messages: "Tout les messages"
+    _requested_memberships:
+      header: "Demande d’abonnement"
+      requests_membership_for: "demande d’abonnement pour"
+      view_group: "Voir les groupes"
+      view_profile: "Voir le profil"
+    _secondary_column:
+      header: "System Blog"
+  offers:
+    partial:
+      accept_offer: "Payez maintenant"
+      expires: "Expire"
+      available_count: "Available count"
+      created_by: "Crée par"
+    index:
+      header: "Les offres"
+      nooffers: "Aucune offre pour l’instant"
+    edit:
+      header: "Modifier cette offre"
+    new:
+      header: "Nouvelle offre"
+      total_available: "Somme disponible"
+    show:
+      header: "Offre"
+      send: "Envoyez"
+      add_offer: "Ajoutez une offre"
+
+  people:
+    edit:
+      header: "Modifiez le profil"
+      personal_details: "Détails personnels"
+      name: "Nom"
+      share_phone_number: "Partager le numéro de téléphone"
+      phone: "Téléphone"
+      services_offered: "Les services offerts"
+      add_new_category: "Ajouter une nouvelle catégorie"
+      neighborhood: "Quartier"
+      description: "Description"
+      openid_identifier: "OpenID"
+      email: "Courriel"
+      email_notification_preferences: "Préférences pour les avertissements par courriel"
+      email_notification_note: "Vous recevrez un avertissement par courriel pour tous les types d’événement qui sont cochés"
+      requests_in_my_service_categories: "Les requêtes dans mes catégories de service:"
+      messages: "Messages"
+      wall_comments: "Commentaires"
+      forum_posts: "Les entrées du forum"
+      photos: "Photos"
+      add_a_photo: "Ajoutez une photo"
+      adresses: "Les adresses"
+      add_address: "Ajoutez une adresse"
+      change_your_password: "Changez votre mot de passe"
+      current_password: "Mot de passe actuel"
+      new_password: "Nouveau mot de passe"
+      confirm_password: "Confirmez le mot de passe"
+      change_password: "Changez le mot de passe"
+      change_openid: "Changez OpenID"
+    groups:
+      no_groups: "Présentement aucun groupe"
+      new_group: "Nouveau groupe"
+    index:
+      header: "People"
+      alpha: "Alpha"
+      newest: "plus récent"
+      no_results_for: "Pas de résultat pour"
+    invitations:
+      header: "Invitations de groupe pour"
+      respond: "Répondre"
+      no_invitations: "Aucune invitation pour l’instant"
+    new:
+      header: "Joindre"
+      email_address: "Adresse de courriel"
+      comma_will_be_verified: "Va être vérifié"
+      never_made_public: "jamais rendu publique"
+      name: "Nom"
+      will_be_displayed: "  (va être vu"
+      zipcode: "code postal"
+      which_services: "Quels services êtes-vous prêts a offrir (et possiblement recevoir des courriels pour vous avertir des nouvelles requêtes)"
+      something_about_yourself: "Présentez aux autres members qui vous êtes et quelles sont les qualifications que vous apportez a la communauté."
+      neighborhood: "Quartier"
+      password: "Mot de passe"
+      confirm_password: "Confirmer le mot de passe"
+      i_accept_the: "J’accepte le"
+      member_agreement: "formulaire de consentement"
+      or_signup_with_openid: "Ou enregistrez avec OpenID"
+      back_to_regular_signup: "retour vers l’enregistrement"
+      openid_url: "OpenID URL"
+      signup_button: "Enregistrez"
+    request_memberships: 
+      header: "Enregistrez votre groupe"
+      respond: "Répondre"
+      no_membership_request: "No membership request (yet)"
+    show:
+      header: "Profil"
+      organization_profile: "Ceci est le profil d’une organisation"
+      not_active: "Cette personne n’est pas active"
+      description_blank: "Votre description est vide"
+      add_description: "Cliquez ici pour ajouter une description"
+      own_profile: "Vous regardez votre profil"
+      edit_it: "Cliquez ici pour le modifier"
+      update_location: "Cliquez ici pour changer d’endroit"
+      address_remain_private: "Votre adresse restera confidentielle"
+      phone: "Téléphone"
+      switch_user: "Act as this person"
+    _language:
+      language: "Langue"
+      english: "English"
+      spanish: "Spanish"
+      french: "Français"
+    _recent_activity:
+      header: "Activité récente"
+    _recent_exchanges:
+      header: "Creddits"
+
+  reqs:
+    partial:
+      due: "Due"
+      createdby: "Crée par"
+    index:
+      header: "Requêtes"
+      current: "Courant"
+      all: "Tout"
+      noreqs: "Aucune requête présentement"
+    edit:
+      header: "Modifiez la requête"
+    new:
+      header: "Nouvelle requête"
+
+      people_to_be_notified: "Personne à contacter"
+      notify_members_email: "Contactez les members ci-dessous"
+    show:
+      header: "Requete"
+      bids: "Enchères"
+      nobids: "Aucune enchère"
+      newbid: "Nouvelle enchère"
+      private_message_to_requestor: "Message confidentiel au requèrant"
+
+  exchanges:
+    new:
+      enter_credit_for: "Entrez les crédits pour"
+      amount: "montant"
+      for: "Pour"
+      or_ask: "ou demander"
+      service_provided: "Service rendu"
+      no_currencies: "Cette personne n’utilise pas de monnaie"
+
+  sessions:
+    new:
+      header: "Accédez"
+      email_address: "Adresse courriel"
+      password: "Mot de passe"
+      openid: "OpenID"
+      remember_me: "Remember me:"    
+      button_signin: "Accédez"
+      or_signup: "Enregistrez-vous"
+      i_forgot_my_password: "J’ai oublié mon mot de passe"
+      login_using_openid: "Accédez avec OpenID"
+      back_to_regular_login: "Retour à l’accès régulier"
+
+  topics:
+    show:
+      add_a_new_post: "Ajoutez une nouvelle entrée"
+    new:
+      header: "Nouveau sujet"
+    edit:
+      header: "Modifiez le sujet"
+    partial:
+      created_by: "Crée par"
+
+  transacts:
+    index:
+      header: "Votre transaction"
+      this_is_a: "Ceci est un"
+      opentransact: "OpenTransact"
+      url: "URL"
+    show:
+      header: "Transaction"
+    new:
+      header: "Payez quelqu’un"
+      header_simple: "Payez"
+      explanation: "Ceci est requis en échange de"
+      pay_now: "Payez maintenant"
+      to: "Adresse courriel du bénéficiaire"
+      amount: "Montant"
+      memo: "Mémo"
+    helper:
+      received_from: "Reçu de"
+      paid_to: "Payez à"
+
+  password_resets:
+    new:
+      header: "Actualisé le mot de passe"
+    edit:
+      header: "Mettre à jour votre mot de passe"
+
+  shared:
+    minifeed:
+      activity: "Activité"
+      whats_going_on: "Qu’est-ce-qui ce passe"
+    transact:
+      for: "pour"
+
+  person_mailer:
+    email_verification:
+      message_default: "Cliquez ici pour compléter la verification de votre adresse courriel:"
+      message_whitelist: "Cliquez ici pour completer la verification de votre adresse courriel. Notez que l’accès à l’échange doit être approuvé par l’administrateur."
+
+      thanks: "Merci"
+
+  authlogic:
+    error_messages:
+      not_active: "Votre compte n’est pas actif. C’est possible que l’administrateur doive l’approuver"
+  notice_warning_your_email_address: "Attention: votre courriel est toujours à"
+  notice_change_it_here: "Changez-le ici"
+  notice_bid_accepted: "L’enchère est acceptée. Un message a été envoyé pour confirmation à l’acheteur"
+
+  notice_bid_committed: "L’enchère est confirmé  Un message à été envoyé au vendeur"
+
+  notice_bid_completed: "Travaux réputés complétés. Le requérant en a été avisé"
+
+  notice_bid_approved: "Travaux réputés vérifiés. Un reçu à été envoyé"
+
+  notice_bid_invalid: "Cette enchère est invalide"
+
+  notice_bid_removed: "L’enchère à été retirée"
+
+  notice_category_updated: "Cette categories a été mise à jour"
+
+  notice_forum_updated: "Le forum a été mis à jour"
+
+  notice_event_updated: "Cet événement a été mis à jour"
+
+  notice_you_are_attending_this_event: "Vous assistez à cet événement"
+
+  notice_you_are_not_attending: "Vous n’assistez pas à cet événement"
+
+  notice_in_progress: "Cet endroit est présentement en construction"
+
+  notice_group_updated: "Le groupe a été mis à jour"
+  notice_invite_contacts: "Vous avez invite certains de vos contacts à"
+  notice_upload_canceled: "Vous avez cancellé le transfert"
+
+  notice_blog_updated: "Blog mis à jour"
+  notice_entries: "Entrées"
+  notice_you_have_joined: "Vous avez joint"
+  notice_membership_request_sent: "Votre requête d’abonnement a été envoyée"
+
+  notice_membership_invalid: "Votre abonnement est invalide"	
+  notice_accepted_membership_with: "Votre abonnement est accepté avec"
+
+  notice_declined_membership_for: "Abonnement refuse pour"
+
+  notice_neighborhood_updated: "Votre quartier a été mis a jour"
+
+
+  notice_registered_the_information_successfully: "L’information a été enregistrée avec succès"
+
+  notice_updated_the_client_information_successfully: "La mise à jour des informations du client a réussie"
+    
+  notice_destroyed_the_client_application_registration: "La demande d’application du client a été détruite"
+
+  notice_offer_updated: "L’offre a été mise à jour avec succès"
+
+  notice_thanks_for_signing_up_check_email: "Merci de vous être enregistré. Consultez votre courriel pour vérifier votre adresse de courriel"
+
+  notice_thanks_for_signing_u: "Merci de vous être enregistré."
+  notice_post_updated: "Les entrées sont mises à jour"
+  notice_request_updated: "Les requêtes sont mises à jour"
+  notice_logged_in_successfully: "Activation réussie"
+  notice_unverified_email_address: "L’adresse courriel n’est pas vérifiée. S’il vous plait, consultez votre courriel pour le code d’activation."
+  notice_topic_updated: "Le sujet a été mis à jour"
+  notice_transfer_succeeded: "Le transfert a reussi"
+  success_activity_deleted: "Activité cancellée"
+  success_bid_created: "L’enchère a été crée avec succès"
+  success_category_created: "La catégorie a été créée avec succès"
+  success_comment_created: "Le commentaire a été crée avec succès"
+  success_comment_deleted: "Commentaire effacé"
+  success_event_created: "L’événement a été crée avec succès"
+  success_credit_transfer_succeeded: "Le transfert de credit a réussi"
+  success_payment_suspended: "Paiement suspendu"
+  success_group_created: "Le groupe a été crée avec succès"
+  success_group_deleted: "Le groupe a été effacé avec succès"
+  success_photo_uploaded: "Photo transférée avec succès"
+  success_photo_deleted_for_group: "Photo effacée pour le groupe"
+  success_you_have_left_the_group: "Vous avez quitté le groupe"
+  success_you_have_unsubscribed: "Vous êtes  désinscrit"
+  success_from_group: "du groupe"
+  success_you_have_accepted: "Vous avez accepté"
+  success_for_group: "pour le groupe"
+  success_message_sent: "Message envoyé"
+  success_message_trashed: "Message effacé"
+  success_message_restored_to_inbox: "Le message est sauvegardé dans la boîte de réception"
+
+  success_neighborhood_created: "Le quartier a été crée avec succès"
+  success_offer_created: "L’offre a été crée avec succès"
+
+  success_offer_destroyed: "L’offre est effacée"
+  success_your_password_has_been_sent: "Votre mot de passe a été envoyé"
+  success_email_verified: "Courriel vérifié. Votre profil est actif"
+
+  success_email_verified_whitelist: "Courriel vérifié. L’activation de votre profil doit être approve par l’administrateur."
+ 
+  success_updated: "Mis à jour"
+  success_profile_updated: "Profil mis à jour"
+  success_password_changed: "Mot de passe modifié"
+  success_photo_uploaded: "Photo transférée avec succès"
+  success_photo_deleted: "Photo effacé"
+  success_post_created: "L’entrée a été crée"
+  success_post_destroyed: "L’entrée a été effacée"
+  success_request_created: "La requête a été crée avec succès"
+  success_request_destroyed: "Requête effacée"
+  success_you_have_been_logged_out: "Vous avez été désactivé"
+  success_topic_created: "Sujet a été crée avec succès"
+  success_topic_destroyed: "Sujet effacé avec succès"
+
+  error_geocoding_failed: "Geocoding failed"
+  error_at_least_one_address: "Vous devez avoir au moins une adresse"
+  error_admin_access_required: "Administrateur requis"
+  error_default_password: "Attention: Votre mot de passe n’a pas été personnalisé"
+  error_creating_bid: "Erreur dans la création de l’enchère"
+  error_category_authorization: "Autorisation requise pour modifier les catégories"
+  error_you_can_only_attend_once: "Vous pouvez seulement  participer une seule fois"
+  error_you_are_not_attending: "Vous ne participez pas à cet événement"
+  error_offer_person_mismatch: "L’offre en question ne correspond à aucune personne"
+  error_with_credit_transfer: "Erreur dans le transfert de crédit"
+  error_with_suspension: "Erreur avec la suspension de paiement"
+  error_no_contacts: "Vous n’avez pas de contacts ou vous les avez tous invités"
+  error_browser_upload_fail: "Votre navigateur ne supporte pas le transfert de fichier"
+  error_blog_update: "La mise à jour du blog a échoué"
+  error_invalid_connection: "La connexion est invalide"
+  error_invalid_or_expired_membership: "La requête d’abonnement est invalide ou expirée"
+  error_invalid_action: "action invalide"
+  error_authorization_required_to_edit_neighborhood: "Autorisation requise pour modifier les quartiers"
+  error_wrong_application_id: "mauvaise identification pour l’application"
+  error_offer_cannot_be_deleted: "Cette offre ne peut pas être effacée car elle a été acceptée"
+  error_request_cannot_be_deleted: "Cette requête ne peut pas être effacée car elle a été acceptée"
+  error_invalid_email_address: "Adresse courriel invalide"
+  error_person_inactive: "Cette personne n’est pas active"
+  error_invalid_email_verification_code: "Le code de verification par courriel est invalide"
+  error_password_cant_be_changed: "Le mot de passe ne peut pas être changé en mode démonstration"
+  error_invalid_image: "Image invalide"
+  error_authentication_failed: "L’authentification a échouée"
+  error_invalid_search: "Recherche invalide"
+  error_openid_problems: "Les problèmes suivants sont survenus avec votre profil OpenID"
+  error_deactivated_account: "Votre compte a été désactivé"
+  error_your_account_is_deactivated: "Votre compte est présentement désactivé. Pour le réactiver vous devez être approuvé par l’administrateur."
+  error_membership_is_approved_after: "L’enregistrement est approuvé après une session d’orientation. Pour en savoir plus"
+  error_membership_here: "sur l’enregistrement"
+  error_you_can_also: "Vous pouvez aussi"
+  error_contact: "contacter"
+  error_the_administrators: "L’administrateur si vous pensez que votre compte devrait être actif"
+
+
+  error_invalid_email_password: "Combinaison courriel/mot de passe invalide"
+  error_your_account_is_inactive: "Votre compte est inactif"
+  error_could_not_find_transaction: "transaction introuvable"
+  error_could_not_find_payee: "le vendeur est introuvable"
+  error_with_transfer: "Erreur avec le transfert"

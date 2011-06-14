@@ -15,6 +15,16 @@
       <label for="unit"><%= t('groups.edit.currency_unit_plural') %></label>
       <%= f.text_field :unit %>
     </div>
+
+    <div class="form_row">
+      <label for="asset"><%= t('groups.edit.asset') %></label>
+      <%= f.text_field :asset, :disabled => !@group.asset.nil? %>
+    </div>
+
+    <div class="form_row">
+      <label for="default_credit_limit"><%= t('groups.edit.default_credit_limit') %></label>
+      <%= f.text_field :default_credit_limit, :size => 5 %>
+    </div>
 <%- end -%>
 
     <div class="form_row">
@@ -70,4 +80,14 @@
     <%= button_to t('groups.edit.add_a_photo'), new_photo_group_path(@group), :class => "button" %>
   </div>
 
+<%- end -%>
+<%- column_div :type => :secondary do -%>
+  <h2>Forum</h2>
+  <p>
+  <%= link_to "Edit Forum Preferences", edit_forum_path(@group.forum) %>
+  </p>
+  <h2>Members</h2>
+  <p>
+    <%= link_to "Edit Member Roles", members_group_path(@group) %>
+  </p>
 <%- end -%>

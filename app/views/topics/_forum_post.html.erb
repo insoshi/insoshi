@@ -1,23 +1,16 @@
-<li>
+<li class="forum_post post_id_<%= forum_post.id %>" data-time="<%= forum_post.created_at.to_i %>">
   <a name="post_<%= forum_post.id %>"></a>
   <div class="profile-image">
     <%= image_link forum_post.person, :image => :thumbnail %>
     <%= image_tag "icons/comment.gif", :class => "icon" %>
   </div>
   <p class="meta"><%= person_link forum_post.person %> <%= t('posted') %>
-  <%= time_ago_in_words(forum_post.created_at) %> <%= t('ago') %>
-      <%- if current_person?(forum_post.person) or admin? -%>
-        | <%= link_to t('button_edit'),
-                edit_forum_topic_post_path(@forum, @topic, forum_post) %>
-      <%- end -%>
-      <%- if admin? -%>
-        | <%= link_to t('button_delete'),
-                      forum_topic_post_path(@forum, @topic, forum_post),
-                      :confirm => t('are_you_sure'),
-                      :method => :delete %>
+  <%= timeago(forum_post.created_at) %>
+      <%- if can? :destroy, forum_post -%>
+            <%= link_to t('button_delete'),forum_topic_post_path(@forum, @topic, forum_post),:class => 'delete_post' %>
       <%- end -%>
   </p>
   <div class="forum">
-  <%= display forum_post.body %>
+  <%= display simple_format_without_paragraph forum_post.body %>
   </div>
 </li>

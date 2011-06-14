@@ -1,0 +1,18 @@
+This creates an OAuth Provider controller as well as the requisite models.
+
+It requires an authentication framework such as acts_as_authenticated, restful_authentication or restful_open_id_authentication.
+
+If you generated the migration file (true by default), make sure you run
+
+  rake db:migrate
+
+include the following in your user.rb
+
+  has_many :client_applications
+  has_many :tokens, :class_name=>"OauthToken",:order=>"authorized_at desc",:include=>[:client_application]
+
+For legacy OAUTH 1.0 support add the following constant in your environment.rb
+
+  OAUTH_10_SUPPORT = true
+
+Note, you should only do this if you really positively require to support old OAuth1.0 clients. There is a serious security issue with this.

@@ -39,7 +39,7 @@ class Person < ActiveRecord::Base
   end
 
 #  attr_accessor :password, :verify_password, :new_password, :password_confirmation
-  attr_accessor :sorted_photos
+  attr_accessor :sorted_photos, :accept_agreement
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications, :forum_notifications,
@@ -105,6 +105,7 @@ class Person < ActiveRecord::Base
     person.has_many :_sent_exchanges, :foreign_key => "customer_id", :class_name => "Exchange"
     person.has_many :_received_exchanges, :foreign_key => "worker_id", :class_name => "Exchange"
   end
+  has_many :exchanges
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'activities.created_at DESC',
                                             :limit => FEED_SIZE,
@@ -115,10 +116,6 @@ class Person < ActiveRecord::Base
   
   has_many :own_groups, :class_name => "Group", :foreign_key => "person_id",
     :order => "name ASC"
-  has_many :own_not_hidden_groups, :class_name => "Group", 
-    :foreign_key => "person_id", :conditions => "mode != 2", :order => "name ASC"
-  has_many :own_hidden_groups, :class_name => "Group", 
-    :foreign_key => "person_id", :conditions => "mode = 2", :order => "name ASC"
   has_many :memberships
   has_many :groups, :through => :memberships, :source => :group, 
     :conditions => "status = 0", :order => "name ASC"
@@ -139,6 +136,7 @@ class Person < ActiveRecord::Base
   has_many :offers
   has_many :reqs
   has_many :bids
+  belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
 
   validates_presence_of     :email, :name
 #  validates_presence_of     :password,              :if => :password_required?
@@ -155,11 +153,13 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of   :email
 #  validates_uniqueness_of   :identity_url, :allow_nil => true
 
-  validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
+  # XXX just doing jquery validation
+  #validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
 
   before_create :create_blog, :check_config_for_deactivation
-  after_create :create_account
+  before_create :set_default_group
   after_create :create_address
+  after_create :join_mandatory_groups
   before_save :update_group_letter
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
@@ -211,10 +211,6 @@ class Person < ActiveRecord::Base
       find(:all, :conditions => conditions_for_active)
     end
 
-    def all_listening_to_forum_posts
-      find(:all, :conditions => conditions_for_active_and_forum_notifications)
-    end
-    
     def find_recent
       # TODO: configure attachment_fu for the S3 backend when deploying to Heroku
       find(:all, :order => "people.created_at DESC",
@@ -271,11 +267,6 @@ class Person < ActiveRecord::Base
           :conditions => ['status = 2 and group_id in (?)', self.own_group_ids])
   end
   
-  def invitations
-    Membership.find_all_by_person_id(self, 
-          :conditions => ['status = 1'], :order => 'created_at DESC')
-  end
-
   # Contact links for the contact image raster.
   def requested_contact_links
     requested_contacts.map do |p|
@@ -369,25 +360,33 @@ class Person < ActiveRecord::Base
     address.save
   end
 
+  def set_default_group
+    self.default_group_id = Person.global_prefs.default_group_id
+  end
+
+  def join_mandatory_groups
+    Group.all(:conditions => ['mandatory = ?', true]).each do |g|
+      Membership.request(self,g,false)
+    end
+  end
+
   def address
     addresses.first
   end
 
   ## Account helpers
 
-  def create_account
-    account = Account.new( :name => 'personal' )
-    account.balance = Account::INITIAL_BALANCE 
-    account.person = self
-    account.save
-  end
-
-  def account
-    accounts.first(:conditions => ["group_id IS ?", nil])
+  def account(group)
+    accounts.first(:conditions => ['group_id = ?', group.id])
   end
 
   def notifications
     connection_notifications
+  end
+
+  def is?(role,group)
+    mem = Membership.mem(self,group)
+    mem && mem.is?(role)
   end
 
   ## Photo helpers
@@ -533,16 +532,6 @@ class Person < ActiveRecord::Base
       Feed.find_all_by_person_id(self).each {|f| f.destroy}
     end
 
-    # Connect new users to "Tom".
-    def connect_to_admin
-      # Find the first admin created.
-      # The ununitiated should Google "tom myspace".
-      tom = Person.find_first_admin
-      unless tom.nil? or tom == self
-        Connection.connect(self, tom)
-      end
-    end
-
     ## Other private method(s)
 
     def password_required?
@@ -560,14 +549,6 @@ class Person < ActiveRecord::Base
          false, true]
       end
       
-      # Return the conditions for a user to be active and listening to forum posts.
-      def conditions_for_active_and_forum_notifications
-        [%(deactivated = ? AND 
-           forum_notifications = ? AND
-           (email_verified IS NULL OR email_verified = ?)),
-         false, true, true]
-      end
-
       # Return the conditions for a user to be 'mostly' active.
       def conditions_for_mostly_active
         [%(deactivated = ? AND 

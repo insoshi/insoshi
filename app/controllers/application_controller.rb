@@ -17,6 +17,24 @@ class ApplicationController < ActionController::Base
 
   layout proc{ |c| c.request.xhr? ? false : "application" }
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    respond_to do |format|
+      format.html {redirect_to @group}
+      format.js do
+        canvas = case params[:action] 
+          when 'new_req','create_req','update' # from bids#update payment denied
+            'reqs_canvas'
+          when 'new_offer','create_offer'
+            'offers_canvas'
+          else
+            'empty_canvas'
+          end
+        render :partial => '/shared/flash_messages', :locals => {:canvas_id => canvas}
+      end
+    end
+  end
+
   ActiveScaffold.set_defaults do |config|
     config.ignore_columns.add [ :created_at, :updated_at, :audits]
   end
@@ -30,10 +48,6 @@ class ApplicationController < ActionController::Base
   protected
     def logged_in?
       !!current_person
-    end
-
-    def authorized?
-      logged_in?
     end
 
     def login_required
@@ -78,6 +92,10 @@ class ApplicationController < ActionController::Base
       current_person 
     end
 
+    def current_ability
+      @current_ability ||= Ability.new(current_person, current_token)
+    end
+
     def set_person_locale
       if logged_in?
         I18n.locale = current_person.language
@@ -111,7 +129,7 @@ class ApplicationController < ActionController::Base
         #                :user_agent => request.env["HTTP_USER_AGENT"])
       end
     end
-  
+ 
     def require_activation
       if logged_in?
         unless current_person.active? or current_person.admin?

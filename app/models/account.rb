@@ -15,7 +15,19 @@ class Account < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
 
+  attr_accessible :credit_limit
+
+  before_update :check_credit_limit
+
   INITIAL_BALANCE = 0
+
+  def membership
+    Membership.mem(person,group)
+  end
+
+  def authorized?(amount)
+    credit_limit.nil? or (amount <= balance + credit_limit)
+  end
 
   def withdraw(amount)
     adjust_balance_and_save(-amount)
@@ -33,12 +45,27 @@ class Account < ActiveRecord::Base
   def self.transfer(from, to, amount, metadata)
     transaction do
       exchange = Exchange.new()
-      exchange.customer = from.person
-      exchange.worker = to.person
+      exchange.customer = from
+      exchange.worker = to
       exchange.amount = amount
       exchange.metadata = metadata
       exchange.group_id = metadata.group_id
-      exchange.save!
+      # permission depends on current_user and policy of group specified in request
+      if metadata.ability.can? :create, exchange
+        exchange.save!
+      else
+        raise CanCan::AccessDenied.new("Payment declined.", :create, Exchange)
+      end
+    end
+  end
+
+  private
+
+  def check_credit_limit 
+    if credit_limit_changed?
+      if credit_limit + balance < 0
+        raise CanCan::AccessDenied.new("Denied: Updating credit limit for #{person.name} would put account in prohibited state.", :update, Account)
+      end
     end
   end
 end

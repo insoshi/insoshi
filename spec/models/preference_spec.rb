@@ -1,7 +1,14 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Preference do
-  
+  describe "static global preference" do
+    it "should prohibit multiple preference objects" do
+      @preferences = Preference.new
+      @preferences.save.should be_false
+      @preferences.errors.full_messages.should include('Attempting to instantiate another Preference object')
+    end
+  end
+
   describe "validations" do
     before(:each) do
       @preferences = Preference.new

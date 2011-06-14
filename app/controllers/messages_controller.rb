@@ -41,6 +41,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.js
     end
   end
 
@@ -70,11 +71,13 @@ class MessagesController < ApplicationController
   
     respond_to do |format|
       if !preview? and @message.save
-        flash[:success] = t('success_message_sent') 
+        flash[:notice] = t('success_message_sent') 
         format.html { redirect_to messages_url }
+        format.js
       else
         @preview = @message.content if preview?
         format.html { render :action => "new" }
+        format.js { render :action => "new" }
       end
     end
   end

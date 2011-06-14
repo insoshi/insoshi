@@ -1,15 +1,3 @@
-<% if params[:tab] == 'forum' %>
-  $('#forum_canvas').html("<%= escape_javascript(render :partial => 'forum_canvas') %>");
-  $('span.wait').hide();
-<% elsif params[:tab] == 'requests' %>
-  $('#reqs_canvas').html("<%= escape_javascript(render :partial => 'reqs_canvas') %>");
-  $('span.wait').hide();
-<% elsif params[:tab] == 'offers' %>
-  $('#offers_canvas').html("<%= escape_javascript(render :partial => 'offers_canvas') %>");
-  $('span.wait').hide();
-<% elsif params[:tab] == 'exchanges' %>
-  $('#exchanges_canvas').html("<%= escape_javascript(render :partial => 'exchanges_canvas') %>");
-  $('span.wait').hide();
-<% else %>
-  alert('bad request');
-<% end %>
+$('#home_canvas').html("<%= escape_javascript(render :partial => 'home_canvas') %>");
+$('#home_canvas').linkify();
+<%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'home_canvas'} %>

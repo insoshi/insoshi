@@ -1,0 +1,8 @@
+<%= javascript_include_tag 'req_edit_form' %>
+<h2><%= t('reqs.edit.header') %></h2>
+<% form_for @req, :html => {:id => 'edit_req'} do |f| %>
+  <%= render :partial => 'form_fields', :locals => {:f => f} %>
+  <div class="form_row">
+    <%= f.submit t('button_update') %><%= waiting_image %>
+  </div>
+<% end %>

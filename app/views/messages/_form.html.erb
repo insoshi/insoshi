@@ -1,0 +1,41 @@
+  <h2>New message</h2>
+  <p><%= formatting_note %></p>
+
+  <%= error_messages_for :message %>
+  
+  <%- unless @preview.nil? -%>
+    <h3>Message preview</h3>
+    <%= display @preview %>
+  <%- end -%>
+  
+  <%= image_link @recipient, :image => :thumbnail %>
+
+  <% form_for(:message,
+              :url => person_messages_path(@recipient), :html => {:id => 'new_message'}) do |f| %>
+    <div class="form_row full">
+      <label for="recipient">To</label>
+      <%= text_field_tag :recipient, h(@recipient.name) %>
+      <!-- TODO: be able to change recipients with this
+      <a href="#" class="add-recipient">
+        <%= image_tag "icons/add.gif", :alt => "Add a recipient" %>
+      </a> -->
+    </div>
+    <div class="form_row full">
+      <label for="message_subject">Subject</label>
+      <%= f.text_field :subject, :id => "message_subject" %>
+    </div>
+    <div class="form_row">
+      <label for="message_body">Your message</label>
+      <%= f.text_area :content, :id => "message_body" %>
+      <%- if @message.reply? -%>
+        <%= f.hidden_field :parent_id %>
+        <%= set_focus_to "message_body" %>
+      <%- else -%>
+        <%= set_focus_to "message_subject" %>
+      <%- end -%>
+    </div>
+    <div class="form_row">
+      <%= f.submit "Send!", :class => "button", :id => "message_submit" %>
+      <%= waiting_image %>
+    </div>
+  <% end %>

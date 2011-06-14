@@ -1,25 +1,24 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :member_preferences
+
   map.resources :neighborhoods
 
   map.resources :memberships, :member => {:unsuscribe => :delete, :suscribe => :post}
 
-  map.resources :transacts
+  map.resources :transacts, :as => "transacts/:asset"
 
-  map.resources :groups, 
+  map.resources :groups, :has_many => [:offers,:reqs], :shallow => true, 
     :member => { :join => :post, 
                  :leave => :post, 
-                 :members => :get, 
-                 :invite => :get,
-                 :invite_them => :post,
-                 :new_req => :get,
-                 :create_req => :post,
-                 :new_offer => :get,
-                 :create_offer => :post,
+                 :exchanges => :get,
+                 :members => :get,
+                 :graphs => :get,
                  :photos => :get,
                  :new_photo => :post,
                  :save_photo => :post,
                  :delete_photo => :delete } do |group|
     group.resources :memberships
+    group.resource :forum
   end
 
   map.resources :broadcast_emails
@@ -52,11 +51,12 @@ ActionController::Routing::Routes.draw do |map|
                            :member => { :reply => :get, :undestroy => :put }
 
   map.resources :people, :member => { :verify_email => :get,
+                                      :su => :get,
                                       :common_contacts => :get }
   map.connect 'people/verify/:id', :controller => 'people',
                                     :action => 'verify_email'
   map.resources :people, :member => {:groups => :get, 
-    :admin_groups => :get, :request_memberships => :get, :invitations => :get} do |person|
+    :admin_groups => :get} do |person|
      person.resources :messages
      person.resources :accounts
      person.resources :exchanges
@@ -69,12 +69,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :people, :active_scaffold => true
     admin.resources :exchanges, :active_scaffold => true
     admin.resources :preferences, :broadcast_emails, :feed_posts
-    admin.resources :groups
-    admin.resources :forums do |forums|
-      forums.resources :topics do |topic|
-        topic.resources :posts
-      end
-    end    
   end
   map.resources :blogs do |blog|
     blog.resources :posts do |post|
@@ -92,12 +86,11 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'person_sessions', :action => 'new'
   map.logout '/logout', :controller => 'person_sessions', :action => 'destroy'
   map.home '/', :controller => 'home'
-  map.refreshblog '/refreshblog', :controller => 'home', :action => 'refreshblog'
+  map.refreshblog '/refreshblog', :controller => 'feed_posts', :action => 'refresh_blog'
   map.about '/about', :controller => 'home', :action => 'about'
   map.practice '/practice', :controller => 'home', :action => 'practice'
   map.steps '/steps', :controller => 'home', :action => 'steps'
   map.questions '/questions', :controller => 'home', :action => 'questions'
-  map.memberships '/memberships', :controller => 'home', :action => 'memberships'
   map.contact '/contact', :controller => 'home', :action => 'contact'
   map.agreement '/agreement', :controller => 'home', :action => 'agreement'
 
@@ -136,7 +129,7 @@ ActionController::Routing::Routes.draw do |map|
   #   end
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => "home"
+  map.root :controller => 'home'
 
   # See how all your routes lay out with "rake routes"
 

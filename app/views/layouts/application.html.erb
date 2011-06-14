@@ -9,8 +9,14 @@
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
     <%= stylesheet_link_tag "default" %>
-    <%= stylesheet_link_tag 'south-street/jquery-ui-1.8.4.custom' %>
+    <%= stylesheet_link_tag 'Aristo/jquery-ui-1.8rc3.custom' %>
     <%= javascript_include_tag 'jquery-1.4.2.min' %>
+    <%= javascript_include_tag 'jquery-ui-1.8.4.custom.min' %>
+    <%= javascript_include_tag 'jquery.timeago' %>
+    <%= javascript_include_tag 'highcharts' %>
+    <%= javascript_include_tag 'jquery.ba-hashchange.min' %>
+    <%= javascript_include_tag 'jquery.linkify-1.0-min' %>
+    <%= javascript_include_tag 'site' %>
     <%= yield :jquery_support %>
     <%= yield :head %>    
   </head>
@@ -18,25 +24,15 @@
     <div id="header-wrap">
       <div id="header">
         <h1>
-        <%= global_prefs.app_name %>
+        <%- if params[:controller] == 'groups' and params[:action] == 'show' %>
+        <%= h @group.name %>
+        <%- else -%>
+          <%= global_prefs.app_name %>
+        <%- end -%>
         </h1>
-        <ul id="nav">
-          <%- menu.each do |link| -%>
-            <%= menu_li link %>
-          <%- end -%>
-        </ul>
-        
+        <div> 
           <p class="welcome">
             <%- if logged_in? -%>
-              Welcome, <%= h current_person.name %>!
-              (<%= link_to "Sign out", logout_path %>)
-              <br />
-              <%= link_to "about", about_path if !global_prefs.about.blank? %>
-              <%= link_to "practice", practice_path if !global_prefs.practice.blank? %>
-              <%= link_to "steps", steps_path if !global_prefs.steps.blank? %>
-              <%= link_to "contact", contact_path if !global_prefs.contact.blank? %>
-              <%= link_to "agreement", agreement_path if !global_prefs.agreement.blank? %>
-              <%= link_to "faq", questions_path if !global_prefs.questions.blank? %>
               <%- if current_person.admin? -%>
                 <%- if admin_view? -%>
                   <%= link_to("Standard view", home_path) %>
@@ -54,6 +50,41 @@
               <%- end -%>             
             <%- end -%>
           </p>
+        </div>
+          <%- if logged_in? -%>
+            <ul id="sfmenu">
+              <li class="left_item">
+                <a href="#">Your Groups</a>
+                <ul>
+                  <%= render :partial => 'shared/membership', :collection => current_person.memberships.all(:include => 'group', :order => 'groups.name ASC') %>
+                  <li><%= link_to "more...", groups_path, :id => 'moregroups' %></li>
+                </ul>
+              </li>
+              <li class="middle_item">
+                <a href="#">Help</a>
+                <ul class="active">
+                  <li><%= link_to "about", about_path if !global_prefs.about.blank? %></li>
+                  <li><%= link_to "practice", practice_path if !global_prefs.practice.blank? %></li>
+                  <li><%= link_to "steps", steps_path if !global_prefs.steps.blank? %></li>
+                  <li><%= link_to "contact", contact_path if !global_prefs.contact.blank? %></li>
+                  <li><%= link_to "agreement", agreement_path if !global_prefs.agreement.blank? %></li>
+                  <li><%= link_to "faq", questions_path if !global_prefs.questions.blank? %></li>
+                </ul>
+              </li>
+              <li class="profile_icon_item">
+                <%= image_link current_person, {:link => person_path(current_person)} %>
+              </li>
+              <li class="right_item">
+                <a href="#"><%= h current_person.name %></a>
+                <ul>
+                  <%= link_to "Profile", person_path(current_person) %>
+                  <%= link_to "Inbox", messages_path %>
+                  <%= link_to "Sign out", logout_path %>
+                </ul>
+              </li>
+            </ul>
+          <%- end -%>
+        </div>
       </div>
     </div>
 
@@ -77,16 +108,13 @@
 
         
         <div id="footer">
-          <p id="footer-nav">
-          <%- if logged_in? -%>
-          <a href="/">Home</a> | <a href="/categories">SkillBank</a> | <a href="/reqs">Requests</a> | <a href="/messages">Inbox</a> | <a href="/people">People</a> | <a href="/forums">Forum</a>
-          <%- else -%>
-          <a href="/">Home</a> | <a href="/categories">SkillBank</a>
-          <%- end -%>
-
-          </p>
           <p>
 		<%= render :partial => 'shared/powered_by' %>
+          </p>
+        </div>
+        <div id="license">
+          <p>
+            <%= render :partial => 'shared/license' %>
           </p>
         </div>
       </div>
