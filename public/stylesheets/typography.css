@@ -232,17 +232,6 @@ label  {
 input, textarea, select {
   margin-bottom: 1em;
 }
-input.button, button, input[submit], input[button] {
-  background: #e5e5e5;
-  border: 1px solid #ccc;
-  clear: both;
-  cursor: pointer;
-/*  display: block;*/
-  font-family: Helvetica, Arial, Univers, sans-serif;
-  font-size: 12px;
-  height: 32px;
-  padding: 3px 12px;
-}
 .col1 textarea {
   width: 530px;
 }
