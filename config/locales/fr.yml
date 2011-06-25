@@ -1,4 +1,4 @@
-
+﻿
 fr:
   currency_unit_plural: "heures"
 
@@ -353,9 +353,10 @@ fr:
       switch_user: "Act as this person"
     _language:
       language: "Langue"
-      english: "English"
-      spanish: "Spanish"
+      english: "Anglais"
+      spanish: "Espagnole"
       french: "Français"
+      greek: "Grecques"
     _recent_activity:
       header: "Activité récente"
     _recent_exchanges:

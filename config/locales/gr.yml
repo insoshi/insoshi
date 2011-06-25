@@ -1,0 +1,533 @@
+﻿gr:
+  currency_unit_plural: "ώρες"
+
+  button_submit: "Υποβολή"
+  button_delete: "Διαγραφή"
+  button_edit: "Επεξεργασία"
+  button_create: "Δημιουργία"
+  button_update: "Ενημέρωση"
+  button_cancel: "Ακύρωση"
+  button_send: "Αποστολή!"
+  button_upload: "Ανέβασμα"
+  button_select: "Επιλογή"
+  button_search: "Αναζήτηση"
+
+  estimate: "Εκτίμηση"
+  title: "Τίτλος"
+  bid: "δήλωση"
+  due_date: "Καταληκτική Ημερομηνία"
+  expiration_date: "Ημερομηνία Λήξης"
+  description: "Περιγραφή"
+  are_you_sure: "Είστε σίγουροι;"
+  miles_away: "μίλια μακρυά"
+  ago: "πριν"
+  estimated: "Εκτίμηση"
+  payment: "πληρωμή"
+  a_question: "μια ερώτηση"
+  group: "Ομάδα"
+  recent_street_cred: "Μονάδες"
+  last_logged_in: "Τελευταία Είσοδος"
+  post: "δημοσίευση"
+  posted: "δημοσιεύτηκε"
+  earned: "κερδισμένες"
+  for: "για"
+  said: "είπε"
+  reply_on: "απάντηση προς"
+  wall: "τοίχος"
+  see_all: "Δες τα όλα"
+  by: "από"
+  to: "προς"
+  from: "από"
+  in: "σε"
+
+  accounts:
+    show:
+      header: "Κύριος λογαριασμός"
+      header_group: "Λογαριασμός για"
+
+  addresses:
+    new:
+      header: "Δημιουργία νέας διεύθυνσης"
+    edit:
+      header: "Ενημέρωση διεύθυνσης"
+    form:
+      address_line_1: "Διεύθυνση 1"
+      address_line_2: "Διεύθυνση 2"
+      address_line_3: "Διεύθυνση 3"
+      city: "Πόλη"
+      state: "Νομός"
+      zipcode: "Τ.Κ."
+
+  bids:
+    bid:
+      expires: "λήγει"
+      accepted: "Αποδεκτή"
+      submitted_by: "Υποβλήθηκε από"
+
+  categories:
+    index:
+      header: "Υπηρεσίες"
+      no_categories: "Καμία κατηγορία (ακόμη!)"
+      explanation: "Αριθμός ατόμων που εμφανίζονται σε παρένθεση"
+    show:
+      go_back_to_edit_your_profile: "Επιστροφή στην επεξεργασία του προφίλ"
+    new:
+      header: "Νέα Υπηρεσία"
+    edit:
+      header: "Επεξεργασία Υπηρεσίας"
+    form:
+      name: "¨Ονομα"
+      parent_category: "Γενική Κατηγορία"
+
+  comments:
+    event_new:
+      header: "Σχόλιο γεγονότος"
+      leave_a_comment: "Κάνε σχόλιο"
+    wall_new:
+      header: "Σχόλιο τοίχου"
+      leave_a_comment: "Κάνε σχόλιο"
+
+  forums:
+    show:
+      header: "Θέματα Συζήτησης"
+      add_new_topic: "Προσθήκη Νέου Θέματος"
+    edit:
+      header: "Επεξεργασία προτιμήσεων στο φόρουμ"
+      world_writable: "Οποιοσδήποτε μπορει να δημοσιεύσει"
+
+  groups:
+    index:
+      header: "Ομάδες"
+      no_groups_yet: "Καμία Ομάδα (ακόμη!)"
+    edit:
+      header: "Επεξεργασία Ομάδας"
+      name: "Όνομα"
+      currency_unit_plural: "Νόμισμα (πληθυντικός)"
+      asset: "OpenTransact Asset name"
+      default_credit_limit: "Προεπιλεγμένο πιστωτικό όριο"
+      description: "Περιγραφή"
+      mode: "Λειτουργία"
+      photos: "Φωτογραφίες"
+      primary: "πρωτεύων"
+      add_a_photo: "Προσθήκη Φωτογραφίας"
+    members:
+      pending_request: "Η Αίτηση είναι σε εξέλιξη"
+      cancel_membership: "Ακύρωση Συμμετοχής"
+      confirm: "Είστε σίγουροι ότι θέλετε να διαγραφείτε από αυτό το πρόσωπο;"
+      accept_membership: "Αποδοχή Συμμετοχής"
+      header: "Μέλη"
+      no_members_yet: "Κανένα μέλος (ακόμη!)"
+      admins: "Διαχειριστές"
+      created_by: "Δημιουργήθηκε από"
+    new:
+      header: "Νέα Ομάδα"
+      name: "'Ονομα"
+      adhoc_currency: "Create ad-hoc currency"
+      currency_unit_plural: "Νόμισμα (πληθυντικός)"
+      asset: "asset symbol (one word & permanent)"
+      default_credit_limit: "Προεπιλεγμένο πιστωτικό όριο"
+      description: "Περιγραφή"
+      mode: "Λειτουργία"
+    new_photo:
+      header: "Ανέβασμα φωτογραφίας ομάδας"
+      upload_a_photo: "Ανέβασε μια φωτογραφία:"
+    show:
+      header: "Ομάδα:"
+      blank_description: "Η περιγραφή της ομάδας είναι κενή."
+      add_description: "Πατήστε εδώ για να προσθέσετε περιγραφή"
+      you_are_viewing_your_group: "Βλέπετε την ομάδα σας."
+      click_here_to_edit_it: "Πατήστε εδώ για επεξεργασία"
+      currency_unit: "Νόμισμα:"
+      asset: "Asset Symbol:"
+      join_group: "Συμμετοχή στην ομάδα"
+      you_have_been_invited: "Έχετε προσκληθεί"
+      respond: "(απάντηση)"
+      you_are_a_member_of: "Είστε μέλος της ομάδας"
+      leave_group: "Αποχώρηση από την ομάδα"
+      are_you_sure_you_want_to_leave: "Είστε σίγουρος ότι θέλετε να φύγετε;"
+      you_have_requested_to_be_a_member_of: "Σας έχει ζητηθεί να γίνετε μέλος της"
+      you_are_group_admin: "Είστε διαχειριστής ομάδας"
+      delete_it: "(Διαγραφή)"
+      mode: "Λειτουργία:"
+      your_credit_limit: "Το πιστωτικό σας όριο: "
+      default_credit_limit: "Προεπιλεγμένο πιστωτικό όριο: "
+      your_activity: "Η δραστηριότητά σας"
+      asset_name: "OpenTransact Asset Name:"
+      invite_contacts: "Πρόσκληση επαφών"
+      delete_group: "Διαγραφή Ομάδας"
+      discussion_topics: "Θέματα Συζήτησης"
+      add_a_new_topic: "Προσθήκη νέου θέματος"
+      community_exchanges: "Ανταλλαγές Κοινότητας"
+      home: "Αρχική"
+      forum: "Φόρουμ"
+      requests: "Αιτήσεις"
+      offers: "Προσφορές"
+      exchanges: "Ανταλλαγές"
+      people: "Άνθρωποι"
+    _people:
+      header: "Ομάδας"
+      all_members: "Όλα τα μέλη"
+      no_members: "Κανένα μέλος (ακόμη)"
+
+  home:
+    index:
+      header: "Αρχική"
+      tab_exchanges: "Ανταλλαγές"
+      tab_your_activity: "Η δραστηριότητά σας"
+      tab_graphs: "Γραφήματα"
+      unread_messages: "Έχετε μη αναγνωσμένη αλληλογραφία."
+      see_your_messages: "Πατήστε εδώ για να δείτε τα μηνύματα σας"
+    show:
+      header: "blog"
+    _blog:
+      header: "blog"
+    _dashboard:
+      bids: "Οι ενεργές δηλώσεις σας"
+      no_active_bids: "Δεν υπάρχουν ενεργές δηλώσεις"
+      offers: "Οι ενεργές προσφορές σας"
+      no_active_offers: "Δεν υπάρχουν ενεργές προσφορές"
+      requests: "Οι ενεργές αιτήσεις σας"
+      no_active_requests: "Δεν υπάρχουν ενεργές αιτήσεις"
+    _graphs:
+    _forum_preview:
+      header: "Φόρουμ Συζητήσεων"
+      last_post: "Τελευταία δημοσίευση"
+    _invitations:
+      header: "Προσκλήσεις για ομάδες"
+      invitation_for: "Πρόσκληση για"
+      respond: "Απάντηση"
+      view_group: "Προβολή Ομάδας"
+    _members_preview:
+      see_all_members: "Δείτε όλα τα μέλη"
+    _messages_preview:
+      header: "Μηνύματα"
+      all_messages: "Όλα τα μηνύματα"
+    _requested_memberships:
+      header: "Αιτήσεις συμμετοχής"
+      requests_membership_for: "ζητάει συμμετοχή σε"
+      view_group: "Προβολή Ομάδας"
+      view_profile: "Προβολή Προφίλ"
+    _secondary_column:
+      header: "Blog Συστήματος"
+  offers:
+    partial:
+      accept_offer: "Πληρωμή τώρα!"
+      expires: "Λήγει"
+      available_count: "Διαθέσιμο Υπόλοιπο"
+      created_by: "Δημιουργήθηκε από"
+    index:
+      header: "Προσφορές"
+      nooffers: "Καμία Προσφορά (ακόμη!)"
+    edit:
+      header: "Επεξεργασία προσφοράς"
+    new:
+      header: "Νέα Προσφορά"
+      total_available: "Διαθέσιμο Σύνολο"
+    show:
+      header: "Προσφορά"
+      send: "Αποστολή"
+      add_offer: "Προσθήκη Προσφοράς!"
+
+  people:
+    edit:
+      header: "Επεξεργασία προφίλ"
+      personal_details: "Προσωπικά στοιχεία"
+      name: "Όνομα"
+      share_phone_number: "Κοινός αριθμός τηλεφώνου:"
+      phone: "Τηλέφωνο"
+      services_offered: "Προσφερόμενες Υπηρεσίες"
+      add_new_category: "Προσθήκη Νέας Κατηγορίας"
+      neighborhood: "Περιοχή"
+      description: "Περιγραφή"
+      openid_identifier: "OpenID"
+      email: "Email"
+      email_notification_preferences: "Προτιμήσεις ειδοποίησης μέσω email"
+      email_notification_note: "Θα λαμβάνεται ειδοποιήσεις μέσω email για κάθε τύπο γεγονότος που έχετε επιλεγμένο."
+      requests_in_my_service_categories: "Αιτήσεις για τις κατηγορίες των υπηρεσιών μου:"
+      messages: "Μηνύματα:"
+      wall_comments: "Σχόλια τοίχου:"
+      forum_posts: "Δημοσιεύσεις του φόρουμ:"
+      photos: "Φωτογραφίες"
+      add_a_photo: "Προσθήκη φωτογραφίας"
+      addresses: "Διευθύνσεις"
+      add_address: "Προσθήκη Διεύθυνσης"
+      change_your_password: "Αλλαγή κωδικού πρόσβασης"
+      current_password: "Τρέχων κωδικός πρόσβασης"
+      new_password: "Νέος Κωδικός Πρόσβασης"
+      confirm_password: "Επιβεβαίωση Κωδικού Πρόσβασης"
+      change_password: "Αλλαγή Κωδικού Πρόσβασης"
+      change_openid: "Αλλαγή OpenID"
+    groups:
+      no_groups: "Καμία ομάδα (ακόμη)"
+      new_group: "Νέα Ομάδα"
+    index:
+      header: "Άνθρωποι"
+      alpha: "Άλφα"
+      newest: "Πιο Πρόσφατο"
+      no_results_for: "Δεν βρέθηκαν αποτελέσματα για"
+    invitations:
+      header: "Προσκλήσεις ομάδων για"
+      respond: "Απάντηση"
+      no_invitations: "Καμία Πρόσκληση (ακόμη)"
+    new:
+      header: "Εγγραφή"
+      email_address: "Ηλεκτρονική διεύθυνση"
+      comma_will_be_verified: ", θα απαληθευτεί"
+      never_made_public: "ποτέ δεν θα εμφανίζεται"
+      name: "Όνομα"
+      will_be_displayed: "(θα εμφανίζεται)"
+      zipcode: "Τ.Κ."
+      which_services: "Ποιές υπηρεσίες θέλετε να προσφέρετε; (και προαιρετικά να λαμβάνετε ειδοποιήσεις μέσω email για νέες αιτήσεις για αυτές τις υπηρεσίες)"
+      something_about_yourself: "Ενημερώστε τα υπόλοιπα μέλη για εσάς και τις δεξιότητες σας."
+      neighborhood: "Περιοχή"
+      password: "Κωδικός Πρόσβασης"
+      confirm_password: "Επιβεβαίωση Κωδικού Πρόσβασης"
+      i_accept_the: "Αποδέχομαι την"
+      member_agreement: "δήλωση μέλους"
+      or_signup_with_openid: "ή εγγραφείτε με OpenID"
+      back_to_regular_signup: "Επιστροφή στην κανονική εγγραφή"
+      openid_url: "OpenID URL"
+      signup_button: "Εγγραφή"
+    request_memberships:
+      header: "Αίτηση συμμετοχής για τις ομάδες σας"
+      respond: "Απάντηση"
+      no_membership_request: "Καμία αίτηση συμμετοχής (ακόμη)"
+    show:
+      header: "Προφίλ:"
+      organization_profile: "Αυτό είναι προφίλ οργανισμού"
+      not_active: "Αυτό το πρόσωπο δεν είναι ενεργό"
+      description_blank: "Η περιγραφλή σας είναι κενή."
+      add_description: "Πατήστε εδώ για να προσθέσετε περιγραφή"
+      own_profile: "Βλέπετε το προφίλ σας."
+      edit_it: "Πατήστε εδώ για επεξεργασία"
+      update_location: "Πατήστε εδώ για επεξεργασία της τοποθεσίας σας"
+      address_remain_private: "(Η διεύθυνσή σας θα παραμείνει μυστική)"
+      phone: "Τηλέφωνο:"
+      switch_user: "Ενέργεια σαν αυτό το πρόσωπο"
+    _language:
+      language: "Γλώσσα"
+      english: "Αγγλικά"
+      spanish: "Ισπανικά"
+      french: "Γαλλικά"
+      greek: "Ελληνικά"
+    _recent_activity:
+      header: "Πρόσφατη Δραστηριότητα"
+    _recent_exchanges:
+      header: "Μονάδες"
+
+  reqs:
+    partial:
+      due: "μέχρι"
+      createdby: "Δημιουργήθηκε από"
+    index:
+      header: "Αιτήσεις"
+      current: "Τρέχουσες"
+      all: "Όλες"
+      noreqs: "Καμία αίτηση (ακόμη!)"
+    edit:
+      header: "Επεξεργασία αίτησης"
+    new:
+      header: "Νέα Αίτηση"
+      people_to_be_notified: "Άνθρωποι που θα ειδοποιούνται"
+      notify_members_email: "Να ειδοποιούνται τα μέλη που φαίνονται παραπάνω;"
+    show:
+      header: "Αίτηση"
+      bids: "Δηλώσεις"
+      nobids: "Καμία δήλωση (ακόμη!)"
+      newbid: "Νέα Δήλωση"
+      private_message_to_requestor: "Προσωπικό μήνυμα στον αιτούντα"
+
+  exchanges:
+    new:
+      enter_credit_for: "Εισάγεται μονάδες για"
+      amount: "ποσό"
+      for: "Για:"
+      or_ask: "ή ζητήστε"
+      service_provided: "Παρεχόμενη Υπηρεσία"
+      no_currencies: "Αυτό το πρόσωπο δεν χρησιμοποιεί καμένα νόμισμα"
+
+  sessions:
+    new:
+      header: "Είσοδος"
+      email_address: "Διεύθυνση email"
+      password: "Κωδικός Πρόσβασης"
+      openid: "OpenID"
+      remember_me: "Να με θυμάσαι:"
+      button_signin: "Είσοδος"
+      or_signup: "ή Εγγραφή"
+      i_forgot_my_password: "Ξέχασα τον κωδικό πρόσβασης!"
+      login_using_openid: "Είδοσος με χρήση OpenID"
+      back_to_regular_login: "Επιστροφή σε κανονική είσοδο"
+
+  topics:
+    show:
+      add_a_new_post: "Προσθήκη νέας δημοσίευσης"
+    new:
+      header: "Νέο θέμα"
+    edit:
+      header: "Επεξεργασία θέματος"
+    partial:
+      created_by: "Δημιουργήθηκε από"
+
+  transacts:
+    index:
+      header: "Οι συναλλαγές σας"
+      this_is_a: "Αυτή είναι μία"
+      opentransact: "OpenTransact"
+      url: "URL"
+    show:
+      header: "Συναλλαγή"
+    new:
+      header: "Πλήρωσε κάποιον"
+      header_simple: "Πληρωμή"
+      explanation: "Αυτό έχει ζητηθεί σε αντάλλαγμα για:"
+      pay_now: "Πληρωμή τώρα"
+      to: "Διεύθυνση email του αμοιβομένου"
+      amount: "Ποσό"
+      memo: "Σημείωση"
+    helper:
+      received_from: "παραλήφθηκε από"
+      paid_to: "πληρώθηκαν στον"
+
+  password_resets:
+    new:
+      header: "Επαναφορά Κωδικού Πρόσβασης"
+    edit:
+      header: "Επεξεργασία Κωδικού Πρόσβασης"
+
+  shared:
+    minifeed:
+      activity: "Δραστηριότητα"
+      whats_going_on: "Τί συμβαίνει"
+    transact:
+      for: "για"
+
+  person_mailer:
+    email_verification:
+      message_default: "Πατήστε εδώ για να ολοκληρώσετε την επαλήθευση email:"
+      message_whitelist: "Πατήστε εδώ για να ολοκληρώσετε την επαλήθευση email. Υπενθυμίζουμε πως για την πρόσβαση σε ανταλλαγές απαιτείται πρώτα η έγκριση του λογαριασμού σας από τους διαχειριστές"
+      thanks: "Ευχαριστούμε!"
+
+  authlogic:
+    error_messages:
+      not_active: "Ο λογαριασμός σας δεν είναι ενεργός. Μπορεί να απαιτείται έγκριση από τους διαχειριστές."
+
+  notice_warning_your_email_address: "Προειδοποίηση: η διεύθυνση του email σας είναι ακόμη"
+  notice_change_it_here: "Αλλάξτε το εδώ"
+  notice_bid_accepted: "Η δήλωση έγινε αποδεκτή. Στάλθηκε μήνυμα στον συμμετέχοντα"
+  notice_bid_committed: "Η δήλωση πραγματοποιήθηκε. Στάλθηκε ειδοποίηση στον αιτούντα"
+  notice_bid_completed: "Η επιλεγμένη εργασία ολοκληρώθηκε. Στάλθηκε ειδοποίηση στον αιτούντα"
+  notice_bid_approved: "Η επιλεγμένη εργασία επαληθεύτηκε. Στάλθηκε ειδοποίηση έγκρισης"
+  notice_bid_invalid: "Μή έγκυρο γεγονός δήλωσης"
+  notice_bid_removed: "Η δήλωση αφαιρέθηκε."
+  notice_category_updated: "Η Κατηγορία ενημερώθηκε επιτυχώς."
+  notice_forum_updated: "Το Φόρουμ ενημερώθηκε επιτυχώς."
+  notice_event_updated: "Το Γεγονός ενημερώθηκε επιτυχώς."
+  notice_you_are_attending_this_event: "Παρακολουθείτε αυτό το γεγονός."
+  notice_you_are_not_attending: "Δεν παρακολουθείτε αυτό το γεγονός."
+  notice_in_progress: "Η εργασία για αυτό το χαρακτηριστικό είναι σε εξέλιξη."
+  notice_group_updated: "Η Ομάδα ενημερώθηκε επιτυχώς."
+  notice_invite_contacts: "Έχετε προσκαλέσει κάποιες επαφές σας σε"
+  notice_upload_canceled: "Έχετε ακυρώσει το ανέβασμα"
+  notice_blog_updated: "Το Blog ενημερώθηκε"
+  notice_entries: "εγγραφές."
+  notice_you_have_joined: "¨Εχετε γίνει μέλος στο "
+  notice_membership_request_sent: "Η αίτηση συμμετοχής στάλθηκε!"
+  notice_membership_invalid: "Μη έγκυρη συμμετοχή"
+  notice_accepted_membership_with: "Έγινε αποδεκτή η συμμετοχή για"
+  notice_declined_membership_for: "Απορρίφθηκε η συμμετοχή για"
+  notice_neighborhood_updated: "Η Περιοχή ενημερώθηκε επιτυχώς."
+  notice_registered_the_information_successfully: "Η πληροφορία γράφτηκε επιτυχώς"
+  notice_updated_the_client_information_successfully: "Οι πληροφορίες ενημερώθηκαν επιτυχώς"
+  notice_destroyed_the_client_application_registration: "Η αίτηση εγγραφής διαγράφηκε"
+  notice_offer_updated: "Η Προσφορά ενημερώθηκε επιτυχώς."
+  notice_thanks_for_signing_up_check_email: "Ευχαριστούμε για την εγγραφή! Ελέγξτε το email σας για να επαληθεύσετε την διεύθυνσή σας."
+  notice_thanks_for_signing_up: "Ευχαριστούμε για την εγγραφή!"
+  notice_post_updated: "Η δημοσίευση ενημερώθηκε"
+  notice_request_updated: "Η Αίτηση ενημερώθηκε επιτυχώς."
+  notice_logged_in_successfully: "Επιτυχής είσοδος"
+  notice_unverified_email_address: "Δεν έχει επαληθευτεί η διεύθυνση email. Παρακαλώ ελέγξτε το email σας για τον κωδικό ενεργοποίησης."
+  notice_topic_updated: "Το θέμα ενημερώθηκε επιτυχώς."
+  notice_transfer_succeeded: "Επιτυχής μεταφορά."
+
+  success_activity_deleted: "Η Δραστηριότητα διαγράφηκε"
+  success_bid_created: "Η Δήλωση δημιουργήθηκε επιτυχώς."
+  success_category_created: "Η Κατηγορία δημιουργήθηκε επιτυχώς."
+  success_comment_created: "Το σχόλιο δημιουργήθηκε επιτυχώς."
+  success_comment_deleted: "Το σχόλιο διαγράφηκε"
+  success_event_created: "Το γεγονός δημιουργήθηκε επιτυχώς."
+  success_credit_transfer_succeeded: "Επιτυχής μεταφορά μονάδων."
+  success_payment_suspended: "Η πληρωμή έχει ανασταλλεί."
+  success_group_created: "Η Ομάδα δημιουργήθηκε επιτυχώς"
+  success_group_deleted: "Η Ομάδα διαγράφηκε επιτυχώς"
+  success_photo_uploaded: "Η φωτογραφία ανέβηκε επιτυχώς"
+  success_photo_deleted_for_group: "Η φωτογραφία διαγράφηκε για την ομάδα"
+  success_you_have_left_the_group: "Έχετε εγκαταλείψει την ομάδα"
+  success_you_have_unsubscribed: "Έχετε πάψει την εγγραφή σας"
+  success_from_group: "από την ομάδα"
+  success_you_have_accepted: "Έχετε αποδεχτεί"
+  success_for_group: "για την ομάδα"
+  success_message_sent: "Το μήνυμα στάλθηκε!"
+  success_message_trashed: "Το μήνυμα πήγε στον κάδο ανακύκλωσης"
+  success_message_restored_to_inbox: "Το μήνυμα επαναφέρθηκε στα εισερχόμενα"
+  success_neighborhood_created: "Η Περιοχή δημιουργήθηκε επιτυχώς."
+  success_offer_created: "Η Προσφορά δημιουργήθηκε επιτυχώς."
+  success_offer_destroyed: "Η προσφορά διαγράφηκε"
+  success_your_password_has_been_sent: "Ο κωδικός πρόσβασης έχει σταλεί"
+  success_email_verified: "Η διεύθυνση email επαληθεύτηκε. Το προφίλ σας είναι ενεργό!"
+  success_email_verified_whitelist: "Η διεύθυνση email επαληθεύτηκε. Για την ενεργοποίηση του προφίλ σας απαιτείται έγκριση από τους διαχειριστές."
+  success_updated: "ενημερώθηκε."
+  success_profile_updated: "Το προφίλ ενημερώθηκε!"
+  success_password_changed: "Ο κωδικός πρόσβασης άλλαξε."
+  success_photo_uploaded: "Η φωτογραφία ανέβηκε επιτυχώς"
+  success_photo_deleted: "Η φωτογραφία διαγράφηκε"
+  success_post_created: "Η δημοσίευση δημιουργήθηκε"
+  success_post_destroyed: "Η δημοσίευση διαγράφηκε"
+  success_request_created: "Η αίτηση δημιουργήθηκε επιτυχώς."
+  success_request_destroyed: "Η αίτηση διαγράφηκε"
+  success_you_have_been_logged_out: "Έχετε αποσυνδεθεί."
+  success_topic_created: "Το θέμα δημιουργήθηκε επιτυχώς."
+  success_topic_destroyed: "Το θέμα διαγράφηκε επιτυχώς."
+
+  error_geocoding_failed: "Η Γεωκωδικοποίηση απέτυχε"
+  error_at_least_one_address: "Πρέπει να έχετε τουλάχιστον μία διεύθυνση"
+  error_admin_access_required: "Απαιτείται έγκριση των διαχειριστών"
+  error_default_password: "Προειδοποίηση: Ο κωδικός πρόσβασης είναι ακόμη ο προεπιλεγμένος."
+  error_creating_bid: "Σφάλμα κατά την δημιουργία της δήλωσης."
+  error_category_authorization: "Απαιτείται εξουσιοδότηση για να επεξεργαστείτε τις Κατηγορίες"
+  error_you_can_only_attend_once: "Μπορείτε να παρακολουθήσετε μόνο μία φορά."
+  error_you_are_not_attending: "Δεν παρακολουθείτε αυτό το γεγονός."
+  error_offer_person_mismatch: "Η επιλεγμένη προσφορά δεν ταιριάζει με πρόσωπο"
+  error_with_credit_transfer: "Σφάλμα κατά την μεταφορά μονάδων."
+  error_with_suspension: "Σφάλμα κατά την αναστολή πληρωμών."
+  error_no_contacts: "Δεν έχετε επαφές ή έχετε και τις προσκαλέσατε ήδη όλες"
+  error_browser_upload_fail: "Φαίνεται πως ο browser σας δεν υποστηρίζει ανέβασμα αρχείων"
+  error_blog_update: "Η ενημέρωση του Blog απέτυχε."
+  error_invalid_connection: "Μη έγκυρη σύνδεση."
+  error_invalid_or_expired_membership: "Μη έγκυρη ή ληξιπρόθεσμη αίτηση συμμετοχής"
+  error_invalid_action: "Μη έγκυρη ενέργεια"
+  error_authorization_required_to_edit_neighborhood: "Απαιτείται εξουσιοδότηση για να επεξεργαστείτε την Περιοχή"
+  error_wrong_application_id: "Λάθος αναγνωριστικό εφαρμογής"
+  error_offer_cannot_be_deleted: "Αυτή η προσφορά δεν μπορεί να διαγραφεί επειδή έχει γίνει αποδεκτή"
+  error_request_cannot_be_deleted: "Αυτή η αίτηση δεν μπορεί να διαγραφεί επειδή έχει γίνει αποδεκτή"
+  error_invalid_email_address: "Μη έγκυρη διεύθυνση email"
+  error_person_inactive: "Αυτό το πρόσωπο δεν είναι ενεργό"
+  error_invalid_email_verification_code: "Μη έγκυρος κωδικός επαλήθευσης μέσω email"
+  error_password_cant_be_changed: "Οι κωδικοί πρόσβασης δεν αλλάζουν στην δοκιμαστική λειτουργία."
+  error_invalid_image: "Μη έγκυρη εικόνα!"
+  error_authentication_failed: "Η αυθεντικοποίηση απέτυχε"
+  error_invalid_search: "Μη έγκυρη αναζήτηση"
+  error_openid_problems: "Τα παρακάτω προβλήματα υπάρχουν με το OpenID προφίλ:"
+  error_deactivated_account: "Ο λογαριασμός σας έχει απενεργοποιηθεί"
+  error_your_account_is_deactivated: "Ο λογαριασμός σας είναι απενεργοποιημένος. Προκειμένου να συνδεθείτε ξανά απαιτείται έγκριση από τους διαχειριστές."
+  error_membership_is_approved_after: "Η συμμετοχή θα εγκριθεί αφότου παρακολουθήσετε κάποια κατεύθυνση.Διαβάστε περισσότερα σχετικά"
+  error_membership_here: "συμμετοχή εδώ"
+  error_you_can_also: "Μπορείτε επίσης"
+  error_contact: "επικοινωνείστε"
+  error_the_administrators: "με τους διαχειριστές αν πιστεύετε πως ο λογαριασμός σας θα έπρεπε να είναι ενεργός."
+  error_invalid_email_password: "Μη έγκυρος συνδυασμός ονόματος/κωδικού πρόσβασης"
+  error_your_account_is_inactive: "Ο λογαριασμός σας είναι αδρανής."
+  error_could_not_find_transaction: "δεν βρέθηκε η συναλλαγή"
+  error_could_not_find_payee: "δεν βρέθηκε ο αμοιβόμενος"
+  error_with_transfer: "Σφάλμα με την μεταφορά."
+
