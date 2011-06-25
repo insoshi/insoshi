@@ -1,4 +1,4 @@
-es:
+﻿es:
   currency_unit_plural: "horas"
 
   button_submit: "Enviar"
@@ -309,6 +309,7 @@ es:
       english: "Ingles"
       spanish: "Espanol"
       french: "Français"
+      greek: "Griego"
     _recent_activity:
       header: "Actividades recientes" 
     _recent_exchanges:
