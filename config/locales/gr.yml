@@ -40,6 +40,43 @@ gr:
   from: "από"
   in: "σε"
 
+  datetime:
+    distance_in_words:
+      half_a_minute: "μισό λεπτό"
+      less_than_x_seconds:
+        one:   "λιγότερο από 1 δευτερόλεπτο"
+        other: "λιγότερο από %{count} δευτερόλεπτα"
+      x_seconds:
+        one:   "1 δευτερόλεπτο"
+        other: "%{count} δευτερόλεπτα"
+      less_than_x_minutes:
+        one:   "λιγότερο από ένα λεπτό"
+        other: "λιγότερο από %{count} λεπτά"
+      x_minutes:
+        one:   "1 λεπτό"
+        other: "%{count} λεπτά"
+      about_x_hours:
+        one:   "περίπου 1 ώρα"
+        other: "περίπου %{count} ώρες"
+      x_days:
+        one:   "1 ημέρα"
+        other: "%{count} ημέρες"
+      about_x_months:
+        one:   "περίπου 1 μήνα"
+        other: "περίπου %{count} μήνες"
+      x_months:
+        one:   "1 μήνα"
+        other: "%{count} μήνες"
+      about_x_years:
+        one:   "περίπου 1 χρόνο"
+        other: "περίπου %{count} χρόνια"
+      over_x_years:
+        one:   "πάνω από 1 χρόνο"
+        other: "πάνω από %{count} χρόνια"
+      almost_x_years:
+        one:   "almost 1 year"
+        other: "almost %{count} years"
+
   accounts:
     show:
       header: "Κύριος λογαριασμός"
