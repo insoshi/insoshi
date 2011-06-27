@@ -14,7 +14,7 @@
   <%= display @post.body %>
 
   <p class="meta">
-  Posted <%= time_ago_in_words(@post.created_at) %> ago
+  Posted <%= time_ago_in_words(@post.created_at) %> <%= t('ago') %>
   by <%= person_link @blog.person %>
   </p>
 

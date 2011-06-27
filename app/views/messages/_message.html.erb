@@ -18,7 +18,7 @@
       <span class="label">From:</span>
       <%= person_link message.sender, :class => "url fn" %>
     <%- end -%>
-    <span class="meta"><%= time_ago_in_words message.created_at %> ago</span>
+    <span class="meta"><%= time_ago_in_words message.created_at %> <%= t('ago') %></span>
   </p>
   <p>
     <span class="label">Subject:</span>

@@ -8,7 +8,7 @@
   </div>
   <%= display simple_format_without_paragraph full_message.content %>
   <p class="meta tools">
-    Sent <%= time_ago_in_words full_message.created_at %> ago |
+    Sent <%= time_ago_in_words full_message.created_at %> <%= t('ago') %> |
     <%= link_to "Reply", reply_message_path(full_message) %> |
     <% unless full_message.trashed?(current_person) -%>
       <%= link_to("Trash", full_message, :method => :delete) %>

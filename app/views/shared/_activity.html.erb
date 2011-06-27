@@ -15,7 +15,7 @@
   <%- end -%>
     </p>
   <p class="meta published">
-    <%= time_ago_in_words(activity.created_at).capitalize %> ago
+    <%= time_ago_in_words(activity.created_at).capitalize %> <%= t('ago') %>
   </p>
 
 </li>
