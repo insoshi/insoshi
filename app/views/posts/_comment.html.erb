@@ -5,7 +5,7 @@
   </div>
   <p class="meta">
     <%= person_link comment.commenter %> posted a comment
-    <%= time_ago_in_words(comment.created_at) %> ago:
+    <%= time_ago_in_words(comment.created_at) %> <%= t('ago') %>:
   </p>
   <%= display comment.body %>
   <%- if current_person?(comment.commentable.blog.person) -%>
