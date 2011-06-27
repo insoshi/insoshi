@@ -14,7 +14,7 @@
 
   <div class="form_row">
     <label for="language"><%= t('people._language.language') %></label>
-    <%= f.select :language, [[t('people._language.english'),'en'],[t('people._language.spanish'),'es'],[t('people._language.french'),'fr']], {:selected => params[:locale]}, {:onchange => "document.location='/signup?locale=' + this.value"} %>
+    <%= f.select :language, [[t('people._language.english'),'en'],[t('people._language.spanish'),'es'],[t('people._language.french'),'fr'],[t('people._language.greek'),'gr']], {:selected => params[:locale]}, {:onchange => "document.location='/signup?locale=' + this.value"} %>
   </div>
   <fieldset id="creds">
 <span id="standard">
