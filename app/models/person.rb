@@ -503,7 +503,7 @@ class Person < ActiveRecord::Base
     end
 
     def update_group_letter
-      self.first_letter = name[0,1].capitalize
+      self.first_letter = name.mb_chars[0,1].capitalize
     end
 
     def check_config_for_deactivation
