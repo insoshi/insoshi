@@ -66,11 +66,12 @@ ActionController::Routing::Routes.draw do |map|
      person.resources :comments
   end
   map.namespace :admin do |admin|
-    admin.resources :people, :active_scaffold => true
-    admin.resources :categories, :active_scaffold => true
-    admin.resources :neighborhoods, :active_scaffold => true
-    admin.resources :exchanges, :active_scaffold => true
-    admin.resources :preferences, :broadcast_emails, :feed_posts
+    #admin.resources :people, :active_scaffold => true
+    #admin.resources :categories, :active_scaffold => true
+    #admin.resources :neighborhoods, :active_scaffold => true
+    #admin.resources :exchanges, :active_scaffold => true
+    #admin.resources :feed_posts, :active_scaffold => true
+    admin.resources :preferences, :broadcast_emails
   end
   map.resources :blogs do |blog|
     blog.resources :posts do |post|

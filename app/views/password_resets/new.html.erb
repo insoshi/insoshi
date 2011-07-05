@@ -1,7 +1,6 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('password_resets.new.header') %></h2>
-
-  <% form_tag password_resets_path do %>
+  <%= form_tag password_resets_path do %>
     <div class="form_row">
       <label for="email"><%= t('sessions.new.email_address') %></label>
       <%= text_field_tag :email %>

@@ -1,8 +1,0 @@
-<h4><%= active_scaffold_config.show.label -%></h4>
-
-<%= render :partial => 'show_columns', :locals => {:columns => active_scaffold_config.show.columns} -%>
-
-<p class="form-footer">
-  <%= link_to as_(:close), main_path_to_return, :class => 'cancel' %>
-  <%= loading_indicator_tag(:action => :create, :id => params[:id]) %>
-</p>

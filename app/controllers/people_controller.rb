@@ -5,7 +5,6 @@ class PeopleController < ApplicationController
   #before_filter :login_or_oauth_required, :only => [ :index, :show, :edit, :update ]
   before_filter :login_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
-  before_filter :setup
   before_filter :setup_zips, :only => [:index, :show]
   
   def index
@@ -53,7 +52,6 @@ class PeopleController < ApplicationController
   
   def new
     @body = "register single-col"
-    @body = @body + " yui-skin-sam"
     @person = Person.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
@@ -117,7 +115,7 @@ class PeopleController < ApplicationController
   end
 
   def edit
-    @body = @body + " yui-skin-sam"
+    logger.info "XXX id: #{params[:id]}"
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
@@ -222,10 +220,6 @@ class PeopleController < ApplicationController
   end
 
   private
-
-    def setup
-      @body = "person"
-    end
 
     def setup_zips
       @zips = []

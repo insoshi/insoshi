@@ -1,9 +1,0 @@
-<div class="active-scaffold-header">
-  <div class="actions">
-    <% active_scaffold_config.action_links.each :member do |link| -%>
-      <% next unless link.action == 'nested' -%>
-      <% next if skip_action_link(link) -%>
-      <%= record.authorized_for?(:crud_type => link.crud_type, :action => link.action) ? render_action_link(link, url_options, record) : "<a class='disabled'>#{link.label}</a>" -%>
-    <% end -%>
-  </div>
-</div>

@@ -8,7 +8,7 @@
   <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h req.estimated_hours %> <%= h req.unit %>)
   <%= t('reqs.partial.due') %>: <%= relative_time_ago_in_words(req.due_date) %>
   </p>
-    <%= display req.formatted_categories, :class => "meta" %>
+    <%= display formatted_req_categories(req.long_categories), :class => "meta" %>
   <p>
     <%= markdown(req.description) %>
   </p>
@@ -32,7 +32,7 @@
     <% end -%>
     <br>
     <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>
-      <%= number_with_precision(req.person.address.distance_to(current_person.address), 1).to_s %> <%= t('miles_away') %>
+      <%= number_with_precision(req.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
     <% end -%>
   </p>
 </div>

@@ -10,8 +10,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_person
   helper_method :logged_in?
 
-  filter_parameter_logging :password
-
   before_filter :require_activation, :admin_warning,
                 :set_person_locale
 
@@ -35,9 +33,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  ActiveScaffold.set_defaults do |config|
-    config.ignore_columns.add [ :created_at, :updated_at, :audits]
-  end
+  #ActiveScaffold.set_defaults do |config|
+  #  config.ignore_columns.add [ :created_at, :updated_at, :audits]
+  #end
 
 #  audit Req, Offer, Bid, Exchange, Account, Person, :only => [:create, :update, :destroy]
 

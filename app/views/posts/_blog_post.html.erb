@@ -4,7 +4,7 @@
     <%= link_to sanitize(blog_post.title), {:controller => 'home', :action => 'show', :id => blog_post.id},
                 :class => "show-follow" %>
   </h3>
-  <%= blog_post.content %>
+  <%= blog_post.content.html_safe %>
   <p class="meta">
     <%= t('posted') %> <%= time_ago_in_words(blog_post.date_published) %> <%= t('ago') %> <a href="/home/show/<%= blog_post.id %>#disqus_thread"></a>
   </p>

@@ -8,7 +8,7 @@ class Offer < ActiveRecord::Base
 
   named_scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
   named_scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
-  named_scope :active, :conditions => ["available_count > ? AND expiration_date >= ?", 0, DateTime.now]
+  scope :active, :conditions => ["available_count > ? AND expiration_date >= ?", 0, DateTime.now]
 
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :neighborhoods
@@ -45,8 +45,8 @@ class Offer < ActiveRecord::Base
     group.unit
   end
 
-  def formatted_categories
-    categories.collect {|cat| cat.long_name + "<br>"}.to_s.chop.chop.chop.chop
+  def long_categories
+    categories.map {|cat| cat.long_name }
   end
   
   private

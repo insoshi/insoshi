@@ -11,7 +11,7 @@
 <% end %>
 <%= t('offers.partial.expires') %> <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
   </p>
-    <%= display offer.formatted_categories, :class => "meta" %>
+    <%= display formatted_offer_categories(offer.long_categories), :class => "meta" %>
   <p>
     <%= markdown(offer.description) %>
   </p>
@@ -28,7 +28,7 @@
     <% end -%>
     <br>
     <% if !current_person.address.nil? && !offer.person.address.nil? && !current_person?(offer.person) -%>
-      <%= number_with_precision(offer.person.address.distance_to(current_person.address), 1).to_s %> <%= t('miles_away') %>
+      <%= number_with_precision(offer.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
     <% end -%>
   </p>
 </div>

@@ -17,6 +17,7 @@ class NeighborhoodsController < ApplicationController
   # GET /neighborhoods/1
   # GET /neighborhoods/1.xml
   def show
+    logger.info "XXX params: #{params.inspect}"
     @neighborhood = Neighborhood.find(params[:id])
 
     respond_to do |format|

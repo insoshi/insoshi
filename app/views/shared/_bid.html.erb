@@ -26,7 +26,7 @@
     <% end -%>
     <br>
     <% if current_person?(bid.req.person) && !current_person.address.nil? && !bid.person.address.nil? && !current_person?(bid.person) -%>
-      <%= number_with_precision(bid.person.address.distance_to(current_person.address), 1).to_s %> miles away
+      <%= number_with_precision(bid.person.address.distance_to(current_person.address), :precision => 1).to_s %> miles away
     <% end -%>
   </p>
 </li>

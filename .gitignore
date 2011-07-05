@@ -30,3 +30,5 @@ vendor/plugins/footnotes/*
 rsa_key*
 sphinx/*
 config/ultrasphinx/*.conf
+.bundle
+.sass-cache/

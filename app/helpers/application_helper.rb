@@ -83,19 +83,19 @@ module ApplicationHelper
   end
 
   def waiting_image
-    "<span class='wait' style='display:none'><img alt='wait' class='wait' src='/images/loading.gif'></span>"
+    "<span class='wait' style='display:none'><img alt='wait' class='wait' src='/images/loading.gif'></span>".html_safe
   end
 
   def organization_image(person)
     if person.org?
-      "<img title=\"#{t('people.show.organization_profile')}\" src=\"/images/icons/community_small.png\" />"
+      "<img title=\"#{t('people.show.organization_profile')}\" src=\"/images/icons/community_small.png\" />".html_safe
     else
       ""
     end
   end
 
   def currency_units
-    "<span id='units' class='small'>#{t('currency_unit_plural')}</span>"
+    "<span id='units' class='small'>#{t('currency_unit_plural')}</span>".html_safe
   end
 
   def menu_element(content, address)
@@ -149,7 +149,7 @@ module ApplicationHelper
       # Sometimes Markdown throws exceptions, so rescue gracefully.
       processed_text = content_tag(:p, sanitize(text))
     end
-    add_tag_options(processed_text, tag_opts)
+    add_tag_options(processed_text, tag_opts).html_safe
   end
   
   # Output a column div.
@@ -163,7 +163,7 @@ module ApplicationHelper
     # Allow callers to pass in additional classes.
     options[:class] = "#{klass} #{options[:class]}".strip
     content = content_tag(:div, capture(&block), options)
-    concat(content)
+    #concat(content)
   end
 
   def account_link(account, options = {})
@@ -177,6 +177,7 @@ module ApplicationHelper
       str = link_to(img,path, options)
       str << " "
       str << link_to_unless_current(action, path, options)
+      # str.html_safe
     end
   end
 
@@ -187,6 +188,7 @@ module ApplicationHelper
     str = link_to(img,path,options)
     str << " "
     str << link_to_unless_current(action, path, options)
+    # str.html_safe
   end
 
   def email_link(person, options = {})

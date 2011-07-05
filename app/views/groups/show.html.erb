@@ -1,5 +1,5 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'group' } %>
-  <% tabs_for do |tab| %>
+  <%= tabs_for do |tab| %>
     <% tab.create('tab_home', t('groups.show.home')) do %>
       <div id="home_canvas">
         <%= render :partial => 'home_canvas' %>
