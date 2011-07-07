@@ -1,0 +1,11 @@
+<span class='neighborhood_filter hide'>
+<%= 
+    collection_select( Offer, 
+                       'neighborhood_ids', 
+                       Neighborhood.all(:order => "parent_id, name").sort_by { |a| a.long_name },
+                       :id, 
+                       :long_name, 
+                       { :include_blank => true, :selected => selected_neighborhood }
+                     ) 
+%>
+</span>
