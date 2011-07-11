@@ -45,7 +45,9 @@ RailsAdmin.config do |config|
 
     edit do
       field :title
-      field :content
+      field :content, :text do
+        ckeditor true
+      end
     end
   end
 
@@ -62,6 +64,15 @@ RailsAdmin.config do |config|
 
     edit do
       field :body
+    end
+  end
+
+  config.model BroadcastEmail do
+    edit do
+      field :subject
+      field :message, :text do
+        ckeditor true
+      end
     end
   end
 
@@ -91,6 +102,9 @@ RailsAdmin.config do |config|
       field :phone
       field :admin
       field :org
+      field :description, :text do
+        ckeditor true
+      end
       # generally not appropriate for admin to edit openid since it is an assertion
     end
   end
