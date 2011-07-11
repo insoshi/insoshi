@@ -18,7 +18,13 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
     respond_to do |format|
-      format.html {redirect_to @group}
+      format.html do
+        unless @group.nil?
+          redirect_to @group
+        else
+          redirect_to root_path
+        end
+      end
       format.js do
         canvas = case params[:action] 
           when 'new_req','create_req','update' # from bids#update payment denied

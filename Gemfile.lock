@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/sferik/rails_admin.git
+  revision: 5be5711481be5a0a5883d63e053f689670a3a305
+  specs:
+    rails_admin (0.0.1)
+      builder (~> 2.1.0)
+      fastercsv
+      haml (>= 3.0.0, < 3.2.0)
+      rails (~> 3.0.7)
+
 PATH
   remote: vendor/gems/oauth-plugin-0.4.0.pre4
   specs:
@@ -56,9 +66,11 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
+    fastercsv (1.5.4)
     feed-normalizer (1.5.2)
       hpricot (>= 0.6)
       simple-rss (>= 1.1)
+    haml (3.1.2)
     heroku (2.3.6)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
@@ -154,6 +166,7 @@ DEPENDENCIES
   pg
   rack-openid
   rails (= 3.0.9)
+  rails_admin!
   rmagick
   rspec-rails (>= 2.0.0)
   ruby-openid

@@ -9,11 +9,6 @@
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
     <%= stylesheet_link_tag "default" %>
-    <%= javascript_include_tag :defaults %>
-    <%= active_scaffold_includes %>
-    <%= calendar_date_select_includes :default %>
-    <%= stylesheet_link_tag 'calendar/blue/style' %>
-    <%= yield :jquery_support %>
     <%= yield :head %>    
   </head>
   <body class="<%= @body %>">
@@ -23,9 +18,6 @@
         <%= global_prefs.app_name %>
         </h1>
         <ul id="nav">
-          <%- menu.each do |link| -%>
-            <%= menu_li link %>
-          <%- end -%>
         </ul>
         
           <p class="welcome">
@@ -34,12 +26,8 @@
               (<%= link_to "Sign out", logout_path %>)
               <%- if current_person.admin? -%>
                 <br />
-                <%- if admin_view? -%>
-                  <%= link_to("Refresh Blog Feed", '/refreshblog') %> | 
-                  <%= link_to("Standard view", home_path) %>
-                <%- else -%>
-                  <%= link_to("Admin view", admin_preferences_path) %>
-                <%- end -%>
+                <%= link_to("Refresh Blog Feed", '/refreshblog') %> | 
+                <%= link_to("Standard view", home_path) %>
               <%- end -%>
             <%- else -%>
               <%= link_to "Sign in", login_path %> or

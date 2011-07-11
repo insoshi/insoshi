@@ -36,11 +36,7 @@
           <p class="welcome">
             <%- if logged_in? -%>
               <%- if current_person.admin? -%>
-                <%- if admin_view? -%>
-                  <%= link_to("Standard view", home_path) %>
-                <%- else -%>
-                  <%= link_to("Admin view", admin_preferences_path) %>
-                <%- end -%>
+                <%= link_to("Admin view", admin_preferences_path) %>
               <%- end -%>
             <%- else -%>
               <%= link_to t('sessions.new.header'), login_path %>

@@ -29,7 +29,7 @@ module ApplicationHelper
     else
       forum = menu_element("Forums", forums_path)
     end
-    if logged_in? and not admin_view?
+    if logged_in?
       profile  = menu_element("Profile",  person_path(current_person))
       offers = menu_element("Offers", offers_path)
       requests = menu_element("Requests", reqs_path)
@@ -44,16 +44,6 @@ module ApplicationHelper
         links = [home, profile, categories, offers, requests, people, messages, groups, forum]
       # TODO: remove 'unless production?' once events are ready.
       #links.push(events) #unless production?
-      
-    elsif logged_in? and admin_view?
-      spam = menu_element("eNews", admin_broadcast_emails_path)
-      people =  menu_element("People", admin_people_path)
-      exchanges =  menu_element("Ledger", admin_exchanges_path)
-      feed = menu_element("Feed", admin_feed_posts_path)
-      preferences = menu_element("Prefs", admin_preferences_path)
-      categories = menu_element("Categories", admin_categories_path)
-      neighborhoods = menu_element("Neighborhoods", admin_neighborhoods_path)
-      links = [spam, categories, neighborhoods, people, exchanges, feed, preferences]
     else
       #links = [home, people]
       links = [home, categories]
@@ -110,11 +100,6 @@ module ApplicationHelper
     klass = "n-#{link[:content].downcase}"
     klass += " active" if current_page?(link[:href])
     content_tag(:li, menu_link_to(link, options), :class => klass)
-  end
-  
-  # Return true if the user is viewing the site in admin view.
-  def admin_view?
-    params[:controller] =~ /admin/ and admin?
   end
   
   def admin?
