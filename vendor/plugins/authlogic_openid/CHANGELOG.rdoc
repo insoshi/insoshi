@@ -1,0 +1,25 @@
+== 1.0.4 released 2009-5-14
+
+* Only authenticate with OpenID for models when a block is passed.
+* Check for the existence of an openid_identifier field before including the model. Allowing this library to only be activated when present.
+* Change required_field and optional_fields to openid_required_field and openid_optional_fields
+
+== 1.0.3 released 2009-4-3
+
+* Added find_by_openid_identifier config option for AuthlogicOpenid::Session.
+* Set the openid_identifier by the one passed back by the provider in AuthlogicOpenid::ActsAsAuthentic.
+* Added required_fields and optional_fields config options for AuthlogicOpenid::ActsAsAuthentic.
+* Added map_openid_registration, attributes_to_save, and map_saved_attributes methods to customize how attributes are set for AuthlogicOpenid::ActsAsAuthentic.
+* Make authenticating_with_openid? method a little more stringent to avoid trying to double authenticate. Ex: finding a session in the save block during a successful save.
+
+== 1.0.2 released 2009-3-30
+
+* Remove config block in initializer.
+
+== 1.0.1 released 2009-3-30
+
+* Change password validation option when included, and prepend the OpenID module.
+
+== 1.0.0 released 2009-3-30
+
+* Initial release

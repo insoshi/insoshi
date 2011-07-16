@@ -13,7 +13,7 @@ gem "oauth"
 gem "chronic"
 
 gem "feed-normalizer"
-gem "texticle"
+gem "texticle", "1.0.4.20101004123327"
 
 gem "eventmachine"
 gem "aws-s3"
@@ -25,7 +25,7 @@ gem "json"
 gem "will_paginate", "~> 3.0.pre2"
 gem "aasm"
 gem "authlogic"
-gem "authlogic-oid", :require => "authlogic_openid"
+#gem "authlogic-oid", :require => "authlogic_openid"
 gem "ruby-openid", :require => "openid"
 gem "oauth-plugin", :path => "#{File.expand_path(__FILE__)}/../vendor/gems/oauth-plugin-0.4.0.pre4"
 gem "cancan"
@@ -34,6 +34,7 @@ gem "redcarpet", "1.17.2"
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
 group :development, :test do
+  gem "silent-postgres"
   gem "test-unit"
 # gem 'ruby-debug19', :require => 'ruby-debug'
   gem "rspec-rails", ">= 2.0.0" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))

@@ -1,0 +1,115 @@
+= Authlogic OpenID
+
+Authlogic OpenID is an extension of the Authlogic library to add OpenID support. Authlogic v2.0 introduced an enhanced API that makes "plugging in" alternate authentication methods as easy as installing a gem.
+
+== Helpful links
+
+*	<b>Documentation:</b> http://authlogic-oid.rubyforge.org
+*	<b>Authlogic:</b> http://github.com/binarylogic/authlogic
+*	<b>Live example:</b> http://authlogicexample.binarylogic.com
+
+== Install and use
+
+=== 1. Make some simple changes to your database:
+
+  class AddUsersOpenidField < ActiveRecord::Migration
+    def self.up
+      add_column :users, :openid_identifier, :string
+      add_index :users, :openid_identifier
+
+      change_column :users, :login, :string, :default => nil, :null => true
+      change_column :users, :crypted_password, :string, :default => nil, :null => true
+      change_column :users, :password_salt, :string, :default => nil, :null => true
+    end
+
+    def self.down
+      remove_column :users, :openid_identifier
+
+      [:login, :crypted_password, :password_salt].each do |field|
+        User.all(:conditions => "#{field} is NULL").each { |user| user.update_attribute(field, "") if user.send(field).nil? }
+        change_column :users, field, :string, :default => "", :null => false
+      end
+    end
+  end
+
+=== 2. Install the openid_authentication plugin
+
+  $ script/plugin install git://github.com/rails/open_id_authentication.git
+
+And make sure all required gems are installed:
+
+  rake gems:install
+
+For more information on how to configure the plugin, checkout it's README: http://github.com/rails/open_id_authentication/tree/master
+
+=== 3. Install the Authlogic Openid gem
+
+  $ sudo gem install authlogic-oid
+
+Now add the gem dependency in your config:
+
+  config.gem "authlogic-oid", :lib => "authlogic_openid"
+
+Or for older version of rails, install it as a plugin:
+
+  $ script/plugin install git://github.com/binarylogic/authlogic_openid.git
+
+=== 4. Make sure you save your objects properly
+
+You only need to save your objects this way if you want the user to authenticate with their OpenID provider.
+
+That being said, you probably want to do this in your controllers. You should do this for BOTH your User objects and UserSession objects (assuming you are authenticating users). It should look something like this:
+
+  @user_session.save do |result|
+    if result
+      flash[:notice] = "Login successful!"
+      redirect_back_or_default account_url
+    else
+      render :action => :new
+    end
+  end
+
+You should save your @user objects this way as well, because you also want the user to verify that they own the OpenID identifier that they supplied.
+
+Notice we are saving with a block. Why? Because we need to redirect the user to their OpenID provider so that they can authenticate. When we do this, we don't want to execute that block of code, because if we do, we will get a DoubleRender error. This lets us skip that entire block and send the user along their way without any problems.
+
+=== 5. Check your validations / Auto registration
+
+In case you want to enable automatic user registrations with OpenID, enable this in your session:
+
+  class UserSession < Authlogic::Session::Base
+    auto_register
+  end
+
+In this case you migth also want to change the user object to no longer require a login:
+
+  class User < ActiveRecord::Base
+    acts_as_authentic do |c|
+      c.merge_validates_length_of_login_field_options(:unless => :using_openid?)
+      c.merge_validates_format_of_login_field_options(:unless => :using_openid?)
+    end
+  end
+
+=== 6. Done!
+
+That's it! The rest is taken care of for you.
+
+== Redirecting from the models?
+
+If you are interested, I explain myself below. Regardless, if you don't feel comfortable with the organization of the logic,you can easily do this using the traditional method. As you saw in the setup instructions, this library leverages the open_id_authentication rails plugin. After the user has been authenticated just do this:
+
+  UserSession.create(@user)
+
+It's that simple. For more information there is a great OpenID tutorial at: http://railscasts.com/episodes/68-openid-authentication
+
+Now, here are my thoughts on the subject:
+
+You are probably thinking: "Ben, you can't handle controller responsibilities in models". I agree with you on that comment, but my personal opinion is that these are not controller responsibilities. The fact that OpenID authentication requires a redirect should not effect the location of the logic / code. It's all part of the authentication process, which is the entire purpose of this library. This library is not one big module of code, its a collection of modules that all deal with OpenID authentication. These modules get included wherever it makes sense. That's the whole idea behind modules. To group common logic.
+
+Let's take a step back and look at the traditional method of OpenID authentication in rails. What if you wanted to authenticate with OpenID in multiple controllers in your application (Ex: registration and loggin in)? You would probably pull out the common code into a module and include it in the respective controllers. Even better, you might create a class that elegantly handles this process and then place it in your lib directory. Then, if you really wanted to be slick, you might take it another step further and have your models trigger this class during certain actions. Then what do we have? This exact library, that's exactly what this is.
+
+The last thing I will leave you with, to get you thinking, is... where do sweepers lie in the MVC pattern? Without this, things like caching would be extremely difficult. There is a big difference between misplacing code / logic, and organizing logic into a separate module and hooking it in using the API provided by your models. Especially when the logic needs to be triggered by actions invoked on models.
+
+Regardless, if I still haven't convinced you, I hope this library is of some benefit to you. At the very least an example of how to extend Authlogic.
+
+Copyright (c) 2009 Ben Johnson of [Binary Logic](http://www.binarylogic.com), released under the MIT license

@@ -1,12 +1,12 @@
 GIT
   remote: git://github.com/sferik/rails_admin.git
-  revision: 5be5711481be5a0a5883d63e053f689670a3a305
+  revision: 9fa11cd0e8b3e3179d368255da1957ce9a47c610
   specs:
     rails_admin (0.0.1)
       builder (~> 2.1.0)
       fastercsv
-      haml (>= 3.0.0, < 3.2.0)
-      rails (~> 3.0.7)
+      haml (>= 3.1.0, < 3.3.0)
+      rails (~> 3.0.9)
 
 PATH
   remote: vendor/gems/oauth-plugin-0.4.0.pre4
@@ -49,8 +49,6 @@ GEM
     authlogic (3.0.3)
       activerecord (>= 3.0.7)
       activerecord (>= 3.0.7)
-    authlogic-oid (1.0.4)
-      authlogic
     awesome_print (0.3.2)
     aws-s3 (0.6.2)
       builder
@@ -133,6 +131,7 @@ GEM
       rspec (~> 2.6.0)
     ruby-openid (2.1.8)
     rubyzip (0.9.5)
+    silent-postgres (0.0.8)
     simple-rss (1.2.3)
     term-ansicolor (1.0.5)
     test-unit (2.3.0)
@@ -150,7 +149,6 @@ PLATFORMS
 DEPENDENCIES
   aasm
   authlogic
-  authlogic-oid
   awesome_print (= 0.3.2)
   aws-s3
   cancan
@@ -170,6 +168,7 @@ DEPENDENCIES
   rmagick
   rspec-rails (>= 2.0.0)
   ruby-openid
+  silent-postgres
   test-unit
-  texticle
+  texticle (= 1.0.4.20101004123327)
   will_paginate (~> 3.0.pre2)
