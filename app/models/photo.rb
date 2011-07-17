@@ -38,11 +38,12 @@ class Photo < ActiveRecord::Base
                                   :bounded_icon => '36x36>' }
   
   has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Photo'", :dependent => :destroy
+  validate :filename_to_upload_exists_and_images_are_correct_format
     
   after_save :log_activity
                  
   # Override the crappy default AttachmentFu error messages.
-  def validate
+  def filename_to_upload_exists_and_images_are_correct_format
     if filename.nil?
       errors.add_to_base("You must choose a file to upload")
     else

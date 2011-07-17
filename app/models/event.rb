@@ -32,6 +32,7 @@ class Event < ActiveRecord::Base
   validates_presence_of :title, :start_time, :person, :privacy
   validates_length_of :title, :maximum => MAX_TITLE_LENGTH
   validates_length_of :description, :maximum => MAX_DESCRIPTION_LENGTH, :allow_blank => true
+  validate :start_time_not_later_than_end_time
 
   named_scope :person_events, 
               lambda { |person| { :conditions => ["person_id = ? OR (privacy = ? OR (privacy = ? AND (person_id IN (?))))", 
@@ -54,7 +55,7 @@ class Event < ActiveRecord::Base
     self.period_events(date.beginning_of_day, date.to_time.end_of_day)
   end
 
-  def validate
+  def start_time_not_later_than_end_time
     if end_time
       unless start_time <= end_time
         errors.add(:start_time, "can't be later than End Time")

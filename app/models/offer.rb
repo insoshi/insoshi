@@ -20,6 +20,8 @@ class Offer < ActiveRecord::Base
   validates_presence_of :name, :expiration_date
   validates_presence_of :total_available
   validates_presence_of :group_id
+  validate :group_has_a_currency_and_includes_offerer_as_a_member
+  validate :maximum_categories
 
   after_create :log_activity
 
@@ -51,11 +53,13 @@ class Offer < ActiveRecord::Base
   
   private
 
-  def validate
+  def maximum_categories
     if self.categories.length > 5
       errors.add_to_base('Only 5 categories are allowed per offer')
     end
+  end
 
+  def group_has_a_currency_and_includes_offerer_as_a_member
     unless self.group.nil?
       unless self.group.adhoc_currency?
         errors.add(:group_id, "does not have its own currency")

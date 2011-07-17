@@ -22,6 +22,9 @@ class Exchange < ActiveRecord::Base
 
   validates_presence_of :customer, :worker, :amount, :metadata
   validates_presence_of :group_id
+  validate :offer_exists
+  validate :group_has_a_currency_and_includes_both_counterparties_as_members
+  validate :amount_is_positive
 
   attr_accessible :amount, :group_id
   attr_readonly :amount
@@ -61,26 +64,30 @@ class Exchange < ActiveRecord::Base
 
   private
 
-  def validate
-    if self.new_record?
-      unless amount > 0
-        errors.add(:amount, "must be greater than zero")
-      end
+  def amount_is_positive
+    unless amount > 0
+      errors.add(:amount, "must be greater than zero")
+    end
+  end
 
+  def group_has_a_currency_and_includes_both_counterparties_as_members
+    unless worker.groups.include?(self.group)
+      errors.add(:group_id, "does not include recipient as a member")
+    end
+    unless customer.groups.include?(self.group)
+      errors.add(:group_id, "does not include you as a member")
+    end
+    unless self.group.adhoc_currency?
+      errors.add(:group_id, "does not have its own currency")
+    end
+  end
+
+  def offer_exists
+    if self.new_record?
       if self.metadata.class == Offer
         if self.metadata.available_count == 0
           errors.add_to_base('This offer is no longer available')
         end
-      end
-
-      unless worker.groups.include?(self.group)
-        errors.add(:group_id, "does not include recipient as a member")
-      end
-      unless customer.groups.include?(self.group)
-        errors.add(:group_id, "does not include you as a member")
-      end
-      unless self.group.adhoc_currency?
-        errors.add(:group_id, "does not have its own currency")
       end
     end
   end

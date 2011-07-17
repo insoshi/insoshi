@@ -30,8 +30,11 @@ class Bid < ActiveRecord::Base
   belongs_to :req
   belongs_to :person
   belongs_to :group
-  validates_presence_of :estimated_hours, :person_id
   attr_readonly :estimated_hours
+
+  validates_presence_of :estimated_hours, :person_id
+  validate :estimated_hours_is_positive
+  validate :group_includes_bidder_as_a_member
 
   attr_protected :person_id, :created_at, :updated_at
   attr_protected :status_id, :state
@@ -97,11 +100,13 @@ class Bid < ActiveRecord::Base
     @server ||= Bid.global_prefs.server_name
   end
 
-  def validate
+  def estimated_hours_is_positive
     unless estimated_hours > 0
       errors.add(:estimated_hours, "must be greater than zero")
     end
+  end
 
+  def group_includes_bidder_as_a_member
     unless self.group.nil?
       unless self.person.groups.include?(self.group)
         errors.add(:group_id, "does not include you as a member")
