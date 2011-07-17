@@ -167,7 +167,7 @@ class Message < Communication
     
     def send_receipt_reminder
       return if sender == recipient
-      @send_mail ||= Message.global_prefs.email_notifications? &&
+      @send_mail ||= Message.global_prefs && Message.global_prefs.email_notifications? &&
                      recipient.message_notifications?
       PersonMailer.deliver_message_notification(self) if @send_mail
     end
