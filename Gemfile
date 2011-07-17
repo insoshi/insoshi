@@ -37,6 +37,7 @@ group :development, :test do
   gem "silent-postgres"
   gem "test-unit"
 # gem 'ruby-debug19', :require => 'ruby-debug'
-  gem "rspec-rails", ">= 2.0.0" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
+  gem "rspec-rails" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
+  gem "cucumber-rails"
   gem "awesome_print", "0.3.2"
 end
