@@ -20,8 +20,65 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
+  # Load the custom matchers in spec/matchers
+  matchers_path = File.dirname(__FILE__) + "/matchers"
+  matchers_files = Dir.entries(matchers_path).select {|x| /\.rb\z/ =~ x}
+  matchers_files.each do |path|
+    require File.join(matchers_path, path)
+  end
+  
+  # Custom matchers includes
+  config.include(CustomModelMatchers)
+
+  config.global_fixtures = :blogs, :client_applications, :comments, :communications, :conversations, :events, :feeds, :forums, :neighborhoods, :oauth_nonces, :oauth_tokens, :offers, :people, :posts, :preferences, :topics
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  # Simulate an uploaded file.
+  def uploaded_file(filename, content_type = "image/png")
+    t = Tempfile.new(filename)
+    t.binmode
+    path = File.join(RAILS_ROOT, "spec", "images", filename)
+    FileUtils.copy_file(path, t.path)
+    (class << t; self; end).class_eval do
+      alias local_path path
+      define_method(:original_filename) {filename}
+      define_method(:content_type) {content_type}
+    end
+    return t
+  end
+  
+  def mock_photo(options = {})
+    photo = mock_model(Photo)
+    photo.stub!(:public_filename).and_return("photo.png")
+    photo.stub!(:primary).and_return(options[:primary])
+    photo.stub!(:primary?).and_return(photo.primary)
+    photo
+  end
+  
+  # Write response body to output file.
+  # This can be very helpful when debugging specs that test HTML.
+  def output_body(response)
+    File.open("tmp/index.html", "w") { |f| f.write(response.body) }
+  end
+  
+  # Make a user an admin.
+  # All fixture people are not admins by default, to protect against mistakes.
+  def admin!(person)
+    person.admin = true
+    person.save!
+    person
+  end
+
+  # This is needed to get RSpec to understand link_to(..., person).
+  def polymorphic_path(args)
+    "http://a.fake.url"
+  end
+
+  def enable_email_notifications
+    Preference.find(:first).update_attributes(:email_verifications => true)      
+  end
 end
