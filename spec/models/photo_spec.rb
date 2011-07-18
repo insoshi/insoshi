@@ -28,8 +28,8 @@ describe Photo do
   it "should not have default AttachmentFu errors for an empty image" do
     photo = new_photo(:uploaded_data => nil)
     photo.should_not be_valid
-    photo.errors.on(:size).should be_nil
-    photo.errors.on(:base).should_not be_nil
+    photo.errors[:size].should be_empty
+    photo.errors[:base].should_not be_empty
   end
   
   private

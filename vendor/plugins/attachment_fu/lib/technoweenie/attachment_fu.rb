@@ -1,7 +1,7 @@
 module Technoweenie # :nodoc:
   module AttachmentFu # :nodoc:
     @@default_processors = %w(ImageScience Rmagick MiniMagick Gd2 CoreImage)
-    @@tempfile_path      = File.join(RAILS_ROOT, 'tmp', 'attachment_fu')
+    @@tempfile_path      = File.join(::Rails.root.to_s, 'tmp', 'attachment_fu')
     @@content_types      = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg']
     mattr_reader :content_types, :tempfile_path, :default_processors
     mattr_writer :tempfile_path
@@ -139,7 +139,7 @@ module Technoweenie # :nodoc:
         base.after_destroy :destroy_file
         base.after_validation :process_attachment
         if defined?(::ActiveSupport::Callbacks)
-          base.define_callbacks :after_resize, :after_attachment_saved, :before_thumbnail_saved
+          base.define_callbacks :after_resize, :before_thumbnail_saved
         end
       end
 
@@ -154,19 +154,6 @@ module Technoweenie # :nodoc:
         #   end
         def after_resize(&block)
           write_inheritable_array(:after_resize, [block])
-        end
-
-        # Callback after an attachment has been saved either to the file system or the DB.
-        # Only called if the file has been changed, not necessarily if the record is updated.
-        #
-        #   class Foo < ActiveRecord::Base
-        #     acts_as_attachment
-        #     after_attachment_saved do |record|
-        #       ...
-        #     end
-        #   end
-        def after_attachment_saved(&block)
-          write_inheritable_array(:after_attachment_saved, [block])
         end
 
         # Callback before a thumbnail is saved.  Use this to pass any necessary extra attributes that may be required.
@@ -210,7 +197,7 @@ module Technoweenie # :nodoc:
 
     module InstanceMethods
       def self.included(base)
-        base.define_callbacks *[:after_resize, :after_attachment_saved, :before_thumbnail_saved] if base.respond_to?(:define_callbacks)
+        base.define_callbacks *[:after_resize, :before_thumbnail_saved] if base.respond_to?(:define_callbacks)
       end
 
       # Checks whether the attachment's content type is an image content type
@@ -421,9 +408,13 @@ module Technoweenie # :nodoc:
           end
         end
 
+        if defined?(Rails) && Rails::VERSION::MAJOR >= 3
+          def callback_with_args(method, arg = self)
+            send(method, arg) if respond_to?(method)
+          end
         # Yanked from ActiveRecord::Callbacks, modified so I can pass args to the callbacks besides self.
         # Only accept blocks, however
-        if ActiveSupport.const_defined?(:Callbacks)
+        elsif ActiveSupport.const_defined?(:Callbacks)
           # Rails 2.1 and beyond!
           def callback_with_args(method, arg = self)
             notify(method)
