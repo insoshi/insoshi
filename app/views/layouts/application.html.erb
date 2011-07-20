@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -10,13 +9,14 @@
     <%- end -%>
     <%= stylesheet_link_tag "default" %>
     <%= stylesheet_link_tag 'Aristo/jquery-ui-1.8rc3.custom' %>
-    <%= javascript_include_tag 'jquery-1.4.2.min' %>
+    <%= javascript_include_tag 'jquery.min.js' %>
     <%= javascript_include_tag 'jquery-ui-1.8.4.custom.min' %>
     <%= javascript_include_tag 'jquery.timeago' %>
     <%= javascript_include_tag 'highcharts' %>
     <%= javascript_include_tag 'jquery.ba-hashchange.min' %>
     <%= javascript_include_tag 'jquery.linkify-1.0-min' %>
     <%= javascript_include_tag 'site' %>
+    <%= javascript_include_tag 'jquery_ujs' %>
     <%= yield :jquery_support %>
     <%= yield :head %>    
   </head>

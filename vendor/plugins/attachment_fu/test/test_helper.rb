@@ -87,6 +87,14 @@ class Test::Unit::TestCase #:nodoc:
       end
     end
 
+    def upload_merb_file(options = {})
+      use_temp_file options[:filename] do |file|
+        att = attachment_model.create :uploaded_data => {"size" => file.size, "content_type" => options[:content_type] || 'image/png', "filename" => file, 'tempfile' => fixture_file_upload(file, options[:content_type] || 'image/png')}
+        att.reload unless att.new_record?
+        return att
+      end
+    end
+    
     def use_temp_file(fixture_filename)
       temp_path = File.join('/tmp', File.basename(fixture_filename))
       FileUtils.mkdir_p File.join(fixture_path, 'tmp')

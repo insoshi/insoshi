@@ -23,6 +23,13 @@ class GeometryTest < Test::Unit::TestCase
       "100" => [100, 128]
   end
   
+  def test_should_resize_no_height_with_x
+    assert_geometry 50, 64,
+      "50x"  => [50, 64],
+      "60x"  => [60, 77],
+      "100x" => [100, 128]
+  end
+  
   def test_should_resize_with_percent
     assert_geometry 50, 64,
       "50x50%"   => [25, 32],

@@ -34,7 +34,7 @@ module Technoweenie # :nodoc:
             # supports.
             filename.sub! /gif$/, 'png'
             content_type.sub!(/gif$/, 'png')
-            self.temp_path = write_to_temp_file(filename)
+            temp_paths.unshift write_to_temp_file(filename)
             grab_dimensions = lambda do |img|
               self.width  = img.width  if respond_to?(:width)
               self.height = img.height if respond_to?(:height)

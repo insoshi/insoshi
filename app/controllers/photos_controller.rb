@@ -19,14 +19,6 @@ class PhotosController < ApplicationController
     end
   end
   
-  def new
-    @photo = Photo.new
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
   def edit
     @display_photo = @photo
     respond_to do |format|

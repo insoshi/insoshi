@@ -25,7 +25,7 @@ class Geometry
   end
 
   # Construct an object from a geometry string
-  RE = /\A(\d*)(?:x(\d+))?([-+]\d+)?([-+]\d+)?([%!<>@]?)\Z/
+  RE = /\A(\d*)(?:x(\d+)?)?([-+]\d+)?([-+]\d+)?([%!<>@]?)\Z/
 
   def self.from_s(str)
     raise(ArgumentError, "no geometry string specified") unless str
@@ -76,7 +76,7 @@ class Geometry
         new_height = orig_height if @flag && orig_height.send(@flag, new_height)
     end
 
-    [new_width, new_height].collect! { |v| v.round }
+    [new_width, new_height].collect! { |v| [v.round, 1].max }
   end
 end
 

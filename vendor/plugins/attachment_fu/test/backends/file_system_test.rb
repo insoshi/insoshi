@@ -1,4 +1,5 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'test_helper'))
+require 'digest/sha2'
 
 class FileSystemTest < Test::Unit::TestCase
   include BaseAttachmentTests
@@ -52,7 +53,7 @@ class FileSystemTest < Test::Unit::TestCase
     assert_not_created do
       use_temp_file 'files/rails.png' do |file|
         attachment.filename        = 'rails2.png'
-        attachment.temp_path = File.join(fixture_path, file)
+        attachment.temp_paths.unshift File.join(fixture_path, file)
         attachment.save!
         assert  File.exists?(attachment.full_filename), "#{attachment.full_filename} does not exist"    
         assert !File.exists?(old_filename),             "#{old_filename} still exists"
@@ -77,4 +78,66 @@ class FileSystemTest < Test::Unit::TestCase
   end
   
   test_against_subclass :test_should_delete_old_file_when_renaming, FileAttachment
+  
+  def test_path_partitioning_works_on_integer_id(klass = FileAttachment)
+    attachment_model klass
+    
+    # Create a random attachment object, doesn't matter what.
+    attachment = upload_file :filename => '/files/rails.png'
+    old_id = attachment.id
+    attachment.id = 1
+    
+    begin
+      assert_equal ["0000", "0001", "bar.txt"], attachment.send(:partitioned_path, "bar.txt")
+    ensure
+      attachment.id = old_id
+    end
+  end
+  
+  test_against_subclass :test_path_partitioning_works_on_integer_id, FileAttachment
+  
+  def test_path_partitioning_with_string_id_works_by_generating_hash(klass = FileAttachmentWithStringId)
+    attachment_model klass
+    
+    # Create a random attachment object, doesn't matter what.
+    attachment = upload_file :filename => '/files/rails.png'
+    old_id = attachment.id
+    attachment.id = "hello world some long string"
+    hash = Digest::SHA512.hexdigest("hello world some long string")
+    
+    begin
+      assert_equal [
+          hash[0..31],
+          hash[32..63],
+          hash[64..95],
+          hash[96..127],
+          "bar.txt"
+        ], attachment.send(:partitioned_path, "bar.txt")
+    ensure
+      attachment.id = old_id
+    end
+  end
+  
+  test_against_subclass :test_path_partitioning_with_string_id_works_by_generating_hash, FileAttachmentWithStringId
+  
+  def test_path_partition_string_id_hashing_is_turned_off_if_id_is_uuid(klass = FileAttachmentWithUuid)
+    attachment_model klass
+    
+    # Create a random attachment object, doesn't matter what.
+    attachment = upload_file :filename => '/files/rails.png'
+    old_id = attachment.id
+    attachment.id = "0c0743b698483569dc65909a8cdb3bf9"
+    
+    begin
+      assert_equal [
+          "0c0743b698483569",
+          "dc65909a8cdb3bf9",
+          "bar.txt"
+        ], attachment.send(:partitioned_path, "bar.txt")
+    ensure
+      attachment.id = old_id
+    end
+  end
+  
+  test_against_subclass :test_path_partition_string_id_hashing_is_turned_off_if_id_is_uuid, FileAttachmentWithUuid
 end

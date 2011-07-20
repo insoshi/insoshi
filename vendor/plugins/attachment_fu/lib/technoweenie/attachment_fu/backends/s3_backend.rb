@@ -17,22 +17,28 @@ module Technoweenie # :nodoc:
       # If you don't already have your access keys, all you need to sign up for the S3 service is an account at Amazon.
       # You can sign up for S3 and get access keys by visiting http://aws.amazon.com/s3.
       #
+      # If you wish to use Amazon CloudFront to serve the files, you can also specify a distibution domain for the bucket.
+      # To read more about CloudFront, visit http://aws.amazon.com/cloudfront
+      #
       # Example configuration (RAILS_ROOT/config/amazon_s3.yml)
-      # 
+      #
       #   development:
       #     bucket_name: appname_development
       #     access_key_id: <your key>
       #     secret_access_key: <your key>
-      #   
+      #     distribution_domain: XXXX.cloudfront.net
+      #
       #   test:
       #     bucket_name: appname_test
       #     access_key_id: <your key>
       #     secret_access_key: <your key>
-      #   
+      #     distribution_domain: XXXX.cloudfront.net
+      #
       #   production:
       #     bucket_name: appname
       #     access_key_id: <your key>
       #     secret_access_key: <your key>
+      #     distribution_domain: XXXX.cloudfront.net
       #
       # You can change the location of the config path by passing a full path to the :s3_config_path option.
       #
@@ -59,6 +65,8 @@ module Technoweenie # :nodoc:
       # * <tt>:server</tt> - The server to make requests to. Defaults to <tt>s3.amazonaws.com</tt>.
       # * <tt>:port</tt> - The port to the requests should be made on. Defaults to 80 or 443 if <tt>:use_ssl</tt> is set.
       # * <tt>:use_ssl</tt> - If set to true, <tt>:port</tt> will be implicitly set to 443, unless specified otherwise. Defaults to false.
+      # * <tt>:distribution_domain</tt> - The CloudFront distribution domain for the bucket.  This can either be the assigned
+      #     distribution domain (ie. XXX.cloudfront.net) or a chosen domain using a CNAME. See CloudFront for more details.
       #
       # == Usage
       #
@@ -81,10 +89,33 @@ module Technoweenie # :nodoc:
       #
       # Which would result in URLs like <tt>http(s)://:server/:bucket_name/my/custom/path/:id/:filename.</tt>
       #
+      #
+      # And then your amazon_s3.yml file needs to look like this.
+      #
+      #   development:
+      #     bucket_name: appname_development
+      #     access_key_id: <your key>
+      #     secret_access_key: <your key>
+      #
+      #   test:
+      #     bucket_name: appname_test
+      #     access_key_id: <your key>
+      #     secret_access_key: <your key>
+      #
+      #   production:
+      #     bucket_name: appname
+      #     photo_bucket_name: appname_photos
+      #     access_key_id: <your key>
+      #     secret_access_key: <your key>
+      #
+      #  If the bucket_key you specify is not there in a certain environment then attachment_fu will
+      #  default to the <tt>bucket_name</tt> key.  This way you only have to create special buckets
+      #  this can be helpful if you only need special buckets in certain environments.
+      #
       # === Permissions
       #
       # By default, files are stored on S3 with public access permissions. You can customize this using
-      # the <tt>:s3_access</tt> option to <tt>has_attachment</tt>. Available values are 
+      # the <tt>:s3_access</tt> option to <tt>has_attachment</tt>. Available values are
       # <tt>:private</tt>, <tt>:public_read_write</tt>, and <tt>:authenticated_read</tt>.
       #
       # === Other options
@@ -117,13 +148,23 @@ module Technoweenie # :nodoc:
       #
       # Niether <tt>base_path</tt> or <tt>full_filename</tt> include the bucket name as part of the path.
       # You can retrieve the bucket name using the <tt>bucket_name</tt> method.
+      # 
+      # === Accessing CloudFront URLs
+      # 
+      # You can get an object's CloudFront URL using the cloudfront_url accessor.  Using the example from above:
+      # @postcard.cloudfront_url # => http://XXXX.cloudfront.net/photos/1/mexico.jpg
+      #
+      # The resulting url is in the form: http://:distribution_domain/:table_name/:id/:file
+      #
+      # If you set :cloudfront to true in your model, the public_filename will be the CloudFront
+      # URL, not the S3 URL.
       module S3Backend
         class RequiredLibraryNotFoundError < StandardError; end
         class ConfigFileNotFoundError < StandardError; end
 
         def self.included(base) #:nodoc:
           mattr_reader :bucket_name, :s3_config
-          
+
           begin
             require 'aws/s3'
             include AWS::S3
@@ -138,12 +179,9 @@ module Technoweenie # :nodoc:
           #  raise ConfigFileNotFoundError.new('File %s not found' % @@s3_config_path)
           end
 
-          if ENV['AMAZON_ACCESS_KEY_ID'] && ENV['AMAZON_SECRET_ACCESS_KEY']
-            s3_config[:access_key_id] = ENV['AMAZON_ACCESS_KEY_ID']
-            s3_config[:secret_access_key] = ENV['AMAZON_SECRET_ACCESS_KEY']
-          end
-
-          @@bucket_name = ENV['S3_BUCKET_NAME'] || s3_config[:bucket_name]
+          @@bucket_name = ENV['S3_BUCKET_NAME']
+          s3_config[:access_key_id] = ENV['AMAZON_ACCESS_KEY_ID']
+          s3_config[:secret_access_key] = ENV['AMAZON_SECRET_ACCESS_KEY']
 
           Base.establish_connection!(s3_config.slice(:access_key_id, :secret_access_key, :server, :port, :use_ssl, :persistent, :proxy))
 
@@ -155,26 +193,34 @@ module Technoweenie # :nodoc:
         def self.protocol
           @protocol ||= s3_config[:use_ssl] ? 'https://' : 'http://'
         end
-        
+
         def self.hostname
           @hostname ||= s3_config[:server] || AWS::S3::DEFAULT_HOST
         end
-        
+
         def self.port_string
           @port_string ||= (s3_config[:port].nil? || s3_config[:port] == (s3_config[:use_ssl] ? 443 : 80)) ? '' : ":#{s3_config[:port]}"
+        end
+        
+        def self.distribution_domain
+          @distribution_domain = s3_config[:distribution_domain]
         end
 
         module ClassMethods
           def s3_protocol
             Technoweenie::AttachmentFu::Backends::S3Backend.protocol
           end
-          
+
           def s3_hostname
             Technoweenie::AttachmentFu::Backends::S3Backend.hostname
           end
-          
+
           def s3_port_string
             Technoweenie::AttachmentFu::Backends::S3Backend.port_string
+          end
+          
+          def cloudfront_distribution_domain
+            Technoweenie::AttachmentFu::Backends::S3Backend.distribution_domain
           end
         end
 
@@ -201,7 +247,7 @@ module Technoweenie # :nodoc:
           File.join(base_path, thumbnail_name_for(thumbnail))
         end
 
-        # All public objects are accessible via a GET request to the S3 servers. You can generate a 
+        # All public objects are accessible via a GET request to the S3 servers. You can generate a
         # url for an object using the s3_url method.
         #
         #   @photo.s3_url
@@ -215,8 +261,30 @@ module Technoweenie # :nodoc:
           File.join(s3_protocol + s3_hostname + s3_port_string, bucket_name, full_filename(thumbnail))
         end
         alias :public_filename :s3_url
+        
+        # All public objects are accessible via a GET request to CloudFront. You can generate a
+        # url for an object using the cloudfront_url method.
+        #
+        #   @photo.cloudfront_url
+        #
+        # The resulting url is in the form: <tt>http://:distribution_domain/:table_name/:id/:file</tt> using
+        # the <tt>:distribution_domain</tt> variable set in the configuration parameters in <tt>RAILS_ROOT/config/amazon_s3.yml</tt>.
+        #
+        # The optional thumbnail argument will output the thumbnail's filename (if any).
+        def cloudfront_url(thumbnail = nil)
+          "http://" + cloudfront_distribution_domain + "/" + full_filename(thumbnail)
+        end
+        
+        # XXX bye bye.
+        #def public_filename(*args)
+          #if attachment_options[:cloudfront]
+          #  cloudfront_url(args)
+          #else
+          #  s3_url(args)
+          #end
+        #end
 
-        # All private objects are accessible via an authenticated GET request to the S3 servers. You can generate an 
+        # All private objects are accessible via an authenticated GET request to the S3 servers. You can generate an
         # authenticated url for an object like this:
         #
         #   @photo.authenticated_s3_url
@@ -228,7 +296,7 @@ module Technoweenie # :nodoc:
         #
         #   # Absolute expiration date (October 13th, 2025)
         #   @photo.authenticated_s3_url(:expires => Time.mktime(2025,10,13).to_i)
-        #   
+        #
         #   # Expiration in five hours from now
         #   @photo.authenticated_s3_url(:expires_in => 5.hours)
         #
@@ -241,8 +309,9 @@ module Technoweenie # :nodoc:
         #
         #   @photo.authenticated_s3_url('thumbnail', :expires_in => 5.hours, :use_ssl => true)
         def authenticated_s3_url(*args)
-          thumbnail = args.first.is_a?(String) ? args.first : nil
-          options   = args.last.is_a?(Hash)    ? args.last  : {}
+          options   = args.extract_options!
+          options[:expires_in] = options[:expires_in].to_i if options[:expires_in]
+          thumbnail = args.shift
           S3Object.url_for(full_filename(thumbnail), bucket_name, options)
         end
 
@@ -257,13 +326,17 @@ module Technoweenie # :nodoc:
         def s3_protocol
           Technoweenie::AttachmentFu::Backends::S3Backend.protocol
         end
-        
+
         def s3_hostname
           Technoweenie::AttachmentFu::Backends::S3Backend.hostname
         end
-          
+
         def s3_port_string
           Technoweenie::AttachmentFu::Backends::S3Backend.port_string
+        end
+        
+        def cloudfront_distribution_domain
+          Technoweenie::AttachmentFu::Backends::S3Backend.distribution_domain
         end
 
         protected
@@ -274,7 +347,7 @@ module Technoweenie # :nodoc:
 
           def rename_file
             return unless @old_filename && @old_filename != filename
-            
+
             old_full_filename = File.join(base_path, @old_filename)
 
             S3Object.rename(

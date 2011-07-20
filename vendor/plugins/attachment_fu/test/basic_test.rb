@@ -24,8 +24,8 @@ class BasicTest < Test::Unit::TestCase
   def test_should_normalize_content_types_to_array
     assert_equal %w(pdf), PdfAttachment.attachment_options[:content_type]
     assert_equal %w(pdf doc txt), DocAttachment.attachment_options[:content_type]
-    assert_equal ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg'], ImageAttachment.attachment_options[:content_type]
-    assert_equal ['pdf', 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg'], ImageOrPdfAttachment.attachment_options[:content_type]
+    assert_equal Technoweenie::AttachmentFu.content_types, ImageAttachment.attachment_options[:content_type]
+    assert_equal ['pdf'] + Technoweenie::AttachmentFu.content_types, ImageOrPdfAttachment.attachment_options[:content_type]
   end
   
   def test_should_sanitize_content_type
@@ -42,6 +42,12 @@ class BasicTest < Test::Unit::TestCase
 
     @attachment.filename = 'f o!O-.bar'
     assert_equal 'f_o_O-.bar', @attachment.filename
+    
+    @attachment.filename = 'sheeps_says_bææ'
+    assert_equal 'sheeps_says_b__', @attachment.filename
+
+    @attachment.filename = nil
+    assert_nil @attachment.filename
   end
   
   def test_should_convert_thumbnail_name
