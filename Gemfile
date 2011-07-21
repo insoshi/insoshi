@@ -38,6 +38,10 @@ group :development, :test do
   gem "test-unit"
 # gem 'ruby-debug19', :require => 'ruby-debug'
   gem "rspec-rails" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
-  gem "cucumber-rails"
+  gem "rack", "1.2.1"
+  gem "rack-test", "0.5.7"
+  gem "database_cleaner"
+  gem "cucumber", "0.10.5"
+  gem "cucumber-rails", "0.5.2"
   gem "awesome_print", "0.3.2"
 end

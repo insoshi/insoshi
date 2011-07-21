@@ -21,10 +21,10 @@
 
 class Bid < ActiveRecord::Base
   extend PreferencesHelper
-  before_validation_on_create :setup
+  before_validation :setup, :on => :create
   after_create :trigger_offered
 
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
   include AASM
 
   belongs_to :req

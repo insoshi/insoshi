@@ -9,6 +9,7 @@ module Delayed
     MAX_ATTEMPTS = 25
     MAX_RUN_TIME = 4.hours
     set_table_name :delayed_jobs
+    before_save :set_default_run_at
 
     # By default failed jobs are destroyed after too many attempts.
     # If you want to keep them around (perhaps to inspect the reason
@@ -257,7 +258,7 @@ module Delayed
 
   protected
 
-    def before_save
+    def set_default_run_at
       self.run_at ||= self.class.db_time_now
     end
 

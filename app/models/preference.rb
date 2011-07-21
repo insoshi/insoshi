@@ -48,7 +48,7 @@ class Preference < ActiveRecord::Base
 
   validates_presence_of :domain,       :if => :using_email?
   validates_presence_of :smtp_server,  :if => :using_email?
-  validate_on_create :enforce_singleton
+  validate :enforce_singleton, :on => :create
   
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
 

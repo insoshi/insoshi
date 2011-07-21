@@ -2,10 +2,10 @@ class Membership < ActiveRecord::Base
   extend ActivityLogger
   extend PreferencesHelper
   
-  named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
-  named_scope :active, :include => :person, :conditions => {'people.deactivated' => false}
-  named_scope :listening, :include => :member_preference, :conditions => {'member_preferences.forum_notifications' => true}
-  named_scope :search, lambda { |text| {:include => :person, :conditions => ["lower(people.name) LIKE ? OR lower(people.description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
+  scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
+  scope :active, :include => :person, :conditions => {'people.deactivated' => false}
+  scope :listening, :include => :member_preference, :conditions => {'member_preferences.forum_notifications' => true}
+  scope :search, lambda { |text| {:include => :person, :conditions => ["lower(people.name) LIKE ? OR lower(people.description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
 
   belongs_to :group
   belongs_to :person

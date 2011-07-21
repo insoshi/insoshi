@@ -7,7 +7,7 @@ ActionView::Base.send(:include, CalendarDateSelect::FormHelper)
 ActionView::Base.send(:include, CalendarDateSelect::IncludesHelper)
 
 # install files
-unless File.exists?(RAILS_ROOT + '/public/javascripts/calendar_date_select/calendar_date_select.js')
+unless File.exists?(::Rails.root.to_s + '/public/javascripts/calendar_date_select/calendar_date_select.js')
   ['/public', '/public/javascripts/calendar_date_select', '/public/stylesheets/calendar_date_select', '/public/images/calendar_date_select', '/public/javascripts/calendar_date_select/locale'].each do |dir|
     source = File.join(directory,dir)
     dest = RAILS_ROOT + dir

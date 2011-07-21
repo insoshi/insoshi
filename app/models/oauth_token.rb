@@ -4,7 +4,7 @@ class OauthToken < ActiveRecord::Base
   belongs_to :group
   validates_uniqueness_of :token
   validates_presence_of :client_application, :token, :group
-  before_validation_on_create :generate_keys
+  before_validation :generate_keys, :on => :create
   before_create :validate_scope
   
   def invalidated?

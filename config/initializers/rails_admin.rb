@@ -1,13 +1,12 @@
-RailsAdmin.authenticate_with{
-  unless current_person
-    session[:return_to] = request.url
-    redirect_to login_url, :alert => "You must first log in or sign up before accessing this page."
-  end
-}
-
-RailsAdmin.authorize_with :cancan
-
 RailsAdmin.config do |config|
+  config.authorize_with :cancan
+  config.authenticate_with {
+    unless current_person
+      session[:return_to] = request.url
+      redirect_to login_url, :alert => "You must first log in or sign up before accessing this page."
+    end
+  }
+
   config.included_models = [Exchange,ForumPost,FeedPost,BroadcastEmail,Person]
 
   config.model Exchange do

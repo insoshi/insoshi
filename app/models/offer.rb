@@ -6,8 +6,8 @@ class Offer < ActiveRecord::Base
     description
   end
 
-  named_scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
-  named_scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
+  scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
+  scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
   scope :active, :conditions => ["available_count > ? AND expiration_date >= ?", 0, DateTime.now]
 
   has_and_belongs_to_many :categories

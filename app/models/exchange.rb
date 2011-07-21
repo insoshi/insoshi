@@ -36,10 +36,10 @@ class Exchange < ActiveRecord::Base
   after_create :send_payment_notification_to_worker
   before_destroy :delete_calculate_account_balances
 
-  named_scope :by_customer, lambda {|person_id| {:conditions => ["customer_id = ?", person_id]}}
-  named_scope :everyone, :conditions => {}
-  named_scope :everyone_by_group, lambda {|group_id| {:conditions => ["group_id = ?", group_id]}}
-  named_scope :by_month, lambda {|date| {:conditions => ["DATE_TRUNC('month',created_at) = ?", date]}}
+  scope :by_customer, lambda {|person_id| {:conditions => ["customer_id = ?", person_id]}}
+  scope :everyone, :conditions => {}
+  scope :everyone_by_group, lambda {|group_id| {:conditions => ["group_id = ?", group_id]}}
+  scope :by_month, lambda {|date| {:conditions => ["DATE_TRUNC('month',created_at) = ?", date]}}
 
   def log_activity
     add_activities(:item => self, :person => self.worker, :group => self.group)

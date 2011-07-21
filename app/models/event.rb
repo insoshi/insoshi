@@ -34,16 +34,16 @@ class Event < ActiveRecord::Base
   validates_length_of :description, :maximum => MAX_DESCRIPTION_LENGTH, :allow_blank => true
   validate :start_time_not_later_than_end_time
 
-  named_scope :person_events, 
-              lambda { |person| { :conditions => ["person_id = ? OR (privacy = ? OR (privacy = ? AND (person_id IN (?))))", 
+  scope :person_events, 
+        lambda { |person| { :conditions => ["person_id = ? OR (privacy = ? OR (privacy = ? AND (person_id IN (?))))", 
                                                   person.id,
                                                   PRIVACY[:public], 
                                                   PRIVACY[:contacts], 
                                                   person.contact_ids] } }
 
-  named_scope :period_events,
-              lambda { |date_from, date_until| { :conditions => ['start_time >= ? and start_time <= ?',
-                                                 date_from, date_until] } }
+  scope :period_events,
+        lambda { |date_from, date_until| { :conditions => ['start_time >= ? and start_time <= ?',
+                                           date_from, date_until] } }
 
   after_create :log_activity
   
