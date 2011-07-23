@@ -161,6 +161,7 @@ GEM
       rubyzip
     silent-postgres (0.0.8)
     simple-rss (1.2.3)
+    spork (0.8.5)
     term-ansicolor (1.0.5)
     test-unit (2.3.0)
     texticle (1.0.4.20101004123327)
@@ -204,6 +205,7 @@ DEPENDENCIES
   rspec-rails
   ruby-openid
   silent-postgres
+  spork
   test-unit
   texticle (= 1.0.4.20101004123327)
   will_paginate (~> 3.0.pre2)

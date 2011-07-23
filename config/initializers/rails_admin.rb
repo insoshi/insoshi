@@ -1,3 +1,4 @@
+unless Rails.env == 'test'
 RailsAdmin.config do |config|
   config.authorize_with :cancan
   config.authenticate_with {
@@ -107,4 +108,6 @@ RailsAdmin.config do |config|
       # generally not appropriate for admin to edit openid since it is an assertion
     end
   end
+end
+
 end

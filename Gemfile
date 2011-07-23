@@ -44,4 +44,5 @@ group :development, :test do
   gem "cucumber", "0.10.5"
   gem "cucumber-rails", "0.5.2"
   gem "awesome_print", "0.3.2"
+  gem "spork"
 end
