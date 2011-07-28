@@ -1,39 +1,67 @@
 module OscurrencyHelpers
   def init_oscurrency
     Preference.create
-    p = create_person
-    p.default_group = create_default_group(p)
-    p.save!
+    q = create_person(:name => "Quire",
+                      :email => "quire@example.com", 
+                      :password => "quire")
+  end
 
+  def init_asset(asset="coupons")
+    q = Person.find_by_email("quire@example.com")
+    g = create_group("default group",q,asset)
+    q.default_group = g
+    q.save!
+    p = create_person(:name => "Patrick",
+                      :email => "patrick@example.com", 
+                      :default_group => g,
+                      :password => "patrick")
+    # group membership required before participating in currency 
+    Membership.request(p,g,false)
+
+    2.times do
+      create_exchange(q,p,g,1.0)
+    end
+  end
+
+  def add_asset(asset)
+    q = Person.find_by_email("quire@example.com")
+    g = create_group(asset,q,asset)
+  end
+
+  def create_exchange(customer,worker,group,amount)
+    e = Exchange.new
+    e.metadata = Req.create!(:name => 'Generic',:estimated_hours => 0, :group => group, :due_date => Time.now, :person => customer, :active => false)
+    e.worker = worker
+    e.customer = customer
+    e.group = group
+    e.amount = amount
+    e.save!
+  end
+
+  def sign_in_to_oscurrency(email = "quire@examples.com", password = "quire")
     visit login_url
-    fill_in "person_session_email", :with => "quire@example.com"
-    fill_in "person_session_password", :with => "quire"
+    fill_in "person_session_email", :with => email
+    fill_in "person_session_password", :with => password
     click_button "Sign In"
   end
 
-  def create_default_group(person)
+  def create_group(name,person,asset)
     valid_attributes = {
-      :name => "value for name",
+      :name => name,
       :description => "value for description",
       :mode => Group::PUBLIC,
-      :unit => "value for unit",
+      :unit => asset,
+      :asset => asset,
       :owner => person,
-      :adhoc_currency => false
+      :adhoc_currency => true
     }
     g = Group.create!(valid_attributes)
   end
 
   def create_person(options = {})
-    record = Person.new({ :email => 'quire@example.com',
-                          :password => 'quire',
-                          :password_confirmation => 'quire',
-                          :name => 'Quire',
-                          :accept_agreement => true,
-                          :description => 'A new person' }.merge(options))
-    record.valid?
-    record.save!
-    record
+    Person.create!({ :password_confirmation => options[:password],
+                     :accept_agreement => true,
+                     :description => 'A new person' }.merge(options))
   end
 end
 
-World(OscurrencyHelpers)

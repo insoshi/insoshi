@@ -1,6 +1,6 @@
 class TransactsController < ApplicationController
   skip_before_filter :require_activation
-  before_filter :login_or_oauth_required
+  prepend_before_filter :login_or_oauth_required
   before_filter :find_group_by_asset
   skip_before_filter :verify_authenticity_token, :set_person_locale, :if => :oauth?
 
@@ -108,9 +108,18 @@ class TransactsController < ApplicationController
   private
 
   def find_group_by_asset
-    @group = Group.find_by_asset(params[:asset])
+    @group = Group.by_opentransact(params[:asset])
     if oauth?
-      invalid_oauth_response unless current_token.group_id == @group.id
+      unless params[:asset]
+        invalid_oauth_response(400,"No asset specified")
+      else
+        if @group.nil?
+          invalid_oauth_response(404,"Unknown asset")
+        else
+          invalid_oauth_response(409,"Asset does not match token") if current_token.group_id != @group.id
+        end
+      end
     end
+    true 
   end
 end

@@ -155,7 +155,6 @@ module GeoKit
 #        res = Net::HTTP.get_response(URI.parse("http://maps.google.com/maps/geo?q=#{CGI.escape(address_str)}&output=xml&key=#{GeoKit::Geocoders::google}&oe=utf-8"))
         return GeoLoc.new if !res.is_a?(Net::HTTPSuccess)
         xml=res.body
-        logger.debug "Google geocoding. Address: #{address}. Result: #{xml}"
         doc=REXML::Document.new(xml)
 
         if doc.elements['//kml/Response/Status/code'].text == '200'

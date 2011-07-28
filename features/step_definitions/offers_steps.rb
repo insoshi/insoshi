@@ -1,5 +1,6 @@
 Given /^a category named Vegetables\:Beans$/ do
   init_oscurrency
+  sign_in_to_oscurrency
 
   @vegetables_category = Category.create!(:name => "Vegetables")
   @beans_category = Category.new(:name => "Beans")
@@ -25,6 +26,7 @@ end
 
 Given /^an offer with a price of 5$/ do
   init_oscurrency
+  sign_in_to_oscurrency
 
   @offer = Offer.new(:name => "Pizza", :price => 5)
   @offer.person = Person.find_by_name('Quire')

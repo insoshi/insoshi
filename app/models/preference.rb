@@ -63,7 +63,7 @@ class Preference < ActiveRecord::Base
 
   def enforce_singleton
     unless Preference.all.count == 0
-      errors.add_to_base "Attempting to instantiate another Preference object"
+      errors.add :base, "Attempting to instantiate another Preference object"
     end
   end
 

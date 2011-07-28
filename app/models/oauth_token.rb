@@ -30,7 +30,7 @@ class OauthToken < ActiveRecord::Base
 
   def scope_hash
     scope_uri = URI.parse(self.scope)
-    CGI::parse(scope_uri.query)
+    scope_uri.query.nil? ? {} : CGI::parse(scope_uri.query)
   end
     
   def asset

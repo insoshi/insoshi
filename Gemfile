@@ -45,4 +45,6 @@ group :development, :test do
   gem "cucumber-rails", "0.5.2"
   gem "awesome_print", "0.3.2"
   gem "spork"
+  gem "guard-spork"
+  gem "artifice"
 end

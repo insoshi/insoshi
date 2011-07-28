@@ -44,6 +44,10 @@ class Group < ActiveRecord::Base
                      :per_page => RASTER_PER_PAGE,
                      :order => "name ASC")
     end
+
+    def by_opentransact(asset)
+      Group.find_by_asset(asset)
+    end
   end
 
   def admins
