@@ -15,10 +15,10 @@ module OpentransactHelpers
     OAuth::Consumer.new(consumer_key,consumer_secret,{:site => 'http://localhost:3000'})
   end
 
-  def create_access_token(asset)
+  def create_access_token(scope)
+    scope_uri = URI.parse(scope)
+    asset = CGI::parse(scope_uri.query)['asset'][0]
     group = Group.find_by_asset(asset)
-    #scope = "http://localhost:3000/scopes/list_payments.json"
-    scope = "http://localhost:3000/scopes/single_payment.json"
     AccessToken.create! :person => Person.find_by_email('quire@example.com'), :client_application => ClientApplication.first, :group => group, :scope => scope
   end
 

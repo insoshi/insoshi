@@ -8,12 +8,22 @@ Given /^an account holder with asset "([^"]*)"$/ do |asset|
   init_asset(asset)
 end
 
+Given /^an account holder with email "([^"]*)" and asset "([^"]*)"$/ do |email, asset|
+  # XXX for now, assume asset is already created
+  g = Group.by_opentransact(asset)
+  p = create_person(:name => email,
+                    :email => email,
+                    :default_group => g,
+                    :password => "password")
+  Membership.request(p,g,false)
+end
+
 Given /^another asset called "([^"]*)"$/ do |asset|
   add_asset(asset)
 end
 
-Given /^an access token for "([^"]*)"$/ do |asset|
-  create_access_token(asset)
+Given /^an access token with scope "([^"]*)"$/ do |scope|
+  create_access_token(scope)
 end
 
 When /^I request transactions for "([^"]*)"$/ do |asset|
@@ -30,6 +40,23 @@ Then /^I should see transactions for "([^"]*)"$/ do |asset|
 end
 
 Then /^I should receive error message "([^"]*)"$/ do |message|
-  @transacts['error'].should == message
+  result = @transacts.nil? ? @transact : @transacts
+  result['error'].should == message
+end
+
+When /^I pay "([^"]*)" "([^"]*)" to "([^"]*)"$/ do |amount, asset, to|
+  a = OAuth::AccessToken.new(consumer,access_token_key,access_token_secret)
+  transacts_path = asset.empty? ? "/transacts" : "/transacts/#{asset}" 
+  opts = {:amount => amount,
+          :memo => "test payment", 
+          :to => to
+          }
+  Artifice.activate_with(app) do
+    @transact = JSON.parse(a.post(transacts_path, opts, {'Accept'=>'application/json'}).body)
+  end
+end
+
+Then /^I should see a new transaction with amount "([^"]*)"$/ do |amount|
+  @transact['amount'].to_f.should == amount.to_f
 end
 

@@ -59,7 +59,7 @@ class OauthToken < ActiveRecord::Base
   end
 
   def action
-    @action ||= JSON.parse(File.read(RAILS_ROOT + '/public' + URI.parse(self.scope).path))['action']
+    @action ||= JSON.parse(File.read(::Rails.root.to_s + '/public' + URI.parse(self.scope).path))['action']
   end
 
   protected

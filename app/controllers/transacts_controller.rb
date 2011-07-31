@@ -88,7 +88,7 @@ class TransactsController < ApplicationController
           render :action => "new"
         end
         format.json do
-          @transact.errors.add_to_base(t('error_with_credit_transfer'))
+          @transact.errors.add(:base, t('error_with_credit_transfer'))
           render :json => @transact.as_json, :status => :unprocessable_entity
         end
       end
