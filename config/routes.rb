@@ -120,6 +120,7 @@ Oscurrency::Application.routes.draw do
   match '/oauth/access_token' => 'oauth#access_token', :as => :access_token
   match '/oauth/test_request' => 'oauth#test_request', :as => :test_request
   match '/oauth' => 'oauth#index', :as => :oauth
+  match '/about_user' => 'transacts#about_user', :as => :about_user
   match '/home/show/:id' => 'home#show'
   root :to => 'home#index'
   match '/' => 'home#index', :as => :home

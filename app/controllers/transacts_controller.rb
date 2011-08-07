@@ -1,8 +1,18 @@
 class TransactsController < ApplicationController
   skip_before_filter :require_activation
-  prepend_before_filter :login_or_oauth_required
-  before_filter :find_group_by_asset
+  prepend_before_filter :authlogic_login_or_oauth_required
+  before_filter :find_group_by_asset, :except => :about_user
   skip_before_filter :verify_authenticity_token, :set_person_locale, :if => :oauth?
+
+  def about_user
+    @person = {'login' => current_person.to_param,
+               'email_md5' => Digest::MD5.hexdigest(current_person.email),
+               'profile' => person_url(current_person),
+               'thumbnail_url' => current_person.thumbnail}
+    respond_to do |format|
+      format.json { render :json => @person.as_json }
+    end
+  end
 
   def index
     @transactions = current_person.transactions.select {|transact| transact.group == @group}
@@ -107,6 +117,11 @@ class TransactsController < ApplicationController
 
   private
 
+  def authlogic_login_or_oauth_required
+    activate_authlogic
+    login_or_oauth_required
+  end
+
   def find_group_by_asset
     @group = Group.by_opentransact(params[:asset])
     if oauth?
@@ -116,6 +131,7 @@ class TransactsController < ApplicationController
         if @group.nil?
           invalid_oauth_response(404,"Unknown asset")
         else
+          # token's group needs to match group specified by asset
           invalid_oauth_response(409,"Asset does not match token") if current_token.group_id != @group.id
         end
       end
