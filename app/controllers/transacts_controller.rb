@@ -1,7 +1,7 @@
 class TransactsController < ApplicationController
   skip_before_filter :require_activation
   prepend_before_filter :authlogic_login_or_oauth_required
-  before_filter :find_group_by_asset, :except => :about_user
+  before_filter :find_group_by_asset, :except => [:about_user,:wallet]
   skip_before_filter :verify_authenticity_token, :set_person_locale, :if => :oauth?
 
   def about_user
@@ -11,6 +11,18 @@ class TransactsController < ApplicationController
                'thumbnail_url' => current_person.thumbnail}
     respond_to do |format|
       format.json { render :json => @person.as_json }
+    end
+  end
+
+  def wallet
+    @groups = current_person.groups.select {|g| g.opentransact?}
+    @assets = @groups.map {|g| {:name => g.name, :url => transacts_url(:asset => g.asset), :balance => current_person.account(g).balance.to_s}}
+    @wallet = {'version' => '1.0',
+                'encoding' => 'UTF8',
+                'total' => @assets.length,
+                'assets' => @assets}
+    respond_to do |format|
+      format.json { render :json => @wallet.as_json }
     end
   end
 

@@ -50,6 +50,10 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def opentransact?
+    !asset.nil?
+  end
+
   def admins
     memberships.with_role('admin').map {|m| m.person}
   end
