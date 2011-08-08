@@ -31,7 +31,7 @@ gem "oauth-plugin", :path => "#{File.expand_path(__FILE__)}/../vendor/gems/oauth
 gem "cancan"
 gem "dalli"
 gem "redcarpet", "1.17.2"
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :branch => 'rails-3.0'
 
 group :development, :test do
   gem "silent-postgres"
