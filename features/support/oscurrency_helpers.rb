@@ -1,6 +1,6 @@
 module OscurrencyHelpers
   def init_oscurrency
-    Preference.create
+    Preference.create!(:app_name => "APP_NAME", :domain => '', :server_name => "xyz.com", :smtp_server => '', :email_notifications => false) 
     q = create_person(:name => "Quire",
                       :email => "quire@example.com", 
                       :password => "quire")

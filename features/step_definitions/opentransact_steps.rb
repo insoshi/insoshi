@@ -35,7 +35,11 @@ When /^I request transactions for "([^"]*)"$/ do |asset|
 end
 
 Then /^I should see transactions for "([^"]*)"$/ do |asset|
-  #@transacts.each {|t| puts "#{t['amount']}: #{t['memo']} - #{t['txn_id']}"} 
+  if @transacts.length == 2 
+    @transacts.each {|t| puts "#{t['amount']}: #{t['memo']} - #{t['txn_id']}"}
+  else
+    puts "Error: #{@transacts['error']}" if @transacts['error']
+  end
   @transacts.should have(2).items
 end
 

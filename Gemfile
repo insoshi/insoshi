@@ -35,7 +35,7 @@ gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :branch =>
 
 group :development, :test do
   gem "silent-postgres"
-  gem "test-unit"
+  gem "test-unit", "2.3.0"
 # gem 'ruby-debug19', :require => 'ruby-debug'
   gem "rspec-rails" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
   gem "rack", "1.2.1"

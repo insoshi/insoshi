@@ -34,4 +34,4 @@ I want to make a payment on behalf of an account holder
     And another asset called "jacks"
     And an access token with scope "http://localhost:3000/scopes/single_payment.json?amount=10&asset=marbles"
     When I pay "10" "jacks" to "service@bank.com"
-    Then I should receive error message "Asset does not match token"
+    Then I should receive error message "Bad scope"

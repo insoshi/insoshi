@@ -31,5 +31,16 @@ I want to access transactions on behalf of an account holder
     And another asset called "jacks"
     And an access token with scope "http://localhost:3000/scopes/list_payments.json?asset=marbles"
     When I request transactions for "jacks"
-    Then I should receive error message "Asset does not match token"
+    Then I should receive error message "Bad scope"
 
+  Scenario: Successful transactions request with no asset specified in scope
+    Given an account holder with asset "marbles"
+    And an access token with scope "http://localhost:3000/scopes/list_payments.json"
+    When I request transactions for "marbles"
+    Then I should see transactions for "marbles"
+
+  Scenario: Successful transactions request with multiple scopes
+    Given an account holder with asset "marbles"
+    And an access token with scope "http://localhost:3000/scopes/wallet.json http://localhost:3000/scopes/list_payments.json"
+    When I request transactions for "marbles"
+    Then I should see transactions for "marbles"

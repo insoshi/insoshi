@@ -15,11 +15,14 @@ module OpentransactHelpers
     OAuth::Consumer.new(consumer_key,consumer_secret,{:site => 'http://localhost:3000'})
   end
 
-  def create_access_token(scope)
-    scope_uri = URI.parse(scope)
-    asset = CGI::parse(scope_uri.query)['asset'][0]
-    group = Group.find_by_asset(asset)
-    AccessToken.create! :person => Person.find_by_email('quire@example.com'), :client_application => ClientApplication.first, :group => group, :scope => scope
+  def create_access_token(scopes)
+    # no longer associating group with access token
+    a = AccessToken.create! :person => Person.find_by_email('quire@example.com'), :client_application => ClientApplication.first
+    scopes.split.each do |scope|
+      puts "parsing scope: #{scope}"
+      a.capabilities << Capability.create!(:scope => scope)
+    end
+    a
   end
 
   def access_token_key

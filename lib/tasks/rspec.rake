@@ -1,6 +1,6 @@
 gem 'test-unit', '2.3.0' if RUBY_VERSION.to_f >= 1.9
 rspec_gem_dir = nil
-Dir["#{RAILS_ROOT}/vendor/gems/*"].each do |subdir|
+Dir["#{::Rails.root.to_s}/vendor/gems/*"].each do |subdir|
   rspec_gem_dir = subdir if subdir.gsub("#{RAILS_ROOT}/vendor/gems/","") =~ /^(\w+-)?rspec-(\d+)/ && File.exist?("#{subdir}/lib/spec/rake/spectask.rb")
 end
 rspec_plugin_dir = File.expand_path(File.dirname(__FILE__) + '/../../vendor/plugins/rspec')

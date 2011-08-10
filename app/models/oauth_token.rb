@@ -1,11 +1,10 @@
 class OauthToken < ActiveRecord::Base
   belongs_to :client_application
   belongs_to :person
-  belongs_to :group
+  has_many :capabilities
   validates_uniqueness_of :token
-  validates_presence_of :client_application, :token, :group
+  validates_presence_of :client_application, :token
   before_validation :generate_keys, :on => :create
-  before_create :validate_scope
   
   def invalidated?
     invalidated_at != nil
@@ -23,43 +22,12 @@ class OauthToken < ActiveRecord::Base
     "oauth_token=#{token}&oauth_token_secret=#{secret}"
   end
 
-  def validate_scope
-    # make sure there is at most one instance of each query parameter
-    scope_hash.each_value {|v| return false if v.length > 1}
-  end
-
-  def scope_hash
-    scope_uri = URI.parse(self.scope)
-    scope_uri.query.nil? ? {} : CGI::parse(scope_uri.query)
-  end
-    
-  def asset
-    scope_hash['asset'][0]
-  end
-
-  def amount
-    scope_hash['amount'][0]
-  end
-
   def authorized_for?(requested_amount)
-    ['single_payment','recurring_payment'].include?(action_id) && requested_amount <= amount.to_f && !invalidated?
+    !invalidated? && capabilities.detect {|capability| capability.authorized_for?(requested_amount)}
   end
 
-  # XXX assuming just one scope for now
-  def action_id
-    action['_id']
-  end
-
-  def action_name
-    action['name']
-  end
-
-  def action_icon_uri
-    action['icon_uri']
-  end
-
-  def action
-    @action ||= JSON.parse(File.read(::Rails.root.to_s + '/public' + URI.parse(self.scope).path))['action']
+  def single_payment?
+    capabilities.detect {|capability| capability.single_payment?}
   end
 
   protected

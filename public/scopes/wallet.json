@@ -1,0 +1,8 @@
+{
+  "action": 
+    {
+    "_id":"read_wallet",
+    "name":"view balances in wallet",
+    "icon_uri":"/images/icons/folder.gif"
+  }
+}

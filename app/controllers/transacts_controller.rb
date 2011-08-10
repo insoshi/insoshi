@@ -15,6 +15,9 @@ class TransactsController < ApplicationController
   end
 
   def wallet
+    unless includes_wallet_capability?
+      return invalid_oauth_response(401,"Bad scope")
+    end
     @groups = current_person.groups.select {|g| g.opentransact?}
     @assets = @groups.map {|g| {:name => g.name, :url => transacts_url(:asset => g.asset), :balance => current_person.account(g).balance.to_s}}
     @wallet = {'version' => '1.0',
@@ -27,6 +30,11 @@ class TransactsController < ApplicationController
   end
 
   def index
+    if oauth?
+      unless includes_list_capability?
+        return invalid_oauth_response(401,"Bad scope")
+      end
+    end
     @transactions = current_person.transactions.select {|transact| transact.group == @group}
     respond_to do |format|
       format.html
@@ -62,6 +70,13 @@ class TransactsController < ApplicationController
   end
 
   def create
+    if oauth?
+      # Make sure scope is good for the asset
+      unless includes_payment_capability?
+        return invalid_oauth_response(401,"Bad scope")
+      end
+    end
+
     # Transact.to and Transact.memo - makes @transact look opentransacty
     #
     @transact = Transact.new(:to => params[:to], :memo => params[:memo], :amount => params[:amount], :callback_url => params[:callback_url], :redirect_url => params[:redirect_url])
@@ -88,7 +103,7 @@ class TransactsController < ApplicationController
     @transact.metadata = @transact.create_req(params[:memo])
 
     if can?(:create, @transact) && @transact.save
-      if !current_token.nil? && current_token.action_id == 'single_payment'
+      if current_token && current_token.single_payment?
         current_token.invalidate!
       end
       if @transact.redirect_url.blank?
@@ -129,6 +144,18 @@ class TransactsController < ApplicationController
 
   private
 
+  def includes_wallet_capability?
+    current_token.capabilities.detect {|c| c.can_list_wallet_contents? }
+  end
+
+  def includes_list_capability?
+    current_token.capabilities.detect {|c| c.can_list?(@group)}
+  end
+
+  def includes_payment_capability?
+    current_token.capabilities.detect {|c| c.can_pay?(@group)}
+  end
+
   def authlogic_login_or_oauth_required
     activate_authlogic
     login_or_oauth_required
@@ -142,9 +169,6 @@ class TransactsController < ApplicationController
       else
         if @group.nil?
           invalid_oauth_response(404,"Unknown asset")
-        else
-          # token's group needs to match group specified by asset
-          invalid_oauth_response(409,"Asset does not match token") if current_token.group_id != @group.id
         end
       end
     end
