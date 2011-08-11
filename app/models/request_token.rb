@@ -16,7 +16,10 @@ class RequestToken < OauthToken
     return false unless oauth10? || verifier==provided_oauth_verifier
     
     RequestToken.transaction do
-      access_token = AccessToken.create(:person => person, :group_id => group_id, :scope => scope, :client_application => client_application)
+      access_token = AccessToken.create(:person => person, :scope => scope, :client_application => client_application)
+      capabilities.each do |capability|
+        access_token.capabilities << capability
+      end
       invalidate!
       access_token
     end

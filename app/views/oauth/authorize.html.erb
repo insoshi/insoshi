@@ -4,10 +4,9 @@
   <%= hidden_field_tag "oauth_token", @token.token %>
   <%- if params[:oauth_callback] -%>
   <%= hidden_field_tag "oauth_callback", params[:oauth_callback] %>
-<%- end -%>
-<p>
-  <%= check_box_tag 'authorize' %> authorize <span id="scope-action"><%= @token.action_name %></span> <img src="<%= @token.action_icon_uri %>"> of <%= @token.amount %> <%= @token.asset %>
-</p>
+  <%- end -%>
+  <%= render :partial => 'capability', :collection => @token.capabilities %>   
+  <%= check_box_tag 'authorize' %> 
 <p>
   <%= submit_tag %>
 </p>

@@ -44,30 +44,36 @@ class ClientApplication < ActiveRecord::Base
   def credentials
     @oauth_client ||= OAuth::Consumer.new(key, secret)
   end
-    
+
   def create_request_token(params={}) 
     if params[:scope]
-      scope_uri = URI.parse(params[:scope])
-      # XXX ignoring host:port and assuming it's our host:port
-      filepath = RAILS_ROOT + '/public' + scope_uri.path
-      if File.exist?(filepath)
-        # valid asset is required
-        asset = CGI::parse(scope_uri.query)['asset'][0]
-        unless asset.blank?
-          group = Group.find_by_asset(asset)
-          RequestToken.create(:client_application => self, 
-                              :scope => params[:scope], 
-                              :group_id => group.id, 
-                              :callback_url=>self.token_callback_url) unless group.nil?
+      scopes = params[:scope]
+      if all_exist?(params[:scope])
+        r = RequestToken.create(:client_application => self, 
+                                :scope => params[:scope], 
+                                :callback_url=>self.token_callback_url)
+        params[:scope].split.each do |scope|
+          puts "parsing scope: #{scope}"
+          r.capabilities << Capability.create!(:scope => scope)
         end
-      else
-        logger.info "XXX create_request_token - file not found: #{scope_uri.path}"
       end
+      r
     end
   end
   
 protected
-  
+  def all_exist?(scopes)
+    scopes.split.each do |scope|
+      scope_uri = URI.parse(scope)
+      # XXX ignoring host:port and assuming it's our host:port
+      filepath = RAILS_ROOT + '/public' + scope_uri.path
+      unless File.exist?(filepath)
+        return false
+      end
+    end
+    true
+  end
+
   def generate_keys
     self.key = OAuth::Helper.generate_key(40)[0,40]
     self.secret = OAuth::Helper.generate_key(40)[0,40]
