@@ -18,7 +18,9 @@ class RequestToken < OauthToken
     RequestToken.transaction do
       access_token = AccessToken.create(:person => person, :scope => scope, :client_application => client_application)
       capabilities.each do |capability|
-        access_token.capabilities << capability
+        unless capability.invalidated? 
+          access_token.capabilities << capability
+        end
       end
       invalidate!
       access_token

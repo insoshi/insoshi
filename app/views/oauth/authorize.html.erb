@@ -6,7 +6,6 @@
   <%= hidden_field_tag "oauth_callback", params[:oauth_callback] %>
   <%- end -%>
   <%= render :partial => 'capability', :collection => @token.capabilities %>   
-  <%= check_box_tag 'authorize' %> 
 <p>
   <%= submit_tag %>
 </p>

@@ -1,7 +1,7 @@
 class TransactsController < ApplicationController
   skip_before_filter :require_activation
   prepend_before_filter :authlogic_login_or_oauth_required
-  before_filter :find_group_by_asset, :except => [:about_user,:wallet]
+  before_filter :find_group_by_asset, :except => [:about_user,:wallet,:scopes]
   skip_before_filter :verify_authenticity_token, :set_person_locale, :if => :oauth?
 
   def about_user
@@ -139,6 +139,23 @@ class TransactsController < ApplicationController
       @worker = Person.find_by_email(payee)
     else
       @worker = Person.find_by_openid_identifier(OpenIdAuthentication.normalize_identifier(CGI.unescape(payee)))
+    end
+  end
+
+  def scopes
+    result = ""
+    scopes = []
+
+    if oauth?
+      current_token.capabilities.each do |capability|
+        scopes << capability.scope unless capability.invalidated?
+      end
+      result = scopes.join(" ")
+    end
+
+    respond_to do |format|
+      format.html { render :text => result }
+      format.json { render :json => scopes.as_json }
     end
   end
 

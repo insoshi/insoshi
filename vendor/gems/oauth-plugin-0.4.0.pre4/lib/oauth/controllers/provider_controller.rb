@@ -216,7 +216,15 @@ module OAuth
 
       # Override this to match your authorization page form
       def user_authorizes_token?
-        params[:authorize] == '1'
+        token_authorized = false
+        @token.capabilities.each do |capability|
+          unless params[:capabilities].has_value?(capability.id.to_s)
+            capability.invalidate!
+          else
+            token_authorized = true
+          end
+        end
+        token_authorized
       end  
 
       def oauth2_error(error="invalid_grant")
