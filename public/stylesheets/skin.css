@@ -198,9 +198,9 @@ ul li.profile_icon_item {
   width: auto;
 }
 
-#scope-action {
-  background: #FFF6BF;
-  color: #514721;
+.scope-action {
+  background: #FFF6BF; 
+  color: #514721; 
   border: 1px solid #FFD324;
 }
 

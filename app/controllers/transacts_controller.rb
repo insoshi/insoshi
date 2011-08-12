@@ -89,7 +89,7 @@ class TransactsController < ApplicationController
           render :action => "new"
         end
         format.json do
-          @transact.errors.add_to_base(t('error_could_not_find_payee'))
+          @transact.errors.add(:base, t('error_could_not_find_payee'))
           render :json => @transact.as_json, :status => :unprocessable_entity
         end
       end
@@ -103,8 +103,8 @@ class TransactsController < ApplicationController
     @transact.metadata = @transact.create_req(params[:memo])
 
     if can?(:create, @transact) && @transact.save
-      if current_token && current_token.single_payment?
-        current_token.invalidate!
+      if current_token && (cap = current_token.single_payment?)
+        cap.invalidate!
       end
       if @transact.redirect_url.blank?
         flash[:notice] = t('notice_transfer_succeeded')

@@ -2,7 +2,7 @@
   "action": 
     {
     "_id":"read_payments",
-    "name":"reading payments",
+    "name":"view payments",
     "icon_uri":"/images/icons/unlocked.gif"
   }
 }

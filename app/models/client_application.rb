@@ -53,7 +53,6 @@ class ClientApplication < ActiveRecord::Base
                                 :scope => params[:scope], 
                                 :callback_url=>self.token_callback_url)
         params[:scope].split.each do |scope|
-          puts "parsing scope: #{scope}"
           r.capabilities << Capability.create!(:scope => scope)
         end
       end
@@ -66,7 +65,7 @@ protected
     scopes.split.each do |scope|
       scope_uri = URI.parse(scope)
       # XXX ignoring host:port and assuming it's our host:port
-      filepath = RAILS_ROOT + '/public' + scope_uri.path
+      filepath = ::Rails.root.to_s + '/public' + scope_uri.path
       unless File.exist?(filepath)
         return false
       end

@@ -4,8 +4,16 @@ class Capability < ActiveRecord::Base
 
   before_create :validate_scope_and_assign_group
 
+  def invalidated?
+    invalidated_at != nil
+  end
+  
+  def invalidate!
+    update_attribute(:invalidated_at, Time.now)
+  end
+
   def authorized_for?(requested_amount)
-    ['single_payment','recurring_payment'].include?(action_id) && requested_amount <= amount.to_f
+    ['single_payment','recurring_payment'].include?(action_id) && requested_amount <= amount.to_f && !invalidated?
   end
 
   def single_payment?
@@ -29,7 +37,7 @@ class Capability < ActiveRecord::Base
   end
 
   def can_pay?(g)
-    ['single_payment','recurring_payment'].include?(action_id) && (self.group == g || self.group.nil?)
+    ['single_payment','recurring_payment'].include?(action_id) && (self.group == g || self.group.nil?) && !invalidated?
   end
 
   def can_list_wallet_contents?
@@ -47,7 +55,8 @@ class Capability < ActiveRecord::Base
   end
 
   def amount
-    scope_hash['amount'][0]
+    amount_array = scope_hash['amount']
+    amount_array.nil? ? "" : amount_array[0]
   end
 
   def action_id
