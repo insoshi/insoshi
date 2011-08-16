@@ -32,6 +32,7 @@ class MembershipsController < ApplicationController
     @account = @person.account(@membership.group)
     respond_to do |format|
       format.js
+      format.html { redirect_to('/groups/' + @membership.group.id.to_s + '#memberships/' + @membership.id.to_s)}
     end
   end
 
