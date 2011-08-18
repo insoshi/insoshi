@@ -25,11 +25,19 @@ module OpentransactHelpers
     a
   end
 
+  def invalidate_scope(scope)
+    access_token.capabilities.find_by_scope(scope).invalidate!
+  end
+
   def access_token_key
-    AccessToken.first.token
+    access_token.token
   end
 
   def access_token_secret
-    AccessToken.first.secret
+    access_token.secret
+  end
+
+  def access_token
+    AccessToken.first
   end
 end

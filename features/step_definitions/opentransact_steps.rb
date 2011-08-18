@@ -26,6 +26,10 @@ Given /^an access token with scope "([^"]*)"$/ do |scope|
   create_access_token(scope)
 end
 
+Given /^the scope "([^"]*)" is invalidated$/ do |scope|
+  invalidate_scope(scope)
+end
+
 When /^I request transactions for "([^"]*)"$/ do |asset|
   a = OAuth::AccessToken.new(consumer,access_token_key,access_token_secret)
   transacts_path = asset.empty? ? "/transacts" : "/transacts/#{asset}" 

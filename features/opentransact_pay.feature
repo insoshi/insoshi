@@ -35,3 +35,11 @@ I want to make a payment on behalf of an account holder
     And an access token with scope "http://localhost:3000/scopes/single_payment.json?amount=10&asset=marbles"
     When I pay "10" "jacks" to "service@bank.com"
     Then I should receive error message "Bad scope"
+
+  Scenario: Scope exists but is invalidated
+    Given an account holder with asset "marbles"
+    And an account holder with email "service@bank.com" and asset "marbles"
+    And an access token with scope "http://localhost:3000/scopes/single_payment.json?amount=10&asset=marbles"
+    And the scope "http://localhost:3000/scopes/single_payment.json?amount=10&asset=marbles" is invalidated
+    When I pay "10" "marbles" to "service@bank.com"
+    Then I should receive error message "Bad scope"
