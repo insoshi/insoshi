@@ -3,6 +3,10 @@ Given /^a client application$/ do
   create_client_application
 end
 
+Given /^using opentransact gem$/ do
+  @using_opentransact_gem = true
+end
+
 Given /^an account holder with asset "([^"]*)"$/ do |asset|
   # Implementation detail beyond the scope of OpenTransact
   init_asset(asset)
@@ -52,15 +56,30 @@ Then /^I should receive error message "([^"]*)"$/ do |message|
   result['error'].should == message
 end
 
-When /^I pay "([^"]*)" "([^"]*)" to "([^"]*)"$/ do |amount, asset, to|
-  a = OAuth::AccessToken.new(consumer,access_token_key,access_token_secret)
-  transacts_path = asset.empty? ? "/transacts" : "/transacts/#{asset}" 
-  opts = {:amount => amount,
-          :memo => "test payment", 
-          :to => to
-          }
-  Artifice.activate_with(app) do
-    @transact = JSON.parse(a.post(transacts_path, opts, {'Accept'=>'application/json'}).body)
+When /^I pay "([^"]*)" "([^"]*)" to "([^"]*)"$/ do |amount, asset_name, to|
+  transacts_path = asset_name.empty? ? "http://test.com/transacts" : "http://test.com/transacts/#{asset_name}" 
+  memo = "test payment"
+
+  if @using_opentransact_gem
+    client = OpenTransact::Client.new(transacts_path, :token => access_token_key, :secret => access_token_secret,
+                                      :consumer_key => consumer_key, :consumer_secret => consumer_secret)
+    asset = OpenTransact::Asset.new(transacts_path, :client => client)
+    Artifice.activate_with(app) do
+      begin
+        @transact = asset.transfer(amount,to,memo)
+      rescue OpenTransact::HttpException => e
+        @transact = JSON.parse(e.response.body)
+      end
+    end
+  else
+    a = OAuth::AccessToken.new(consumer,access_token_key,access_token_secret)
+    opts = {:amount => amount,
+            :memo => memo, 
+            :to => to
+            }
+    Artifice.activate_with(app) do
+      @transact = JSON.parse(a.post(transacts_path, opts, {'Accept'=>'application/json'}).body)
+    end
   end
 end
 

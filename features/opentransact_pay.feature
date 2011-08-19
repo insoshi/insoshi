@@ -6,6 +6,7 @@ I want to make a payment on behalf of an account holder
 
   Background: A client application is registered on the server
     Given a client application
+    And using opentransact gem
 
   Scenario: Successful payment
     Given an account holder with asset "marbles"

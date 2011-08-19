@@ -47,4 +47,5 @@ group :development, :test do
   gem "spork"
   gem "guard-spork"
   gem "artifice"
+  gem "opentransact"
 end

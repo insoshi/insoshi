@@ -116,8 +116,14 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    multi_json (1.0.3)
+    multi_xml (0.3.0)
     nokogiri (1.5.0)
     oauth (0.4.5)
+    opentransact (0.1.2)
+      multi_json
+      multi_xml
+      oauth (~> 0.4.4)
     pg (0.11.0)
     polyglot (0.3.2)
     rack (1.2.1)
@@ -206,6 +212,7 @@ DEPENDENCIES
   json
   oauth
   oauth-plugin!
+  opentransact
   pg
   rack (= 1.2.1)
   rack-openid
