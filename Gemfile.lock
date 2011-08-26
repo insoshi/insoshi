@@ -1,12 +1,13 @@
 GIT
   remote: git://github.com/sferik/rails_admin.git
-  revision: 77b45592f4bbcc182294e4281147671c74a9179d
-  branch: rails-3.0
+  revision: 608ae867438f406bcd9671438df8be7399937d1d
+  ref: 608ae867438f406bcd96
   specs:
     rails_admin (0.0.1)
       builder (~> 2.1.0)
+      fastercsv (~> 1.5.4)
       haml (>= 3.1.0, < 3.3.0)
-      rails (~> 3.0.10)
+      rails (~> 3.0.9)
 
 PATH
   remote: vendor/gems/oauth-plugin-0.4.0.pre4
@@ -87,11 +88,12 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
+    fastercsv (1.5.4)
     feed-normalizer (1.5.2)
       hpricot (>= 0.6)
       simple-rss (>= 1.1)
     ffi (1.0.9)
-    gherkin (2.4.11)
+    gherkin (2.4.16)
       json (>= 1.4.6)
     guard (0.6.2)
       thor (~> 0.14.6)
@@ -99,7 +101,7 @@ GEM
       guard (>= 0.2.2)
       spork (>= 0.8.4)
     haml (3.1.2)
-    heroku (2.4.2)
+    heroku (2.5.2)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
       rubyzip
@@ -149,8 +151,8 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.4)
     rake (0.9.2)
-    rdoc (3.9.2)
-    rest-client (1.6.3)
+    rdoc (3.9.3)
+    rest-client (1.6.7)
       mime-types (>= 1.16)
     rmagick (2.13.1)
     rspec (2.6.0)
@@ -168,12 +170,12 @@ GEM
       rspec (~> 2.6.0)
     ruby-openid (2.1.8)
     rubyzip (0.9.4)
-    selenium-webdriver (2.4.0)
+    selenium-webdriver (2.5.0)
       childprocess (>= 0.2.1)
       ffi (>= 1.0.7)
       json_pure
       rubyzip
-    silent-postgres (0.0.8)
+    silent-postgres (0.1.1)
     simple-rss (1.2.3)
     spork (0.8.5)
     term-ansicolor (1.0.6)
