@@ -11,7 +11,7 @@ task :install => :environment do |t|
   p.admin = true
   p.save
   address = Address.new(:name => 'personal', :person => p)
-  address.save!
+  address.save
 
   group_attributes = {:name => (ENV['APP_NAME'] || "Default Group"),
                       :description => "The system installation created this group with a currency and configured it as a mandatory group. All people who register on the system will automatically join all mandatory groups. By default, there is no credit limit configured for new account holders for this group although you may configure one.",
