@@ -38,7 +38,8 @@ class ClientApplication < ActiveRecord::Base
   end
   
   def oauth_server
-    @oauth_server||=OAuth::Server.new( "http://" + ClientApplication.global_prefs.server_name )
+    server_name = ClientApplication.global_prefs.server_name || ""
+    @oauth_server||=OAuth::Server.new( "http://" + server_name )
   end
   
   def credentials
