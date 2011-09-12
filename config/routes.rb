@@ -120,6 +120,7 @@ Oscurrency::Application.routes.draw do
   match '/oauth/access_token' => 'oauth#access_token', :as => :access_token
   match '/oauth/test_request' => 'oauth#test_request', :as => :test_request
   match '/oauth/scopes' => 'transacts#scopes', :as => :scopes
+  match '/oauth/revoke' => 'oauth#revoke', :as => :revoke
   match '/oauth' => 'oauth#index', :as => :oauth
   match '/about_user' => 'transacts#about_user', :as => :about_user
   match '/wallet' => 'transacts#wallet', :as => :wallet
