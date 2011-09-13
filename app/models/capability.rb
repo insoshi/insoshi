@@ -59,6 +59,18 @@ class Capability < ActiveRecord::Base
     amount_array.nil? ? "" : amount_array[0]
   end
 
+  def long_amount
+    amount.blank? ? "" : "#{amount} "
+  end
+
+  def long_asset
+    asset.blank? ? "" : " (#{long_amount}#{asset})"
+  end
+
+  def long_action_name
+    action_name + long_asset
+  end
+
   def action_id
     action['_id']
   end

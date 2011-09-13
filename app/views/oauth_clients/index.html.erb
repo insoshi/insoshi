@@ -3,10 +3,11 @@
 <% unless @tokens.empty? %>
 <p>The following tokens have been issued to applications in your name</p>
 <table>
-  <tr><th>Application</th><th>Issued</th><th>&nbsp;</th></tr>
+  <tr><th>Application</th><th>Capabilities</th><th>Issued</th><th>&nbsp;</th></tr>
   <% @tokens.each do |token|%>
     <% content_tag_for :tr, token do %>
       <td><%= link_to token.client_application.name, token.client_application.url %></td>
+      <td><%= render :partial => 'capability', :collection => token.capabilities %></td>
       <td><%= token.authorized_at %></td>
       <td>
         <% form_tag :controller => 'oauth', :action => 'revoke' do %>
