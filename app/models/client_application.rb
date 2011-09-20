@@ -48,32 +48,16 @@ class ClientApplication < ActiveRecord::Base
 
   def create_request_token(params={}) 
     if params[:scope]
-      scopes = params[:scope]
-      if all_exist?(params[:scope])
+      if ::OauthScope.all_exist?(params[:scope])
         r = RequestToken.create(:client_application => self, 
                                 :scope => params[:scope], 
                                 :callback_url=>self.token_callback_url)
-        params[:scope].split.each do |scope|
-          r.capabilities << Capability.create!(:scope => scope)
-        end
       end
       r
     end
   end
   
 protected
-  def all_exist?(scopes)
-    scopes.split.each do |scope|
-      scope_uri = URI.parse(scope)
-      # XXX ignoring host:port and assuming it's our host:port
-      filepath = ::Rails.root.to_s + '/public' + scope_uri.path
-      unless File.exist?(filepath)
-        return false
-      end
-    end
-    true
-  end
-
   def generate_keys
     self.key = OAuth::Helper.generate_key(40)[0,40]
     self.secret = OAuth::Helper.generate_key(40)[0,40]

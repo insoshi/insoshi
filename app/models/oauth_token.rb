@@ -5,7 +5,17 @@ class OauthToken < ActiveRecord::Base
   validates_uniqueness_of :token
   validates_presence_of :client_application, :token
   before_validation :generate_keys, :on => :create
+
+  after_create :add_capabilities
   
+  def add_capabilities
+    if ::OauthScope.all_exist?(self.scope)
+      self.scope.split.each do |s|
+        self.capabilities << Capability.create!(:scope => s)
+      end
+    end
+  end
+
   def invalidated?
     invalidated_at != nil
   end

@@ -1,0 +1,16 @@
+<h1>Authorize access to your account</h1>
+<p>Would you like to authorize <%%= link_to @token.client_application.name,@token.client_application.url %> (<%%= link_to @token.client_application.url,@token.client_application.url %>) to access your account?</p>
+<%% form_tag authorize_url do %>
+  <%%= hidden_field_tag "response_type", params[:response_type]%>
+  <%%= hidden_field_tag "client_id", params[:client_id]%>
+  <%%= hidden_field_tag "redirect_uri", params[:redirect_uri]%>
+  <%%= hidden_field_tag "state", params[:state]%>
+  <%%= hidden_field_tag "scope", params[:scope]%>
+
+<p>
+  <%%= check_box_tag 'authorize' %> authorize access
+</p>
+<p>
+  <%%= submit_tag %>
+</p>
+<%% end %>

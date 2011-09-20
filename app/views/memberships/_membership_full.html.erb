@@ -2,7 +2,7 @@
     <%- if @person.openid_identifier.nil? -%>
     <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.name %></span>&nbsp;<%= organization_image(@person) %><%= waiting_image %></h2>
     <%- else -%>
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<img src="http://openid.net/images/login-bg.gif"><%= organization_image(@person) %>&nbsp;<%= waiting_image %></h2>
+    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<img src="/images/login-bg.gif"><%= organization_image(@person) %>&nbsp;<%= waiting_image %></h2>
     <%- end -%>
     <%- if admin? and not @person.active? -%>
       <p class="error"><%= t('people.show.not_active') %></p>

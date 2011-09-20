@@ -3,7 +3,7 @@ class Oauth2Verifier < OauthToken
   
   def exchange!(params={})
     OauthToken.transaction do
-      token = Oauth2Token.create! :person=>person,:client_application=>client_application
+      token = Oauth2Token.create! :person=>person,:client_application=>client_application, :scope=>scope
       invalidate!
       token
     end

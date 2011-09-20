@@ -41,5 +41,8 @@ module Oscurrency
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+
+    require 'oauth/rack/oauth_filter'
+    config.middleware.use OAuth::Rack::OAuthFilter
   end
 end

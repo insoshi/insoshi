@@ -92,6 +92,10 @@ class ApplicationController < ActionController::Base
       @current_person = current_person_session && current_person_session.record
     end
 
+    def current_person=(person)
+      @current_person=person
+    end
+
     def current_user
       current_person 
     end
