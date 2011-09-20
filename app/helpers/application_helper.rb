@@ -51,7 +51,8 @@ module ApplicationHelper
       exchanges =  menu_element("Ledger", admin_exchanges_path)
       feed = menu_element("Feed", admin_feed_posts_path)
       preferences = menu_element("Prefs", admin_preferences_path)
-      links = [spam, people, exchanges, feed, preferences]
+      categories = menu_element("Categories", "/categories")
+      links = [spam, categories, people, exchanges, feed, preferences]
     else
       #links = [home, people]
       links = [home, categories]
