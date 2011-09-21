@@ -1,4 +1,3 @@
-
 en:
   currency_unit_plural: "hrs"
 
@@ -12,6 +11,9 @@ en:
   button_upload: "Upload"
   button_select: "Select"
   button_search: "Search"
+
+  filter_categories: "Categories"
+  filter_neighborhoods: "Neighborhoods"
 
   estimate: "Estimate"
   title: "Title"

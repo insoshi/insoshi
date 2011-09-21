@@ -1,4 +1,3 @@
-
 fr:
   currency_unit_plural: "heures"
 
@@ -12,6 +11,9 @@ fr:
   button_upload: "Rafraîchir"
   button_select: "Choisir"
   button_search: "Rechercher"
+
+  filter_categories: "Categories"
+  filter_neighborhoods: "Neighborhoods"
 
   estimate: "Estimer"
   title: "Titre"

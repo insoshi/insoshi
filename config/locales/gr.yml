@@ -12,6 +12,9 @@ gr:
   button_select: "Επιλογή"
   button_search: "Αναζήτηση"
 
+  filter_categories: "Κατηγορίες"
+  filter_neighborhoods: "Περιοχές"
+
   estimate: "Εκτίμηση"
   title: "Τίτλος"
   bid: "δήλωση"
