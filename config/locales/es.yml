@@ -12,6 +12,9 @@ es:
   button_select: "Seleccionar"
   button_search: "Búsqueda"
 
+  filter_categories: "Categorías"
+  filter_neighborhoods: "Vecindarios"
+
   estimate: "Estimación"
   title: "Titulo"
   bid: "oferta"
