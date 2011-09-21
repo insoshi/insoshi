@@ -1,4 +1,4 @@
-<div><%= link_to "Categories", home_path, :class => "toggle-category filter_selected" %> | <%= link_to "Neighborhoods", home_path, :class => "toggle-neighborhood" %></div>
+<div><%= link_to t('filter_categories'), home_path, :class => "toggle-category filter_selected" %> | <%= link_to t('filter_neighborhoods'), home_path, :class => "toggle-neighborhood" %></div>
 <% cache('reqs_filters', :expires_in => 24.hours) do %>
 <%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'req', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
 <%= render :partial => '/reqs/neighborhoods', :locals => {:selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
