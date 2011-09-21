@@ -12,8 +12,8 @@ es:
   button_select: "Seleccionar"
   button_search: "Búsqueda"
 
-  filter_categories: "Categories"
-  filter_neighborhoods: "Neighborhoods"
+  filter_categories: "Categorías"
+  filter_neighborhoods: "Vecindarios"
 
   estimate: "Estimación"
   title: "Titulo"
