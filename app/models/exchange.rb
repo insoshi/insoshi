@@ -25,6 +25,7 @@ class Exchange < ActiveRecord::Base
   validate :offer_exists
   validate :group_has_a_currency_and_includes_both_counterparties_as_members
   validate :amount_is_positive
+  validate :worker_is_not_customer
 
   attr_accessible :amount, :group_id
   attr_readonly :amount
@@ -67,6 +68,12 @@ class Exchange < ActiveRecord::Base
   def amount_is_positive
     unless amount > 0
       errors.add(:amount, "must be greater than zero")
+    end
+  end
+
+  def worker_is_not_customer
+    if customer == worker
+      errors.add(:worker, "cannot be not be the payer")
     end
   end
 

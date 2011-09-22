@@ -13,8 +13,8 @@ Oscurrency::Application.routes.draw do
 
   # XXX in 2.3.x, this was easier -> map.resources :transacts, :as => "transacts/:asset"
   get    "transacts(/:asset)(.:format)"          => "transacts#index",   :as => 'transacts'
-  get    "transacts(/:asset)/:id(.:format)"      => "transacts#show",    :as => 'transact'
   get    "transacts(/:asset)/new"      => "transacts#new",     :as => 'new_transact'
+  get    "transacts(/:asset)/:id(.:format)"      => "transacts#show",    :as => 'transact'
   post   "transacts(/:asset)(.:format)"          => "transacts#create",  :as => 'transacts'
   #get    "transacts/[:asset]/:id/edit" => "transacts#edit",    :as => 'edit_transact'
   #put    "transacts/[:asset]/:id"      => "transacts#update",  :as => 'transact'

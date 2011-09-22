@@ -110,9 +110,11 @@ class TransactsController < ApplicationController
         cap.invalidate!
       end
       if @transact.redirect_url.blank?
-        flash[:notice] = t('notice_transfer_succeeded')
         respond_to do |format|
-          format.html { redirect_to person_path(@worker) }
+          format.html do 
+            flash[:notice] = t('notice_transfer_succeeded')
+            redirect_to person_path(@worker)
+          end
           format.json { render :json => @transact.as_json }
           format.xml { render :xml => @transact.to_xml }
         end
