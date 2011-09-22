@@ -11,6 +11,8 @@ en:
   button_upload: "Upload"
   button_select: "Select"
   button_search: "Search"
+  button_new_offer: "New Offer"
+  button_new_req: "New Request"
 
   filter_categories: "Categories"
   filter_neighborhoods: "Neighborhoods"
