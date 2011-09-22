@@ -1,6 +1,9 @@
 class TransactsController < ApplicationController
   skip_before_filter :require_activation
-  prepend_before_filter :authlogic_login_or_oauth_required
+  prepend_before_filter :activate_authlogic
+  oauthenticate :strategies => :token, :except => [:about_user,:wallet,:scopes,:new]
+  oauthenticate :strategies => [], :only => :new
+  oauthenticate :strategies => :token, :interactive => false, :only => [:about_user,:wallet,:scopes]
   before_filter :find_group_by_asset, :except => [:about_user,:wallet,:scopes]
   skip_before_filter :verify_authenticity_token, :set_person_locale, :if => :oauth?
 
@@ -133,15 +136,6 @@ class TransactsController < ApplicationController
 
   end
 
-  def opentransact_find_worker(payee)
-    # assume identifier is either an email address or a url
-    if payee.split('@').size == 2
-      @worker = Person.find_by_email(payee)
-    else
-      @worker = Person.find_by_openid_identifier(OpenIdAuthentication.normalize_identifier(CGI.unescape(payee)))
-    end
-  end
-
   def scopes
     result = ""
     scopes = []
@@ -161,6 +155,15 @@ class TransactsController < ApplicationController
 
   private
 
+  def opentransact_find_worker(payee)
+    # assume identifier is either an email address or a url
+    if payee.split('@').size == 2
+      @worker = Person.find_by_email(payee)
+    else
+      @worker = Person.find_by_openid_identifier(OpenIdAuthentication.normalize_identifier(CGI.unescape(payee)))
+    end
+  end
+
   def includes_wallet_capability?
     current_token.capabilities.detect {|c| c.can_list_wallet_contents? }
   end
@@ -171,11 +174,6 @@ class TransactsController < ApplicationController
 
   def includes_payment_capability?
     current_token.capabilities.detect {|c| c.can_pay?(@group)}
-  end
-
-  def authlogic_login_or_oauth_required
-    activate_authlogic
-    login_or_oauth_required
   end
 
   def find_group_by_asset
