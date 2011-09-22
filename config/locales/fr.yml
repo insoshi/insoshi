@@ -224,7 +224,9 @@ fr:
     index:
       header: "Home"
       tab_exchanges: "Exchanges"
+      community_exchanges_graph: "Community Exchanges Graph"
       tab_your_activity: "Votre activité"
+      edit_your_preferences: "Edit Your Preferences"
       tab_graphs: "Graphique"
       unread_messages: "Vous avez des messages non-lus dans votre boîte aux lettres"
       see_your_messages: "Cliquer ici pour lire vos messages"

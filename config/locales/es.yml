@@ -178,7 +178,9 @@ es:
     index:
       header: "Pagina Central"
       tab_exchanges: "Intercambios"
+      community_exchanges_graph: "Community Exchanges Graph"
       tab_your_activity: "Tus actividades"
+      edit_your_preferences: "Edit Your Preferences"
       tab_graphs: "Gráficos"
       unread_messages: "Tienes mensajes no abiertos en tu buzon."
       see_your_messages: "Entrar aqui  para ver sus mensajes"
