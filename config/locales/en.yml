@@ -178,7 +178,9 @@ en:
     index:
       header: "Home"
       tab_exchanges: "Exchanges"
+      community_exchanges_graph: "Community Exchanges Graph"
       tab_your_activity: "Your Activity"
+      edit_your_preferences: "Edit Your Preferences"
       tab_graphs: "Graphs"
       unread_messages: "You have unread messages in your mailbox."
       see_your_messages: "Click here to see your messages"

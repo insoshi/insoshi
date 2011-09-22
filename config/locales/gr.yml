@@ -215,7 +215,9 @@ gr:
     index:
       header: "Αρχική"
       tab_exchanges: "Ανταλλαγές"
+      community_exchanges_graph: "Γράφημα Ανταλλαγών Κοινότητας"
       tab_your_activity: "Η δραστηριότητά σας"
+      edit_your_preferences: "Επεξεργασία Προτιμήσεων Ειδοποίησης"
       tab_graphs: "Γραφήματα"
       unread_messages: "Έχετε μη αναγνωσμένη αλληλογραφία."
       see_your_messages: "Πατήστε εδώ για να δείτε τα μηνύματα σας"
