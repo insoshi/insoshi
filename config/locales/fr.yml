@@ -11,6 +11,8 @@ fr:
   button_upload: "Rafraîchir"
   button_select: "Choisir"
   button_search: "Rechercher"
+  button_new_offer: "New Offer"
+  button_new_req: "New Request"
 
   filter_categories: "Categories"
   filter_neighborhoods: "Neighborhoods"

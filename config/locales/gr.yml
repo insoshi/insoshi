@@ -11,6 +11,8 @@ gr:
   button_upload: "Ανέβασμα"
   button_select: "Επιλογή"
   button_search: "Αναζήτηση"
+  button_new_offer: "Νέα Προσφορά"
+  button_new_req: "Νέα Αίτηση"
 
   filter_categories: "Κατηγορίες"
   filter_neighborhoods: "Περιοχές"
