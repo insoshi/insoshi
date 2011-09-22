@@ -11,6 +11,8 @@ es:
   button_upload: "Descargar"
   button_select: "Seleccionar"
   button_search: "Búsqueda"
+  button_new_offer: "New Offer"
+  button_new_req: "New Request"
 
   filter_categories: "Categorías"
   filter_neighborhoods: "Vecindarios"
