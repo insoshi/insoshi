@@ -44,7 +44,8 @@ en:
   to: "to"
   from: "from"
   in: "in"
-
+  or: "or"
+  
   accounts:
     show:
       header: "Main Account"
@@ -165,7 +166,7 @@ en:
       community_exchanges: "Community Exchanges"
       home: "Home"
       forum: "Forum"
-      requests: "Reqs"
+      requests: "Requests"
       offers: "Offers"
       exchanges: "Exchanges"
       people: "People"
@@ -175,6 +176,21 @@ en:
       no_members: "No members (yet)"
 
   home:
+    menu:
+      blog: "Blog"
+      skillbank: "Skillbank"
+      about: "About"
+      practice: "Practice"
+      steps: "Steps"
+      contact: "Contact"
+      faq: "FAQ"
+      agreement: "Agreement"
+      your_groups: "Your Groups"
+      more_groups: "more..."
+      help: "Help"
+      profile: "Profile"
+      inbox: "Inbox"
+      sign_out: "Sign out"
     index:
       header: "Home"
       tab_exchanges: "Exchanges"

@@ -44,6 +44,7 @@ fr:
   to: "à"
   from: "de"
   in: "dans"
+  or: "or"
 
   datetime:
     distance_in_words:
@@ -221,6 +222,21 @@ fr:
       no_members: "Pas encore de membres"
 
   home:
+    menu:
+      blog: "Blog"
+      skillbank: "Skillbank"
+      about: "About"
+      practice: "Practice"
+      steps: "Steps"
+      contact: "Contact"
+      faq: "FAQ"
+      agreement: "Agreement"
+      your_groups: "Your Groups"
+      more_groups: "more..."
+      help: "Help"
+      profile: "Profile"
+      inbox: "Inbox"
+      sign_out: "Sign out"
     index:
       header: "Home"
       tab_exchanges: "Exchanges"
