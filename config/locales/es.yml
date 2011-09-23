@@ -44,6 +44,7 @@ es:
   to: "a"
   from: "de"
   in: "dans"
+  or: "or"
 
   accounts:
     show:
@@ -175,6 +176,21 @@ es:
       no_members: "Sin afiliados todavía"
 
   home:
+    menu:
+      blog: "Blog"
+      skillbank: "Skillbank"
+      about: "About"
+      practice: "Practice"
+      steps: "Steps"
+      contact: "Contact"
+      faq: "FAQ"
+      agreement: "Agreement"
+      your_groups: "Your Groups"
+      more_groups: "more..."
+      help: "Help"
+      profile: "Profile"
+      inbox: "Inbox"
+      sign_out: "Sign out"
     index:
       header: "Pagina Central"
       tab_exchanges: "Intercambios"

@@ -39,11 +39,12 @@ gr:
   said: "είπε"
   reply_on: "απάντηση προς"
   wall: "τοίχος"
-  see_all: "Δες τα όλα"
+  see_all: "Προβολή όλων"
   by: "από"
   to: "προς"
   from: "από"
   in: "σε"
+  or: "ή"
 
   datetime:
     distance_in_words:
@@ -212,6 +213,21 @@ gr:
       no_members: "Κανένα μέλος (ακόμη)"
 
   home:
+    menu:
+      blog: "Blog"
+      skillbank: "Υπηρεσίες"
+      about: "Σχετικά"
+      practice: "Εξάσκηση"
+      steps: "Βήματα"
+      contact: "Επικοινωνία"
+      faq: "FAQ"
+      agreement: "Δήλωση μέλους"
+      your_groups: "Οι Ομάδες σας"
+      more_groups: "περισσότερα..."
+      help: "Βοήθεια"
+      profile: "Προφίλ"
+      inbox: "Εισερχόμενα"
+      sign_out: "Έξοδος"
     index:
       header: "Αρχική"
       tab_exchanges: "Ανταλλαγές"
@@ -316,7 +332,7 @@ gr:
     new:
       header: "Εγγραφή"
       email_address: "Ηλεκτρονική διεύθυνση"
-      comma_will_be_verified: ", θα απαληθευτεί"
+      comma_will_be_verified: ", θα επαληθευτεί"
       never_made_public: "ποτέ δεν θα εμφανίζεται"
       name: "Όνομα"
       will_be_displayed: "(θα εμφανίζεται)"

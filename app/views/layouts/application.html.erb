@@ -43,11 +43,12 @@
                 <%- end -%>
               <%- end -%>
             <%- else -%>
-              <%= link_to "Sign in", login_path %> or
-              <%= link_to "Sign up", signup_path %>
+              <%= link_to t('sessions.new.header'), login_path %>
+              <%= t('or') %>
+              <%= link_to t('people.new.header'), signup_path %>
               <%- if global_prefs.can_send_email? -%>
               <br />
-              <%= link_to "I forgot my password",
+              <%= link_to t('sessions.new.i_forgot_my_password'),
                            new_password_reset_path %>
               <%- end -%>             
             <%- end -%>
@@ -56,21 +57,21 @@
           <%- if logged_in? -%>
             <ul id="sfmenu">
               <li class="left_item">
-                <a href="#">Your Groups</a>
+                <a href="#"><%= t('home.menu.your_groups') %></a>
                 <ul>
                   <%= render :partial => 'shared/membership', :collection => current_person.memberships.all(:include => 'group', :order => 'groups.name ASC') %>
-                  <li><%= link_to "more...", groups_path, :id => 'moregroups' %></li>
+                  <li><%= link_to t('home.menu.more_groups'), groups_path, :id => 'moregroups' %></li>
                 </ul>
               </li>
               <li class="middle_item">
-                <a href="#">Help</a>
+                <a href="#"><%= t('home.menu.help') %></a>
                 <ul class="active">
-                  <li><%= link_to "about", about_path if !global_prefs.about.blank? %></li>
-                  <li><%= link_to "practice", practice_path if !global_prefs.practice.blank? %></li>
-                  <li><%= link_to "steps", steps_path if !global_prefs.steps.blank? %></li>
-                  <li><%= link_to "contact", contact_path if !global_prefs.contact.blank? %></li>
-                  <li><%= link_to "agreement", agreement_path if !global_prefs.agreement.blank? %></li>
-                  <li><%= link_to "faq", questions_path if !global_prefs.questions.blank? %></li>
+                  <li><%= link_to t('home.menu.about'), about_path if !global_prefs.about.blank? %></li>
+                  <li><%= link_to t('home.menu.practice'), practice_path if !global_prefs.practice.blank? %></li>
+                  <li><%= link_to t('home.menu.steps'), steps_path if !global_prefs.steps.blank? %></li>
+                  <li><%= link_to t('home.menu.contact'), contact_path if !global_prefs.contact.blank? %></li>
+                  <li><%= link_to t('home.menu.agreement'), agreement_path if !global_prefs.agreement.blank? %></li>
+                  <li><%= link_to t('home.menu.faq'), questions_path if !global_prefs.questions.blank? %></li>
                 </ul>
               </li>
               <li class="profile_icon_item">
@@ -79,9 +80,9 @@
               <li class="right_item">
                 <a href="#"><%= h current_person.name %></a>
                 <ul>
-                  <%= link_to "Profile", person_path(current_person) %>
-                  <%= link_to "Inbox", messages_path %>
-                  <%= link_to "Sign out", logout_path %>
+                  <%= link_to t('home.menu.profile'), person_path(current_person) %>
+                  <%= link_to t('home.menu.inbox'), messages_path %>
+                  <%= link_to t('home.menu.sign_out'), logout_path %>
                 </ul>
               </li>
             </ul>
