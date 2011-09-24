@@ -641,7 +641,9 @@ input#person_openid_identifier, input#person_session_openid_identifier {
 }
 
 #tabs {
-  height: 960px;
+/*  height: 960px;*/
+  height: auto;
+  margin-bottom: 24px;
 }
 
 .membership_id {
