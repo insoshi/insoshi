@@ -32,6 +32,7 @@ class OffersController < ApplicationController
 
   def new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
       format.js
     end
@@ -47,11 +48,13 @@ class OffersController < ApplicationController
       if @offer.save
         flash[:notice] = t('success_offer_created')
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
         format.js
         format.xml  { render :xml => @offer, :status => :created, :location => @offer }
       else
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.js {render :action => 'new'}
         format.xml  { render :xml => @offer.errors, :status => :unprocessable_entity }
       end
@@ -61,6 +64,7 @@ class OffersController < ApplicationController
   def edit
     @group = @offer.group
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
       format.js
     end
@@ -73,12 +77,14 @@ class OffersController < ApplicationController
       if @offer.update_attributes(params[:offer])
         flash[:notice] = t('notice_offer_updated')
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
         #format.html { redirect_to(@offer) }
         format.js
         format.xml  { head :ok }
       else
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         #format.html { render :action => "edit" }
         format.js {render :action => 'edit'}
         format.xml  { render :xml => @offer.errors, :status => :unprocessable_entity }
