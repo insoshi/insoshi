@@ -60,20 +60,26 @@ $(function() {
 
   // request hashes are inconsistent since controller is reqs
   route('requests', /^#requests$/,                                 '/groups/[:group_id]/reqs');
+  route('requests', /^#requests\/category_id=$/,                   '/groups/[:group_id]/reqs');
   route('requests', /^#requests\/category_id=(\d+)$/,              '/groups/[:group_id]/reqs?category_id=[:1]');
   route('requests', /^#reqs\/category_id=(\d+)\/page=(\d+)$/,      '/groups/[:group_id]/reqs?category_id=[:1]&page=[:2]');
+  route('requests', /^#requests\/neighborhood_id=$/,              '/groups/[:group_id]/reqs');
   route('requests', /^#requests\/neighborhood_id=(\d+)$/,          '/groups/[:group_id]/reqs?neighborhood_id=[:1]');
   route('requests', /^#reqs\/neighborhood_id=(\d+)\/page=(\d+)$/,  '/groups/[:group_id]/reqs?neighborhood_id=[:1]&page=[:2]');
 
   route('offers',   /^#offers$/,                                   '/groups/[:group_id]/offers');
+  route('offers',   /^#offers\/category_id=$/,                     '/groups/[:group_id]/offers');
   route('offers',   /^#offers\/category_id=(\d+)$/,                '/groups/[:group_id]/offers?category_id=[:1]');
   route('offers',   /^#offers\/category_id=(\d+)\/page=(\d+)$/,    '/groups/[:group_id]/offers?category_id=[:1]&page=[:2]');
+  route('offers',   /^#offers\/neighborhood_id=$/,                 '/groups/[:group_id]/offers');
   route('offers',   /^#offers\/neighborhood_id=(\d+)$/,            '/groups/[:group_id]/offers?neighborhood_id=[:1]');
   route('offers',   /^#offers\/neighborhood_id=(\d+)\/page=(\d+)$/,'/groups/[:group_id]/offers?neighborhood_id=[:1]&page=[:2]');
 
   route('people',   /^#people$/,                                   '/groups/[:group_id]/memberships');
+  route('people',   /^#people\/category_id=$/,                     '/groups/[:group_id]/memberships');
   route('people',   /^#people\/category_id=(\d+)$/,                '/groups/[:group_id]/memberships?category_id=[:1]');
   route('people',   /^#people\/category_id=(\d+)\/page=(\d+)$/,    '/groups/[:group_id]/memberships?category_id=[:1]&page=[:2]');
+  route('people',   /^#people\/neighborhood_id=$/,                 '/groups/[:group_id]/memberships');
   route('people',   /^#people\/neighborhood_id=(\d+)$/,            '/groups/[:group_id]/memberships?neighborhood_id=[:1]');
   route('people',   /^#people\/neighborhood_id=(\d+)\/page=(\d+)$/,'/groups/[:group_id]/memberships?neighborhood_id=[:1]&page=[:2]');
 

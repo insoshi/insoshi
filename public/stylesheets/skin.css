@@ -98,7 +98,10 @@ font-size:1.3em;
   margin: 0 0 0 0;
   padding: 0;
   text-align: center;
-  width: 70px;
+  width: 70px; 
+}
+#nav li.n-neighborhoods {
+ width: 90px;
 }
 #nav li a {
   color: #fff;
