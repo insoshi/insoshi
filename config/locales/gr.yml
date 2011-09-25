@@ -429,6 +429,19 @@ gr:
     partial:
       created_by: "Δημιουργήθηκε από"
 
+  searches:
+    header: "Αναζήτηση"
+    search_results: "Αποτελέσματα αναζήτησης"
+    no_result: "Κανένα αποτέλεσμα"
+    type:
+      forums: "στο Φόρουμ"
+      messages: "Μηνυμάτων"
+      groups: "Ομάδων"
+      people: "Ανθρώπων"
+      categories: "Κατηγοριών"
+      offers: "Προσφορών"
+      reqs: "Αιτήσεων"
+
   transacts:
     index:
       header: "Οι συναλλαγές σας"

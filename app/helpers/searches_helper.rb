@@ -14,19 +14,19 @@ module SearchesHelper
   
   def search_type
     if params[:controller] == "forums" or params[:model] == "ForumPost"
-      "Forums" 
+      t('searches.type.forums')
     elsif params[:controller] == "messages" or params[:model] == "Message"
-      "Messages"
+      t('searches.type.messages')
     elsif params[:controller].include?("groups") or params[:model] == "Group" or params[:action].include?("groups")
-      "Groups"
+      t('searches.type.groups')
     elsif params[:controller] == "people" or params[:model] == "Person"
-      "People"
+      t('searches.type.people')
     elsif params[:controller] == "categories" or params[:model] == "Category"
-      "Categories"
+      t('searches.type.categories')
     elsif params[:controller] == "offers" or params[:model] == "Offer"
-      "Offers"
+      t('searches.type.offers')
     else
-      "Requests"
+      t('searches.type.reqs')
     end
   end
   
