@@ -392,6 +392,19 @@ en:
     partial:
       created_by: "Created by"
 
+  searches:
+    header: "Search"
+    search_results: "Search results"
+    no_result: "No result"
+    type:
+      forums: "Forums"
+      messages: "Messages"
+      groups: "Groups"
+      people: "People"
+      categories: "Categories"
+      offers: "Offers"
+      reqs: "Requests"
+
   transacts:
     index:
       header: "Your Transactions"
