@@ -195,7 +195,7 @@ ul li.profile_icon_item {
   background: #FFF6BF; 
   color: #514721; 
   border: 1px solid #FFD324;
-  width: 45px;
+  width: auto;
 }
 
 #scope-action {
@@ -641,7 +641,9 @@ input#person_openid_identifier, input#person_session_openid_identifier {
 }
 
 #tabs {
-  height: 960px;
+/*  height: 960px;*/
+  height: auto;
+  margin-bottom: 24px;
 }
 
 .membership_id {

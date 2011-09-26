@@ -44,6 +44,7 @@ es:
   to: "a"
   from: "de"
   in: "dans"
+  or: "or"
 
   accounts:
     show:
@@ -175,10 +176,27 @@ es:
       no_members: "Sin afiliados todavía"
 
   home:
+    menu:
+      blog: "Blog"
+      skillbank: "Skillbank"
+      about: "About"
+      practice: "Practice"
+      steps: "Steps"
+      contact: "Contact"
+      faq: "FAQ"
+      agreement: "Agreement"
+      your_groups: "Your Groups"
+      more_groups: "more..."
+      help: "Help"
+      profile: "Profile"
+      inbox: "Inbox"
+      sign_out: "Sign out"
     index:
       header: "Pagina Central"
       tab_exchanges: "Intercambios"
+      community_exchanges_graph: "Community Exchanges Graph"
       tab_your_activity: "Tus actividades"
+      edit_your_preferences: "Edit Your Preferences"
       tab_graphs: "Gráficos"
       unread_messages: "Tienes mensajes no abiertos en tu buzon."
       see_your_messages: "Entrar aqui  para ver sus mensajes"
@@ -373,6 +391,19 @@ es:
       header: "Modificar el tema"
     partial:
       created_by: "Creado por"
+
+  searches:
+    header: "Search"
+    search_results: "Search results"
+    no_result: "No result"
+    type:
+      forums: "Forums"
+      messages: "Messages"
+      groups: "Groups"
+      people: "People"
+      categories: "Categories"
+      offers: "Offers"
+      reqs: "Requests"
 
   transacts:
     index:

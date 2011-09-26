@@ -44,6 +44,7 @@ fr:
   to: "à"
   from: "de"
   in: "dans"
+  or: "or"
 
   datetime:
     distance_in_words:
@@ -221,10 +222,27 @@ fr:
       no_members: "Pas encore de membres"
 
   home:
+    menu:
+      blog: "Blog"
+      skillbank: "Skillbank"
+      about: "About"
+      practice: "Practice"
+      steps: "Steps"
+      contact: "Contact"
+      faq: "FAQ"
+      agreement: "Agreement"
+      your_groups: "Your Groups"
+      more_groups: "more..."
+      help: "Help"
+      profile: "Profile"
+      inbox: "Inbox"
+      sign_out: "Sign out"
     index:
       header: "Home"
       tab_exchanges: "Exchanges"
+      community_exchanges_graph: "Community Exchanges Graph"
       tab_your_activity: "Votre activité"
+      edit_your_preferences: "Edit Your Preferences"
       tab_graphs: "Graphique"
       unread_messages: "Vous avez des messages non-lus dans votre boîte aux lettres"
       see_your_messages: "Cliquer ici pour lire vos messages"
@@ -420,6 +438,19 @@ fr:
       header: "Modifiez le sujet"
     partial:
       created_by: "Crée par"
+
+  searches:
+    header: "Search"
+    search_results: "Search results"
+    no_result: "No result"
+    type:
+      forums: "Forums"
+      messages: "Messages"
+      groups: "Groups"
+      people: "People"
+      categories: "Categories"
+      offers: "Offers"
+      reqs: "Requests"
 
   transacts:
     index:

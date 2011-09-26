@@ -44,7 +44,8 @@ en:
   to: "to"
   from: "from"
   in: "in"
-
+  or: "or"
+  
   accounts:
     show:
       header: "Main Account"
@@ -165,7 +166,7 @@ en:
       community_exchanges: "Community Exchanges"
       home: "Home"
       forum: "Forum"
-      requests: "Reqs"
+      requests: "Requests"
       offers: "Offers"
       exchanges: "Exchanges"
       people: "People"
@@ -175,10 +176,27 @@ en:
       no_members: "No members (yet)"
 
   home:
+    menu:
+      blog: "Blog"
+      skillbank: "Skillbank"
+      about: "About"
+      practice: "Practice"
+      steps: "Steps"
+      contact: "Contact"
+      faq: "FAQ"
+      agreement: "Agreement"
+      your_groups: "Your Groups"
+      more_groups: "more..."
+      help: "Help"
+      profile: "Profile"
+      inbox: "Inbox"
+      sign_out: "Sign out"
     index:
       header: "Home"
       tab_exchanges: "Exchanges"
+      community_exchanges_graph: "Community Exchanges Graph"
       tab_your_activity: "Your Activity"
+      edit_your_preferences: "Edit Your Preferences"
       tab_graphs: "Graphs"
       unread_messages: "You have unread messages in your mailbox."
       see_your_messages: "Click here to see your messages"
@@ -373,6 +391,19 @@ en:
       header: "Editing topic"
     partial:
       created_by: "Created by"
+
+  searches:
+    header: "Search"
+    search_results: "Search results"
+    no_result: "No result"
+    type:
+      forums: "Forums"
+      messages: "Messages"
+      groups: "Groups"
+      people: "People"
+      categories: "Categories"
+      offers: "Offers"
+      reqs: "Requests"
 
   transacts:
     index:
