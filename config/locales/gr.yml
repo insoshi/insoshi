@@ -485,6 +485,10 @@ gr:
     error_messages:
       not_active: "Ο λογαριασμός σας δεν είναι ενεργός. Μπορεί να απαιτείται έγκριση από τους διαχειριστές."
 
+  pagination:
+    previous: "Προηγούμενο"
+    next: "Επόμενο"
+
   notice_warning_your_email_address: "Προειδοποίηση: η διεύθυνση του email σας είναι ακόμη"
   notice_change_it_here: "Αλλάξτε το εδώ"
   notice_bid_accepted: "Η δήλωση έγινε αποδεκτή. Στάλθηκε μήνυμα στον συμμετέχοντα"
