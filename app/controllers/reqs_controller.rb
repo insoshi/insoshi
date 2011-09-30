@@ -48,7 +48,7 @@ class ReqsController < ApplicationController
     unless @req.group.nil?
       if logged_in?
         unless Membership.exist?(current_person,@req.group)
-          flash[:notice] = 'Making a bid requires group membership.'
+          flash[:notice] = t('notice_bid_requires_membership')
         end
       end
     end

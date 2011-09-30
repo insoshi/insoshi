@@ -415,6 +415,7 @@ fr:
       or_ask: "ou demander"
       service_provided: "Service rendu"
       no_currencies: "Cette personne n’utilise pas de monnaie"
+      enter_description: "Enter description of service here"
 
   sessions:
     new:
@@ -537,7 +538,12 @@ fr:
   notice_unverified_email_address: "L’adresse courriel n’est pas vérifiée. S’il vous plait, consultez votre courriel pour le code d’activation."
   notice_topic_updated: "Le sujet a été mis à jour"
   notice_transfer_succeeded: "Le transfert a reussi"
-  
+  notice_login_required: "You must be logged in to view this page"
+  notice_connection_accepted: "Accepted connection with"
+  notice_connection_declined: "Declined connection with"
+  notice_bid_requires_membership: "Making a bid requires group membership."
+  notice_password_instructions_emailed: "Instructions to reset your password have been emailed to you"
+
   success_activity_deleted: "Activité cancellée"
   success_bid_created: "L’enchère a été crée avec succès"
   success_category_created: "La catégorie a été créée avec succès"
@@ -576,6 +582,12 @@ fr:
   success_you_have_been_logged_out: "Vous avez été désactivé"
   success_topic_created: "Sujet a été crée avec succès"
   success_topic_destroyed: "Sujet effacé avec succès"
+  success_preferences_updated: "Preference was successfully updated."
+  success_logout: "Log out successful!"
+  success_connection_request_sent: "Connection request sent!"
+  success_connection_ended: "Ended connection with"
+  success_password_updated: "Your password was updated."
+  success_credit_limit_updated: "Credit limit updated"
 
   error_geocoding_failed: "Geocoding failed"
   error_at_least_one_address: "Vous devez avoir au moins une adresse"
@@ -591,7 +603,7 @@ fr:
   error_no_contacts: "Vous n’avez pas de contacts ou vous les avez tous invités"
   error_browser_upload_fail: "Votre navigateur ne supporte pas le transfert de fichier"
   error_blog_update: "La mise à jour du blog a échoué"
-  error_invalid_connection: "La connexion est invalide"
+  error_connection_invalid: "La connexion est invalide"
   error_invalid_or_expired_membership: "La requête d’abonnement est invalide ou expirée"
   error_invalid_action: "action invalide"
   error_authorization_required_to_edit_neighborhood: "Autorisation requise pour modifier les quartiers"
@@ -618,3 +630,8 @@ fr:
   error_could_not_find_transaction: "transaction introuvable"
   error_could_not_find_payee: "le vendeur est introuvable"
   error_with_transfer: "Erreur avec le transfert"
+  error_credit_limit_update_failed: "Credit limit update failed"
+  error_connection_request_invadid_or_expired: "Invalid or expired connection request"
+  error_connection_request_person_deactivated: "Invalid connection request: person deactivated"
+  error_email_not_found: "No one was found with that email address"
+  error_account_locate: "We're sorry, but we could not locate your account"

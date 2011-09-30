@@ -31,7 +31,7 @@ class PersonSessionsController < ApplicationController
 
   def destroy
     @current_person_session.destroy
-    flash[:notice] = "Log out successful!"
+    flash[:success] = t('success_logout')
     redirect_back_or_default root_url
   end
 end
