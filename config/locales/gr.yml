@@ -417,7 +417,7 @@ gr:
       button_signin: "Είσοδος"
       or_signup: "ή Εγγραφή"
       i_forgot_my_password: "Ξέχασα τον κωδικό πρόσβασης!"
-      login_using_openid: "Είδοσος με χρήση OpenID"
+      login_using_openid: "Είσοδος με χρήση OpenID"
       back_to_regular_login: "Επιστροφή σε κανονική είσοδο"
 
   topics:
@@ -482,13 +482,66 @@ gr:
       message_whitelist: "Πατήστε εδώ για να ολοκληρώσετε την επαλήθευση email. Υπενθυμίζουμε πως για την πρόσβαση σε ανταλλαγές απαιτείται πρώτα η έγκριση του λογαριασμού σας από τους διαχειριστές"
       thanks: "Ευχαριστούμε!"
 
-  authlogic:
-    error_messages:
-      not_active: "Ο λογαριασμός σας δεν είναι ενεργός. Μπορεί να απαιτείται έγκριση από τους διαχειριστές."
-
   pagination:
     previous: "Προηγούμενο"
     next: "Επόμενο"
+
+  authlogic:
+    attributes:
+      person_session:
+        login: "Το όνομα"
+        email: "Το email"
+        password: "Ο κωδικός πρόσβασης"
+        remember_me: "Να με θυμάσαι"
+    error_messages:
+      login_blank: "δεν μπορεί να είναι κενό."
+      login_not_found: "δεν είναι έγκυρο."
+      login_invalid: "θα πρέπει να περιέχει μόνο γράμματα, αριθμούς, κενά και .-_@ παρακαλώ."
+      consecutive_failed_logins_limit_exceeded: "Το όριο συνεχόμενων αποτυχημένων εισόδων ξεπεράστηκε, ο λογαριασμός απενεργοποιήθηκε."
+      email_invalid: "δεν είναι έγκυρη διεύθυνση email."
+      password_blank: "δεν μπορεί να είναι κενός."
+      password_invalid: "δεν είναι έγκυρος."
+      not_active: "Ο λογαριασμός σας δεν είναι ενεργός. Μπορεί να απαιτείται έγκριση από τους διαχειριστές."
+      not_confirmed: "Ο λογαριασμός σας δεν έχει επιβεβαιωθεί."
+      not_approved: "Ο λογαριασμός σας δεν έχει εγκριθεί."
+      no_authentication_details: "Δεν εισάγατε στοιχεία εισόδου"
+
+  activerecord:
+    attributes:
+      person:
+        email: "Το email"
+        name: "Το όνομα"
+        password: "Ο κωδικός πρόσβασης"
+        password_confirmation: "Η επιβεβαίωση του κωδικού"
+    errors:
+      template:
+        header:
+          one: "Κάποιο λάθος έγινε!"
+          other: "Κάποια λάθη έγιναν!"
+        body: "Υπήρχε πρόβλημα με τα παρακάτω πεδία:"
+      models:
+        person:
+          attributes:
+            email:
+              blank: "δεν μπορεί να είναι κενό."
+              too_short: "είναι πολύ μικρό (το ελάχιστο είναι %{count} χαρακτήρες)."
+              too_long: "είναι πολύ μεγάλο (το μέγιστο είναι %{count} χαρακτήρες)."
+              invalid: "δεν είναι έγκυρη διεύθυνση email."
+              taken: "αυτό χρησιμοποιείται ήδη!"
+            name:
+              blank: "δεν μπορεί να είναι κενό."
+              too_short: "είναι πολύ μικρό (το ελάχιστο είναι %{count} χαρακτήρες)."
+              too_long: "είναι πολύ μεγάλο (το μέγιστο είναι %{count} χαρακτήρες)."
+              invalid: "δεν είναι έγκυρο"
+            password:
+              blank: "δεν μπορεί να είναι κενός."
+              too_short: "είναι πολύ μικρός (το ελάχιστο είναι %{count} χαρακτήρες)."
+              too_long: "είναι πολύ μεγάλος (το μέγιστο είναι %{count} χαρακτήρες)."
+              confirmation: "δεν ταιριάζει με την επιβεβαίωση κωδικού."
+            password_confirmation:
+              blank: "δεν μπορεί να είναι κενή."
+              too_short: "είναι πολύ μικρή (το ελάχιστο είναι %{count} χαρακτήρες)."
+              too_long: "είναι πολύ μεγάλη (το μέγιστο είναι %{count} χαρακτήρες)."
 
   notice_warning_your_email_address: "Προειδοποίηση: η διεύθυνση του email σας είναι ακόμη"
   notice_change_it_here: "Αλλάξτε το εδώ"

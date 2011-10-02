@@ -445,10 +445,6 @@ es:
       message_whitelist: "Click here to complete your email verification.  Note that access to the exchange requires admin approval (following orientation or other blessing ritual) of your account"
       thanks: "Gracias!"
 
-  authlogic:
-    error_messages:
-      not_active: "Your account is not active. It may require admin approval."
-
   datetime:
     distance_in_words:
       half_a_minute: "medio minuto" 
@@ -489,6 +485,62 @@ es:
   pagination:
     previous: "Previous"
     next: "Next"
+
+  authlogic:
+    attributes:
+      person_session:
+        login: "Login"
+        email: "Email"
+        password: "Password"
+    error_messages:
+      login_blank: "can not be blank."
+      login_not_found: "is not valid."
+      login_invalid: "should use only letters, numbers, spaces, and .-_@ please."
+      consecutive_failed_logins_limit_exceeded: "Consecutive failed logins limit exceeded, account is disabled."
+      email_invalid: "should look like an email address."
+      password_blank: "can not be blank."
+      password_invalid: "is not valid"
+      not_active: "Your account is not active. It may require admin approval."
+      not_confirmed: "Your account is not confirmed."
+      not_approved: "Your account is not approved."
+      no_authentication_details: "You did not provide any details for authentication."
+
+  activerecord:
+    attributes:
+      person:
+        email: "Email"
+        name: "Name"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+    errors:
+      template:
+        header:
+          one: "An error happened!"
+          other: "Some errors happened!"
+        body: "There was problem with the following fields:"
+      models:
+        person:
+          attributes:
+            email:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+              invalid: "is not a valid email address."
+              taken: "has already been taken!"
+            name:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+              invalid: "is not valid"
+            password:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+              confirmation: "does not match."
+            password_confirmation:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
 
   notice_warning_your_email_address: "Warning: your email address is still at"
   notice_change_it_here: "Change it here"
