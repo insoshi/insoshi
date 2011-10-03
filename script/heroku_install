@@ -17,10 +17,10 @@ unless APP_CONFIG['AMAZON_ACCESS_KEY_ID'] && APP_CONFIG['AMAZON_SECRET_ACCESS_KE
   raise "you need to set amazon s3 environment variables"
 end
 
-Heroku::Command.run('apps:create',['--stack','bamboo'])
 heroku_client = Heroku::Client.new(APP_CONFIG['HEROKU_USER'], APP_CONFIG['HEROKU_PASSWORD'])
-info = heroku_client.info('')
-app_name = info[:name]
+app_name = heroku_client.create('',{:stack => 'bamboo-ree-1.8.7'})
+puts "app_name: #{app_name}"
+`git remote add heroku git@heroku.com:#{app_name}.git`
 
 AWS::S3::Base.establish_connection!(
   :access_key_id => APP_CONFIG['AMAZON_ACCESS_KEY_ID'],
