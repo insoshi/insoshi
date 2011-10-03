@@ -278,6 +278,7 @@ fr:
       view_profile: "Voir le profil"
     _secondary_column:
       header: "System Blog"
+
   offers:
     partial:
       accept_offer: "Payez maintenant"
@@ -292,6 +293,7 @@ fr:
     new:
       header: "Nouvelle offre"
       total_available: "Somme disponible"
+      description_label: "Be sure to include your preferred means of communication, i.e. email. text or telephone."
     show:
       header: "Offre"
       send: "Envoyez"
@@ -433,12 +435,42 @@ fr:
   topics:
     show:
       add_a_new_post: "Ajoutez une nouvelle entrée"
+      members_viewing_this_topic:
+        one: "1 member viewing this topic"
+        other: "%{count} members viewing this topic"
     new:
       header: "Nouveau sujet"
     edit:
       header: "Modifiez le sujet"
     partial:
       created_by: "Crée par"
+    post:
+      one: "1 post"
+      other: "%{count} posts"
+
+  messages:
+    index:
+      header: "Messages"
+      no_messages: "No messages (yet!)"
+      inbox: "Inbox"
+      sent: "Sent"
+      trash: "Trash"
+    new:
+      header: "New message"
+      preview: "Message preview"
+      body: "Your message"
+    show:
+      subject: "Subject"
+      sent: "Sent"
+      reply: "Reply"
+      trash: "Trash"
+      untrash: "Untrash"
+      read: "Read"
+      message_sent_to: "Message sent to"
+      message_from: "Message from"
+    edit:
+      header: "Editing message"
+      content: "Content"
 
   searches:
     header: "Search"
@@ -485,6 +517,7 @@ fr:
       whats_going_on: "Qu’est-ce-qui ce passe"
     transact:
       for: "pour"
+    multiple_select_label: "For multiple selection in the list below, press and hold Ctrl key (or Command for Mac users)"
 
   person_mailer:
     email_verification:

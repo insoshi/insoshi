@@ -232,6 +232,7 @@ es:
       view_profile: "Vea su perfil"
     _secondary_column:
       header: "Sistema de blog"
+
   offers:
     partial:
       accept_offer: "Paga ahora!"
@@ -246,6 +247,7 @@ es:
     new:
       header: "Nueva oferta"
       total_available: "Total disponible"
+      description_label: "Be sure to include your preferred means of communication, i.e. email. text or telephone."
     show:
       header: "Oferta"
       send: "Enviar"
@@ -386,12 +388,42 @@ es:
   topics:
     show:
       add_a_new_post: "agregar un nuevo mensaje"
+      members_viewing_this_topic:
+        one: "1 member viewing this topic"
+        other: "%{count} members viewing this topic"
     new:
       header: "Nuevo Tema"
     edit:
       header: "Modificar el tema"
     partial:
       created_by: "Creado por"
+    post:
+      one: "1 post"
+      other: "%{count} posts"
+
+  messages:
+    index:
+      header: "Messages"
+      no_messages: "No messages (yet!)"
+      inbox: "Inbox"
+      sent: "Sent"
+      trash: "Trash"
+    new:
+      header: "New message"
+      preview: "Message preview"
+      body: "Your message"
+    show:
+      subject: "Subject"
+      sent: "Sent"
+      reply: "Reply"
+      trash: "Trash"
+      untrash: "Untrash"
+      read: "Read"
+      message_sent_to: "Message sent to"
+      message_from: "Message from"
+    edit:
+      header: "Editing message"
+      content: "Content"
 
   searches:
     header: "Search"
@@ -438,6 +470,7 @@ es:
       whats_going_on: "Qué pasa"
     transact:
       for: "por"
+    multiple_select_label: "For multiple selection in the list below, press and hold Ctrl key (or Command for Mac users)"
 
   person_mailer:
     email_verification:

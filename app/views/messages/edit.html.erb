@@ -1,15 +1,15 @@
-<h1>Editing message</h1>
+<h1><%= t('messages.edit.header') %></h1>
 
 <%= error_messages_for :message %>
 
 <% form_for(:message,
             :url => edit_person_message_url(current_person, @message)) do |f| %>
   <p>
-    <b>Content</b><br />
+    <b><%= t('messages.edit.content') %></b><br />
     <%= f.text_field :content %>
   </p>
 
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit t('button_update') %>
   </p>
 <% end %>

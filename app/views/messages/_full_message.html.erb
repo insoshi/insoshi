@@ -8,12 +8,12 @@
   </div>
   <%= display simple_format_without_paragraph full_message.content %>
   <p class="meta tools">
-    Sent <%= time_ago_in_words full_message.created_at %> <%= t('ago') %> |
-    <%= link_to "Reply", reply_message_path(full_message) %> |
+    <%= t('messages.show.sent') %> <%= time_ago_in_words full_message.created_at %> <%= t('ago') %> |
+    <%= link_to t('messages.show.reply'), reply_message_path(full_message) %> |
     <% unless full_message.trashed?(current_person) -%>
-      <%= link_to("Trash", full_message, :method => :delete) %>
+      <%= link_to(t('messages.show.trash'), full_message, :method => :delete) %>
     <% else -%>
-      <%= link_to "Untrash", undestroy_message_path(full_message), 
+      <%= link_to t('messages.show.untrash'), undestroy_message_path(full_message), 
                              :method => :put %>
     <% end -%>
   </p>

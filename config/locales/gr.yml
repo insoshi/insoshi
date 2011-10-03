@@ -45,6 +45,7 @@ gr:
   from: "από"
   in: "σε"
   or: "ή"
+  hours: "ώρες"
 
   datetime:
     distance_in_words:
@@ -269,6 +270,7 @@ gr:
       view_profile: "Προβολή Προφίλ"
     _secondary_column:
       header: "Blog Συστήματος"
+
   offers:
     partial:
       accept_offer: "Πληρωμή τώρα!"
@@ -283,6 +285,7 @@ gr:
     new:
       header: "Νέα Προσφορά"
       total_available: "Διαθέσιμο Σύνολο"
+      description_label: "Βεβαιωθείτε πως αναφέρετε προτιμώμενα μέσα επικοινωνίας, πχ email. μήνυμα ή τηλέφωνο."
     show:
       header: "Προσφορά"
       send: "Αποστολή"
@@ -423,12 +426,42 @@ gr:
   topics:
     show:
       add_a_new_post: "Προσθήκη νέας δημοσίευσης"
+      members_viewing_this_topic:
+        one: "1 μέλος παρακολουθεί αυτό το θέμα"
+        other: "%{count} μέλη παρακολουθούν αυτό το θέμα"
     new:
       header: "Νέο θέμα"
     edit:
       header: "Επεξεργασία θέματος"
     partial:
       created_by: "Δημιουργήθηκε από"
+    post:
+      one: "1 δημοσίευση"
+      other: "%{count} δημοσιεύσεις"
+
+  messages:
+    index:
+      header: "Μηνύματα"
+      no_messages: "Κανένα μήνυμα (ακόμη!)"
+      inbox: "Εισερχόμενα"
+      sent: "Εξερχόμενα"
+      trash: "Διαγραμμένα"
+    new:
+      header: "Νέο μήνυμα"
+      preview: "Προεπισκόπηση μηνύματος"
+      body: "Κείμενο μηνύματος"
+    show:
+      subject: "Θέμα"
+      sent: "Στάλθηκε"
+      reply: "Απάντηση"
+      trash: "Διαγραφή"
+      untrash: "Επαναφορά"
+      read: "Ανάγνωση"
+      message_sent_to: "Μήνυμα προς"
+      message_from: "Μήνυμα από"
+    edit:
+      header: "Επεξεργασία μηνύματος"
+      content: "Περιεχόμενο"
 
   searches:
     header: "Αναζήτηση"
@@ -473,8 +506,10 @@ gr:
     minifeed:
       activity: "Δραστηριότητα"
       whats_going_on: "Τί συμβαίνει"
+      offer_created: "δημιούργησε μία προσφορά:"
     transact:
       for: "για"
+    multiple_select_label: "Για πολλαπλή επιλογή από την παρακάτω λίστα, κρατήστε πατημένο το πλήκτρο Ctrl"
 
   person_mailer:
     email_verification:

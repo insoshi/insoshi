@@ -1,10 +1,10 @@
 <%- column_div :type => :primary do -%>
-  <h2>Messages</h2>
+  <h2><%= t('messages.index.header') %></h2>
 
   <%= render :partial => 'message_nav' %>
   
   <%- if @messages.empty? -%>
-    <h3 class="blankslate">No messages (yet!)</h3>
+    <h3 class="blankslate"><%= t('messages.index.no_messages') %></h3>
   <%- else -%>
     <%= will_paginate %>
     <ul class="list messages full">
