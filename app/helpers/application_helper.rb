@@ -223,7 +223,7 @@ def relative_time_ago_in_words(time)
   if time > Time.now
     t('in') + " " + time_ago_in_words(time)
   else
-    time_ago_in_words(time) + " ago"  # rob young - this needs to be added to the language file!
+    time_ago_in_words(time) + " " + t('ago')
   end
 end
 

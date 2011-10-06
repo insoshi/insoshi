@@ -3,7 +3,7 @@
 <%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'req', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
 <%= render :partial => '/reqs/neighborhoods', :locals => {:selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
 <% end %>
-<span class='req' style='float:right;'><%= link_to "New request", new_group_req_path(@group), {:class => 'show-follow button'} %></span>
+<span class='req' style='float:right;'><%= link_to t('button_new_req'), new_group_req_path(@group), {:class => 'show-follow button'} %></span>
 <% form_tag group_reqs_path(@group), :method => :get, :class => 'search_form' do %>
   <p>
     <%= text_field_tag :search, params[:search] %>

@@ -12,26 +12,26 @@
   </div>
   <p>
     <%- if current_person?(message.sender) -%>
-      <span class="label">To:</span>
+      <span class="label"><%= t('to').mb_chars.capitalize %>:</span>
       <%= person_link message.recipient, :class => "url fn" %>
     <%- else -%>
-      <span class="label">From:</span>
+      <span class="label"><%= t('from').mb_chars.capitalize %>:</span>
       <%= person_link message.sender, :class => "url fn" %>
     <%- end -%>
     <span class="meta"><%= time_ago_in_words message.created_at %> <%= t('ago') %></span>
   </p>
   <p>
-    <span class="label">Subject:</span>
+    <span class="label"><%= t('messages.show.subject') %>:</span>
     <%= link_to sanitize(message.subject),
                 message_path(message, :anchor => message_anchor(message)) %>
   </p>
   <p class="tools meta">
-    <%= link_to "Read", message %> |
-    <%= link_to "Reply", reply_message_path(message) %> |
+    <%= link_to t('messages.show.read'), message %> |
+    <%= link_to t('messages.show.reply'), reply_message_path(message) %> |
     <% unless message.trashed?(current_person) -%>
-      <%= link_to("Trash", message, :method => :delete) %>
+      <%= link_to(t('messages.show.trash'), message, :method => :delete) %>
     <% else -%>
-      <%= link_to "Untrash", undestroy_message_path(message),
+      <%= link_to t('messages.show.untrash'), undestroy_message_path(message),
                              :method => :put %>
     <% end -%>    
   </p>
