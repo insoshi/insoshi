@@ -44,6 +44,16 @@
             <li>
               <%= link_to t('people.show.switch_user'), su_person_path(@person) %>
             </li>
+            <%- if global_prefs.whitelist? -%>
+              <li>
+              <%- activator = @person.activator? ? "demote" : "promote to activator" -%>
+              <%= link_to activator, 
+                          person_path(@person, :task => "activator"),
+                          :method => :put %>
+              </li>
+            <%- end -%>
+          <%- end -%>
+          <%- if current_person.admin? || current_person.activator? -%>
             <li>
             <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
             <%= link_to activity, 
