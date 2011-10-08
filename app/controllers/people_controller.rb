@@ -32,7 +32,7 @@ class PeopleController < ApplicationController
   def show
     person_id = ( 0 == params[:id].to_i ) ? current_person.id : params[:id]
     @person = Person.find(person_id)
-    unless @person.active? or current_person.admin?
+    unless @person.active? || current_person.admin? || (global_prefs.whitelist? && current_person.activator?)
       flash[:error] = t('error_person_inactive')
       redirect_to home_url and return
     end
@@ -118,7 +118,6 @@ class PeopleController < ApplicationController
 
   def edit
     @body = @body + " yui-skin-sam"
-    @person = Person.find(params[:id])
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     respond_to do |format|
@@ -127,17 +126,14 @@ class PeopleController < ApplicationController
   end
 
   def update
-    @person = Person.find(params[:id])
-
     unless(params[:task].blank?)
-      if current_person.admin?
-        @person.toggle!(params[:task])
-        respond_to do |format|
-          flash[:success] = "#{CGI.escapeHTML @person.name} " + t('success_updated')
-          format.html { redirect_to :back }
-        end
-        return
+      @person.toggle!(params[:task])
+      if 'deactivated' == params[:task]
+        @person.update_attributes!(:sponsor => current_person)
       end
+      flash[:success] = "#{CGI.escapeHTML @person.name} " + t('success_updated')
+      redirect_to person_path(@person)
+      return
     end
 
     case params[:type]
@@ -240,7 +236,19 @@ class PeopleController < ApplicationController
     end
 
     def correct_person_required
-      redirect_to home_url unless ( current_person.admin? or Person.find(params[:id]) == current_person )
+      @person = Person.find(params[:id])
+      unless(params[:task].blank?)
+        can_change_status = case params[:task]
+        when 'deactivated'
+          current_person.admin? || (global_prefs.whitelist? && current_person.activator?)
+        when 'activator'
+          current_person.admin?
+        end
+        flash[:error] = t('error_admin_access_required') unless can_change_status
+        redirect_to person_path(@person) unless can_change_status
+      else
+        redirect_to home_url unless ( current_person.admin? or Person.find(params[:id]) == current_person )
+      end
     end
 
     def preview?
