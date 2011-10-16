@@ -92,6 +92,15 @@ fr:
       minute: "Minute"
       second: "Seconde"
 
+  date:
+    formats:
+      default: "%d.%m.%Y"
+  time:
+    am: "a.m."
+    pm: "p.m."
+    formats:
+      default: "%d.%m.%Y %I:%M %p"
+
   accounts:
     show:
       header: "compte principal"

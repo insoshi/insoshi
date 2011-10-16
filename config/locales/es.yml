@@ -515,6 +515,15 @@ es:
         one: "casi 1 año"
         other: "casi {{count}} años"
 
+  date:
+    formats:
+      default: "%d.%m.%Y"
+  time:
+    am: "a.m."
+    pm: "p.m."
+    formats:
+      default: "%d.%m.%Y %I:%M %p"
+
   pagination:
     previous: "Previous"
     next: "Next"
