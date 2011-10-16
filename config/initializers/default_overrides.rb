@@ -4,4 +4,8 @@ class ActiveRecord::Base
   def self.per_page
     10
   end
-end 
+end
+
+# This enables i18n support for previous_label and next_label for will_paginate.
+WillPaginate::ViewHelpers.pagination_options[:previous_label] = '&laquo; ' + I18n.t('pagination.previous')
+WillPaginate::ViewHelpers.pagination_options[:next_label] = I18n.t('pagination.next') + ' &raquo'

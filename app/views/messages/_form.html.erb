@@ -1,10 +1,10 @@
-  <h2>New message</h2>
+  <h2><%= t('messages.new.header') %></h2>
   <p><%= formatting_note %></p>
 
   <%= error_messages_for :message %>
   
   <%- unless @preview.nil? -%>
-    <h3>Message preview</h3>
+    <h3><%= t('messages.new.preview') %></h3>
     <%= display @preview %>
   <%- end -%>
   
@@ -13,7 +13,7 @@
   <% form_for(:message,
               :url => person_messages_path(@recipient), :html => {:id => 'new_message'}) do |f| %>
     <div class="form_row full">
-      <label for="recipient">To</label>
+      <label for="recipient"><%= t('to').mb_chars.capitalize %></label>
       <%= text_field_tag :recipient, h(@recipient.name) %>
       <!-- TODO: be able to change recipients with this
       <a href="#" class="add-recipient">
@@ -21,11 +21,11 @@
       </a> -->
     </div>
     <div class="form_row full">
-      <label for="message_subject">Subject</label>
+      <label for="message_subject"><%= t('messages.show.subject') %></label>
       <%= f.text_field :subject, :id => "message_subject" %>
     </div>
     <div class="form_row">
-      <label for="message_body">Your message</label>
+      <label for="message_body"><%= t('messages.new.body') %></label>
       <%= f.text_area :content, :id => "message_body" %>
       <%- if @message.reply? -%>
         <%= f.hidden_field :parent_id %>
@@ -35,7 +35,7 @@
       <%- end -%>
     </div>
     <div class="form_row">
-      <%= f.submit "Send!", :class => "button", :id => "message_submit" %>
+      <%= f.submit t('button_send'), :class => "button", :id => "message_submit" %>
       <%= waiting_image %>
     </div>
   <% end %>

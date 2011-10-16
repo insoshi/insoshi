@@ -5,11 +5,10 @@
     <%= image_tag "icons/new.gif", :class => "icon", :alt => "Topic" %>
   </div>
   <p>
-  <%- n = topic.posts.count -%>
   <%= link_to h(topic.name), 
               forum_topic_path(topic.forum, topic),
               :class => "show-follow" %>
-  <span class="meta">(<%= pluralize(n, t('post')) %>)</span>
+  <span class="meta">(<%= t('topics.post', :count => topic.posts.count) %>)</span>
   </p>
   <p class="meta">
   <%= t('topics.partial.created_by') %> <%= person_link topic.person %>

@@ -30,7 +30,7 @@ class MemberPreferencesController < ApplicationController
 
     respond_to do |format|
       if @member_preference.update_attributes(params[:member_preference])
-        flash[:notice] = 'Preference was successfully updated.'
+        flash[:success] = t('success_preferences_updated')
         format.js
       else
         format.js { render :partial => "edit" }

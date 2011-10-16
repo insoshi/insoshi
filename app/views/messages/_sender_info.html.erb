@@ -1,9 +1,9 @@
 <% if message.sender == current_person %>
   <% other_person = message.recipient %>
-  <h2>Sent to <%= name_link other_person %></h2>
+  <h2><%= t(messages.show.sent) %> <%= t('to') %> <%= name_link other_person %></h2>
 <% else %>
   <% other_person = message.sender %>
-  <h2>Sent by <%= name_link other_person %></h2>
+  <h2><%= t(messages.show.sent) %> <%= t('by') %> <%= name_link other_person %></h2>
 <% end %>
 <div><%= name_link message.sender %></div>
 <div class="status-mail">

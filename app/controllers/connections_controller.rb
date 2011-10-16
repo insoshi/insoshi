@@ -20,12 +20,12 @@ class ConnectionsController < ApplicationController
 
     respond_to do |format|
       if Connection.request(current_person, @contact)
-        flash[:notice] = 'Connection request sent!'
+        flash[:success] = t('success_connection_request_sent')
         format.html { redirect_to(home_url) }
       else
         # This should only happen when people do something funky
         # like friending themselves.
-        flash[:notice] = "Invalid connection"
+        flash[:error] = t('error_connection_invalid')
         format.html { redirect_to(home_url) }
       end
     end
@@ -39,11 +39,11 @@ class ConnectionsController < ApplicationController
       case params[:commit]
       when "Accept"
         @connection.accept
-        flash[:notice] = %(Accepted connection with
-                           <a href="#{person_url(contact)}">#{name}</a>)
+        flash[:notice] = t('notice_connection_accepted') + " " +
+                           %(<a href="#{person_url(contact)}">#{name}</a>)
       when "Decline"
         @connection.breakup
-        flash[:notice] = "Declined connection with #{name}"
+        flash[:notice] = t('notice_connection_declined') + " #{name}"
       end
       format.html { redirect_to(home_url) }
     end
@@ -53,7 +53,7 @@ class ConnectionsController < ApplicationController
     @connection.breakup
     
     respond_to do |format|
-      flash[:success] = "Ended connection with #{@connection.contact.name}"
+      flash[:success] = t('success_connection_ended') + " #{@connection.contact.name}"
       format.html { redirect_to( person_connections_url(current_person)) }
     end
   end
@@ -78,11 +78,11 @@ class ConnectionsController < ApplicationController
       @connection = Connection.find(params[:id],
                                     :include => [:person, :contact])
       unless current_person?(@connection.person)
-        flash[:error] = "Invalid connection."
+        flash[:error] = t('error_connection_invalid')
         redirect_to home_url
       end
     rescue ActiveRecord::RecordNotFound
-      flash[:error] = "Invalid or expired connection request"
+      flash[:error] = t('error_connection_request_invalid_or_expired')
       redirect_to home_url
     end
     
@@ -91,7 +91,7 @@ class ConnectionsController < ApplicationController
     # deactivates Alice.  We don't want Bob to be able to make the connection.
     def redirect_for_inactive
       if @connection.contact.deactivated?
-        flash[:error] = "Invalid connection request: person deactivated"
+        flash[:error] = t('error_connection_request_person_deactivated')
         redirect_to home_url
       end
     end

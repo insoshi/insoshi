@@ -37,7 +37,7 @@ class ExchangesController < ApplicationController
         @group = Group.find(params[:group])
       end
       @req = Req.new
-      @req.name = 'Enter description of service here'
+      @req.name = t('exchanges.new.enter_description')
     end
 
     # XXX @groups not used in new ajax ui

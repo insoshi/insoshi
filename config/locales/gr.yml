@@ -34,7 +34,7 @@ gr:
   last_logged_in: "Τελευταία Είσοδος"
   post: "δημοσίευση"
   posted: "δημοσιεύτηκε"
-  earned: "κερδισμένες"
+  earned: "κέρδισε"
   for: "για"
   said: "είπε"
   reply_on: "απάντηση προς"
@@ -45,6 +45,7 @@ gr:
   from: "από"
   in: "σε"
   or: "ή"
+  hours: "ώρες"
 
   datetime:
     distance_in_words:
@@ -269,6 +270,7 @@ gr:
       view_profile: "Προβολή Προφίλ"
     _secondary_column:
       header: "Blog Συστήματος"
+
   offers:
     partial:
       accept_offer: "Πληρωμή τώρα!"
@@ -283,6 +285,7 @@ gr:
     new:
       header: "Νέα Προσφορά"
       total_available: "Διαθέσιμο Σύνολο"
+      description_label: "Βεβαιωθείτε πως αναφέρετε προτιμώμενα μέσα επικοινωνίας, πχ email. μήνυμα ή τηλέφωνο."
     show:
       header: "Προσφορά"
       send: "Αποστολή"
@@ -405,6 +408,7 @@ gr:
       or_ask: "ή ζητήστε"
       service_provided: "Παρεχόμενη Υπηρεσία"
       no_currencies: "Αυτό το πρόσωπο δεν χρησιμοποιεί καμένα νόμισμα"
+      enter_description: "Εισάγετε περιγραφή της υπηρεσίας εδώ"
 
   sessions:
     new:
@@ -416,18 +420,48 @@ gr:
       button_signin: "Είσοδος"
       or_signup: "ή Εγγραφή"
       i_forgot_my_password: "Ξέχασα τον κωδικό πρόσβασης!"
-      login_using_openid: "Είδοσος με χρήση OpenID"
+      login_using_openid: "Είσοδος με χρήση OpenID"
       back_to_regular_login: "Επιστροφή σε κανονική είσοδο"
 
   topics:
     show:
       add_a_new_post: "Προσθήκη νέας δημοσίευσης"
+      members_viewing_this_topic:
+        one: "1 μέλος παρακολουθεί αυτό το θέμα"
+        other: "%{count} μέλη παρακολουθούν αυτό το θέμα"
     new:
       header: "Νέο θέμα"
     edit:
       header: "Επεξεργασία θέματος"
     partial:
       created_by: "Δημιουργήθηκε από"
+    post:
+      one: "1 δημοσίευση"
+      other: "%{count} δημοσιεύσεις"
+
+  messages:
+    index:
+      header: "Μηνύματα"
+      no_messages: "Κανένα μήνυμα (ακόμη!)"
+      inbox: "Εισερχόμενα"
+      sent: "Εξερχόμενα"
+      trash: "Διαγραμμένα"
+    new:
+      header: "Νέο μήνυμα"
+      preview: "Προεπισκόπηση μηνύματος"
+      body: "Κείμενο μηνύματος"
+    show:
+      subject: "Θέμα"
+      sent: "Στάλθηκε"
+      reply: "Απάντηση"
+      trash: "Διαγραφή"
+      untrash: "Επαναφορά"
+      read: "Ανάγνωση"
+      message_sent_to: "Μήνυμα προς"
+      message_from: "Μήνυμα από"
+    edit:
+      header: "Επεξεργασία μηνύματος"
+      content: "Περιεχόμενο"
 
   searches:
     header: "Αναζήτηση"
@@ -472,8 +506,10 @@ gr:
     minifeed:
       activity: "Δραστηριότητα"
       whats_going_on: "Τί συμβαίνει"
+      offer_created: "δημιούργησε μία προσφορά:"
     transact:
       for: "για"
+    multiple_select_label: "Για πολλαπλή επιλογή από την παρακάτω λίστα, κρατήστε πατημένο το πλήκτρο Ctrl"
 
   person_mailer:
     email_verification:
@@ -481,9 +517,66 @@ gr:
       message_whitelist: "Πατήστε εδώ για να ολοκληρώσετε την επαλήθευση email. Υπενθυμίζουμε πως για την πρόσβαση σε ανταλλαγές απαιτείται πρώτα η έγκριση του λογαριασμού σας από τους διαχειριστές"
       thanks: "Ευχαριστούμε!"
 
+  pagination:
+    previous: "Προηγούμενο"
+    next: "Επόμενο"
+
   authlogic:
+    attributes:
+      person_session:
+        login: "Το όνομα"
+        email: "Το email"
+        password: "Ο κωδικός πρόσβασης"
+        remember_me: "Να με θυμάσαι"
     error_messages:
+      login_blank: "δεν μπορεί να είναι κενό."
+      login_not_found: "δεν είναι έγκυρο."
+      login_invalid: "θα πρέπει να περιέχει μόνο γράμματα, αριθμούς, κενά και .-_@ παρακαλώ."
+      consecutive_failed_logins_limit_exceeded: "Το όριο συνεχόμενων αποτυχημένων εισόδων ξεπεράστηκε, ο λογαριασμός απενεργοποιήθηκε."
+      email_invalid: "δεν είναι έγκυρη διεύθυνση email."
+      password_blank: "δεν μπορεί να είναι κενός."
+      password_invalid: "δεν είναι έγκυρος."
       not_active: "Ο λογαριασμός σας δεν είναι ενεργός. Μπορεί να απαιτείται έγκριση από τους διαχειριστές."
+      not_confirmed: "Ο λογαριασμός σας δεν έχει επιβεβαιωθεί."
+      not_approved: "Ο λογαριασμός σας δεν έχει εγκριθεί."
+      no_authentication_details: "Δεν εισάγατε στοιχεία εισόδου"
+
+  activerecord:
+    attributes:
+      person:
+        email: "Το email"
+        name: "Το όνομα"
+        password: "Ο κωδικός πρόσβασης"
+        password_confirmation: "Η επιβεβαίωση του κωδικού"
+    errors:
+      template:
+        header:
+          one: "Κάποιο λάθος έγινε!"
+          other: "Κάποια λάθη έγιναν!"
+        body: "Υπήρχε πρόβλημα με τα παρακάτω πεδία:"
+      models:
+        person:
+          attributes:
+            email:
+              blank: "δεν μπορεί να είναι κενό."
+              too_short: "είναι πολύ μικρό (το ελάχιστο είναι %{count} χαρακτήρες)."
+              too_long: "είναι πολύ μεγάλο (το μέγιστο είναι %{count} χαρακτήρες)."
+              invalid: "δεν είναι έγκυρη διεύθυνση email."
+              taken: "αυτό χρησιμοποιείται ήδη!"
+            name:
+              blank: "δεν μπορεί να είναι κενό."
+              too_short: "είναι πολύ μικρό (το ελάχιστο είναι %{count} χαρακτήρες)."
+              too_long: "είναι πολύ μεγάλο (το μέγιστο είναι %{count} χαρακτήρες)."
+              invalid: "δεν είναι έγκυρο"
+            password:
+              blank: "δεν μπορεί να είναι κενός."
+              too_short: "είναι πολύ μικρός (το ελάχιστο είναι %{count} χαρακτήρες)."
+              too_long: "είναι πολύ μεγάλος (το μέγιστο είναι %{count} χαρακτήρες)."
+              confirmation: "δεν ταιριάζει με την επιβεβαίωση κωδικού."
+            password_confirmation:
+              blank: "δεν μπορεί να είναι κενή."
+              too_short: "είναι πολύ μικρή (το ελάχιστο είναι %{count} χαρακτήρες)."
+              too_long: "είναι πολύ μεγάλη (το μέγιστο είναι %{count} χαρακτήρες)."
 
   notice_warning_your_email_address: "Προειδοποίηση: η διεύθυνση του email σας είναι ακόμη"
   notice_change_it_here: "Αλλάξτε το εδώ"
@@ -522,6 +615,11 @@ gr:
   notice_unverified_email_address: "Δεν έχει επαληθευτεί η διεύθυνση email. Παρακαλώ ελέγξτε το email σας για τον κωδικό ενεργοποίησης."
   notice_topic_updated: "Το θέμα ενημερώθηκε επιτυχώς."
   notice_transfer_succeeded: "Επιτυχής μεταφορά."
+  notice_login_required: "Πρέπει να συνδεθείτε για να δείτε αυτή τη σελίδα"
+  notice_connection_accepted: "Έγινε αποδεκτή η σύνδεση με"
+  notice_connection_declined: "Δεν έγινε αποδεκτή η σύνδεση με"
+  notice_bid_requires_membership: "Για να κάνετε δήλωση χρειάζεται συμμετοχή σε ομάδα."
+  notice_password_instructions_emailed: "Σας έχουν σταλεί με email οδηγίες για επαναφορά κωδικού πρόσβασης"
 
   success_activity_deleted: "Η Δραστηριότητα διαγράφηκε"
   success_bid_created: "Η Δήλωση δημιουργήθηκε επιτυχώς."
@@ -561,6 +659,12 @@ gr:
   success_you_have_been_logged_out: "Έχετε αποσυνδεθεί."
   success_topic_created: "Το θέμα δημιουργήθηκε επιτυχώς."
   success_topic_destroyed: "Το θέμα διαγράφηκε επιτυχώς."
+  success_preferences_updated: "Οι προτιμήσεις σας ενημερώθηκαν επιτυχώς."
+  success_logout: "Επιτυχής έξοδος!"
+  success_connection_request_sent: "Η Αίτηση σύνδεσης στάλθηκε!"
+  success_connection_ended: "Τερματίστηκε επιτυχώς η σύνδεση με"
+  success_password_updated: "Ο κωδικός πρόσβασης ενημερώθηκε."
+  success_credit_limit_updated: "Το πιστωτικό όριο ενημερώθηκε"
 
   error_geocoding_failed: "Η Γεωκωδικοποίηση απέτυχε"
   error_at_least_one_address: "Πρέπει να έχετε τουλάχιστον μία διεύθυνση"
@@ -576,7 +680,7 @@ gr:
   error_no_contacts: "Δεν έχετε επαφές ή έχετε και τις προσκαλέσατε ήδη όλες"
   error_browser_upload_fail: "Φαίνεται πως ο browser σας δεν υποστηρίζει ανέβασμα αρχείων"
   error_blog_update: "Η ενημέρωση του Blog απέτυχε."
-  error_invalid_connection: "Μη έγκυρη σύνδεση."
+  error_connection_invalid: "Μη έγκυρη σύνδεση."
   error_invalid_or_expired_membership: "Μη έγκυρη ή ληξιπρόθεσμη αίτηση συμμετοχής"
   error_invalid_action: "Μη έγκυρη ενέργεια"
   error_authorization_required_to_edit_neighborhood: "Απαιτείται εξουσιοδότηση για να επεξεργαστείτε την Περιοχή"
@@ -603,4 +707,8 @@ gr:
   error_could_not_find_transaction: "δεν βρέθηκε η συναλλαγή"
   error_could_not_find_payee: "δεν βρέθηκε ο αμοιβόμενος"
   error_with_transfer: "Σφάλμα με την μεταφορά."
-
+  error_credit_limit_update_failed: "Η ενημέρωση του πιστωτικού ορίου απέτυχε!"
+  error_connection_request_invadid_or_expired: "Η αίτηση σύνδεσης δεν είναι έγκυρη ή έχει λήξει"
+  error_connection_request_person_deactivated: "Μη έγκυρη αίτηση σύνδεσης: το πρόσωπο είναι απενεργοποιημένο"
+  error_email_not_found: "Δεν βρέθηκε κανένας με αυτήν την διεύθυνση email"
+  error_account_locate: "Συγγνώμη, δεν εντοπίστηκε ο λογαριασμός σας"

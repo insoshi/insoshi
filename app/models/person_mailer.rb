@@ -109,7 +109,7 @@ class PersonMailer < ActionMailer::Base
 
   def registration_notification(new_peep)
     from         "Registration notification <registration@#{domain}>"
-    recipients   PersonMailer.global_prefs.new_member_notification.split
+    recipients   recipients_of_registration_notifications
     subject      formatted_subject("New registration")
     body         "email" => new_peep.email,
     "name" => new_peep.name,
@@ -130,6 +130,14 @@ class PersonMailer < ActionMailer::Base
   
   private
   
+  def recipients_of_registration_notifications
+    recipients = []
+    if PersonMailer.global_prefs.whitelist?
+      recipients += Person.all(:conditions => ['activator = ?',true]).map {|p| p.email}
+    end
+    recipients += PersonMailer.global_prefs.new_member_notification.split
+  end
+
   # Prepend the application name to subjects if present in preferences.
   def formatted_subject(text)
     name = PersonMailer.global_prefs.app_name

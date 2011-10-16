@@ -278,6 +278,7 @@ fr:
       view_profile: "Voir le profil"
     _secondary_column:
       header: "System Blog"
+
   offers:
     partial:
       accept_offer: "Payez maintenant"
@@ -292,6 +293,7 @@ fr:
     new:
       header: "Nouvelle offre"
       total_available: "Somme disponible"
+      description_label: "Be sure to include your preferred means of communication, i.e. email. text or telephone."
     show:
       header: "Offre"
       send: "Envoyez"
@@ -415,6 +417,7 @@ fr:
       or_ask: "ou demander"
       service_provided: "Service rendu"
       no_currencies: "Cette personne n’utilise pas de monnaie"
+      enter_description: "Enter description of service here"
 
   sessions:
     new:
@@ -432,12 +435,42 @@ fr:
   topics:
     show:
       add_a_new_post: "Ajoutez une nouvelle entrée"
+      members_viewing_this_topic:
+        one: "1 member viewing this topic"
+        other: "%{count} members viewing this topic"
     new:
       header: "Nouveau sujet"
     edit:
       header: "Modifiez le sujet"
     partial:
       created_by: "Crée par"
+    post:
+      one: "1 post"
+      other: "%{count} posts"
+
+  messages:
+    index:
+      header: "Messages"
+      no_messages: "No messages (yet!)"
+      inbox: "Inbox"
+      sent: "Sent"
+      trash: "Trash"
+    new:
+      header: "New message"
+      preview: "Message preview"
+      body: "Your message"
+    show:
+      subject: "Subject"
+      sent: "Sent"
+      reply: "Reply"
+      trash: "Trash"
+      untrash: "Untrash"
+      read: "Read"
+      message_sent_to: "Message sent to"
+      message_from: "Message from"
+    edit:
+      header: "Editing message"
+      content: "Content"
 
   searches:
     header: "Search"
@@ -484,70 +517,104 @@ fr:
       whats_going_on: "Qu’est-ce-qui ce passe"
     transact:
       for: "pour"
+    multiple_select_label: "For multiple selection in the list below, press and hold Ctrl key (or Command for Mac users)"
 
   person_mailer:
     email_verification:
       message_default: "Cliquez ici pour compléter la verification de votre adresse courriel:"
       message_whitelist: "Cliquez ici pour completer la verification de votre adresse courriel. Notez que l’accès à l’échange doit être approuvé par l’administrateur."
-
       thanks: "Merci"
 
+  pagination:
+    previous: "Previous"
+    next: "Next"
+
   authlogic:
+    attributes:
+      person_session:
+        login: "Login"
+        email: "Email"
+        password: "Password"
     error_messages:
+      login_blank: "can not be blank."
+      login_not_found: "is not valid."
+      login_invalid: "should use only letters, numbers, spaces, and .-_@ please."
+      consecutive_failed_logins_limit_exceeded: "Consecutive failed logins limit exceeded, account is disabled."
+      email_invalid: "should look like an email address."
+      password_blank: "can not be blank."
+      password_invalid: "is not valid"
       not_active: "Votre compte n’est pas actif. C’est possible que l’administrateur doive l’approuver"
+      not_confirmed: "Your account is not confirmed."
+      not_approved: "Your account is not approved."
+      no_authentication_details: "You did not provide any details for authentication."
+
+  activerecord:
+    attributes:
+      person:
+        email: "Email"
+        name: "Name"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+    errors:
+      template:
+        header:
+          one: "An error happened!"
+          other: "Some errors happened!"
+        body: "There was problem with the following fields:"
+      models:
+        person:
+          attributes:
+            email:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+              invalid: "is not a valid email address."
+              taken: "has already been taken!"
+            name:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+              invalid: "is not valid"
+            password:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+              confirmation: "does not match."
+            password_confirmation:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+
   notice_warning_your_email_address: "Attention: votre courriel est toujours à"
   notice_change_it_here: "Changez-le ici"
   notice_bid_accepted: "L’enchère est acceptée. Un message a été envoyé pour confirmation à l’acheteur"
-
   notice_bid_committed: "L’enchère est confirmé  Un message à été envoyé au vendeur"
-
   notice_bid_completed: "Travaux réputés complétés. Le requérant en a été avisé"
-
   notice_bid_approved: "Travaux réputés vérifiés. Un reçu à été envoyé"
-
   notice_bid_invalid: "Cette enchère est invalide"
-
   notice_bid_removed: "L’enchère à été retirée"
-
   notice_category_updated: "Cette categories a été mise à jour"
-
   notice_forum_updated: "Le forum a été mis à jour"
-
   notice_event_updated: "Cet événement a été mis à jour"
-
   notice_you_are_attending_this_event: "Vous assistez à cet événement"
-
   notice_you_are_not_attending: "Vous n’assistez pas à cet événement"
-
   notice_in_progress: "Cet endroit est présentement en construction"
-
   notice_group_updated: "Le groupe a été mis à jour"
   notice_invite_contacts: "Vous avez invite certains de vos contacts à"
   notice_upload_canceled: "Vous avez cancellé le transfert"
-
   notice_blog_updated: "Blog mis à jour"
   notice_entries: "Entrées"
   notice_you_have_joined: "Vous avez joint"
   notice_membership_request_sent: "Votre requête d’abonnement a été envoyée"
-
   notice_membership_invalid: "Votre abonnement est invalide"	
   notice_accepted_membership_with: "Votre abonnement est accepté avec"
-
   notice_declined_membership_for: "Abonnement refuse pour"
-
   notice_neighborhood_updated: "Votre quartier a été mis a jour"
-
-
   notice_registered_the_information_successfully: "L’information a été enregistrée avec succès"
-
   notice_updated_the_client_information_successfully: "La mise à jour des informations du client a réussie"
-    
   notice_destroyed_the_client_application_registration: "La demande d’application du client a été détruite"
-
   notice_offer_updated: "L’offre a été mise à jour avec succès"
-
   notice_thanks_for_signing_up_check_email: "Merci de vous être enregistré. Consultez votre courriel pour vérifier votre adresse de courriel"
-
   notice_thanks_for_signing_u: "Merci de vous être enregistré."
   notice_post_updated: "Les entrées sont mises à jour"
   notice_request_updated: "Les requêtes sont mises à jour"
@@ -555,6 +622,12 @@ fr:
   notice_unverified_email_address: "L’adresse courriel n’est pas vérifiée. S’il vous plait, consultez votre courriel pour le code d’activation."
   notice_topic_updated: "Le sujet a été mis à jour"
   notice_transfer_succeeded: "Le transfert a reussi"
+  notice_login_required: "You must be logged in to view this page"
+  notice_connection_accepted: "Accepted connection with"
+  notice_connection_declined: "Declined connection with"
+  notice_bid_requires_membership: "Making a bid requires group membership."
+  notice_password_instructions_emailed: "Instructions to reset your password have been emailed to you"
+
   success_activity_deleted: "Activité cancellée"
   success_bid_created: "L’enchère a été crée avec succès"
   success_category_created: "La catégorie a été créée avec succès"
@@ -575,16 +648,12 @@ fr:
   success_message_sent: "Message envoyé"
   success_message_trashed: "Message effacé"
   success_message_restored_to_inbox: "Le message est sauvegardé dans la boîte de réception"
-
   success_neighborhood_created: "Le quartier a été crée avec succès"
   success_offer_created: "L’offre a été crée avec succès"
-
   success_offer_destroyed: "L’offre est effacée"
   success_your_password_has_been_sent: "Votre mot de passe a été envoyé"
   success_email_verified: "Courriel vérifié. Votre profil est actif"
-
   success_email_verified_whitelist: "Courriel vérifié. L’activation de votre profil doit être approve par l’administrateur."
- 
   success_updated: "Mis à jour"
   success_profile_updated: "Profil mis à jour"
   success_password_changed: "Mot de passe modifié"
@@ -597,6 +666,12 @@ fr:
   success_you_have_been_logged_out: "Vous avez été désactivé"
   success_topic_created: "Sujet a été crée avec succès"
   success_topic_destroyed: "Sujet effacé avec succès"
+  success_preferences_updated: "Preference was successfully updated."
+  success_logout: "Log out successful!"
+  success_connection_request_sent: "Connection request sent!"
+  success_connection_ended: "Ended connection with"
+  success_password_updated: "Your password was updated."
+  success_credit_limit_updated: "Credit limit updated"
 
   error_geocoding_failed: "Geocoding failed"
   error_at_least_one_address: "Vous devez avoir au moins une adresse"
@@ -612,7 +687,7 @@ fr:
   error_no_contacts: "Vous n’avez pas de contacts ou vous les avez tous invités"
   error_browser_upload_fail: "Votre navigateur ne supporte pas le transfert de fichier"
   error_blog_update: "La mise à jour du blog a échoué"
-  error_invalid_connection: "La connexion est invalide"
+  error_connection_invalid: "La connexion est invalide"
   error_invalid_or_expired_membership: "La requête d’abonnement est invalide ou expirée"
   error_invalid_action: "action invalide"
   error_authorization_required_to_edit_neighborhood: "Autorisation requise pour modifier les quartiers"
@@ -634,10 +709,13 @@ fr:
   error_you_can_also: "Vous pouvez aussi"
   error_contact: "contacter"
   error_the_administrators: "L’administrateur si vous pensez que votre compte devrait être actif"
-
-
   error_invalid_email_password: "Combinaison courriel/mot de passe invalide"
   error_your_account_is_inactive: "Votre compte est inactif"
   error_could_not_find_transaction: "transaction introuvable"
   error_could_not_find_payee: "le vendeur est introuvable"
   error_with_transfer: "Erreur avec le transfert"
+  error_credit_limit_update_failed: "Credit limit update failed"
+  error_connection_request_invadid_or_expired: "Invalid or expired connection request"
+  error_connection_request_person_deactivated: "Invalid connection request: person deactivated"
+  error_email_not_found: "No one was found with that email address"
+  error_account_locate: "We're sorry, but we could not locate your account"
