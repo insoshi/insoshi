@@ -232,6 +232,7 @@ es:
       view_profile: "Vea su perfil"
     _secondary_column:
       header: "Sistema de blog"
+
   offers:
     partial:
       accept_offer: "Paga ahora!"
@@ -246,6 +247,7 @@ es:
     new:
       header: "Nueva oferta"
       total_available: "Total disponible"
+      description_label: "Be sure to include your preferred means of communication, i.e. email. text or telephone."
     show:
       header: "Oferta"
       send: "Enviar"
@@ -368,6 +370,7 @@ es:
       or_ask: "o preguntar"
       service_provided: "Servicios proveídos"
       no_currencies: "esta persona no está utilizando ninguna monedas"
+      enter_description: "Enter description of service here"
 
   sessions:
     new:
@@ -385,12 +388,42 @@ es:
   topics:
     show:
       add_a_new_post: "agregar un nuevo mensaje"
+      members_viewing_this_topic:
+        one: "1 member viewing this topic"
+        other: "%{count} members viewing this topic"
     new:
       header: "Nuevo Tema"
     edit:
       header: "Modificar el tema"
     partial:
       created_by: "Creado por"
+    post:
+      one: "1 post"
+      other: "%{count} posts"
+
+  messages:
+    index:
+      header: "Messages"
+      no_messages: "No messages (yet!)"
+      inbox: "Inbox"
+      sent: "Sent"
+      trash: "Trash"
+    new:
+      header: "New message"
+      preview: "Message preview"
+      body: "Your message"
+    show:
+      subject: "Subject"
+      sent: "Sent"
+      reply: "Reply"
+      trash: "Trash"
+      untrash: "Untrash"
+      read: "Read"
+      message_sent_to: "Message sent to"
+      message_from: "Message from"
+    edit:
+      header: "Editing message"
+      content: "Content"
 
   searches:
     header: "Search"
@@ -437,16 +470,13 @@ es:
       whats_going_on: "Qué pasa"
     transact:
       for: "por"
+    multiple_select_label: "For multiple selection in the list below, press and hold Ctrl key (or Command for Mac users)"
 
   person_mailer:
     email_verification:
       message_default: "Click here to complete your email verification:"
       message_whitelist: "Click here to complete your email verification.  Note that access to the exchange requires admin approval (following orientation or other blessing ritual) of your account"
       thanks: "Gracias!"
-
-  authlogic:
-    error_messages:
-      not_active: "Your account is not active. It may require admin approval."
 
   datetime:
     distance_in_words:
@@ -485,6 +515,66 @@ es:
         one: "casi 1 año"
         other: "casi {{count}} años"
 
+  pagination:
+    previous: "Previous"
+    next: "Next"
+
+  authlogic:
+    attributes:
+      person_session:
+        login: "Login"
+        email: "Email"
+        password: "Password"
+    error_messages:
+      login_blank: "can not be blank."
+      login_not_found: "is not valid."
+      login_invalid: "should use only letters, numbers, spaces, and .-_@ please."
+      consecutive_failed_logins_limit_exceeded: "Consecutive failed logins limit exceeded, account is disabled."
+      email_invalid: "should look like an email address."
+      password_blank: "can not be blank."
+      password_invalid: "is not valid"
+      not_active: "Your account is not active. It may require admin approval."
+      not_confirmed: "Your account is not confirmed."
+      not_approved: "Your account is not approved."
+      no_authentication_details: "You did not provide any details for authentication."
+
+  activerecord:
+    attributes:
+      person:
+        email: "Email"
+        name: "Name"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+    errors:
+      template:
+        header:
+          one: "An error happened!"
+          other: "Some errors happened!"
+        body: "There was problem with the following fields:"
+      models:
+        person:
+          attributes:
+            email:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+              invalid: "is not a valid email address."
+              taken: "has already been taken!"
+            name:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+              invalid: "is not valid"
+            password:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+              confirmation: "does not match."
+            password_confirmation:
+              blank: "cannot be blank."
+              too_short: "is too short (minimum is %{count} characters)."
+              too_long: "is too long (maximum is %{count} characters)."
+
   notice_warning_your_email_address: "Warning: your email address is still at"
   notice_change_it_here: "Change it here"
   notice_bid_accepted: "Bid accepted. Message sent to bidder to commit"
@@ -522,6 +612,11 @@ es:
   notice_unverified_email_address: "Unverified email address. Please check your email for your activation code."
   notice_topic_updated: "Topic was successfully updated."
   notice_transfer_succeeded: "Transfer succeeded."
+  notice_login_required: "You must be logged in to view this page"
+  notice_connection_accepted: "Accepted connection with"
+  notice_connection_declined: "Declined connection with"
+  notice_bid_requires_membership: "Making a bid requires group membership."
+  notice_password_instructions_emailed: "Instructions to reset your password have been emailed to you"
 
   success_activity_deleted: "Activity deleted"
   success_bid_created: "Bid was successfully created."
@@ -561,6 +656,12 @@ es:
   success_you_have_been_logged_out: "You have been logged out."
   success_topic_created: "Topic was successfully created."
   success_topic_destroyed: "Topic was successfully destroyed."
+  success_preferences_updated: "Preference was successfully updated."
+  success_logout: "Log out successful!"
+  success_connection_request_sent: "Connection request sent!"
+  success_connection_ended: "Ended connection with"
+  success_password_updated: "Your password was updated."
+  success_credit_limit_updated: "Credit limit updated"
 
   error_geocoding_failed: "Geocoding failed"
   error_at_least_one_address: "You must have at least one address"
@@ -576,7 +677,7 @@ es:
   error_no_contacts: "You have no contacts or you have invited all of them"
   error_browser_upload_fail: "Your browser doesn't appear to support file uploading"
   error_blog_update: "Blog update failed."
-  error_invalid_connection: "Invalid connection."
+  error_connection_invalid: "Invalid connection."
   error_invalid_or_expired_membership: "Invalid or expired membership request"
   error_invalid_action: "Invalid action"
   error_authorization_required_to_edit_neighborhood: "Authorization required to edit neighborhood"
@@ -603,3 +704,8 @@ es:
   error_could_not_find_transaction: "could not find transaction"
   error_could_not_find_payee: "could not find payee"
   error_with_transfer: "Error with transfer."
+  error_credit_limit_update_failed: "Credit limit update failed"
+  error_connection_request_invadid_or_expired: "Invalid or expired connection request"
+  error_connection_request_person_deactivated: "Invalid connection request: person deactivated"
+  error_email_not_found: "No one was found with that email address"
+  error_account_locate: "We're sorry, but we could not locate your account"

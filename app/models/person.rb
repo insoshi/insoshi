@@ -48,7 +48,8 @@ class Person < ActiveRecord::Base
                   :phone, :phoneprivacy,
                   :accept_agreement,
                   :language,
-                  :openid_identifier
+                  :openid_identifier,
+                  :sponsor
 
   index do
     name
@@ -137,6 +138,7 @@ class Person < ActiveRecord::Base
   has_many :reqs
   has_many :bids
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
+  belongs_to :sponsor, :class_name => "Person", :foreign_key => "sponsor_id"
 
   validates_presence_of     :email, :name
 #  validates_presence_of     :password,              :if => :password_required?

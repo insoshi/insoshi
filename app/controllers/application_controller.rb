@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
     def login_required
       unless current_person
         store_location
-        flash[:notice] = "You must be logged in to view the page"
+        flash[:notice] = t('notice_login_required')
         redirect_to login_url
         return false
       end
