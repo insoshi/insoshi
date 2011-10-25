@@ -17,9 +17,6 @@ es:
   filter_categories: "Categorías"
   filter_neighborhoods: "Vecindarios"
 
-  filter_categories: "Categorías"
-  filter_neighborhoods: "Vecindarios"
-
   estimate: "Estimación"
   title: "Titulo"
   bid: "oferta"
@@ -517,6 +514,15 @@ es:
       almost_x_years:
         one: "casi 1 año"
         other: "casi {{count}} años"
+
+  date:
+    formats:
+      default: "%d.%m.%Y"
+  time:
+    am: "a.m."
+    pm: "p.m."
+    formats:
+      default: "%d.%m.%Y %I:%M %p"
 
   pagination:
     previous: "Previous"

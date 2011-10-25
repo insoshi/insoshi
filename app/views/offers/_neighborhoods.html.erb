@@ -1,6 +1,6 @@
 <span class='neighborhood_filter hide'>
 <%= 
-    collection_select( Offer, 
+    collection_select( filtered_obj,
                        'neighborhood_ids', 
                        Neighborhood.all(:order => "parent_id, name").sort_by { |a| a.long_name },
                        :id, 

@@ -29,6 +29,7 @@ class Req < ActiveRecord::Base
   named_scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
 
   has_and_belongs_to_many :categories
+  has_and_belongs_to_many :neighborhoods
   belongs_to :person
   belongs_to :group
   has_many :bids, :order => 'created_at DESC', :dependent => :destroy

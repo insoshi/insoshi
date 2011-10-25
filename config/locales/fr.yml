@@ -17,9 +17,6 @@ fr:
   filter_categories: "Categories"
   filter_neighborhoods: "Neighborhoods"
 
-  filter_categories: "Categories"
-  filter_neighborhoods: "Neighborhoods"
-
   estimate: "Estimer"
   title: "Titre"
   bid: "Enchère"
@@ -94,6 +91,15 @@ fr:
       hour: "Heure"
       minute: "Minute"
       second: "Seconde"
+
+  date:
+    formats:
+      default: "%d.%m.%Y"
+  time:
+    am: "a.m."
+    pm: "p.m."
+    formats:
+      default: "%d.%m.%Y %I:%M %p"
 
   accounts:
     show:

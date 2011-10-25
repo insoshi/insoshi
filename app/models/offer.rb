@@ -10,6 +10,7 @@ class Offer < ActiveRecord::Base
   named_scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
 
   has_and_belongs_to_many :categories
+  has_and_belongs_to_many :neighborhoods
   has_many :exchanges, :as => :metadata
   belongs_to :person
   belongs_to :group
