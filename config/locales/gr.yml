@@ -84,6 +84,15 @@ gr:
         one:   "almost 1 year"
         other: "almost %{count} years"
 
+  date:
+    formats:
+      default: "%d.%m.%Y"
+  time:
+    am: "π.μ."
+    pm: "μ.μ."
+    formats:
+      default: "%d.%m.%Y %I:%M %p"
+
   accounts:
     show:
       header: "Κύριος λογαριασμός"

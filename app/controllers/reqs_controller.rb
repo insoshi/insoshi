@@ -64,6 +64,7 @@ class ReqsController < ApplicationController
   # GET /reqs/new.xml
   def new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.js
@@ -76,6 +77,7 @@ class ReqsController < ApplicationController
     @req = Req.find(params[:id])
     @group = @req.group
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
 
     respond_to do |format|
       format.js
@@ -99,11 +101,13 @@ class ReqsController < ApplicationController
       if @req.save
         flash[:notice] = t('success_request_created')
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
         format.js
         format.xml  { render :xml => @req, :status => :created, :location => @req }
       else
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.js { render :action => "new" }
         format.xml  { render :xml => @req.errors, :status => :unprocessable_entity }
       end
@@ -120,12 +124,14 @@ class ReqsController < ApplicationController
       if @req.update_attributes(params[:req])
         flash[:notice] = t('notice_request_updated')
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
         format.html { redirect_to(@req) }
         format.js
         format.xml  { head :ok }
       else
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { render :action => "edit" }
         format.js { render :action => "edit" }
         format.xml  { render :xml => @req.errors, :status => :unprocessable_entity }
