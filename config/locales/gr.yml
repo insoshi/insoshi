@@ -55,47 +55,114 @@ gr:
     distance_in_words:
       half_a_minute: "μισό λεπτό"
       less_than_x_seconds:
-        one:   "λιγότερο από 1 δευτερόλεπτο"
+        one: "λιγότερο από ένα δευτερόλεπτο"
         other: "λιγότερο από %{count} δευτερόλεπτα"
       x_seconds:
-        one:   "1 δευτερόλεπτο"
+        one: "1 δευτερόλεπτο"
         other: "%{count} δευτερόλεπτα"
       less_than_x_minutes:
-        one:   "λιγότερο από ένα λεπτό"
+        one: "λιγότερο από ένα λεπτό"
         other: "λιγότερο από %{count} λεπτά"
       x_minutes:
-        one:   "1 λεπτό"
+        one: "1 λεπτό"
         other: "%{count} λεπτά"
       about_x_hours:
-        one:   "περίπου 1 ώρα"
+        one: "περίπου μία ώρα"
         other: "περίπου %{count} ώρες"
       x_days:
-        one:   "1 ημέρα"
-        other: "%{count} ημέρες"
+        one: "1 μέρα"
+        other: "%{count} μέρες"
       about_x_months:
-        one:   "περίπου 1 μήνα"
+        one: "περίπου ένα μήνα"
         other: "περίπου %{count} μήνες"
       x_months:
-        one:   "1 μήνα"
+        one: "1 μήνα"
         other: "%{count} μήνες"
       about_x_years:
-        one:   "περίπου 1 χρόνο"
+        one: "περίπου ένα χρόνο"
         other: "περίπου %{count} χρόνια"
       over_x_years:
-        one:   "πάνω από 1 χρόνο"
+        one: "πάνω από ένα χρόνο"
         other: "πάνω από %{count} χρόνια"
       almost_x_years:
-        one:   "almost 1 year"
-        other: "almost %{count} years"
+        one:   "σχεδόν ένα χρόνο"
+        other: "σχεδόν %{count} χρόνια"
+    prompts:
+      year: "Έτος"
+      month: "Μήνας"
+      day: "Ημέρα"
+      hour: "Ώρα"
+      minute: "Λεπτό"
+      second: "Δευτερόλεπτο"
 
   date:
     formats:
-      default: "%d.%m.%Y"
+      default: "%d/%m/%Y"
+      short: "%d %b"
+      long: "%e %B %Y"
+      long_ordinal: "%e %B %Y"
+      only_day: "%e"
+
+    day_names:
+      - Κυριακή
+      - Δευτέρα
+      - Τρίτη
+      - Τετάρτη
+      - Πέμπτη
+      - Παρασκευή
+      - Σάββατο
+    abbr_day_names:
+      - Κυρ
+      - Δευ
+      - Τρι
+      - Τετ
+      - Πεμ
+      - Παρ
+      - Σαβ
+    month_names:
+      - ~
+      - Ιανουάριος
+      - Φεβρουάριος
+      - Μάρτιος
+      - Απρίλιος
+      - Μάιος
+      - Ιούνιος
+      - Ιούλιος
+      - Αύγουστος
+      - Σεπτέμβριος
+      - Οκτώβριος
+      - Νοέμβριος
+      - Δεκέμβριος
+    abbr_month_names:
+      - ~
+      - Ιαν.
+      - Φεβ.
+      - Μάρ.
+      - Απρ.
+      - Μαι.
+      - Ιουν.
+      - Ιούλ.
+      - Αυγ.
+      - Σεπ.
+      - Οκτ.
+      - Νοε.
+      - Δεκ.
+    order:
+      - :day
+      - :month
+      - :year
+
   time:
-    am: "π.μ."
-    pm: "μ.μ."
     formats:
-      default: "%d.%m.%Y %I:%M %p"
+      default: "%d %B %Y %H:%M"
+      time: "%H:%M"
+      short: "%d %b %H:%M"
+      long: "%A %d %B %Y %H:%M:%S %Z"
+      long_ordinal: "%A %d %B %Y %H:%M:%S %Z"
+      only_second: "%S"
+    am: 'πμ'
+    pm: 'μμ'
+
 
   accounts:
     show:
