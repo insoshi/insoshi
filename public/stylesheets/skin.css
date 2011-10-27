@@ -18,7 +18,7 @@ body {
   margin: 0 auto;
   text-align: left;
   width: 844px;
-	
+
 }
 */
 
@@ -98,7 +98,7 @@ font-size:1.3em;
   margin: 0 0 0 0;
   padding: 0;
   text-align: center;
-  width: 70px; 
+  width: 70px;
 }
 #nav li.n-neighborhoods {
  width: 90px;
@@ -123,7 +123,7 @@ font-size:1.3em;
   margin-top: 48px;
   padding: 24px 0;
   width: 844px;
-  
+
 }
 
 #license {
@@ -192,15 +192,15 @@ ul li.profile_icon_item {
 }
 
 #sfmenu a#moregroups {
-  background: #FFF6BF; 
-  color: #514721; 
+  background: #FFF6BF;
+  color: #514721;
   border: 1px solid #FFD324;
   width: auto;
 }
 
 #scope-action {
-  background: #FFF6BF; 
-  color: #514721; 
+  background: #FFF6BF;
+  color: #514721;
   border: 1px solid #FFD324;
 }
 
@@ -232,8 +232,8 @@ ul li.profile_icon_item {
   border-bottom: 1px solid #eee;
   background: none;
   clear: both;
-  display: inline;
-  float: left;
+/*  display: inline;
+  float: left;*/
   list-style: none;
   margin: 0 0 12px 6px;
   padding: 0 0 6px 0;
@@ -264,7 +264,7 @@ ul li.profile_icon_item {
 }
 .list .forum p {
   margin-bottom: 1em;
-  
+
 }
 .list.small p {
   font-size: 12px;
@@ -452,7 +452,7 @@ p.poweredby{
 
 div.desc-message{
  	position: relative;
-	width:500px;	
+	width:500px;
 	margin-bottom:20px;
 }
 
@@ -519,8 +519,8 @@ ul.categories li ul li
 .categoryAdd
 {
   float:right;
-  font-size: .8em; 
-  margin-bottom: 1.875em; 
+  font-size: .8em;
+  margin-bottom: 1.875em;
   line-height: 1.875em;
   padding-right:85px;
 }
@@ -667,7 +667,7 @@ button::-moz-focus-inner,
   input[type="submit"]::-moz-focus-inner,
   input[type="file"] > input[type="button"]::-moz-focus-inner {
     border: none; }
-  
+
   .button {
     display: inline-block;
     padding: 0.5em 2em 0.55em;
@@ -705,4 +705,3 @@ button::-moz-focus-inner,
       background: -moz-linear-gradient(top, #7ab330, #94ce48);
       filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7ab330', endColorstr='#94ce48');
       color: #d7e8c0; }
-  
