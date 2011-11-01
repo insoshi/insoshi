@@ -8,8 +8,8 @@ module ActivitiesHelper
       post = activity.item
       blog = post.blog
       view_blog = blog_link("View #{h person.name}'s blog", blog)
-      %(#{person_link(person)} made a blog post titled
-        #{post_link(blog, post)}.<br /> #{view_blog}.)
+      %(#{person_link(person)} #{t('shared.minifeed.made_a')} #{t('shared.minifeed.blog_post')}: 
+      #{post_link(blog, post)}.<br /> #{view_blog}.)
     when "Comment"
       parent = activity.item.commentable
       parent_type = parent.class.to_s
@@ -17,57 +17,54 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        %(#{person_link(person)} made a comment to
-           #{someones(blog.person, person)}
-           blog post #{post_link(blog, post)}.)
+        %(#{person_link(person)} #{t('shared.minifeed.commented')} #{t('to')} #{someones(blog.person, person)}
+         #{t('shared.minifeed.blog_post')} #{post_link(blog, post)}.)
       when "Person"
-        %(#{person_link(activity.item.commenter)} commented on 
-          #{wall(activity)}.)
+        %(#{person_link(activity.item.commenter)} #{t('shared.minifeed.commented')} #{t('on')} #{wall(activity)}.)
       when "Event"
         event = activity.item.commentable
         commenter = activity.item.commenter
-        %(#{person_link(commenter)} commented on 
-          #{someones(event.person, commenter)} event: 
-          #{event_link(event.title, event)}.)
+        %(#{person_link(commenter)} #{t('shared.minifeed.commented')} #{t('on')} #{someones(event.person, commenter)} 
+         #{t('event')}: #{event_link(event.title, event)}.)
       end
     when "Connection"
-      %(#{person_link(activity.item.person)} and
-        #{person_link(activity.item.contact)}
-        have connected.)
+      %(#{person_link(activity.item.person)} #{t('and')} #{person_link(activity.item.contact)} 
+      #{t('shared.minifeed.have_connected')}.)
     when "ForumPost"
       post = activity.item
-      %(#{person_link(person)} made a post on the forum topic
-        #{topic_link(post.topic)}.)
+      %(#{person_link(person)} #{t('shared.minifeed.made_post_on_forum_topic')}: #{topic_link(post.topic)}.)
     when "Topic"
-      %(#{person_link(person)} created the new discussion topic
-        #{topic_link(activity.item)}.)
+      %(#{person_link(person)} #{t('shared.minifeed.created_a')} #{t('shared.minifeed.new_discussion_topic')} 
+      #{topic_link(activity.item)}.)
     when "Photo"
-      %(#{person_link(person)}'s profile picture has changed.)
+      %(#{person_link(person)}#{t('shared.minifeed.profile_picture_changed')}.)
     when "Person"
-      %(#{person_link(person)}'s description has changed.)
+      %(#{person_link(person)}#{t('shared.minifeed.description_changed')}.)
     when "Group"
-      %(#{person_link(person)} created the group '#{group_link(Group.find(activity.item))}')
+      %(#{person_link(person)} #{t('shared.minifeed.created_the_group')} '#{group_link(Group.find(activity.item))}')
     when "Membership"
-      %(#{person_link(person)} joined the group '#{group_link(Group.find(activity.item.group))}')
+      %(#{person_link(person)} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}')
     when "Event"
       event = activity.item
-      %(#{person_link(person)} has created a new event: #{event_link(event.title, event)}.)
+      %(#{person_link(person)} #{t('shared.minifeed.event_created')}: #{event_link(event.title, event)}.)
     when "EventAttendee"
       event = activity.item.event
-      %(#{person_link(person)} is attending #{someones(event.person, person)} event: 
-        #{event_link(event.title, event)}.) 
+      %(#{person_link(person)} #{t('shared.minifeed.is_attending')} #{someones(event.person, person)} #{t('event')}: 
+        #{event_link(event.title, event)}.)
     when "Req"
       req = activity.item
-      %(#{person_link(person)} has created a new request: #{req_link(req.name, req)}.)
+      %(#{person_link(person)} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.)
     when "Offer"
       offer = activity.item
-      %(#{person_link(person)} has created a new offer: #{offer_link(offer.name, offer)}.)
+      %(#{person_link(person)} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.)
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
-        %(#{person_link(person)} earned #{exchange.amount} hours for #{metadata_link(exchange.metadata)}.)
+        %(#{person_link(person)} #{t('earned')} #{exchange.amount} #{t('shared.minifeed.hours_for')} 
+        #{metadata_link(exchange.metadata)}.)
       else
-        %(#{person_link(person)} earned #{exchange.amount} #{exchange.group.unit} for #{metadata_link(exchange.metadata)} in #{group_link(exchange.group)}.)
+        %(#{person_link(person)} #{t('earned')} #{exchange.amount} #{exchange.group.unit} #{t('for')} 
+        #{metadata_link(exchange.metadata)} #{t('in')} #{group_link(exchange.group)}.)
       end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -80,8 +77,7 @@ module ActivitiesHelper
     when "BlogPost"
       post = activity.item
       blog = post.blog
-      %(#{person.name} made a
-        #{post_link("new blog post", blog, post)}.)
+      %(#{person.name} #{t('shared.minifeed.made_a')} #{post_link(t('shared.minifeed.new_blog_post'), blog, post)}.)
     when "Comment"
       parent = activity.item.commentable
       parent_type = parent.class.to_s
@@ -89,54 +85,51 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        %(#{person.name} made a comment to
-           #{someones(blog.person, person)}
-           blog post #{post_link(blog, post)}.)
-        %(#{person.name} made a comment on
-          #{someones(blog.person, person)} 
-          #{post_link("blog post", post.blog, post)}.)
+        %(#{person.name} #{t('shared.minifeed.commented')} #{t('to')} #{someones(blog.person, person)} 
+        #{t('shared.minifeed.blog_post')} #{post_link(blog, post)}.)
+        %(#{person.name} #{t('shared.minifeed.commented')} #{t('on')} 
+        #{someones(blog.person, person)} #{post_link(t('shared.minifeed.blog_post'), post.blog, post)}.)
       when "Person"
-        %(#{activity.item.commenter.name} commented on 
-          #{wall(activity)}.)
+        %(#{activity.item.commenter.name} #{t('shared.minifeed.commented')} #{t('on')} #{wall(activity)}.)
       when "Event"
         event = activity.item.commentable
-        %(#{activity.item.commenter.name} commented on 
-          #{someones(event.person, activity.item.commenter)} #{event_link("event", event)}.)
+        %(#{activity.item.commenter.name} #{t('shared.minifeed.commented')} #{t('on')}
+        #{someones(event.person, activity.item.commenter)} #{event_link(t('event'), event)}.)
       end
     when "Connection"
-      %(#{person.name} and #{activity.item.contact.name}
-        have connected.)
+      %(#{person.name} #{t('and')} #{activity.item.contact.name} #{t('shared.minifeed.have_connected')}.)
     when "ForumPost"
       topic = activity.item.topic
-      %(#{person.name} made a #{topic_link("forum post", topic)}.)
+      %(#{person.name} #{t('shared.minifeed.made_a')} #{topic_link(t('shared.minifeed.forum_post'), topic)}.)
     when "Topic"
-      %(#{person.name} created a 
-        #{topic_link("new discussion topic", activity.item)}.)
+      %(#{person.name} #{t('shared.minifeed.created_a')} #{topic_link(t('shared.minifeed.new_discussion_topic'), activity.item)}.)
     when "Photo"
-      %(#{person.name}'s profile picture has changed.)
+      %(#{person.name}#{t('shared.minifeed.profile_picture_changed')}.)
     when "Person"
-      %(#{person.name}'s description has changed.)
+      %(#{person.name}#{t('shared.minifeed.description_changed')}.)
     when "Group"
-      %(#{person.name} created the group '#{group_link(Group.find(activity.item))}')
+      %(#{person.name} #{t('shared.minifeed.created_the_group')} '#{group_link(Group.find(activity.item))}')
     when "Membership"
-      %(#{person.name} joined the group '#{group_link(Group.find(activity.item.group))}')
+      %(#{person.name} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}')
     when "Event"
-      %(#{person.name}s has created a new #{event_link("event", activity.item)}.)
+      %(#{person.name}s #{t('shared.minifeed.has_created_a_new')} #{event_link(t('event'), activity.item)}.)
     when "EventAttendee"
       event = activity.item.event
-      %(#{person.name} is attending #{someones(event.person, person)} #{event_link("event", event)}.)
+      %(#{person.name} #{t('shared.minifeed.is_attending')} #{someones(event.person, person)} 
+      #{event_link(t('event'), event)}.)
     when "Req"
       req = activity.item
-      %(#{person.name} has created a new request: #{req_link(req.name, req)}.)
+      %(#{person.name} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.)
     when "Offer"
       offer = activity.item
-      %(#{person.name} has created a new offer: #{offer_link(offer.name, offer)}.)
+      %(#{person.name} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.)
     when "Exchange"
       exchange = activity.item
       if exchange.group.nil?
-        %(#{person.name} earned #{exchange.amount} hours for #{metadata_link(exchange.metadata)}.)
+        %(#{person.name} #{t('earned')} #{exchange.amount} #{t('shared.minifeed.hour_for')} #{metadata_link(exchange.metadata)}.)
       else
-        %(#{person.name} earned #{exchange.amount} #{exchange.group.unit} for #{metadata_link(exchange.metadata)} in #{group_link(exchange.group)}.)
+        %(#{person.name} #{t('earned')} #{exchange.amount} #{exchange.group.unit} #{t('for')} 
+        #{metadata_link(exchange.metadata)} #{t('in')} #{group_link(exchange.group)}.)
       end
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"

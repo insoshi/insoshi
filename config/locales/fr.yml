@@ -45,6 +45,7 @@ fr:
   from: "de"
   in: "dans"
   or: "or"
+  event: "event"
 
   datetime:
     distance_in_words:
@@ -524,6 +525,25 @@ fr:
     minifeed:
       activity: "Activité"
       whats_going_on: "Qu’est-ce-qui ce passe"
+      made_a: "made a"
+      created_a: "created a"
+      have_connected: "have connected"
+      commented: "made a comment"
+      forum_post: "forum post"
+      blog_post: "blog post"
+      new_blog_post: "new blog post"
+      new_discussion_topic: "new discussion topic"
+      made_post_on_forum_topic: "made a post on the forum topic"
+      hours_for: "hours for"
+      profile_picture_changed: "'s profile picture has changed"
+      description_changed: "'s description has changed"
+      created_the_group: "created the group"
+      joined_the_group: "joined the group"
+      has_created_a_new: "has created a new"
+      is_attending: "is attending"
+      offer_created: "has created a new offer"
+      req_created: "has created a new request"
+      event_created: "has created a new event"
     transact:
       for: "pour"
     multiple_select_label: "For multiple selection in the list below, press and hold Ctrl key (or Command for Mac users)"

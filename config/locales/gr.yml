@@ -46,6 +46,7 @@ gr:
   in: "σε"
   or: "ή"
   hours: "ώρες"
+  event: "γεγονός"
 
   datetime:
     distance_in_words:
@@ -368,7 +369,7 @@ gr:
       header: "Προφίλ:"
       organization_profile: "Αυτό είναι προφίλ οργανισμού"
       not_active: "Αυτό το πρόσωπο δεν είναι ενεργό"
-      description_blank: "Η περιγραφλή σας είναι κενή."
+      description_blank: "Η περιγραφή σας είναι κενή."
       add_description: "Πατήστε εδώ για να προσθέσετε περιγραφή"
       own_profile: "Βλέπετε το προφίλ σας."
       edit_it: "Πατήστε εδώ για επεξεργασία"
@@ -515,7 +516,26 @@ gr:
     minifeed:
       activity: "Δραστηριότητα"
       whats_going_on: "Τί συμβαίνει"
-      offer_created: "δημιούργησε μία προσφορά:"
+      made_a: "έκανε"
+      created_a: "δημιούργησε"
+      have_connected: "έχουν συνδεθεί"
+      commented: "έκανε σχόλιο"
+      forum_post: "δημοσίευση στο φόρουμ"
+      blog_post: "δημοσίευση στο blog"
+      new_blog_post: "νέα δημοσίευση στο blog"
+      new_discussion_topic: "νέο θέμα συζήτησης"
+      made_post_on_forum_topic: "έκανε δημοσίευση στο φόρουμ στο θέμα"
+      hours_for: "ώρες για"
+      profile_picture_changed: " άλλαξε την φωτογραφία του προφίλ."
+      description_changed: " τροποποίησε την περιγραφή του προφίλ."
+      created_the_group: "δημιούργησε την ομάδα"
+      joined_the_group: "συμμετέχει στην ομάδα"
+      has_created_a_new: "δημιούργησε νέο"
+      is_attending: "παρακολουθεί"
+      offer_created: "δημιούργησε νέα προσφορά"
+      req_created: "δημιούργησε νέα αίτηση"
+      event_created: "δημιούργησε ένα νέο γεγονός"
+
     transact:
       for: "για"
     multiple_select_label: "Για πολλαπλή επιλογή από την παρακάτω λίστα, κρατήστε πατημένο το πλήκτρο Ctrl"
