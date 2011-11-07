@@ -128,23 +128,20 @@ class Exchange < ActiveRecord::Base
   end
 
   def send_payment_notification_to_worker
-    # XXX fix wierdness related to cancan
-=begin
     exchange_note = Message.new()
-    subject = "PAYMENT: " + self.amount.to_s + " hours - for " + self.metadata.name 
+    subject = I18n.translate('exchanges.notify.you_have_received_a_payment_of') + " " + self.amount.to_s + " " +  self.group.unit + " " + I18n.translate('for') + " " + self.metadata.name 
     exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
-    exchange_note.content = "This is an automatically generated system notice: " + self.customer.name + " paid you " + self.amount.to_s + " hours."
+    exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.paid_you') + " " + self.amount.to_s + " " + self.group.unit + "."
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
     exchange_note.save!
-=end
   end
 
   def send_suspend_payment_notification_to_worker
     exchange_note = Message.new()
-    subject = "PAYMENT SUSPENDED: " + self.amount.to_s + " hours - by " + self.metadata.name
+    subject = I18n.translate('exchanges.notify.payment_suspended') + self.amount.to_s + " " + self.group.unit + " - " + I18n.translate('by') + " " + self.metadata.name
     exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
-    exchange_note.content = "This is an automatically generated system notice: " + self.customer.name + " suspended payment of " + self.amount.to_s + " hours."
+    exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.suspended_payment_of') + " " + self.amount.to_s + " " + self.group.unit + "."
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
     exchange_note.save!
