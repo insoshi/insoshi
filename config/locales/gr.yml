@@ -419,6 +419,11 @@ gr:
       service_provided: "Παρεχόμενη Υπηρεσία"
       no_currencies: "Αυτό το πρόσωπο δεν χρησιμοποιεί καμένα νόμισμα"
       enter_description: "Εισάγετε περιγραφή της υπηρεσίας εδώ"
+    notify:
+      you_have_received_a_payment_of: "You have received a payment of"
+      paid_you: "paid you"
+      payment_suspended: "Payment suspended: "
+      suspended_payment_of: "suspended payment of"
 
   sessions:
     new:

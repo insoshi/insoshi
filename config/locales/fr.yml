@@ -428,6 +428,11 @@ fr:
       service_provided: "Service rendu"
       no_currencies: "Cette personne n’utilise pas de monnaie"
       enter_description: "Enter description of service here"
+    notify:
+      you_have_received_a_payment_of: "You have received a payment of"
+      paid_you: "paid you"
+      payment_suspended: "Payment suspended: "
+      suspended_payment_of: "suspended payment of"
 
   sessions:
     new:
