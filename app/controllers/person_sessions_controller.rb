@@ -30,7 +30,7 @@ class PersonSessionsController < ApplicationController
   end
 
   def destroy
-    unless current_person_session.nil?
+    unless @current_person_session.nil?
       @current_person_session.destroy
       flash[:success] = t('success_logout')
     else
