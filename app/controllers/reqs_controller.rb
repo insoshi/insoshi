@@ -65,6 +65,7 @@ class ReqsController < ApplicationController
   def new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @selected_neighborhoods = current_person.neighborhoods
 
     respond_to do |format|
       format.js
