@@ -6,7 +6,7 @@
                       @all_neighborhoods,
                       :id,
                       :long_name,
-                      {:selected => @selected_neighborhoods.map(&:id)},
+                      {:selected => @selected_neighborhoods.nil? ? [] : @selected_neighborhoods.map(&:id)},
                       {:multiple => true, :size => '10'}
                       )
 %>
