@@ -771,3 +771,4 @@ gr:
   error_connection_request_person_deactivated: "Μη έγκυρη αίτηση σύνδεσης: το πρόσωπο είναι απενεργοποιημένο"
   error_email_not_found: "Δεν βρέθηκε κανένας με αυτήν την διεύθυνση email"
   error_account_locate: "Συγγνώμη, δεν εντοπίστηκε ο λογαριασμός σας"
+  error_already_logged_out: "Είστε ήδη αποσυνδεδεμένοι"

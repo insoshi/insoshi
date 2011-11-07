@@ -7,7 +7,7 @@ class PersonSessionsController < ApplicationController
     @person_session = PersonSession.new
     @body = "login single-col"
   end
-  
+
 
   def create
     @person_session = PersonSession.new(params[:person_session])
@@ -30,8 +30,12 @@ class PersonSessionsController < ApplicationController
   end
 
   def destroy
-    @current_person_session.destroy
-    flash[:success] = t('success_logout')
+    unless current_person_session.nil?
+      @current_person_session.destroy
+      flash[:success] = t('success_logout')
+    else
+      flash[:error] = t('error_already_logged_out')
+    end
     redirect_back_or_default root_url
   end
 end
