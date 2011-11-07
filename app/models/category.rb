@@ -17,6 +17,7 @@ class Category < ActiveRecord::Base
     name description
   end
 
+  validates_presence_of :name
   has_and_belongs_to_many :reqs, :order => 'created_at DESC'
   has_and_belongs_to_many :offers, :order => 'created_at DESC'
   has_and_belongs_to_many :people, :conditions => Person.conditions_for_active
