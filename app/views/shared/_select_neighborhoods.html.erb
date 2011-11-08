@@ -6,7 +6,7 @@
                       @all_neighborhoods,
                       :id,
                       :long_name,
-                      {:selected => @selected_neighborhoods.nil? ? [] : @selected_neighborhoods.map(&:id)},
+                      {:selected => logged_in? ? current_person.neighborhoods.map(&:id) : []},
                       {:multiple => true, :size => '10'}
                       )
 %>
