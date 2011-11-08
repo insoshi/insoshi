@@ -12,7 +12,7 @@ gr:
   button_select: "Επιλογή"
   button_search: "Αναζήτηση"
   button_new_offer: "Νέα Προσφορά"
-  button_new_req: "Νέα Αίτηση"
+  button_new_req: "Νέα Ζήτηση"
 
   filter_categories: "Κατηγορίες"
   filter_neighborhoods: "Περιοχές"
@@ -165,7 +165,7 @@ gr:
       primary: "πρωτεύων"
       add_a_photo: "Προσθήκη Φωτογραφίας"
     members:
-      pending_request: "Η Αίτηση είναι σε εξέλιξη"
+      pending_request: "Η Ζήτηση είναι σε εξέλιξη"
       cancel_membership: "Ακύρωση Συμμετοχής"
       confirm: "Είστε σίγουροι ότι θέλετε να διαγραφείτε από αυτό το πρόσωπο;"
       accept_membership: "Αποδοχή Συμμετοχής"
@@ -214,8 +214,8 @@ gr:
       community_exchanges: "Ανταλλαγές Κοινότητας"
       home: "Αρχική"
       forum: "Φόρουμ"
-      requests: "Αιτήσεις"
-      offers: "Προσφορές"
+      requests: "Ζήτηση"
+      offers: "Προσφορά"
       exchanges: "Ανταλλαγές"
       people: "Άνθρωποι"
     _people:
@@ -257,8 +257,8 @@ gr:
       no_active_bids: "Δεν υπάρχουν ενεργές δηλώσεις"
       offers: "Οι ενεργές προσφορές σας"
       no_active_offers: "Δεν υπάρχουν ενεργές προσφορές"
-      requests: "Οι ενεργές αιτήσεις σας"
-      no_active_requests: "Δεν υπάρχουν ενεργές αιτήσεις"
+      requests: "Οι ενεργές ζητήσεις σας"
+      no_active_requests: "Δεν υπάρχουν ενεργές ζητήσεις"
     _graphs:
     _forum_preview:
       header: "Φόρουμ Συζητήσεων"
@@ -288,14 +288,14 @@ gr:
       available_count: "Διαθέσιμο Υπόλοιπο"
       created_by: "Δημιουργήθηκε από"
     index:
-      header: "Προσφορές"
+      header: "Προσφορά"
       nooffers: "Καμία Προσφορά (ακόμη!)"
     edit:
       header: "Επεξεργασία προσφοράς"
     new:
       header: "Νέα Προσφορά"
       total_available: "Διαθέσιμο Σύνολο"
-      description_label: "Βεβαιωθείτε πως αναφέρετε προτιμώμενα μέσα επικοινωνίας, πχ email. μήνυμα ή τηλέφωνο."
+      description_label: "Βεβαιωθείτε πως αναφέρετε προτιμώμενα μέσα επικοινωνίας, πχ προσωπικό μήνυμα, email ή τηλέφωνο."
     show:
       header: "Προσφορά"
       send: "Αποστολή"
@@ -393,18 +393,18 @@ gr:
       due: "μέχρι"
       createdby: "Δημιουργήθηκε από"
     index:
-      header: "Αιτήσεις"
+      header: "Ζήτηση"
       current: "Τρέχουσες"
       all: "Όλες"
-      noreqs: "Καμία αίτηση (ακόμη!)"
+      noreqs: "Καμία ζήτηση (ακόμη!)"
     edit:
-      header: "Επεξεργασία αίτησης"
+      header: "Επεξεργασία ζήτησης"
     new:
-      header: "Νέα Αίτηση"
+      header: "Νέα Ζήτηση"
       people_to_be_notified: "Άνθρωποι που θα ειδοποιούνται"
       notify_members_email: "Να ειδοποιούνται τα μέλη που φαίνονται παραπάνω;"
     show:
-      header: "Αίτηση"
+      header: "Ζήτηση"
       bids: "Δηλώσεις"
       nobids: "Καμία δήλωση (ακόμη!)"
       newbid: "Νέα Δήλωση"
@@ -417,13 +417,13 @@ gr:
       for: "Για:"
       or_ask: "ή ζητήστε"
       service_provided: "Παρεχόμενη Υπηρεσία"
-      no_currencies: "Αυτό το πρόσωπο δεν χρησιμοποιεί καμένα νόμισμα"
+      no_currencies: "Αυτό το πρόσωπο δεν χρησιμοποιεί κανένα νόμισμα"
       enter_description: "Εισάγετε περιγραφή της υπηρεσίας εδώ"
     notify:
-      you_have_received_a_payment_of: "You have received a payment of"
-      paid_you: "paid you"
-      payment_suspended: "Payment suspended: "
-      suspended_payment_of: "suspended payment of"
+      you_have_received_a_payment_of: "Έχετε λάβει μια πληρωμή από"
+      paid_you: "σας πλήρωσε"
+      payment_suspended: "Αναστολή πληρωμής: "
+      suspended_payment_of: "αναστολή πληρωμής για"
 
   sessions:
     new:
@@ -538,7 +538,7 @@ gr:
       has_created_a_new: "δημιούργησε νέο"
       is_attending: "παρακολουθεί"
       offer_created: "δημιούργησε νέα προσφορά"
-      req_created: "δημιούργησε νέα αίτηση"
+      req_created: "δημιούργησε νέα ζήτηση"
       event_created: "δημιούργησε ένα νέο γεγονός"
 
     transact:
@@ -546,10 +546,35 @@ gr:
     multiple_select_label: "Για πολλαπλή επιλογή από την παρακάτω λίστα, κρατήστε πατημένο το πλήκτρο Ctrl"
 
   person_mailer:
+    blog_comment_notification:
+      new: "Έχετε ένα νέο σχόλιο στο blog από"
+    connection_request:
+      new: "Έχετε μια νέα αίτηση σύνδεσης από"
     email_verification:
       message_default: "Πατήστε εδώ για να ολοκληρώσετε την επαλήθευση email:"
       message_whitelist: "Πατήστε εδώ για να ολοκληρώσετε την επαλήθευση email. Υπενθυμίζουμε πως για την πρόσβαση σε ανταλλαγές απαιτείται πρώτα η έγκριση του λογαριασμού σας από τους διαχειριστές"
       thanks: "Ευχαριστούμε!"
+    membership_accepted:
+      accepted: "Η αίτηση σας έχει γίνει αποδεκτή για συμμετοχή σε"
+    membership_public_group:
+      joined: "συμμετέχει στην δημόσια ομάδα σας"
+    membership_request:
+      new: "Έχετε μια νέα αίτηση συμμετοχής από"
+      for_group: "για την ομάδα"
+    message_notification:
+      click_to_view: "Πατήστε εδώ για να δείτε αυτό το μήνυμα στο"
+    password_reset_instructions:
+      header: "Οδηγίες Επαναφοράς Κωδικού Πρόσβασης"
+      message: "Έχει γίνει μια αίτηση για επαναφορά του κωδικού σας. Αν δεν κάνατε αυτή την αίτηση, απλά αγνοείστε αυτό το μήνυμα. Αν όντως κάνατε αυτή την αίτηση, παρακαλώ ακολουθήστε τον παρακάτω σύνδεσμο."
+      reset_password: "Επαναφορά Κωδικού Πρόσβασης!"
+    registration_notification:
+      new: "Ένα νέο πρόσωπο έχει εγγραφεί"
+    req_notification:
+      matches_a_skill_category_you_have: "αναφέρεται σε μια κατηγορία που έχετε δηλώσει"
+      description: "Περιγραφή"
+      requested_by: "Ζητήθηκε από"
+    wall_comment_notification:
+      new: "Έχετε ένα νέο σχόλιο στον τοίχο σας από"
 
   pagination:
     previous: "Προηγούμενο"
@@ -644,7 +669,7 @@ gr:
   notice_thanks_for_signing_up_check_email: "Ευχαριστούμε για την εγγραφή! Ελέγξτε το email σας για να επαληθεύσετε την διεύθυνσή σας."
   notice_thanks_for_signing_up: "Ευχαριστούμε για την εγγραφή!"
   notice_post_updated: "Η δημοσίευση ενημερώθηκε"
-  notice_request_updated: "Η Αίτηση ενημερώθηκε επιτυχώς."
+  notice_request_updated: "Η Ζήτηση ενημερώθηκε επιτυχώς."
   notice_logged_in_successfully: "Επιτυχής είσοδος"
   notice_unverified_email_address: "Δεν έχει επαληθευτεί η διεύθυνση email. Παρακαλώ ελέγξτε το email σας για τον κωδικό ενεργοποίησης."
   notice_topic_updated: "Το θέμα ενημερώθηκε επιτυχώς."
@@ -688,8 +713,8 @@ gr:
   success_photo_deleted: "Η φωτογραφία διαγράφηκε"
   success_post_created: "Η δημοσίευση δημιουργήθηκε"
   success_post_destroyed: "Η δημοσίευση διαγράφηκε"
-  success_request_created: "Η αίτηση δημιουργήθηκε επιτυχώς."
-  success_request_destroyed: "Η αίτηση διαγράφηκε"
+  success_request_created: "Η ζήτηση δημιουργήθηκε επιτυχώς."
+  success_request_destroyed: "Η ζήτηση διαγράφηκε"
   success_you_have_been_logged_out: "Έχετε αποσυνδεθεί."
   success_topic_created: "Το θέμα δημιουργήθηκε επιτυχώς."
   success_topic_destroyed: "Το θέμα διαγράφηκε επιτυχώς."
@@ -720,7 +745,7 @@ gr:
   error_authorization_required_to_edit_neighborhood: "Απαιτείται εξουσιοδότηση για να επεξεργαστείτε την Περιοχή"
   error_wrong_application_id: "Λάθος αναγνωριστικό εφαρμογής"
   error_offer_cannot_be_deleted: "Αυτή η προσφορά δεν μπορεί να διαγραφεί επειδή έχει γίνει αποδεκτή"
-  error_request_cannot_be_deleted: "Αυτή η αίτηση δεν μπορεί να διαγραφεί επειδή έχει γίνει αποδεκτή"
+  error_request_cannot_be_deleted: "Αυτή η ζήτηση δεν μπορεί να διαγραφεί επειδή έχει γίνει αποδεκτή"
   error_invalid_email_address: "Μη έγκυρη διεύθυνση email"
   error_person_inactive: "Αυτό το πρόσωπο δεν είναι ενεργό"
   error_invalid_email_verification_code: "Μη έγκυρος κωδικός επαλήθευσης μέσω email"
