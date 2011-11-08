@@ -554,10 +554,35 @@ fr:
     multiple_select_label: "For multiple selection in the list below, press and hold Ctrl key (or Command for Mac users)"
 
   person_mailer:
+    blog_comment_notification:
+      new: "You have a new comment on your blog from"
+    connection_request:
+      new: "You have a new connection request from"
     email_verification:
       message_default: "Cliquez ici pour compléter la verification de votre adresse courriel:"
       message_whitelist: "Cliquez ici pour completer la verification de votre adresse courriel. Notez que l’accès à l’échange doit être approuvé par l’administrateur."
-      thanks: "Merci"
+      thanks: "Merci!"
+    membership_accepted:
+      accepted: "Your membership request has been accepted to join"
+    membership_public_group:
+      joined: "has joined to your public group"
+    membership_request:
+      new: "You have a new membership request from"
+      for_group: "for group"
+    message_notification:
+      click_to_view: "Click here to view this message at"
+    password_reset_instructions:
+      header: "Password Reset Instructions"
+      message: "A request to reset your password has been made. If you did not make this request, simply ignore this email. If you did make this request, please follow the link below."
+      reset_password: "Reset Password!"
+    registration_notification:
+      new: "A new person has registered"
+    req_notification:
+      matches_a_skill_category_you_have: "matches a skill category you have"
+      description: "Description"
+      requested_by: "Requested by"
+    wall_comment_notification:
+      new: "You have a new comment on your wall from"
 
   pagination:
     previous: "Previous"

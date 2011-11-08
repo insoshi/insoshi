@@ -6,7 +6,7 @@
     <%=h role.humanize %><br />
   <% end %>
   <%= hidden_field_tag "membership[roles][]", "" %>
-  <%= f.submit "Update" %>
+  <%= f.submit t('button_update') %>
 <% end %>
 <% if @account %>
   <h2>Edit account for <%= h @membership.person.name %></h2>
@@ -16,6 +16,6 @@
         <%= f.label "Credit Limit" %>
         <%= f.text_field :credit_limit, :size => 5 %>&nbsp;<span class="small"><%= @account.group.unit %></span>
       </div>
-    <%= f.submit "Update" %>
+    <%= f.submit t('button_update') %>
   <% end %>
 <% end %>

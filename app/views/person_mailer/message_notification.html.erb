@@ -1,6 +1,6 @@
 <%= display simple_format_without_paragraph @message.content %><br>
 --<br>
-Click here to view this message at <%= @server %>:<br>
+<%= t('person_mailer.message_notification.click_to_view') %> <%= @server %>:<br>
 <br>
 http://<%= @server %>/messages/<%= @message.to_param %><br>
 <br>
