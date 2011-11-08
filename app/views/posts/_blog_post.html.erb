@@ -6,6 +6,6 @@
   </h3>
   <%= blog_post.content %>
   <p class="meta">
-    Posted <%= time_ago_in_words(blog_post.date_published) %> <%= t('ago') %> <a href="/home/show/<%= blog_post.id %>#disqus_thread"></a>
+    <%= t('posted') %> <%= time_ago_in_words(blog_post.date_published) %> <%= t('ago') %> <a href="/home/show/<%= blog_post.id %>#disqus_thread"></a>
   </p>
 </li>

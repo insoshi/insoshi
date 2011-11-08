@@ -1,8 +1,8 @@
-[<%= h @name %>] matches a skill category you have
+[<%= h @name %>] <%= t('person_mailer.req_notification.matches_a_skill_category_you_have') %> 
 
 http://<%= @server %><%= @url %>
 
-Description:
+<%= t('person_mailer.req_notification.description') %>:
 <%= h @description %>
 
-Requested by: <%= h(@requestor) %>
+<%= t('person_mailer.req_notification.requested_by') %>: <%= h(@requestor) %>

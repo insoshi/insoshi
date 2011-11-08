@@ -1,4 +1,4 @@
-You have a new comment on your blog from <%= @comment.commenter.name %>:
+<%= t('person_mailer.blog_comment_notification.new') %> <%= @comment.commenter.name %>:
 
 http://<%= @server %><%= @url %>
 

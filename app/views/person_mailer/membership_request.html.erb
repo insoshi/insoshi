@@ -1,4 +1,5 @@
-You have a new membership request from <%= @membership.person.name %> for group
+<%= t('person_mailer.membership_request.new') %> <%= @membership.person.name %> 
+<%= t('person_mailer.membership_request.for_group') %>
 <%= @membership.group.name %>:
 
 http://<%= @server %><%= @url %>
