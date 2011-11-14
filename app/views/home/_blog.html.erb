@@ -13,9 +13,9 @@
   <ul class="list blog full">
     <%= render :partial => 'posts/blog_post', :collection => posts %>
   </ul>
+  <%= will_paginate(posts) %>
 <%- end -%>
 
-<%= will_paginate(posts) %>
 <% end %>
 <script type="text/javascript">
 //<![CDATA[

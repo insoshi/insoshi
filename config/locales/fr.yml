@@ -778,3 +778,4 @@ fr:
   error_connection_request_person_deactivated: "Invalid connection request: person deactivated"
   error_email_not_found: "No one was found with that email address"
   error_account_locate: "We're sorry, but we could not locate your account"
+  error_already_logged_out: "You are already logged out"
