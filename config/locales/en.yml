@@ -514,7 +514,7 @@ en:
       new: "You have a new membership request from"
       for_group: "for group"
     message_notification:
-      click_to_view: "Click here to view this message at"
+      click_to_view: "to this message"
     password_reset_instructions:
       header: "Password Reset Instructions"
       message: "A request to reset your password has been made. If you did not make this request, simply ignore this email. If you did make this request, please follow the link below."
@@ -527,6 +527,8 @@ en:
       requested_by: "Requested by"
     wall_comment_notification:
       new: "You have a new comment on your wall from"
+    _footer:
+      thankyou: "Thank you for supporting open source software."
 
   authlogic:
     error_messages:
