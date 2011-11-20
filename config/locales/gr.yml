@@ -562,7 +562,7 @@ gr:
       new: "Έχετε μια νέα αίτηση συμμετοχής από"
       for_group: "για την ομάδα"
     message_notification:
-      click_to_view: "Πατήστε εδώ για να δείτε αυτό το μήνυμα στο"
+      click_to_view: "σε αυτό το μήνυμα"
     password_reset_instructions:
       header: "Οδηγίες Επαναφοράς Κωδικού Πρόσβασης"
       message: "Έχει γίνει μια αίτηση για επαναφορά του κωδικού σας. Αν δεν κάνατε αυτή την αίτηση, απλά αγνοείστε αυτό το μήνυμα. Αν όντως κάνατε αυτή την αίτηση, παρακαλώ ακολουθήστε τον παρακάτω σύνδεσμο."
@@ -575,6 +575,8 @@ gr:
       requested_by: "Ζητήθηκε από"
     wall_comment_notification:
       new: "Έχετε ένα νέο σχόλιο στον τοίχο σας από"
+    _footer:
+      thankyou: "Thank you for supporting open source software."
 
   pagination:
     previous: "Προηγούμενο"
