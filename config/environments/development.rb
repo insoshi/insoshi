@@ -1,7 +1,6 @@
 # Settings specified here will take precedence over those in config/environment.rb
 # XXX uncomment this for memcache
 #require 'active_support/cache/dalli_store23'
-require 'mail_view'
 
 # In the development environment your application's code is reloaded on
 # every request.  This slows down response time but is perfect for development
