@@ -3,7 +3,7 @@ class Admin::ExchangesController < ApplicationController
   before_filter :login_required, :admin_required
   active_scaffold :exchange do |config|
     config.label = "Exchanges"
-    update.columns.exclude [:group]
+    config.actions.exclude :update
     create.columns.exclude [:group]
   end
 
