@@ -38,6 +38,7 @@ class Req < ActiveRecord::Base
   attr_accessor :ability
   attr_protected :ability
   attr_protected :person_id, :created_at, :updated_at
+  attr_readonly :estimated_hours
   attr_readonly :group_id
   validates_presence_of :name, :due_date
   validates_presence_of :group_id
