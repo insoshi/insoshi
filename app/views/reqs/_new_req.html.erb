@@ -1,7 +1,7 @@
 <%= javascript_include_tag 'req_new_form' %>
 <h2><%= t('reqs.new.header') %></h2>
 <% form_for :req, :url => group_reqs_path(@group), :html => {:id => 'new_req'} do |f| %>
-  <%= render :partial => 'form_fields', :locals => {:f => f} %>
+  <%= render :partial => 'form_fields', :locals => {:f => f, :estimate_disabled => false} %>
   <div id="providersDisplay" style="height: 95px;" class="form_row full"><label><%= t('reqs.new.people_to_be_notified') %>:</label><div id="followMe"></div></div>
   <div class="form_row">
     <label for="notifications" class="checkbox"><%= t('reqs.new.notify_members_email') %></label>

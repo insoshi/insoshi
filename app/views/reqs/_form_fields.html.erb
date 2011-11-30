@@ -4,7 +4,7 @@
   </div>
   <div class="form_row">
     <%= f.label t('estimated') + ' ' + t('payment') %>
-    <%= f.text_field :estimated_hours, :size => 5 %>&nbsp;<span><%= @group.unit %></span>
+    <%= f.text_field :estimated_hours, :size => 5, :disabled => estimate_disabled %>&nbsp;<span><%= @group.unit %></span>
   </div>
   <div class="form_row">
     <%= f.label t('due_date') %>
