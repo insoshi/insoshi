@@ -8,6 +8,7 @@ class Offer < ActiveRecord::Base
 
   named_scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
   named_scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
+  named_scope :active, :conditions => ["available_count > ? AND expiration_date >= ?", 0, DateTime.now]
 
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :neighborhoods
@@ -23,18 +24,16 @@ class Offer < ActiveRecord::Base
   after_create :log_activity
 
   class << self
-
-    def current(page=1)
-      today = DateTime.now
-      Offer.paginate(:all, :page => page, :conditions => ["available_count > ? AND expiration_date >= ?", 0, today], :order => 'created_at DESC')
-    end
-
-    def search(category,group,page,posts_per_page,search=nil)
+    def search(category,group,active_only,page,posts_per_page,search=nil)
       unless category
-        group.offers.search(search).paginate(:page => page, :per_page => posts_per_page)
+        chain = group.offers
+        chain = chain.search(search) if search
       else
-        category.offers.with_group_id(group.id).paginate(:page => page, :per_page => posts_per_page)
+        chain = category.offers.with_group_id(group.id)
       end
+
+      chain = chain.active if active_only
+      chain.paginate(:page => page, :per_page => posts_per_page)
     end
   end
 

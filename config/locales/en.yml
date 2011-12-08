@@ -46,6 +46,8 @@ en:
   in: "in"
   or: "or"
   event: "event"
+  active: "Active"
+  all: "All"
 
   accounts:
     show:

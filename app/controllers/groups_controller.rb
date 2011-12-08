@@ -28,6 +28,7 @@ class GroupsController < ApplicationController
                            )
         @offers = Offer.search(nil,
                                @group,
+                               active=true,
                                1, #params[:page]
                                AJAX_POSTS_PER_PAGE,
                                nil

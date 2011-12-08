@@ -47,6 +47,8 @@ gr:
   or: "ή"
   hours: "ώρες"
   event: "γεγονός"
+  active: "ενεργός"
+  all: "όλα"
 
   datetime:
     distance_in_words:

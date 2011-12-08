@@ -46,6 +46,8 @@ es:
   in: "dans"
   or: "or"
   event: "event"
+  active: "Activo"
+  all: "Todos"
 
   accounts:
     show:

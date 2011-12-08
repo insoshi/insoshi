@@ -6,9 +6,9 @@ class OffersController < ApplicationController
 
   def index
     @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
-
     @offers = Offer.search(@selected_neighborhood || @selected_category,
                            @group,
+                           active=params[:scope].nil?, # if a scope is not passed, just return actives
                            params[:page],
                            AJAX_POSTS_PER_PAGE,
                            params[:search]
@@ -49,7 +49,7 @@ class OffersController < ApplicationController
         flash[:notice] = t('success_offer_created')
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-        @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+        @offers = Offer.search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
         format.js
         format.xml  { render :xml => @offer, :status => :created, :location => @offer }
       else
@@ -78,7 +78,7 @@ class OffersController < ApplicationController
         flash[:notice] = t('notice_offer_updated')
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-        @offers = @group.offers.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+        @offers = Offer.search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
         #format.html { redirect_to(@offer) }
         format.js
         format.xml  { head :ok }

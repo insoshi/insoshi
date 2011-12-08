@@ -46,6 +46,8 @@ fr:
   in: "dans"
   or: "or"
   event: "event"
+  active: "Actif"
+  all: "Tous les"
 
   datetime:
     distance_in_words:

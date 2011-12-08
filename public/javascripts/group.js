@@ -19,6 +19,7 @@ $(function() {
   OSCURRENCY.post_allowed = true;
   OSCURRENCY.notice_fadeout_time = 8000;
   OSCURRENCY.delete_fadeout_time = 4000;
+  OSCURRENCY.offers_mode = ''
 
   $("#tabs").tabs({
     select: function(event, ui) {
@@ -153,6 +154,16 @@ $(function() {
     return hash;
   }
 
+  function active_option(url) {
+    var response = ""
+    if('all' == OSCURRENCY.offers_mode) {
+      if((-1==url.indexOf('edit')) && (-1==url.indexOf('new'))) {
+        response = (-1==url.indexOf('?')) ? "?scope=all" : "&scope=all";
+      }
+    }
+    return response;
+  }
+
   $(window).hashchange( function() {
       var hash = location.hash;
       var js_url = "";
@@ -163,6 +174,9 @@ $(function() {
         a = resolve(hash);
         tab = a[0];
         js_url = a[1];
+        if('#tab_offers' == tab) {
+          js_url += active_option(js_url);
+        }
         if(tab != OSCURRENCY.tab) {
           // for responding to back/forward buttons
           t.tabs('select',tab);
@@ -311,19 +325,46 @@ $(function() {
     return false;
     });
 
-  $('.toggle-category').live('click',function() {
+  $.fn.make_filter_visible = function() {
       $(this).parent().children().removeClass('filter_selected');
       $(this).addClass('filter_selected');
+  };
+
+  $('.toggle-category').live('click',function() {
+      $(this).make_filter_visible();
       $('span.category_filter').show();
       $('span.neighborhood_filter').hide();
       return false;
     });
 
   $('.toggle-neighborhood').live('click',function() {
-      $(this).parent().children().removeClass('filter_selected');
-      $(this).addClass('filter_selected');
+      $(this).make_filter_visible();
       $('span.category_filter').hide();
       $('span.neighborhood_filter').show();
+      return false;
+    });
+
+  function change_offers_mode(mode) {
+    if(mode != OSCURRENCY.offers_mode) {
+      OSCURRENCY.offers_mode = mode;
+      if('#offers' == window.location.hash) {
+        // force a hash change
+        window.location.hash = '#offers/page=1';
+      } else {
+        window.location.hash = '#offers';
+      }
+    }
+  }
+
+  $('.toggle-active-offers').live('click',function() {
+      $(this).make_filter_visible();
+      change_offers_mode('');
+      return false;
+    });
+
+  $('.toggle-all-offers').live('click',function() {
+      $(this).make_filter_visible();
+      change_offers_mode('all');
       return false;
     });
 
