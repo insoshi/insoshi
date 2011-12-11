@@ -25,6 +25,7 @@ class ReqsController < ApplicationController
 
     @reqs = Req.search(@selected_neighborhood || @selected_category, 
                        @group, 
+                       active=params[:scope].nil?, # if a scope is not passed, just return actives
                        params[:page], 
                        AJAX_POSTS_PER_PAGE,
                        params[:search]
@@ -102,7 +103,7 @@ class ReqsController < ApplicationController
         flash[:notice] = t('success_request_created')
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-        @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+        @reqs = Req.search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
         format.js
         format.xml  { render :xml => @req, :status => :created, :location => @req }
       else
@@ -125,7 +126,7 @@ class ReqsController < ApplicationController
         flash[:notice] = t('notice_request_updated')
         @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-        @reqs = @group.reqs.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+        @reqs = Req.search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
         format.html { redirect_to(@req) }
         format.js
         format.xml  { head :ok }

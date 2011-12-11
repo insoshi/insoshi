@@ -22,6 +22,7 @@ class GroupsController < ApplicationController
         @topics = Topic.find_recently_active(@forum, params[:page]) 
         @reqs = Req.search(nil, 
                            @group, 
+                           active=true,
                            1, # params[:page] 
                            AJAX_POSTS_PER_PAGE,
                            nil

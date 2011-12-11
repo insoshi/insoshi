@@ -18,7 +18,7 @@ class Category < ActiveRecord::Base
   end
 
   validates_presence_of :name
-  has_and_belongs_to_many :reqs, :order => 'created_at DESC'
+  has_and_belongs_to_many :reqs, :conditions => "biddable IS true", :order => 'created_at DESC'
   has_and_belongs_to_many :offers, :order => 'created_at DESC'
   has_and_belongs_to_many :people, :conditions => Person.conditions_for_active
   acts_as_tree

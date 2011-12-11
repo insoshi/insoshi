@@ -24,7 +24,7 @@ class Req < ActiveRecord::Base
     description
   end
   
-  named_scope :active, :conditions => {:biddable => true}
+  named_scope :active, :conditions => ["active IS true AND due_date >= ?", DateTime.now]
   named_scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
   named_scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
 
@@ -43,6 +43,7 @@ class Req < ActiveRecord::Base
   validates_presence_of :name, :due_date
   validates_presence_of :group_id
 
+  before_create :make_active, :if => :biddable
   after_create :notify_workers, :if => :notifications
   after_create :log_activity
 
@@ -58,12 +59,16 @@ class Req < ActiveRecord::Base
       @reqs = Req.paginate(:all, :page => page, :conditions => ["biddable = ?", true], :order => 'created_at DESC')
     end
 
-    def search(category,group,page,posts_per_page,search=nil)
+    def search(category,group,active_only,page,posts_per_page,search=nil)
       unless category
-        group.reqs.active.search(search).paginate(:page => page, :per_page => posts_per_page)
+        chain = group.reqs
+        chain = chain.search(search) if search
       else
-        category.reqs.active.with_group_id(group.id).paginate(:page => page, :per_page => posts_per_page)
+        chain = category.reqs.with_group_id(group.id)
       end
+
+      chain = chain.active if active_only
+      chain.paginate(:page => page, :per_page => posts_per_page)
     end
   end
 
@@ -120,6 +125,10 @@ class Req < ActiveRecord::Base
         errors.add(:group_id, "does not include you as a member")
       end
     end
+  end
+
+  def make_active
+    self.active = true
   end
 
   def notify_workers

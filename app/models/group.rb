@@ -5,7 +5,7 @@ class Group < ActiveRecord::Base
   attr_protected :mandatory
 
   has_one :forum
-  has_many :reqs, :order => "created_at DESC"
+  has_many :reqs, :conditions => "biddable IS true", :order => "created_at DESC"
   has_many :offers, :order => "created_at DESC"
   has_many :photos, :dependent => :destroy, :order => "created_at"
   has_many :exchanges, :order => "created_at DESC"

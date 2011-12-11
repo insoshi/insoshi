@@ -20,6 +20,7 @@ $(function() {
   OSCURRENCY.notice_fadeout_time = 8000;
   OSCURRENCY.delete_fadeout_time = 4000;
   OSCURRENCY.offers_mode = ''
+  OSCURRENCY.reqs_mode = ''
 
   $("#tabs").tabs({
     select: function(event, ui) {
@@ -154,9 +155,9 @@ $(function() {
     return hash;
   }
 
-  function active_option(url) {
+  function active_option(mode,url) {
     var response = ""
-    if('all' == OSCURRENCY.offers_mode) {
+    if('all' == mode) {
       if((-1==url.indexOf('edit')) && (-1==url.indexOf('new'))) {
         response = (-1==url.indexOf('?')) ? "?scope=all" : "&scope=all";
       }
@@ -175,8 +176,11 @@ $(function() {
         tab = a[0];
         js_url = a[1];
         if('#tab_offers' == tab) {
-          js_url += active_option(js_url);
+          js_url += active_option(OSCURRENCY.offers_mode,js_url);
+        } else if('#tab_requests' == tab) {
+          js_url += active_option(OSCURRENCY.reqs_mode,js_url);
         }
+
         if(tab != OSCURRENCY.tab) {
           // for responding to back/forward buttons
           t.tabs('select',tab);
@@ -365,6 +369,30 @@ $(function() {
   $('.toggle-all-offers').live('click',function() {
       $(this).make_filter_visible();
       change_offers_mode('all');
+      return false;
+    });
+
+  function change_reqs_mode(mode) {
+    if(mode != OSCURRENCY.reqs_mode) {
+      OSCURRENCY.reqs_mode = mode;
+      if('#requests' == window.location.hash) {
+        // force a hash change
+        window.location.hash = '#reqs/page=1';
+      } else {
+        window.location.hash = '#requests';
+      }
+    }
+  }
+
+  $('.toggle-active-reqs').live('click',function() {
+      $(this).make_filter_visible();
+      change_reqs_mode('');
+      return false;
+    });
+
+  $('.toggle-all-reqs').live('click',function() {
+      $(this).make_filter_visible();
+      change_reqs_mode('all');
       return false;
     });
 
