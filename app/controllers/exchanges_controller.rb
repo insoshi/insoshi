@@ -70,7 +70,7 @@ class ExchangesController < ApplicationController
       @req.estimated_hours = @exchange.amount
       @req.due_date = Time.now
       @req.person = current_person
-      @req.active = false
+      @req.biddable = false
       @req.save!
 
       @exchange.metadata = @req

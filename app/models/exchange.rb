@@ -117,7 +117,7 @@ class Exchange < ActiveRecord::Base
           worker.account(group).withdraw(amount)
           customer.account(group).deposit(amount)
           if self.metadata.class == Req
-            unless self.metadata.active?
+            unless self.metadata.biddable?
               self.metadata.destroy
             end
           end

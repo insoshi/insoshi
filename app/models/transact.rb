@@ -12,7 +12,7 @@ class Transact < Exchange
     req.person = customer
     req.estimated_hours = amount
     req.due_date = Time.now
-    req.active = false
+    req.biddable = false
     req.save!
     req
   end

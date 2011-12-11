@@ -24,7 +24,7 @@ class Req < ActiveRecord::Base
     description
   end
   
-  named_scope :active, :conditions => {:active => true}
+  named_scope :active, :conditions => {:biddable => true}
   named_scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
   named_scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
 
@@ -50,12 +50,12 @@ class Req < ActiveRecord::Base
 
     def current_and_active(page=1)
       today = DateTime.now
-      @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
+      @reqs = Req.paginate(:all, :page => page, :conditions => ["biddable = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
       @reqs.delete_if { |req| req.has_approved? }
     end
 
     def all_active(page=1)
-      @reqs = Req.paginate(:all, :page => page, :conditions => ["active = ?", true], :order => 'created_at DESC')
+      @reqs = Req.paginate(:all, :page => page, :conditions => ["biddable = ?", true], :order => 'created_at DESC')
     end
 
     def search(category,group,page,posts_per_page,search=nil)

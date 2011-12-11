@@ -22,7 +22,7 @@
     <% if can?(:update, req) -%>
       | <%= link_to t('button_edit'), edit_req_path(req), :class => 'show-follow' %>
     <% end -%>
-    <% if req.active? && can?(:destroy, req) -%>
+    <% if req.biddable? && can?(:destroy, req) -%>
       | <%= link_to t('button_delete'), req, :class => 'delete_req' %>
     <% end -%>
     <br>
