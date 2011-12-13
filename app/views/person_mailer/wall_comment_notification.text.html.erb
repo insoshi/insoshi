@@ -6,7 +6,7 @@
 </div>
 <div style="font-size:14px;color:rgb(50,50,50);border-bottom:1px #555 dotted">
   <div style="background:rgb(255,255,225);padding:5px;">
-    <p><%= display simple_format_without_paragraph h @comment.body %></p>
+    <p><%= markdown(@comment.body) %></p>
   </div>
 </div>
 <%= render :partial => 'notice', :object =>  link_to("#{t('messages.show.reply')} ","http://#{@server}#{@url}") + t('person_mailer.message_notification.click_to_view') %>

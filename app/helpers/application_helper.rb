@@ -126,13 +126,10 @@ module ApplicationHelper
   def set_focus_to(id)
     javascript_tag("jQuery('##{id}').focus()");
   end
- 
-  # Same as Rails' simple_format helper without using paragraphs
-  def simple_format_without_paragraph(text)
-    text.to_s.
-      gsub(/\r\n?/, "\n").                    # \r\n and \r -> \n
-      gsub(/\n\n+/, "<br /><br />").          # 2+ newline  -> 2 br
-      gsub(/([^\n]\n)(?=[^\n])/, '\1<br />')  # 1 newline   -> br
+
+  def markdown(text)
+    options = [:hard_wrap, :no_intraemphasis]
+    Redcarpet.new(text, *options).to_html.html_safe
   end
 
   # Display text by sanitizing and formatting.

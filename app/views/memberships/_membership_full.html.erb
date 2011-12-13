@@ -71,7 +71,7 @@
       </div>
       <%- end -%>
     <%- end -%>
-    <%= display simple_format_without_paragraph @person.description %>
+    <%= markdown(@person.description) %>
   </div>
 
   <div id="wall_canvas">

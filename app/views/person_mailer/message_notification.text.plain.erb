@@ -1,4 +1,4 @@
-<%= display simple_format_without_paragraph @message.content %>
+<%= strip_tags(@message.content) %>
 --
 <%= t('person_mailer.message_notification.click_to_view') %> <%= @server %>:
 

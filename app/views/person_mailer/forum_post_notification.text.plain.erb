@@ -1,5 +1,5 @@
 
-<%= display simple_format_without_paragraph @forum_post.body %>
+<%= strip_tags(@forum_post.body) %>
 
 
 http://<%= @server %>/groups/<%= @forum_post.topic.forum.group.id %>

@@ -7,7 +7,7 @@
     <%= person_link comment.commenter %> <%= t('said') %>
     <%= time_ago_in_words(comment.created_at) %> <%= t('ago') %>
   </p>
-  <%= display simple_format_without_paragraph comment.body %>
+  <%= markdown(comment.body) %>
 
   <%- if(current_person?(comment.commentable)) -%>
   <%= link_to t('reply_on') + " #{comment.commenter.name}'s " + t('wall'), person_path(comment.commenter, :anchor => 'wall'), :class => "small" %>

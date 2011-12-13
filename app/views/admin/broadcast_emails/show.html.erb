@@ -1,7 +1,7 @@
 <h2><%= h @broadcast_email.subject %></h2>
 
 <p>
-  <%=h simple_format_without_paragraph @broadcast_email.message %>
+  <%=markdown(@broadcast_email.message) %>
 </p>
 
 <%= link_to 'Edit', edit_admin_broadcast_email_path(@broadcast_email) %> |

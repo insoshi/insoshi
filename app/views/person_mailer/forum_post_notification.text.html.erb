@@ -4,7 +4,7 @@
 </div>
 <div style="font-size:14px;color:rgb(50,50,50);border-bottom:1px #555 dotted">
   <div style="background:rgb(255,255,225);padding:5px;">
-    <p><%= display simple_format_without_paragraph h @forum_post.body %></p>
+    <p><%= markdown(@forum_post.body) %></p>
   </div>
 </div>
 <%= render :partial => 'notice', :object =>  link_to("#{t('messages.show.reply')} ","http://#{@server}/groups/#{@forum_post.topic.forum.group.id}") + t('person_mailer.message_notification.click_to_view') %>

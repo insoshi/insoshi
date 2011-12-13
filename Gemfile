@@ -23,6 +23,7 @@ gem "ruby-openid", :require => "openid"
 gem "oauth-plugin", :path => "#{File.expand_path(__FILE__)}/../vendor/gems/oauth-plugin-0.4.0.pre4"
 gem "cancan", "1.5.1"
 gem "dalli"
+gem "redcarpet", "1.17.2"
 
 group :development, :test do
   gem "rspec", "1.3.0"

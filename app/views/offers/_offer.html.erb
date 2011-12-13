@@ -13,7 +13,7 @@
   </p>
     <%= display offer.formatted_categories, :class => "meta" %>
   <p>
-    <%= display simple_format_without_paragraph(offer.description) %>
+    <%= markdown(offer.description) %>
   </p>
   <p class="meta">
   <%= t('offers.partial.available_count') %>: <%= offer.available_count %>

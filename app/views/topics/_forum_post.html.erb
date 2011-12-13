@@ -11,6 +11,6 @@
       <%- end -%>
   </p>
   <div class="forum">
-  <%= display simple_format_without_paragraph forum_post.body %>
+  <%= markdown(forum_post.body) %>
   </div>
 </li>

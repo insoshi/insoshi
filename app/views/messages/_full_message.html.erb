@@ -6,7 +6,7 @@
   <%= image_link full_message.sender, :class => "photo",
                                       :image => :thumbnail %>
   </div>
-  <%= display simple_format_without_paragraph full_message.content %>
+  <%= markdown(full_message.content) %>
   <p class="meta tools">
     <%= t('messages.show.sent') %> <%= time_ago_in_words full_message.created_at %> <%= t('ago') %> |
     <%= link_to t('messages.show.reply'), reply_message_path(full_message) %> |
