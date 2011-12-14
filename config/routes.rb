@@ -25,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :bids
 
-  map.resources :reqs do |req|
+  map.resources :reqs, :member => {:deactivate => :post} do |req|
     req.resources :bids
   end
 

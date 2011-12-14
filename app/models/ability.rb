@@ -71,6 +71,9 @@ class Ability
       referenced = req.has_commitment? || req.has_approved? # no delete after a worker commits
       !referenced && (person.is?(:admin,req.group) || req.person == person || person.admin?)
     end
+    can :deactivate, Req do |req|
+      person.is?(:admin,req.group) || req.person == person || person.admin?
+    end
 
     can :read, Exchange
     can :destroy, Exchange, :customer => person

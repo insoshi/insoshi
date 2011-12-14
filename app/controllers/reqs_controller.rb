@@ -158,6 +158,17 @@ class ReqsController < ApplicationController
     end
   end 
 
+  def deactivate
+    @req = Req.find(params[:id])
+    if can?(:deactivate, @req)
+      flash[:notice] = t('success_request_deactivated')
+      @req.deactivate
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def correct_person_and_no_accept_required

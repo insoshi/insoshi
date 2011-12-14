@@ -3,6 +3,7 @@ fr:
 
   button_submit: "Soumettre"
   button_delete: "Effacer"
+  button_deactivate: "Désactiver"
   button_edit: "Modifier"
   button_create: "Créer"
   button_update: "Mettre a jour"
@@ -726,6 +727,7 @@ fr:
   success_post_destroyed: "L’entrée a été effacée"
   success_request_created: "La requête a été crée avec succès"
   success_request_destroyed: "Requête effacée"
+  success_request_deactivated: "Requête désactivé"
   success_you_have_been_logged_out: "Vous avez été désactivé"
   success_topic_created: "Sujet a été crée avec succès"
   success_topic_destroyed: "Sujet effacé avec succès"

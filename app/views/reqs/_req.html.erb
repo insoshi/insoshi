@@ -22,8 +22,13 @@
     <% if can?(:update, req) -%>
       | <%= link_to t('button_edit'), edit_req_path(req), :class => 'show-follow' %>
     <% end -%>
-    <% if req.biddable? && can?(:destroy, req) -%>
-      | <%= link_to t('button_delete'), req, :class => 'delete_req' %>
+    <% if req.biddable? %>
+      <% if can?(:destroy, req) -%>
+        | <%= link_to t('button_delete'), req, :class => 'delete_req' %>
+      <% end -%>
+      <% if can?(:deactivate, req) && req.considered_active? -%>
+        | <%= link_to t('button_deactivate'), deactivate_req_path(req), :class => 'deactivate_req' %>
+      <% end -%>
     <% end -%>
     <br>
     <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>

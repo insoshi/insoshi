@@ -256,6 +256,12 @@ $(function() {
       return false;
     });
 
+  $('.deactivate_req').live('click', function() {
+    var data = {'_method': 'deactivate'}
+    $.post($(this).attr('href'),data,null,'script');
+    return false;
+  });
+
   $('a.pay_now').live('click', function() {
     window.location.hash = url2hash(this.href);
     return false;

@@ -72,6 +72,14 @@ class Req < ActiveRecord::Base
     end
   end
 
+  def considered_active?
+    active? && (due_date > DateTime.now)
+  end
+
+  def deactivate
+    update_attribute(:active,false)
+  end
+
   def unit
     group.unit
   end

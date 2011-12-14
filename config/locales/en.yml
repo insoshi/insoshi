@@ -3,6 +3,7 @@ en:
 
   button_submit: "Submit"
   button_delete: "Delete"
+  button_deactivate: "Deactivate"
   button_edit: "Edit"
   button_create: "Create"
   button_update: "Update"
@@ -618,6 +619,7 @@ en:
   success_post_destroyed: "Post destroyed"
   success_request_created: "Request was successfully created."
   success_request_destroyed: "Request destroyed"
+  success_request_deactivated: "Request deactivated"
   success_you_have_been_logged_out: "You have been logged out."
   success_topic_created: "Topic was successfully created."
   success_topic_destroyed: "Topic was successfully destroyed."
