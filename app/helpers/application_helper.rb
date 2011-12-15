@@ -129,7 +129,7 @@ module ApplicationHelper
 
   def markdown(text)
     options = [:hard_wrap, :no_intraemphasis]
-    Redcarpet.new(text, *options).to_html.html_safe
+    Redcarpet.new(text || "", *options).to_html.html_safe
   end
 
   # Display text by sanitizing and formatting.
