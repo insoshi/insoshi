@@ -787,7 +787,7 @@ gr:
   success_post_destroyed: "Η δημοσίευση διαγράφηκε"
   success_request_created: "Η ζήτηση δημιουργήθηκε επιτυχώς."
   success_request_destroyed: "Η ζήτηση διαγράφηκε"
-  success_request_deactivated: "Η ζήτηση Απενεργοποιημένα"
+  success_request_deactivated: "Η ζήτηση απενεργοποιήθηκε"
   success_you_have_been_logged_out: "Έχετε αποσυνδεθεί."
   success_topic_created: "Το θέμα δημιουργήθηκε επιτυχώς."
   success_topic_destroyed: "Το θέμα διαγράφηκε επιτυχώς."
