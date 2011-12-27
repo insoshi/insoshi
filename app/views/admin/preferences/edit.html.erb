@@ -28,6 +28,11 @@
     </div>
 
     <div class="form_row">
+      <label for="smtp_port">Smtp port</label>
+      <%= f.select :smtp_port,[25,587] %>
+    </div>
+
+    <div class="form_row">
       <label for="default_group_id">Default group for new registrations</label>
       <%= f.select :default_group_id, @groups %>
     </div>
