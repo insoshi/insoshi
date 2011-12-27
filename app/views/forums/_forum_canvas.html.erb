@@ -1,13 +1,14 @@
 <h2><%= t('groups.show.discussion_topics') %><%= waiting_image %></h2>
-<ol class="list forum full">
-  <%= render :partial => 'topics/topic', :collection => @topics %>
-</ol>
 <%- if logged_in? -%>
-  <h3><%= t('groups.show.add_a_new_topic') %></h3>
   <% form_for :topic, :url => forum_topics_path(@forum), :html => {:id => 'new_topic'} do |f| %>
     <div class="form_row">
-      <%= f.text_field :name %>
+      <%= f.text_field :name, :placeholder => 'Add a new topic...' %>
       <%= submit_tag t('button_submit'), :class => "button" %>
     </div>
   <% end %>
 <%- end -%>
+<%= will_paginate(@topics) %>
+<ol class="list forum full">
+  <%= render :partial => 'topics/topic', :collection => @topics %>
+</ol>
+<%= will_paginate(@topics) %>

@@ -41,6 +41,7 @@ $(function() {
   route('requests', /^#reqs\/page=(\d+)/,                          '/groups/[:group_id]/reqs?page=[:1]');
   route('offers',   /^#offers\/page=(\d+)/,                        '/groups/[:group_id]/offers?page=[:1]');
   route('people',   /^#people\/page=(\d+)/,                        '/groups/[:group_id]/memberships?page=[:1]');
+  route('forum',    /^#forum\/page=(\d+)/,                         '/groups/[:group_id]/forum?page=[:1]');
 
   route('requests', /^#reqs\/(\d+)$/,                              '/reqs/[:1]');
   route('requests', /^#reqs\/(\d+)\/edit$/,                        '/reqs/[:1]/edit');
