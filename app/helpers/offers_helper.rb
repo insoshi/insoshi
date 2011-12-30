@@ -13,6 +13,7 @@ module OffersHelper
     else
       "toggle-all-offers"
     end
+  end
 
   def formatted_offer_categories(categories)
     text = ""
