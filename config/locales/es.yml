@@ -579,9 +579,9 @@ es:
     formats:
       default: "%d.%m.%Y %I:%M %p"
 
-  pagination:
-    previous: "Previous"
-    next: "Next"
+  will_paginate:
+    previous_label: "&laquo; Anterior"
+    next_label: "Siguiente &raquo;"
 
   authlogic:
     attributes:

@@ -589,9 +589,9 @@ fr:
     _footer:
       thankyou: "Thank you for supporting open source software."
 
-  pagination:
-    previous: "Previous"
-    next: "Next"
+  will_paginate:
+    previous_label: "&laquo; Précédent"
+    next_label: "Suivant &raquo;"
 
   authlogic:
     attributes:

@@ -648,9 +648,9 @@ gr:
     _footer:
       thankyou: "Thank you for supporting open source software."
 
-  pagination:
-    previous: "Προηγούμενο"
-    next: "Επόμενο"
+  will_paginate:
+    previous_label: "&laquo; Προηγούμενο"
+    next_label: "Επόμενο &raquo;"
 
   authlogic:
     attributes:

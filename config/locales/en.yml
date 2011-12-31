@@ -537,9 +537,9 @@ en:
     error_messages:
       not_active: "Your account is not active. It may require admin approval."
 
-  pagination:
-    previous: "Previous"
-    next: "Next"
+  will_paginate:
+    previous_label: "&laquo; Previous"
+    next_label: "Next &raquo;"
 
   notice_warning_your_email_address: "Warning: your email address is still at"
   notice_change_it_here: "Change it here"
