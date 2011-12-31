@@ -7,16 +7,7 @@
     <%- else -%>
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
-    <%= stylesheet_link_tag "default" %>
-    <%= stylesheet_link_tag 'Aristo/jquery-ui-1.8rc3.custom' %>
-    <%= javascript_include_tag 'jquery.min.js' %>
-    <%= javascript_include_tag 'jquery-ui-1.8.4.custom.min' %>
-    <%= javascript_include_tag 'jquery.timeago' %>
-    <%= javascript_include_tag 'highcharts' %>
-    <%= javascript_include_tag 'jquery.ba-hashchange.min' %>
-    <%= javascript_include_tag 'jquery.linkify-1.0-min' %>
-    <%= javascript_include_tag 'site' %>
-    <%= javascript_include_tag 'jquery_ujs' %>
+    <%= stylesheet_link_tag "application" %>
     <%= yield :jquery_support %>
     <%= yield :head %>    
   </head>

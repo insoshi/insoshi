@@ -1,11 +1,18 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.10'
+gem 'rails', '3.1.3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+
+group :assets do
+  gem "sass-rails"
+  gem "uglifier"
+end
+
+gem 'jquery-rails'
 
 #gem "rack", '= 1.2.2'   #Heroku seems to force this
 gem 'dynamic_form'
@@ -32,19 +39,20 @@ gem "cancan"
 gem "dalli"
 gem "redcarpet", "1.17.2"
 #gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :branch => 'rails-3.0'
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :ref =>'608ae867438f406bcd96'
+#gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :ref =>'608ae867438f406bcd96'
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
 group :development, :test do
   gem "silent-postgres"
-  gem "test-unit", "2.3.0"
+  gem "test-unit"
 # gem 'ruby-debug19', :require => 'ruby-debug'
   gem "rspec-rails" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
-  gem "rack", "1.2.1"
-  gem "rack-test", "0.5.7"
+  gem "rack"
+  gem "rack-test"
   gem "database_cleaner"
-  gem "cucumber", "0.10.5"
-  gem "cucumber-rails", "0.5.2"
-  gem "awesome_print", "0.3.2"
+  gem "cucumber"
+  gem "cucumber-rails"
+  gem "awesome_print"
   gem "spork"
   gem "guard-spork"
   gem "artifice"
