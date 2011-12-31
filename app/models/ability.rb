@@ -22,6 +22,17 @@ class Ability
       person.admin?
     end
 
+    # adding category,neighborhood to rails_admin
+    can [:read,:create], Category
+    can [:update], Category do |category|
+      person.admin?
+    end
+
+    can :read, Neighborhood
+    can [:create,:update], Neighborhood do |neighborhood|
+      person.admin?
+    end
+
     can [:read, :create], Group
     can [:new_req,:create_req], Group
     can [:new_offer,:create_offer], Group

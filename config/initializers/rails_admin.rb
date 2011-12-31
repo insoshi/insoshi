@@ -8,7 +8,7 @@ RailsAdmin.config do |config|
     end
   }
 
-  config.included_models = [Exchange,ForumPost,FeedPost,BroadcastEmail,Person]
+  config.included_models = [Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood]
 
   config.model Exchange do
     list do
@@ -73,6 +73,28 @@ RailsAdmin.config do |config|
       field :message, :text do
         ckeditor true
       end
+    end
+  end
+
+  config.model Category do
+    list do
+      field :name
+    end
+
+    edit do
+      field :name
+      field :description
+    end
+  end
+
+  config.model Neighborhood do
+    list do
+      field :name
+    end
+
+    edit do
+      field :name
+      field :description
     end
   end
 

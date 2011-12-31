@@ -27,7 +27,6 @@ class GroupsController < ApplicationController
                            AJAX_POSTS_PER_PAGE,
                            nil
                            )
-        logger.info "XXX length: #{@reqs.length}"
         @offers = Offer.search(nil,
                                @group,
                                active=true,

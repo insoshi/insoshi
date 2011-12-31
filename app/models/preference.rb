@@ -49,10 +49,12 @@ class Preference < ActiveRecord::Base
   validates_presence_of :domain,       :if => :using_email?
   validates_presence_of :smtp_server,  :if => :using_email?
   validate :enforce_singleton, :on => :create
+
+  after_initialize :set_default_smtp_port
   
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
 
-  def after_initialize
+  def set_default_smtp_port
     self.smtp_port ||= 587
   end
 

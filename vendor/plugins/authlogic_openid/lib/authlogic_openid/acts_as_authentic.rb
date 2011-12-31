@@ -69,8 +69,8 @@ module AuthlogicOpenid
       #
       # Another advantage of taking this approach is that we can set fields from their OpenID profile before we save the record,
       # if their OpenID provider supports it.
-      def save(perform_validation = true, &block)
-        return false if perform_validation && block_given? && authenticate_with_openid? && !authenticate_with_openid
+      def save(options = {}, &block)
+        return false if options[:validate] != false && block_given? && authenticate_with_openid? && !authenticate_with_openid
         result = super
         yield(result) if block_given?
         result
