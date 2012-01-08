@@ -1,3 +1,4 @@
+unless Rails.env == 'production'
 gem 'test-unit' if RUBY_VERSION.to_f >= 1.9
 rspec_gem_dir = nil
 Dir["#{::Rails.root.to_s}/vendor/gems/*"].each do |subdir|
@@ -141,4 +142,5 @@ namespace :spec do
   end
 end
 
+end
 end
