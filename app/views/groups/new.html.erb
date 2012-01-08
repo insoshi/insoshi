@@ -20,10 +20,10 @@
     }
   }
 </script>
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('groups.new.header') %></h2>
 
-  <% form_for(@group) do |f| %>
+  <%= form_for(@group) do |f| %>
     <%= f.error_messages %>
 
     <div class="form_row">

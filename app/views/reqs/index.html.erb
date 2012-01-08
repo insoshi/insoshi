@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('reqs.index.header') %></h2>
   <ul id="message-nav">
   <%= list_link_with_active t('reqs.index.current'), reqs_path %>
@@ -15,7 +15,7 @@
 <%- end -%>
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <%= render :partial => 'shared/add_req_button' %>
   <%= render :partial => 'searches/box' %>
 <%- end -%>

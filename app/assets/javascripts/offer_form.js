@@ -1,10 +1,10 @@
 /*
  *
  */
-
 $(function() {
-  $("#offer_expiration_date").datepicker({
+  $("#offer_expiration_date").live.datepicker({
 buttonImage: "/images/calendar.gif",
-buttonImageOnly: true
+buttonImageOnly: true,
+dateFormat: "yy-mm-dd"
     });
 });

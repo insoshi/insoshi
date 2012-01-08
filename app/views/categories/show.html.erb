@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%=h @category.long_name %></h2>
   <% if @people.empty? %>
     <h3><%= link_to t('categories.show.go_back_to_edit_your_profile'), edit_person_path(current_person) %></h3>
@@ -9,7 +9,7 @@
   <%- end -%>
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <%- if admin? -%>
     <h2><%=h t('button_edit') %></h2>
     <%= link_to t('button_edit'), edit_category_path(@category) %>

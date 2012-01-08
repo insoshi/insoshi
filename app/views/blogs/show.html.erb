@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
 <%- unless global_prefs.app_name.blank? -%>
 <h2><%= global_prefs.app_name %> blog</h2>
 <%- else -%>
@@ -21,7 +21,7 @@
   <%= will_paginate(@posts) %>
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <%- if current_person?(@blog.person) -%>
   <h2>Add new post</h2>
 

@@ -28,6 +28,7 @@ gem "rmagick"
 gem "rack-openid"
 gem "heroku"
 gem "json"
+gem "therubyracer"
 
 gem "will_paginate", "~> 3.0.pre2"
 gem "aasm"

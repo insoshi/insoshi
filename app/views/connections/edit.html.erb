@@ -3,7 +3,7 @@
 <p><%= image_link @contact, :image => :thumbnail %></p>
 <p>You have a contact request from <%= @contact.name %></p>
 
-<% form_for(@connection) do |f| %>
+<%= form_for(@connection) do |f| %>
   <p>
     <%= f.submit "Accept", :class => "button" %>
     <%= f.submit "Decline", :id => nil, :class => "button" %>

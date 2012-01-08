@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <% if current_person?(@message.sender) %>
     <% heading = t('messages.show.message_sent_to') + " #{h @message.recipient.name}" %>
   <% else %>
@@ -19,5 +19,5 @@
 
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
 <%- end -%>

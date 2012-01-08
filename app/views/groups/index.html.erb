@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('groups.index.header') %></h2>
   <% unless @groups.empty? -%>
     <%= will_paginate %>
@@ -12,6 +12,6 @@
 
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <%= render :partial => 'shared/add_group_button' %>
 <%- end -%>

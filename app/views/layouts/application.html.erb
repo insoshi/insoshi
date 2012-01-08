@@ -8,6 +8,8 @@
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
     <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tag %>
     <%= yield :jquery_support %>
     <%= yield :head %>    
   </head>
@@ -81,18 +83,8 @@
     <div id="wrap">
 
       <div id="content">
-      <!--div id="atenroot">
-        <%=  image_tag "aten/aten_root100.png", :alt => "Grass Roots Logo"  %>
-
-      </div-->
-        <%- if global_prefs.demo? -%>
-          <p class="error" style="font-weight: bold;">
-            This is a demonstration site. 
-            Data may be modified or removed without warning.
-          </p>
-        <%- end -%>
         <% flash.each do |key, msg| %>
-          <%= content_tag :p, msg, :class => "flash #{key}" %>
+          <%= content_tag :p, msg.html_safe, :class => "flash #{key}" %>
         <% end %>
         <%= yield %>
 

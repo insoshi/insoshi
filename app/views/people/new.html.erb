@@ -1,7 +1,7 @@
 <% content_for(:jquery_support) do %>
   <%= javascript_include_tag 'signup_form' %>
 <% end %>
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <%- if global_prefs.app_name.blank? -%>
   <h2><%= t('people.new.header') %></h2>
   <%- else -%>
@@ -10,7 +10,7 @@
 
   <%= error_messages_for :person %>
   <%= format global_prefs.registration_intro %>
-  <% form_for @person do |f| -%>
+  <%= form_for @person do |f| -%>
 
   <div class="form_row">
     <label for="language"><%= t('people._language.language') %></label>

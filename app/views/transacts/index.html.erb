@@ -1,10 +1,10 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('transacts.index.header') %></h2>
   <ul class="list activity full">
     <%= render :partial => 'shared/transact', :collection => @transactions %> 
   </ul>
 <%- end -%>
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <h2><%= t('transacts.index.opentransact') %></h2>
   <p>
     <%= t('transacts.index.this_is_a') %> <a href="http://www.opentransact.org/core.html#example"><%= t('transacts.index.opentransact') %></a> <%= t('transacts.index.url') %>

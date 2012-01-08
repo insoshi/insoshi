@@ -4,7 +4,7 @@
 
 <h3><%= t('comments.wall_new.leave_a_comment') %></h3>
 
-<% form_for :comment, :url => person_comments_path(@person), :html => {:id => 'new_wall_post'} do |f| %>
+<%= form_for :comment, :url => person_comments_path(@person), :html => {:id => 'new_wall_post'} do |f| %>
   <div class="form_row">
     <%= f.text_area :body %>
   </div>

@@ -82,19 +82,19 @@ class Group < ActiveRecord::Base
   end
 
   def main_photo
-    photo.nil? ? "/images/g_default.png" : photo.public_filename
+    photo.nil? ? "g_default.png" : photo.public_filename
   end
 
   def thumbnail
-    photo.nil? ? "/images/g_default_thumbnail.png" : photo.public_filename(:thumbnail)
+    photo.nil? ? "g_default_thumbnail.png" : photo.public_filename(:thumbnail)
   end
 
   def icon
-    photo.nil? ? "/images/g_default_icon.png" : photo.public_filename(:icon)
+    photo.nil? ? "g_default_icon.png" : photo.public_filename(:icon)
   end
 
   def bounded_icon
-    photo.nil? ? "/images/g_default_icon.png" : photo.public_filename(:bounded_icon)
+    photo.nil? ? "g_default_icon.png" : photo.public_filename(:bounded_icon)
   end
 
   # Return the photos ordered by primary first, then by created_at.

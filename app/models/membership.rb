@@ -5,7 +5,7 @@ class Membership < ActiveRecord::Base
   scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
   scope :active, :include => :person, :conditions => {'people.deactivated' => false}
   scope :listening, :include => :member_preference, :conditions => {'member_preferences.forum_notifications' => true}
-  scope :search, lambda { |text| {:include => :person, :conditions => ["lower(people.name) LIKE ? OR lower(people.description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
+  scope :search_by, lambda { |text| {:include => :person, :conditions => ["lower(people.name) LIKE ? OR lower(people.description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
 
   belongs_to :group
   belongs_to :person
@@ -25,7 +25,7 @@ class Membership < ActiveRecord::Base
   class << self
     def search(category,group,page,posts_per_page,search=nil)
       unless category
-          group.memberships.active.search(search).paginate(:page => page,
+          group.memberships.active.search_by(search).paginate(:page => page,
                                             :conditions => ['status = ?', Membership::ACCEPTED],
                                             :order => 'memberships.created_at DESC',
                                             :include => :person,

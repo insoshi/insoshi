@@ -1,10 +1,10 @@
 <% content_for(:jquery_support) do %>
   <%= javascript_include_tag 'login_form' %>
 <% end %>
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('sessions.new.header') %></h2>
 
-  <% form_for @person_session do |f| -%>
+  <%= form_for @person_session do |f| -%>
     <%= f.error_messages %>
 <span id="standard">
     <div class="form_row">

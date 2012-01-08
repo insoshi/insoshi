@@ -4,7 +4,7 @@
         </ol>
         <%- if logged_in? -%>
           <h3><%= t('groups.show.add_a_new_topic') %></h3>
-          <% form_for :topic, :url => forum_topics_path(@forum), :html => {:id => 'new_topic'} do |f| %>
+          <%= form_for :topic, :url => forum_topics_path(@forum), :html => {:id => 'new_topic'} do |f| %>
             <div class="form_row">
               <%= f.text_field :name %>
               <%= submit_tag t('button_submit'), :class => "button" %>

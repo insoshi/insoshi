@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
 <h2><%=h @neighborhood.long_name %></h2>
 <ul class="list people">
   <%- if @neighborhood.people.empty? -%>
@@ -9,5 +9,5 @@
 </ul>
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
 <%- end -%>

@@ -1,5 +1,5 @@
 <h2><%= t('offers.new.header') %></h2>
-<% form_for :offer, :url => group_offers_path(@group), :html => {:id => 'new_offer'} do |f| %>
+<%= form_for :offer, :url => group_offers_path(@group), :html => {:id => 'new_offer'} do |f| %>
   <%= render :partial => 'form_fields', :locals => {:f => f} %>
   <div class="form_row">
     <%= f.submit t('button_create') %><%= waiting_image %>

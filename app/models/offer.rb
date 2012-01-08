@@ -7,7 +7,7 @@ class Offer < ActiveRecord::Base
   end
 
   scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
-  scope :search, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
+  scope :search_by, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
   scope :active, :conditions => ["available_count > ? AND expiration_date >= ?", 0, DateTime.now]
 
   has_and_belongs_to_many :categories
@@ -29,7 +29,7 @@ class Offer < ActiveRecord::Base
     def search(category,group,active_only,page,posts_per_page,search=nil)
       unless category
         chain = group.offers
-        chain = chain.search(search) if search
+        chain = chain.search_by(search) if search
       else
         chain = category.offers.with_group_id(group.id)
       end

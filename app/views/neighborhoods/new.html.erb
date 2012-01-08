@@ -1,9 +1,9 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2>New neighborhood</h2>
 
   <%= error_messages_for :neighborhood %>
 
-<% form_for(@neighborhood) do |f| %>
+<%= form_for(@neighborhood) do |f| %>
   <div class="form_row">
     <%= f.label :name %>
     <%= f.text_field :name %>
@@ -19,5 +19,5 @@
 
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
 <%- end -%>

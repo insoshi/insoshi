@@ -10,7 +10,7 @@
   
   <%= image_link @recipient, :image => :thumbnail %>
 
-  <% form_for(:message,
+  <%= form_for(:message,
               :url => person_messages_path(@recipient), :html => {:id => 'new_message'}) do |f| %>
     <div class="form_row full">
       <label for="recipient"><%= t('to').mb_chars.capitalize %></label>

@@ -1,6 +1,6 @@
 <h2><%= t('groups.show.discussion_topics') %><%= waiting_image %></h2>
 <%- if logged_in? -%>
-  <% form_for :topic, :url => forum_topics_path(@forum), :html => {:id => 'new_topic'} do |f| %>
+  <%= form_for :topic, :url => forum_topics_path(@forum), :html => {:id => 'new_topic'} do |f| %>
     <div class="form_row">
       <%= f.text_field :name, :placeholder => 'Add a new topic...' %>
       <%= submit_tag t('button_submit'), :class => "button" %>

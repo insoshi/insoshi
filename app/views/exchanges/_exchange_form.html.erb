@@ -2,7 +2,7 @@
 
   <%= error_messages_for :exchange %>
 
-  <% form_for :exchange, :url => person_exchanges_path(@person), :html => {:id => 'new_exchange'} do |f| %>
+  <%= form_for :exchange, :url => person_exchanges_path(@person), :html => {:id => 'new_exchange'} do |f| %>
     <%= f.hidden_field :group_id, :value => @group.id %>
     <div class="form_row">
       <%= f.label t('exchanges.new.amount') %>

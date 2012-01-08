@@ -9,7 +9,7 @@
     <% unless current_person?(@req.person) -%>
       <h2><%= t('reqs.show.newbid') %></h2>
 
-      <% form_for :bid, :url => req_bids_path(@req), :html => {:id => 'new_bid'} do |f| %>
+      <%= form_for :bid, :url => req_bids_path(@req), :html => {:id => 'new_bid'} do |f| %>
         <div class="form_row">
           <%= f.label t('estimate') %>
           <%= f.text_field :estimated_hours, :size => 2 %>&nbsp;<span class="small"><%= @req.unit %>

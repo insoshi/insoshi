@@ -1,9 +1,9 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('addresses.new.header') %></h2>
 
   <%= error_messages_for :address %>
 
-  <% form_for [@current_person, @address] do |form| %>
+  <%= form_for [@current_person, @address] do |form| %>
     <%= render :partial => 'form', :object => form %>
     <div class="form_row">
       <%= form.submit t('button_create') %>
@@ -11,5 +11,5 @@
   <% end %>
 <% end %>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
 <% end %>

@@ -1,11 +1,11 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= h @topic.name %></h2>
     <%= link_to t('topics.show.add_a_new_post'), forum_topic_path(@forum, @topic, :posts => @topic.posts.count, :anchor => 'forum_post'), :class => 'small' %>
   <%= render :partial => 'posts' %>
   <%= render :partial => 'post_form' %>
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <% if @group %>
     <%= render :partial => 'group' %>
     <%= render :partial => 'shared/group_membership', :locals => {:group => @group} %>

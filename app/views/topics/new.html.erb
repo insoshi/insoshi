@@ -2,7 +2,7 @@
 
 <%= error_messages_for :topic %>
 
-<% form_for :topic, :url => forum_topics_path(@forum)  do |f| %>
+<%= form_for :topic, :url => forum_topics_path(@forum)  do |f| %>
   <div class="form_row">
     <%= f.text_field :name %>
     <%= f.submit t('button_submit'), :class => "button" %>

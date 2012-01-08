@@ -1,5 +1,5 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'home' } %>
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <%= tabs_for do |tab| %>
     <% tab.create('blog',t('home.menu.blog')) do %>
       <%= render :partial => 'blog' %>
@@ -25,6 +25,6 @@
   <% end %>
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <%= render :partial => 'secondary_column' %>
 <%- end -%>

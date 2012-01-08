@@ -2,7 +2,7 @@
 require 'active_record'
 require 'active_record/fixtures'
 
-DATA_DIRECTORY = File.join(RAILS_ROOT, "lib", "tasks", "sample_data")
+DATA_DIRECTORY = File.join(::Rails.root.to_s, "lib", "tasks", "sample_data")
 
 namespace :db do
   namespace :sample_data do 

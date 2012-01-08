@@ -2,7 +2,7 @@
 
 <%= error_messages_for :message %>
 
-<% form_for(:message,
+<%= form_for(:message,
             :url => edit_person_message_url(current_person, @message)) do |f| %>
   <p>
     <b><%= t('messages.edit.content') %></b><br />

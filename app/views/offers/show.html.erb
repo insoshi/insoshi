@@ -1,10 +1,10 @@
-<% column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('offers.show.header') %></h2>
 <ul class="list full">
 <%= render :partial => @offer %>
 </ul>
 <% unless current_person?(@offer.person) %>
-  <% form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
+  <%= form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
     <% fields_for :offer do |o| %>
       <%= o.hidden_field :id %>
     <% end %>
@@ -22,7 +22,7 @@
 <% end %>
 <%- end -%>
 
-<% column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <%= render :partial => 'shared/add_button', :locals => { :button_text => t('offers.show.add_offer'), :new_resource_path => new_offer_path } %>
   <%= render :partial => 'searches/box' %>
 <%- end -%>

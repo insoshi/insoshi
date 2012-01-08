@@ -1,8 +1,8 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('groups.edit.header') %></h2>
   <div id="profile_edit">
 
-  <% form_for(@group) do |f| %>
+  <%= form_for(@group) do |f| %>
     <%= f.error_messages %>
 
     <div class="form_row">
@@ -81,7 +81,7 @@
   </div>
 
 <%- end -%>
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <h2>Forum</h2>
   <p>
   <%= link_to "Edit Forum Preferences", edit_forum_path(@group.forum) %>

@@ -73,12 +73,13 @@ module ApplicationHelper
   end
 
   def waiting_image
-    "<span class='wait' style='display:none'><img alt='wait' class='wait' src='/images/loading.gif'></span>".html_safe
+    img = image_tag("loading.gif",:class=>"wait",:alt=>"wait")
+    "<span class='wait' style='display:none'>#{img}</span>".html_safe
   end
 
   def organization_image(person)
     if person.org?
-      "<img title=\"#{t('people.show.organization_profile')}\" src=\"/images/icons/community_small.png\" />".html_safe
+      image_tag("icons/community_small.png",:title=> t('people.show.organization_profile'))
     else
       ""
     end

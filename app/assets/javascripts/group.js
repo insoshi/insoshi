@@ -204,21 +204,24 @@ $(function() {
   $("input#bid_expiration_date").live('focus', function() {
     $(this).datepicker({
       buttonImage: "/images/calendar.gif",
-      buttonImageOnly: true
+      buttonImageOnly: true,
+      dateFormat: "yy-mm-dd"
       });
     });
 
   $("input#req_due_date").live('focus', function() {
     $(this).datepicker({
       buttonImage: "/images/calendar.gif",
-      buttonImageOnly: true
+      buttonImageOnly: true,
+      dateFormat: "yy-mm-dd"
       });
     });
 
   $("input#offer_expiration_date").live('focus', function() {
     $(this).datepicker({
       buttonImage: "/images/calendar.gif",
-      buttonImageOnly: true
+      buttonImageOnly: true,
+      dateFormat: "yy-mm-dd"
       });
     });
 

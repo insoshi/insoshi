@@ -1,4 +1,4 @@
 <% flash.each do |key, msg| %>
-  $('#<%= canvas_id %>').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
+  $('#<%= canvas_id %>').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.discard(key)) %></div>");
   $('#flash_<%= key %>').fadeOut(OSCURRENCY.notice_fadeout_time,function() { $(this).remove(); });
 <% end %>     

@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= (params[:action] == 'admin_groups' ? "Admin " : "" ) + "Groups" %> <%= t('for') %> <%= h @person.name %></h2>
 
   <% unless @groups.empty? -%>
@@ -15,6 +15,6 @@
   
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <%= render :partial => 'searches/box' %>
 <%- end -%>

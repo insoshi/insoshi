@@ -2,7 +2,7 @@
 
 <%= error_messages_for :connection %>
 
-<% form_for(@connection) do |f| %>
+<%= form_for(@connection) do |f| %>
   <p>
     <b>Person</b><br />
     <%= f.text_field :person_id %>

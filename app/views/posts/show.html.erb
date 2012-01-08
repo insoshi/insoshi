@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
 
   <h2><%= link_to "Blog for #{h @blog.person.name}", @blog %></h2>
 
@@ -30,7 +30,7 @@
   <%- if logged_in? -%>
     <h4>Leave a comment</h4>
 
-    <% form_for :comment, :url => blog_post_comments_path(@blog, @post),
+    <%= form_for :comment, :url => blog_post_comments_path(@blog, @post),
                           :html => { :id => "blogcomment" } do |f| %>
       <div class="form_row">
         <%= f.text_area :body, :rows => 10 %>
@@ -44,5 +44,5 @@
   <%- end -%>
 <%- end -%>
 
-  <%- column_div :type => :secondary do -%>
+  <%= column_div :type => :secondary do -%>
   <%- end -%>

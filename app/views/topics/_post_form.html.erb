@@ -2,7 +2,7 @@
   <a name="forum_post">
   <%= error_messages_for :post %>
 
-  <% form_for :post,
+  <%= form_for :post,
       :url => forum_topic_posts_path(@forum, @topic), :html => {:id => 'new_post'}  do |f| %>
     <div class="form_row">
       <%= f.text_area :body, :rows => 10 %>

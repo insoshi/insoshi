@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('forums.show.header') %></h2>
   
   <ol class="list forum full">
@@ -9,7 +9,7 @@
   <%- if logged_in? -%>
   <h2><%= t('forums.show.add_new_topic') %></h2>
   
-    <% form_for :topic, :url => forum_topics_path(@forum) do |f| %>
+    <%= form_for :topic, :url => forum_topics_path(@forum) do |f| %>
       <div class="form_row">
         <%= f.text_field :name %>
         <%= submit_tag t('button_submit'), :class => "button" %>
@@ -19,6 +19,6 @@
 
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <%= render :partial => 'searches/box' %>
 <%- end -%>

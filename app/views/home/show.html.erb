@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <%- unless global_prefs.app_name.blank? -%>
   <h2><%= global_prefs.app_name %> <%= t('home.show.header') %></h2>
   <%- else -%>
@@ -22,6 +22,6 @@
 <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <%= render :partial => 'secondary_column' %>
 <%- end -%>

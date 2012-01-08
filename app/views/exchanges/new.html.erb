@@ -1,5 +1,5 @@
 <%= render :partial => '/shared/update_currency_units' %>
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('exchanges.new.enter_credit_for') %> <%= h @person.name %></h2>
   <% unless @groups.empty? %>
 
@@ -8,7 +8,7 @@
   <% if params[:offer] %>
     <%= render :partial => 'exchange_offer_form' %>
   <% else %>
-    <% form_for :exchange, :url => person_exchanges_path(@person) do |f| %>
+    <%= form_for :exchange, :url => person_exchanges_path(@person) do |f| %>
       <div class="form_row">
         <%= f.label t('exchanges.new.amount') %>
         <%= f.text_field :amount, :size => 2 %>&nbsp;<span id="units" class="small"><%= @groups[0].unit %></span>

@@ -2,7 +2,7 @@
 
 <%= error_messages_for :post %>
 
-<% form_for :post, :url => blog_post_path(@blog, @post),
+<%= form_for :post, :url => blog_post_path(@blog, @post),
                    :html => { :method => :put } do |f| %>
   <p>
     <b>Blog</b><br />

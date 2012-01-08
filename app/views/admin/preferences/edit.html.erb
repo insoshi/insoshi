@@ -1,9 +1,9 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2>Editing preferences</h2>
 
   <%= error_messages_for :preferences %>
 
-  <% form_for :preferences,
+  <%= form_for :preferences,
               :url => admin_preference_path(@preferences),
               :html => { :method => :put } do |f| %>
               

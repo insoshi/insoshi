@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('offers.index.header') %></h2>
   <%- if @offers.empty? -%> 
   <h3 class="blankslate"><%= t('offers.index.nooffers') %></h3>
@@ -10,7 +10,7 @@
   </ul>
   <%- end -%>
 <%- end -%>
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
   <%= render :partial => 'shared/add_button', :locals => { :button_text => "Add Offer", :new_resource_path => new_offer_path } %>
   <%= render :partial => 'searches/box' %>
 <%- end -%>

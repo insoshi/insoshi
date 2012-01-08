@@ -4,7 +4,7 @@
 
 <h3><%= t('events.event_new.leave_a_comment') %></h3>
 
-<% form_for :comment, :url => event_comments_path(@event),
+<%= form_for :comment, :url => event_comments_path(@event),
             :html => { :id => "eventcomment" } do |f| %>
   <div class="form_row">
     <%= f.text_area :body, :rows => 10 %>

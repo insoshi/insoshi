@@ -1,5 +1,5 @@
 
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= link_to h(@group.name), group_path(@group) %></h2>
   
   <% unless @pending.empty? -%>

@@ -1,4 +1,4 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
 <h2>Contacts for <%= h @person.name %></h2>
 
 <% unless @contacts.empty? -%>
@@ -21,5 +21,5 @@
 
 <%- end -%>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
 <%- end -%>

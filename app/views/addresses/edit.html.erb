@@ -1,9 +1,9 @@
-<%- column_div :type => :primary do -%>
+<%= column_div :type => :primary do -%>
   <h2><%= t('addresses.edit.header') %></h2>
 
   <%= error_messages_for :address %>
 
-  <% form_for :address, :url => person_address_path(@person,@address), :html => {:method => :put} do |form| %>
+  <%= form_for :address, :url => person_address_path(@person,@address), :html => {:method => :put} do |form| %>
     <%= render :partial => 'form', :object => form %>
     <div class="form_row">
       <%= form.submit t('button_update') %>
@@ -11,5 +11,5 @@
   <% end %>
 <% end %>
 
-<%- column_div :type => :secondary do -%>
+<%= column_div :type => :secondary do -%>
 <% end %>
