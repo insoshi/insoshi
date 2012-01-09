@@ -8,7 +8,8 @@
     <%- else -%>
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
-    <%= stylesheet_link_tag "default" %>
+    <%= stylesheet_link_tag "application" %>
+    <%= csrf_meta_tag %>
     <%= yield :head %>    
   </head>
   <body class="<%= @body %>">
