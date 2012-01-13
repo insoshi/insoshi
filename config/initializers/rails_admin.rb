@@ -1,5 +1,7 @@
 unless Rails.env == 'test'
 RailsAdmin.config do |config|
+
+  config.current_user_method { current_person } #auto-generated
   config.authorize_with :cancan
   config.authenticate_with {
     unless current_person

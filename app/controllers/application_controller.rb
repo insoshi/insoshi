@@ -154,16 +154,12 @@ class ApplicationController < ActionController::Base
       if request.format.html?
         default_domain = "example.com"
         default_password = "admin"
-        if logged_in? and current_person.admin? 
+        if logged_in? and current_person.admin? and !(request.fullpath =~ /^\/admin/)
           if current_person.email =~ /@#{default_domain}$/
             flash[:notice] = %(#{t('notice_warning_your_email_address')} 
               #{default_domain}.
               <a href="#{edit_person_path(current_person)}">#{t('notice_change_it_here')}</a>.)
           end
-          #if current_person.unencrypted_password == default_password
-          #  flash[:error] = %(#{t('error_default_password')}
-          #    <a href="#{edit_person_path(current_person)}">#{t('notice_change_it_here')}</a>.)          
-          #end
         end
       end
     end
