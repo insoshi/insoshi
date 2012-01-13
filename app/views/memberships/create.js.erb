@@ -1,5 +1,5 @@
 <% flash.each do |key, msg| %>
-  $('#membership_wrapper').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
+  $('#membership_wrapper').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.discard(key)) %></div>");
   $('#flash_<%= key %>').fadeOut(5000,function() { $(this).remove(); });
 <% end %>
 <% if @hr %>

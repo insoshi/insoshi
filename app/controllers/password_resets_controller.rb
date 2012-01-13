@@ -1,7 +1,6 @@
 class PasswordResetsController < ApplicationController
   before_filter :require_no_person
   before_filter :load_person_using_perishable_token, :only => [:edit,:update]
-  before_filter :mailer_set_url_options
 
   def new
   end
@@ -33,10 +32,6 @@ class PasswordResetsController < ApplicationController
   end
 
   private
-
-  def mailer_set_url_options
-    ActionMailer::Base.default_url_options[:host] = request.host_with_port
-  end
 
   def load_person_using_perishable_token
     @person = Person.find_using_perishable_token(params[:id])

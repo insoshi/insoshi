@@ -1,5 +1,11 @@
-<%= t('person_mailer.registration_notification.new') %>:
-<%= h @name %>
-<%= h @email %>
-http://<%= @server %><%= @url %>
+<div style="background-color:rgb(245,245,245);border-bottom:2px rgb(200,200,200) solid;padding:5px 10px;margin:20px 0;margin:80px 0 0 0">
+<h2 style="font-size:18px;color:rgb(0,0,0)"><%= t('person_mailer.registration_notification.new') %></h2>
+</div>
+<div style="font-size:14px;color:rgb(50,50,50);border-bottom:1px #555 dotted">
+  <div style="background:rgb(255,255,225);padding:5px;">
+    <p><%= @person.name %></p>
+    <p><%= @person.email %></p>
+    <p><%= link_to t('people.show.header'), person_url(@person) %></p>
+  </div>
+</div>
 

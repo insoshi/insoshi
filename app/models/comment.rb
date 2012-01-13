@@ -87,11 +87,7 @@ class Comment < ActiveRecord::Base
       if wall_comment?
         @send_mail ||= Comment.global_prefs.email_notifications? &&
                        commented_person.wall_comment_notifications?
-        PersonMailer.deliver_wall_comment_notification(self) if @send_mail
-      elsif blog_post_comment?
-        @send_mail ||= Comment.global_prefs.email_notifications? &&
-                       commented_person.blog_comment_notifications?
-        PersonMailer.deliver_blog_comment_notification(self) if @send_mail
+        PersonMailer.wall_comment_notification(self).deliver if @send_mail
       end
     end
 end

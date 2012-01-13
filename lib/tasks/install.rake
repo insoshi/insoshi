@@ -9,6 +9,7 @@ task :install => :environment do |t|
   p = Person.new(:name => "admin", :email => "admin@example.com", :password => "admin", :password_confirmation => "admin", :description => "")
   p.save!
   p.admin = true
+  p.email_verified = true
   p.save
   address = Address.new(:name => 'personal', :person => p)
   address.save

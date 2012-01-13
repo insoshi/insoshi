@@ -31,8 +31,10 @@ begin
 	:user_name => ENV['SMTP_USER'] || ENV['GMAIL_SMTP_USER'],
 	:password => ENV['SMTP_PASSWORD'] || ENV['GMAIL_SMTP_PASSWORD']
       }
+      ActionMailer::Base.default_url_options[:host] = global_prefs.server_name
     end
   end
+
 rescue
   # Rescue from the error raised upon first migrating
   # (needed to bootstrap the preferences).

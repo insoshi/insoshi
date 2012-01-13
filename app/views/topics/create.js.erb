@@ -1,6 +1,6 @@
 $('#forum_canvas').html("");
 $('#forum_form').html("<%= escape_javascript(render :partial => 'post_form') %>");
 <% flash.each do |key, msg| %>
-  $('#forum_canvas').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
+  $('#forum_canvas').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.discard(key)) %></div>");
   $('#flash_<%= key %>').fadeOut(5000);
 <% end %>     

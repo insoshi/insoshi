@@ -1,6 +1,6 @@
 $('#offers_canvas').html('<%= escape_javascript(render :partial => 'offer_full') %>');
 $('#offers_canvas').linkify();
 <% flash.each do |key, msg| %>
-  $('#offers_canvas').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
+  $('#offers_canvas').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.discard(key)) %></div>");
   $('#flash_<%= key %>').fadeOut(5000);
 <% end %>     

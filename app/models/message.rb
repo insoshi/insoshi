@@ -169,6 +169,6 @@ class Message < Communication
       return if sender == recipient
       @send_mail ||= Message.global_prefs && Message.global_prefs.email_notifications? &&
                      recipient.message_notifications?
-      PersonMailer.deliver_message_notification(self) if @send_mail
+      PersonMailer.message_notification(self).deliver if @send_mail
     end
 end

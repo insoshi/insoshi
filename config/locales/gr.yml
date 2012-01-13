@@ -436,7 +436,7 @@ gr:
       respond: "Απάντηση"
       no_membership_request: "Καμία αίτηση συμμετοχής (ακόμη)"
     show:
-      header: "Προφίλ:"
+      header: "Προφίλ"
       organization_profile: "Αυτό είναι προφίλ οργανισμού"
       not_active: "Αυτό το πρόσωπο δεν είναι ενεργό"
       description_blank: "Η περιγραφή σας είναι κενή."

@@ -59,12 +59,6 @@ class Connection < ActiveRecord::Base
           create(:person => person, :contact => contact, :status => PENDING)
           create(:person => contact, :contact => person, :status => REQUESTED)
         end
-        if send_mail
-          # The order here is important: the mail is sent *to* the contact,
-          # so the connection should be from the contact's point of view.
-          connection = conn(contact, person)
-          PersonMailer.deliver_connection_request(connection)
-        end
         true
       end
     end

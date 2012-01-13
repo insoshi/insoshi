@@ -3,10 +3,9 @@ module ApplicationHelper
 
   def current_page_pre22?(options)
     url_string = CGI.escapeHTML(url_for(options))
-    request = @controller.request
-    request_uri = request.request_uri
+    request_uri = request.fullpath
     if url_string =~ /^\w+:\/\//
-      url_string == "#{request.protocol}#{request.host_with_port}#{request_uri}"
+      url_string == "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
     else
       url_string == request_uri
     end

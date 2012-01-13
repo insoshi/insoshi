@@ -1,8 +1,8 @@
-[<%= h @name %>] <%= t('person_mailer.req_notification.matches_a_skill_category_you_have') %> 
+[<%= @req.name %>] <%= t('person_mailer.req_notification.matches_a_skill_category_you_have') %> 
 
-http://<%= @server %><%= @url %>
+<%= req_url(@req) %>
 
 <%= t('person_mailer.req_notification.description') %>:
-<%= h @description %>
+<%= @req.description %>
 
-<%= t('person_mailer.req_notification.requested_by') %>: <%= h(@requestor) %>
+<%= t('person_mailer.req_notification.requested_by') %>: <%= @req.person.name %>
