@@ -29,7 +29,7 @@
           <p class="welcome">
             <%- if logged_in? -%>
               <%- if current_person.admin? -%>
-                <%= link_to("Admin view", admin_preferences_path) %>
+                <%= link_to("Admin view", "/admin") %>
               <%- end -%>
             <%- else -%>
               <%= link_to t('sessions.new.header'), login_path %>
