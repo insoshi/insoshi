@@ -58,7 +58,6 @@ Oscurrency::Application.routes.draw do
     resources :comments
   end
 
-  resources :preferences
   resources :searches
   resources :activities
   resources :connections
@@ -92,9 +91,6 @@ Oscurrency::Application.routes.draw do
 
   match 'people/verify/:id' => 'people#verify_email'
 
-  namespace :admin do
-    resources :preferences
-  end
   resources :blogs do
     resources :posts do
       resources :comments

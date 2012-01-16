@@ -17,6 +17,11 @@ class Ability
       person.admin?
     end
 
+    can :read, Preference
+    can :update, Preference do |pref|
+      person.admin?
+    end
+
     can :read, BroadcastEmail
     can [:create,:update], BroadcastEmail do |broadcast_email|
       person.admin?

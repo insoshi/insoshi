@@ -10,7 +10,40 @@ RailsAdmin.config do |config|
     end
   }
 
-  config.included_models = [Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood]
+  config.included_models = [Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood]
+
+  config.model Preference do
+    list do
+      field :app_name
+    end
+
+    edit do
+      field :app_name
+      field :domain
+      field :server_name
+      field :smtp_server
+      field :smtp_port
+      field :default_group_id
+      field :blog_feed_url
+      field :exception_notification
+      field :new_member_notification
+      field :googlemap_api_key
+      field :disqus_shortname
+      field :gmail
+      field :email_notifications
+      field :email_verifications
+      field :zipcode_browsing
+      field :whitelist
+      field :registration_intro
+      field :agreement
+      field :about
+      field :practice
+      field :steps
+      field :questions
+      field :contact
+      field :analytics
+    end
+  end
 
   config.model Exchange do
     list do
