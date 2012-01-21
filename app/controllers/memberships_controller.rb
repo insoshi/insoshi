@@ -1,7 +1,8 @@
 class MembershipsController < ApplicationController
   before_filter :login_required
-  load_and_authorize_resource 
-  
+  load_resource :group
+  load_and_authorize_resource :membership, :through => :group, :shallow => true
+
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
     respond_to do |format|
@@ -10,8 +11,6 @@ class MembershipsController < ApplicationController
   end
 
   def index
-    @group = Group.find(params[:group_id])
-
     @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
@@ -41,7 +40,6 @@ class MembershipsController < ApplicationController
   end
   
   def create
-    @group = Group.find(params[:group_id])
 
     respond_to do |format|
       @hr = Membership.request(current_person, @group)

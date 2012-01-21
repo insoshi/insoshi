@@ -187,7 +187,9 @@ $(function() {
           t.tabs('select',tab);
         }
         if(js_url.length != 0) {
+          $.ajaxSetup({cache:true});
           $.getScript(js_url);
+          $.ajaxSetup({cache:false});
         }
       }
     });
@@ -412,6 +414,8 @@ $(function() {
 function update_topic() {
   topic_id = $('#topic').attr('data-id');
   after = $('.forum_post:first-child').attr('data-time');
+  $.ajaxSetup({cache:true});
   $.getScript('/posts?topic_id=' + topic_id + '&after=' + after);
+  $.ajaxSetup({cache:false});
 }
 

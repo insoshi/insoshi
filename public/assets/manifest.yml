@@ -391,7 +391,7 @@ ckeditor/skins/v2/images/noimage.png: ckeditor/skins/v2/images/noimage-a2cc8fd2b
 ckeditor/skins/v2/images/sprites.png: ckeditor/skins/v2/images/sprites-c3f7ae056042da169ec1a81f18eb31e6.png
 ckeditor/skins/v2/images/sprites_ie6.png: ckeditor/skins/v2/images/sprites_ie6-f87b6810a17d1fd9740f7e9eb27f351f.png
 ckeditor/skins/v2/images/toolbar_start.gif: ckeditor/skins/v2/images/toolbar_start-d24bf760b3d2d019158605ec6c957426.gif
-group.js: group-d4e31b1b89a856b9463235d8ce5359a4.js
+group.js: group-1a549ff4587769581cd5d13a76d1a94d.js
 home.js: home-f56e7f77767f4abc25d1b1996184d04c.js
 login_form.js: login_form-59019366a18eafd791269a006e8dedae.js
 offer_form.js: offer_form-d6060c85243d505b13a6ef32c270074d.js

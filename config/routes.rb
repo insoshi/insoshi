@@ -6,12 +6,6 @@ Oscurrency::Application.routes.draw do
   resources :password_resets, :only => [:new, :create, :edit, :update]
   resources :member_preferences
   resources :neighborhoods
-  resources :memberships do
-    member do
-      delete :unsuscribe
-      post :suscribe
-    end
-  end
 
   # XXX in 2.3.x, this was easier -> map.resources :transacts, :as => "transacts/:asset"
   get    "transacts(/:asset)(.:format)"          => "transacts#index",   :as => 'transacts'
@@ -22,7 +16,7 @@ Oscurrency::Application.routes.draw do
   #put    "transacts/[:asset]/:id"      => "transacts#update",  :as => 'transact'
   delete "transacts(/:asset)/:id(.:format)"      => "transacts#destroy", :as => 'transact'
 
-  resources :groups do
+  resources :groups, :shallow => true do
     member do
       post :join
       post :leave
@@ -56,6 +50,13 @@ Oscurrency::Application.routes.draw do
       get :unattend
     end
     resources :comments
+  end
+
+  resources :memberships do
+    member do
+      delete :unsuscribe
+      post :suscribe
+    end
   end
 
   resources :searches
