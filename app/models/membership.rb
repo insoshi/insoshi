@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class Membership < ActiveRecord::Base
   extend ActivityLogger
   extend PreferencesHelper
