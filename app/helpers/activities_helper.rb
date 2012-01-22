@@ -9,7 +9,7 @@ module ActivitiesHelper
       blog = post.blog
       view_blog = blog_link("View #{h person.name}'s blog", blog)
       %(#{person_link(person)} #{t('shared.minifeed.made_a')} #{t('shared.minifeed.blog_post')}: 
-      #{post_link(blog, post)}.<br /> #{view_blog}.)
+      #{post_link(blog, post)}.<br /> #{view_blog}.).html_safe
     when "Comment"
       parent = activity.item.commentable
       parent_type = parent.class.to_s
@@ -18,54 +18,49 @@ module ActivitiesHelper
         post = activity.item.commentable
         blog = post.blog
         %(#{person_link(person)} #{t('shared.minifeed.commented')} #{t('to')} #{someones(blog.person, person)}
-         #{t('shared.minifeed.blog_post')} #{post_link(blog, post)}.)
+         #{t('shared.minifeed.blog_post')} #{post_link(blog, post)}.).html_safe
       when "Person"
-        %(#{person_link(activity.item.commenter)} #{t('shared.minifeed.commented')} #{t('on')} #{wall(activity)}.)
+        %(#{person_link(activity.item.commenter)} #{t('shared.minifeed.commented')} #{t('on')} #{wall(activity)}.).html_safe
       when "Event"
         event = activity.item.commentable
         commenter = activity.item.commenter
         %(#{person_link(commenter)} #{t('shared.minifeed.commented')} #{t('on')} #{someones(event.person, commenter)} 
-         #{t('event')}: #{event_link(event.title, event)}.)
+         #{t('event')}: #{event_link(event.title, event)}.).html_safe
       end
     when "Connection"
       %(#{person_link(activity.item.person)} #{t('and')} #{person_link(activity.item.contact)} 
-      #{t('shared.minifeed.have_connected')}.)
+      #{t('shared.minifeed.have_connected')}.).html_safe
     when "ForumPost"
       post = activity.item
-      %(#{person_link(person)} #{t('shared.minifeed.made_post_on_forum_topic')}: #{topic_link(post.topic)}.)
+      %(#{person_link(person)} #{t('shared.minifeed.made_post_on_forum_topic')}: #{topic_link(post.topic)}.).html_safe
     when "Topic"
       %(#{person_link(person)} #{t('shared.minifeed.created_a')} #{t('shared.minifeed.new_discussion_topic')} 
-      #{topic_link(activity.item)}.)
+      #{topic_link(activity.item)}.).html_safe
     when "Photo"
-      %(#{person_link(person)}#{t('shared.minifeed.profile_picture_changed')}.)
+      %(#{person_link(person)}#{t('shared.minifeed.profile_picture_changed')}.).html_safe
     when "Person"
-      %(#{person_link(person)}#{t('shared.minifeed.description_changed')}.)
+      %(#{person_link(person)}#{t('shared.minifeed.description_changed')}.).html_safe
     when "Group"
-      %(#{person_link(person)} #{t('shared.minifeed.created_the_group')} '#{group_link(Group.find(activity.item))}')
+      %(#{person_link(person)} #{t('shared.minifeed.created_the_group')} '#{group_link(Group.find(activity.item))}').html_safe
     when "Membership"
-      %(#{person_link(person)} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}')
+      %(#{person_link(person)} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}').html_safe
     when "Event"
       event = activity.item
-      %(#{person_link(person)} #{t('shared.minifeed.event_created')}: #{event_link(event.title, event)}.)
+      %(#{person_link(person)} #{t('shared.minifeed.event_created')}: #{event_link(event.title, event)}.).html_safe
     when "EventAttendee"
       event = activity.item.event
       %(#{person_link(person)} #{t('shared.minifeed.is_attending')} #{someones(event.person, person)} #{t('event')}: 
-        #{event_link(event.title, event)}.)
+        #{event_link(event.title, event)}.).html_safe
     when "Req"
       req = activity.item
-      %(#{person_link(person)} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.)
+      %(#{person_link(person)} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.).html_safe
     when "Offer"
       offer = activity.item
-      %(#{person_link(person)} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.)
+      %(#{person_link(person)} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.).html_safe
     when "Exchange"
       exchange = activity.item
-      if exchange.group.nil?
-        %(#{person_link(person)} #{t('earned')} #{exchange.amount} #{t('shared.minifeed.hours_for')} 
-        #{metadata_link(exchange.metadata)}.)
-      else
-        %(#{person_link(person)} #{t('earned')} #{exchange.amount} #{exchange.group.unit} #{t('for')} 
-        #{metadata_link(exchange.metadata)} #{t('in')} #{group_link(exchange.group)}.)
-      end
+      %(#{person_link(person)} #{t('earned')} #{exchange.amount} #{exchange.group.unit} #{t('for')} 
+      #{metadata_link(exchange.metadata)} #{t('in')} #{group_link(exchange.group)}.).html_safe
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -77,7 +72,7 @@ module ActivitiesHelper
     when "BlogPost"
       post = activity.item
       blog = post.blog
-      raw %(#{person.name} #{t('shared.minifeed.made_a')} #{post_link(t('shared.minifeed.new_blog_post'), blog, post)}.)
+      %(#{h person.name} #{t('shared.minifeed.made_a')} #{post_link(t('shared.minifeed.new_blog_post'), blog, post)}.).html_safe
     when "Comment"
       parent = activity.item.commentable
       parent_type = parent.class.to_s
@@ -85,45 +80,45 @@ module ActivitiesHelper
       when "BlogPost"
         post = activity.item.commentable
         blog = post.blog
-        raw %(#{person.name} #{t('shared.minifeed.commented')} #{t('on')} 
-        #{someones(blog.person, person)} #{post_link(t('shared.minifeed.blog_post'), post.blog, post)}.)
+        %(#{h person.name} #{t('shared.minifeed.commented')} #{t('on')} 
+        #{someones(blog.person, person)} #{post_link(t('shared.minifeed.blog_post'), post.blog, post)}.).html_safe
       when "Person"
-        raw %(#{activity.item.commenter.name} #{t('shared.minifeed.commented')} #{t('on')} #{wall(activity)}.)
+        %(#{h activity.item.commenter.name} #{t('shared.minifeed.commented')} #{t('on')} #{wall(activity)}.).html_safe
       when "Event"
         event = activity.item.commentable
-        raw %(#{activity.item.commenter.name} #{t('shared.minifeed.commented')} #{t('on')}
-        #{someones(event.person, activity.item.commenter)} #{event_link(t('event'), event)}.)
+        %(#{h activity.item.commenter.name} #{t('shared.minifeed.commented')} #{t('on')}
+        #{someones(event.person, activity.item.commenter)} #{event_link(t('event'), event)}.).html_safe
       end
     when "Connection"
-      raw %(#{person.name} #{t('and')} #{activity.item.contact.name} #{t('shared.minifeed.have_connected')}.)
+      raw %(#{h person.name} #{t('and')} #{h activity.item.contact.name} #{t('shared.minifeed.have_connected')}.).html_safe
     when "ForumPost"
       topic = activity.item.topic
-      raw %(#{person.name} #{t('shared.minifeed.made_a')} #{topic_link(t('shared.minifeed.forum_post'), topic)}.)
+      %(#{h person.name} #{t('shared.minifeed.made_a')} #{topic_link(t('shared.minifeed.forum_post'), topic)}.).html_safe
     when "Topic"
-      raw %(#{person.name} #{t('shared.minifeed.created_a')} #{topic_link(t('shared.minifeed.new_discussion_topic'), activity.item)}.)
+      %(#{h person.name} #{t('shared.minifeed.created_a')} #{topic_link(t('shared.minifeed.new_discussion_topic'), activity.item)}.).html_safe
     when "Photo"
-      %(#{person.name}#{t('shared.minifeed.profile_picture_changed')}.)
+      %(#{h person.name}#{t('shared.minifeed.profile_picture_changed')}.).html_safe
     when "Person"
-      %(#{person.name}#{t('shared.minifeed.description_changed')}.)
+      %(#{h person.name}#{t('shared.minifeed.description_changed')}.).html_safe
     when "Group"
-      raw %(#{person.name} #{t('shared.minifeed.created_the_group')} '#{group_link(Group.find(activity.item))}')
+      %(#{h person.name} #{t('shared.minifeed.created_the_group')} '#{group_link(Group.find(activity.item))}').html_safe
     when "Membership"
-      raw %(#{person.name} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}')
+      %(#{h person.name} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}').html_safe
     when "Event"
-      raw %(#{person.name}s #{t('shared.minifeed.has_created_a_new')} #{event_link(t('event'), activity.item)}.)
+      %(#{h person.name}s #{t('shared.minifeed.has_created_a_new')} #{event_link(t('event'), activity.item)}.).html_safe
     when "EventAttendee"
       event = activity.item.event
-      raw %(#{person.name} #{t('shared.minifeed.is_attending')} #{someones(event.person, person)} #{event_link(t('event'), event)}.)
+      %(#{h person.name} #{t('shared.minifeed.is_attending')} #{someones(event.person, person)} #{event_link(t('event'), event)}.).html_safe
     when "Req"
       req = activity.item
-      raw %(#{person.name} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.)
+      %(#{h person.name} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.).html_safe
     when "Offer"
       offer = activity.item
-      raw %(#{person.name} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.)
+      %(#{h person.name} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.).html_safe
     when "Exchange"
       exchange = activity.item
-      %(#{person.name} #{t('earned')} #{exchange.amount} #{exchange.group.unit} #{t('for')} 
-      #{metadata_link(exchange.metadata)} #{t('in')} #{group_link(exchange.group)}.)
+      %(#{h person.name} #{t('earned')} #{exchange.amount} #{exchange.group.unit} #{t('for')} 
+      #{metadata_link(exchange.metadata)} #{t('in')} #{group_link(exchange.group)}.).html_safe
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
@@ -225,7 +220,7 @@ module ActivitiesHelper
   def wall(activity)
     commenter = activity.person
     person = activity.item.commentable
-    link_to("#{someones(person, commenter, false)} wall",
+    link_to("#{h someones(person, commenter, false)} wall",
             person_path(person, :anchor => "wall"))
   end
   
