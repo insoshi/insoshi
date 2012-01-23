@@ -1,0 +1,10 @@
+<%
+  model_name = field.abstract_model.to_param.singularize
+  collection = field.properties[:collection]
+  tag_name = "#{model_name}[#{field.name}]"
+%>
+
+<div class="field <%= field.to_param %>">
+  <%= select_tag field.to_param, options_for_select(collection,field.value), :name => tag_name %>
+</div>
+

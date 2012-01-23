@@ -22,8 +22,14 @@ RailsAdmin.config do |config|
       field :domain
       field :server_name
       field :smtp_server
-      field :smtp_port
-      field :default_group_id
+      field :smtp_port do
+        properties[:collection] = [['587','587'],['25','25']]
+        partial "select"
+      end
+      field :default_group_id do
+        properties[:collection] = Group.all.map {|g| [g.name,g.id]}
+        partial "select"
+      end
       field :blog_feed_url
       field :exception_notification
       field :new_member_notification
