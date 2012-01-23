@@ -36,6 +36,7 @@ class Person < ActiveRecord::Base
   acts_as_authentic do |c|
     c.openid_required_fields = [:nickname, :email]
     c.perishable_token_valid_for = 48.hours
+    c.maintain_sessions = false if Rails.env == "test"
   end
 
 #  attr_accessor :password, :verify_password, :new_password, :password_confirmation
