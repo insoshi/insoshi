@@ -157,7 +157,6 @@ describe Group do
         it "should not allow a payment with wrong scope type" do
           # _id = "read_payments"
           @token.scope = "http://localhost/scopes/list_payments.json?asset=#{@g.asset}"
-          @token.capabilities << Capability.create(:scope => @token.scope) # ok for one scope
           @token.save
           @token.authorize!(@p2)
 
@@ -172,7 +171,6 @@ describe Group do
         it "should allow a payment with the right scope type" do
           # _id = "single_payment"
           @token.scope = "http://localhost/scopes/single_payment.json?amount=10&asset=#{@g.asset}"
-          @token.capabilities << Capability.create(:scope => @token.scope) # ok for one scope
           @token.save
           @token.authorize!(@p2)
 
@@ -187,7 +185,6 @@ describe Group do
         it "should not allow a single payment that exceeds the authorized amount" do
           # _id = "single_payment"
           @token.scope = "http://localhost/scopes/single_payment.json?amount=0.5&asset=#{@g.asset}"
-          @token.capabilities << Capability.create(:scope => @token.scope) # ok for one scope
           @token.save
           @token.authorize!(@p2)
 
@@ -202,7 +199,6 @@ describe Group do
         it "should not allow a single payment to be made more than once" do
           # _id = "single_payment"
           @token.scope = "http://localhost/scopes/single_payment.json?amount=1&asset=#{@g.asset}"
-          @token.capabilities << Capability.create(:scope => @token.scope) # ok for one scope
           @token.save
           @token.authorize!(@p2)
 

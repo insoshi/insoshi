@@ -47,14 +47,15 @@ class ClientApplication < ActiveRecord::Base
   end
 
   def create_request_token(params={}) 
+    r=nil
     if params[:scope]
       if ::OauthScope.all_exist?(params[:scope])
         r = RequestToken.create(:client_application => self, 
                                 :scope => params[:scope], 
                                 :callback_url=>self.token_callback_url)
       end
-      r
     end
+    r
   end
   
 protected
