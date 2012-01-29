@@ -1,7 +1,7 @@
 $('.blankslate').fadeOut();
 $('.bids').append('<%= escape_javascript(render(:partial => @bid)) %>');
 <% flash.each do |key, msg| %>
-  $('#new_bid').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.delete(key)) %></div>");
+  $('#new_bid').before("<div id='flash_<%= key %>'><%= escape_javascript(flash.discard(key)) %></div>");
   $('#flash_<%= key %>').fadeOut(5000);
 <% end %>     
 $('#new_bid')[0].reset();
