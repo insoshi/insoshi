@@ -50,6 +50,15 @@ en:
   active: "Active"
   all: "All"
 
+  oauth:
+    authorize:
+      authorize_access_to_your_account: "Authorize access to your account"
+      would_you_like_to_authorize: "Would you like to authorize"
+      to_access_your_account: "to access your account?"
+      authorize: "authorize"
+      authorize_access: "authorize access"
+      button_authorize: "Authorize!"
+
   accounts:
     show:
       header: "Main Account"

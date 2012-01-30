@@ -1,12 +1,12 @@
-<h2>Authorize access to your account</h2>
-<p>Would you like to authorize <%= link_to @token.client_application.name,@token.client_application.url %> (<%= link_to @token.client_application.url,@token.client_application.url %>) to access your account?</p>
-<% form_tag authorize_url do %>
+<h2><%= t('oauth.authorize.authorize_access_to_your_account') %></h2>
+<p><%= t('oauth.authorize.would_you_like_to_authorize') %> <%= link_to @token.client_application.name,@token.client_application.url %> (<%= link_to @token.client_application.url,@token.client_application.url %>) <%= t('oauth.authorize.to_access_your_account') %></p>
+<%= form_tag authorize_url do %>
   <%= hidden_field_tag "oauth_token", @token.token %>
   <%- if params[:oauth_callback] -%>
   <%= hidden_field_tag "oauth_callback", params[:oauth_callback] %>
   <%- end -%>
   <%= render :partial => 'capability', :collection => @token.capabilities %>   
 <p>
-  <%= submit_tag "Authorize!" %>
+  <%= submit_tag t('oauth.authorize.button_authorize') %>
 </p>
 <% end %>

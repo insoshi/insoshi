@@ -105,12 +105,21 @@ fr:
     formats:
       default: "%d.%m.%Y %I:%M %p"
 
+  oauth:
+    authorize:
+      authorize_access_to_your_account: "Authorize access to your account"
+      would_you_like_to_authorize: "Would you like to authorize"
+      to_access_your_account: "to access your account?"
+      authorize: "authorize"
+      authorize_access: "authorize access"
+      button_authorize: "Authorize!"
+
   accounts:
     show:
       header: "compte principal"
       header_group: "compte dédie a"
 
-  adresses:
+  addresses:
     new:
       header: "créer une nouvelle adresse"
     edit:
