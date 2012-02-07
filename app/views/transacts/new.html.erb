@@ -15,7 +15,7 @@
     </div>
   </div>
   <div>
-    <%= form_tag :action => :create do %>
+    <%= form_tag transacts_path(:asset => params[:asset]) do %>
       <div class="form_row">
         <label for="amount"><%= t('transacts.new.amount') %></label>
         <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= h @group.unit %>
@@ -34,7 +34,7 @@
 </div>
   <% end %>
 <% else %>
-  <%= form_tag :action => :create do %>
+  <%= form_tag transacts_path(:asset => params[:asset]) do %>
     <div class="form_row">
       <label for="to"><%= t('transacts.new.to') %></label>
       <%= text_field_tag(:to,params[:to],:size => 40) %>
