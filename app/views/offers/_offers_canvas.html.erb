@@ -1,5 +1,5 @@
 <span class='offer' style='float:right;'><%= link_to t('button_new_offer'), new_group_offer_path(@group), {:class => 'show-follow button'} %></span>
-<% form_tag group_offers_path(@group), :method => :get, :class => 'search_form' do %>
+<%= form_tag group_offers_path(@group), :method => :get, :class => 'search_form' do %>
   <p>
     <%= text_field_tag :search, params[:search] %>
     <%= submit_tag t('button_search'), :name => nil %>

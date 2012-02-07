@@ -15,7 +15,7 @@
     </div>
   </div>
   <div>
-    <% form_tag :action => :create do %>
+    <%= form_tag :action => :create do %>
       <div class="form_row">
         <label for="amount"><%= t('transacts.new.amount') %></label>
         <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= h @group.unit %>
@@ -28,13 +28,13 @@
       <%= hidden_field_tag(:callback_url,params[:callback_url]) %>
       <%= hidden_field_tag(:redirect_url,params[:redirect_url]) %>
   <div class="status-btn">
-    <input type="submit" name="update" value="<%= t('transacts.new.pay_now') %>" id="update-submit" class="round-btn"/>
+    <input type="submit" name="update" value="<%= t('transacts.new.pay_now') %>" id="update-submit" class="button"/>
   </div>
   <br><br>
 </div>
   <% end %>
 <% else %>
-  <% form_tag :action => :create do %>
+  <%= form_tag :action => :create do %>
     <div class="form_row">
       <label for="to"><%= t('transacts.new.to') %></label>
       <%= text_field_tag(:to,params[:to],:size => 40) %>
@@ -48,7 +48,7 @@
       <%= text_field_tag(:memo,params[:memo],:size => 40) %>
     </div>
   <div class="status-btn">
-    <input type="submit" name="update" value="<%= t('transacts.new.pay_now') %>" id="update-submit" class="round-btn"/>
+    <input type="submit" name="update" value="<%= t('transacts.new.pay_now') %>" id="update-submit" class="button"/>
   </div>
   <% end %>
 <% end %>

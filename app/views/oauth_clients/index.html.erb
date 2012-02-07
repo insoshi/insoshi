@@ -10,7 +10,7 @@
       <td><%= render :partial => 'capability', :collection => token.capabilities %></td>
       <td><%= token.authorized_at %></td>
       <td>
-        <% form_tag :controller => 'oauth', :action => 'revoke' do %>
+        <%= form_tag :controller => 'oauth', :action => 'revoke' do %>
         <%= hidden_field_tag 'token', token.token %>
         <%= submit_tag "Revoke!" %>
         <% end %>

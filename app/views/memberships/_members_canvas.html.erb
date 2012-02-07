@@ -3,7 +3,7 @@
 <%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'person', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
 <%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'person', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
 <% end %>
-<% form_tag group_memberships_path(@group), :method => :get, :class => 'search_form' do %>
+<%= form_tag group_memberships_path(@group), :method => :get, :class => 'search_form' do %>
   <p>
     <%= text_field_tag :search, params[:search] %>
     <%= submit_tag t('button_search'), :name => nil %>

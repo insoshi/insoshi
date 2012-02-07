@@ -1,7 +1,7 @@
 <%= column_div :type => :primary do -%>
   <h2><%= t('password_resets.edit.header') %></h2>
 
-  <% form_tag password_reset_path, :method => :put do %>
+  <%= form_tag password_reset_path, :method => :put do %>
     <div class="form_row">
       <label for="password"><%= t('sessions.new.password') %></label>
       <%= password_field_tag :password %>
