@@ -55,7 +55,9 @@ class Group < ActiveRecord::Base
   end
 
   def admins
-    memberships.with_role('admin').map {|m| m.person}
+    admins = memberships.with_role('admin').map {|m| m.person}
+    admins << owner if admins.empty?
+    admins
   end
 
   def public?
