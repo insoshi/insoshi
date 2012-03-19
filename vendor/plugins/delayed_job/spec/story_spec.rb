@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/database'
+require 'spec_helper'
 
 describe "A story" do
 
@@ -11,7 +11,7 @@ describe "A story" do
   end
 
   it "should not return its result if it storytelling is delayed" do
-    @story.send_later(:tell).should_not == 'Once upon a time...'
+    @story.delay.tell.should_not == 'Once upon a time...'
   end
 
 end
