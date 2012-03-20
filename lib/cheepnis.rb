@@ -28,7 +28,7 @@ module Cheepnis
         start
         # and enqueue something that calls maybe_stop, at low priortity
         terminator = Terminator.new
-        Delayed::Job.enqueue(terminator, -10)    
+        Delayed::Job.enqueue(terminator, 100)    
       end
     end
   end
