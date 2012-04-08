@@ -225,6 +225,10 @@ class Person < ActiveRecord::Base
       find(:all, :conditions => conditions_for_active)
     end
 
+    def all_broadcast_email
+        find(:all, :conditions => conditions_for_broadcast)
+    end
+
     def find_recent
       # TODO: configure attachment_fu for the S3 backend when deploying to Heroku
       find(:all, :order => "people.created_at DESC",
@@ -561,6 +565,12 @@ class Person < ActiveRecord::Base
         [%(deactivated = ? AND
            (email_verified IS NULL OR email_verified = ?)),
          false, true]
+      end
+
+      def conditions_for_broadcast
+        [%(deactivated = ? AND broadcast_emails = ? AND
+           (email_verified IS NULL OR email_verified = ?)),
+         false, true, true]
       end
 
       # Return the conditions for a user to be 'mostly' active.
