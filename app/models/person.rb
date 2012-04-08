@@ -60,7 +60,8 @@ class Person < ActiveRecord::Base
                   :accept_agreement,
                   :language,
                   :openid_identifier,
-                  :sponsor
+                  :sponsor,
+                  :broadcast_emails
 
   index do
     name
