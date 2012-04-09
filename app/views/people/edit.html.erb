@@ -6,7 +6,7 @@
   <h3><%= t('people.edit.personal_details') %></h3>
 
     <%= error_messages_for :person %>
-    
+
     <% form_for @person do |f| %>
 
       <div class="form_row">
@@ -29,7 +29,7 @@
         <span class="categoryAdd"><%= link_to t('people.edit.add_new_category'), new_category_path %></span>
         <%= render :partial => "shared/select_categories", :locals => { :model_name => 'person' } %>
   </div>
-  
+
   <div class="form_row full">
         <label for="person_neighborhoods"><%= t('people.edit.neighborhood') %>
         </label>
@@ -52,18 +52,18 @@
         <label for="person_email"><%= t('people.edit.email') %></label>
         <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
       </div>
-      
+
       <%- if global_prefs.email_notifications? -%>
-      
+
         <br />
-      
+
         <h3><%= t('people.edit.email_notification_preferences') %></h3>
-      
+
         <p>
-          <%= t('people.edit.email_notification_note') %> 
+          <%= t('people.edit.email_notification_note') %>
         </p>
-        
-      
+
+
         <div class="form_row">
           <p>
           <label for="message_notifications"
@@ -75,11 +75,16 @@
                  class="checkbox"><%= t('people.edit.wall_comments') %></label>
           <%= f.check_box :wall_comment_notifications %>
           </p>
+          <p>
+          <label for="broadcast_emails"
+                 class="checkbox"><%= t('people.edit.broadcast_emails') %></label>
+          <%= f.check_box :broadcast_emails %>
+          </p>
         </div>
       <%- end -%>
-      
+
       <br />
-  
+
       <div class="form_row">
         <%= f.submit t('button_update'), :class => "button" %>
         <%= f.submit "Preview", :id => "preview", :class => "button" %>
@@ -90,7 +95,7 @@
   <br />
 
   <h3><%= t('people.edit.photos') %></h3>
-  
+
     <% if @person.photos.empty? %>
       <%= image_tag @person.thumbnail %>
     <% else %>

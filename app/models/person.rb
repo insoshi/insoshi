@@ -1,32 +1,43 @@
 # == Schema Information
-# Schema version: 20090216032013
+# Schema version: 20120408185823
 #
 # Table name: people
 #
-#  id                         :integer(4)      not null, primary key
-#  email                      :string(255)     
-#  name                       :string(255)     
-#  remember_token             :string(255)     
-#  crypted_password           :string(255)     
-#  description                :text            
-#  remember_token_expires_at  :datetime        
-#  last_contacted_at          :datetime        
-#  last_logged_in_at          :datetime        
-#  forum_posts_count          :integer(4)      default(0), not null
-#  blog_post_comments_count   :integer(4)      default(0), not null
-#  wall_comments_count        :integer(4)      default(0), not null
-#  created_at                 :datetime        
-#  updated_at                 :datetime        
-#  admin                      :boolean(1)      not null
-#  deactivated                :boolean(1)      not null
-#  connection_notifications   :boolean(1)      default(TRUE)
-#  message_notifications      :boolean(1)      default(TRUE)
-#  wall_comment_notifications :boolean(1)      default(TRUE)
-#  blog_comment_notifications :boolean(1)      default(TRUE)
-#  email_verified             :boolean(1)      
-#  identity_url               :string(255)     
-#  phone                      :string(255)     
-#  twitter_name               :string(255)     
+#  id                         :integer         not null, primary key
+#  email                      :string(255)
+#  name                       :string(255)
+#  crypted_password           :string(255)
+#  password_salt              :string(255)
+#  persistence_token          :string(255)
+#  description                :text
+#  last_contacted_at          :datetime
+#  last_logged_in_at          :datetime
+#  forum_posts_count          :integer         default(0), not null
+#  blog_post_comments_count   :integer         default(0), not null
+#  wall_comments_count        :integer         default(0), not null
+#  created_at                 :datetime
+#  updated_at                 :datetime
+#  admin                      :boolean         not null
+#  deactivated                :boolean         not null
+#  connection_notifications   :boolean         default(TRUE)
+#  message_notifications      :boolean         default(TRUE)
+#  wall_comment_notifications :boolean         default(TRUE)
+#  blog_comment_notifications :boolean         default(TRUE)
+#  email_verified             :boolean
+#  identity_url               :string(255)
+#  phone                      :string(255)
+#  first_letter               :string(255)
+#  zipcode                    :string(255)
+#  phoneprivacy               :boolean
+#  forum_notifications        :boolean
+#  language                   :string(255)
+#  openid_identifier          :string(255)
+#  perishable_token           :string(255)     default(""), not null
+#  default_group_id           :integer
+#  org                        :boolean
+#  activator                  :boolean
+#  sponsor_id                 :integer
+#  broadcast_emails           :boolean
 #
 
 class Person < ActiveRecord::Base
@@ -49,7 +60,8 @@ class Person < ActiveRecord::Base
                   :accept_agreement,
                   :language,
                   :openid_identifier,
-                  :sponsor
+                  :sponsor,
+                  :broadcast_emails
 
   index do
     name
@@ -114,15 +126,15 @@ class Person < ActiveRecord::Base
                                             :include => :person
 
 #  has_many :page_views, :order => 'created_at DESC'
-  
+
   has_many :own_groups, :class_name => "Group", :foreign_key => "person_id",
     :order => "name ASC"
   has_many :memberships
-  has_many :groups, :through => :memberships, :source => :group, 
+  has_many :groups, :through => :memberships, :source => :group,
     :conditions => "status = 0", :order => "name ASC"
-  has_many :groups_not_hidden, :through => :memberships, :source => :group, 
+  has_many :groups_not_hidden, :through => :memberships, :source => :group,
     :conditions => "status = 0 and mode != 2", :order => "name ASC"
-  
+
   has_many :events
   has_many :event_attendees
   has_many :attendee_events, :through => :event_attendees, :source => :event
@@ -178,7 +190,7 @@ class Person < ActiveRecord::Base
                      :per_page => RASTER_PER_PAGE,
                      :conditions => conditions_for_active)
     end
-    
+
     # Return the people who are 'mostly' active.
     # People are mostly active if they have logged in recently enough.
     def mostly_active(sort_opts, page = 1)
@@ -207,10 +219,14 @@ class Person < ActiveRecord::Base
                       :conditions => conditions_for_mostly_active,
                       :order => "name ASC")
     end
-    
+
     # Return *all* the active users.
     def all_active
       find(:all, :conditions => conditions_for_active)
+    end
+
+    def all_broadcast_email
+        find(:all, :conditions => conditions_for_broadcast)
     end
 
     def find_recent
@@ -263,12 +279,12 @@ class Person < ActiveRecord::Base
   def some_contacts
     contacts[(0...12)]
   end
-  
+
   def requested_memberships
-    Membership.find(:all, 
+    Membership.find(:all,
           :conditions => ['status = 2 and group_id in (?)', self.own_group_ids])
   end
-  
+
   # Contact links for the contact image raster.
   def requested_contact_links
     requested_contacts.map do |p|
@@ -288,7 +304,7 @@ class Person < ActiveRecord::Base
   end
 
   ## Exchange methods
- 
+
   def received_exchanges(page = 1)
     _received_exchanges.paginate(:page => page, :per_page => EXCHANGES_PER_PAGE, :conditions => "group_id is NULL")
   end
@@ -464,7 +480,7 @@ class Person < ActiveRecord::Base
                     OR contact.email_verified = ?)))
     conditions = [sql, id, contact.id, Connection::ACCEPTED, false, true]
     opts = { :page => page, :per_page => RASTER_PER_PAGE }
-    connections = 
+    connections =
     @common_contacts ||= Person.find(Connection.
                                      paginate_by_sql(conditions, opts).
                                      map(&:contact_id)).paginate
@@ -479,7 +495,7 @@ class Person < ActiveRecord::Base
     reset_perishable_token!
     PersonMailer.deliver_email_verification(self)
   end
-  
+
   protected
 
     def map_openid_registration(registration)
@@ -529,7 +545,7 @@ class Person < ActiveRecord::Base
     def destroy_activities
       Activity.find_all_by_person_id(self).each {|a| a.destroy}
     end
-    
+
     def destroy_feeds
       Feed.find_all_by_person_id(self).each {|f| f.destroy}
     end
@@ -541,19 +557,25 @@ class Person < ActiveRecord::Base
       #(crypted_password.blank? && identity_url.nil?) || !password.blank? ||
       #!verify_password.nil?
     end
-    
+
     class << self
-    
+
       # Return the conditions for a user to be active.
       def conditions_for_active
-        [%(deactivated = ? AND 
+        [%(deactivated = ? AND
            (email_verified IS NULL OR email_verified = ?)),
          false, true]
       end
-      
+
+      def conditions_for_broadcast
+        [%(deactivated = ? AND broadcast_emails = ? AND
+           (email_verified IS NULL OR email_verified = ?)),
+         false, true, true]
+      end
+
       # Return the conditions for a user to be 'mostly' active.
       def conditions_for_mostly_active
-        [%(deactivated = ? AND 
+        [%(deactivated = ? AND
            (email_verified IS NULL OR email_verified = ?) AND
            (last_logged_in_at IS NOT NULL AND
             last_logged_in_at >= ?)),
