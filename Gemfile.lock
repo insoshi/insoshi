@@ -17,10 +17,10 @@ GIT
 PATH
   remote: vendor/gems/oauth-plugin-0.4.0.pre7
   specs:
-    oauth-plugin (0.4.0.pre7)
+    oauth-plugin (0.4.0)
       multi_json
       oauth (~> 0.4.4)
-      oauth2
+      oauth2 (>= 0.5.0)
       rack
 
 GEM
