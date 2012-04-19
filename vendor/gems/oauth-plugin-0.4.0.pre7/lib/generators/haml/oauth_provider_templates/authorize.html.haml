@@ -5,7 +5,7 @@
   (
   = link_to @token.client_application.url,@token.client_application.url
   ) to access your account?
-- form_tag authorize_url do
+= form_tag authorize_url do
   = hidden_field_tag "oauth_token", @token.token
   - if params[:oauth_callback]
     = hidden_field_tag "oauth_callback", params[:oauth_callback]

@@ -1,7 +1,7 @@
 A few non backwards compatible changes have been made that are really easy to fix.
 
 If you are upgrading a oauth_consumer from 0.3.x to 0.4.x add the following line to your consumer_token model:
-  
+
   belongs_to :user
 
 So it looks like this:

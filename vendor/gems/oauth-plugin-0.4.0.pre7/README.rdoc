@@ -4,31 +4,95 @@ This is a plugin for implementing OAuth Providers and Consumers in Rails applica
 
 We support the revised OAuth 1.0a specs at:
 
-http://oauth.net/core/1.0a
+http://tools.ietf.org/html/rfc5849
 
 As well as support for OAuth 2.0:
 
-http://tools.ietf.org/html/draft-ietf-oauth-v2-10
+http://tools.ietf.org/html/draft-ietf-oauth-v2-22
 
-and the OAuth site at:
+Find out more on the OAuth site at:
 
 http://oauth.net
 
-For more about the changes made to OAuth1.0a please see Seth's Idiot's Guide to OAuth 1.0a.
+== IMPORTANT note for people upgrading the provider
 
-http://mojodna.net/2009/05/20/an-idiots-guide-to-oauth-10a.html
+There are several changes to the latest OAuth 2.0 spec which requires a couple of changes to 2 models which you are REQUIRED to update manually if you are supporting OAuth2.
+
+https://github.com/pelle/oauth-plugin/blob/master/lib/generators/active_record/oauth_provider_templates/oauth2_token.rb
+
+  class Oauth2Token < AccessToken
+    attr_accessor :state
+    def as_json(options={})
+      d = {:access_token=>token, :token_type => 'bearer'}
+      d[:expires_in] = expires_in if expires_at
+      d
+    end
+
+    def to_query
+      q = "access_token=#{token}&token_type=bearer"
+      q << "&state=#{URI.escape(state)}" if @state
+      q << "&expires_in=#{expires_in}" if expires_at
+      q << "&scope=#{URI.escape(scope)}" if scope
+      q
+    end
+
+    def expires_in
+      expires_at.to_i - Time.now.to_i
+    end
+  end
+
+
+https://github.com/pelle/oauth-plugin/blob/master/lib/generators/active_record/oauth_provider_templates/oauth2_verifier.rb
+
+  class Oauth2Verifier < OauthToken
+    validates_presence_of :user
+    attr_accessor :state
+
+    def exchange!(params={})
+      OauthToken.transaction do
+        token = Oauth2Token.create! :user=>user,:client_application=>client_application, :scope => scope
+        invalidate!
+        token
+      end
+    end
+
+    def code
+      token
+    end
+
+    def redirect_url
+      callback_url
+    end
+
+    def to_query
+      q = "code=#{token}"
+      q << "&state=#{URI.escape(state)}" if @state
+      q
+    end
+
+    protected
+
+    def generate_keys
+      self.token = OAuth::Helper.generate_key(20)[0,20]
+      self.expires_at = 10.minutes.from_now
+      self.authorized_at = Time.now
+    end
+
+  end
+
+There are matching specs for these which you may want to move into your project as well.
 
 == Requirements
 
 You need to install the oauth gem (0.4.4) which is the core OAuth ruby library. It will likely NOT work on any previous version of the gem.
-  
+
   gem install oauth
 
 == Installation (Rails 3.0)
 
 Add the plugin to your Gemfile:
 
-  gem "oauth-plugin", ">= 0.4.0.pre1"
+  gem "oauth-plugin", "~> 0.4.0"
 
 And install it:
 
@@ -39,7 +103,7 @@ And install it:
 The plugin can now be installed as an gem from github, which is the easiest way to keep it up to date.
 
   gem install oauth-plugin --pre
-  
+
 You should add the following in the gem dependency section of environment.rb
 
   config.gem "oauth"
@@ -72,7 +136,7 @@ It requires an authentication framework such as acts_as_authenticated, restful_a
 A big change over previous versions is that we now use a rack filter. You have to install this in your application.rb file:
 
   require 'oauth/rack/oauth_filter'
-  config.middleware.use OAuth::Rack::OAuthFilter    
+  config.middleware.use OAuth::Rack::OAuthFilter
 
 
 === Generator Options
@@ -107,7 +171,7 @@ It requires an authentication framework such as acts_as_authenticated, restful_a
 By default the generator generates RSpec and ERB templates. The generator can instead create Test::Unit and/or HAML templates. To do this use the following options:
 
   ./script/generate oauth_provider --test-unit --haml
-  
+
 These can of course be used individually as well.
 
 === User Model
@@ -120,7 +184,7 @@ Add the following lines to your user model:
 === Migrate database
 
 The database is defined in:
-  
+
   db/migrate/XXX_create_oauth_tables.rb
 
 Run them as any other normal migration in rails with:
@@ -173,14 +237,14 @@ Then change the create_request_token method to the following:
 
 === Changes in request_token.rb
 
-The RequestToken contains the bulk of the changes so it's easiest to list it in it's entirety. Mainly we need to add support for the oauth_verifier parameter and also tell the client that we support OAuth 1.0a. 
+The RequestToken contains the bulk of the changes so it's easiest to list it in it's entirety. Mainly we need to add support for the oauth_verifier parameter and also tell the client that we support OAuth 1.0a.
 
 Make sure it looks like this:
 
   class RequestToken < OauthToken
-  
+
     attr_accessor :provided_oauth_verifier
-  
+
     def authorize!(user)
       return false if authorized?
       self.user = user
@@ -188,18 +252,18 @@ Make sure it looks like this:
       self.verifier=OAuth::Helper.generate_key(16)[0,20] unless oauth10?
       self.save
     end
-  
+
     def exchange!
       return false unless authorized?
       return false unless oauth10? || verifier == provided_oauth_verifier
-    
+
       RequestToken.transaction do
         access_token = AccessToken.create(:user => user, :client_application => client_application)
         invalidate!
         access_token
       end
     end
-  
+
     def to_query
       if oauth10?
         super
@@ -207,11 +271,11 @@ Make sure it looks like this:
         "#{super}&oauth_callback_confirmed = true"
       end
     end
-  
+
     def oob?
       self.callback_url == 'oob'
     end
-  
+
     def oauth10?
       (defined? OAUTH_10_SUPPORT) && OAUTH_10_SUPPORT && self.callback_url.blank?
     end
@@ -220,12 +284,12 @@ Make sure it looks like this:
 
 === Changes in oauth_controller
 
-All you need to do here is the change the authorize action to use the request_token callback url and add the oauth_verifier to the callback url. 
+All you need to do here is the change the authorize action to use the request_token callback url and add the oauth_verifier to the callback url.
 
   def authorize
     @token = ::RequestToken.find_by_token params[:oauth_token]
-    unless @token.invalidated?    
-      if request.post? 
+    unless @token.invalidated?
+      if request.post?
         if params[:authorize] == '1'
           @token.authorize!(current_user)
           if @token.oauth10?
@@ -233,7 +297,7 @@ All you need to do here is the change the authorize action to use the request_to
           else
             @redirect_url = @token.oob? ? @token.client_application.callback_url : @token.callback_url
           end
-        
+
           if @redirect_url
             if @token.oauth10?
               redirect_to "#{@redirect_url}?oauth_token=#{@token.token}"
@@ -305,7 +369,7 @@ You could add application specific information to the OauthToken and ClientAppli
 The oauth_consumer generator creates a controller to manage the authentication flow between your application and any number of external OAuth secured applications that you wish to connect to.
 
 To run it in Rails 3 simply run:
-  
+
   rails g oauth_consumer
 
 In previous versions:
@@ -320,7 +384,7 @@ By default the generator generates ERB templates. The generator can instead crea
 
   ./script/generate oauth_consumer --haml
 
-Rails 3 respects your application defaults, see the oauth provider generator section above for more info. 
+Rails 3 respects your application defaults, see the oauth provider generator section above for more info.
 
 === Configuration
 
@@ -346,13 +410,13 @@ Add entries to OAUTH_CREDENTIALS for all OAuth Applications you wish to connect 
       :key => "",
       :secret => "",
       :options = {
-        :site => "http://hourfeed.com" 
+        :site => "http://hourfeed.com"
       }
     },
     :nu_bux => {
       :key => "",
       :secret => "",
-      :super_class => "OpenTransactToken",  # if a OAuth service follows a particular standard 
+      :super_class => "OpenTransactToken",  # if a OAuth service follows a particular standard
                                           # with a token implementation you can set the superclass
                                           # to use
       :options => {
@@ -402,7 +466,7 @@ These can be found in lib/oauth/models/consulers/services. Contributions will be
 To connect a user to an external service link or redirect them to:
 
   /oauth_consumers/[SERVICE_NAME]
-  
+
 Where SERVICE_NAME is the name you set in the OAUTH_CREDENTIALS hash. This will request the request token and redirect the user to the services authorization screen. When the user accepts the get redirected back to:
 
   /oauth_consumers/[SERVICE_NAME]/callback
@@ -420,7 +484,7 @@ This is designed to let your local javascript apps access remote OAuth apis. You
       :client => :oauth_gem, # :twitter_gem or :oauth_gem (defaults to :twitter_gem)
       :expose => true      # set to true to expose client via the web
     }
-      
+
 Once the user has authorized your application, you can access the client APIs via:
 
   /oauth_consumers/[SERVICE_NAME]/client/[ENDPOINT]

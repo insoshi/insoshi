@@ -5,7 +5,7 @@
   (
   = link_to @client_application.url,@client_application.url
   ) to access your account?
-- form_tag authorize_url do
+= form_tag authorize_url do
   = hidden_field_tag "response_type", params[:response_type]
   = hidden_field_tag "client_id", params[:client_id]
   = hidden_field_tag "redirect_uri", params[:redirect_uri]

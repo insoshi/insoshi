@@ -1,4 +1,4 @@
-./script/generate oauth_provider 
+./script/generate oauth_provider
 
 This creates an OAuth Provider controller as well as the requisite models.
 

@@ -5,12 +5,12 @@ module Oauth
       # This is just a simple
       class SimpleClient
         attr_reader :token
-  
+
         def initialize(token)
           @token = token
         end
-  
-  
+
+
         def put(path,params={})
           parse(token.put(path,params, {'Accept' => 'application/json'}))
         end
@@ -41,9 +41,9 @@ module Oauth
             logger.debug "Got Response code: #{response.code}"
             false
           end
-          
+
         end
-        
+
       end
     end
   end

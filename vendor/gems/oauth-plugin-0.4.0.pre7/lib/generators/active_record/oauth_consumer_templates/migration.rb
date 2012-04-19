@@ -1,6 +1,6 @@
 class CreateOauthConsumerTokens < ActiveRecord::Migration
   def self.up
-    
+
     create_table :consumer_tokens do |t|
       t.integer :user_id
       t.string :type, :limit => 30
@@ -8,9 +8,9 @@ class CreateOauthConsumerTokens < ActiveRecord::Migration
       t.string :secret
       t.timestamps
     end
-    
+
     add_index :consumer_tokens, :token, :unique => true
-    
+
   end
 
   def self.down

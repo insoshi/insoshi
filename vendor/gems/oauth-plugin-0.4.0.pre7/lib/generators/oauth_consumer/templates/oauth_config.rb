@@ -53,15 +53,15 @@
 #   :nu_bux=>{
 #     :key=>"",
 #     :secret=>"",
-#     :super_class=>"OpenTransactToken",  # if a OAuth service follows a particular standard 
+#     :super_class=>"OpenTransactToken",  # if a OAuth service follows a particular standard
 #                                         # with a token implementation you can set the superclass
 #                                         # to use
 #     :options=>{ # OAuth::Consumer options
-#       :site=>"http://nubux.heroku.com" 
+#       :site=>"http://nubux.heroku.com"
 #     }
 #   }
 # }
-# 
+#
 OAUTH_CREDENTIALS={
 } unless defined? OAUTH_CREDENTIALS
 

@@ -14,13 +14,13 @@ module Oauth
           model.send(:extend, ClassMethods)
 
         end
-        
+
         module ClassMethods
-          
+
           def service_name
             @service_name||=self.to_s.underscore.scan(/^(.*?)(_token)?$/)[0][0].to_sym
           end
-          
+
           def consumer
             options = credentials[:options] || {}
             @consumer||=OAuth::Consumer.new credentials[:key],credentials[:secret],options
@@ -37,7 +37,7 @@ module Oauth
             access_token=request_token.get_access_token options
             find_or_create_from_access_token user, access_token
           end
-          
+
           def find_or_create_from_access_token(user,access_token)
             secret = access_token.respond_to?(:secret) ? access_token.secret : nil
             if user
@@ -45,26 +45,25 @@ module Oauth
             else
               token = self.find_or_initialize_by_token(access_token.token)
             end
-            
+
             # set or update the secret
             token.secret = secret
             token.save! if token.new_record? or token.changed?
 
             token
           end
-          
+
           def build_user_from_token
           end
-          protected
           
           def credentials
             @credentials||=OAUTH_CREDENTIALS[service_name]
           end
-          
+
         end
-        
+
         module InstanceMethods
-          
+
           # Main client for interfacing with remote service. Override this to use
           # preexisting library eg. Twitter gem.
           def client
@@ -74,19 +73,19 @@ module Oauth
           def simple_client
             @simple_client||=SimpleClient.new client
           end
-          
+
           # Override this to return user data from service
           def params_for_user
             {}
           end
-          
+
           def create_user
             self.user ||= begin
               User.new params_for_user
               user.save(:validate=>false)
             end
-          end  
-          
+          end
+
         end
       end
     end

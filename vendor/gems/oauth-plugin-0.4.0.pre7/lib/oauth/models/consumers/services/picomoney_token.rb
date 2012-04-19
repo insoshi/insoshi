@@ -8,8 +8,8 @@ class PicomoneyToken < OpenTransactToken
         :consumer_key => super[:key],
         :consumer_secret => super[:secret]
       }.merge(super)
-  end  
-  
+  end
+
   def about_user
     client.get("/about_user")
   end

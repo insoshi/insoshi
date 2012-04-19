@@ -1,3 +1,19 @@
+0.4.0
+  - fix migrations to use expires_at instead of valid_to [pelle]
+  - add force parameter for forcing token refresh [afeld]
+  - make it work in rails 2x [Kimtaro]
+  - Use 0.5+ OAuth2 gem [kookster]
+  - prevent addition of ? marks to callback url when not needed [kookster]
+  - make .credentials accessible to TwitterToken [afeld]
+0.4.0-rc2
+  - Better OAuth2 support.
+  - Refactored authorizer into a Authorizer object which is now better tested
+0.4.0-rc1
+  PLEASE help test this so we can mark it as final
+  - Update to OAuth2 draft 22 which is likely the final release. [pelle] ACTION REQUIRED BY YOU, see README.
+  - Update forms to work with rails 3.1 [morgz]
+  - Allow nil callbacks for oob in OAuth 1.0a [Shaliko Usubov]
+  - OAuthFilter:oauth2_token to rejects headers that explicitly state oauth_version="1.0" [KentonWhite]
 0.4.0-pre7
   - OAuth 1 requests using query or form encoded parameters where being interpreted as OAuth2 [pelleb]
   - OAuth 2 requests were not checking for invalidated tokens. Please upgrade for this if you offer OAuth 2 [rymai]

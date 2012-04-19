@@ -3,7 +3,7 @@ require 'oauth/controllers/consumer_controller'
 # Goes through the entries in your OAUTH_CREDENTIALS and either loads the class required
 # or subclasses ConsumerToken with the name.
 #
-# So an entry called "my_service" will create a class MyServiceToken which you can 
+# So an entry called "my_service" will create a class MyServiceToken which you can
 # connect with has_one to your user model.
 if defined? ConsumerToken && defined? OAUTH_CREDENTIALS
   require File.join(File.dirname(__FILE__), 'services', 'oauth2_token')

@@ -16,7 +16,7 @@
       </td>
     <%% end %>
   <%% end %>
-  
+
 </table>
 <%% end %>
 <h3>Application Developers</h3>
@@ -33,7 +33,7 @@
   </p>
   <%% @client_applications.each do |client|%>
     <%% div_for client do %>
-      <%%= link_to client.name, oauth_client_path(client) %>- 
+      <%%= link_to client.name, oauth_client_path(client) %>-
         <%%= link_to 'Edit', edit_oauth_client_path(client) %>
         <%%= link_to 'Delete', oauth_client_path(client), :confirm => "Are you sure?", :method => :delete %>
     <%% end %>

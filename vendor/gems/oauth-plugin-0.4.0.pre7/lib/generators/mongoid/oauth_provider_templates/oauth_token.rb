@@ -9,7 +9,7 @@ class OauthToken
   field :scope, :type => String
   field :authorized_at, :type => Time
   field :invalidated_at, :type => Time
-  field :valid_to, :type => Time
+  field :expires_at, :type => Time
 
   index :token, :unique => true
 
