@@ -82,7 +82,7 @@ class TransactsController < ApplicationController
 
     # Transact.to and Transact.memo - makes @transact look opentransacty
     #
-    @transact = Transact.new(:to => params[:to], :memo => params[:memo], :amount => params[:amount], :callback_url => params[:callback_url], :redirect_url => params[:redirect_url])
+    @transact = Transact.new(:to => params[:to], :memo => params[:note], :amount => params[:amount], :callback_url => params[:callback_url], :redirect_url => params[:redirect_url])
 
     @worker = opentransact_find_worker(params[:to])
     if nil == @worker
@@ -103,7 +103,7 @@ class TransactsController < ApplicationController
     @transact.worker = @worker
     @transact.group = @group
 
-    @transact.metadata = @transact.create_req(params[:memo])
+    @transact.metadata = @transact.create_req(params[:note])
 
     if can?(:create, @transact) && @transact.save
       if current_token && (cap = current_token.single_payment?)

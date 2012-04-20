@@ -17,14 +17,14 @@ module OAuth
 
       def code
         @code ||= ::Oauth2Verifier.create! :client_application => app,
-                                      :user => @user,
+                                      :person => @user,
                                       :scope => @params[:scope],
                                       :callback_url => @params[:redirect_uri]
       end
 
       def token
         @token ||= ::Oauth2Token.create! :client_application => app,
-                                      :user => @user,
+                                      :person => @user,
                                       :scope => @params[:scope],
                                       :callback_url => @params[:redirect_uri]
       end

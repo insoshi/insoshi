@@ -12,8 +12,12 @@ class Capability < ActiveRecord::Base
     update_attribute(:invalidated_at, Time.now)
   end
 
+  def amount_user_authorized
+    action_id == "all_access" ? 1.0/0 : amount.to_f
+  end
+
   def authorized_for?(requested_amount)
-    ['single_payment','recurring_payment'].include?(action_id) && requested_amount <= amount.to_f && !invalidated?
+    ['single_payment','recurring_payment','all_access'].include?(action_id) && requested_amount <= amount_user_authorized && !invalidated?
   end
 
   def single_payment?
@@ -33,15 +37,15 @@ class Capability < ActiveRecord::Base
   end
 
   def can_list?(g)
-    'read_payments' == action_id && (self.group == g || self.group.nil?)
+    ['read_payments','all_access'].include?(action_id) && (self.group == g || self.group.nil?)
   end
 
   def can_pay?(g)
-    ['single_payment','recurring_payment'].include?(action_id) && (self.group == g || self.group.nil?) && !invalidated?
+    ['single_payment','recurring_payment','all_access'].include?(action_id) && (self.group == g || self.group.nil?) && !invalidated?
   end
 
   def can_list_wallet_contents?
-    'read_wallet' == action_id
+    ['read_wallet','all_access'].include?(action_id)
   end
 
   def scope_hash

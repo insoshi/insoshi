@@ -57,7 +57,11 @@ module OAuth
           @token = ::RequestToken.find_by_token! params[:oauth_token]
           oauth1_authorize
         else
+          # XXX oauth2
           if request.post?
+            if params[:scope].empty?
+              params[:scope] = "http://#{request.host}/scopes/all_access.json"
+            end
             @authorizer = OAuth::Provider::Authorizer.new current_person, user_authorizes_token_without_capabilities?, params
             redirect_to @authorizer.redirect_uri
           else

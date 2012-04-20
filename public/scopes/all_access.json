@@ -1,0 +1,8 @@
+{
+  "action": 
+    {
+    "_id":"all_access",
+    "name":"all access",
+    "icon_uri":"/images/icons/user.gif"
+  }
+}

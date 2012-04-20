@@ -29,7 +29,7 @@ class Transact < Exchange
       :from => customer.email,
       :amount => amount.to_s,
       :txn_date => created_at.iso8601,
-      :memo => metadata.name,
+      :note => metadata.name,
       :txn_id => "http://" + Transact.global_prefs.server_name + "/transacts/#{id}",
       :status => 'ok'
     }
