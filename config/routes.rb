@@ -124,6 +124,7 @@ Oscurrency::Application.routes.draw do
   match '/oauth' => 'oauth#index', :as => :oauth
   match '/about_user' => 'transacts#about_user', :as => :about_user
   match '/wallet' => 'transacts#wallet', :as => :wallet
+  match '/.well-known/host-meta' => 'home#host_meta', :as => :host_meta
   match '/home/show/:id' => 'home#show'
   root :to => 'home#index'
   match '/' => 'home#index', :as => :home

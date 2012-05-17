@@ -13,4 +13,7 @@ class HomeController < ApplicationController
     @post = FeedPost.find(params[:id])
   end
 
+  def host_meta
+    render 'host_meta.xml.erb'
+  end
 end

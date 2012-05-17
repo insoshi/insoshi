@@ -57,7 +57,11 @@ class ClientApplication < ActiveRecord::Base
     end
     r
   end
-  
+ 
+  def as_json
+    {:client_id => key, :redirect_url => callback_url, :issued_at => created_at}.as_json
+  end
+
 protected
   def generate_keys
     self.key = OAuth::Helper.generate_key(40)[0,40]
