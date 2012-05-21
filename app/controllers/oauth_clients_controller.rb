@@ -25,6 +25,7 @@ class OauthClientsController < ApplicationController
         end
       end
       format.json do
+        response.headers["Cache-Control"] = "private, no-store, max-age=0, must-revalidate"
         redirect_uri = ""
         begin
           raise "client_name" if params[:client_name].nil?

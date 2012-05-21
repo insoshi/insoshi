@@ -59,7 +59,7 @@ class ClientApplication < ActiveRecord::Base
   end
  
   def as_json
-    {:client_id => key, :redirect_url => callback_url, :issued_at => created_at}.as_json
+    {:client_id => key, :client_secret => secret, :redirect_url => callback_url, :issued_at => created_at}.as_json
   end
 
 protected
