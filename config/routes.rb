@@ -123,6 +123,7 @@ Oscurrency::Application.routes.draw do
   match '/oauth/revoke' => 'oauth#revoke', :as => :revoke
   match '/oauth' => 'oauth#index', :as => :oauth
   match '/about_user' => 'transacts#about_user', :as => :about_user
+  match '/user_info' => 'transacts#user_info', :as => :user_info
   match '/wallet' => 'transacts#wallet', :as => :wallet
   match '/.well-known/host-meta' => 'home#host_meta', :as => :host_meta
   match '/home/show/:id' => 'home#show'

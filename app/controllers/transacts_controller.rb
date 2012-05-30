@@ -4,7 +4,7 @@ class TransactsController < ApplicationController
   oauthenticate :strategies => :token, :except => [:about_user,:wallet,:scopes,:new]
   oauthenticate :strategies => [], :only => :new
   oauthenticate :strategies => :token, :interactive => false, :only => [:about_user,:wallet,:scopes]
-  before_filter :find_group_by_asset, :except => [:about_user,:wallet,:scopes]
+  before_filter :find_group_by_asset, :except => [:about_user,:user_info,:wallet,:scopes]
   skip_before_filter :verify_authenticity_token, :set_person_locale, :if => :oauth?
 
   def about_user
@@ -14,6 +14,18 @@ class TransactsController < ApplicationController
                'thumbnail_url' => current_person.thumbnail}
     respond_to do |format|
       format.json { render :json => @person.as_json }
+    end
+  end
+
+  def user_info
+    @user_info = {'name' => current_person.name,
+                  'profile' => person_url(current_person),
+                  'picture' => current_person.thumbnail,
+                  'website' => current_person.openid_identifier || '',
+                  'email' => current_person.email,
+                  'user_id' => current_person.id.to_s}
+    respond_to do |format|
+      format.json { render :json => @user_info.as_json }
     end
   end
 
