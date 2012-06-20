@@ -398,6 +398,7 @@ gr:
       messages: "Μηνύματα:"
       wall_comments: "Σχόλια τοίχου:"
       forum_posts: "Δημοσιεύσεις του φόρουμ:"
+      broadcast_emails: "Newsletter:"
       photos: "Φωτογραφίες"
       add_a_photo: "Προσθήκη φωτογραφίας"
       addresses: "Διευθύνσεις"

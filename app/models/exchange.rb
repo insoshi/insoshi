@@ -144,7 +144,7 @@ class Exchange < ActiveRecord::Base
   def send_payment_notification_to_worker
     exchange_note = Message.new()
     subject = I18n.translate('exchanges.notify.you_have_received_a_payment_of') + " " + self.amount.to_s + " " +  self.group.unit + " " + I18n.translate('for') + " " + self.metadata.name 
-    exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
+    exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject 
     exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.paid_you') + " " + self.amount.to_s + " " + self.group.unit + "."
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
@@ -154,7 +154,7 @@ class Exchange < ActiveRecord::Base
   def send_suspend_payment_notification_to_worker
     exchange_note = Message.new()
     subject = I18n.translate('exchanges.notify.payment_suspended') + self.amount.to_s + " " + self.group.unit + " - " + I18n.translate('by') + " " + self.metadata.name
-    exchange_note.subject =  subject.length > 75 ? subject.slice(0,75).concat("...") : subject 
+    exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject 
     exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.suspended_payment_of') + " " + self.amount.to_s + " " + self.group.unit + "."
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker

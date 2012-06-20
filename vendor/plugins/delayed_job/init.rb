@@ -1,1 +1,1 @@
-require File.dirname(__FILE__) + '/lib/delayed_job'
+require File.join(File.dirname(__FILE__), 'rails', 'init')
