@@ -5,7 +5,7 @@ Dir["#{::Rails.root.to_s}/vendor/gems/*"].each do |subdir|
   rspec_gem_dir = subdir if subdir.gsub("#{::Rails.root.to_s}/vendor/gems/","") =~ /^(\w+-)?rspec-(\d+)/ && File.exist?("#{subdir}/lib/spec/rake/spectask.rb")
 end
 rspec_plugin_dir = File.expand_path(File.dirname(__FILE__) + '/../../vendor/plugins/rspec')
-
+include Rake::DSL
 if rspec_gem_dir && (test ?d, rspec_plugin_dir)
   raise "\n#{'*'*50}\nYou have rspec installed in both vendor/gems and vendor/plugins\nPlease pick one and dispose of the other.\n#{'*'*50}\n\n"
 end

@@ -24,7 +24,7 @@ gem "texticle", "1.0.4.20101004123327"
 
 gem "eventmachine"
 gem "aws-s3"
-gem "rmagick"
+gem "rmagick", :require => 'RMagick'
 gem "rack-openid"
 gem "heroku"
 gem "json"
