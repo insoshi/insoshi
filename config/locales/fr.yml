@@ -340,6 +340,7 @@ fr:
       messages: "Messages"
       wall_comments: "Commentaires"
       forum_posts: "Les entrées du forum"
+      broadcast_emails: "Newsletter:"
       photos: "Photos"
       add_a_photo: "Ajoutez une photo"
       adresses: "Les adresses"

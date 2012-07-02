@@ -1,41 +1,36 @@
-#version = File.read('README.textile').scan(/^\*\s+([\d\.]+)/).flatten
+# -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name     = "delayed_job"
-  s.version  = "1.7.0"
-  s.date     = "2008-11-28"
-  s.summary  = "Database-backed asynchronous priority queue system -- Extracted from Shopify"
-  s.email    = "tobi@leetsoft.com"
-  s.homepage = "http://github.com/tobi/delayed_job/tree/master"
-  s.description = "Delated_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background. It is a direct extraction from Shopify where the job table is responsible for a multitude of core tasks."
-  s.authors  = ["Tobias Lütke"]
+  s.name              = 'delayed_job'
+  s.version           = '2.0.7'
+  s.authors           = ["Chris Gaffney", "Brandon Keepers", "Tobias L\303\274tke"]
+  s.summary           = 'Database-backed asynchronous priority queue system -- Extracted from Shopify'
+  s.description       = "Delayed_job (or DJ) encapsulates the common pattern of asynchronously executing longer tasks in the background. It is a direct extraction from Shopify where the job table is responsible for a multitude of core tasks.
 
-  # s.bindir = "bin"
-  # s.executables = ["delayed_job"]
-  # s.default_executable = "delayed_job"
+This gem is collectiveidea's fork (http://github.com/collectiveidea/delayed_job)."
+  s.email             = ['chris@collectiveidea.com', 'brandon@opensoul.org']
+  s.extra_rdoc_files  = 'README.textile'
+  s.files             = Dir.glob('{contrib,lib,generators,rails,recipes,spec,tasks}/**/*') +
+                        %w(MIT-LICENSE README.textile)
+  s.homepage          = 'http://github.com/collectiveidea/delayed_job'
+  s.rdoc_options      = ["--main", "README.textile", "--inline-source", "--line-numbers"]
+  s.require_paths     = ["lib"]
+  s.test_files        = Dir.glob('spec/**/*')
 
-  s.has_rdoc = false
-  s.rdoc_options = ["--main", "README.textile"]
-  s.extra_rdoc_files = ["README.textile"]
+  s.add_runtime_dependency      'daemons',        '1.0.10'
+  s.add_runtime_dependency      'activesupport',  '~> 2.0'
 
-  # run git ls-files to get an updated list
-  s.files = %w[
-    MIT-LICENSE
-    README.textile
-    delayed_job.gemspec
-    init.rb
-    lib/delayed/job.rb
-    lib/delayed/message_sending.rb
-    lib/delayed/performable_method.rb
-    lib/delayed/worker.rb
-    lib/delayed_job.rb
-    tasks/jobs.rake
-    tasks/tasks.rb
-  ]
-  s.test_files = %w[
-    spec/database.rb
-    spec/delayed_method_spec.rb
-    spec/job_spec.rb
-    spec/story_spec.rb
-  ]
+  s.add_development_dependency  'rspec',          '~> 1.0'
+  s.add_development_dependency  'rake',           '0.8.7' #~>0.8 still resulted in 0.9 being used on bundler 1.0.10
+  s.add_development_dependency  'rails',          '~> 2.3'
+  s.add_development_dependency  'sqlite3'
+  s.add_development_dependency  'mysql'
+  s.add_development_dependency  'mongo_mapper',   '~> 0.8.0'
+  s.add_development_dependency  'dm-core'
+  s.add_development_dependency  'dm-observer'
+  s.add_development_dependency  'dm-aggregates'
+  s.add_development_dependency  'dm-validations'
+  s.add_development_dependency  'do_sqlite3'
+  s.add_development_dependency  'database_cleaner'
 end
+

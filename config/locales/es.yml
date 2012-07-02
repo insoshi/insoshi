@@ -285,6 +285,7 @@ es:
       messages: "Mensajes:"
       wall_comments: "Pared de comentarios:"
       forum_posts: "Foro publicaciones:"
+      broadcast_emails: "Newsletter:"
       photos: "Fotos"
       add_a_photo: "Agrege una foto"
       addresses: "Direcciones"

@@ -126,7 +126,7 @@ class Bid < ActiveRecord::Base
   def trigger_offered
     bid_note = Message.new()
     subject = "BID: " + self.estimated_hours.to_s + " hours - " + self.req.name 
-    bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
+    bid_note.subject = subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
     bid_note.content = ""
     bid_note.content << self.private_message_to_requestor + "\n--\n\n" if self.private_message_to_requestor.length > 0
     bid_note.content << "See your <a href=\"" + "http://" + server + req_path(self.req) + "\">request</a> to consider bid"
@@ -140,7 +140,7 @@ class Bid < ActiveRecord::Base
     save
     bid_note = Message.new()
     subject = "Bid accepted for " + self.req.name
-    bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
+    bid_note.subject = subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
     bid_note.content = "See the <a href=\"" + "http://" + server + req_path(self.req) + "\">request</a> to commit to bid"
     bid_note.sender = self.req.person
     bid_note.recipient = self.person
@@ -152,7 +152,7 @@ class Bid < ActiveRecord::Base
     save
     bid_note = Message.new()
     subject = "Bid committed for " + self.req.name
-    bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
+    bid_note.subject = subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
     bid_note.content = "Commitment made for your <a href=\"" + "http://" + server + req_path(self.req) + "\">request</a>. This is an automated message"
     bid_note.sender = self.person
     bid_note.recipient = self.req.person
@@ -164,7 +164,7 @@ class Bid < ActiveRecord::Base
     save
     bid_note = Message.new()
     subject = "Work completed for " + self.req.name
-    bid_note.subject = subject.length > 75 ? subject.slice(0,75).concat("...") : subject
+    bid_note.subject = subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
     bid_note.content = "Work completed for your <a href=\"" + "http://" + server + req_path(self.req) + "\">request</a>. Please approve transaction! This is an automated message"
     bid_note.sender = self.person
     bid_note.recipient = self.req.person
