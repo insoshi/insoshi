@@ -53,7 +53,8 @@ class Message < Communication
 
   before_create :assign_conversation
   after_create :update_recipient_last_contacted_at,
-               :save_recipient, :set_replied_to, :send_receipt_reminder
+               :set_replied_to, :send_receipt_reminder
+               #:save_recipient
   
   def parent
     return @parent unless @parent.nil?
@@ -162,7 +163,7 @@ class Message < Communication
     end
     
     def save_recipient
-      self.recipient.save!
+      #self.recipient.save!
     end
     
     def send_receipt_reminder
