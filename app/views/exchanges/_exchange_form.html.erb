@@ -8,7 +8,7 @@
       <%= f.label t('exchanges.new.amount') %>
       <%= f.text_field :amount, :size => 2 %>&nbsp;<span class="small"><%= @group.unit %></span>
     </div>
-    <% fields_for :req do |r| %>
+    <%= fields_for :req do |r| %>
       <div class="form_row">
         <%= r.label t('exchanges.new.service_provided') %>
         <%= r.text_field :name, :onclick => "this.value='';" %>

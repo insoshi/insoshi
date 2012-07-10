@@ -5,7 +5,7 @@
 </ul>
 <% unless current_person?(@offer.person) %>
   <%= form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
-    <% fields_for :offer do |o| %>
+    <%= fields_for :offer do |o| %>
       <%= o.hidden_field :id %>
     <% end %>
     <%= f.hidden_field :subject, :id => "message_subject", :value => @offer.name %>
