@@ -1,7 +1,7 @@
 <% if params[:offer] %>
-  $('#offers_canvas').html('<ul class="list messages full"><%= escape_javascript(render :partial => 'groups/exchange') %></ul><div style="clear:both;"></div>');
+  $('#offers_canvas').html('<ul class="list messages full"><%= escape_javascript(render :partial => 'groups/exchange', :locals => {:exchange => @exchange}) %></ul><div style="clear:both;"></div>');
   <%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'offers_canvas'} %>
 <% else %>
-  $('#people_canvas').html('<ul class="list messages full"><%= escape_javascript(render :partial => 'groups/exchange') %></ul><div style="clear:both;"></div>');
+  $('#people_canvas').html('<ul class="list messages full"><%= escape_javascript(render :partial => 'groups/exchange', :locals => {:exchange => @exchange}) %></ul><div style="clear:both;"></div>');
   <%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'people_canvas'} %>
 <% end %>
