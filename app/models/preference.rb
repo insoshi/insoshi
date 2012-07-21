@@ -45,6 +45,7 @@ class Preference < ActiveRecord::Base
                   :disqus_shortname,
                   :default_group_id,
                   :smtp_port
+  attr_accessible *attribute_names, :as => :admin
 
   validates_presence_of :domain,       :if => :using_email?
   validates_presence_of :smtp_server,  :if => :using_email?

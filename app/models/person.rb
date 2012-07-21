@@ -52,7 +52,7 @@ class Person < ActiveRecord::Base
 
 #  attr_accessor :password, :verify_password, :new_password, :password_confirmation
   attr_accessor :sorted_photos, :accept_agreement
-  attr_accessible :admin, :deactivated, :email_verified, :org, :as => :admin
+  attr_accessible *attribute_names, :as => :admin
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications, :forum_notifications,
@@ -120,7 +120,7 @@ class Person < ActiveRecord::Base
     person.has_many :_sent_exchanges, :foreign_key => "customer_id", :class_name => "Exchange"
     person.has_many :_received_exchanges, :foreign_key => "worker_id", :class_name => "Exchange"
   end
-  has_many :exchanges
+  has_many :exchanges, :foreign_key => "worker_id"
   has_many :feeds
   has_many :activities, :through => :feeds, :order => 'activities.created_at DESC',
                                             :limit => FEED_SIZE,

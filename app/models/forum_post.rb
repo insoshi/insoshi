@@ -25,6 +25,7 @@ class ForumPost < Post
 #              :include => [{:association_name => 'topic', :field => 'name'}]
 
   attr_accessible :body
+  attr_accessible *attribute_names, :as => :admin
   
   belongs_to :topic,  :counter_cache => true, :touch => true
   belongs_to :person, :counter_cache => true
