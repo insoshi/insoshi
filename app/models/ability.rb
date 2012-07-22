@@ -7,7 +7,7 @@ class Ability
     end
 
     # need these for rails_admin
-    can :read, Person
+    can [:read,:create], Person
     can :update, Person do |target_person|
       target_person == person || person.admin?
     end

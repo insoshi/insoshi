@@ -53,6 +53,7 @@ class Person < ActiveRecord::Base
 #  attr_accessor :password, :verify_password, :new_password, :password_confirmation
   attr_accessor :sorted_photos, :accept_agreement
   attr_accessible *attribute_names, :as => :admin
+  attr_accessible :password, :password_confirmation, :as => :admin
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
                   :message_notifications, :wall_comment_notifications, :forum_notifications,
