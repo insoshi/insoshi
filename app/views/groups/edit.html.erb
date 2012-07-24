@@ -34,7 +34,7 @@
 
     <div class="form_row">
       <label for="mode"><% t('groups.edit.mode') %></label>
-      <%= f.select :mode, get_groups_modes %>
+      <%= f.select :mode, @group.get_groups_modes %>
     </div>  
     
     <div class="form_row">

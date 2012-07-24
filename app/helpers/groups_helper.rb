@@ -27,16 +27,8 @@ module GroupsHelper
     link_to(content, link, link_options)
   end
   
-  
   def group_link(group)
     link_to(h(group.name), group_path(group))
-  end
-  
-  def get_groups_modes
-    modes = []
-    modes << ["Public",0]
-    modes << ["Membership approval required",1]
-    return modes
   end
   
 end

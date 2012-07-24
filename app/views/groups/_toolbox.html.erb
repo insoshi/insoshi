@@ -35,7 +35,7 @@
                 <%= link_to t('groups.show.delete_it'), group_path(@group), :confirm => t('are_you_sure'), :method => :delete %>
               </li>
               <li>
-                <%= t('groups.show.mode') %> <%= get_groups_modes[@group.mode][0] %>
+                <%= t('groups.show.mode') %> <%= @group.get_groups_modes[@group.mode][0] %>
               </li>
               <% unless @group.asset.nil? %>
               <li>

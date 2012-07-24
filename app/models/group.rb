@@ -1,5 +1,6 @@
 class Group < ActiveRecord::Base
   include ActivityLogger
+  extend PreferencesHelper
   
   validates_presence_of :name, :person_id
   attr_protected :mandatory
@@ -36,6 +37,17 @@ class Group < ActiveRecord::Base
   # GROUP modes
   PUBLIC = 0
   PRIVATE = 1
+  
+  def get_groups_modes
+    modes = []
+    modes << ["Public",PUBLIC]
+    modes << ["Membership approval required",PRIVATE] unless default_group?
+    return modes
+  end
+
+  def default_group?
+    id == Group.global_prefs.default_group_id
+  end
   
   class << self
 
