@@ -59,4 +59,5 @@ group :development, :test do
   gem "guard-spork"
   gem "artifice"
   gem "opentransact"
+  gem "capybara"
 end
