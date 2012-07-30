@@ -1,5 +1,15 @@
 unless Rails.env == 'test'
+require Rails.root.join('lib', 'rails_admin_send_broadcast_email.rb')
 RailsAdmin.config do |config|
+module RailsAdmin
+  module Config
+    module Actions
+      class SendBroadcastEmail < RailsAdmin::Config::Actions::Base
+        RailsAdmin::Config::Actions.register(self)
+      end
+    end
+  end
+end
 
   config.current_user_method { current_person } #auto-generated
   config.authorize_with :cancan
@@ -10,6 +20,16 @@ RailsAdmin.config do |config|
       redirect_to login_url, :alert => "You must first log in or sign up before accessing this page."
     end
   }
+
+  config.actions do
+    dashboard
+    index
+    new
+    send_broadcast_email
+    show
+    edit
+    delete
+  end
 
   config.included_models = [Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood]
 

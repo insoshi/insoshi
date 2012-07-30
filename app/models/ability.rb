@@ -27,7 +27,7 @@ class Ability
     end
 
     can :read, BroadcastEmail
-    can [:create,:update], BroadcastEmail do |broadcast_email|
+    can [:create,:update,:send_broadcast_email], BroadcastEmail do |broadcast_email|
       person.admin?
     end
 

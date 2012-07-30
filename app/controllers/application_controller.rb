@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
         unless @group.nil?
           redirect_to @group
         else
-          redirect_to root_path
+          redirect_to index
         end
       end
       format.js do
