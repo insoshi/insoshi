@@ -48,7 +48,7 @@ module Oscurrency
     # Enable the asset pipeline
     config.assets.enabled = true
 
-    config.assets.precompile += ['bid_form.js','group.js','home.js','login_form.js','offer_form.js','req_edit_form.js','req_new_form.js','signup_form.js','site.js']
+    config.assets.precompile += ['bid_form.js','group.js','home.js','login_form.js','offer_form.js','req_edit_form.js','req_new_form.js','signup_form.js','site.js','rails_admin/rails_admin.css', 'rails_admin/rails_admin.js']
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

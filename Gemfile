@@ -8,7 +8,7 @@ gem 'rails', '3.1.3'
 gem 'pg'
 
 group :assets do
-  gem "sass-rails"
+  gem "sass-rails", '3.1.5'
   gem "uglifier"
 end
 
