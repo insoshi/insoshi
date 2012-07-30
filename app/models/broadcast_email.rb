@@ -16,9 +16,7 @@ class BroadcastEmail < ActiveRecord::Base
     peeps = Person.all_broadcast_email
     peeps.each do |peep|
       logger.info("BroadcaseEmail: sending email to #{peep.id}: #{peep.name}")
-      email = BroadcastMailer.create_spew(peep, subject, message)
-      email.set_content_type("text/html")
-      BroadcastMailer.deliver(email)
+      BroadcastMailer.spew(peep, subject, message).deliver
     end
   end
 
