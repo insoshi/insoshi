@@ -6,6 +6,10 @@ class Ability
       person.admin? && !target_person.admin?
     end
 
+    if person.admin?
+      can :dashboard
+    end
+
     # need these for rails_admin
     can [:read,:create], Person
     can :update, Person do |target_person|
