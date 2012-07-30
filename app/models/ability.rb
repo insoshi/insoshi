@@ -6,6 +6,10 @@ class Ability
       person.admin? && !target_person.admin?
     end
 
+    if person.admin?
+      can :dashboard
+    end
+
     # need these for rails_admin
     can [:read,:create], Person
     can :update, Person do |target_person|
@@ -23,7 +27,7 @@ class Ability
     end
 
     can :read, BroadcastEmail
-    can [:create,:update], BroadcastEmail do |broadcast_email|
+    can [:create,:update,:send_broadcast_email], BroadcastEmail do |broadcast_email|
       person.admin?
     end
 

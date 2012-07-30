@@ -1,1 +1,0 @@
-$(document).ready(function(){$("#sfmenu li ul").css({display:"none",left:"auto"}),$("#sfmenu li").hover(function(){$(this).find("ul").stop(!0,!0).slideDown("fast")},function(){$(this).find("ul").stop(!0,!0).fadeOut("fast")})})

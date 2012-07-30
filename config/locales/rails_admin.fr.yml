@@ -82,6 +82,8 @@ fr:
       deleted: "supprimé(e)"
       export: "export"
       exported: "exporté(e)"
+      send_broadcast_email:
+        menu: "Send Now!"
     breadcrumbs:
       delete: "delete"
       history: "history"

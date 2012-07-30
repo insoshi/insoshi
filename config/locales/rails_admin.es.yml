@@ -82,6 +82,8 @@ es:
       deleted: "borrado"
       export: "exportar"
       exported: "exportado"      
+      send_broadcast_email:
+        menu: "Send Now!"
     breadcrumbs:
       delete: "delete"
       history: "history"

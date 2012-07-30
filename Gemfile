@@ -8,7 +8,7 @@ gem 'rails', '3.1.3'
 gem 'pg'
 
 group :assets do
-  gem "sass-rails"
+  gem "sass-rails", '3.1.5'
   gem "uglifier"
 end
 
@@ -41,7 +41,8 @@ gem "dalli"
 gem "redcarpet", "1.17.2"
 #gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :branch => 'rails-3.0'
 #gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :ref =>'608ae867438f406bcd96'
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+#gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+gem 'rails_admin', "0.0.3"
 gem "delayed_job_active_record"
 
 group :development, :test do
