@@ -48,6 +48,7 @@ class GroupsController < ApplicationController
   end
 
   def new
+    @photo = Photo.new
     respond_to do |format|
       format.html
     end
