@@ -16,7 +16,7 @@ class FeedPostSweeper < ActionController::Caching::Sweeper
   private
   
   def clear_cache
-    logger.info "feed_post cache sweep"
+    #logger.info "cache sweep" # Causes heroku exception
     # for now, just clear everything
     Rails.cache.clear
   end

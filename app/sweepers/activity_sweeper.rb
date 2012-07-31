@@ -13,7 +13,7 @@ class ActivitySweeper < ActionController::Caching::Sweeper
   private
   
     def clear_cache
-      logger.info "cache sweep"
+      #logger.info "cache sweep" # Causes heroku exception
       expire_fragment(:controller => "home", :action => "index",
                       :part => "feed")
     end
