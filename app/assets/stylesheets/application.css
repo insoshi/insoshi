@@ -1,5 +1,5 @@
 /*
-*= require Aristo/jquery-ui-1.8rc3.custom
+*= require_tree ./Aristo
 *= require reset
 *= require typography
 *= require skin

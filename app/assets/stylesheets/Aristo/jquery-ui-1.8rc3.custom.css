@@ -50,11 +50,11 @@
 .ui-widget-header a { color: #ffffff; }
 
 /* === Interaction states === */
-.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #f6f6f6 url(images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #5F83B9; }
+.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #cccccc; background: #f6f6f6 url(./Aristo/images/ui-bg_glass_100_f6f6f6_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #5F83B9; }
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #1c94c4; text-decoration: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #749aaf; background: #fdf5ce url(images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #749aaf; background: #fdf5ce url(./Aristo/images/ui-bg_glass_100_fdf5ce_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #c77405; }
 .ui-state-hover a, .ui-state-hover a:hover { color: #c77405; text-decoration: none; }
-.ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #fbd850; background: #ffffff url(images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #eb8f00; }
+.ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #fbd850; background: #ffffff url(./Aristo/images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x; font-weight: bold; color: #eb8f00; }
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #eb8f00; text-decoration: none; }
 .ui-widget :active { outline: none; }
 
@@ -73,14 +73,14 @@
 /* === Icons === */
 
 /* states and images */
-.ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_222222_256x240.png); }
-.ui-widget-content .ui-icon {background-image: url(images/ui-icons_222222_256x240.png); }
-.ui-widget-header .ui-icon {background-image: url(images/ui-icons_ffffff_256x240.png); }
-.ui-state-default .ui-icon { background-image: url(images/ui-icons_222222_256x240.png); }
-.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(images/ui-icons_222222_256x240.png); }
-.ui-state-active .ui-icon {background-image: url(images/ui-icons_222222_256x240.png); }
-.ui-state-highlight .ui-icon {background-image: url(images/ui-icons_228ef1_256x240.png); }
-.ui-state-error .ui-icon, .ui-state-error-text .ui-icon { background: url(images/icon_sprite.png) -16px 0px no-repeat !important; }
+.ui-icon { width: 16px; height: 16px; background-image: url(./Aristo/images/ui-icons_222222_256x240.png); }
+.ui-widget-content .ui-icon {background-image: url(./Aristo/images/ui-icons_222222_256x240.png); }
+.ui-widget-header .ui-icon {background-image: url(./Aristo/images/ui-icons_ffffff_256x240.png); }
+.ui-state-default .ui-icon { background-image: url(./Aristo/images/ui-icons_222222_256x240.png); }
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(./Aristo/images/ui-icons_222222_256x240.png); }
+.ui-state-active .ui-icon {background-image: url(./Aristo/images/ui-icons_222222_256x240.png); }
+.ui-state-highlight .ui-icon {background-image: url(./Aristo/images/ui-icons_228ef1_256x240.png); }
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon { background: url(./Aristo/images/icon_sprite.png) -16px 0px no-repeat !important; }
 
 /* positioning */
 .ui-icon-carat-1-n { background-position: 0 0; }
@@ -204,7 +204,7 @@
 .ui-icon-video { background-position: -224px -128px; }
 .ui-icon-script { background-position: -240px -128px; }
 .ui-icon-alert { background-position: 0 -144px; }
-.ui-icon-info { background: url(images/icon_sprite.png) 0px 0px no-repeat !important; }
+.ui-icon-info { background: url(./Aristo/images/icon_sprite.png) 0px 0px no-repeat !important; }
 .ui-icon-notice { background-position: -32px -144px; }
 .ui-icon-help { background-position: -48px -144px; }
 .ui-icon-check { background-position: -64px -144px; }
@@ -272,7 +272,7 @@
 
 /* === Overlays === */
 .ui-widget-overlay { background: #222d3f; opacity: .70; filter:Alpha(Opacity=70); }
-.ui-widget-shadow { margin: -5px 0 0 -5px; padding: 5px; background: #000000 url(images/ui-bg_flat_10_000000_40x100.png) 50% 50% repeat-x; opacity: .20;filter:Alpha(Opacity=20); -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
+.ui-widget-shadow { margin: -5px 0 0 -5px; padding: 5px; background: #000000 url(./Aristo/images/ui-bg_flat_10_000000_40x100.png) 50% 50% repeat-x; opacity: .20;filter:Alpha(Opacity=20); -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
 
 /* === Resizable === */
 .ui-resizable { position: relative;}
@@ -289,12 +289,12 @@
 
 /* === Accordion === */
 
-.ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; background: url(images/button_bg.png) repeat-x; }
+.ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; background: url(./Aristo/images/button_bg.png) repeat-x; }
 .ui-accordion .ui-accordion-header .ui-state-default { background-position: 0px 0px; }
 .ui-accordion .ui-accordion-header.ui-state-active { background-position: 0px -33px; border-color: #749aaf !important; }
 .ui-accordion .ui-accordion-header.ui-state-hover, .ui-accordion h3.ui-state-default { border-color: #aaaaaa; }
 .ui-accordion .ui-accordion-header.ui-state-active a { color:#1c4257; }
-.ui-accordion .ui-accordion-header .ui-icon { background: url(images/icon_sprite.png); }
+.ui-accordion .ui-accordion-header .ui-icon { background: url(./Aristo/images/icon_sprite.png); }
 .ui-accordion .ui-accordion-header.ui-state-active .ui-icon { background-position: 0px -64px; }
 .ui-accordion .ui-accordion-header.ui-state-default .ui-icon { background-position: -16px -80px; }
 .ui-accordion .ui-accordion-li-fix { display: inline; }
@@ -354,16 +354,16 @@ button.ui-button-icons-only { width: 3.2em; }
 
 
 /* === INPUT:SUBMIT BUG FIX === */
-input.ui-button { background: url(images/button_bg.png) 0px 0px repeat-x !important; color: #4f4f4f; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border: 1px solid #b6b6b6; outline: none; }
-input.ui-button:hover { background: url(images/button_bg.png) 0px 0px repeat-x !important; color: #313131; border-color: #9d9d9d; -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 0px 0px 8px rgba(212,212,212,1); box-shadow: 0px 0px 8px rgba(212,212,212,1); }
-input.ui-button:active { background: url(images/button_bg.png) 0px bottom repeat-x !important; color: #4f4f4f; border-color: #b6b6b6;  }
+input.ui-button { background: url(./Aristo/images/button_bg.png) 0px 0px repeat-x !important; color: #4f4f4f; -moz-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; border: 1px solid #b6b6b6; outline: none; }
+input.ui-button:hover { background: url(./Aristo/images/button_bg.png) 0px 0px repeat-x !important; color: #313131; border-color: #9d9d9d; -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 0px 0px 8px rgba(212,212,212,1); box-shadow: 0px 0px 8px rgba(212,212,212,1); }
+input.ui-button:active { background: url(./Aristo/images/button_bg.png) 0px bottom repeat-x !important; color: #4f4f4f; border-color: #b6b6b6;  }
 
 /* === IE6 AND IE7 BUTTON WIDTH FIX === */
 .ui-button { *display: inline !important; }
 
-.ui-state-default .ui-button-text { background: url(images/button_bg.png) 0px 0px repeat-x !important; color: #4f4f4f; border-color: #b6b6b6; }
-.ui-state-hover .ui-button-text { background: url(images/button_bg.png) 0px 0px repeat-x !important; color: #313131; border-color: #9d9d9d; -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 0px 0px 8px rgba(212,212,212,1); box-shadow: 0px 0px 8px rgba(212,212,212,1); }
-.ui-state-active .ui-button-text { background: url(images/button_bg.png) 0px bottom repeat-x !important; color: #4f4f4f; border-color: #b6b6b6; }
+.ui-state-default .ui-button-text { background: url(./Aristo/images/button_bg.png) 0px 0px repeat-x !important; color: #4f4f4f; border-color: #b6b6b6; }
+.ui-state-hover .ui-button-text { background: url(./Aristo/images/button_bg.png) 0px 0px repeat-x !important; color: #313131; border-color: #9d9d9d; -moz-box-shadow: 0 0 6px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 0px 0px 8px rgba(212,212,212,1); box-shadow: 0px 0px 8px rgba(212,212,212,1); }
+.ui-state-active .ui-button-text { background: url(./Aristo/images/button_bg.png) 0px bottom repeat-x !important; color: #4f4f4f; border-color: #b6b6b6; }
 
 /*button text element */
 .ui-button .ui-button-text { display: block; line-height: 1.4; font-weight: bold; font-size: 14px; text-shadow: 0px 1px 0px rgba(255,255,255,0.8); }
@@ -387,7 +387,7 @@ input.ui-button { padding: .4em 1em; }
 .ui-buttonset, .ui-buttonset span { -moz-border-radius: 0px !important; -webkit-border-radius: 0px !important; border-radius: 0px !important; }
 .ui-corner-left .ui-button-text { -moz-border-radius-topleft: 4px !important; -webkit-border-top-left-radius: 4px !important; border-top-left-radius: 4px !important; -moz-border-radius-bottomleft: 4px !important; -webkit-border-bottom-left-radius: 4px !important; border-bottom-left-radius: 4px !important; }
 .ui-corner-right .ui-button-text { -moz-border-radius-topright: 4px !important; -webkit-border-top-right-radius: 4px !important; border-top-right-radius: 4px !important; -moz-border-radius-bottomright: 4px !important; -webkit-border-bottom-right-radius: 4px !important; border-bottom-right-radius: 4px !important; }
-.ui-buttonset .ui-state-active .ui-button-text { cursor: default; background: url(images/button_bg.png) 0px -33px repeat-x !important; color: #1c4257; border-color: #7096ab; -moz-box-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; }
+.ui-buttonset .ui-state-active .ui-button-text { cursor: default; background: url(./Aristo/images/button_bg.png) 0px -33px repeat-x !important; color: #1c4257; border-color: #7096ab; -moz-box-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; }
 
 /* workarounds */
 button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
@@ -398,10 +398,10 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 
 /* === Dialog === */
 .ui-dialog { position: absolute; padding: 0; width: 300px; overflow: hidden; background: #FFFFFF; -moz-box-shadow: 0px 5px 8px rgba(0,0,0,0.8); -webkit-box-shadow: 0px 5px 8px rgba(0,0,0,0.8); box-shadow: 0px 5px 8px rgba(0,0,0,0.8); }
-.ui-dialog .ui-dialog-titlebar { padding: .5em 1em .3em; position: relative; border-width: 0px 0px 1px 0px; border-color: #979797; background: url(images/the_gradient.gif) 0px 0px repeat-x; -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; }
+.ui-dialog .ui-dialog-titlebar { padding: .5em 1em .3em; position: relative; border-width: 0px 0px 1px 0px; border-color: #979797; background: url(./Aristo/images/the_gradient.gif) 0px 0px repeat-x; -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; }
 .ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .2em 0; font-size: 13px; color: #000000; text-shadow: 0px 1px 0px rgba(255,255,255,0.8); } 
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: 6px; top: 50%; width: 16px; margin: -9px 0 0 0; height: 16px; }
-.ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; background: url(images/icon_sprite.png) 0px -16px no-repeat; }
+.ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; background: url(./Aristo/images/icon_sprite.png) 0px -16px no-repeat; }
 .ui-dialog-titlebar .ui-state-hover { -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; border: 0px none; background: transparent; }
 .ui-dialog .ui-dialog-titlebar-close.ui-state-hover span { background-position: -16px -16px ; }
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
@@ -414,20 +414,20 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 /* === Slider === */
 .ui-slider { position: relative; text-align: left; border: 0px none; }
 .ui-state-focus .ui-slider-handle { border: 0px none; }
-.ui-slider .ui-slider-handle { background: url(images/slider_handles.png) 0px -23px no-repeat; position: absolute; z-index: 2; width: 23px; height: 23px; cursor: pointer; }
+.ui-slider .ui-slider-handle { background: url(./Aristo/images/slider_handles.png) 0px -23px no-repeat; position: absolute; z-index: 2; width: 23px; height: 23px; cursor: pointer; }
 .ui-slider .ui-state-hover { background-position: 0px 0px !important; }
 .ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; }
 .ui-slider .ui-state-default { border: 0px none; }
 
-.ui-slider-horizontal { height: 5px; background: url(images/slider_h_bg.gif) 0px 0px repeat-x;}
+.ui-slider-horizontal { height: 5px; background: url(./Aristo/images/slider_h_bg.gif) 0px 0px repeat-x;}
 .ui-slider-horizontal .ui-slider-handle { top: -9px; margin-left: -12px; }
-.ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; background: url(images/slider_h_bg.gif) 0px -5px repeat-x; }
+.ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; background: url(./Aristo/images/slider_h_bg.gif) 0px -5px repeat-x; }
 .ui-slider-horizontal .ui-slider-range-min { left: 0; }
 .ui-slider-horizontal .ui-slider-range-max { right: 0; }
 
-.ui-slider-vertical { width: 5px; height: 100px; background: url(images/slider_v_bg.gif) -5px 0px repeat-y; }
+.ui-slider-vertical { width: 5px; height: 100px; background: url(./Aristo/images/slider_v_bg.gif) -5px 0px repeat-y; }
 .ui-slider-vertical .ui-slider-handle { left: -.3em; margin-left: -.6em; margin-bottom: -.6em; }
-.ui-slider-vertical .ui-slider-range { left: 0; width: 100%; background: url(images/slider_v_bg.gif) 0px 0px repeat-y; }
+.ui-slider-vertical .ui-slider-range { left: 0; width: 100%; background: url(./Aristo/images/slider_v_bg.gif) 0px 0px repeat-y; }
 .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
 .ui-slider-vertical .ui-slider-range-max { top: 0; }
 
@@ -443,13 +443,13 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
 .ui-tabs .ui-tabs-panel { display: block; border: 0; padding: 1em 1.4em; background: none; font-size: 12px; border-color: #a8a8a8; border-width: 0px 1px 1px 1px; border-style: solid; -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px;}
 .ui-tabs .ui-tabs-hide { display: none !important; }
-.ui-tabs .ui-tabs-nav li.ui-state-default { background: #cccccc url(images/button_bg.png) 0px 0px repeat-x; border-color: #a8a8a8; }
+.ui-tabs .ui-tabs-nav li.ui-state-default { background: #cccccc url(./Aristo/images/button_bg.png) 0px 0px repeat-x; border-color: #a8a8a8; }
 .ui-tabs .ui-tabs-nav li.ui-state-default a { color: #4f4f4f !important; text-shadow: 0px 1px 0px rgba(255,255,255,0.8); }
 .ui-tabs .ui-tabs-nav li.ui-state-active { background: #FFFFFF; }
 .ui-tabs-panel .ui-button { border-width: 0px; background: transparent; }
 
 /* === Datepicker === */
-.ui-datepicker { width: 17em; padding: .2em .2em 0; background: #FFFFFF url(images/datepicker.gif) left top repeat-x; -moz-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); box-shadow: 0px 5px 10px rgba(0,0,0,0.8); }
+.ui-datepicker { width: 17em; padding: .2em .2em 0; background: #FFFFFF url(./Aristo/images/datepicker.gif) left top repeat-x; -moz-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.8); box-shadow: 0px 5px 10px rgba(0,0,0,0.8); }
 .ui-datepicker .ui-datepicker-header { position:relative; padding:2px 0px 6px 0px; background: transparent; -moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius: 0px; border: 0px none; }
 .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { position:absolute; top: 6px; width: 16px; height: 16px; border: 0px none; cursor: pointer; }
 .ui-datepicker .ui-datepicker-prev { left:2px; }
@@ -459,7 +459,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-datepicker .ui-datepicker-next span { background-position: -16px -32px !important; }
 .ui-datepicker .ui-datepicker-prev-hover span { background-position: 0px -48px !important; }
 .ui-datepicker .ui-datepicker-next-hover span { background-position: -16px -48px !important; }
-.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px; background: url(images/icon_sprite.png) no-repeat;  }
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px; background: url(./Aristo/images/icon_sprite.png) no-repeat;  }
 .ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1.8em; text-align: center; font-size: 12px; color: #000000; text-shadow: 0px 1px 0px rgba(255,255,255,0.8); }
 .ui-datepicker .ui-datepicker-title select { font-size:1em; margin:1px 0; }
 .ui-datepicker select.ui-datepicker-month-year {width: 100%;}
@@ -471,7 +471,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-datepicker td span, .ui-datepicker td a { display: block; padding: 2px 3px 3px; text-align: right; text-decoration: none; }
 .ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
 .ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
-.ui-datepicker-buttonpane  button { background: url(images/button_bg.png) 0px 0px repeat-x !important; color: #4f4f4f !important; border-color: #b6b6b6 !important; font-weight: bold !important; font-size: 12px; text-shadow: 0px 1px 0px rgba(255,255,255,0.8); }
+.ui-datepicker-buttonpane  button { background: url(./Aristo/images/button_bg.png) 0px 0px repeat-x !important; color: #4f4f4f !important; border-color: #b6b6b6 !important; font-weight: bold !important; font-size: 12px; text-shadow: 0px 1px 0px rgba(255,255,255,0.8); }
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
 .ui-datepicker .ui-datepicker-calendar a { background: transparent; border: 0px none; }
 .ui-datepicker .ui-datepicker-calendar .ui-state-active {  }
@@ -517,5 +517,5 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 }
 
 /* === Progressbar === */
-.ui-progressbar { height: 12px; text-align: left; background: url(images/progress_bar.gif) 0px -14px repeat-x; }
-.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; background: url(images/progress_bar.gif) 0px 0px repeat-x; }
+.ui-progressbar { height: 12px; text-align: left; background: url(./Aristo/images/progress_bar.gif) 0px -14px repeat-x; }
+.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; background: url(./Aristo/images/progress_bar.gif) 0px 0px repeat-x; }
