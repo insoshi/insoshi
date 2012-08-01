@@ -41,8 +41,8 @@ module ApplicationHelper
 #      links = [home, profile, contacts, messages, blog, people, forum]
       #events   = menu_element("Events", events_path)
         links = [home, profile, categories, offers, requests, people, messages, groups, forum]
-      # TODO: remove 'unless production?' once events are ready.
-      #links.push(events) #unless production?
+      # TODO: remove 'unless Rails.env.production?' once events are ready.
+      #links.push(events) #unless Rails.env.production?
     else
       #links = [home, people]
       links = [home, categories]

@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 
-  before_filter :in_progress if production?
+  before_filter :in_progress if Rails.env.production?
 #  before_filter :login_required
   before_filter :load_event, :except => [:index, :new, :create]
   before_filter :load_date, :only => [:index, :show]
