@@ -61,7 +61,7 @@
           </p>
         </div>
       </div>
-      <%- if development? -%>
+      <%- if Rails.env.development? -%>
         <div><%= render :partial => 'shared/debug' %></div>
       <%- end -%> 
     </div>

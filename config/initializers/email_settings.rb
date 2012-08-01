@@ -17,7 +17,7 @@ module ActionMailer
 end
 
 begin
-  unless test?
+  unless Rails.env.test?
     global_prefs = Preference.find(:first)
     if global_prefs.email_notifications?
       ActionMailer::Base.delivery_method = :smtp
