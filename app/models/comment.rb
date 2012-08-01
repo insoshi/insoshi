@@ -28,7 +28,7 @@ class Comment < ActiveRecord::Base
   belongs_to :post
   belongs_to :event
 
-  has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Comment'", :dependent => :destroy
+  has_many :activities, :as => :item, :dependent => :destroy
 
   validates_presence_of :body, :commenter
   validates_length_of :body, :maximum => MAX_TEXT_LENGTH

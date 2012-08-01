@@ -37,7 +37,7 @@ class Photo < ActiveRecord::Base
                                   :icon         => '36>',
                                   :bounded_icon => '36x36>' }
   
-  has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Photo'", :dependent => :destroy
+  has_many :activities, :as => :item, :dependent => :destroy
   validate :filename_to_upload_exists_and_images_are_correct_format
     
   after_save :log_activity
