@@ -12,6 +12,8 @@ group :assets do
   gem "uglifier"
 end
 
+gem "audited-activerecord"
+
 gem 'jquery-rails'
 
 #gem "rack", '= 1.2.2'   #Heroku seems to force this
@@ -46,6 +48,7 @@ gem 'rails_admin', "0.0.3"
 gem "delayed_job_active_record"
 
 group :development, :test do
+  gem 'sqlite3'
   gem "silent-postgres"
   gem "test-unit"
 # gem 'ruby-debug19', :require => 'ruby-debug'
