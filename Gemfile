@@ -1,4 +1,6 @@
-source 'http://rubygems.org'
+#!/usr/bin/ruby
+
+source :rubygems
 
 gem 'rails', '3.1.3'
 
@@ -10,6 +12,7 @@ gem 'pg'
 group :assets do
   gem "sass-rails", '3.1.5'
   gem "uglifier"
+  gem 'jquery-ui-rails'
 end
 
 gem 'jquery-rails'
