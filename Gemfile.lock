@@ -297,6 +297,7 @@ DEPENDENCIES
   guard-spork
   heroku
   jquery-rails
+  jquery-ui-rails
   json
   oauth
   oauth-plugin!
