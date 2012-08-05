@@ -3,4 +3,6 @@
 *= require reset
 *= require typography
 *= require skin
+*= require jquery.ui.tabs
+*= require jquery.ui.datepicker
 */
