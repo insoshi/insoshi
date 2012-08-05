@@ -2,7 +2,8 @@
 // This file is automatically included by javascript_include_tag :defaults
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui-1.8.4.custom.min
+//= require jquery.ui.tabs
+//= require jquery.ui.datepicker
 //= require jquery.timeago
 //= require highcharts
 //= require jquery.ba-hashchange.min

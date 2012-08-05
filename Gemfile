@@ -1,4 +1,6 @@
-source 'http://rubygems.org'
+#!/usr/bin/ruby
+
+source :rubygems
 
 gem 'rails', '3.1.3'
 
@@ -10,7 +12,10 @@ gem 'pg'
 group :assets do
   gem "sass-rails", '3.1.5'
   gem "uglifier"
+  gem 'jquery-ui-rails'
 end
+
+gem "audited-activerecord"
 
 gem 'jquery-rails'
 
@@ -43,6 +48,7 @@ gem 'rails_admin'
 gem "delayed_job_active_record"
 
 group :development, :test do
+  gem 'sqlite3'
   gem "silent-postgres"
   gem "test-unit"
 # gem 'ruby-debug19', :require => 'ruby-debug'
