@@ -1,4 +1,3 @@
-<%= javascript_include_tag 'req_edit_form' %>
 <h2><%= t('reqs.edit.header') %></h2>
 <%= form_for @req, :html => {:id => 'edit_req'} do |f| %>
   <%= render :partial => 'form_fields', :locals => {:f => f, :estimate_disabled => true} %>
