@@ -52,6 +52,18 @@ module Oscurrency
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address => "smtp.gmail.com",
+      :port => 587,
+      :authentication => :plain,
+      :domain => ENV['GMAIL_SMTP_USER'],
+      :user_name => ENV['GMAIL_SMTP_USER'],
+      :password => ENV['GMAIL_SMTP_PASSWORD'],
+      :enable_starttls_auto => true
+    }
+
+
     require 'oauth/rack/oauth_filter'
     config.middleware.use OAuth::Rack::OAuthFilter
   end
