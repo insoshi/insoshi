@@ -1,14 +1,15 @@
 begin
   unless Rails.env.test?
-    global_prefs = Preference.find(:first)
+    global_prefs = Preference.first
     if global_prefs.email_notifications?
       ActionMailer::Base.delivery_method = :smtp
-      starttls_auto = 587==global_prefs.smtp_port ? true : false
+      smtp_port = ENV['SMTP_PORT'].to_i || 587
+      starttls_auto = 587==smtp_port ? true : false
       ActionMailer::Base.smtp_settings = {
-        :address    => global_prefs.smtp_server,
-	:port => global_prefs.smtp_port,
+        :address    => ENV['SMTP_SERVER'] || global_prefs.smtp_server, # deprecate email settings in preference object
+	:port => smtp_port,
 	:authentication => :plain,
-        :domain     => global_prefs.domain,
+        :domain     => ENV['SMTP_DOMAIN'] || global_prefs.domain,
         :enable_starttls_auto => starttls_auto,
 	:user_name => ENV['SMTP_USER'] || ENV['GMAIL_SMTP_USER'],
 	:password => ENV['SMTP_PASSWORD'] || ENV['GMAIL_SMTP_PASSWORD']

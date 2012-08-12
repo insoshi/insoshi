@@ -32,7 +32,7 @@
 #
 
 class Preference < ActiveRecord::Base
-  attr_accessible :app_name, :server_name, :domain, :smtp_server, 
+  attr_accessible :app_name, :server_name,
                   :exception_notification, :new_member_notification,
                   :email_notifications, :email_verifications, :analytics,
                   :about, :demo, :whitelist, :gmail,
@@ -43,25 +43,16 @@ class Preference < ActiveRecord::Base
                   :blog_feed_url,
                   :googlemap_api_key,
                   :disqus_shortname,
-                  :default_group_id,
-                  :smtp_port
+                  :default_group_id
   attr_accessible *attribute_names, :as => :admin
 
-  validates_presence_of :domain,       :if => :using_email?
-  validates_presence_of :smtp_server,  :if => :using_email?
   validate :enforce_singleton, :on => :create
 
-  after_initialize :set_default_smtp_port
-  
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
-
-  def set_default_smtp_port
-    self.smtp_port ||= 587
-  end
 
   # Can we send mail with the present configuration?
   def can_send_email?
-    not (domain.blank? or smtp_server.blank?)
+    not (ENV['SMTP_DOMAIN'].blank? or ENV['SMTP_SERVER'].blank?)
   end
 
   def enforce_singleton
