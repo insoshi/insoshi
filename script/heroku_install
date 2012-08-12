@@ -17,7 +17,7 @@ unless APP_CONFIG['AMAZON_ACCESS_KEY_ID'] && APP_CONFIG['AMAZON_SECRET_ACCESS_KE
 end
 
 heroku_client = Heroku::Client.new(APP_CONFIG['HEROKU_USER'], APP_CONFIG['HEROKU_PASSWORD'])
-app_name = heroku_client.create(nil,{:stack => 'bamboo-mri-1.9.2'})
+app_name = heroku_client.create
 puts "app_name: #{app_name}"
 `git remote add heroku git@heroku.com:#{app_name}.git`
 

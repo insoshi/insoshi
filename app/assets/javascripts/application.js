@@ -8,3 +8,12 @@
 //= require highcharts
 //= require jquery.ba-hashchange.min
 //= require jquery.linkify-1.0-min
+//= require bid_form.js
+//= require group.js
+//= require home.js
+//= require login_form.js
+//= require offer_form.js
+//= require req_edit_form.js
+//= require req_new_form.js
+//= require signup_form.js
+//= require site.js

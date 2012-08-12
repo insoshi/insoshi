@@ -47,11 +47,22 @@ module Oscurrency
 
     # Enable the asset pipeline
     config.assets.enabled = true
-
-    config.assets.precompile += ['bid_form.js','group.js','home.js','login_form.js','offer_form.js','req_edit_form.js','req_new_form.js','signup_form.js','site.js','rails_admin/rails_admin.css', 'rails_admin/rails_admin.js']
+    config.assets.initialize_on_precompile = false
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address => "smtp.gmail.com",
+      :port => 587,
+      :authentication => :plain,
+      :domain => ENV['GMAIL_SMTP_USER'],
+      :user_name => ENV['GMAIL_SMTP_USER'],
+      :password => ENV['GMAIL_SMTP_PASSWORD'],
+      :enable_starttls_auto => true
+    }
+
 
     require 'oauth/rack/oauth_filter'
     config.middleware.use OAuth::Rack::OAuthFilter
