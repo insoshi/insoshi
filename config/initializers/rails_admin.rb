@@ -40,7 +40,6 @@ end
 
     edit do
       field :app_name
-#      field :domain
       field :server_name
       field :default_group_id do
         properties[:collection] = Group.all.map {|g| [g.name,g.id]}

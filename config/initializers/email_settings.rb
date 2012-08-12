@@ -6,10 +6,10 @@ begin
       smtp_port = ENV['SMTP_PORT'].to_i || 587
       starttls_auto = 587==smtp_port ? true : false
       ActionMailer::Base.smtp_settings = {
-        :address    => ENV['SMTP_SERVER'] || global_prefs.smtp_server, # deprecate email settings in preference object
+        :address    => ENV['SMTP_SERVER'],
 	:port => smtp_port,
 	:authentication => :plain,
-        :domain     => ENV['SMTP_DOMAIN'] || global_prefs.domain,
+        :domain     => ENV['SMTP_DOMAIN'],
         :enable_starttls_auto => starttls_auto,
 	:user_name => ENV['SMTP_USER'] || ENV['GMAIL_SMTP_USER'],
 	:password => ENV['SMTP_PASSWORD'] || ENV['GMAIL_SMTP_PASSWORD']
