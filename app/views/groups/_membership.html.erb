@@ -6,7 +6,9 @@
   <li class="add_to_memberships <%= @membership_display %>">
     <%= t('groups.show.you_are_a_member_of') %> <strong><%= h @group.name%></strong>
     <br />
-    (<%= link_to t('groups.show.leave_group'),membership_path(Membership.mem(current_person, @group)), {:id => 'leave_group'} %>) 
+    <% unless @group.default_group? %>
+      (<%= link_to t('groups.show.leave_group'),membership_path(Membership.mem(current_person, @group)), {:id => 'leave_group'} %>) 
+    <% end %>
   </li>
   <%= waiting_image %>
 </span>
