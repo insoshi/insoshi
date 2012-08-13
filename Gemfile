@@ -8,6 +8,7 @@ gem 'rails', '3.1.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+gem 'thin'
 
 group :assets do
   gem "sass-rails", '3.1.5'
