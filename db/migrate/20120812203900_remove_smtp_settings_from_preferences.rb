@@ -6,5 +6,8 @@ class RemoveSmtpSettingsFromPreferences < ActiveRecord::Migration
   end
 
   def down
+    add_column :preferences, :smtp_port, :integer
+    add_column :preferences, :smtp_server, :string, :null => false, :default => ""
+    add_column :preferences, :domain, :string, :null => false, :default => ""
   end
 end
