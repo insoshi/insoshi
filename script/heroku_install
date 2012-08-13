@@ -9,15 +9,13 @@ require 'heroku/command/apps'
 require 'heroku/command/run'
 
 APP_CONFIG = YAML.load_file("config/config.yml")
-DOMAIN = 'heroku.com'
-SMTP_SERVER = 'smtp.gmail.com'
 
 unless APP_CONFIG['AMAZON_ACCESS_KEY_ID'] && APP_CONFIG['AMAZON_SECRET_ACCESS_KEY']
   raise "you need to set amazon s3 environment variables"
 end
 
 heroku_client = Heroku::Client.new(APP_CONFIG['HEROKU_USER'], APP_CONFIG['HEROKU_PASSWORD'])
-app_name = heroku_client.create(nil,{:stack => 'bamboo-mri-1.9.2'})
+app_name = heroku_client.create
 puts "app_name: #{app_name}"
 `git remote add heroku git@heroku.com:#{app_name}.git`
 
@@ -31,18 +29,20 @@ AWS::S3::Bucket.create(app_name)
 `heroku config:add BUNDLE_WITHOUT="development:test"`
 `heroku config:add AMAZON_ACCESS_KEY_ID=#{APP_CONFIG['AMAZON_ACCESS_KEY_ID']}`
 `heroku config:add AMAZON_SECRET_ACCESS_KEY=#{APP_CONFIG['AMAZON_SECRET_ACCESS_KEY']}`
-`heroku config:add GMAIL_SMTP_USER=#{APP_CONFIG['GMAIL_SMTP_USER']}`
-`heroku config:add GMAIL_SMTP_PASSWORD=#{APP_CONFIG['GMAIL_SMTP_PASSWORD']}`
+`heroku config:add SMTP_DOMAIN=#{APP_CONFIG['SMTP_DOMAIN']}`
+`heroku config:add SMTP_SERVER=#{APP_CONFIG['SMTP_SERVER']}`
+`heroku config:add SMTP_PORT=#{APP_CONFIG['SMTP_PORT']}`
+`heroku config:add SMTP_USER=#{APP_CONFIG['SMTP_USER']}`
+`heroku config:add SMTP_PASSWORD=#{APP_CONFIG['SMTP_PASSWORD']}`
 `heroku config:add S3_BUCKET_NAME=#{app_name}`
 `heroku config:add HEROKU_USER=#{APP_CONFIG['HEROKU_USER']}`
 `heroku config:add HEROKU_PASSWORD=#{APP_CONFIG['HEROKU_PASSWORD']}`
 
-# default values of preference object will be set to these.  preference overrides ENV
+# default values of preference object will be set to these.
 `heroku config:add APP_NAME=#{app_name}`
-`heroku config:add DOMAIN=#{DOMAIN}`
-`heroku config:add SERVER_NAME=#{app_name + '.' + DOMAIN}`
-`heroku config:add SMTP_SERVER=#{SMTP_SERVER}`
+`heroku config:add SERVER_NAME=#{app_name + '.' + 'herokuapp.com'}`
 
 `git push heroku rails31:master`
-`heroku rake db:migrate`
-`heroku rake install`
+`heroku run rake db:migrate`
+`heroku run rake install`
+`heroku run rake db:seed`

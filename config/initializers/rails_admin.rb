@@ -40,13 +40,8 @@ end
 
     edit do
       field :app_name
-      field :domain
       field :server_name
-      field :smtp_server
-      field :smtp_port do
-        properties[:collection] = [['587','587'],['25','25']]
-        partial "select"
-      end
+      field :groups
       field :default_group_id do
         properties[:collection] = Group.all.map {|g| [g.name,g.id]}
         partial "select"

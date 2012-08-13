@@ -18,7 +18,7 @@ class Connection < ActiveRecord::Base
   
   belongs_to :person
   belongs_to :contact, :class_name => "Person", :foreign_key => "contact_id"
-  has_many :activities, :foreign_key => "item_id", :conditions => "item_type = 'Connection'", :dependent => :destroy
+  has_many :activities, :as => :item, :dependent => :destroy
   validates_presence_of :person_id, :contact_id
   
   # Status codes.

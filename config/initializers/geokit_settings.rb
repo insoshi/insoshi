@@ -1,5 +1,5 @@
 begin
-  unless test?
+  unless Rails.env.test?
     global_prefs = Preference.find(:first)
     GeoKit::Geocoders::google = global_prefs.googlemap_api_key
 

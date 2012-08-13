@@ -1,4 +1,6 @@
-source 'http://rubygems.org'
+#!/usr/bin/ruby
+
+source :rubygems
 
 gem 'rails', '3.1.3'
 
@@ -6,11 +8,15 @@ gem 'rails', '3.1.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
+gem 'thin'
 
 group :assets do
   gem "sass-rails", '3.1.5'
   gem "uglifier"
+  gem 'jquery-ui-rails'
 end
+
+gem "audited-activerecord"
 
 gem 'jquery-rails'
 
@@ -39,13 +45,11 @@ gem "oauth-plugin", :path => "#{File.expand_path(__FILE__)}/../vendor/gems/oauth
 gem "cancan"
 gem "dalli"
 gem "redcarpet", "1.17.2"
-#gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :branch => 'rails-3.0'
-#gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git', :ref =>'608ae867438f406bcd96'
-#gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
-gem 'rails_admin', "0.0.3"
+gem 'rails_admin'
 gem "delayed_job_active_record"
 
 group :development, :test do
+  gem 'sqlite3'
   gem "silent-postgres"
   gem "test-unit"
 # gem 'ruby-debug19', :require => 'ruby-debug'

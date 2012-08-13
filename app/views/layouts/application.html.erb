@@ -46,11 +46,13 @@
           <%- if logged_in? -%>
             <ul id="sfmenu">
               <li class="left_item">
+              <% if global_prefs.groups %>
                 <a href="#"><%= t('home.menu.your_groups') %></a>
                 <ul>
                   <%= render :partial => 'shared/membership', :collection => current_person.memberships.all(:include => 'group', :order => 'groups.name ASC') %>
                   <li><%= link_to t('home.menu.more_groups'), groups_path, :id => 'moregroups' %></li>
                 </ul>
+              <% end %>
               </li>
               <li class="middle_item">
                 <a href="#"><%= t('home.menu.help') %></a>
@@ -100,7 +102,7 @@
           </p>
         </div>
       </div>
-      <%- if development? -%>
+      <%- if Rails.env.development? -%>
         <div><%= render :partial => 'shared/debug' %></div>
       <%- end -%> 
     </div>

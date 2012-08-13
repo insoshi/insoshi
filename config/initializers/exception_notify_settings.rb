@@ -1,5 +1,5 @@
 begin
-  unless test?
+  unless Rails.env.test?
     global_prefs = Preference.find(:first)
     if global_prefs.exception_notification?
       if global_prefs.domain?

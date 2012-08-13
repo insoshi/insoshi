@@ -13,7 +13,7 @@ end
 # In some cases autotest interprets the initialization of the UUID generator
 # as something new, and so just keeps running the tests.
 # This stub here fixes the problem.
-unless test?
+unless Rails.env.test?
   require 'uuid'
 else
   class UUID

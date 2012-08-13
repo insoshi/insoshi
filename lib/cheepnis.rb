@@ -28,13 +28,14 @@ module Cheepnis
         start
         # and enqueue something that calls maybe_stop, at low priortity
         terminator = Terminator.new
-        Delayed::Job.enqueue(terminator, 100)    
+        Delayed::Job.enqueue(terminator)    
+      else
       end
     end
   end
 
   def self.on_heroku
-    ENV["HEROKU_UPID"] != nil
+    Rails.env.production?
   end
 
   def self.get_client
@@ -46,14 +47,14 @@ module Cheepnis
     info = heroku.info(ENV['APP_NAME'])
     workers = info[:workers].to_i
     if workers == 0
-      heroku.set_workers(ENV['APP_NAME'], 1)
+      heroku.ps_scale(ENV['APP_NAME'], :type => 'worker', :qty => 1)
       Rails.logger.info('worker started')
     end
   end
 
   def self.stop
     heroku = get_client
-    heroku.set_workers(ENV['APP_NAME'], 0)
+    heroku.ps_scale(ENV['APP_NAME'], :type => 'worker', :qty => 0)
     Rails.logger.info('worker stopped')
   end
 
