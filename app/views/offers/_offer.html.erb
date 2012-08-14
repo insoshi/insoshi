@@ -13,7 +13,7 @@
   </p>
     <%= display formatted_offer_categories(offer.long_categories), :class => "meta" %>
   <p>
-    <%= markdown(offer.description) %>
+    <%= markdown((full rescue false) ? offer.description : first_n_words(offer.description)) %>
   </p>
   <p class="meta">
   <%= t('offers.partial.available_count') %>: <%= offer.available_count %>
