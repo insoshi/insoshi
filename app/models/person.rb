@@ -325,14 +325,10 @@ class Person < ActiveRecord::Base
   end
 
   def trashed_messages(page = 1)
-    conditions = [%((sender_id = :person AND sender_deleted_at > :t) OR
-                    (recipient_id = :person AND recipient_deleted_at > :t)),
-                  { :person => id, :t => TRASH_TIME_AGO }]
-    order = 'created_at DESC'
-    trashed = Message.paginate(:all, :conditions => conditions,
-                                     :order => order,
-                                     :page => page,
-                                     :per_page => MESSAGES_PER_PAGE)
+    conditions = [%((sender_id = ? AND sender_deleted_at > ?) OR (recipient_id = ? AND recipient_deleted_at > ?)),
+                  id, TRASH_TIME_AGO, id, TRASH_TIME_AGO]
+
+    trashed = Message.where(conditions).paginate(:page => page, :per_page => MESSAGES_PER_PAGE).order('created_at DESC')
   end
 
   def recent_messages
