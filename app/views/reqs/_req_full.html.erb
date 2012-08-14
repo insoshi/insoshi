@@ -1,6 +1,6 @@
   <h2><%= h @req.name %><%= waiting_image %></h2>
   <ul class="list full">
-    <%= render :partial => @req %>
+    <%= render :partial => @req, :locals => {:full => true} %>
   </ul>
   <% if @req.active? %>
     <%= render :partial => '/reqs/bids' %>

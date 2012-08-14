@@ -191,6 +191,10 @@ module ApplicationHelper
     str << link_to_unless_current(action, path, opts)
   end
 
+  def first_n_words(s, n=20)
+    s[/(\s*\S+){,#{n}}/]
+  end
+
   # Return a formatting note (depends on the presence of a Markdown library)
   def formatting_note
     if markdown?
