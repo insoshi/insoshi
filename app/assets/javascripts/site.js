@@ -14,4 +14,7 @@ $(document).ready(function(){
       .stop(true,true)
       .fadeOut('fast');
   });
+
+  // Style all submit buttons for UI consistency
+  $('[type="submit"]').not('.button').addClass('button');
 });
