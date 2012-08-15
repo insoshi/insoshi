@@ -51,18 +51,20 @@ gem "delayed_job_active_record"
 group :development, :test do
   gem 'sqlite3'
   gem "silent-postgres"
-  gem "test-unit"
-# gem 'ruby-debug19', :require => 'ruby-debug'
-  gem "rspec-rails" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
   gem "rack"
   gem "rack-test"
-  gem "database_cleaner"
-  gem "cucumber"
-  gem "cucumber-rails"
   gem "awesome_print"
-  gem "spork"
-  gem "guard-spork"
   gem "artifice"
   gem "opentransact"
+end
+
+group :test do
   gem "capybara"
+  gem "cucumber"
+  gem "cucumber-rails"
+  gem "database_cleaner"
+  gem "guard-spork"
+  gem "rspec-rails" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
+  gem "spork"
+  gem "test-unit"
 end
