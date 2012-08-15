@@ -8,7 +8,7 @@ gem 'rails', '3.1.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-gem 'thin'
+gem "unicorn"
 
 group :assets do
   gem "sass-rails", '3.1.5'
@@ -28,7 +28,6 @@ gem "chronic"
 gem "feed-normalizer"
 gem "texticle", "1.0.4.20101004123327"
 
-gem "eventmachine"
 gem "aws-s3"
 gem "rmagick", :require => 'RMagick'
 gem "rack-openid"
