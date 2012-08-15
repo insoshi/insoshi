@@ -17,4 +17,7 @@ $(document).ready(function(){
 
   // Style all submit buttons for UI consistency
   $('input[type=submit]').not('.button').addClass('button');
+  // $('#tabs').bind('tabsshow', function(event, ui) {
+  //   $('#tabs').find('input[type=submit]').addClass('button')
+  // });
 });

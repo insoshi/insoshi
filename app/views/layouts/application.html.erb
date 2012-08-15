@@ -13,7 +13,7 @@
     <%= yield :jquery_support %>
     <%= yield :head %>    
   </head>
-  <body class="<%= @body %>">
+  <body class="<%= @body || controller_name %>">
     <div id="header-wrap">
       <div id="header">
         <h1>
