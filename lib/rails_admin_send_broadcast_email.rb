@@ -23,7 +23,7 @@ module RailsAdmin
         register_instance_option :controller do
           Proc.new do
             @object.update_attribute(:sent, true)
-            Cheepnis.enqueue(@object)
+            BROADCAST_EMAIL_QUEUE.push(:id => @object.id)
             flash[:notice] = "Sending #{object.subject}."
             redirect_to back_or_index
           end

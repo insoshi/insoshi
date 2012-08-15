@@ -10,6 +10,7 @@ gem 'rails', '3.1.3'
 gem 'pg'
 gem "unicorn"
 gem "newrelic_rpm"
+gem "girl_friday"
 
 group :assets do
   gem "sass-rails", '3.1.5'
@@ -46,7 +47,6 @@ gem "cancan"
 gem "dalli"
 gem "redcarpet", "1.17.2"
 gem 'rails_admin'
-gem "delayed_job_active_record"
 
 group :development, :test do
   gem 'sqlite3'
