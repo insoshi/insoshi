@@ -3,7 +3,12 @@ require 'active_record/fixtures'
 
 desc "Install Insoshi"
 task :install => :environment do |t|
-  Rake::Task["db:migrate"].invoke
+  Rake::Task["db:schema:load"].invoke
+  begin
+    Rake::Task["db:full_text_index"].invoke
+  rescue
+    puts "An error happened while installing the full text index: #{$!}."
+  end
   using_email = !!(ENV['SMTP_DOMAIN'] && ENV['SMTP_SERVER']) # explicit true
   pref = Preference.first || Preference.create!(:app_name => (ENV['APP_NAME'] || "APP_NAME is Blank"), :server_name => ENV['SERVER_NAME'], :smtp_server => ENV['SMTP_SERVER'] || '', :email_notifications => using_email) 
   p = Person.new(:name => "admin", :email => "admin@example.com", :password => "admin", :password_confirmation => "admin", :description => "")

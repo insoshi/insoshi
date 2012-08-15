@@ -10,7 +10,6 @@ tmp/profile*
 *.swp
 doc/api
 doc/app
-db/schema.rb
 db/schema.sql
 db/*.sqlite3*
 config/database.yml
