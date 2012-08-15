@@ -273,7 +273,7 @@ $(function() {
     return false;
     });
 
-  $('.pagination a').live('click',function() {
+  $('body.groups .pagination a').live('click',function() {
     str = url2hash(this.href);
     // XXX hack until hash is renamed to match
     str = str.replace(/memberships/,'people');
