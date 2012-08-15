@@ -9,6 +9,7 @@ gem 'rails', '3.1.3'
 
 gem 'pg'
 gem "unicorn"
+gem "newrelic_rpm"
 
 group :assets do
   gem "sass-rails", '3.1.5'
