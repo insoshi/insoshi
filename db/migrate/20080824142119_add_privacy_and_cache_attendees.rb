@@ -1,7 +1,7 @@
 class AddPrivacyAndCacheAttendees < ActiveRecord::Migration
   def self.up
     add_column :events, :event_attendees_count, :integer, :default => 0
-    add_column :events, :privacy, :integer, :null => false
+    add_column :events, :privacy, :integer, :null => false, :default => 2
   end
 
   def self.down
