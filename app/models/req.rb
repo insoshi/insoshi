@@ -164,6 +164,6 @@ class Req < ActiveRecord::Base
   end
 
   def send_req_notifications
-    Cheepnis.enqueue(self)
+    REQ_QUEUE.push(:id => self.id)
   end
 end

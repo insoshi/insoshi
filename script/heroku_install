@@ -41,6 +41,9 @@ AWS::S3::Bucket.create(app_name)
 # default values of preference object will be set to these.
 `heroku config:add APP_NAME=#{app_name}`
 `heroku config:add SERVER_NAME=#{app_name + '.' + 'herokuapp.com'}`
+`heroku addons:add newrelic:standard`
+`heroku addons:add memcache:5mb`
+`heroku addons:add sendgrid:starter`
 
 `git push heroku rails31:master`
 `heroku run rake db:migrate`
