@@ -1,5 +1,5 @@
 /*
-*= require_tree ../../../vendor/assets/stylesheets
+*= require vendor
 *= require reset
 *= require typography
 *= require skin
