@@ -31,7 +31,8 @@ class Group < ActiveRecord::Base
   before_update :update_member_credit_limits
   
   index do 
-    name description
+    name 
+    description
   end
   
   # GROUP modes

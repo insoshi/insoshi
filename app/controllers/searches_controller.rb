@@ -17,10 +17,10 @@ class SearchesController < ApplicationController
     end
 
     if query.blank?
-      @results = []
+      @results,@page_results = []
     else
       klass = model.constantize
-      @results = klass.search(query)
+      @results = klass.search(query).all
       @page_results = @results.paginate(:page=> page, :per_page => 10)
     end
   end

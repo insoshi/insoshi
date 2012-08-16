@@ -6,9 +6,9 @@ module SearchesHelper
     return "Req"       if params[:controller] =~ /reqs/
     return "Offer"     if params[:controller] =~ /offers/
     return "Category"  if params[:controller] =~ /categories/
-    return "Person"    if params[:controller] =~ /people/
     return "ForumPost" if params[:controller] =~ /forums/
-    return "Group"    if params[:controller] =~ /groups/ or params[:action] =~ /groups/
+    return "Group"     if params[:controller] =~ /groups/ or params[:action] =~ /groups/
+    return "Person"    if params[:controller] =~ /people/ # Needs to be last
     params[:model] || params[:controller].classify
   end
   
