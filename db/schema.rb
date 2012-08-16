@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(:version => 20120813083612) do
     t.string   "county_id"
     t.integer  "state_id"
     t.string   "zipcode_plus_4", :limit => 10
-    t.decimal  "latitude"
-    t.decimal  "longitude"
+    t.decimal  "latitude",                     :precision => 12, :scale => 8
+    t.decimal  "longitude",                    :precision => 12, :scale => 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -257,7 +257,7 @@ ActiveRecord::Schema.define(:version => 20120813083612) do
   create_table "exchanges", :force => true do |t|
     t.integer  "customer_id"
     t.integer  "worker_id"
-    t.decimal  "amount",        :default => 0.0
+    t.decimal  "amount",        :precision => 8, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
@@ -537,7 +537,7 @@ ActiveRecord::Schema.define(:version => 20120813083612) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 5
+    t.integer  "year",       :limit => 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -547,15 +547,15 @@ ActiveRecord::Schema.define(:version => 20120813083612) do
   create_table "reqs", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.decimal  "estimated_hours", :default => 0.0
+    t.decimal  "estimated_hours", :precision => 8, :scale => 2, :default => 0.0
     t.datetime "due_date"
     t.integer  "person_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "biddable",        :default => true
-    t.boolean  "notifications",   :default => false
+    t.boolean  "biddable",                                      :default => true
+    t.boolean  "notifications",                                 :default => false
     t.integer  "group_id"
-    t.boolean  "active",          :default => false
+    t.boolean  "active",                                        :default => false
   end
 
   create_table "states", :force => true do |t|
