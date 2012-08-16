@@ -3,7 +3,7 @@ class PersonMailer < ActionMailer::Base
   helper :application
 
   def domain
-    @domain ||= ENV['SMTP_DOMAIN']
+    @domain ||= (ENV['SMTP_DOMAIN'] || ENV['DOMAIN'])
   end
   
   def server

@@ -15,7 +15,7 @@ class BroadcastMailer < ActionMailer::Base
 private
 
     def domain
-      @domain ||= ENV['SMTP_DOMAIN']
+      @domain ||= (ENV['SMTP_DOMAIN'] || ENV['DOMAIN'])
     end
 
     def server
