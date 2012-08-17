@@ -31,7 +31,53 @@ end
     delete
   end
 
-  config.included_models = [Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood]
+  config.included_models = [Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood,Req,Offer]
+
+  config.model Req do
+    label "Request" 
+    label_plural "Requests"
+    list do
+      field :name
+      field :person do
+        label "requested by"
+        formatted_value do
+          value.name
+        end
+      end
+      field :created_at
+    end
+
+    edit do
+      field :name
+      field :estimated_hours
+      field :due_date, :date
+      field :description
+      field :categories
+      field :neighborhoods
+    end
+  end
+
+  config.model Offer do
+    list do
+      field :name
+      field :person do
+        label "offered by"
+        formatted_value do
+          value.name
+        end
+      end
+      field :created_at
+    end
+
+    edit do
+      field :name
+      field :total_available
+      field :expiration_date, :date
+      field :description
+      field :categories
+      field :neighborhoods
+    end
+  end
 
   config.model Preference do
     list do

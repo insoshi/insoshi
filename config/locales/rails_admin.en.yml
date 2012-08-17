@@ -82,6 +82,8 @@ en:
       update: "update"
       updated: "updated"
       delete: "delete"
+      delete:
+        menu: "Delete"
       deleted: "deleted"
       export: "export"
       exported: "exported"
