@@ -49,6 +49,7 @@ end
       field :blog_feed_url
       field :exception_notification
       field :new_member_notification
+      field :user_walls_enabled
       field :googlemap_api_key
       field :disqus_shortname
       field :gmail
