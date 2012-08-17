@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
   before_filter :login_required
   before_filter :get_instance_vars
   before_filter :authorize_destroy, :only => [:destroy]
+  before_filter :wall_enabled_check, :only => [:new, :create]
 
   def index
     redirect_to comments_url
@@ -51,6 +52,13 @@ class CommentsController < ApplicationController
   end
   
   private
+
+    def wall_enabled_check
+      if wall? && !global_prefs.user_walls_enabled?
+        flash[:error] = t('error_invalid_action')
+        redirect_to comments_url
+      end
+    end
   
     def get_instance_vars
       if wall?

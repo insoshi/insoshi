@@ -73,10 +73,11 @@
     <%- end -%>
     <%= markdown(@person.description) %>
   </div>
-
-  <div id="wall_canvas">
-    <%= render :partial => '/shared/wall' %>
-  </div>
+  <%- if global_prefs.user_walls_enabled? -%>
+    <div id="wall_canvas">
+      <%= render :partial => '/shared/wall' %>
+    </div>
+  <%- end %>
   <%- if @membership.group.adhoc_currency? -%>
     <%= render :partial => '/shared/recent_exchanges', :locals => {:group => @account.group} %>
   <%- end -%>
