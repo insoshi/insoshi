@@ -3,13 +3,16 @@ begin
     global_prefs = Preference.first
     if global_prefs.email_notifications?
       ActionMailer::Base.delivery_method = :smtp
+      smtp_port = ENV['SMTP_PORT'] ? ENV['SMTP_PORT'].to_i : 587
+      starttls_auto = 587==smtp_port ? true : false
       ActionMailer::Base.smtp_settings = {
-        :address        => 'smtp.sendgrid.net',
-        :port           => '587',
+        :address        => ENV['SMTP_SERVER'] || 'smtp.sendgrid.net',
+        :port           => smtp_port,
         :authentication => :plain,
-        :user_name      => ENV['SENDGRID_USERNAME'],
-        :password       => ENV['SENDGRID_PASSWORD'],
-        :domain         => 'heroku.com'
+        :enable_starttls_auto => starttls_auto,
+        :user_name      => ENV['SMTP_USER'] || ENV['SENDGRID_USERNAME'],
+        :password       => ENV['SMTP_PASSWORD'] || ENV['SENDGRID_PASSWORD'],
+        :domain         => ENV['SMTP_DOMAIN'] || 'herokuapp.com'
       }
       ActionMailer::Base.default_url_options[:host] = global_prefs.server_name
     end
