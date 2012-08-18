@@ -1,6 +1,4 @@
-FORUM_POST_QUEUE = GirlFriday::WorkQueue.new(:forum_post, :size => 1) do |msg|
-  ForumPost.find(msg[:id]).perform
-end
+FORUM_POST_QUEUE = ForumPostQueue
 
 REQ_QUEUE = GirlFriday::WorkQueue.new(:req, :size => 1) do |msg|
   Req.find(msg[:id]).perform
