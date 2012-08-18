@@ -37,7 +37,7 @@ class ForumPost < Post
   after_create :send_forum_notifications
 
   def send_forum_notifications
-    FORUM_POST_QUEUE.push(:id => self.id)
+    ForumPostQueue.push(:id => self.id)
   end
   
   def perform

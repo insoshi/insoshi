@@ -134,7 +134,7 @@ class Req < ActiveRecord::Base
       workers.uniq!
       workers.each do |worker|
         if worker.active?
-          PersonMailer.deliver_req_notification(self, worker) if worker.connection_notifications?
+          PersonMailer.req_notification(self, worker).deliver if worker.connection_notifications?
         end
       end
     end
@@ -164,6 +164,6 @@ class Req < ActiveRecord::Base
   end
 
   def send_req_notifications
-    REQ_QUEUE.push(:id => self.id)
+    ReqQueue.push(:id => self.id)
   end
 end
