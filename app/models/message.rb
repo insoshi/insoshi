@@ -28,7 +28,6 @@ class Message < Communication
   index do
     subject
     content
-    recipient_id
   end
     
 
