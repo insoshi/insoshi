@@ -49,6 +49,7 @@ en:
   event: "event"
   active: "Active"
   all: "All"
+  cancelled: "cancelled"
 
   oauth:
     authorize:

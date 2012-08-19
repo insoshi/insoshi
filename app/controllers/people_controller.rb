@@ -124,6 +124,12 @@ class PeopleController < ApplicationController
   end
 
   def update
+    if cancel?
+      flash[:notice] = "#{CGI.escapeHTML @person.name} " + t('cancelled')
+      redirect_to person_path(@person)
+      return
+    end
+
     unless(params[:task].blank?)
       @person.toggle!(params[:task])
       if 'deactivated' == params[:task]
@@ -137,15 +143,12 @@ class PeopleController < ApplicationController
     case params[:type]
     when 'info_edit'
       respond_to do |format|
-        if !preview? and @person.update_attributes(params[:person])
+        if @person.update_attributes(params[:person])
           flash[:success] = t('success_profile_updated')
           format.html { redirect_to(@person) }
         else
           @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-          if preview?
-            @preview = @person.description = params[:person][:description]
-          end
           format.html { render :action => "edit" }
         end
       end
@@ -245,7 +248,7 @@ class PeopleController < ApplicationController
       end
     end
 
-    def preview?
-      params["commit"] == "Preview"
+    def cancel?
+      params["commit"] == t('button_cancel');
     end
 end

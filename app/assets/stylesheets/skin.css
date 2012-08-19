@@ -705,3 +705,6 @@ button::-moz-focus-inner,
       background: -moz-linear-gradient(top, #7ab330, #94ce48);
       filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7ab330', endColorstr='#94ce48');
       color: #d7e8c0; }
+    .button#cancel {
+    background: #ff0000;
+    }

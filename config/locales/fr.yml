@@ -49,6 +49,7 @@ fr:
   event: "event"
   active: "Actif"
   all: "Tous les"
+  cancelled: "cancelled"
 
   datetime:
     distance_in_words:

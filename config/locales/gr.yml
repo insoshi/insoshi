@@ -50,6 +50,7 @@ gr:
   event: "γεγονός"
   active: "ενεργός"
   all: "όλα"
+  cancelled: "cancelled"
 
   datetime:
     distance_in_words:
