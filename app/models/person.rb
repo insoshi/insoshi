@@ -71,6 +71,8 @@ class Person < ActiveRecord::Base
     description
   end
 
+  scope :active, :conditions => {:active => true}
+  scope :connection_notifications, :conditions => {:connection_notifications => true}
   #is_indexed :fields => [ 'name', 'description', 'deactivated',
   #                        'email_verified'],
   #           :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
@@ -487,12 +489,12 @@ class Person < ActiveRecord::Base
 
   def deliver_password_reset_instructions!
     reset_perishable_token!
-    PersonMailer.password_reset_instructions(self).deliver
+    after_transaction { PersonMailerQueue.password_reset_instructions(self) }
   end
 
   def deliver_email_verification!
     reset_perishable_token!
-    PersonMailer.email_verification(self).deliver
+    after_transaction { PersonMailerQueue.email_verification(self) }
   end
 
   protected

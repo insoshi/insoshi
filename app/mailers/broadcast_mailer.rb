@@ -1,15 +1,19 @@
 class BroadcastMailer < ActionMailer::Base
-  extend PreferencesHelper 
-  
+  extend PreferencesHelper
+  include CoreHelper
+
   def spew(person, subject, message, sent_at = Time.now)
+    person = coerce(person, Person)
+    message = coerce(message, Message)
     @message = message
     @person = person
     @preferences_note = preferences_note(person)
 
-    mail(:to => person.email,
-         :from => "Community Exchange Notes <notes@#{domain}>",
-         :subject => formatted_subject(subject)
-        )
+    mail(
+      :to => person.email,
+      :from => "Community Exchange Notes <notes@#{domain}>",
+      :subject => formatted_subject(subject)
+    )
   end
 
 private

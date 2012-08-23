@@ -37,19 +37,11 @@ class ForumPost < Post
   after_create :send_forum_notifications
 
   def send_forum_notifications
-    ForumPostQueue.push(:id => self.id)
-  end
-  
-  def perform
-    do_send_forum_notifications
-  end
-
-  def do_send_forum_notifications
     peeps = topic.forum.group.memberships.listening.map {|m| m.person}
-    
-    peeps.each do |peep|
-      logger.info("forum_post: sending email to #{peep.id}: #{peep.name}")
-      PersonMailer.forum_post_notification(peep, self).deliver
+    after_transaction do
+      peeps.each do |peep|
+        PersonMailerQueue.forum_post_notification(peep, self)
+      end
     end
   end
 

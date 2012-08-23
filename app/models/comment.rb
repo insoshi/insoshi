@@ -87,7 +87,7 @@ class Comment < ActiveRecord::Base
       if wall_comment?
         @send_mail ||= Comment.global_prefs.email_notifications? &&
                        commented_person.wall_comment_notifications?
-        PersonMailer.wall_comment_notification(self).deliver if @send_mail
+        after_transaction { PersonMailerQueue.wall_comment_notification(self) } if @send_mail
       end
     end
 end

@@ -29,6 +29,7 @@ class Req < ActiveRecord::Base
   scope :search_by, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
 
   has_and_belongs_to_many :categories
+  has_many :workers, :through => :categories, :source => :people
   has_and_belongs_to_many :neighborhoods
   belongs_to :person
   belongs_to :group
@@ -120,24 +121,12 @@ class Req < ActiveRecord::Base
     end
   end
 
-  def perform
-    workers = []
-    # even though pseudo-reqs created by direct payments do not have associated categories, let's
-    # be extra cautious and check for the active property as well
-    #
-    if self.active? && Req.global_prefs.can_send_email? && Req.global_prefs.email_notifications?
-      self.categories.each do |category|
-        workers << category.people
-      end
+  def notifiable_workers
+    workers.active.connection_notifications
+  end
 
-      workers.flatten!
-      workers.uniq!
-      workers.each do |worker|
-        if worker.active?
-          PersonMailer.req_notification(self, worker).deliver if worker.connection_notifications?
-        end
-      end
-    end
+  def should_send_notifications?
+    active and Req.global_prefs.can_send_email? and Req.global_prefs.email_notifications?
   end
 
   private
@@ -164,6 +153,12 @@ class Req < ActiveRecord::Base
   end
 
   def send_req_notifications
-    ReqQueue.push(:id => self.id)
+    # even though pseudo-reqs created by direct payments do not have associated categories, let's
+    # be extra cautious and check for the active property as well
+    #
+    notifiable_workers.each do |worker|
+      after_transaction { PersonMailerQueue.req_notification(self, worker) }
+    end if should_send_notifications?
   end
+
 end

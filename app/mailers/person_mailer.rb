@@ -1,6 +1,7 @@
 class PersonMailer < ActionMailer::Base
   extend PreferencesHelper
   helper :application
+  include CoreHelper
 
   def domain
     @domain ||= (ENV['SMTP_DOMAIN'] || ENV['DOMAIN'])
@@ -11,6 +12,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def password_reset_instructions(person)
+    person = coerce(person, Person)
     @edit_password_reset_url = edit_password_reset_url(person.perishable_token)
     mail(:to => person.email,
          :from => "Password reset <password_reset@#{domain}>",
@@ -19,6 +21,7 @@ class PersonMailer < ActionMailer::Base
   end
 
   def message_notification(message)
+    message = coerce(message, Message)
     @message = message
     @server = server
     @preferences_note = preferences_note(message.recipient)
@@ -27,8 +30,9 @@ class PersonMailer < ActionMailer::Base
          :subject => formatted_subject(message.subject)
         )
   end
-  
+
   def membership_public_group(membership)
+    membership = coerce(membership, Membership)
     @membership = membership
     @server = server
     @url = members_group_path(membership.group)
@@ -40,6 +44,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def membership_request(membership)
+    membership = coerce(membership, Membership)
     @membership = membership
     @server = server
     @url = members_group_path(membership.group)
@@ -51,6 +56,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def membership_accepted(membership)
+    membership = coerce(membership, Membership)
     @membership = membership
     @server = server
     @url = group_path(membership.group)
@@ -62,6 +68,7 @@ class PersonMailer < ActionMailer::Base
   end
   
   def wall_comment_notification(comment)
+    comment = coerce(comment, Comment)
     @comment = comment
     @server = server
     @url = person_path(comment.commentable, :anchor => "wall")
@@ -74,9 +81,11 @@ class PersonMailer < ActionMailer::Base
   end
   
   def forum_post_notification(subscriber, forum_post)
+    subscriber = coerce(subscriber, Person)
+    forum_post = coerce(forum_post, ForumPost)
     @forum_post = forum_post
     @server = server
-    @preferences_note = forum_preferences_note(subscriber,forum_post.topic.forum.group)
+    @preferences_note = forum_preferences_note(subscriber, forum_post.topic.forum.group)
 
     mail(:to => subscriber.email,
          :from => "#{forum_post.person.name} <forum@#{domain}>",
@@ -85,6 +94,7 @@ class PersonMailer < ActionMailer::Base
   end
 
   def email_verification(person)
+    person = coerce(person, Person)
     @server_name = server
     @code = person.perishable_token
     mail(:to => "#{person.name} <#{person.email}>", 
@@ -94,6 +104,7 @@ class PersonMailer < ActionMailer::Base
   end
 
   def registration_notification(person)
+    person = coerce(person, Person)
     @server_name = server
     @person = person
 
@@ -105,6 +116,8 @@ class PersonMailer < ActionMailer::Base
   end
 
   def req_notification(req, recipient)
+    req = coerce(req, Req)
+    recipient = coerce(recipient, Person)
     @req = req
     mail(:to => recipient.email,
          :from => "Request notification <request@#{domain}>",
