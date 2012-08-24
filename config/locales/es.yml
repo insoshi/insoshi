@@ -39,14 +39,12 @@ es:
   for: "para"
   said: "dicho"
   reply_on: "contestado en"
-  wall: "pared"
   see_all: "Ver todo"
   by: "por"
   to: "a"
   from: "de"
   in: "dans"
   or: "or"
-  event: "event"
   active: "Activo"
   all: "Todos"
   cancelled: "cancelled"
@@ -98,14 +96,6 @@ es:
     form:
       name: "Nombre"
       parent_category: "Primera Categoría"
-
-  comments:
-    event_new:
-      header: "Comentario sobre el evento"
-      leave_a_comment: "Dejar un comentario"
-    wall_new:
-      header: "Mural de comentarios"
-      leave_a_comment: "Dejar un comentario"
 
   forums:
     show:
@@ -191,7 +181,6 @@ es:
 
   home:
     menu:
-      blog: "Blog"
       skillbank: "Skillbank"
       about: "About"
       practice: "Practice"
@@ -214,10 +203,6 @@ es:
       tab_graphs: "Gráficos"
       unread_messages: "Tienes mensajes no abiertos en tu buzon."
       see_your_messages: "Entrar aqui  para ver sus mensajes"
-    show:
-      header: "blog"
-    _blog:
-      header: "blog"
     _dashboard:
       bids: "Tus solicitudes y ofertas de trabajo"
       no_active_bids: "No hay ofertas vigentes"
@@ -244,8 +229,6 @@ es:
       requests_membership_for: "Peticiones de membresía"
       view_group: "Visite el grupo"
       view_profile: "Vea su perfil"
-    _secondary_column:
-      header: "Sistema de blog"
 
   offers:
     partial:
@@ -284,7 +267,6 @@ es:
       email_notification_note: "Recibiras notificaciónes via email por cada evento que marques."
       requests_in_my_service_categories: "Peticiones en mi categoria de servicios:"
       messages: "Mensajes:"
-      wall_comments: "Pared de comentarios:"
       forum_posts: "Foro publicaciones:"
       broadcast_emails: "Newsletter:"
       photos: "Fotos"
@@ -496,8 +478,6 @@ es:
       have_connected: "have connected"
       commented: "made a comment"
       forum_post: "forum post"
-      blog_post: "blog post"
-      new_blog_post: "new blog post"
       new_discussion_topic: "new discussion topic"
       made_post_on_forum_topic: "made a post on the forum topic"
       hours_for: "hours for"
@@ -506,17 +486,13 @@ es:
       created_the_group: "created the group"
       joined_the_group: "joined the group"
       has_created_a_new: "has created a new"
-      is_attending: "is attending"
       offer_created: "has created a new offer"
       req_created: "has created a new request"
-      event_created: "has created a new event"
     transact:
       for: "por"
     multiple_select_label: "For multiple selection in the list below, press and hold Ctrl key (or Command for Mac users)"
 
   person_mailer:
-    blog_comment_notification:
-      new: "You have a new comment on your blog from"
     connection_request:
       new: "You have a new connection request from"
     email_verification:
@@ -542,8 +518,6 @@ es:
       matches_a_skill_category_you_have: "matches a skill category you have"
       description: "Description"
       requested_by: "Requested by"
-    wall_comment_notification:
-      new: "You have a new comment on your wall from"
     _footer:
       thankyou: "Thank you for supporting open source software."
 
@@ -663,14 +637,10 @@ es:
   notice_bid_removed: "Bid was removed."
   notice_category_updated: "Category was successfully updated."
   notice_forum_updated: "Forum was successfully updated."
-  notice_event_updated: "Event was successfully updated."
-  notice_you_are_attending_this_event: "You are attending this event."
-  notice_you_are_not_attending: "You are not attending this event."
   notice_in_progress: "Work on this feature is in progress."
   notice_group_updated: "Group was successfully updated."
   notice_invite_contacts: "You have invite some of your contacts to"
   notice_upload_canceled: "You have canceled the upload"
-  notice_blog_updated: "Blog updated"
   notice_entries: "entries."
   notice_you_have_joined: "You have joined "
   notice_membership_request_sent: "Membership request sent!"
@@ -701,7 +671,6 @@ es:
   success_category_created: "Category was successfully created."
   success_comment_created: "Comment was successfully created."
   success_comment_deleted: "Comment deleted"
-  success_event_created: "Event was successfully created."
   success_credit_transfer_succeeded: "Credit transfer succeeded."
   success_payment_suspended: "Payment suspended."
   success_group_created: "Group was successfully created."
@@ -748,14 +717,11 @@ es:
   error_default_password: "Warning: your password is still the default."
   error_creating_bid: "Error creating bid."
   error_category_authorization: "Authorization required to edit category"
-  error_you_can_only_attend_once: "You can only attend once."
-  error_you_are_not_attending: "You are not attending this event."
   error_offer_person_mismatch: "Specified offer does not match person"
   error_with_credit_transfer: "Error with credit transfer."
   error_with_suspension: "Error with suspension of payment."
   error_no_contacts: "You have no contacts or you have invited all of them"
   error_browser_upload_fail: "Your browser doesn't appear to support file uploading"
-  error_blog_update: "Blog update failed."
   error_connection_invalid: "Invalid connection."
   error_invalid_or_expired_membership: "Invalid or expired membership request"
   error_invalid_action: "Invalid action"

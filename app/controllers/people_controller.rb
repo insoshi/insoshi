@@ -67,7 +67,7 @@ class PeopleController < ApplicationController
       respond_to do |format|
         if result
           if global_prefs.can_send_email? && !global_prefs.new_member_notification.blank?
-            PersonMailer.registration_notification(@person).deliver
+            after_transaction { PersonMailerQueue.registration_notification(@person) }
           end
           if global_prefs.email_verifications?
             @person.deliver_email_verification!

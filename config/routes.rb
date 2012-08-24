@@ -44,13 +44,6 @@ Oscurrency::Application.routes.draw do
 
   resources :offers
   resources :categories
-  resources :events do
-    member do
-      get :attend
-      get :unattend
-    end
-    resources :comments
-  end
 
   resources :memberships do
     member do
@@ -88,16 +81,9 @@ Oscurrency::Application.routes.draw do
     resources :addresses
     resources :photos
     resources :connections
-    resources :comments
   end
 
   match 'people/verify/:id' => 'people#verify_email'
-
-  resources :blogs do
-    resources :posts do
-      resources :comments
-    end
-  end
 
   resources :forums do
     resources :topics do

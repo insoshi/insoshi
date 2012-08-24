@@ -4,9 +4,6 @@
   <%- else -%>
   <h2><%= t('home.show.header').capitalize %></h2>
   <%- end -%>
-  <ul class="list blog full">
-    <%= render :partial => 'posts/blog_post', :locals => { :blog_post => @post } %>
-  </ul>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   /**

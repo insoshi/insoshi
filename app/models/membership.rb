@@ -105,14 +105,14 @@ class Membership < ActiveRecord::Base
             create(:person => person, :group => group, :status => PENDING)
             if send_mail
               membership = person.memberships.find(:first, :conditions => ['group_id = ?',group])
-              PersonMailer.membership_request(membership).deliver
+              after_transaction { PersonMailerQueue.membership_request(membership) }
             end
           end
           if group.public?
             Membership.accept(person,group)
             if send_mail
               membership = person.memberships.find(:first, :conditions => ['group_id = ?',group])
-              PersonMailer.membership_public_group(membership).deliver
+              after_transaction { PersonMailerQueue.membership_public_group(membership) }
             end
           end
         end

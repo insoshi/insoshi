@@ -39,7 +39,7 @@ RSpec.configure do |config|
   # Custom matchers includes
   config.include(CustomModelMatchers)
 
-  config.global_fixtures = :blogs, :client_applications, :comments, :communications, :conversations, :events, :feeds, :forums, :neighborhoods, :oauth_nonces, :oauth_tokens, :offers, :people, :posts, :preferences, :topics
+  config.global_fixtures = :client_applications, :comments, :communications, :conversations, :feeds, :forums, :neighborhoods, :oauth_nonces, :oauth_tokens, :offers, :people, :posts, :preferences, :topics
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

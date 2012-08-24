@@ -165,10 +165,14 @@ class Message < Communication
       #self.recipient.save!
     end
     
-    def send_receipt_reminder
-      return if sender == recipient
-      @send_mail ||= Message.global_prefs && Message.global_prefs.email_notifications? &&
+    def send_mail?
+      @send_mail ||= Message.global_prefs and
+                     Message.global_prefs.email_notifications? and
                      recipient.message_notifications?
-      PersonMailer.message_notification(self).deliver if @send_mail
+    end
+
+    def send_receipt_reminder
+      return if sender == recipient or not send_mail?
+      after_transaction { PersonMailerQueue.message_notification(self) }
     end
 end

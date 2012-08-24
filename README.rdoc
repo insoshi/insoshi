@@ -49,6 +49,9 @@ You should update the email address and password.
 
 To see site preferences such as email settings, click on the "Admin view" and the click on "Prefs" in the menu.  Click the "Edit" link to customize the preferences for your particular site.
 
+== Online Chat
+
+Aug 23, 2012 5pmeast/ 11pm Spain - Skype - rails31 issue list - contact herestomwiththeweather@skype
 == License
 
 See the file LICENSE.

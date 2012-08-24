@@ -4,29 +4,6 @@ module ActivitiesHelper
   def feed_message(activity)
     person = activity.person
     case activity_type(activity)
-    when "BlogPost"
-      post = activity.item
-      blog = post.blog
-      view_blog = blog_link("View #{h person.name}'s blog", blog)
-      %(#{person_link(person)} #{t('shared.minifeed.made_a')} #{t('shared.minifeed.blog_post')}: 
-      #{post_link(blog, post)}.<br /> #{view_blog}.).html_safe
-    when "Comment"
-      parent = activity.item.commentable
-      parent_type = parent.class.to_s
-      case parent_type
-      when "BlogPost"
-        post = activity.item.commentable
-        blog = post.blog
-        %(#{person_link(person)} #{t('shared.minifeed.commented')} #{t('to')} #{someones(blog.person, person)}
-         #{t('shared.minifeed.blog_post')} #{post_link(blog, post)}.).html_safe
-      when "Person"
-        %(#{person_link(activity.item.commenter)} #{t('shared.minifeed.commented')} #{t('on')} #{wall(activity)}.).html_safe
-      when "Event"
-        event = activity.item.commentable
-        commenter = activity.item.commenter
-        %(#{person_link(commenter)} #{t('shared.minifeed.commented')} #{t('on')} #{someones(event.person, commenter)} 
-         #{t('event')}: #{event_link(event.title, event)}.).html_safe
-      end
     when "Connection"
       %(#{person_link(activity.item.person)} #{t('and')} #{person_link(activity.item.contact)} 
       #{t('shared.minifeed.have_connected')}.).html_safe
@@ -44,13 +21,6 @@ module ActivitiesHelper
       %(#{person_link(person)} #{t('shared.minifeed.created_the_group')} '#{group_link(Group.find(activity.item))}').html_safe
     when "Membership"
       %(#{person_link(person)} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}').html_safe
-    when "Event"
-      event = activity.item
-      %(#{person_link(person)} #{t('shared.minifeed.event_created')}: #{event_link(event.title, event)}.).html_safe
-    when "EventAttendee"
-      event = activity.item.event
-      %(#{person_link(person)} #{t('shared.minifeed.is_attending')} #{someones(event.person, person)} #{t('event')}: 
-        #{event_link(event.title, event)}.).html_safe
     when "Req"
       req = activity.item
       %(#{person_link(person)} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.).html_safe
@@ -69,26 +39,6 @@ module ActivitiesHelper
   def minifeed_message(activity)
     person = activity.person
     case activity_type(activity)
-    when "BlogPost"
-      post = activity.item
-      blog = post.blog
-      %(#{h person.name} #{t('shared.minifeed.made_a')} #{post_link(t('shared.minifeed.new_blog_post'), blog, post)}.).html_safe
-    when "Comment"
-      parent = activity.item.commentable
-      parent_type = parent.class.to_s
-      case parent_type
-      when "BlogPost"
-        post = activity.item.commentable
-        blog = post.blog
-        %(#{h person.name} #{t('shared.minifeed.commented')} #{t('on')} 
-        #{someones(blog.person, person)} #{post_link(t('shared.minifeed.blog_post'), post.blog, post)}.).html_safe
-      when "Person"
-        %(#{h activity.item.commenter.name} #{t('shared.minifeed.commented')} #{t('on')} #{wall(activity)}.).html_safe
-      when "Event"
-        event = activity.item.commentable
-        %(#{h activity.item.commenter.name} #{t('shared.minifeed.commented')} #{t('on')}
-        #{someones(event.person, activity.item.commenter)} #{event_link(t('event'), event)}.).html_safe
-      end
     when "Connection"
       raw %(#{h person.name} #{t('and')} #{h activity.item.contact.name} #{t('shared.minifeed.have_connected')}.).html_safe
     when "ForumPost"
@@ -104,11 +54,6 @@ module ActivitiesHelper
       %(#{h person.name} #{t('shared.minifeed.created_the_group')} '#{group_link(Group.find(activity.item))}').html_safe
     when "Membership"
       %(#{h person.name} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}').html_safe
-    when "Event"
-      %(#{h person.name}s #{t('shared.minifeed.has_created_a_new')} #{event_link(t('event'), activity.item)}.).html_safe
-    when "EventAttendee"
-      event = activity.item.event
-      %(#{h person.name} #{t('shared.minifeed.is_attending')} #{someones(event.person, person)} #{event_link(t('event'), event)}.).html_safe
     when "Req"
       req = activity.item
       %(#{h person.name} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.).html_safe
@@ -127,18 +72,6 @@ module ActivitiesHelper
   # Given an activity, return the right icon.
   def feed_icon(activity)
     img = case activity_type(activity)
-            when "BlogPost"
-              "blog.gif"
-            when "Comment"
-              parent_type = activity.item.commentable.class.to_s
-              case parent_type
-              when "BlogPost"
-                "comment.gif"
-              when "Event"
-                "comment.gif"
-              when "Person"
-                "signal.gif"
-              end
             when "Connection"
               "switch.gif"
             when "ForumPost"
@@ -153,10 +86,6 @@ module ActivitiesHelper
               "new.gif"
             when "Membership"
               "add.gif"
-            when "Event"
-              "time.gif"
-            when "EventAttendee"
-              "check.gif"
             when "Req"
               "new.gif"
             when "Offer"
@@ -173,29 +102,12 @@ module ActivitiesHelper
     link ? "#{person_link(person)}'s" : "#{h person.name}'s"
   end
   
-  def blog_link(text, blog)
-    link_to(h(text), blog_path(blog))
-  end
-  
-  def post_link(text, blog, post = nil)
-    if post.nil?
-      post = blog
-      blog = text
-      text = post.title
-    end
-    link_to(h(text), blog_post_path(blog, post))
-  end
-  
   def topic_link(text, topic = nil)
     if topic.nil?
       topic = text              # Eh?  This makes no sense...
       text = topic.name
     end
     link_to(h(text), forum_topic_path(topic.forum, topic), :class => "show-follow")
-  end
-
-  def event_link(text, event)
-    link_to(h(text), event_path(event))
   end
 
   def metadata_link(metadata)
@@ -216,14 +128,6 @@ module ActivitiesHelper
     link_to(h(text), offer_path(offer), :class => "show-follow")
   end
 
-  # Return a link to the wall.
-  def wall(activity)
-    commenter = activity.person
-    person = activity.item.commentable
-    link_to("#{h someones(person, commenter, false)} wall",
-            person_path(person, :anchor => "wall"))
-  end
-  
   private
   
     # Return the type of activity.

@@ -40,6 +40,8 @@ GEM
     activesupport (3.1.3)
       multi_json (~> 1.0)
     addressable (2.3.2)
+    ar_after_transaction (0.2.4)
+      activerecord
     arel (2.2.3)
     artifice (0.6)
       rack-test
@@ -288,6 +290,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
+  ar_after_transaction
   artifice
   audited-activerecord
   authlogic

@@ -1,9 +1,6 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'home' } %>
 <%= column_div :type => :primary do -%>
   <%= tabs_for do |tab| %>
-    <% tab.create('blog',t('home.menu.blog')) do %>
-      <%= render :partial => 'blog' %>
-    <% end unless global_prefs.about.blank? %>
     <% tab.create('skillbank',t('home.menu.skillbank')) do %>
       <%= render :partial => 'categories' %>
     <% end %>

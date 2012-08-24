@@ -68,13 +68,6 @@
                  class="checkbox"><%= t('people.edit.messages') %></label>
           <%= f.check_box :message_notifications %>
           </p>
-          <%- if global_prefs.user_walls_enabled? -%>
-            <p>
-            <label for="wall_comment_notifications"
-                   class="checkbox"><%= t('people.edit.wall_comments') %></label>
-            <%= f.check_box :wall_comment_notifications %>
-            </p>
-          <%- end %>
           <p>
           <label for="broadcast_emails"
                  class="checkbox"><%= t('people.edit.broadcast_emails') %></label>

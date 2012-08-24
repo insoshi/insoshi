@@ -23,7 +23,7 @@ module RailsAdmin
         register_instance_option :controller do
           Proc.new do
             @object.update_attribute(:sent, true)
-            BroadcastEmailQueue.push(:id => @object.id)
+            @object.spew
             flash[:notice] = "Sending #{object.subject}."
             redirect_to back_or_index
           end

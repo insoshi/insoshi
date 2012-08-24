@@ -15,7 +15,6 @@ namespace :db do
       make_connections
       make_messages(@lipsum)
       make_forum_posts
-      make_blog_posts
       make_feed
       puts "Completed loading sample data."
     end
@@ -97,17 +96,6 @@ def make_forum_posts
       topic.posts.unsafe_create(:body => @lipsum, :person => people.pick,
                          :created_at => rand(10).hours.ago)
     end
-  end
-end
-
-def make_blog_posts
-  3.times do
-    default_person.blog.posts.unsafe_create!(:title => some_text(rand(25)),
-      :body => some_text(rand(MEDIUM_TEXT_LENGTH)))
-  end
-  default_person.contacts.each do |contact|
-    contact.blog.posts.unsafe_create!(:title => some_text(rand(25)),
-      :body => some_text(rand(MEDIUM_TEXT_LENGTH)))
   end
 end
 

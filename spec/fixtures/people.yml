@@ -11,8 +11,6 @@ quentin:
   deactivated: false
   connection_notifications: true
   message_notifications: true
-  wall_comment_notifications: true
-  blog_comment_notifications: true
   email_verified: true
 
 aaron:
@@ -27,8 +25,6 @@ aaron:
   deactivated: false
   connection_notifications: true
   message_notifications: true
-  wall_comment_notifications: true
-  blog_comment_notifications: true
   email_verified: true
 
 buzzard:
@@ -43,8 +39,6 @@ buzzard:
   deactivated: false
   connection_notifications: true
   message_notifications: true
-  wall_comment_notifications: true
-  blog_comment_notifications: true
   email_verified: true
 
 kelly:
@@ -59,8 +53,6 @@ kelly:
   deactivated: false
   connection_notifications: true
   message_notifications: true
-  wall_comment_notifications: true
-  blog_comment_notifications: true
   
 admin:
   email: admin@example.com
@@ -75,8 +67,6 @@ admin:
   deactivated: false
   connection_notifications: true
   message_notifications: true
-  wall_comment_notifications: true
-  blog_comment_notifications: true
 
 deactivated:
   email: deactivated@example.com

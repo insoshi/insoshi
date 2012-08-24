@@ -24,6 +24,6 @@ class EmailVerification < ActiveRecord::Base
     end
     
     def send_verification_email
-      PersonMailer.deliver_email_verification(self)
+      after_transaction { PersonMailerQueue.email_verification(self) }
     end
 end
