@@ -67,6 +67,7 @@ Oscurrency::Application.routes.draw do
     collection do
       get :sent
       get :trash
+      get :recipients
     end
     member do
       get :reply

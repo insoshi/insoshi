@@ -4,6 +4,7 @@
 //= require jquery_ujs
 //= require jquery.ui.tabs
 //= require jquery.ui.datepicker
+//= require jquery.ui.autocomplete
 //= require jquery.timeago
 //= require highcharts
 //= require jquery.ba-hashchange.min
@@ -12,6 +13,7 @@
 //= require group.js
 //= require home.js
 //= require login_form.js
+//= require messages.js
 //= require offer_form.js
 //= require req_edit_form.js
 //= require req_new_form.js

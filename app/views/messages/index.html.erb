@@ -17,4 +17,5 @@
 
 <%= column_div :type => :secondary do -%>
   <%= render :partial => 'searches/box' %>
+  <%= render :partial => 'shared/add_button', :locals => { :button_text => t('messages.new.new_message'), :new_resource_path => new_message_path } %>
 <%- end -%>

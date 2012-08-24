@@ -28,6 +28,19 @@ class MessagesController < ApplicationController
     end    
   end
 
+  # GET /messages/recipients
+  # Used to autocomplete recipient name in messages
+  def recipients
+    unless params[:term].blank? || params[:term].length < 2
+      @recipients = Person.select('id, name').where("lower(name) like ?", "#{params[:term].downcase}%").limit(params[:limit] || 50)
+    else
+      @recipients = []
+    end
+    respond_to do |format|
+      format.json { render :json => @recipients.collect{|p| p.as_json(:methods => [:icon,:to_param], :only=>[:id, :name, :icon])} }
+    end 
+  end
+
   def show
     @message.mark_as_read if current_person?(@message.recipient)
     respond_to do |format|
@@ -37,7 +50,7 @@ class MessagesController < ApplicationController
 
   def new    
     @message = Message.new
-    @recipient = Person.find(params[:person_id])
+    @recipient = Person.find(params[:person_id]) if params[:person_id]
 
     respond_to do |format|
       format.html
@@ -61,7 +74,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(params[:message])
-    @recipient = Person.find(params[:person_id])
+    @recipient = Person.find(params[:person_id]) if params[:person_id]
     @message.sender    = current_person
     @message.recipient = @recipient
     if reply?

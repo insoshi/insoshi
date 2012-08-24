@@ -8,17 +8,17 @@
     <%= display @preview %>
   <%- end -%>
   
-  <%= image_link @recipient, :image => :thumbnail %>
+  <%- if @recipient -%>
+    <%= image_link @recipient, :image => :thumbnail, :id => 'recipient_avatar' %>
+  <%- else -%>
+    <%= link_to image_tag('default_thumbnail.png'), '#', :id => 'recipient_avatar' %>
+  <%- end -%>
 
   <%= form_for(:message,
-              :url => person_messages_path(@recipient), :html => {:id => 'new_message'}) do |f| %>
+              :url => (@recipient ? person_messages_path(@recipient) : messages_path(@message)), :html => {:id => 'new_message'}) do |f| %>
     <div class="form_row full">
       <label for="recipient"><%= t('to').mb_chars.capitalize %></label>
-      <%= text_field_tag :recipient, h(@recipient.name) %>
-      <!-- TODO: be able to change recipients with this
-      <a href="#" class="add-recipient">
-        <%= image_tag "icons/add.gif", :alt => "Add a recipient" %>
-      </a> -->
+      <%= text_field_tag :recipient, (@recipient ? h(@recipient.name) : ''), :id => 'recipient_autocomplete', :class => 'recipient_autocomplete', :placeholder => t('messages.new.to.placeholder') %>
     </div>
     <div class="form_row full">
       <label for="message_subject"><%= t('messages.show.subject') %></label>

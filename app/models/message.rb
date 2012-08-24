@@ -46,7 +46,7 @@ class Message < Communication
   belongs_to :recipient, :class_name => 'Person',
                          :foreign_key => 'recipient_id'
   belongs_to :conversation
-  validates_presence_of :subject, :content
+  validates_presence_of :subject, :content, :recipient
   validates_length_of :subject, :maximum => 80
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 

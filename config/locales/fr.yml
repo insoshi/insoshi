@@ -488,6 +488,9 @@ fr:
       header: "New message"
       preview: "Message preview"
       body: "Your message"
+      to:
+        placeholder: "Type recipient's name..."
+      new_message: "Compose New Message"
     show:
       subject: "Subject"
       sent: "Sent"
