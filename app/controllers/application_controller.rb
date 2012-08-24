@@ -144,8 +144,7 @@ class ApplicationController < ActionController::Base
           redirect_to logout_url
         end
         # last_logged_in_at actually captures site activity, so update it now.
-        current_person.last_logged_in_at = Time.now
-        current_person.save
+        current_person.touch :last_logged_in_at
       end
     end
     

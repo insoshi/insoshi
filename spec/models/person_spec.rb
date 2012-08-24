@@ -119,16 +119,6 @@ describe Person do
     it "should not currently have any photos" do
       @person.photos.should be_empty
     end
-
-    it "should have an associated blog on creation" do
-      person = create_person(:save => true)
-      person.blog.should_not be_nil
-    end
-
-    it "should have many wall comments" do
-      @person.comments.should be_a_kind_of(Array)
-      @person.comments.should_not be_empty
-    end
   end
 
   describe "photo methods" do

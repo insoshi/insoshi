@@ -72,15 +72,11 @@ def make_demo_activities
                  :content => "The message content.",
                  :sender => people.rand,
                  :recipient => person)
-  person.comments.create(:body => "A wall comment!",
-                         :commenter => people.rand)
   forum = Forum.find(:first)
   topic = forum.topics.create(:name => "A forum topic",
                               :person => people.rand)
   topic.posts.create(:body => "This is the post body.",
                      :person => people.rand)
-  people.rand.blog.posts.create(:title => "A blog post",
-                                :body => "This is a blog post!")
 end
 
 def default_demo_person

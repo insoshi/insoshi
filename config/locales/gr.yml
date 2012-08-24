@@ -39,7 +39,6 @@ gr:
   for: "για"
   said: "είπε"
   reply_on: "απάντηση προς"
-  wall: "τοίχος"
   see_all: "Προβολή όλων"
   by: "από"
   to: "προς"
@@ -47,7 +46,6 @@ gr:
   in: "σε"
   or: "ή"
   hours: "ώρες"
-  event: "γεγονός"
   active: "ενεργός"
   all: "όλα"
   cancelled: "cancelled"
@@ -212,14 +210,6 @@ gr:
       name: "¨Ονομα"
       parent_category: "Γενική Κατηγορία"
 
-  comments:
-    event_new:
-      header: "Σχόλιο γεγονότος"
-      leave_a_comment: "Κάνε σχόλιο"
-    wall_new:
-      header: "Σχόλιο τοίχου"
-      leave_a_comment: "Κάνε σχόλιο"
-
   forums:
     show:
       header: "Θέματα Συζήτησης"
@@ -304,7 +294,6 @@ gr:
 
   home:
     menu:
-      blog: "Blog"
       skillbank: "Υπηρεσίες"
       about: "Σχετικά"
       practice: "Εξάσκηση"
@@ -328,9 +317,6 @@ gr:
       unread_messages: "Έχετε μη αναγνωσμένη αλληλογραφία."
       see_your_messages: "Πατήστε εδώ για να δείτε τα μηνύματα σας"
     show:
-      header: "blog"
-    _blog:
-      header: "blog"
     _dashboard:
       bids: "Οι ενεργές δηλώσεις σας"
       no_active_bids: "Δεν υπάρχουν ενεργές δηλώσεις"
@@ -357,8 +343,6 @@ gr:
       requests_membership_for: "ζητάει συμμετοχή σε"
       view_group: "Προβολή Ομάδας"
       view_profile: "Προβολή Προφίλ"
-    _secondary_column:
-      header: "Blog Συστήματος"
 
   offers:
     partial:
@@ -397,7 +381,6 @@ gr:
       email_notification_note: "Θα λαμβάνεται ειδοποιήσεις μέσω email για κάθε τύπο γεγονότος που έχετε επιλεγμένο."
       requests_in_my_service_categories: "Αιτήσεις για τις κατηγορίες των υπηρεσιών μου:"
       messages: "Μηνύματα:"
-      wall_comments: "Σχόλια τοίχου:"
       forum_posts: "Δημοσιεύσεις του φόρουμ:"
       broadcast_emails: "Newsletter:"
       photos: "Φωτογραφίες"
@@ -606,8 +589,6 @@ gr:
       have_connected: "έχουν συνδεθεί"
       commented: "έκανε σχόλιο"
       forum_post: "δημοσίευση στο φόρουμ"
-      blog_post: "δημοσίευση στο blog"
-      new_blog_post: "νέα δημοσίευση στο blog"
       new_discussion_topic: "νέο θέμα συζήτησης"
       made_post_on_forum_topic: "έκανε δημοσίευση στο φόρουμ στο θέμα"
       hours_for: "ώρες για"
@@ -616,18 +597,14 @@ gr:
       created_the_group: "δημιούργησε την ομάδα"
       joined_the_group: "συμμετέχει στην ομάδα"
       has_created_a_new: "δημιούργησε νέο"
-      is_attending: "παρακολουθεί"
       offer_created: "δημιούργησε νέα προσφορά"
       req_created: "δημιούργησε νέα ζήτηση"
-      event_created: "δημιούργησε ένα νέο γεγονός"
 
     transact:
       for: "για"
     multiple_select_label: "Για πολλαπλή επιλογή από την παρακάτω λίστα, κρατήστε πατημένο το πλήκτρο Ctrl"
 
   person_mailer:
-    blog_comment_notification:
-      new: "Έχετε ένα νέο σχόλιο στο blog από"
     connection_request:
       new: "Έχετε μια νέα αίτηση σύνδεσης από"
     email_verification:
@@ -653,8 +630,6 @@ gr:
       matches_a_skill_category_you_have: "αναφέρεται σε μια κατηγορία που έχετε δηλώσει"
       description: "Περιγραφή"
       requested_by: "Ζητήθηκε από"
-    wall_comment_notification:
-      new: "Έχετε ένα νέο σχόλιο στον τοίχο σας από"
     _footer:
       thankyou: "Thank you for supporting open source software."
 
@@ -729,14 +704,10 @@ gr:
   notice_bid_removed: "Η δήλωση αφαιρέθηκε."
   notice_category_updated: "Η Κατηγορία ενημερώθηκε επιτυχώς."
   notice_forum_updated: "Το Φόρουμ ενημερώθηκε επιτυχώς."
-  notice_event_updated: "Το Γεγονός ενημερώθηκε επιτυχώς."
-  notice_you_are_attending_this_event: "Παρακολουθείτε αυτό το γεγονός."
-  notice_you_are_not_attending: "Δεν παρακολουθείτε αυτό το γεγονός."
   notice_in_progress: "Η εργασία για αυτό το χαρακτηριστικό είναι σε εξέλιξη."
   notice_group_updated: "Η Ομάδα ενημερώθηκε επιτυχώς."
   notice_invite_contacts: "Έχετε προσκαλέσει κάποιες επαφές σας σε"
   notice_upload_canceled: "Έχετε ακυρώσει το ανέβασμα"
-  notice_blog_updated: "Το Blog ενημερώθηκε"
   notice_entries: "εγγραφές."
   notice_you_have_joined: "¨Εχετε γίνει μέλος στο "
   notice_membership_request_sent: "Η αίτηση συμμετοχής στάλθηκε!"
@@ -767,7 +738,6 @@ gr:
   success_category_created: "Η Κατηγορία δημιουργήθηκε επιτυχώς."
   success_comment_created: "Το σχόλιο δημιουργήθηκε επιτυχώς."
   success_comment_deleted: "Το σχόλιο διαγράφηκε"
-  success_event_created: "Το γεγονός δημιουργήθηκε επιτυχώς."
   success_credit_transfer_succeeded: "Επιτυχής μεταφορά μονάδων."
   success_payment_suspended: "Η πληρωμή έχει ανασταλλεί."
   success_group_created: "Η Ομάδα δημιουργήθηκε επιτυχώς"
@@ -814,14 +784,11 @@ gr:
   error_default_password: "Προειδοποίηση: Ο κωδικός πρόσβασης είναι ακόμη ο προεπιλεγμένος."
   error_creating_bid: "Σφάλμα κατά την δημιουργία της δήλωσης."
   error_category_authorization: "Απαιτείται εξουσιοδότηση για να επεξεργαστείτε τις Κατηγορίες"
-  error_you_can_only_attend_once: "Μπορείτε να παρακολουθήσετε μόνο μία φορά."
-  error_you_are_not_attending: "Δεν παρακολουθείτε αυτό το γεγονός."
   error_offer_person_mismatch: "Η επιλεγμένη προσφορά δεν ταιριάζει με πρόσωπο"
   error_with_credit_transfer: "Σφάλμα κατά την μεταφορά μονάδων."
   error_with_suspension: "Σφάλμα κατά την αναστολή πληρωμών."
   error_no_contacts: "Δεν έχετε επαφές ή έχετε και τις προσκαλέσατε ήδη όλες"
   error_browser_upload_fail: "Φαίνεται πως ο browser σας δεν υποστηρίζει ανέβασμα αρχείων"
-  error_blog_update: "Η ενημέρωση του Blog απέτυχε."
   error_connection_invalid: "Μη έγκυρη σύνδεση."
   error_invalid_or_expired_membership: "Μη έγκυρη ή ληξιπρόθεσμη αίτηση συμμετοχής"
   error_invalid_action: "Μη έγκυρη ενέργεια"

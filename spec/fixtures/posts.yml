@@ -11,9 +11,3 @@ forum_2:
   person: aaron
   body: FooBar
   type: ForumPost
-
-blog_post:
-  blog: one
-  person_id: quentin
-  body: MyText
-  type: BlogPost

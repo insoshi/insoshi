@@ -39,14 +39,12 @@ fr:
   for: "pour"
   said: "a dit(e)"
   reply_on: "répondre sur"
-  wall: "mur"
   see_all: "Tout voir"
   by: "par"
   to: "à"
   from: "de"
   in: "dans"
   or: "or"
-  event: "event"
   active: "Actif"
   all: "Tous les"
   cancelled: "cancelled"
@@ -154,14 +152,6 @@ fr:
       name: "Nom"
       parent_category: "Parent Category"
 
-  comments:
-    event_new:
-      header: "Commentaire sur l’événement"
-      leave_a_comment: "Laisser un commentaire"
-    wall_new:
-      header: "Wall comment"			
-      leave_a_comment: "Laisser un commentaire"
-
   forums:
     show:   
       header: "Sujet de discussion"
@@ -246,7 +236,6 @@ fr:
 
   home:
     menu:
-      blog: "Blog"
       skillbank: "Skillbank"
       about: "About"
       practice: "Practice"
@@ -269,10 +258,6 @@ fr:
       tab_graphs: "Graphique"
       unread_messages: "Vous avez des messages non-lus dans votre boîte aux lettres"
       see_your_messages: "Cliquer ici pour lire vos messages"
-    show:
-      header: "Blog"
-    _blog:
-      header: "blog"
     _dashboard:
       bids: "Vos enchères actives"
       no_active_bids: "Aucune enchère active"
@@ -299,8 +284,6 @@ fr:
       requests_membership_for: "demande d’abonnement pour"
       view_group: "Voir les groupes"
       view_profile: "Voir le profil"
-    _secondary_column:
-      header: "System Blog"
 
   offers:
     partial:
@@ -339,7 +322,6 @@ fr:
       email_notification_note: "Vous recevrez un avertissement par courriel pour tous les types d’événement qui sont cochés"
       requests_in_my_service_categories: "Les requêtes dans mes catégories de service:"
       messages: "Messages"
-      wall_comments: "Commentaires"
       forum_posts: "Les entrées du forum"
       broadcast_emails: "Newsletter:"
       photos: "Photos"
@@ -549,8 +531,6 @@ fr:
       have_connected: "have connected"
       commented: "made a comment"
       forum_post: "forum post"
-      blog_post: "blog post"
-      new_blog_post: "new blog post"
       new_discussion_topic: "new discussion topic"
       made_post_on_forum_topic: "made a post on the forum topic"
       hours_for: "hours for"
@@ -559,17 +539,13 @@ fr:
       created_the_group: "created the group"
       joined_the_group: "joined the group"
       has_created_a_new: "has created a new"
-      is_attending: "is attending"
       offer_created: "has created a new offer"
       req_created: "has created a new request"
-      event_created: "has created a new event"
     transact:
       for: "pour"
     multiple_select_label: "For multiple selection in the list below, press and hold Ctrl key (or Command for Mac users)"
 
   person_mailer:
-    blog_comment_notification:
-      new: "You have a new comment on your blog from"
     connection_request:
       new: "You have a new connection request from"
     email_verification:
@@ -595,8 +571,6 @@ fr:
       matches_a_skill_category_you_have: "matches a skill category you have"
       description: "Description"
       requested_by: "Requested by"
-    wall_comment_notification:
-      new: "You have a new comment on your wall from"
     _footer:
       thankyou: "Thank you for supporting open source software."
 
@@ -670,14 +644,10 @@ fr:
   notice_bid_removed: "L’enchère à été retirée"
   notice_category_updated: "Cette categories a été mise à jour"
   notice_forum_updated: "Le forum a été mis à jour"
-  notice_event_updated: "Cet événement a été mis à jour"
-  notice_you_are_attending_this_event: "Vous assistez à cet événement"
-  notice_you_are_not_attending: "Vous n’assistez pas à cet événement"
   notice_in_progress: "Cet endroit est présentement en construction"
   notice_group_updated: "Le groupe a été mis à jour"
   notice_invite_contacts: "Vous avez invite certains de vos contacts à"
   notice_upload_canceled: "Vous avez cancellé le transfert"
-  notice_blog_updated: "Blog mis à jour"
   notice_entries: "Entrées"
   notice_you_have_joined: "Vous avez joint"
   notice_membership_request_sent: "Votre requête d’abonnement a été envoyée"
@@ -708,7 +678,6 @@ fr:
   success_category_created: "La catégorie a été créée avec succès"
   success_comment_created: "Le commentaire a été crée avec succès"
   success_comment_deleted: "Commentaire effacé"
-  success_event_created: "L’événement a été crée avec succès"
   success_credit_transfer_succeeded: "Le transfert de credit a réussi"
   success_payment_suspended: "Paiement suspendu"
   success_group_created: "Le groupe a été crée avec succès"
@@ -755,14 +724,11 @@ fr:
   error_default_password: "Attention: Votre mot de passe n’a pas été personnalisé"
   error_creating_bid: "Erreur dans la création de l’enchère"
   error_category_authorization: "Autorisation requise pour modifier les catégories"
-  error_you_can_only_attend_once: "Vous pouvez seulement  participer une seule fois"
-  error_you_are_not_attending: "Vous ne participez pas à cet événement"
   error_offer_person_mismatch: "L’offre en question ne correspond à aucune personne"
   error_with_credit_transfer: "Erreur dans le transfert de crédit"
   error_with_suspension: "Erreur avec la suspension de paiement"
   error_no_contacts: "Vous n’avez pas de contacts ou vous les avez tous invités"
   error_browser_upload_fail: "Votre navigateur ne supporte pas le transfert de fichier"
-  error_blog_update: "La mise à jour du blog a échoué"
   error_connection_invalid: "La connexion est invalide"
   error_invalid_or_expired_membership: "La requête d’abonnement est invalide ou expirée"
   error_invalid_action: "action invalide"

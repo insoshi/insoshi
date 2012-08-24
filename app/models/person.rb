@@ -56,8 +56,8 @@ class Person < ActiveRecord::Base
   attr_accessible :password, :password_confirmation, :as => :admin
   attr_accessible :email, :password, :password_confirmation, :name,
                   :description, :connection_notifications,
-                  :message_notifications, :wall_comment_notifications, :forum_notifications,
-                  :blog_comment_notifications, :category_ids, :address_ids, :neighborhood_ids,
+                  :message_notifications, :forum_notifications,
+                  :category_ids, :address_ids, :neighborhood_ids,
                   :zipcode,
                   :phone, :phoneprivacy,
                   :accept_agreement,
@@ -87,7 +87,6 @@ class Person < ActiveRecord::Base
   MESSAGES_PER_PAGE = 5
   EXCHANGES_PER_PAGE = 10
   NUM_RECENT_MESSAGES = 3
-  NUM_WALL_COMMENTS = 10
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 12.months.ago
@@ -103,9 +102,6 @@ class Person < ActiveRecord::Base
                             (email_verified IS NULL OR email_verified = ?)),
                           Connection::REQUESTED, false, true]
 
-  has_one :blog
-  has_many :comments, :as => :commentable, :order => 'created_at DESC',
-                      :limit => NUM_WALL_COMMENTS
   has_many :connections
   has_many :contacts, :through => :connections,
                       :conditions => ACCEPTED_AND_ACTIVE,
@@ -140,9 +136,6 @@ class Person < ActiveRecord::Base
   has_many :groups_not_hidden, :through => :memberships, :source => :group,
     :conditions => "status = 0 and mode != 2", :order => "name ASC"
 
-  has_many :events
-  has_many :event_attendees
-  has_many :attendee_events, :through => :event_attendees, :source => :event
   has_many :accounts
   has_many :addresses
   has_many :client_applications
@@ -175,7 +168,6 @@ class Person < ActiveRecord::Base
   # XXX just doing jquery validation
   #validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
 
-  before_create :create_blog, :check_config_for_deactivation
   before_create :set_default_group
   after_create :create_address
   after_create :join_mandatory_groups

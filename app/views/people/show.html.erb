@@ -82,9 +82,6 @@
     <%= markdown(@person.description) %>
   </div>
 
-  <%- if global_prefs.user_walls_enabled? -%>
-    <%= render :partial => '/shared/wall' %>
-  <%- end -%>
   <%= render :partial => '/shared/recent_activity' %>
 <%- end -%>
 

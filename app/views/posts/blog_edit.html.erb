@@ -1,7 +1,0 @@
-<h2>Edit post</h2>
-
-<%= error_messages_for :post %>
-
-<%= render :partial => 'blog_form',
-           :locals => { :url => blog_post_path(@blog, @post),
-                        :method => :put }%>

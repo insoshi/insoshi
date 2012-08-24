@@ -67,19 +67,6 @@ class PersonMailer < ActionMailer::Base
         )
   end
   
-  def wall_comment_notification(comment)
-    comment = coerce(comment, Comment)
-    @comment = comment
-    @server = server
-    @url = person_path(comment.commentable, :anchor => "wall")
-    @preferences_note = preferences_note(comment.commented_person)
-
-    mail(:to => comment.commented_person.email,
-         :from => "Comment notification <comment@#{domain}>",
-         :subject => formatted_subject("New wall comment")
-        )
-  end
-  
   def forum_post_notification(subscriber, forum_post)
     subscriber = coerce(subscriber, Person)
     forum_post = coerce(forum_post, ForumPost)
