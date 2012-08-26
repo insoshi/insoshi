@@ -22,6 +22,7 @@
 
 class Message < Communication
   extend PreferencesHelper
+  include ActionView::Helpers::TextHelper
   
   attr_accessor :reply, :parent, :send_mail
 
@@ -51,6 +52,7 @@ class Message < Communication
   validates_length_of :content, :maximum => MAX_CONTENT_LENGTH
 
   before_create :assign_conversation
+  before_save :truncate_subject
   after_create :update_recipient_last_contacted_at,
                :set_replied_to, :send_receipt_reminder
                #:save_recipient
@@ -137,6 +139,10 @@ class Message < Communication
   # Return true if a message has been read.
   def read?
     !recipient_read_at.nil?
+  end
+
+  def truncate_subject
+    self.subject = truncate self.subject, :length => 75, :omission => "..."
   end
 
   private

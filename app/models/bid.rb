@@ -4,36 +4,36 @@
 # Table name: bids
 #
 #  id              :integer(4)      not null, primary key
-#  req_id          :integer(4)      
-#  person_id       :integer(4)      
-#  status_id       :integer(4)      
+#  req_id          :integer(4)
+#  person_id       :integer(4)
+#  status_id       :integer(4)
 #  estimated_hours :decimal(8, 2)   default(0.0)
 #  actual_hours    :decimal(8, 2)   default(0.0)
-#  expiration_date :datetime        
-#  created_at      :datetime        
-#  updated_at      :datetime        
-#  accepted_at     :datetime        
-#  committed_at    :datetime        
-#  completed_at    :datetime        
-#  approved_at     :datetime        
-#  rejected_at     :datetime        
+#  expiration_date :datetime
+#  created_at      :datetime
+#  updated_at      :datetime
+#  accepted_at     :datetime
+#  committed_at    :datetime
+#  completed_at    :datetime
+#  approved_at     :datetime
+#  rejected_at     :datetime
 #
 
 class Bid < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+  include AASM
+
   extend PreferencesHelper
   before_validation :setup, :on => :create
   after_create :trigger_offered
-
-  include Rails.application.routes.url_helpers
-  include AASM
 
   belongs_to :req
   belongs_to :person
   belongs_to :group
   attr_readonly :estimated_hours
 
-  validates_presence_of :estimated_hours, :person_id
-  validate :estimated_hours_is_positive
+  validates :person_id, :presence => true
+  validates :estimated_hours, :presence => true, :numericality => { :greater_than => 0 }
   validate :group_includes_bidder_as_a_member
 
   attr_protected :person_id, :created_at, :updated_at
@@ -63,118 +63,82 @@ class Bid < ActiveRecord::Base
   end
 
   aasm_event :pay do
-    transitions :to => :approved, :from => [:accepted,:committed,:completed]
+    transitions :to => :approved, :from => [:accepted, :committed, :completed]
   end
 
   def requestor_event_for_current_state
-    requestor_events = requestor_events_for_current_state
-    requestor_events[0]
+    ([:accept, :pay] & aasm_events_for_current_state).first.to_s.presence
   end
 
   def bidder_event_for_current_state
-    bidder_events = bidder_events_for_current_state
-    bidder_events[0]
-  end
-
-  def requestor_events_for_current_state
-    r_events = aasm_events_for_current_state.map {|event| event.to_s}
-    r_events.find_all {|event| ['accept','pay'].include? event}
-  end
-
-  def bidder_events_for_current_state
-    b_events = aasm_events_for_current_state.map {|event| event.to_s}
-    b_events.find_all {|event| ['commit','complete'].include? event}
+    ([:commit, :complete] & aasm_events_for_current_state).first.to_s.presence
   end
 
   def unit
-    if group.nil?
-      I18n.translate('currency_unit_plural')
-    else
-      group.unit
-    end
+    group.try(:unit) || I18n.translate('currency_unit_plural')
   end
 
-  private
+  # private
 
   def server
     @server ||= Bid.global_prefs.server_name
   end
 
-  def estimated_hours_is_positive
-    unless estimated_hours > 0
-      errors.add(:estimated_hours, "must be greater than zero")
-    end
-  end
-
   def group_includes_bidder_as_a_member
-    unless self.group.nil?
-      unless self.person.groups.include?(self.group)
-        errors.add(:group_id, "does not include you as a member")
-      end
+    unless self.group.nil? or self.person.groups.include?(self.group)
+      errors.add(:group_id, "does not include you as a member")
     end
   end
 
   def setup
     self.group = self.req.group
-    if self.expiration_date.blank?
-      self.expiration_date = 7.days.from_now
-    else
-      self.expiration_date += 1.day - 1.second # make expiration date at end of day
-    end
+    self.expiration_date = 7.days.from_now if self.expiration_date.blank?
+    self.expiration_date = self.expiration_date.end_of_day
   end
 
   def trigger_offered
-    bid_note = Message.new()
-    subject = "BID: " + self.estimated_hours.to_s + " hours - " + self.req.name 
-    bid_note.subject = subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
-    bid_note.content = ""
-    bid_note.content << self.private_message_to_requestor + "\n--\n\n" if self.private_message_to_requestor.length > 0
-    bid_note.content << "See your <a href=\"" + "http://" + server + req_path(self.req) + "\">request</a> to consider bid"
-    bid_note.sender = self.person
-    bid_note.recipient = self.req.person
-    bid_note.save!
+    Message.create! do |bid_note|
+      bid_note.subject = "BID: #{estimated_hours} hours - #{req.name}"
+      bid_note.content = ""
+      bid_note.content << "#{private_message_to_requestor}\n--\n\n" if private_message_to_requestor.present?
+      bid_note.content << "See your <a href=\"#{req_url(self.req)}\">request</a> to consider bid"
+      bid_note.sender = self.person
+      bid_note.recipient = self.req.person
+    end
   end
 
   def trigger_accepted
-    self.accepted_at = Time.now
-    save
-    bid_note = Message.new()
-    subject = "Bid accepted for " + self.req.name
-    bid_note.subject = subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
-    bid_note.content = "See the <a href=\"" + "http://" + server + req_path(self.req) + "\">request</a> to commit to bid"
-    bid_note.sender = self.req.person
-    bid_note.recipient = self.person
-    bid_note.save!
+    touch :accepted_at
+    Message.create! do |bid_note|
+      bid_note.subject = "Bid accepted for #{req.name}"
+      bid_note.content = "See the <a href=\"#{req_url(self.req)}\">request</a> to commit to bid"
+      bid_note.sender = self.req.person
+      bid_note.recipient = self.person
+    end
   end
 
   def trigger_committed
-    self.committed_at = Time.now
-    save
-    bid_note = Message.new()
-    subject = "Bid committed for " + self.req.name
-    bid_note.subject = subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
-    bid_note.content = "Commitment made for your <a href=\"" + "http://" + server + req_path(self.req) + "\">request</a>. This is an automated message"
-    bid_note.sender = self.person
-    bid_note.recipient = self.req.person
-    bid_note.save!
+    touch :committed_at
+    Message.create! do |bid_note|
+      bid_note.subject = "Bid committed for #{req.name}"
+      bid_note.content = "Commitment made for your <a href=\"#{req_url(self.req)}\">request</a>. This is an automated message"
+      bid_note.sender = self.person
+      bid_note.recipient = self.req.person
+    end
   end
 
   def trigger_completed
-    self.completed_at = Time.now
-    save
-    bid_note = Message.new()
-    subject = "Work completed for " + self.req.name
-    bid_note.subject = subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
-    bid_note.content = "Work completed for your <a href=\"" + "http://" + server + req_path(self.req) + "\">request</a>. Please approve transaction! This is an automated message"
-    bid_note.sender = self.person
-    bid_note.recipient = self.req.person
-    bid_note.save!
+    touch :completed_at
+    Message.create! do |bid_note|
+      bid_note.subject = "Work completed for #{req.name}"
+      bid_note.content = "Work completed for your <a href=\"#{req_url(self.req)}\">request</a>. Please approve transaction! This is an automated message"
+      bid_note.sender = self.person
+      bid_note.recipient = self.req.person
+    end
   end
 
   def trigger_approved
-    self.approved_at = Time.now
-    save
-
+    touch :approved_at
     Account.transfer(self.req.person, self.person, self.estimated_hours, self.req)
   end
 end
