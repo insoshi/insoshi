@@ -102,22 +102,22 @@ class Req < ActiveRecord::Base
 
   def has_accepted_bid?
     return bids.any? &:accepted_at if bids.loaded?
-    accepted_bids.exist?
+    !accepted_bids.empty?
   end
 
   def has_completed?
     return bids.any? &:completed_at if bids.loaded?
-    completed_bids.exist?
+    !completed_bids.empty?
   end
 
   def has_commitment?
     return bids.any? &:committed_at if bids.loaded?
-    committed_bids.exist?
+    !committed_bids.empty?
   end
 
   def has_approved?
     return bids.any? &:approved_at if bids.loaded?
-    approved_bids.exist?
+    !approved_bids.empty?
   end
 
   def log_activity

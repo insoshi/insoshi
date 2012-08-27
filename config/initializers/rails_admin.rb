@@ -48,6 +48,8 @@ end
     end
 
     edit do
+      field :group
+      field :person
       field :name
       field :estimated_hours
       field :due_date, :date
@@ -70,6 +72,8 @@ end
     end
 
     edit do
+      field :group
+      field :person
       field :name
       field :total_available
       field :expiration_date, :date
