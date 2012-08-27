@@ -23,10 +23,17 @@ class Req < ActiveRecord::Base
     name
     description
   end
-  
+
   scope :active, :conditions => ["active IS true AND due_date >= ?", DateTime.now]
   scope :with_group_id, lambda {|group_id| {:conditions => ['group_id = ?', group_id]}}
-  scope :search_by, lambda { |text| {:conditions => ["lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase]} }
+  scope :search_by, lambda { |text|
+    where("lower(name) LIKE ? OR lower(description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase)
+  }
+  scope :biddable, where("biddable = ?", true)
+  scope :current, lambda { where("due_date >= ?", DateTime.now) }
+  scope :without_approved_bid,
+    joins("LEFT JOIN bids AS approved_bids ON approved_bids.req_id = reqs.id AND approved_bids.state = 'approved'").
+    where("approved_bids.id IS NULL")
 
   has_and_belongs_to_many :categories
   has_many :workers, :through => :categories, :source => :people
@@ -34,6 +41,10 @@ class Req < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
   has_many :bids, :order => 'created_at DESC', :dependent => :destroy
+  has_many :accepted_bids, :class_name => "Bid", :conditions => "accepted_at IS NOT NULL"
+  has_many :completed_bids, :class_name => "Bid", :conditions => "completed_at IS NOT NULL"
+  has_many :committed_bids, :class_name => "Bid", :conditions => "committed_at IS NOT NULL"
+  has_many :approved_bids, :class_name => "Bid", :conditions => "approved_at IS NOT NULL"
   has_many :exchanges, :as => :metadata
 
   attr_accessor :ability
@@ -53,21 +64,19 @@ class Req < ActiveRecord::Base
   class << self
 
     def current_and_active(page=1)
-      today = DateTime.now
-      @reqs = Req.paginate(:all, :page => page, :conditions => ["biddable = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
-      @reqs.delete_if { |req| req.has_approved? }
+      self.biddable.current.without_approved_bid.page(page).order('created_at DESC')
     end
 
     def all_active(page=1)
-      @reqs = Req.paginate(:all, :page => page, :conditions => ["biddable = ?", true], :order => 'created_at DESC')
+      self.biddable.page(page).order('created_at DESC')
     end
 
-    def search(category,group,active_only,page,posts_per_page,search=nil)
-      unless category
+    def search(category, group, active_only, page, posts_per_page, search=nil)
+      if category
+        chain = category.reqs.with_group_id(group.id)
+      else
         chain = group.reqs
         chain = chain.search_by(search) if search
-      else
-        chain = category.reqs.with_group_id(group.id)
       end
 
       chain = chain.active if active_only
@@ -80,7 +89,7 @@ class Req < ActiveRecord::Base
   end
 
   def deactivate
-    update_attribute(:active,false)
+    update_attributes(:active => false)
   end
 
   def unit
@@ -92,27 +101,23 @@ class Req < ActiveRecord::Base
   end
 
   def has_accepted_bid?
-    a = false
-    bids.each {|bid| a = true if bid.accepted_at != nil }
-    return a
+    return bids.any? &:accepted_at if bids.loaded?
+    accepted_bids.exist?
   end
 
   def has_completed?
-    a = false
-    bids.each {|bid| a = true if bid.completed_at != nil }
-    return a
+    return bids.any? &:completed_at if bids.loaded?
+    completed_bids.exist?
   end
 
   def has_commitment?
-    a = false
-    bids.each {|bid| a = true if bid.committed_at != nil }
-    return a
+    return bids.any? &:committed_at if bids.loaded?
+    committed_bids.exist?
   end
 
   def has_approved?
-    a = false
-    bids.each {|bid| a = true if bid.approved_at != nil }
-    return a
+    return bids.any? &:approved_at if bids.loaded?
+    approved_bids.exist?
   end
 
   def log_activity
@@ -129,7 +134,7 @@ class Req < ActiveRecord::Base
     active and Req.global_prefs.can_send_email? and Req.global_prefs.email_notifications?
   end
 
-  private
+  # private
 
   def maximum_categories
     if self.categories.length > 5
@@ -153,9 +158,6 @@ class Req < ActiveRecord::Base
   end
 
   def send_req_notifications
-    # even though pseudo-reqs created by direct payments do not have associated categories, let's
-    # be extra cautious and check for the active property as well
-    #
     notifiable_workers.each do |worker|
       after_transaction { PersonMailerQueue.req_notification(self, worker) }
     end if should_send_notifications?

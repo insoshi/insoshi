@@ -44,9 +44,7 @@ class Category < ActiveRecord::Base
   end
 
   def current_and_active_reqs
-    today = DateTime.now
-    reqs = self.reqs.find(:all, :conditions => ["biddable = ? AND due_date >= ?", true, today], :order => 'created_at DESC')
-    reqs.delete_if { |req| req.has_approved? }
+    reqs.current.biddable.order('created_at DESC')
   end
 
   def descendants_current_and_active_reqs_count
