@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120817151333) do
+ActiveRecord::Schema.define(:version => 20120823224458) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -93,14 +93,6 @@ ActiveRecord::Schema.define(:version => 20120817151333) do
     t.integer  "group_id"
   end
 
-  create_table "blogs", :force => true do |t|
-    t.integer  "person_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "blogs", ["person_id"], :name => "index_blogs_on_person_id"
-
   create_table "broadcast_emails", :force => true do |t|
     t.string   "subject"
     t.text     "message"
@@ -165,18 +157,6 @@ ActiveRecord::Schema.define(:version => 20120817151333) do
 
   add_index "client_applications", ["key"], :name => "index_client_applications_on_key", :unique => true
 
-  create_table "comments", :force => true do |t|
-    t.integer  "commenter_id"
-    t.integer  "commentable_id"
-    t.string   "commentable_type", :default => "", :null => false
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
-  add_index "comments", ["commenter_id"], :name => "index_comments_on_commenter_id"
-
   create_table "communications", :force => true do |t|
     t.string   "subject"
     t.text     "content"
@@ -235,24 +215,6 @@ ActiveRecord::Schema.define(:version => 20120817151333) do
   end
 
   add_index "email_verifications", ["code"], :name => "index_email_verifications_on_code"
-
-  create_table "event_attendees", :force => true do |t|
-    t.integer "person_id"
-    t.integer "event_id"
-  end
-
-  create_table "events", :force => true do |t|
-    t.string   "title",                                :null => false
-    t.string   "description"
-    t.integer  "person_id",                            :null => false
-    t.datetime "start_time",                           :null => false
-    t.datetime "end_time"
-    t.boolean  "reminder"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "event_attendees_count", :default => 0
-    t.integer  "privacy",               :default => 2, :null => false
-  end
 
   create_table "exchanges", :force => true do |t|
     t.integer  "customer_id"
@@ -436,32 +398,28 @@ ActiveRecord::Schema.define(:version => 20120817151333) do
     t.text     "description"
     t.datetime "last_contacted_at"
     t.datetime "last_logged_in_at"
-    t.integer  "forum_posts_count",          :default => 0,     :null => false
-    t.integer  "blog_post_comments_count",   :default => 0,     :null => false
-    t.integer  "wall_comments_count",        :default => 0,     :null => false
+    t.integer  "forum_posts_count",        :default => 0,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "admin",                      :default => false, :null => false
-    t.boolean  "deactivated",                :default => false, :null => false
-    t.boolean  "connection_notifications",   :default => true
-    t.boolean  "message_notifications",      :default => true
-    t.boolean  "wall_comment_notifications", :default => true
-    t.boolean  "blog_comment_notifications", :default => true
+    t.boolean  "admin",                    :default => false, :null => false
+    t.boolean  "deactivated",              :default => false, :null => false
+    t.boolean  "connection_notifications", :default => true
+    t.boolean  "message_notifications",    :default => true
     t.boolean  "email_verified"
     t.string   "identity_url"
     t.string   "phone"
     t.string   "first_letter"
     t.string   "zipcode"
-    t.boolean  "phoneprivacy",               :default => false
-    t.boolean  "forum_notifications",        :default => false
+    t.boolean  "phoneprivacy",             :default => false
+    t.boolean  "forum_notifications",      :default => false
     t.string   "language"
     t.string   "openid_identifier"
-    t.string   "perishable_token",           :default => "",    :null => false
+    t.string   "perishable_token",         :default => "",    :null => false
     t.integer  "default_group_id"
-    t.boolean  "org",                        :default => false
-    t.boolean  "activator",                  :default => false
+    t.boolean  "org",                      :default => false
+    t.boolean  "activator",                :default => false
     t.integer  "sponsor_id"
-    t.boolean  "broadcast_emails",           :default => true,  :null => false
+    t.boolean  "broadcast_emails",         :default => true,  :null => false
   end
 
   add_index "people", ["admin"], :name => "index_people_on_admin"
@@ -529,7 +487,6 @@ ActiveRecord::Schema.define(:version => 20120817151333) do
     t.integer  "default_group_id"
     t.integer  "topic_refresh_seconds",   :default => 30,    :null => false
     t.boolean  "groups",                  :default => true,  :null => false
-    t.boolean  "user_walls_enabled",      :default => false, :null => false
   end
 
   create_table "rails_admin_histories", :force => true do |t|
