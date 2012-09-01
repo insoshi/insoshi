@@ -7,10 +7,9 @@
     <%= will_paginate(@pending) %>
     <ul class="grid contacts medium">
       <%- @pending.each do |contact| -%>
-        <li class="vcard contact">
+        <li class="contact">
           <%= image_link contact, :image_options => { :class => "photo" },
                                   :link_options => { :class => "url" },
-                                  :vcard => true,
                                   :image => :bounded_icon %>
           <% if @group.owner?(current_person) %>
             <div class="accept_or_cancel_membership">
@@ -37,10 +36,9 @@
     <ul class="grid contacts medium">
       <%- @memberships.each do |membership| -%>
         <% contact = membership.person %>
-        <li class="vcard contact">
+        <li class="contact">
           <%= image_link contact, :image_options => { :class => "photo" },
                                   :link_options => { :class => "url" },
-                                  :vcard => true,
                                   :image => :bounded_icon %>
           <% if can? :unsuscribe, membership %>
             <div class="cancel_membership">
@@ -68,10 +66,9 @@
   <h3><%= t('groups.members.admins') %></h3>
   <ul class="grid contacts medium">
     <%- @group.admins.each do |admin| -%>
-      <li class="vcard contact">
+      <li class="contact">
       <%= image_link admin, :image_options => { :class => "photo" },
                             :link_options => { :class => "url" },
-                            :vcard => true,
                             :image => :bounded_icon %>
       </li>
     <%- end -%>
@@ -79,10 +76,9 @@
 
   <h3><%= t('groups.members.created_by') %></h3>
   <ul class="grid contacts medium">
-    <li class="vcard contact">
+    <li class="contact">
       <%= image_link @group.owner, :image_options => { :class => "photo" },
                               :link_options => { :class => "url" },
-                              :vcard => true,
                               :image => :bounded_icon %>
     </li>
   </ul>
