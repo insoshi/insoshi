@@ -1,25 +1,35 @@
 class PeopleController < ApplicationController
-  
+
   skip_before_filter :require_activation, :only => :verify_email
   skip_before_filter :admin_warning, :only => [ :show, :update ]
   #before_filter :login_or_oauth_required, :only => [ :index, :show, :edit, :update ]
   before_filter :login_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
   before_filter :setup_zips, :only => [:index, :show]
-  
+
   def index
     @zipcode = ""
     if global_prefs.zipcode_browsing? && params[:zipcode]
-      @people = Person.mostly_active_with_zipcode(params[:zipcode],params[:page])
+      @people = Person.
+        with_zipcode(params[:zipcode]).
+        mostly_active.
+        by_name.
+        paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
       @zipcode = "(#{params[:zipcode]})"
     else
       if params[:sort]
         if "alpha" == params[:sort]
-          @people = Person.mostly_active_alpha(params[:page])
+          @people = Person.
+            by_first_letter.
+            mostly_active.
+            paginate(:page => params[:page], :per_page => RASTER_PER_PAGE, :group_by => "first_letter")
           @people.add_missing_links(('A'..'Z').to_a)
         end
       else
-        @people = Person.mostly_active_newest(params[:page])
+        @people = Person.
+          by_newest.
+          mostly_active.
+          paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
       end
     end
 
@@ -27,7 +37,7 @@ class PeopleController < ApplicationController
       format.html
     end
   end
-  
+
   def show
     person_id = ( 0 == params[:id].to_i ) ? current_person.id : params[:id]
     @person = Person.find(person_id)
@@ -49,7 +59,7 @@ class PeopleController < ApplicationController
       end
     end
   end
-  
+
   def new
     @body = "register single-col"
     @person = Person.new
@@ -167,7 +177,7 @@ class PeopleController < ApplicationController
           format.html { render :action => "edit" }
         end
       end
-    #when 'openid_edit'
+      #when 'openid_edit'
     else
       @person.attributes = params[:person]
       @person.save do |result|
@@ -184,11 +194,11 @@ class PeopleController < ApplicationController
       end
     end
   end
-  
+
   def common_contacts
     @person = Person.find(params[:id])
     @common_contacts = @person.common_contacts_with(current_person,
-                                                          params[:page])
+                                                    params[:page])
     respond_to do |format|
       format.html
     end
@@ -197,18 +207,18 @@ class PeopleController < ApplicationController
   def groups
     @person = Person.find(params[:id])
     @groups = current_person == @person ? @person.groups : @person.groups_not_hidden
-    
+
     respond_to do |format|
       format.html
     end
   end
-  
+
   def admin_groups
     @person = Person.find(params[:id])
     @groups = @person.own_groups
     render :action => :groups
   end
-  
+
   def su
     @person = Person.find(params[:id])
     if can?(:su, @person)

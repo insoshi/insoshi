@@ -7,7 +7,7 @@ module PreferencesHelper
   # the redundant database hits is the whole point of using ||= here), but
   # in test mode it's a pain in the ass.
   def global_prefs
-    return Preference.find(:first) if Rails.env.test?
-    @global_prefs ||= Preference.find(:first)
+    return Preference.find(:first) || Preference.create() if Rails.env.test?
+    @global_prefs ||= Preference.find(:first) || Preference.create()
   end
 end

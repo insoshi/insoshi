@@ -192,7 +192,7 @@ module ApplicationHelper
   end
 
   def first_n_words(s, n=20)
-    s[/(\s*\S+){,#{n}}/]
+    s.to_s[/(\s*\S+){,#{n}}/]
   end
 
   # Return a formatting note (depends on the presence of a Markdown library)

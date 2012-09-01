@@ -284,6 +284,9 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    valid_email (0.0.4)
+      activemodel
+      mail
     will_paginate (3.0.3)
     xml-simple (1.1.1)
     xpath (0.1.4)
@@ -340,4 +343,5 @@ DEPENDENCIES
   therubyracer
   uglifier
   unicorn
+  valid_email
   will_paginate (~> 3.0.pre2)

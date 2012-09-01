@@ -20,14 +20,14 @@ class GroupsController < ApplicationController
       format.html do
         @forum = @group.forum
         @topics = Topic.find_recently_active(@forum, params[:page]) 
-        @reqs = Req.search(nil, 
+        @reqs = Req.custom_search(nil,
                            @group, 
                            active=true,
                            1, # params[:page] 
                            AJAX_POSTS_PER_PAGE,
                            nil
                            )
-        @offers = Offer.search(nil,
+        @offers = Offer.custom_search(nil,
                                @group,
                                active=true,
                                1, #params[:page]

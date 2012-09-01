@@ -12,47 +12,60 @@
 #
 
 class Category < ActiveRecord::Base
-
-  index do 
+  LONG_NAME_SEPARATOR = ":"
+  index do
     name description
   end
 
   validates_presence_of :name
-  has_and_belongs_to_many :reqs, :conditions => "biddable IS true", :order => 'created_at DESC'
-  has_and_belongs_to_many :offers, :order => 'created_at DESC'
-  has_and_belongs_to_many :people, :conditions => Person.conditions_for_active
+  has_and_belongs_to_many :reqs
+  has_and_belongs_to_many :offers
+  has_and_belongs_to_many :people
   acts_as_tree
 
   def self.root_nodes
-    all(:conditions => "parent_id is NULL").sort_by {|a| a.name}
+    where(:parent_id => nil).order(:name)
   end
 
-  def descendants
-    children.map(&:descendants).flatten + children
+  def descendant_ids
+    children_only_id = children.select("id")
+    children_only_id.collect(&:descendant_ids).flatten + children_only_id
   end
 
-  def ancestors_name
-    if parent
-      parent.ancestors_name + parent.name + ':'
-    else
-      ""
+  # return all records using a preload strategy to calculate the long names
+  def self.by_long_name
+    all_records = all.to_a
+    all_records.sort_by {|r| r.long_name(all_records)}
+  end
+
+  # Calculate the long_name using the ancestors.
+  #
+  # If an optional list of preloaded parents is given, then no DB call is done
+  # (except for the one used to preload the parents)
+  #
+  # Otherwise each parent is loaded separately from the DB, giving rise
+  # to up to N^2 queries to load all long_names of all records in a balanced
+  # tree.
+  def long_name(preloaded=nil)
+    @long_name ||= begin
+      if preloaded
+        _parent = preloaded.detect { |r| r.id == self.parent_id }
+        [_parent.try(:long_name, preloaded), name].compact
+      else
+        (ancestors.reverse << self).collect(&:name)
+      end.join(LONG_NAME_SEPARATOR)
     end
   end
 
-  def long_name
-    ancestors_name + name
-  end
-
   def current_and_active_reqs
-    reqs.current.biddable.order('created_at DESC')
+    reqs.current
   end
 
   def descendants_current_and_active_reqs_count
-    descendants.map {|d| d.current_and_active_reqs.length}.inject(0) {|sum,element| sum + element}
+    Req.current.biddable.for_category(descendant_ids).count
   end
 
   def descendants_providers_count
-    # not going to the trouble of making sure people are counted only once
-    descendants.map {|d| d.people.length}.inject(0) {|sum,element| sum + element}
+    Person.active.joins(:categories).where(:'categories.id' => descendant_ids).count
   end
 end

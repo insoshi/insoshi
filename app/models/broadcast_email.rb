@@ -13,7 +13,7 @@
 class BroadcastEmail < ActiveRecord::Base
 
   def spew
-    peeps = Person.all_broadcast_email
+    peeps = Person.active.broadcast_email
     after_transaction do
       peeps.each do |peep|
         logger.info("BroadcastEmail: sending email to #{peep.id}: #{peep.name}")

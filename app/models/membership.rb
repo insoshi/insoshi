@@ -25,7 +25,7 @@ class Membership < ActiveRecord::Base
   ROLES = %w[individual admin moderator org]
 
   class << self
-    def search(category,group,page,posts_per_page,search=nil)
+    def custom_search(category,group,page,posts_per_page,search=nil)
       unless category
           group.memberships.active.search_by(search).paginate(:page => page,
                                             :conditions => ['status = ?', Membership::ACCEPTED],
