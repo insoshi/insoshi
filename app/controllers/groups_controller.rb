@@ -100,6 +100,7 @@ class GroupsController < ApplicationController
   end
 
   def members
+    @body = "noajax"
     @memberships = @group.memberships.paginate(:page => params[:page],
                                           :conditions => ['status = ?', Membership::ACCEPTED],
                                           :include => :person,
