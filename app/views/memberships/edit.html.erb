@@ -16,6 +16,10 @@
         <%= f.label "Credit Limit" %>
         <%= f.text_field :credit_limit, :size => 5 %>&nbsp;<span class="small"><%= @account.group.unit %></span>
       </div>
+      <div class="form_row">
+        <%= f.label "Legacy Balance" %>
+        <%= f.text_field :offset, :size => 5 %>&nbsp;<span class="small"><%= @account.group.unit %></span>
+      </div>
     <%= f.submit t('button_update') %>
   <% end %>
 <% end %>

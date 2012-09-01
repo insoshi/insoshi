@@ -16,10 +16,10 @@ class AccountsController < ApplicationController
 
   def update
     if @account.update_attributes(params[:account])
-      flash[:success] = t('success_credit_limit_updated')
+      flash[:success] = t('success_account_updated')
       redirect_to(edit_membership_path(@account.membership))
     else
-      flash[:error] = t('error_credit_limit_update_failed')
+      flash[:error] = t('error_account_update_failed')
       redirect_to(edit_membership_path(@account.membership))
     end
   end

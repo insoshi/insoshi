@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120823224458) do
+ActiveRecord::Schema.define(:version => 20120901062052) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20120823224458) do
     t.datetime "updated_at"
     t.integer  "group_id"
     t.decimal  "credit_limit", :precision => 8, :scale => 2
+    t.decimal  "offset",       :precision => 8, :scale => 2, :default => 0.0
   end
 
   create_table "activities", :force => true do |t|

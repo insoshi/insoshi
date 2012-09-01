@@ -710,6 +710,7 @@ es:
   success_connection_ended: "Ended connection with"
   success_password_updated: "Your password was updated."
   success_credit_limit_updated: "Credit limit updated"
+  success_account_updated: "Account updated"
 
   error_geocoding_failed: "Geocoding failed"
   error_at_least_one_address: "You must have at least one address"
@@ -750,6 +751,7 @@ es:
   error_could_not_find_payee: "could not find payee"
   error_with_transfer: "Error with transfer."
   error_credit_limit_update_failed: "Credit limit update failed"
+  error_account_update_failed: "Account update failed"
   error_connection_request_invadid_or_expired: "Invalid or expired connection request"
   error_connection_request_person_deactivated: "Invalid connection request: person deactivated"
   error_email_not_found: "No one was found with that email address"
