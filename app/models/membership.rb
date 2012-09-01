@@ -142,11 +142,7 @@ class Membership < ActiveRecord::Base
     def accepted?(person, group)
       mem(person, group).status == ACCEPTED
     end
-    
-    def connected?(person, group)
-      exist?(person, group) and accepted?(person, group)
-    end
-    
+
     def pending?(person, group)
       exist?(person, group) and mem(person,group).status == PENDING
     end
