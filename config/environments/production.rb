@@ -60,4 +60,6 @@ Oscurrency::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  # see https://github.com/sferik/rails_admin/issues/1046
+  config.assets.precompile += ['rails_admin/rails_admin.css', 'rails_admin/rails_admin.js']
 end
