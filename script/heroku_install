@@ -43,9 +43,11 @@ AWS::S3::Bucket.create(app_name)
 `heroku config:add SERVER_NAME=#{app_name + '.' + 'herokuapp.com'}`
 `heroku addons:add newrelic:standard`
 `heroku addons:add memcache:5mb`
-`heroku addons:add sendgrid:starter`
+unless APP_CONFIG['SMTP_SERVER']
+  `heroku addons:add sendgrid:starter`
+end
 
-`git push heroku rails31:master`
+`git push heroku master`
 `heroku run rake db:migrate`
 `heroku run rake install`
 `heroku run rake db:seed`
