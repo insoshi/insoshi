@@ -24,7 +24,6 @@
 "Sports & Recreation",
 "Teaching",
 "Transportation",
-"Freebies",
 "Education"
   ]
 
