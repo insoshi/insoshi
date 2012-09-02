@@ -1,7 +1,7 @@
 begin
   unless Rails.env.test?
     global_prefs = Preference.first
-    if global_prefs.email_notifications?
+    if global_prefs.using_email?
       ActionMailer::Base.delivery_method = :smtp
       smtp_port = ENV['SMTP_PORT'] ? ENV['SMTP_PORT'].to_i : 587
       starttls_auto = 587==smtp_port ? true : false
