@@ -68,7 +68,7 @@ class ConnectionsController < ApplicationController
     def authorize_view
       @person = Person.find(params[:person_id])
       unless (current_person?(@person) or
-              Connection.connected?(@person, current_person))
+              Connection.connected_to?(@person, current_person))
         redirect_to home_url
       end
     end

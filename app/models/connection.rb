@@ -44,11 +44,9 @@ class Connection < ActiveRecord::Base
   class << self
 
     # Return true if the persons are (possibly pending) connections.
-    def exists?(person, contact)
-      not conn(person, contact).nil?
+    def exist?(person, contact)
+      where(:person_id => person, :contact_id => contact).exists?
     end
-
-    alias exist? exists?
 
     # Make a pending connection request.
     def request(person, contact, send_mail = nil)
@@ -99,14 +97,14 @@ class Connection < ActiveRecord::Base
 
     # Return a connection based on the person and contact.
     def conn(person, contact)
-      find_by_person_id_and_contact_id(person, contact)
+      where(:person_id => person, :contact_id => contact).first
     end
 
     def accepted?(person, contact)
       conn(person, contact).status == ACCEPTED
     end
 
-    def connected?(person, contact)
+    def connected_to?(person, contact)
       exist?(person, contact) and accepted?(person, contact)
     end
 
