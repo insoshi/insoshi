@@ -33,7 +33,7 @@
 
 class Preference < ActiveRecord::Base
   attr_accessible :app_name, :server_name,
-                  :exception_notification, :new_member_notification,
+                  :new_member_notification,
                   :email_notifications, :email_verifications, :analytics,
                   :about, :demo, :whitelist, :gmail,
                   :practice, :steps, :questions, :contact,
