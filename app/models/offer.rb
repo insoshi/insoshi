@@ -1,11 +1,10 @@
+require 'texticle/searchable'
+
 class Offer < ActiveRecord::Base
   include ActivityLogger
   include AnnouncementBase
 
-  index do
-    name
-    description
-  end
+  extend Searchable(:name, :description)
 
   module Scopes
     def active

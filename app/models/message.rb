@@ -1,24 +1,4 @@
-# == Schema Information
-# Schema version: 20090216032013
-#
-# Table name: communications
-#
-#  id                   :integer(4)      not null, primary key
-#  subject              :string(255)     
-#  content              :text            
-#  parent_id            :integer(4)      
-#  sender_id            :integer(4)      
-#  recipient_id         :integer(4)      
-#  sender_deleted_at    :datetime        
-#  sender_read_at       :datetime        
-#  recipient_deleted_at :datetime        
-#  recipient_read_at    :datetime        
-#  replied_at           :datetime        
-#  type                 :string(255)     
-#  created_at           :datetime        
-#  updated_at           :datetime        
-#  conversation_id      :integer(4)      
-#
+require 'texticle/searchable'
 
 class Message < Communication
   extend PreferencesHelper
@@ -26,16 +6,7 @@ class Message < Communication
   
   attr_accessor :reply, :parent, :send_mail
 
-  index do
-    subject
-    content
-  end
-    
-
-# not sure how to do condition in texticle
-#   is_indexed :fields => [ 'subject', 'content', 'recipient_id',
-#                           'recipient_deleted_at' ],
-#              :conditions => "recipient_deleted_at IS NULL"
+  extend Searchable(:subject, :content)
 
   MAX_CONTENT_LENGTH = 5000
   SEARCH_LIMIT = 20

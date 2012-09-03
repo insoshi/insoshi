@@ -1,28 +1,7 @@
-# == Schema Information
-# Schema version: 20090216032013
-#
-# Table name: posts
-#
-#  id         :integer(4)      not null, primary key
-#  blog_id    :integer(4)      
-#  topic_id   :integer(4)      
-#  person_id  :integer(4)      
-#  title      :string(255)     
-#  body       :text            
-#  type       :string(255)     
-#  created_at :datetime        
-#  updated_at :datetime        
-#
+require 'texticle/searchable'
 
 class ForumPost < Post
-  index do 
-    body
-  end
-
-# not sure how to do this in texticle
-#   is_indexed :fields => [ 'body' ],
-#              :conditions => "type = 'ForumPost'",
-#              :include => [{:association_name => 'topic', :field => 'name'}]
+  extend Searchable(:body)
 
   attr_accessible :body
   attr_accessible *attribute_names, :as => :admin

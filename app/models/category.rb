@@ -1,21 +1,8 @@
-# == Schema Information
-# Schema version: 20090216032013
-#
-# Table name: categories
-#
-#  id          :integer(4)      not null, primary key
-#  name        :string(255)     
-#  description :text            
-#  parent_id   :integer(4)      
-#  created_at  :datetime        
-#  updated_at  :datetime        
-#
+require 'texticle/searchable'
 
 class Category < ActiveRecord::Base
   LONG_NAME_SEPARATOR = ":"
-  index do
-    name description
-  end
+  extend Searchable(:name, :description)
 
   validates_presence_of :name
   has_and_belongs_to_many :reqs

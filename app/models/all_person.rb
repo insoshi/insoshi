@@ -30,8 +30,4 @@
 #
 
 class AllPerson < Person
-  index do
-    name
-    description
-  end
 end

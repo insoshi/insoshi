@@ -1,3 +1,5 @@
+require 'texticle/searchable'
+
 class Group < ActiveRecord::Base
   include ActivityLogger
   extend PreferencesHelper
@@ -30,10 +32,7 @@ class Group < ActiveRecord::Base
   after_create :log_activity
   before_update :update_member_credit_limits
   
-  index do 
-    name 
-    description
-  end
+  extend Searchable(:name, :description)
   
   # GROUP modes
   PUBLIC = 0

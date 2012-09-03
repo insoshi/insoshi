@@ -1,30 +1,11 @@
-# == Schema Information
-# Schema version: 20090216032013
-#
-# Table name: reqs
-#
-#  id              :integer(4)      not null, primary key
-#  name            :string(255)
-#  description     :text
-#  estimated_hours :decimal(8, 2)   default(0.0)
-#  due_date        :datetime
-#  person_id       :integer(4)
-#  created_at      :datetime
-#  updated_at      :datetime
-#  active          :boolean(1)      default(TRUE)
-#  twitter         :boolean(1)
-#
+require 'texticle/searchable'
 
 class Req < ActiveRecord::Base
   include ActivityLogger
   include AnnouncementBase
   extend PreferencesHelper
 
-
-  index do
-    name
-    description
-  end
+  extend Searchable(:name, :description)
 
   scope :active, :conditions => ["active IS true AND due_date >= ?", DateTime.now]
   scope :biddable, where("biddable = ?", true)

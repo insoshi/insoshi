@@ -1,45 +1,4 @@
-# == Schema Information
-# Schema version: 20120408185823
-#
-# Table name: people
-#
-#  id                         :integer         not null, primary key
-#  email                      :string(255)
-#  name                       :string(255)
-#  crypted_password           :string(255)
-#  password_salt              :string(255)
-#  persistence_token          :string(255)
-#  description                :text
-#  last_contacted_at          :datetime
-#  last_logged_in_at          :datetime
-#  forum_posts_count          :integer         default(0), not null
-#  blog_post_comments_count   :integer         default(0), not null
-#  wall_comments_count        :integer         default(0), not null
-#  created_at                 :datetime
-#  updated_at                 :datetime
-#  admin                      :boolean         not null
-#  deactivated                :boolean         not null
-#  connection_notifications   :boolean         default(TRUE)
-#  message_notifications      :boolean         default(TRUE)
-#  wall_comment_notifications :boolean         default(TRUE)
-#  blog_comment_notifications :boolean         default(TRUE)
-#  email_verified             :boolean
-#  identity_url               :string(255)
-#  phone                      :string(255)
-#  first_letter               :string(255)
-#  zipcode                    :string(255)
-#  phoneprivacy               :boolean
-#  forum_notifications        :boolean
-#  language                   :string(255)
-#  openid_identifier          :string(255)
-#  perishable_token           :string(255)     default(""), not null
-#  default_group_id           :integer
-#  org                        :boolean
-#  activator                  :boolean
-#  sponsor_id                 :integer
-#  broadcast_emails           :boolean
-#  web_site_url               :string
-#
+require 'texticle/searchable'
 
 class Person < ActiveRecord::Base
   include ActivityLogger
@@ -68,14 +27,7 @@ class Person < ActiveRecord::Base
   :broadcast_emails,
   :web_site_url
 
-  index do
-    name
-    description
-  end
-
-  #is_indexed :fields => [ 'name', 'description', 'deactivated',
-  #                        'email_verified'],
-  #           :conditions => "deactivated = false AND (email_verified IS NULL OR email_verified = true)"
+  extend Searchable(:name, :description)
 
   MAX_PASSWORD = 40
   MAX_NAME = 40
