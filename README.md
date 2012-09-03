@@ -20,19 +20,17 @@
 
 ### Install
 
-- Git steps
-
 Our public Git repository is hosted on GitHub and can be viewed at
 
-  http://github.com/oscurrency/oscurrency
+  https://github.com/oscurrency/oscurrency
 
 You can clone the the repository with the command:
 
-  $ git clone git://github.com/oscurrency/oscurrency.git
+    $ git clone git://github.com/oscurrency/oscurrency.git
 
 Edit config/config.yml and run heroku_install:
 
-  $ script/heroku_install
+    $ script/heroku_install
 
 ### Admin user
 
@@ -65,16 +63,16 @@ In addition to configuration through the web admin interface, outgoing email con
 - [File an issue](https://github.com/oscurrency/oscurrency/issues)
 
 ### How to start for Developers
-[[Setting up development environment on Ubuntu]]
+[Setting up development environment on Ubuntu](https://github.com/oscurrency/oscurrency/wiki/Setting-up-development-environment-on-ubuntu)
 
 [CentOS 5.6](http://www.soumplis.com/2011/07/07/oscurrency-and-thin-on-centos-5-6/)
 
 ### APIs
-- [[Web Service API]]
+- [Web Service API](https://github.com/oscurrency/oscurrency/wiki/Web-Service-API)
 - [OpenTransact](http://opentransact.org)
 
 ### FAQs
-[[Screencasts]]
+[Screencasts](https://github.com/oscurrency/oscurrency/wiki/Screencasts)
 
 [A Very Important Note about the LICENSE](https://groups.google.com/forum/#!topic/opensourcecurrency/lvzRtLVwbXk)
 
