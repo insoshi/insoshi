@@ -54,5 +54,11 @@ module Oscurrency
 
     require 'oauth/rack/oauth_filter'
     config.middleware.use OAuth::Rack::OAuthFilter
+    if ENV['EXCEPTION_NOTIFICATION']
+      config.middleware.use ExceptionNotifier,
+        sender_address: %("Application Error" <app.error@#{ENV['SMTP_DOMAIN']}>),
+        exception_recipients: ENV['EXCEPTION_NOTIFICATION'].split,
+        email_prefix: "[#{ENV['APP_NAME']}] "
+    end
   end
 end

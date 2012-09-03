@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   include SharedHelper
   include PreferencesHelper
-  include ExceptionNotifiable
 
   helper_method :current_person
   helper_method :logged_in?

@@ -11,6 +11,7 @@ gem 'pg'
 gem "unicorn"
 gem "newrelic_rpm"
 gem "girl_friday"
+gem "exception_notification"
 
 group :assets do
   gem "sass-rails", '3.1.5'
