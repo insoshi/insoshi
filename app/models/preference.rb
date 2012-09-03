@@ -61,6 +61,10 @@ class Preference < ActiveRecord::Base
     end
   end
 
+  def using_email?
+    email_notifications? or email_verifications?
+  end
+
   private
     def decrypt(password)
       k = LocalEncryptionKey.find(:first)
@@ -75,9 +79,5 @@ class Preference < ActiveRecord::Base
     # Encrypts the password with the user salt
     def encrypt(password)
       self.class.encrypt(password)
-    end
-
-    def using_email?
-      email_notifications? or email_verifications?
     end
 end
