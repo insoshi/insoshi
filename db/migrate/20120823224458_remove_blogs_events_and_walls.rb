@@ -17,7 +17,7 @@ class RemoveBlogsEventsAndWalls < ActiveRecord::Migration
     add_column :people, :wall_comments_count, :integer, :default => 0, :null => false
     add_column :people, :wall_comment_notifications, :boolean, :default => true
     add_column :people, :blog_comment_notifications, :boolean, :default => true
-    remove_column :preferences, :user_walls_enabled, :boolean, :default => false, :null => false
+    add_column :preferences, :user_walls_enabled, :boolean, :default => false, :null => false
 
     create_table "blogs", :force => true do |t|
       t.integer  "person_id"
