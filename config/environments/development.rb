@@ -35,4 +35,6 @@ Oscurrency::Application.configure do
   config.assets.debug = true
 
   config.colorize_logging = true
+
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 end

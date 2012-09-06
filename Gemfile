@@ -20,6 +20,7 @@ group :assets do
 end
 
 gem "audited-activerecord"
+gem "rails3_acts_as_paranoid", "~>0.1.4"
 
 gem 'jquery-rails'
 

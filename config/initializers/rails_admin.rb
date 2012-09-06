@@ -39,7 +39,7 @@ end
     list do
       field :name
       field :person do
-        label "requested by"
+        label "Requested by"
         formatted_value do
           value.name
         end
@@ -63,7 +63,7 @@ end
     list do
       field :name
       field :person do
-        label "offered by"
+        label "Offered by"
         formatted_value do
           value.name
         end
@@ -120,20 +120,20 @@ end
     list do
       field :created_at
       field :customer do
-        label "payer"
+        label "Payer"
         formatted_value do
           value.name
         end
       end
       field :worker do
-        label "payee"
+        label "Payee"
         formatted_value do
           value.name
         end
       end
       field :amount
       field :metadata do
-        label "memo"
+        label "Memo"
         formatted_value do
           value.name
         end
@@ -207,12 +207,12 @@ end
   config.model Person do
     list do
       field :last_logged_in_at do
-        label "last login"
+        label "Last login"
       end
       field :name
       field :email
       field :deactivated do
-        label "disabled"
+        label "Disabled"
       end
       field :email_verified
       field :phone

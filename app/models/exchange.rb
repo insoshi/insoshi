@@ -9,11 +9,13 @@
 #  req_id      :integer(4)      
 #  amount      :decimal(8, 2)   default(0.0)
 #  created_at  :datetime        
-#  updated_at  :datetime        
+#  updated_at  :datetime     
+#  deleted_at  :time   
 #
 
 class Exchange < ActiveRecord::Base
   include ActivityLogger
+  acts_as_paranoid
 
   belongs_to :customer, :class_name => "Person", :foreign_key => "customer_id"
   belongs_to :worker, :class_name => "Person", :foreign_key => "worker_id"
