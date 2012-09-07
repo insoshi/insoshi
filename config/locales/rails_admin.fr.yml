@@ -84,6 +84,13 @@ fr:
       exported: "exporté(e)"
       send_broadcast_email:
         menu: "Send Now!"
+      export:
+        title: "Export %{model_label_plural}"
+        menu: "Export"
+        breadcrumb: "Export"
+        link: "Export found %{model_label_plural}"
+        bulk_link: "Export selected %{model_label_plural}"
+        done: "exported"
     breadcrumbs:
       delete: "delete"
       history: "history"

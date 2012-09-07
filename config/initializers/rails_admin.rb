@@ -29,9 +29,33 @@ end
     show
     edit
     delete
+    export
   end
 
-  config.included_models = [Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood,Req,Offer]
+  config.included_models = [Account, Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood,Req,Offer]
+
+  config.model Account do
+    list do
+      field :person do
+        label "Name"
+        formatted_value do
+          value.name
+        end
+      end
+      field :balance
+      field :updated_at do
+        label "Last Transaction"
+      end
+    end
+
+    export do
+      field :person
+      field :balance
+      field :updated_at do
+        label "Last Transaction"
+      end
+    end
+  end
 
   config.model Req do
     label "Request" 
@@ -220,6 +244,21 @@ end
       field :org
       field :openid_identifier
       sort_by :last_logged_in_at
+    end
+
+    export do
+      field :last_logged_in_at do
+        label "Last login"
+      end
+      field :name
+      field :email
+      field :deactivated do
+        label "Disabled"
+      end
+      field :email_verified
+      field :phone
+      field :admin
+      field :org
     end
 
     edit do

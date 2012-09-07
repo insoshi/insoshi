@@ -15,6 +15,7 @@ class Ability
     can :update, Person do |target_person|
       target_person == person || person.admin?
     end
+    can :export, Person
 
     can :read, FeedPost
     can [:update,:destroy], FeedPost do |post|
@@ -85,6 +86,8 @@ class Ability
     can :update, Account do |account|
       person.is?(:admin,account.group)
     end
+    can :export, Account
+
 
     can :read, Offer
     can :create, Offer do |offer|
