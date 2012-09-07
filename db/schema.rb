@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120906144442) do
+ActiveRecord::Schema.define(:version => 20120907153639) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -422,6 +422,7 @@ ActiveRecord::Schema.define(:version => 20120906144442) do
     t.boolean  "activator",                :default => false
     t.integer  "sponsor_id"
     t.boolean  "broadcast_emails",         :default => true,  :null => false
+    t.string   "web_site_url"
   end
 
   add_index "people", ["admin"], :name => "index_people_on_admin"

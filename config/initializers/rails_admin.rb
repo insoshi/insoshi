@@ -259,6 +259,7 @@ end
       field :phone
       field :admin
       field :org
+      field :web_site_url
     end
 
     edit do
@@ -271,6 +272,7 @@ end
       field :phone
       field :admin
       field :org
+      field :web_site_url
       field :description, :text do
         #ckeditor true
       end

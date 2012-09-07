@@ -279,6 +279,7 @@ es:
       confirm_password: "Confirme su contraseña"
       change_password: "Cambiar su contraseña"
       change_openid: "Cambiar su OpenID"
+      web_site_url: "URL del sitio web"
     groups:
       no_groups: "Todavía no hay grupos"
       new_group: "Grupo Nuevo"

@@ -38,6 +38,7 @@
 #  activator                  :boolean
 #  sponsor_id                 :integer
 #  broadcast_emails           :boolean
+#  web_site_url               :string
 #
 
 class Person < ActiveRecord::Base
@@ -64,7 +65,8 @@ class Person < ActiveRecord::Base
                   :language,
                   :openid_identifier,
                   :sponsor,
-                  :broadcast_emails
+                  :broadcast_emails,
+                  :web_site_url
 
   index do
     name

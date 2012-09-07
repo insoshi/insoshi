@@ -393,6 +393,7 @@ gr:
       confirm_password: "Επιβεβαίωση Κωδικού Πρόσβασης"
       change_password: "Αλλαγή Κωδικού Πρόσβασης"
       change_openid: "Αλλαγή OpenID"
+      web_site_url: "URL ιστοσελίδας"
     groups:
       no_groups: "Καμία ομάδα (ακόμη)"
       new_group: "Νέα Ομάδα"

@@ -334,6 +334,7 @@ fr:
       confirm_password: "Confirmez le mot de passe"
       change_password: "Changez le mot de passe"
       change_openid: "Changez OpenID"
+      web_site_url: "Site Web"
     groups:
       no_groups: "Présentement aucun groupe"
       new_group: "Nouveau groupe"

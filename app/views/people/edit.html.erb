@@ -51,6 +51,11 @@
         <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
       </div>
 
+      <div class="form_row">
+        <label for="person_web_site_url"><%= t('people.edit.web_site_url') %></label>
+        <%= f.text_field :web_site_url, :maxlength => Person::MAX_EMAIL %>
+      </div>
+
       <%- if global_prefs.email_notifications? -%>
 
         <br />
