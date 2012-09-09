@@ -36,6 +36,7 @@ gem "texticle"
 gem "aws-s3"
 gem "rmagick", :require => 'RMagick'
 gem "json"
+gem "geokit-rails3"
 
 gem "will_paginate"
 gem "aasm"

@@ -104,6 +104,11 @@ GEM
       hpricot (>= 0.6)
       simple-rss (>= 1.1)
     ffi (1.1.5)
+    geokit (1.6.5)
+      multi_json
+    geokit-rails3 (0.1.5)
+      geokit (~> 1.5)
+      rails (~> 3.0)
     gherkin (2.11.2)
       json (>= 1.4.6)
     girl_friday (0.10.0)
@@ -309,6 +314,7 @@ DEPENDENCIES
   dynamic_form
   exception_notification
   feed-normalizer
+  geokit-rails3
   girl_friday
   guard-spork
   heroku
