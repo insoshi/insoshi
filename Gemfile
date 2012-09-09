@@ -35,7 +35,6 @@ gem "texticle"
 
 gem "aws-s3"
 gem "rmagick", :require => 'RMagick'
-gem "rack-openid"
 gem "json"
 
 gem "will_paginate"
@@ -44,6 +43,7 @@ gem "authlogic"
 #gem "authlogic-oid", :require => "authlogic_openid"
 gem "ruby-openid", :require => "openid"
 gem "oauth-plugin", :path => "#{File.expand_path(__FILE__)}/../vendor/gems/oauth-plugin-0.4.0.pre7"
+gem "open_id_authentication"
 gem "cancan"
 gem "dalli"
 gem "redcarpet"
