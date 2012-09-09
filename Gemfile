@@ -61,6 +61,7 @@ group :development, :test do
   gem "awesome_print"
   gem "artifice"
   gem "opentransact"
+  gem 'annotate'
 end
 
 group :test do
