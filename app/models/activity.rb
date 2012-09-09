@@ -13,6 +13,7 @@
 #
 
 class Activity < ActiveRecord::Base
+  extend PreferencesHelper
   belongs_to :person
   belongs_to :group
   belongs_to :item, :polymorphic => true
@@ -20,35 +21,35 @@ class Activity < ActiveRecord::Base
   
   GLOBAL_FEED_SIZE = 10
 
-  # Return a feed drawn from all activities.
-  # The fancy SQL is to keep inactive people out of feeds.
-  # It's hard to do that entirely, but this way deactivated users 
-  # won't be the person in "<person> has <done something>".
-  #
-  def self.global_feed
-    find(:all, 
-         :joins => "INNER JOIN people p ON activities.person_id = p.id",
-         :conditions => [%(p.deactivated = ? AND
-                           (p.email_verified IS NULL OR p.email_verified = ?)), 
-                         false, true], 
-         :order => 'activities.created_at DESC',
-         :limit => GLOBAL_FEED_SIZE)
+  module Scopes
+
+    def _person_active
+      if global_prefs.email_verifications
+        {"people.deactivated" => false, "people.email_verified" => true}
+      else
+        {"people.deactivated" => false}
+      end
+    end
+
+    def global_feed
+      joins(:person).
+      where(_person_active).
+      order('activities.created_at DESC').
+      limit(GLOBAL_FEED_SIZE)
+    end
+
+    def group_feed(group_id)
+      global_feed.where(:group_id => group_id)
+    end
+
+    def exchange_feed
+      where(:item_type => "Exchange").
+      order('activities.created_at DESC').
+      limit(GLOBAL_FEED_SIZE)
+    end
+
   end
 
-  def self.group_feed(group_id)
-    find(:all, 
-         :joins => "INNER JOIN people p ON activities.person_id = p.id",
-         :conditions => [%(p.deactivated = ? AND
-                           (p.email_verified IS NULL OR p.email_verified = ?) AND (group_id = ?)), 
-                         false, true, group_id], 
-         :order => 'activities.created_at DESC',
-         :limit => GLOBAL_FEED_SIZE)
-  end
+  extend Scopes
 
-  def self.exchange_feed
-    find(:all,
-         :conditions => "item_type = 'Exchange'", 
-         :order => 'activities.created_at DESC',
-         :limit => GLOBAL_FEED_SIZE)
-  end
 end
