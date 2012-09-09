@@ -1,4 +1,6 @@
 class AddPolymorphicMetadataToExchange < ActiveRecord::Migration
+  class Exchange < ActiveRecord::Base; end
+
   def self.up
     add_column :exchanges, :metadata_id, :integer
     add_column :exchanges, :metadata_type, :string
