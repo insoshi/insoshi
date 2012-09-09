@@ -22,6 +22,7 @@ end
 gem "audited-activerecord"
 gem "rails3_acts_as_paranoid", "~>0.1.4"
 gem "acts_as_tree_rails3"
+gem "uuid"
 
 gem 'jquery-rails'
 
