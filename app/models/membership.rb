@@ -92,26 +92,17 @@ class Membership < ActiveRecord::Base
 
     # Make a pending membership request.
     def request(person, group, send_mail = nil)
-      if send_mail.nil?
-        send_mail = global_prefs.email_notifications?
-      end
-      if person.groups.include?(group) or Membership.exists?(person, group)
-        nil
-      else
+      send_mail ||= global_prefs.email_notifications?
+      unless person.groups.include?(group) or Membership.exist?(person, group)
         if group.public? or group.private?
+          membership = nil
           transaction do
-            create(:person => person, :group => group, :status => PENDING)
-            if send_mail
-              membership = person.memberships.find(:first, :conditions => ['group_id = ?',group])
-              after_transaction { PersonMailerQueue.membership_request(membership) }
-            end
+            membership = create(:person => person, :group => group, :status => PENDING)
+            after_transaction { PersonMailerQueue.membership_request(membership) } if send_mail
           end
           if group.public?
-            Membership.accept(person,group)
-            if send_mail
-              membership = person.memberships.find(:first, :conditions => ['group_id = ?',group])
-              after_transaction { PersonMailerQueue.membership_public_group(membership) }
-            end
+            Membership.accept(person, group)
+            after_transaction { PersonMailerQueue.membership_public_group(membership) } if send_mail
           end
         end
         true
