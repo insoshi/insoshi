@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/rewritten/open_id_authentication.git
+  revision: 21b0ef5a6be35a1175ba8fb279e8dab35c7c88cf
+  specs:
+    open_id_authentication (1.1.0)
+      rack-openid (~> 1.3)
+
 PATH
   remote: vendor/gems/oauth-plugin-0.4.0.pre7
   specs:
@@ -170,8 +177,6 @@ GEM
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       rack (~> 1.2)
-    open_id_authentication (1.1.0)
-      rack-openid (~> 1.3)
     opentransact (0.1.2)
       multi_json
       multi_xml
@@ -324,7 +329,7 @@ DEPENDENCIES
   newrelic_rpm
   oauth
   oauth-plugin!
-  open_id_authentication
+  open_id_authentication!
   opentransact
   pg
   rack
