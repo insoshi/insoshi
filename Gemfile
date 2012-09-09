@@ -51,6 +51,7 @@ gem "redcarpet"
 gem 'rails_admin'
 gem "ar_after_transaction"
 gem 'valid_email', :require => 'valid_email/email_validator'
+gem "calendar_helper"
 
 group :development, :test do
   gem "heroku"

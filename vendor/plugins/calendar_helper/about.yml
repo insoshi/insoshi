@@ -1,7 +1,0 @@
-author: topfunky
-summary: Generates a table-based HTML calendar that can be styled with CSS. Also includes a generator with relevant stylesheets.
-homepage: http://nubyonrails.com
-plugin: http://topfunky.net/svn/plugins/calendar_helper
-license: MIT
-version: 0.2.2
-rails_version: 1.0+
