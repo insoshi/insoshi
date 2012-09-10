@@ -43,6 +43,7 @@ end
         end
       end
       field :balance
+      field :credit_limit
       field :updated_at do
         label "Last Transaction"
       end
@@ -51,6 +52,7 @@ end
     export do
       field :person
       field :balance
+      field :credit_limit
       field :updated_at do
         label "Last Transaction"
       end
