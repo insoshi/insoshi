@@ -44,7 +44,6 @@ end
       end
       field :balance
       field :credit_limit
-      field :starting_balance
       field :updated_at do
         label "Last Transaction"
       end
@@ -54,7 +53,6 @@ end
       field :person
       field :balance
       field :credit_limit
-      field :starting_balance
       field :updated_at do
         label "Last Transaction"
       end

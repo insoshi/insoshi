@@ -15,7 +15,7 @@ class Account < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
 
-  attr_accessible :credit_limit, :offset, :starting_balance, :as => :admin
+  attr_accessible :credit_limit, :offset, :as => :admin
   attr_accessible :credit_limit, :offset
 
   before_update :check_credit_limit
