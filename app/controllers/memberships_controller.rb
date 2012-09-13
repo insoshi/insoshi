@@ -86,7 +86,7 @@ class MembershipsController < ApplicationController
     @membership.breakup
     
     respond_to do |format|
-      flash[:success] = t('success_you_have_unsubscribed') + " '#{@membership.person.name}' #{t('success_from_group')} '#{@membership.group.name}'"
+      flash[:success] = t('success_you_have_unsubscribed') + " '#{@membership.person.display_name}' #{t('success_from_group')} '#{@membership.group.name}'"
       format.html { redirect_to(members_group_path(@membership.group)) }
     end
   end
@@ -96,7 +96,7 @@ class MembershipsController < ApplicationController
     after_transaction { PersonMailerQueue.membership_accepted(@membership) }
 
     respond_to do |format|
-      flash[:success] = t('success_you_have_accepted') + " '#{@membership.person.name}' #{t('success_for_group')} '#{@membership.group.name}'"
+      flash[:success] = t('success_you_have_accepted') + " '#{@membership.person.display_name}' #{t('success_for_group')} '#{@membership.group.name}'"
       format.html { redirect_to(members_group_path(@membership.group)) }
     end
   end

@@ -69,7 +69,7 @@
                 <%= image_link current_person, {:link => person_path(current_person)} %>
               </li>
               <li class="right_item">
-                <a href="#"><%= h current_person.name %></a>
+                <a href="#"><%= h current_person.display_name %></a>
                 <ul>
                   <%= link_to t('home.menu.profile'), person_path(current_person) %>
                   <%= link_to t('home.menu.inbox'), messages_path %>

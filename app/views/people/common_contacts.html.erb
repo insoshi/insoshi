@@ -1,5 +1,5 @@
 <%= column_div :type => :primary do -%>
-<h2>Common contacts with <%= @person.name %></h2>
+<h2>Common contacts with <%= @person.display_name %></h2>
 <% unless @common_contacts.empty? -%>
   <%= will_paginate(@common_contacts) %>
   <ul class="list people">

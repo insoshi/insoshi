@@ -31,7 +31,7 @@ CATEGORIES.each do |value|
   category = Category.find_or_create_by_name(value, :description => "")
 end
 
-STATES = [
+US_STATES = [
     [ 'Alabama', 'AL' ], 
     [ 'Alaska', 'AK' ], 
     [ 'Arizona', 'AZ' ], 
@@ -89,6 +89,20 @@ STATES = [
     [ 'Wyoming', 'WY' ]
   ]
 
-STATES.each do |value|
+US_STATES.each do |value|
   state = State.find_or_create_by_name( :name => value[0], :abbreviation => value[1] )
+end
+
+US_BUSINESS_TYPES = [
+    "Sole Proprietor",
+    "C-Corporation",
+    "Partnership",
+    "S-Corporation",
+    "Trust",
+    "Limited Liability Corporation",
+    "Non-profit organization"
+]
+
+US_BUSINESS_TYPES.each do |value|
+  type = BusinessType.find_or_create_by_name(value, :description => "")
 end

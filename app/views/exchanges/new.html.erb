@@ -1,6 +1,6 @@
 <%= render :partial => '/shared/update_currency_units' %>
 <%= column_div :type => :primary do -%>
-  <h2><%= t('exchanges.new.enter_credit_for') %> <%= h @person.name %></h2>
+  <h2><%= t('exchanges.new.enter_credit_for') %> <%= h @person.display_name %></h2>
   <% unless @groups.empty? %>
 
   <%= error_messages_for :exchange %>

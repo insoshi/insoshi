@@ -1,8 +1,8 @@
   <div class="profile vcard">
     <%- if @person.openid_identifier.nil? -%>
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.name %></span>&nbsp;<%= organization_image(@person) %><%= waiting_image %></h2>
+    <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>&nbsp;<%= organization_image(@person) %><%= waiting_image %></h2>
     <%- else -%>
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<%= image_tag("login-bg.gif") %><%= organization_image(@person) %>&nbsp;<%= waiting_image %></h2>
+    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.display_name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<%= image_tag("login-bg.gif") %><%= organization_image(@person) %>&nbsp;<%= waiting_image %></h2>
     <%- end -%>
     <%- if admin? and not @person.active? -%>
       <p class="error"><%= t('people.show.not_active') %></p>
@@ -30,9 +30,12 @@
     <%- end -%>
     <div class="toolbox">
       <%= image_tag @person.main_photo, :class => "profile-image photo",
-                                        :alt => h(@person.name) %>
+                                        :alt => h(@person.display_name) %>
 
         <ul class="tools">
+          <%- if @person.org %>
+            <li><span class="label"><%= t('groups.show.contact') %></span>: <%= @person.name %></li>
+          <%- end %>
         <%- unless current_person?(@person) -%>
           <%- if logged_in? -%>
             <%- if @membership.group.adhoc_currency? -%>

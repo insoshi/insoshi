@@ -142,6 +142,7 @@ es:
       header: "Descargar un grupo de fotografias"
       upload_a_photo: "Descargar una foto:"
     show:
+      contact: "Contact"
       header: "Grupo:"
       blank_description: "La descripción del grupo esta en blanco."
       add_description: "Haga click aqui para agregar una descripción"
@@ -253,6 +254,8 @@ es:
   people:
     edit:
       header: "Editar el perfil"
+      business_details: "Business Details"
+      business_account: "This is a business account"
       personal_details: "Detalles personales"
       name: "Nombre"
       share_phone_number: "Comparta su numero telefonio:"
@@ -280,6 +283,13 @@ es:
       change_password: "Cambiar su contraseña"
       change_openid: "Cambiar su OpenID"
       web_site_url: "URL del sitio web"
+      business_name: "Business Name"
+      legal_business_name: "Business Legal Name"
+      business_type: "Business Type"
+      title: "Your Title"
+      activity_status: "Activity Status"
+      plan_type: "Plan Type"
+      support_contact: "Support Contact"
     groups:
       no_groups: "Todavía no hay grupos"
       new_group: "Grupo Nuevo"
@@ -294,6 +304,7 @@ es:
       no_invitations: "Todavía no hay invitaciones"
     new:
       header: "Enlistarse"
+      business_account: "This is a business account"
       email_address: "Correo electronico"
       comma_will_be_verified: ", sera verificado"
       never_made_public: "nunca se publicara"
@@ -317,6 +328,7 @@ es:
       no_membership_request: "Todavía no hay peticiones de membresía"
     show:
       header: "Perfil"
+      support_contact: "Support Contact"
       organization_profile: "This is a profile of an organization"
       not_active: "Esta persona no esta activa"
       description_blank: "Su descripción esta en blanco."

@@ -125,7 +125,7 @@ class PeopleController < ApplicationController
 
   def update
     if cancel?
-      flash[:notice] = "#{CGI.escapeHTML @person.name} " + t('cancelled')
+      flash[:notice] = "#{CGI.escapeHTML @person.display_name} " + t('cancelled')
       redirect_to person_path(@person)
       return
     end
@@ -135,7 +135,7 @@ class PeopleController < ApplicationController
       if 'deactivated' == params[:task]
         @person.update_attributes!(:sponsor => current_person)
       end
-      flash[:success] = "#{CGI.escapeHTML @person.name} " + t('success_updated')
+      flash[:success] = "#{CGI.escapeHTML @person.display_name} " + t('success_updated')
       redirect_to person_path(@person)
       return
     end

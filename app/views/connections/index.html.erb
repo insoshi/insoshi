@@ -1,5 +1,5 @@
 <%= column_div :type => :primary do -%>
-<h2>Contacts for <%= h @person.name %></h2>
+<h2>Contacts for <%= h @person.display_name %></h2>
 
 <% unless @contacts.empty? -%>
   <%= will_paginate(@contacts) %>

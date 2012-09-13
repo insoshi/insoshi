@@ -32,18 +32,19 @@ end
     export
   end
 
-  config.included_models = [Account, Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood,Req,Offer]
+  config.included_models = [Account, Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
 
   config.model Account do
     list do
       field :person do
         label "Name"
         formatted_value do
-          value.name
+          value.display_name
         end
       end
       field :balance
       field :credit_limit
+      field :starting_balance
       field :updated_at do
         label "Last Transaction"
       end
@@ -53,6 +54,7 @@ end
       field :person
       field :balance
       field :credit_limit
+      field :starting_balance
       field :updated_at do
         label "Last Transaction"
       end
@@ -230,12 +232,49 @@ end
     end
   end
 
+  config.model BusinessType do
+    list do
+      field :name
+      sort_by :name
+    end
+
+    edit do
+      field :name
+      field :description
+    end
+  end
+
+  config.model ActivityStatus do
+    list do
+      field :name
+      sort_by :name
+    end
+
+    edit do
+      field :name
+      field :description
+    end
+  end
+
+  config.model PlanType do
+    list do
+      field :name
+      sort_by :name
+    end
+
+    edit do
+      field :name
+      field :description
+    end
+  end
+
   config.model Person do
     list do
       field :last_logged_in_at do
         label "Last login"
       end
       field :name
+      field :business_name
       field :email
       field :deactivated do
         label "Disabled"
@@ -262,6 +301,14 @@ end
       field :admin
       field :org
       field :web_site_url
+      field :org
+      field :title
+      field :business_name
+      field :legal_business_name
+      field :business_type 
+      field :activity_status
+      field :plan_type
+      field :support_contact
     end
 
     edit do
@@ -273,8 +320,15 @@ end
       field :email_verified
       field :phone
       field :admin
-      field :org
       field :web_site_url
+      field :org
+      field :title
+      field :business_name
+      field :legal_business_name
+      field :business_type
+      field :activity_status
+      field :plan_type
+      field :support_contact
       field :description, :text do
         #ckeditor true
       end

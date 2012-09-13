@@ -4,7 +4,7 @@
 
   <%- unless @person.last_logged_in_at.nil? or current_person?(@person) -%>
     <p class="meta">
-    <%= @person.name %> <%= t('last_logged_in') %>
+    <%= @person.display_name %> <%= t('last_logged_in') %>
     <%= time_ago_in_words(@person.last_logged_in_at) %> <%= t('ago') %>
     </p>    
   <%- end -%>

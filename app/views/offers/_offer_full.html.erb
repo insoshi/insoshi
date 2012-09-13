@@ -10,7 +10,7 @@
         <% end %>
         <%= f.hidden_field :subject, :id => "message_subject", :value => @offer.name %>
         <div class="form_row">
-          <label for="message_body">Send <%= h @offer.person.name %> a question</label>
+          <label for="message_body">Send <%= h @offer.person.display_name %> a question</label>
           <%= f.text_area :content, :id => "message_body", :rows => 5 %>
           <%= set_focus_to "message_body" %>
         </div>

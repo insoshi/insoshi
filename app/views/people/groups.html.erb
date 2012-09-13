@@ -1,5 +1,5 @@
 <%= column_div :type => :primary do -%>
-  <h2><%= (params[:action] == 'admin_groups' ? "Admin " : "" ) + "Groups" %> <%= t('for') %> <%= h @person.name %></h2>
+  <h2><%= (params[:action] == 'admin_groups' ? "Admin " : "" ) + "Groups" %> <%= t('for') %> <%= h @person.display_name %></h2>
 
   <% unless @groups.empty? -%>
     <ul class="list people">

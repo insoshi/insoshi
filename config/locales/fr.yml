@@ -197,6 +197,7 @@ fr:
       header: "Publier une photo de groupe"
       upload_a_photo: "Publier une photo"
     show:
+      contact: "Contact"
       header: "Groupe"
       blank_description: "La description du groupe est vide"
       add_description: "Cliquer ici pour ajouter une description"
@@ -308,6 +309,8 @@ fr:
   people:
     edit:
       header: "Modifiez le profil"
+      business_details: "Business Details"
+      business_account: "This is a business account"
       personal_details: "Détails personnels"
       name: "Nom"
       share_phone_number: "Partager le numéro de téléphone"
@@ -335,6 +338,13 @@ fr:
       change_password: "Changez le mot de passe"
       change_openid: "Changez OpenID"
       web_site_url: "Site Web"
+      business_name: "Business Name"
+      legal_business_name: "Business Legal Name"
+      business_type: "Business Type"
+      title: "Your Title"
+      activity_status: "Activity Status"
+      plan_type: "Plan Type"
+      support_contact: "Support Contact"
     groups:
       no_groups: "Présentement aucun groupe"
       new_group: "Nouveau groupe"
@@ -349,6 +359,7 @@ fr:
       no_invitations: "Aucune invitation pour l’instant"
     new:
       header: "Joindre"
+      business_account: "This is a business account"
       email_address: "Adresse de courriel"
       comma_will_be_verified: "Va être vérifié"
       never_made_public: "jamais rendu publique"
@@ -372,6 +383,7 @@ fr:
       no_membership_request: "No membership request (yet)"
     show:
       header: "Profil"
+      support_contact: "Support Contact"
       organization_profile: "Ceci est le profil d’une organisation"
       not_active: "Cette personne n’est pas active"
       description_blank: "Votre description est vide"

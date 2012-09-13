@@ -68,6 +68,10 @@ class Person < ActiveRecord::Base
                   :broadcast_emails,
                   :web_site_url
 
+  # Organization attributes
+  attr_accessible :business_name, :legal_business_name, :business_type_id, 
+                  :title, :activity_status_id, :plan_type_id, :support_contact_id
+
   index do
     name
     description
@@ -151,6 +155,10 @@ class Person < ActiveRecord::Base
   has_many :bids
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
   belongs_to :sponsor, :class_name => "Person", :foreign_key => "sponsor_id"
+  belongs_to :support_contact, :class_name => "Person", :foreign_key => "support_contact_id"
+  belongs_to :business_type
+  belongs_to :activity_status
+  belongs_to :plan_type
 
   validates_presence_of     :email, :name
 #  validates_presence_of     :password,              :if => :password_required?
@@ -165,6 +173,10 @@ class Person < ActiveRecord::Base
                             :with => EMAIL_REGEX,
                             :message => "must be a valid email address"
   validates_uniqueness_of   :email
+  validates_length_of       :business_name,  :maximum => 100
+  validates_length_of       :legal_business_name,  :maximum => 100
+  validates_presence_of     :business_type, :if => Proc.new { |person| person.org }
+
 #  validates_uniqueness_of   :identity_url, :allow_nil => true
 
   # XXX just doing jquery validation
@@ -242,6 +254,11 @@ class Person < ActiveRecord::Base
       find(:first, :conditions => ["admin = ?", true],
                    :order => :created_at)
     end
+  end
+
+  # Display name based upon entity type
+  def display_name
+    org ? business_name : name
   end
 
   # Params for use in urls.
