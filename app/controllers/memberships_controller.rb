@@ -14,12 +14,12 @@ class MembershipsController < ApplicationController
     @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
-    @memberships = Membership.search(@selected_neighborhood || @selected_category, 
-                                     @group, 
-                                     params[:page], 
-                                     AJAX_POSTS_PER_PAGE, 
-                                     params[:search]
-                                     )
+    @memberships = Membership.custom_search(@selected_neighborhood || @selected_category, 
+                                            @group, 
+                                            params[:page], 
+                                            AJAX_POSTS_PER_PAGE, 
+                                            params[:search]
+                                            )
 
     respond_to do |format|
       format.js

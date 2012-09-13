@@ -63,6 +63,7 @@ group :development, :test do
   gem "artifice"
   gem "opentransact"
   gem 'annotate'
+  gem 'therubyracer'
 end
 
 group :test do
