@@ -30,5 +30,13 @@ module GroupsHelper
   def group_link(group)
     link_to(h(group.name), group_path(group))
   end
-  
+
+  def delete_membership_link(person,group)
+    membership = Membership.mem(person,group)
+    if membership
+      membership_path(membership)
+    else
+      "#"
+    end
+  end
 end
