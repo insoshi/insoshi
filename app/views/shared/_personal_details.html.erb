@@ -11,7 +11,7 @@
       public<%= ", will be verified" if global_prefs.email_verifications? %>)
       </span>
     </label>
-    <%= f.text_field :email, :maxlength => Person::MAX_EMAIL %>
+    <%= f.text_field :email %>
     <%= set_focus_to "person_email" %>  
   </div>
 

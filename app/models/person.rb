@@ -353,7 +353,11 @@ class Person < ActiveRecord::Base
   # Return the photos ordered by primary first, then by created_at.
   # They are already ordered by created_at as per the has_many association.
   def sorted_photos
-    @sorted_photos ||= photos.order("(CASE WHEN primary THEN 1 WHEN primary IS NULL THEN 2 ELSE 3 END)")
+    # The call to partition ensures that the primary photo comes first.
+    # photos.partition(&:primary) => [[primary], [other one, another one]]
+    # flatten yields [primary, other one, another one]
+    @sorted_photos ||= photos.partition(&:primary).flatten
+    #@sorted_photos ||= photos.order("(CASE WHEN primary THEN 1 WHEN primary IS NULL THEN 2 ELSE 3 END)")
   end
 
   def change_password?(passwords)
