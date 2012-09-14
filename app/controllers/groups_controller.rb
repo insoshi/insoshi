@@ -5,6 +5,7 @@ class GroupsController < ApplicationController
   load_and_authorize_resource
   
   def index
+    @body = "noajax"
     # XXX can't define abilities w/ blocks (accessible_by) http://github.com/ryanb/cancan/wiki/Upgrading-to-1.4
     @groups = Group.name_sorted_and_paginated(params[:page])
 
