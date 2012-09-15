@@ -17,6 +17,21 @@ class Ability
     end
     can :export, Person
 
+    can :read, BusinessType
+    can [:create,:update,:destroy], BusinessType do |bt|
+      person.admin?
+    end
+
+    can :read, ActivityStatus
+    can [:create,:update,:destroy], ActivityStatus do |as|
+      person.admin?
+    end
+
+    can :read, PlanType
+    can [:create,:update,:destroy], PlanType do |pt|
+      person.admin?
+    end
+
     can :read, FeedPost
     can [:update,:destroy], FeedPost do |post|
       person.admin?

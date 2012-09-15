@@ -6,7 +6,7 @@ module GroupsHelper
   
   # Return a group's image link.
   # The default is to display the group's icon linked to the profile.
-  def image_link(group, options = {})
+  def group_image_link(group, options = {})
     link = options[:link] || group
     image = options[:image] || :icon
     image_options = { :title => h(group.name), :alt => h(group.name) }

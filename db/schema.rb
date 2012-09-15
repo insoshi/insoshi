@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120907153639) do
+ActiveRecord::Schema.define(:version => 20120911165701) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -37,6 +37,13 @@ ActiveRecord::Schema.define(:version => 20120907153639) do
   add_index "activities", ["item_id"], :name => "index_activities_on_item_id"
   add_index "activities", ["item_type"], :name => "index_activities_on_item_type"
   add_index "activities", ["person_id"], :name => "index_activities_on_person_id"
+
+  create_table "activity_statuses", :force => true do |t|
+    t.string   "name",        :limit => 100, :null => false
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "addresses", :force => true do |t|
     t.integer  "person_id"
@@ -100,6 +107,13 @@ ActiveRecord::Schema.define(:version => 20120907153639) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "sent",       :default => false, :null => false
+  end
+
+  create_table "business_types", :force => true do |t|
+    t.string   "name",        :limit => 100, :null => false
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "capabilities", :force => true do |t|
@@ -423,6 +437,13 @@ ActiveRecord::Schema.define(:version => 20120907153639) do
     t.integer  "sponsor_id"
     t.boolean  "broadcast_emails",         :default => true,  :null => false
     t.string   "web_site_url"
+    t.string   "business_name"
+    t.string   "legal_business_name"
+    t.integer  "business_type_id"
+    t.string   "title"
+    t.integer  "activity_status_id"
+    t.integer  "plan_type_id"
+    t.integer  "support_contact_id"
   end
 
   add_index "people", ["admin"], :name => "index_people_on_admin"
@@ -447,6 +468,13 @@ ActiveRecord::Schema.define(:version => 20120907153639) do
 
   add_index "photos", ["parent_id"], :name => "index_photos_on_parent_id"
   add_index "photos", ["person_id"], :name => "index_photos_on_person_id"
+
+  create_table "plan_types", :force => true do |t|
+    t.string   "name",        :limit => 100, :null => false
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"

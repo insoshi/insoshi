@@ -369,6 +369,9 @@ ul li.profile_icon_item {
   margin: 6px 6px 6px 2em;
   padding: 0;
 }
+.profile ul.tools li span.label {
+  font-weight: bold;
+} 
 form#blogpost #post_title, form#blogpost #post_body {
   width: 312px;
 }

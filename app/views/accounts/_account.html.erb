@@ -1,8 +1,8 @@
-<h2><%= @person.name %>'s <%= t('accounts.show.header_group') %> <%= @account.group.name %></h2>
+<h2><%= @person.display_name %>'s <%= t('accounts.show.header_group') %> <%= @account.group.name %></h2>
   <div class="profile vcard">
     <div class="toolbox">
     <%= link_to( image_tag( @person.main_photo, :class => "profile-image photo",
-                                      :alt => h(@person.name) ), person_path(@person) ) %>
+                                      :alt => h(@person.display_name) ), person_path(@person) ) %>
     <ul class="tools">
       <li>
         <%= account_link @account %>
@@ -17,7 +17,7 @@
 
   <%- unless @person.last_logged_in_at.nil? or current_person?(@person) -%>
     <p class="meta">
-    <%= @person.name %> <%= t('last_logged_in') %> 
+    <%= @person.display_name %> <%= t('last_logged_in') %> 
     <%= time_ago_in_words(@person.last_logged_in_at) %> <%= t('ago') %>
     </p>    
   <%- end -%>

@@ -1,0 +1,10 @@
+<%=
+    collection_select( model_name,
+                      'business_type_id',
+                      BusinessType.all,
+                      :id,
+                      :name,
+                      {},
+                      {:multiple => false}
+                      )
+%>

@@ -179,6 +179,16 @@ module ApplicationHelper
     # str.html_safe
   end
 
+  def support_link(person, group = nil, options = {})
+    img = image_tag("icons/question.gif")
+    path = person_path(person)
+    action = t('people.show.support_contact')
+    str = link_to(img,path,options)
+    str << " "
+    str << link_to_unless_current(action, path, options)
+    # str.html_safe
+  end
+
   def email_link(person, options = {})
     reply = options[:replying_to]
     if reply

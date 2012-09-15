@@ -40,29 +40,29 @@ module ActivitiesHelper
     person = activity.person
     case activity_type(activity)
     when "Connection"
-      raw %(#{h person.name} #{t('and')} #{h activity.item.contact.name} #{t('shared.minifeed.have_connected')}.).html_safe
+      raw %(#{h person.display_name} #{t('and')} #{h activity.item.contact.name} #{t('shared.minifeed.have_connected')}.).html_safe
     when "ForumPost"
       topic = activity.item.topic
-      %(#{h person.name} #{t('shared.minifeed.made_a')} #{topic_link(t('shared.minifeed.forum_post'), topic)}.).html_safe
+      %(#{h person.display_name} #{t('shared.minifeed.made_a')} #{topic_link(t('shared.minifeed.forum_post'), topic)}.).html_safe
     when "Topic"
-      %(#{h person.name} #{t('shared.minifeed.created_a')} #{topic_link(t('shared.minifeed.new_discussion_topic'), activity.item)}.).html_safe
+      %(#{h person.display_name} #{t('shared.minifeed.created_a')} #{topic_link(t('shared.minifeed.new_discussion_topic'), activity.item)}.).html_safe
     when "Photo"
-      %(#{h person.name}#{t('shared.minifeed.profile_picture_changed')}.).html_safe
+      %(#{h person.display_name}#{t('shared.minifeed.profile_picture_changed')}.).html_safe
     when "Person"
-      %(#{h person.name}#{t('shared.minifeed.description_changed')}.).html_safe
+      %(#{h person.display_name}#{t('shared.minifeed.description_changed')}.).html_safe
     when "Group"
-      %(#{h person.name} #{t('shared.minifeed.created_the_group')} '#{group_link(Group.find(activity.item))}').html_safe
+      %(#{h person.display_name} #{t('shared.minifeed.created_the_group')} '#{group_link(Group.find(activity.item))}').html_safe
     when "Membership"
-      %(#{h person.name} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}').html_safe
+      %(#{h person.display_name} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}').html_safe
     when "Req"
       req = activity.item
-      %(#{h person.name} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.).html_safe
+      %(#{h person.display_name} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.).html_safe
     when "Offer"
       offer = activity.item
-      %(#{h person.name} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.).html_safe
+      %(#{h person.display_name} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.).html_safe
     when "Exchange"
       exchange = activity.item
-      %(#{h person.name} #{t('earned')} #{exchange.amount} #{exchange.group.unit} #{t('for')} 
+      %(#{h person.display_name} #{t('earned')} #{exchange.amount} #{exchange.group.unit} #{t('for')} 
       #{metadata_link(exchange.metadata)} #{t('in')} #{group_link(exchange.group)}.).html_safe
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -99,7 +99,7 @@ module ActivitiesHelper
   end
   
   def someones(person, commenter, link = true)
-    link ? "#{person_link(person)}'s" : "#{h person.name}'s"
+    link ? "#{person_link(person)}'s" : "#{h person.display_name}'s"
   end
   
   def topic_link(text, topic = nil)

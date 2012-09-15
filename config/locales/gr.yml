@@ -255,6 +255,7 @@ gr:
       header: "Ανέβασμα φωτογραφίας ομάδας"
       upload_a_photo: "Ανέβασε μια φωτογραφία:"
     show:
+      contact: "Επικοινωνία"
       header: "Ομάδα:"
       blank_description: "Η περιγραφή της ομάδας είναι κενή."
       add_description: "Πατήστε εδώ για να προσθέσετε περιγραφή"
@@ -367,6 +368,8 @@ gr:
   people:
     edit:
       header: "Επεξεργασία προφίλ"
+      business_details: "Business Details"
+      business_account: "This is a business account"
       personal_details: "Προσωπικά στοιχεία"
       name: "Όνομα"
       share_phone_number: "Κοινός αριθμός τηλεφώνου:"
@@ -394,6 +397,13 @@ gr:
       change_password: "Αλλαγή Κωδικού Πρόσβασης"
       change_openid: "Αλλαγή OpenID"
       web_site_url: "URL ιστοσελίδας"
+      business_name: "Business Name"
+      legal_business_name: "Business Legal Name"
+      business_type: "Business Type"
+      title: "Your Title"
+      activity_status: "Activity Status"
+      plan_type: "Plan Type"
+      support_contact: "Support Contact"
     groups:
       no_groups: "Καμία ομάδα (ακόμη)"
       new_group: "Νέα Ομάδα"
@@ -408,6 +418,7 @@ gr:
       no_invitations: "Καμία Πρόσκληση (ακόμη)"
     new:
       header: "Εγγραφή"
+      business_account: "This is a business account"
       email_address: "Ηλεκτρονική διεύθυνση"
       comma_will_be_verified: ", θα επαληθευτεί"
       never_made_public: "ποτέ δεν θα εμφανίζεται"
@@ -431,6 +442,7 @@ gr:
       no_membership_request: "Καμία αίτηση συμμετοχής (ακόμη)"
     show:
       header: "Προφίλ"
+      support_contact: "Support Contact"
       organization_profile: "Αυτό είναι προφίλ οργανισμού"
       not_active: "Αυτό το πρόσωπο δεν είναι ενεργό"
       description_blank: "Η περιγραφή σας είναι κενή."

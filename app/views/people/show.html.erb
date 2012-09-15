@@ -1,9 +1,9 @@
 <%= column_div :type => :primary do -%>
   <div class="profile vcard">
     <%- if @person.openid_identifier.nil? -%>
-      <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.name %></span></h2>
+      <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span></h2>
     <%- else -%>
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<%= image_tag("login-bg.gif") %></h2>
+    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.display_name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<%= image_tag("login-bg.gif") %></h2>
     <%- end -%>
     <%- if admin? and not @person.active? -%>
       <p class="error"><%= t('people.show.not_active') %></p>
@@ -31,9 +31,12 @@
     <%- end -%>
     <div class="toolbox">
       <%= image_tag @person.main_photo, :class => "profile-image photo",
-                                        :alt => h(@person.name) %>
+                                        :alt => h(@person.display_name) %>
 
         <ul class="tools">
+          <%- if @person.org %>
+            <li><span class="label"><%= t('groups.show.contact') %></span>: <%= @person.name %></li>
+          <%- end %>
         <%- unless current_person?(@person) -%>
           <%- if logged_in? -%>
             <li><%= exchange_link @person %></li>
@@ -64,6 +67,9 @@
         <% else -%>
           <%- if logged_in? -%>
             <%= render :partial => 'account', :collection => @person.accounts %>
+            <%- if current_person?(@person) && @person.support_contact -%>
+              <li><%= support_link @person.support_contact %></li>
+            <%- end -%>
           <%- end -%>
         <%- end -%>
       </ul>

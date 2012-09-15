@@ -14,18 +14,20 @@ class Person < ActiveRecord::Base
   attr_accessor :sorted_photos, :accept_agreement
   attr_accessible *attribute_names, :as => :admin
   attr_accessible :password, :password_confirmation, :as => :admin
-  attr_accessible :email, :password, :password_confirmation, :name,
-  :description, :connection_notifications,
-  :message_notifications, :forum_notifications,
-  :category_ids, :address_ids, :neighborhood_ids,
-  :zipcode,
-  :phone, :phoneprivacy,
-  :accept_agreement,
-  :language,
-  :openid_identifier,
-  :sponsor,
-  :broadcast_emails,
-  :web_site_url
+  attr_accessible :email, :password, :password_confirmation, :name
+  attr_accessible :business_name, :legal_business_name, :business_type_id
+  attr_accessible :title, :activity_status_id, :plan_type_id, :support_contact_id
+  attr_accessible :description, :connection_notifications
+  attr_accessible :message_notifications, :forum_notifications
+  attr_accessible :category_ids, :address_ids, :neighborhood_ids
+  attr_accessible :zipcode
+  attr_accessible :phone, :phoneprivacy
+  attr_accessible :accept_agreement
+  attr_accessible :language
+  attr_accessible :openid_identifier
+  attr_accessible :sponsor
+  attr_accessible :broadcast_emails
+  attr_accessible :web_site_url
 
   extend Searchable(:name, :description)
 
@@ -128,10 +130,17 @@ class Person < ActiveRecord::Base
   has_many :bids
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
   belongs_to :sponsor, :class_name => "Person", :foreign_key => "sponsor_id"
+  belongs_to :support_contact, :class_name => "Person", :foreign_key => "support_contact_id"
+  belongs_to :business_type
+  belongs_to :activity_status
+  belongs_to :plan_type
 
   validates :name, :presence => true, :length => { :maximum => MAX_NAME }
   validates :description, :length => { :maximum => MAX_DESCRIPTION }
   validates :email, :presence => true, :uniqueness => true, :email => true
+  validates :business_name, :length => { :maximum => 100 }
+  validates :legal_business_name, :length => { :maximum => 100 }
+  validates :business_type, :presence => true, :if => lambda { |p| p.org }
   #  validates_presence_of     :password,              :if => :password_required?
   #  validates_presence_of     :password_confirmation, :if => :password_required?
   #  validates_length_of       :password, :within => 4..MAX_PASSWORD,
@@ -159,6 +168,11 @@ class Person < ActiveRecord::Base
   # We suggest using this admin as the primary administrative contact.
   def Person.find_first_admin
     where(:admin => true).order(:created_at).first
+  end
+
+  # Display name based upon entity type
+  def display_name
+    org ? business_name : name
   end
 
   # Params for use in urls.
@@ -422,44 +436,44 @@ class Person < ActiveRecord::Base
   # string if it's nil.
   def handle_nil_description
     self.description = "" unless description
-    end
-
-    def update_group_letter
-      self.first_letter = name.mb_chars.first.upcase.to_s
-    end
-
-    def check_config_for_deactivation
-      if Person.global_prefs.whitelist?
-        self.deactivated = true
-      end
-    end
-
-    def set_old_description
-      p = Person.find(self)
-      @old_description = p.description
-    end
-
-    def log_activity_description_changed
-      unless @old_description == description or description.blank?
-        add_activities(:item => self, :person => self)
-      end
-    end
-
-    # Clear out all activities associated with this person.
-    def destroy_activities
-      Activity.where(:person_id => self.id).each &:destroy
-    end
-
-    def destroy_feeds
-      Feed.where(:person_id => self.id).each &:destroy
-    end
-
-    ## Other private method(s)
-
-    def password_required?
-      true
-      #(crypted_password.blank? && identity_url.nil?) || !password.blank? ||
-      #!verify_password.nil?
-    end
-
   end
+
+  def update_group_letter
+    self.first_letter = name.mb_chars.first.upcase.to_s
+  end
+
+  def check_config_for_deactivation
+    if Person.global_prefs.whitelist?
+      self.deactivated = true
+    end
+  end
+
+  def set_old_description
+    p = Person.find(self)
+    @old_description = p.description
+  end
+
+  def log_activity_description_changed
+    unless @old_description == description or description.blank?
+      add_activities(:item => self, :person => self)
+    end
+  end
+
+  # Clear out all activities associated with this person.
+  def destroy_activities
+    Activity.where(:person_id => self.id).each &:destroy
+  end
+
+  def destroy_feeds
+    Feed.where(:person_id => self.id).each &:destroy
+  end
+
+  ## Other private method(s)
+
+  def password_required?
+    true
+    #(crypted_password.blank? && identity_url.nil?) || !password.blank? ||
+    #!verify_password.nil?
+  end
+
+end

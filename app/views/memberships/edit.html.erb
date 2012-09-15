@@ -1,4 +1,4 @@
-<h2>Edit membership for <%= h @membership.person.name %></h2>
+<h2>Edit membership for <%= h @membership.person.display_name %></h2>
 <%= form_for(@membership) do |f| %>
   <%= f.error_messages %>
   <% for role in Membership::ROLES %>
@@ -9,7 +9,7 @@
   <%= f.submit t('button_update') %>
 <% end %>
 <% if @account %>
-  <h2>Edit account for <%= h @membership.person.name %></h2>
+  <h2>Edit account for <%= h @membership.person.display_name %></h2>
   <%= form_for :account, :url => person_account_path(@membership.person,@account), :html => {:method => :put} do |f| %>
     <%= f.error_messages %>
       <div class="form_row">

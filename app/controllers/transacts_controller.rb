@@ -18,7 +18,7 @@ class TransactsController < ApplicationController
   end
 
   def user_info
-    @user_info = {'name' => current_person.name,
+    @user_info = {'name' => current_person.display_name,
                   'profile' => person_url(current_person),
                   'picture' => current_person.thumbnail,
                   'website' => current_person.openid_identifier || '',

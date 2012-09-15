@@ -88,6 +88,10 @@
     <label for="zipcode"><%= t('people.new.zipcode') %></label>
     <%= f.text_field :zipcode %>
   </div>
+
+  <div class="form_row">
+    <%= f.check_box :org, :class => 'checkbox' %> <%= t('people.new.business_account') %>
+  </div>
   
   <div class="form_row">
     <%= f.check_box :accept_agreement, :class => 'checkbox' %> <%= t('people.new.i_accept_the') %> <%= link_to t('people.new.member_agreement'), agreement_path, :target => '_blank', :class => 'small' %>

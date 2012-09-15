@@ -2,6 +2,9 @@
           <%= image_tag @group.main_photo, :class => "profile-image photo",
                                         :alt => h(@group.name) %>
             <ul class="tools">
+            <%- if @membership.person.org %>
+              <li><span class="label"><%= t('groups.show.contact') %></span>: <%= @membership.person.name %></li>
+            <%- end %>
             <%- if @group.adhoc_currency? %>
             <li>
               <%= link_to t('home.index.community_exchanges_graph'), graphs_group_path(@group), :class => "show-follow" %>

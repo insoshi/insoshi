@@ -6,7 +6,7 @@
         <%= fields_for :offer do |o| %>
           <div class="form_row">
             <%= o.label 'For:' %>
-            <%= o.text_field :name, :value => @offer.name, :disabled => true %> &nbsp; <span class="offer"><%= link_to "or ask #{h @offer.person.name} a question", @offer, :class => "meta show-follow" %></span>
+            <%= o.text_field :name, :value => @offer.name, :disabled => true %> &nbsp; <span class="offer"><%= link_to "or ask #{h @offer.person.display_name} a question", @offer, :class => "meta show-follow" %></span>
           </div>
           <%= o.hidden_field :id %>
         <% end %>

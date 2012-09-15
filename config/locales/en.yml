@@ -142,6 +142,7 @@ en:
       header: "Group photo upload"
       upload_a_photo: "Upload a photo:"
     show:
+      contact: "Contact"
       header: "Group:"
       blank_description: "The group description is blank."
       add_description: "Click here to add a description"
@@ -253,6 +254,8 @@ en:
   people:
     edit:
       header: "Edit profile"
+      business_details: "Business Details"
+      business_account: "This is a business account"
       personal_details: "Personal details"
       name: "Name"
       share_phone_number: "Share phone number:"
@@ -280,6 +283,13 @@ en:
       change_password: "Change Password"
       change_openid: "Change OpenID"
       web_site_url: "Web Site URL"
+      business_name: "Business Name"
+      legal_business_name: "Business Legal Name"
+      business_type: "Business Type"
+      title: "Your Title"
+      activity_status: "Activity Status"
+      plan_type: "Plan Type"
+      support_contact: "Support Contact"
     groups:
       no_groups: "No groups (yet)"
       new_group: "New group"
@@ -294,6 +304,7 @@ en:
       no_invitations: "No invitations (yet)"
     new:
       header: "Sign up"
+      business_account: "This is a business account"
       email_address: "Email address"
       comma_will_be_verified: ", will be verified"
       never_made_public: "never made public"
@@ -317,6 +328,7 @@ en:
       no_membership_request: "No membership request (yet)"
     show:
       header: "Profile"
+      support_contact: "Support Contact"
       organization_profile: "This is a profile of an organization"
       not_active: "This person is not active"
       description_blank: "Your description is blank."
