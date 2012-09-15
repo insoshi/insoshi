@@ -499,7 +499,7 @@ es:
     email_verification:
       message_default: "Haz click aquí para confirmar la verificación de tu e-mail:"
       message_whitelist: " Haz click aquí para confirmar la verificación de tu e-mail.  Recuerda que para comenzar a realizar intercambios necesitas la aprobación de un administrador."
-      thanks: "Gracias!
+      thanks: "Gracias!"
     membership_accepted:
       accepted: "Has sido aceptado"
     membership_public_group:
@@ -522,42 +522,42 @@ es:
     _footer:
       thankyou: "Gracias por apoyar el software libre."
 
-  datetime:
-    distance_in_words:
-      half_a_minute: "medio minuto" 
-      less_than_x_seconds:
-        one:  "menos de 1 segundo" 
-        other: "menos de {{count}} segundos"
-      x_seconds:
-        one:  "1 segundo" 
-        other: "{{count}} segundos" 
-      less_than_x_minutes:
-        one:  "menos de 1 minuto" 
-        other: "menos de {{count}} minutos" 
-      x_minutes:
-        one:  "1 minuto" 
-        other: "{{count}} minutos" 
-      about_x_hours:
-        one:  "alrededor de 1 hora" 
-        other: "alrededor de {{count}} horas" 
-      x_days:
-        one:  "1 día" 
-        other: "{{count}} días" 
-      about_x_months:
-        one:  "alrededor de 1 mes" 
-        other: "alrededor de {{count}} meses" 
-      x_months:
-        one:  "1 mes" 
-        other: "{{count}} meses" 
-      about_x_years:
-        one:  "alrededor de 1 año" 
-        other: "alrededor de {{count}} años" 
-      over_x_years:
-        one:  "más de 1 año" 
-        other: "más de {{count}} años" 
-      almost_x_years:
-        one: "casi 1 año"
-        other: "casi {{count}} años"
+  # datetime:
+  #   distance_in_words:
+  #     half_a_minute: "medio minuto" 
+  #     less_than_x_seconds:
+  #       one:  "menos de 1 segundo" 
+  #       other: "menos de {count}} segundos"
+  #     x_seconds:
+  #       one:  "1 segundo" 
+  #       other: "{{count}} segundos" 
+  #     less_than_x_minutes:
+  #       one:  "menos de 1 minuto" 
+  #       other: "menos de {{count}} minutos" 
+  #     x_minutes:
+  #       one:  "1 minuto" 
+  #       other: "{{count}} minutos" 
+  #     about_x_hours:
+  #       one:  "alrededor de 1 hora" 
+  #       other: "alrededor de {{count}} horas" 
+  #     x_days:
+  #       one:  "1 día" 
+  #       other: "{{count}} días" 
+  #     about_x_months:
+  #       one:  "alrededor de 1 mes" 
+  #       other: "alrededor de {{count}} meses" 
+  #     x_months:
+  #       one:  "1 mes" 
+  #       other: "{{count}} meses" 
+  #     about_x_years:
+  #       one:  "alrededor de 1 año" 
+  #       other: "alrededor de {{count}} años" 
+  #     over_x_years:
+  #       one:  "más de 1 año" 
+  #       other: "más de {{count}} años" 
+  #     almost_x_years:
+  #       one: "casi 1 año"
+  #       other: "casi {{count}} años"
 
   date:
     formats:
@@ -581,7 +581,7 @@ es:
     error_messages:
       login_blank: "no puede dejarse en blanco."
       login_not_found: "no es válido."
-      login_invalid: "solo puedes usar letras, números, espacios y  .-_@"
+      login_invalid: "solo puedes usar letras, números, espacios y .-_@"
       consecutive_failed_logins_limit_exceeded: "Demasiados errores en las credenciales, tu cuenta se ha desactivado, contacta con un administrador ."
       password_blank: "no puede dejarse en blanco."
       password_invalid: "no es válido"
@@ -620,12 +620,12 @@ es:
             password:
               blank: "no puede dejarse en blanco."
               too_short: "es demasiado corto (mínimo %{count} caracteres)."
-              too_long"es demasiado largo (máximo %{count} caracteres)."
+              too_long: "es demasiado largo (máximo %{count} caracteres)."
               confirmation: "no coinciden."
             password_confirmation:
               blank: "no puede dejarse en blanco."
               too_short: "es demasiado corto (mínimo %{count} caracteres)."
-              too_long"es demasiado largo (máximo %{count} caracteres)."
+              too_long: "es demasiado largo (máximo %{count} caracteres)."
 
   notice_warning_your_email_address: "Advertencia: tu dirección de correo electrónico está todavía en"
   notice_change_it_here: "Cámbiala aqui"
