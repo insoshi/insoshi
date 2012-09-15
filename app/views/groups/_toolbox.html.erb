@@ -2,25 +2,25 @@
           <%= image_tag @group.main_photo, :class => "profile-image photo",
                                         :alt => h(@group.name) %>
             <ul class="tools">
-            <%- if @membership.person.org %>
+            <%- if @membership.try(:person).try(:org) %>
               <li><span class="label"><%= t('groups.show.contact') %></span>: <%= @membership.person.name %></li>
             <%- end %>
             <%- if @group.adhoc_currency? %>
-            <li>
-              <%= link_to t('home.index.community_exchanges_graph'), graphs_group_path(@group), :class => "show-follow" %>
-            </li>
-              <%- unless @membership.nil? %>
-                <%- unless @membership.account.credit_limit.nil? %>
+              <li>
+                <%= link_to t('home.index.community_exchanges_graph'), graphs_group_path(@group), :class => "show-follow" %>
+              </li>
+              <%- if @membership %>
+                <%- if @membership.account.credit_limit %>
                   <li><%= t('groups.show.your_credit_limit') %> <%= @membership.account.credit_limit %> <%= @group.unit %></li>
                 <%- end -%>
               <%- else -%>
-                <%- unless @group.default_credit_limit.nil? %>
+                <%- if @group.default_credit_limit %>
                   <li><%= t('groups.show.default_credit_limit') %> <%= @group.default_credit_limit %> <%= @group.unit %></li>
                 <%- end -%>
               <%- end -%>
             <%- end -%>
-            <%- unless @membership.nil? %>
-              <% unless @group.asset.nil? %>
+            <%- if @membership %>
+              <% if @group.asset %>
               <li>
                 <%= link_to t('groups.show.your_activity'), transacts_path(@group.asset), :target => '_blank' %>
               </li>
@@ -29,7 +29,7 @@
             <%- end -%>
             <%- if Membership.pending?(current_person, @group) -%>
               <li>
-                <%= t('groups.show.you_have_requested_to_be_a_member_of') %> <strong><%= h @group.name%></strong>
+                <%= t('groups.show.you_have_requested_to_be_a_member_of') %> <strong><%= h @group.name %></strong>
               </li>
             <%- end -%>
             <%- if group_owner?(current_person,@group) -%>
@@ -40,7 +40,7 @@
               <li>
                 <%= t('groups.show.mode') %> <%= @group.get_groups_modes[@group.mode][0] %>
               </li>
-              <% unless @group.asset.nil? %>
+              <% if @group.asset %>
               <li>
                 <%= t('groups.show.asset_name') %> <%= link_to @group.asset, transacts_path(@group.asset), :target => '_blank' %>
               </li>
