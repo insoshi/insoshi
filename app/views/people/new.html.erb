@@ -21,7 +21,7 @@
       <span class="small">(<%= t('people.new.never_made_public') %><%= t('people.new.comma_will_be_verified') if global_prefs.email_verifications? %>)
       </span>
     </label>
-    <%= f.text_field :email %>
+    <%= f.email_field :email %>
     <%= set_focus_to "person_email" %>  
   </div>
 

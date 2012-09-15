@@ -7,7 +7,9 @@
     <%= t('groups.show.you_are_a_member_of') %> <strong><%= h @group.name%></strong>
     <br />
     <% unless @group.default_group? %>
-      (<%= link_to t('groups.show.leave_group'),delete_membership_link(current_person,@group), {:id => 'leave_group'} %>) 
+      <% if Membership.exist?(current_person, @group) %>
+        (<%= link_to t('groups.show.leave_group'),delete_membership_link(current_person,@group), {:id => 'leave_group'} %>) 
+      <% end %>
     <% end %>
   </li>
   <%= waiting_image %>
