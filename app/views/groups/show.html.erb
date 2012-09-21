@@ -10,7 +10,7 @@
       <div id="exchanges_canvas">
         <%= render :partial => 'exchanges_canvas' %>
       </div>
-    <% end if @group.adhoc_currency? %>
+    <% end if (@group.adhoc_currency? && !@group.private_txns?) %>
     <% tab.create('tab_forum', t('groups.show.forum')) do %>
       <div id="forum_canvas">
         <%= render :partial => '/forums/forum_canvas' %>

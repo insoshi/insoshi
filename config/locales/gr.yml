@@ -233,6 +233,7 @@ gr:
       photos: "Φωτογραφίες"
       primary: "πρωτεύων"
       add_a_photo: "Προσθήκη Φωτογραφίας"
+      private_txns: "Private transactions"
     members:
       pending_request: "Η Ζήτηση είναι σε εξέλιξη"
       cancel_membership: "Ακύρωση Συμμετοχής"
@@ -251,6 +252,7 @@ gr:
       default_credit_limit: "Προεπιλεγμένο πιστωτικό όριο"
       description: "Περιγραφή"
       mode: "Λειτουργία"
+      private_txns: "Private transactions"
     new_photo:
       header: "Ανέβασμα φωτογραφίας ομάδας"
       upload_a_photo: "Ανέβασε μια φωτογραφία:"

@@ -35,7 +35,9 @@ class GroupsController < ApplicationController
                                AJAX_POSTS_PER_PAGE,
                                nil
                                )
-        @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+        unless @group.private_txns?
+          @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+        end
         @memberships = @group.memberships.active.paginate(:page => params[:page],
                                               :conditions => ['status = ?', Membership::ACCEPTED],
                                               :order => 'memberships.created_at DESC',

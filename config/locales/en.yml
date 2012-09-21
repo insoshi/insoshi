@@ -120,6 +120,7 @@ en:
       photos: "Photos"
       primary: "primary"
       add_a_photo: "Add a photo"
+      private_txns: "Private transactions"
     members:
       pending_request: "Pending request"
       cancel_membership: "Cancel membership"
@@ -138,6 +139,7 @@ en:
       default_credit_limit: "Default credit limit"
       description: "Description"
       mode: "Mode"
+      private_txns: "Private transactions"
     new_photo:
       header: "Group photo upload"
       upload_a_photo: "Upload a photo:"

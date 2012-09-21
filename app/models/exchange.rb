@@ -46,7 +46,9 @@ class Exchange < ActiveRecord::Base
   scope :by_month, lambda {|date| {:conditions => ["DATE_TRUNC('month',created_at) = ?", date]}}
 
   def log_activity
-    add_activities(:item => self, :person => self.worker, :group => self.group)
+    unless self.group.private_txns?
+      add_activities(:item => self, :person => self.worker, :group => self.group)
+    end
   end
 
   def self.total_on(date)

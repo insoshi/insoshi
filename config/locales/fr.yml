@@ -175,6 +175,7 @@ fr:
       photos: "Photos"
       primary: "primaire"
       add_a_photo: "ajouter une photo"
+      private_txns: "Private transactions"
     members:
       pending_request: "Pending request"                
       cancel_membership: "Canceller l’abonnement"
@@ -193,6 +194,7 @@ fr:
       default_credit_limit: "Limite de credit initiale"
       description: "Description"
       mode: "Mode"
+      private_txns: "Private transactions"
     new_photo:
       header: "Publier une photo de groupe"
       upload_a_photo: "Publier une photo"

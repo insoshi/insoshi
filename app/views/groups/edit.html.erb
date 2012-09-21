@@ -25,6 +25,11 @@
       <label for="default_credit_limit"><%= t('groups.edit.default_credit_limit') %></label>
       <%= f.text_field :default_credit_limit, :size => 5 %>
     </div>
+
+    <div class="form_row">
+      <label for="private_txns" class="checkbox"><%= t('groups.edit.private_txns') %></label>
+      <%= f.check_box :private_txns %>
+    </div>
 <%- end -%>
 
     <div class="form_row">

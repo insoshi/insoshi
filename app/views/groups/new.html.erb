@@ -50,6 +50,11 @@
       <label for="default_credit_limit"><%= t('groups.new.default_credit_limit') %></label>
       <%= f.text_field :default_credit_limit, :size => 5, :disabled => true %>
     </div>
+
+    <div class="form_row">
+      <label for="private_txns" class="checkbox"><%= t('groups.new.private_txns') %></label>
+      <%= f.check_box :private_txns %>
+    </div>
     </fieldset>
     <div class="form_row">
       <label for="description"><%= t('groups.new.description') %></label>
