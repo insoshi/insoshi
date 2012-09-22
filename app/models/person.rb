@@ -152,6 +152,7 @@ class Person < ActiveRecord::Base
   # XXX just doing jquery validation
   #validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
 
+  before_create :check_config_for_deactivation
   before_create :set_default_group
   after_create :create_address
   after_create :join_mandatory_groups
