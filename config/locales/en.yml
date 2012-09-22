@@ -512,7 +512,7 @@ en:
       new: "You have a new connection request from"
     email_verification:
       message_default: "Click here to complete your email verification:"
-      message_whitelist: "Click here to complete your email verification.  Note that access to the exchange requires admin approval (following orientation or other blessing ritual) of your account"
+      message_whitelist: "Click here to complete your email verification.  Note that access to the exchange requires admin approval"
       thanks: "Thanks!"
     membership_accepted:
       accepted: "Your membership request has been accepted to join"
