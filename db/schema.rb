@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120911165701) do
+ActiveRecord::Schema.define(:version => 20120921183034) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -285,6 +285,7 @@ ActiveRecord::Schema.define(:version => 20120911165701) do
     t.boolean  "mandatory",                                          :default => false
     t.decimal  "default_credit_limit", :precision => 8, :scale => 2
     t.string   "asset"
+    t.boolean  "private_txns",                                       :default => false
   end
 
   create_table "groups_people", :id => false, :force => true do |t|
