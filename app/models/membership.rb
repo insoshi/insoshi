@@ -29,7 +29,7 @@ class Membership < ActiveRecord::Base
       unless category
         group.memberships.active.search_by(search).paginate(:page => page,
                                                             :conditions => ['status = ?', Membership::ACCEPTED],
-                                                            :order => 'memberships.created_at DESC',
+                                                            :order => 'memberships.created_at DESC, people.business_name ASC, people.name ASC',
                                                             :include => :person,
                                                             :per_page => posts_per_page)
       else
@@ -39,7 +39,7 @@ class Membership < ActiveRecord::Base
                                             :people => {:deactivated => false}}
         ).map {|p| Membership.find(p.categorized_membership)}.paginate(:page => page,
                                                                        :conditions => ['status = ?', Membership::ACCEPTED],
-                                                                       :order => 'memberships.created_at DESC',
+                                                                       :order => 'memberships.created_at DESC, people.business_name ASC, people.name ASC',
                                                                        :include => :person,
                                                                        :per_page => posts_per_page)
       end
