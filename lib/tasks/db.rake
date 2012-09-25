@@ -9,9 +9,9 @@ namespace :db do
       "CREATE index #{tbl}_fts_idx ON #{tbl} USING gin((to_tsvector('english', #{c})))"
     end
 
-    statements = %w"people categories groups offers reqs".inject([]) do |memo, tbl|
+    statements = %w"categories groups offers reqs".inject([]) do |memo, tbl|
       memo << drop_stmt(tbl) << create_stmt(tbl, "name", "description")
-    end << drop_stmt("posts") << create_stmt("posts", "body")
+    end << drop_stmt("posts") << create_stmt("posts", "body") << drop_stmt("people") << create_stmt("people", "name","business_name", "description")
 
     statements.each &ActiveRecord::Base.connection.method(:execute)
   end

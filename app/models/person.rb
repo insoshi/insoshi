@@ -29,7 +29,7 @@ class Person < ActiveRecord::Base
   attr_accessible :broadcast_emails
   attr_accessible :web_site_url
 
-  extend Searchable(:name, :description)
+  extend Searchable(:name, :business_name, :description)
 
   MAX_PASSWORD = 40
   MAX_NAME = 40
@@ -440,7 +440,7 @@ class Person < ActiveRecord::Base
   end
 
   def update_group_letter
-    self.first_letter = name.mb_chars.first.upcase.to_s
+    self.first_letter = display_name.mb_chars.first.upcase.to_s
   end
 
   def check_config_for_deactivation
