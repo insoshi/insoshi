@@ -169,6 +169,14 @@ p.welcome {
   padding: 4px;
 }
 
+#sfmenu li.right_item, #sfmenu li.right_item ul {
+  background-color: #fff;
+}
+
+#sfmenu li.right_item ul a:hover {
+  background-color: #ddd;
+}
+
 ul li.right_item {
   padding-left: 0px;
 }
@@ -204,8 +212,12 @@ ul li.profile_icon_item {
   border: 1px solid #FFD324;
 }
 
-#sfmenu li.right_item a {
+#sfmenu li.right_item {
   width: 120px;
+}
+
+#sfmenu li.right_item a {
+  width: 100%;
 }
 
 #sfmenu li ul {
