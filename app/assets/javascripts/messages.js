@@ -14,8 +14,8 @@ $(function() {
 		            success: function(data) {
 		                response($.map(data, function(item) {
 		                    return {
-		                        label: item.person.name,
-		                        value: item.person.name,
+		                        label: item.person.display_name_and_contact,
+		                        value: item.person.display_name_and_contact,
 		                        link: item.person.to_param
 		                    }
 		                }))

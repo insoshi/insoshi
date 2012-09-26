@@ -32,12 +32,12 @@ class MessagesController < ApplicationController
   # Used to autocomplete recipient name in messages
   def recipients
     unless params[:term].blank? || params[:term].length < 2
-      @recipients = Person.select('id, name').where("lower(name) like ?", "#{params[:term].downcase}%").limit(params[:limit] || 50)
+      @recipients = Person.select('id, org, name, business_name').where("lower(name) like ? or lower(business_name) like ?", "#{params[:term].downcase}%", "#{params[:term].downcase}%").limit(params[:limit] || 50)
     else
       @recipients = []
     end
     respond_to do |format|
-      format.json { render :json => @recipients.collect{|p| p.as_json(:methods => [:icon,:to_param], :only=>[:id, :name, :icon])} }
+      format.json { render :json => @recipients.collect{|p| p.as_json(:methods => [:icon,:to_param,:display_name_and_contact], :only=>[:id, :name, :icon])} }
     end 
   end
 

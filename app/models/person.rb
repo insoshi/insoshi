@@ -176,6 +176,11 @@ class Person < ActiveRecord::Base
     org ? business_name : name
   end
 
+  # Display name based upon entity type plus contact for business
+  def display_name_and_contact
+    org ? "#{business_name} (#{name})" : name
+  end
+
   # Params for use in urls.
   # Profile urls have the form '/people/1-michael-hartl'.
   # This works automagically because Person.find(params[:id]) implicitly
