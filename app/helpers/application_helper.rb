@@ -18,6 +18,17 @@ module ApplicationHelper
   end
   
   ## Menu helpers
+
+  def display_help?
+    !(
+      global_prefs.about.blank? &&
+      global_prefs.practice.blank? &&
+      global_prefs.steps.blank? &&
+      global_prefs.contact.blank? &&
+      global_prefs.agreement.blank? &&
+      global_prefs.questions.blank?
+    )
+  end
   
   def menu
     home     = menu_element("Home",   home_path)
