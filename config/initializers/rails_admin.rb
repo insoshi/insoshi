@@ -32,15 +32,12 @@ end
     export
   end
 
-  config.included_models = [Account, Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
+  config.included_models = [Account,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
 
   config.model Account do
     list do
       field :person do
         label "Name"
-        formatted_value do
-          value.display_name
-        end
       end
       field :balance
       field :credit_limit
@@ -66,9 +63,6 @@ end
       field :name
       field :person do
         label "Requested by"
-        formatted_value do
-          value.name
-        end
       end
       field :created_at
     end
@@ -90,9 +84,6 @@ end
       field :name
       field :person do
         label "Offered by"
-        formatted_value do
-          value.name
-        end
       end
       field :created_at
     end
@@ -147,15 +138,9 @@ end
       field :created_at
       field :customer do
         label "Payer"
-        formatted_value do
-          value.name
-        end
       end
       field :worker do
         label "Payee"
-        formatted_value do
-          value.name
-        end
       end
       field :amount
       field :metadata do
@@ -185,11 +170,7 @@ end
 
   config.model ForumPost do
     list do
-      field :person do
-        formatted_value do
-          value.name
-        end
-      end
+      field :person
       field :body
       field :created_at
     end
@@ -267,6 +248,9 @@ end
   end
 
   config.model Person do
+    object_label_method do
+      :display_name
+    end
     list do
       field :last_logged_in_at do
         label "Last login"
