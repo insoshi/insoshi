@@ -25,7 +25,7 @@ class Group < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_uniqueness_of :unit, :allow_nil => true
   validates_uniqueness_of :asset, :allow_nil => true
-  validates_format_of :asset, :with => /^[-\.a-z0-9]+$/i, :allow_blank => true
+  validates_format_of :asset, :with => /^[-\.a-z0-9_]+$/i, :allow_blank => true
   validate :changing_asset_name_only_allowed_if_empty
   after_create :create_owner_membership
   after_create :create_forum
