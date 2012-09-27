@@ -172,7 +172,7 @@ module ApplicationHelper
   def exchange_link(person, group = nil, options = {})
     img = image_tag("icons/switch.gif")
     path = new_person_exchange_path(person, ({:group => group.id} unless group.nil?))
-    action = "Give credit"
+    action = t('exchanges.record_transaction')
     str = link_to(img,path,options)
     str << " "
     str << link_to_unless_current(action, path, options)

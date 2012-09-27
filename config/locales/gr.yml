@@ -489,6 +489,7 @@ gr:
       private_message_to_requestor: "Προσωπικό μήνυμα στον αιτούντα"
 
   exchanges:
+    record_transaction: "Record transaction"
     new:
       enter_credit_for: "Εισάγεται μονάδες για"
       amount: "ποσό"

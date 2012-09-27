@@ -363,6 +363,7 @@ es:
       private_message_to_requestor: "Mensaje privado al solicitante"
 
   exchanges:
+    record_transaction: "Record transaction"
     new:
       enter_credit_for: "Realizar ingreso a"
       amount: "Cantidad"

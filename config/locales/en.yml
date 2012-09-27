@@ -375,8 +375,9 @@ en:
       private_message_to_requestor: "Private message to requestor"
 
   exchanges:
+    record_transaction: "Record transaction"
     new:
-      enter_credit_for: "Enter credit for"
+      enter_credit_for: "Record transaction with" 
       amount: "amount"
       for: "For:"
       or_ask: "or ask"

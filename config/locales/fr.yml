@@ -431,6 +431,7 @@ fr:
       private_message_to_requestor: "Message confidentiel au requèrant"
 
   exchanges:
+    record_transaction: "Record transaction"
     new:
       enter_credit_for: "Entrez les crédits pour"
       amount: "montant"
