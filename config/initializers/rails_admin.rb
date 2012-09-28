@@ -69,7 +69,9 @@ end
 
     edit do
       field :group
-      field :person
+      field :person do
+        label "Requested by"
+      end
       field :name
       field :estimated_hours
       field :due_date, :date
@@ -90,7 +92,9 @@ end
 
     edit do
       field :group
-      field :person
+      field :person do
+        label "Offered by"
+      end
       field :name
       field :total_available
       field :expiration_date, :date
@@ -136,12 +140,8 @@ end
   config.model Exchange do
     list do
       field :created_at
-      field :customer do
-        label "Payer"
-      end
-      field :worker do
-        label "Payee"
-      end
+      field :customer
+      field :worker
       field :amount
       field :metadata do
         label "Memo"
