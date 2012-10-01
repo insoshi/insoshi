@@ -491,7 +491,7 @@ gr:
   exchanges:
     record_transaction: "Record transaction"
     new:
-      enter_credit_for: "Εισάγεται μονάδες για"
+      enter_credit_for: "Transfer %{currency} to" 
       amount: "ποσό"
       for: "Για:"
       or_ask: "ή ζητήστε"

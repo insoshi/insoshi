@@ -365,7 +365,7 @@ es:
   exchanges:
     record_transaction: "Record transaction"
     new:
-      enter_credit_for: "Realizar ingreso a"
+      enter_credit_for: "Transfer %{currency} to" 
       amount: "Cantidad"
       for: "Para:"
       or_ask: "o preguntar"

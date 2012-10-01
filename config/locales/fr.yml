@@ -433,7 +433,7 @@ fr:
   exchanges:
     record_transaction: "Record transaction"
     new:
-      enter_credit_for: "Entrez les crédits pour"
+      enter_credit_for: "Transfer %{currency} to" 
       amount: "montant"
       for: "Pour"
       or_ask: "ou demander"
