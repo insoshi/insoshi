@@ -39,15 +39,33 @@ end
       field :person do
         label "Name"
       end
-      field :balance
+      field :offset do
+        label "Starting Balance"
+      end
+      field :balance 
       field :credit_limit
       field :updated_at do
         label "Last Transaction"
       end
     end
 
+    edit do
+      field :name
+      field :person do
+        label "Name"
+      end
+      field :offset do
+        label "Starting Balance"
+      end
+      field :balance
+      field :credit_limit
+    end
+
     export do
       field :person
+      field :offset do
+        label "Starting Balance"
+      end
       field :balance
       field :credit_limit
       field :updated_at do
@@ -149,6 +167,14 @@ end
           value.name
         end
       end
+    end
+
+    edit do
+      field :group
+      field :customer
+      field :worker
+      field :amount
+      field :metadata
     end
   end
 
