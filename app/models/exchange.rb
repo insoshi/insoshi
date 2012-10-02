@@ -34,6 +34,12 @@ class Exchange < ActiveRecord::Base
   attr_readonly :amount
   attr_readonly :customer_id, :worker_id, :group_id
 
+  # These two callbacks are a bit of a hack to allow
+  # admins to create Exchanges via Rails Admin. Used
+  # to create a no-bid request.
+  before_validation :check_metadata
+  before_create :save_metadata
+
   after_create :log_activity
   after_create :decrement_offer_available_count
   before_create :calculate_account_balances
@@ -69,6 +75,29 @@ class Exchange < ActiveRecord::Base
   end
 
   private
+
+  # Hack to create a new Request when Exchanges are
+  # created via RailsAdmin. We are just assuming that
+  # if the metadata is nil, it must be an admin request.
+  # Cancan will still ensure proper authorization.
+  def check_metadata
+    unless self.metadata
+      req = Req.new
+      req.name = 'admin transfer'
+      req.estimated_hours = self.amount
+      req.due_date = Time.now
+      req.person = self.customer
+      req.biddable = false
+      req.group = self.group
+      self.metadata = req
+    end
+  end
+
+  # If the metadata associated with this request is new,
+  # save it before saving the exchange.
+  def save_metadata
+    self.metadata.save! if self.metadata.new_record?
+  end
 
   def amount_is_positive
     unless amount > 0

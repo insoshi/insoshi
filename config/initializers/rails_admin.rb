@@ -186,7 +186,7 @@ end
       field :customer
       field :worker
       field :amount
-      field :metadata
+      #field :metadata
     end
   end
 
