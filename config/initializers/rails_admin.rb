@@ -42,7 +42,11 @@ end
       field :offset do
         label "Starting Balance"
       end
-      field :balance 
+      field :balance do
+        formatted_value do
+          (bindings[:object].balance_with_initial_offset).to_s
+        end
+      end
       field :credit_limit
       field :updated_at do
         label "Last Transaction"
@@ -57,7 +61,11 @@ end
       field :offset do
         label "Starting Balance"
       end
-      field :balance
+      field :balance do
+        formatted_value do
+          (bindings[:object].balance_with_initial_offset).to_s
+        end
+      end
       field :credit_limit
     end
 
@@ -66,7 +74,11 @@ end
       field :offset do
         label "Starting Balance"
       end
-      field :balance
+      field :balance do
+        formatted_value do
+          (bindings[:object].balance_with_initial_offset).to_s
+        end
+      end
       field :credit_limit
       field :updated_at do
         label "Last Transaction"
