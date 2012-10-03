@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120926190258) do
+ActiveRecord::Schema.define(:version => 20121003190616) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -520,6 +520,7 @@ ActiveRecord::Schema.define(:version => 20120926190258) do
     t.integer  "default_group_id"
     t.integer  "topic_refresh_seconds",   :default => 30,    :null => false
     t.boolean  "groups",                  :default => true,  :null => false
+    t.string   "alt_signup_link"
   end
 
   create_table "rails_admin_histories", :force => true do |t|

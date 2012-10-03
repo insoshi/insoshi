@@ -34,7 +34,7 @@
             <%- else -%>
               <%= link_to t('sessions.new.header'), login_path %>
               <%= t('or') %>
-              <%= link_to t('people.new.header'), signup_path %>
+              <%= link_to t('people.new.header'), (global_prefs.alt_signup_link.blank? ? signup_path : global_prefs.alt_signup_link) %>
               <%- if global_prefs.can_send_email? -%>
               <br />
               <%= link_to t('sessions.new.i_forgot_my_password'),
