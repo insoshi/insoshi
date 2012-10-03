@@ -39,7 +39,7 @@
         <li class="contact">
           <%= image_link contact, :image_options => { :class => "photo" },
                                   :link_options => { :class => "url" },
-                                  :image => :bounded_icon %>
+                                  :image => :bounded_icon, :vcard => true, :truncate => 24 %>
           <% if can? :unsuscribe, membership %>
             <div class="cancel_membership">
                 <%= link_to image_tag("icons/remove.gif"), 
@@ -69,7 +69,7 @@
       <li class="contact">
       <%= image_link admin, :image_options => { :class => "photo" },
                             :link_options => { :class => "url" },
-                            :image => :bounded_icon %>
+                            :image => :bounded_icon, :vcard => true, :truncate => 24 %>
       </li>
     <%- end -%>
   </ul>
@@ -79,7 +79,7 @@
     <li class="contact">
       <%= image_link @group.owner, :image_options => { :class => "photo" },
                               :link_options => { :class => "url" },
-                              :image => :bounded_icon %>
+                              :image => :bounded_icon, :vcard => true, :truncate => 24 %>
     </li>
   </ul>
 

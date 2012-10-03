@@ -21,8 +21,9 @@ module PeopleHelper
     # This is a hack needed for the way the designer handled rastered images
     # (with a 'vcard' class).
     if options[:vcard]
-      content = %(#{content}#{content_tag(:span, h(person.display_name), 
-                                                 :class => "fn" )})
+      name = options[:truncate] ? person.display_name.truncate(options[:truncate]) : person.display_name
+      content = %(#{content}#{content_tag(:span, h(name), 
+                                                 :class => "fn" )}).html_safe
     end
     link_to(content, link, link_options)
   end
