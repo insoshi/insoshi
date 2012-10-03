@@ -132,6 +132,7 @@ class GroupsController < ApplicationController
   end
   
   def new_photo
+    @photo = Photo.new
     respond_to do |format|
       format.html
     end
