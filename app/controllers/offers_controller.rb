@@ -15,7 +15,7 @@ class OffersController < ApplicationController
                                   params[:page],
                                   AJAX_POSTS_PER_PAGE,
                                   params[:search]
-                                  )
+                                  ).order("updated_at desc")
     respond_with @offers
   end
 
@@ -43,7 +43,7 @@ class OffersController < ApplicationController
     respond_to do |format|
       if @offer.save
         flash[:notice] = t('success_offer_created') if @offer.save
-        @offers = Offer.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
+        @offers = Offer.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil).order("updated_at desc")
         #respond_with @offer
         #format.html { redirect_to(@offer) }
         format.js
@@ -73,7 +73,7 @@ class OffersController < ApplicationController
     respond_to do |format|
       if @offer.update_attributes(params[:offer])
         flash[:notice] = t('notice_offer_updated')
-        @offers = Offer.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
+        @offers = Offer.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil).order("updated_at desc")
         #format.html { redirect_to(@offer) }
         format.js
         format.xml  { head :ok }

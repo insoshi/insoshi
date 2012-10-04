@@ -21,7 +21,7 @@ class ReqsController < ApplicationController
                               params[:page],
                               AJAX_POSTS_PER_PAGE,
                               params[:search]
-                              )
+                              ).order("updated_at desc")
     respond_with @reqs
   end
 
@@ -80,7 +80,7 @@ class ReqsController < ApplicationController
 
     respond_to do |format|
       if @req.save
-        @reqs = Req.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
+        @reqs = Req.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil).order("updated_at desc")
         flash[:notice] = t('success_request_created')
         #respond_with @req
         #format.html { redirect_to(@req) }
@@ -105,7 +105,7 @@ class ReqsController < ApplicationController
     respond_to do |format|
       if @req.update_attributes(params[:req])
         flash[:notice] = t('notice_request_updated')
-        @reqs = Req.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
+        @reqs = Req.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil).order("updated_at desc")
         format.html { redirect_to(@req) }
         format.js
         format.xml  { head :ok }
