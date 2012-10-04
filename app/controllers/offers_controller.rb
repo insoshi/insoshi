@@ -39,9 +39,21 @@ class OffersController < ApplicationController
     @offer.person = current_person
     @all_categories = Category.by_long_name
     @all_neighborhoods = Neighborhood.by_long_name
-    flash[:notice] = t('success_offer_created') if @offer.save
-    @offers = Offer.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
-    respond_with @offer
+
+    respond_to do |format|
+      if @offer.save
+        flash[:notice] = t('success_offer_created') if @offer.save
+        @offers = Offer.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
+        #respond_with @offer
+        #format.html { redirect_to(@offer) }
+        format.js
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "new" }
+        format.js { render :action => "new" }
+        format.xml  { render :xml => @offer.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
   def edit

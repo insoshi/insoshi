@@ -77,10 +77,21 @@ class ReqsController < ApplicationController
 
     @all_categories = Category.by_long_name
     @all_neighborhoods = Neighborhood.by_long_name
-    @reqs = Req.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
 
-    flash[:notice] = t('success_request_created') if @req.save
-    respond_with @req
+    respond_to do |format|
+      if @req.save
+        @reqs = Req.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil)
+        flash[:notice] = t('success_request_created')
+        #respond_with @req
+        #format.html { redirect_to(@req) }
+        format.js
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "new" }
+        format.js { render :action => "new" }
+        format.xml  { render :xml => @req.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
   # PUT /reqs/1
