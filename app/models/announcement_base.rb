@@ -59,7 +59,7 @@ module AnnouncementBase
   end
 
   def maximum_categories
-    errors.add_to_base("Only 5 categories are allowed") if categories.length > 5
+    errors.add(:base, "Only 5 categories are allowed") if categories.length > 5
   end
 
   def group_has_a_currency

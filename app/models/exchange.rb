@@ -127,7 +127,7 @@ class Exchange < ActiveRecord::Base
     if self.new_record?
       if self.metadata.class == Offer
         if self.metadata.available_count == 0
-          errors.add_to_base('This offer is no longer available')
+          errors.add(:base, 'This offer is no longer available')
         end
       end
     end
