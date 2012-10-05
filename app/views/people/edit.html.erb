@@ -24,7 +24,9 @@
   <div class="form_row full">
         <label for="person_categories"><%= t('people.edit.services_offered') %>
         </label>
-        <span class="categoryAdd"><%= link_to t('people.edit.add_new_category'), new_category_path %></span>
+        <% if can?(:create, @category) %>
+          <span class="categoryAdd"><%= link_to t('people.edit.add_new_category'), new_category_path %></span>
+        <% end %>
         <%= render :partial => "shared/select_categories", :locals => { :model_name => 'person' } %>
   </div>
 
