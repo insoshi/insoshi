@@ -1,7 +1,5 @@
 class CategoriesController < ApplicationController
-
   before_filter :login_required, :except => :index
-  before_filter :authorize_change, :only => [:update, :destroy]
   cache_sweeper :category_sweeper, :only => [:create, :update, :destroy]
 
   # GET /categories
@@ -54,11 +52,13 @@ class CategoriesController < ApplicationController
     @category = Category.new(params[:category])
 
     respond_to do |format|
-      if @category.save
+      if can?(:create, @category) && @category.save
         flash[:success] = t('success_category_created')
         format.html { redirect_to(@category) }
         format.xml  { render :xml => @category, :status => :created, :location => @category }
       else
+        @category = Category.new
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { render :action => "new" }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }
       end
@@ -71,11 +71,13 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
 
     respond_to do |format|
-      if @category.update_attributes(params[:category])
+      if can?(:update, @category) && @category.update_attributes(params[:category])
         flash[:notice] = t('notice_category_updated')
         format.html { redirect_to(@category) }
         format.xml  { head :ok }
       else
+        @category = Category.find(params[:id])
+        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
         format.html { render :action => "edit" }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }
       end
@@ -86,20 +88,18 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1.xml
   def destroy
     @category = Category.find(params[:id])
-    @category.destroy
 
     respond_to do |format|
-      format.html { redirect_to(categories_url) }
-      format.xml  { head :ok }
+      if can?(:destroy, @category)
+        @category.destroy
+        format.html { redirect_to(categories_url) }
+        format.xml  { head :ok }
+      else
+        @top_level_categories = Category.find(:all, :conditions => "parent_id is NULL").sort_by {|a| a.name}
+        @categories = Category.find(:all).sort_by { |a| a.long_name }
+        format.html { render :action => "index" }
+        format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }
+      end
     end
   end
-
-  private
-
-  def authorize_change
-    authorized = current_person.admin?
-    flash[:error] = t('error_category_authorization')
-    redirect_to home_url unless authorized
-  end
-
 end

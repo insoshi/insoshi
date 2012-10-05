@@ -1,4 +1,5 @@
 class Ability
+  extend PreferencesHelper
   include CanCan::Ability
   def initialize(person, access_token = nil)
 
@@ -48,8 +49,11 @@ class Ability
     end
 
     # adding category,neighborhood to rails_admin
-    can [:read,:create], Category
-    can [:update], Category do |category|
+    can :read, Category
+    can :create, Category do |category|
+      person.admin? || !(Ability.global_prefs.protected_categories?)
+    end
+    can [:update,:destroy], Category do |category|
       person.admin?
     end
 
