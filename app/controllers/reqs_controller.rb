@@ -44,7 +44,6 @@ class ReqsController < ApplicationController
   end
 
   # GET /reqs/new
-  # GET /reqs/new.xml
   def new
     @all_categories = Category.by_long_name
     @all_neighborhoods = Neighborhood.by_long_name
@@ -52,7 +51,7 @@ class ReqsController < ApplicationController
 
     respond_to do |format|
       format.js
-      format.xml  { render :xml => @req }
+      format.html { redirect_to group_path(@group, :anchor => 'reqs/new') }
     end
   end
 

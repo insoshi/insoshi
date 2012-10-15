@@ -20,6 +20,7 @@ Oscurrency::Application.routes.draw do
     member do
       post :join
       post :leave
+      get :people
       get :exchanges
       get :members
       get :graphs

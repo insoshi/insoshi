@@ -29,6 +29,7 @@ class OffersController < ApplicationController
     @selected_neighborhoods = current_person.neighborhoods
     respond_to do |format|
       format.js
+      format.html { redirect_to group_path(@group, :anchor => 'offers/new') }
     end
   end
 

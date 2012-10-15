@@ -69,7 +69,7 @@ class Ability
       membership = Membership.mem(person,group)
       membership && membership.is?(:admin)
     end
-    can [:members,:exchanges,:graphs], Group
+    can [:members,:exchanges,:graphs,:people], Group
 
     can :read, Topic
     can :create, Topic do |topic|
