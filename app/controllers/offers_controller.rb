@@ -35,8 +35,6 @@ class OffersController < ApplicationController
 
   def create
     @offer.group = @group
-    ##TODO: move this to the model, a before_create method?
-    @offer.available_count = @offer.total_available
     @offer.person = current_person
     @all_categories = Category.by_long_name
     @all_neighborhoods = Neighborhood.by_long_name

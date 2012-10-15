@@ -127,6 +127,7 @@ end
       end
       field :name
       field :total_available
+      field :price
       field :expiration_date, :date
       field :description
       field :categories

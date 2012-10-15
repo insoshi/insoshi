@@ -14,6 +14,13 @@ class Offer < ActiveRecord::Base
 
   extend Scopes
 
+  before_create :set_available_count
+
   validates :expiration_date, :total_available, :presence => true
+
+  private
+    def set_available_count
+      self.available_count = self.total_available
+    end
 
 end
