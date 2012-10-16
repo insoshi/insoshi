@@ -151,7 +151,6 @@ end
       field :blog_feed_url
       field :new_member_notification
       field :googlemap_api_key
-      field :disqus_shortname
       field :gmail
       field :email_notifications
       field :email_verifications

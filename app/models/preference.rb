@@ -42,7 +42,6 @@ class Preference < ActiveRecord::Base
                   :protected_categories,
                   :blog_feed_url,
                   :googlemap_api_key,
-                  :disqus_shortname,
                   :default_group_id
   attr_accessible *attribute_names, :as => :admin
 

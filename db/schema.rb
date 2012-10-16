@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121016071229) do
+ActiveRecord::Schema.define(:version => 20121016075021) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -515,7 +515,6 @@ ActiveRecord::Schema.define(:version => 20121016071229) do
     t.text     "agreement"
     t.string   "new_member_notification"
     t.text     "registration_intro"
-    t.string   "disqus_shortname"
     t.integer  "default_group_id"
     t.integer  "topic_refresh_seconds",   :default => 30,    :null => false
     t.boolean  "groups",                  :default => true,  :null => false
