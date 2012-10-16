@@ -102,6 +102,12 @@ class GroupsController < ApplicationController
     end
   end
 
+  def people
+    respond_to do |format|
+      format.html { redirect_to group_path(@group, :anchor => 'people') }
+    end
+  end
+
   def members
     @body = "noajax"
     @memberships = @group.memberships.paginate(:page => params[:page],
