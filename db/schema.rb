@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121005163824) do
+ActiveRecord::Schema.define(:version => 20121016071229) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -510,7 +510,6 @@ ActiveRecord::Schema.define(:version => 20121005163824) do
     t.text     "steps"
     t.text     "questions"
     t.text     "contact"
-    t.boolean  "zipcode_browsing",        :default => false
     t.string   "blog_feed_url"
     t.string   "googlemap_api_key"
     t.text     "agreement"

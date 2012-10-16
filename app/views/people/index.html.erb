@@ -1,5 +1,5 @@
 <%= column_div :type => :primary do -%>
-  <h2><%= t('people.index.header') %><%= h @zipcode %></h2>
+  <h2><%= t('people.index.header') %></h2>
   <ul id="message-nav">
     <%= list_link_with_active t('people.index.newest'), people_path %>
     <%= list_link_with_active t('people.index.alpha'), people_path(:sort => 'alpha') %>
@@ -10,16 +10,9 @@
       <%= render :partial => @people %>
     </ul>
     <%= will_paginate @people, :draw_if_single => true, :next_previous_links => true %>
-  <% else %>
-    <% if !@zipcode.empty? %>
-      <div class="meta"><%= t('people.index.no_results_for') %> <%= h @zipcode %></div>
-    <% end %>
   <% end -%>
 <%- end -%>
 
 <%= column_div :type => :secondary do -%>
   <%= render :partial => 'searches/box' %>
-  <%- if global_prefs.zipcode_browsing? -%>
-    <%= render :partial => 'zip', :collection => @zips %>
-  <%- end -%>
 <%- end -%>

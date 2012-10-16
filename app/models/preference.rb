@@ -40,7 +40,6 @@ class Preference < ActiveRecord::Base
                   :registration_intro,
                   :agreement,
                   :protected_categories,
-                  :zipcode_browsing,
                   :blog_feed_url,
                   :googlemap_api_key,
                   :disqus_shortname,

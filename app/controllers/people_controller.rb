@@ -5,32 +5,21 @@ class PeopleController < ApplicationController
   #before_filter :login_or_oauth_required, :only => [ :index, :show, :edit, :update ]
   before_filter :login_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
-  before_filter :setup_zips, :only => [:index, :show]
 
   def index
-    @zipcode = ""
-    if global_prefs.zipcode_browsing? && params[:zipcode]
-      @people = Person.
-        with_zipcode(params[:zipcode]).
-        mostly_active.
-        by_name.
-        paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
-      @zipcode = "(#{params[:zipcode]})"
-    else
-      if params[:sort]
-        if "alpha" == params[:sort]
-          @people = Person.
-            by_first_letter.
-            mostly_active.
-            paginate(:page => params[:page], :per_page => RASTER_PER_PAGE, :group_by => "first_letter")
-          @people.add_missing_links(('A'..'Z').to_a)
-        end
-      else
+    if params[:sort]
+      if "alpha" == params[:sort]
         @people = Person.
-          by_newest.
+          by_first_letter.
           mostly_active.
-          paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
+          paginate(:page => params[:page], :per_page => RASTER_PER_PAGE, :group_by => "first_letter")
+        @people.add_missing_links(('A'..'Z').to_a)
       end
+    else
+      @people = Person.
+        by_newest.
+        mostly_active.
+        paginate(:page => params[:page], :per_page => RASTER_PER_PAGE)
     end
 
     respond_to do |format|
@@ -205,21 +194,6 @@ class PeopleController < ApplicationController
     end
   end
 
-  def groups
-    @person = Person.find(params[:id])
-    @groups = current_person == @person ? @person.groups : @person.groups_not_hidden
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
-  def admin_groups
-    @person = Person.find(params[:id])
-    @groups = @person.own_groups
-    render :action => :groups
-  end
-
   def su
     @person = Person.find(params[:id])
     if can?(:su, @person)
@@ -234,15 +208,6 @@ class PeopleController < ApplicationController
   end
 
   private
-
-    def setup_zips
-      @zips = []
-      @zips = Address.find(:all).map {|a| a.zipcode_plus_4}
-      @zips.uniq!
-      @zips.delete_if {|z| z.blank?}
-      @zips.sort!
-    end
-
     def correct_person_required
       @person = Person.find(params[:id])
       unless(params[:task].blank?)

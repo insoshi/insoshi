@@ -156,7 +156,6 @@ end
       field :email_notifications
       field :email_verifications
       field :protected_categories
-      field :zipcode_browsing
       field :whitelist
       field :registration_intro
       field :agreement
