@@ -34,9 +34,6 @@ class PeopleController < ApplicationController
       flash[:error] = t('error_person_inactive')
       redirect_to home_url and return
     end
-    if logged_in?
-      @groups = current_person == @person ? @person.groups : @person.groups_not_hidden
-    end
     respond_to do |format|
       format.html
       if current_person == @person

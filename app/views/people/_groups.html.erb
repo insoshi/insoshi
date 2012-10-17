@@ -7,10 +7,5 @@
                                 :link_options =>  { :class => "url" }) %>
       </li>
     <%- end -%>
-    <li class="more">
-      <%= link_to "#{t('see_all') + " &raquo;"}".html_safe, 
-          link == "admin" ? 
-              admin_groups_person_path(@person) : groups_person_path(@person) %>
-    </li>
   </ul>
 <%- end -%>

@@ -92,10 +92,6 @@
 <%- end -%>
 
 <%= column_div :type => :secondary do -%>
-  <%= render :partial => 'groups', 
-             :locals => {:groups => @person.own_groups, :title => "Admin Groups", :link => "admin"} %>
-  <%= render :partial => 'groups', 
-             :locals => {:groups => @groups, :title => "Groups", :link => "groups"} %>
   <%= render :partial => 'searches/box' %>
 <%- end -%>
 
