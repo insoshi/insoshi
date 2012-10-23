@@ -17,7 +17,7 @@ end
   config.authenticate_with {
     unless current_person
       session[:return_to] = request.url
-      redirect_to login_url, :alert => "You must first log in or sign up before accessing this page."
+      redirect_to '/login', :notice => "You must first log in or sign up before accessing this page."
     end
   }
 
