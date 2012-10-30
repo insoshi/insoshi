@@ -202,6 +202,9 @@ module ApplicationHelper
 
   def email_link(person, options = {})
     reply = options[:replying_to]
+    classes = ['email-link']
+    classes << options[:class] if options[:class]
+
     if reply
       path = reply_message_path(reply)
     else
@@ -209,7 +212,7 @@ module ApplicationHelper
     end
     img = image_tag("icons/email.gif")
     action = reply.nil? ? "Send a message" : "Send reply"
-    opts = { :class => 'email-link' }
+    opts = { :class => classes.join(' ') }
     str = link_to(img, path, opts)
     str << " "
     str << link_to_unless_current(action, path, opts)

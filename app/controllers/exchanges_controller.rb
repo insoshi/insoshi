@@ -35,6 +35,8 @@ class ExchangesController < ApplicationController
     else
       if params[:group]
         @group = Group.find(params[:group])
+      else
+        @group = current_person.default_group
       end
       @req = Req.new
       @req.name = t('exchanges.new.enter_description')

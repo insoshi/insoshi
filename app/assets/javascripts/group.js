@@ -336,7 +336,7 @@ $(function() {
     return false;
     });
 
-  $('a.email-link').live('click',function() {
+  $('a.email-link:not(.noajax)').live('click',function() {
     window.location.hash = url2hash(this.href);
     return false;
     });
