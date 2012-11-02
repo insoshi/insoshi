@@ -16,6 +16,7 @@ class Ability
     can :update, Person do |target_person|
       target_person == person || person.admin?
     end
+    can :add_to_mailchimp_list, Person
     can :export, Person
 
     can :read, BusinessType

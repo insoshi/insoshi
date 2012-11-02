@@ -52,6 +52,7 @@ gem 'rails_admin'
 gem "ar_after_transaction"
 gem 'valid_email', :require => 'valid_email/email_validator'
 gem "calendar_helper"
+gem "gibbon", :git => "git://github.com/amro/gibbon.git"
 
 group :development, :test do
   gem "heroku"

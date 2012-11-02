@@ -89,6 +89,8 @@ en:
       exported: "exported"
       send_broadcast_email:
         menu: "Send Now!"
+      add_to_mailchimp_list:
+        menu: "Add to mailchimp list"
       export:
         title: "Export %{model_label_plural}"
         menu: "Export"
