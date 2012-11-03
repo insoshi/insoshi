@@ -18,7 +18,7 @@ class Person < ActiveRecord::Base
   attr_accessible :business_name, :legal_business_name, :business_type_id
   attr_accessible :title, :activity_status_id, :plan_type_id, :support_contact_id
   attr_accessible :description, :connection_notifications
-  attr_accessible :message_notifications, :forum_notifications
+  attr_accessible :message_notifications
   attr_accessible :category_ids, :address_ids, :neighborhood_ids
   attr_accessible :zipcode
   attr_accessible :phone, :phoneprivacy
