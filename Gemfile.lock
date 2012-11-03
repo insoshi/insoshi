@@ -13,6 +13,14 @@ GIT
     open_id_authentication (1.1.0)
       rack-openid (~> 1.3)
 
+GIT
+  remote: https://github.com/smartinez87/exception_notification.git
+  revision: aa1052f03252b29e829eb7d0be9ea4e62602877d
+  specs:
+    exception_notification (3.0.0)
+      actionmailer (>= 3.0.4)
+      tinder (~> 1.8)
+
 PATH
   remote: vendor/gems/oauth-plugin-0.4.0.pre7
   specs:
@@ -113,9 +121,6 @@ GEM
     dynamic_form (1.1.4)
     erubis (2.7.0)
     eventmachine (1.0.0)
-    exception_notification (3.0.0)
-      actionmailer (>= 3.0.4)
-      tinder (~> 1.8)
     excon (0.16.7)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -376,7 +381,7 @@ DEPENDENCIES
   dalli
   database_cleaner
   dynamic_form
-  exception_notification
+  exception_notification!
   feed-normalizer
   geokit-rails3
   gibbon!

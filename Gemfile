@@ -11,7 +11,7 @@ gem 'pg'
 gem "unicorn"
 gem "newrelic_rpm"
 gem "girl_friday"
-gem "exception_notification"
+gem "exception_notification", :git => "https://github.com/smartinez87/exception_notification.git"
 
 group :assets do
   gem "sass-rails", '3.1.5'
