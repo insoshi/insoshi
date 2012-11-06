@@ -195,6 +195,7 @@ end
       field :customer
       field :worker
       field :amount
+      field :notes, :text
       #field :metadata
     end
   end

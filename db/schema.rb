@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103012147) do
+ActiveRecord::Schema.define(:version => 20121106160945) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -241,6 +241,7 @@ ActiveRecord::Schema.define(:version => 20121103012147) do
     t.integer  "metadata_id"
     t.string   "metadata_type"
     t.time     "deleted_at"
+    t.string   "notes"
   end
 
   create_table "feed_posts", :force => true do |t|
