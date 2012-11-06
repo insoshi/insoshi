@@ -25,7 +25,7 @@
     </div>
 
 <div style="text-align: center; font-size: 12px; padding: 10px;">
-  <%= link_to t('sessions.new.or_signup'), signup_path %> <br />
+  <%= link_to t('sessions.new.or_signup'), (global_prefs.alt_signup_link.blank? ? signup_path : global_prefs.alt_signup_link) %><br />
   <%- if global_prefs.can_send_email? -%>
     <%= link_to t('sessions.new.i_forgot_my_password'), new_password_reset_path %> ::
   <%- end -%>
