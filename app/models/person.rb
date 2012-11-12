@@ -5,7 +5,12 @@ class Person < ActiveRecord::Base
   extend PreferencesHelper
 
   acts_as_authentic do |c|
-    c.openid_required_fields = [:nickname, :email]
+    c.openid_required_fields = ['http://axschema.org/contact/email',
+      'http://axschema.org/namePerson/first',
+      'http://axschema.org/namePerson/last',
+      :fullname,
+      :email
+    ]
     c.perishable_token_valid_for = 48.hours
     c.maintain_sessions = false if Rails.env == "test"
   end
@@ -422,9 +427,18 @@ class Person < ActiveRecord::Base
 
   protected
 
-  def map_openid_registration(registration)
-    self.email = registration['email'] if email.blank?
-    self.name = registration['nickname'] if name.blank?
+  def map_openid_registration(sreg_registration, ax_registration)
+    unless sreg_registration.nil?
+      self.email = sreg_registration['email'] if email.blank?
+      self.name = sreg_registration['fullname'] if name.blank?
+    end
+    unless ax_registration.nil?
+      self.email = ax_registration["http://axschema.org/contact/email"].first if email.blank?
+      if name.blank?
+        self.name = [ax_registration['http://axschema.org/namePerson/first'].first,
+                     ax_registration['http://axschema.org/namePerson/last'].first].join(' ')
+      end
+    end
   end
 
   ## Callbacks

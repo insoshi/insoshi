@@ -200,7 +200,7 @@
 
   <h2>OpenID</h2>
 
-  <%= form_for @person, :html => { :id => "openid" } do |f| %>
+  <%= form_for @person, :html => { :id => "openid_form" } do |f| %>
     <div class="form_row">
       <label for="openid_identifier"><%= t('people.edit.openid_identifier' ) %></label>
       <%= f.text_field :openid_identifier %>

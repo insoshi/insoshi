@@ -616,6 +616,11 @@ fr:
       not_approved: "Your account is not approved."
       no_authentication_details: "You did not provide any details for authentication."
 
+  valid_email:
+    validations:
+      email:
+        invalid: "is invalid."
+
   activerecord:
     attributes:
       person:

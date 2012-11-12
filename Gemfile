@@ -9,7 +9,6 @@ gem 'rails', '~> 3.1.3'
 
 gem 'pg'
 gem "unicorn"
-gem "newrelic_rpm"
 gem "girl_friday"
 gem "exception_notification", :git => "https://github.com/smartinez87/exception_notification.git"
 

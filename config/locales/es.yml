@@ -593,6 +593,11 @@ es:
       not_approved: "Tu cuenta no está aprobada."
       no_authentication_details: "No has facilitado ningún dato de acceso."
 
+  valid_email:
+    validations:
+      email:
+        invalid: "no es válido."
+
   activerecord:
     attributes:
       person:

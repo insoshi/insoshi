@@ -676,6 +676,11 @@ gr:
       not_approved: "Ο λογαριασμός σας δεν έχει εγκριθεί."
       no_authentication_details: "Δεν εισάγατε στοιχεία εισόδου"
 
+  valid_email:
+    validations:
+      email:
+        invalid: "is invalid."
+
   activerecord:
     attributes:
       person:

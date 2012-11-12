@@ -93,12 +93,12 @@ module AuthlogicOpenid
            :return_to => session_class.controller.url_for(:for_model => "1"),
            :method => :post }
           
-          session_class.controller.send(:authenticate_with_open_id, openid_identifier, options) do |result, openid_identifier, registration|
+          session_class.controller.send(:authenticate_with_open_id, openid_identifier, options) do |result, openid_identifier, sreg_registration, ax_registration|
             if result.unsuccessful?
               @openid_error = result.message
             else
               self.openid_identifier = openid_identifier
-              map_openid_registration(registration)
+              map_openid_registration(sreg_registration, ax_registration)
             end
             
             return true
@@ -112,7 +112,7 @@ module AuthlogicOpenid
         #
         # Basically you will get a hash of values passed as a single argument. Then just map them as you see fit. Check out
         # the source of this method for an example.
-        def map_openid_registration(registration) # :doc:
+        def map_openid_registration(registration, ax_reg) # :doc:
           self.name ||= registration[:fullname] if respond_to?(:name) && !registration[:fullname].blank?
           self.first_name ||= registration[:fullname].split(" ").first if respond_to?(:first_name) && !registration[:fullname].blank?
           self.last_name ||= registration[:fullname].split(" ").last if respond_to?(:last_name) && !registration[:last_name].blank?

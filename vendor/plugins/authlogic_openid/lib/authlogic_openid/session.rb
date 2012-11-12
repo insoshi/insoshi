@@ -101,7 +101,7 @@ module AuthlogicOpenid
 
           controller.send(:authenticate_with_open_id, openid_identifier, options) do |result, openid_identifier, registration|
             if result.unsuccessful?
-              errors.add_to_base(result.message)
+              errors.add(:base, result.message)
               return
             end
             

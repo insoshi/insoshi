@@ -545,6 +545,11 @@ en:
     previous_label: "&laquo; Previous"
     next_label: "Next &raquo;"
 
+  valid_email:
+    validations:
+      email:
+        invalid: "is invalid."
+
   notice_warning_your_email_address: "Warning: your email address is still at"
   notice_change_it_here: "Change it here"
   notice_bid_accepted: "Bid accepted. Message sent to bidder to commit"
