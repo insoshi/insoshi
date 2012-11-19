@@ -72,6 +72,7 @@ Oscurrency::Application.routes.draw do
     member do
       get :verify_email
       get :su
+      get :unsu
       get :common_contacts
     end
     resources :messages

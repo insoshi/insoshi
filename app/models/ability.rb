@@ -6,6 +6,7 @@ class Ability
     can :su, Person do |target_person|
       person.admin? && !target_person.admin?
     end
+    can :unsu, Person
 
     if person.admin?
       can :dashboard

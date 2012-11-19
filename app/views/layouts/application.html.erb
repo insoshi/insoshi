@@ -30,6 +30,8 @@
             <%- if logged_in? -%>
               <%- if current_person.admin? -%>
                 <%= link_to("Admin view", "/admin") %>
+              <%- elsif session[:su_person] %>
+                <%= link_to("Back to admin", unsu_person_path(current_person) ) %>
               <%- end -%>
             <%- else -%>
               <%= link_to t('sessions.new.header'), login_path %>

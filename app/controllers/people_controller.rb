@@ -194,6 +194,7 @@ class PeopleController < ApplicationController
   def su
     @person = Person.find(params[:id])
     if can?(:su, @person)
+      session[:su_person] = current_person.id
       @person_session = PersonSession.create(@person)
     else
       flash[:error] = t('error_admin_access_required')
@@ -202,6 +203,16 @@ class PeopleController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(@person) }
     end
+  end
+
+  def unsu
+    if(session.has_key?(:su_person))
+      @person_session = PersonSession.create(Person.find session[:su_person])
+      session.delete :su_person
+    else
+      flash[:error] = t('error_account_locate')
+    end
+    redirect_to '/'
   end
 
   private
