@@ -18,6 +18,10 @@ class Offer < ActiveRecord::Base
 
   validates :expiration_date, :total_available, :presence => true
 
+  def considered_active?
+    available_count > 0 && expiration_date >= DateTime.now
+  end
+
   private
     def set_available_count
       self.available_count = self.total_available

@@ -3,7 +3,7 @@
     <%= render :partial => @offer, :locals => {:full => true} %>
   </ul>
   <% if logged_in? %>
-    <% unless current_person?(@offer.person) %>
+    <% unless (!@offer.considered_active? || current_person?(@offer.person)) %>
       <%= form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
         <%= fields_for :offer do |o| %>
           <%= o.hidden_field :id %>
