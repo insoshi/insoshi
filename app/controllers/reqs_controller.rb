@@ -7,8 +7,6 @@ class ReqsController < ApplicationController
   before_filter :login_or_oauth_required, :only => [:show, :index]
   load_resource :group
   load_and_authorize_resource :req, :through => :group, :shallow => true
-  before_filter :correct_person_and_no_accept_required, :only => [ :edit, :update ]
-  before_filter :correct_person_and_no_commitment_required, :only => [ :destroy ]
 
   # GET /reqs
   # GET /reqs.xml
@@ -143,18 +141,5 @@ class ReqsController < ApplicationController
     respond_to do |format|
       format.js
     end
-  end
-
-  # private
-
-  def correct_person_and_no_accept_required
-    request = Req.find(params[:id])
-    redirect_to home_url unless request.person == current_person
-    redirect_to home_url if request.has_accepted_bid?
-  end
-
-  def correct_person_and_no_commitment_required
-    request = Req.find(params[:id])
-    redirect_to home_url if request.has_commitment? || request.has_approved?
   end
 end
