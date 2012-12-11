@@ -360,19 +360,19 @@ class Person < ActiveRecord::Base
   end
 
   def main_photo
-    photo.nil? ? "default.png" : photo.public_filename
+    photo.nil? ? "default.png" : photo.pic
   end
 
   def thumbnail
-    photo.nil? ? "default_thumbnail.png" : photo.public_filename(:thumbnail)
+    photo.nil? ? "default_thumbnail.png" : photo.pic(:thumbnail)
   end
 
   def icon
-    photo.nil? ? "default_icon.png" : photo.public_filename(:icon)
+    photo.nil? ? "default_icon.png" : photo.pic(:icon)
   end
 
   def bounded_icon
-    photo.nil? ? "default_icon.png" : photo.public_filename(:bounded_icon)
+    photo.nil? ? "default_icon.png" : photo.pic(:icon)
   end
 
   # Return the photos ordered by primary first, then by created_at.
