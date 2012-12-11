@@ -38,10 +38,20 @@ class Photo < ActiveRecord::Base
                                   :bounded_icon => '36x36>' }
   
   has_many :activities, :as => :item, :dependent => :destroy
-  validate :filename_to_upload_exists_and_images_are_correct_format
+  #validate :filename_to_upload_exists_and_images_are_correct_format
     
   after_save :log_activity
-                 
+
+  mount_uploader :picture, ImageUploader
+
+  # XXX temporary method while attachment-fu data is converted to carrierwave
+  # 
+  # after data is converted, this method and attachment-fu will be removed
+  # and we'll call picture_url() instead of pic()
+  def pic(pictype=nil)
+    picture.blank? ? public_filename(pictype) : picture_url(pictype).to_s
+  end
+
   # Override the crappy default AttachmentFu error messages.
   def filename_to_upload_exists_and_images_are_correct_format
     if filename.nil?
