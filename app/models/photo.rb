@@ -39,7 +39,8 @@ class Photo < ActiveRecord::Base
   
   has_many :activities, :as => :item, :dependent => :destroy
   #validate :filename_to_upload_exists_and_images_are_correct_format
-    
+
+  before_save :update_photo_attributes
   after_save :log_activity
 
   mount_uploader :picture, ImageUploader
@@ -49,7 +50,11 @@ class Photo < ActiveRecord::Base
   # after data is converted, this method and attachment-fu will be removed
   # and we'll call picture_url() instead of pic()
   def pic(pictype=nil)
-    picture.blank? ? public_filename(pictype) : picture_url(pictype).to_s
+    picture.blank? ? public_filename(pictype) : carrierwave_url(pictype).to_s
+  end
+
+  def carrierwave_url(pictype)
+    pictype.nil? ? picture_url : picture_url(pictype)
   end
 
   # Override the crappy default AttachmentFu error messages.
@@ -77,6 +82,13 @@ class Photo < ActiveRecord::Base
         activity = Activity.create!(:item => self, :person => self.person)
         add_activities(:activity => activity, :person => self.person)
       end
+    end
+  end
+
+  def update_photo_attributes
+    if picture.present? && picture_changed?
+      self.content_type = picture.file.content_type
+      self.size = picture.file.size
     end
   end
 
