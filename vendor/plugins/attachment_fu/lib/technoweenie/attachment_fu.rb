@@ -389,6 +389,11 @@ module Technoweenie # :nodoc:
         self.class.with_image(temp_path, &block)
       end
 
+      # Removes the thumbnails for the attachment, if it has any
+      def destroy_thumbnails
+        self.thumbnails.each { |thumbnail| thumbnail.destroy } if thumbnailable?
+      end
+
       protected
         # Generates a unique filename for a Tempfile.
         def random_tempfile_filename
@@ -496,10 +501,6 @@ module Technoweenie # :nodoc:
           end
         end
 
-        # Removes the thumbnails for the attachment, if it has any
-        def destroy_thumbnails
-          self.thumbnails.each { |thumbnail| thumbnail.destroy } if thumbnailable?
-        end
     end
   end
 end

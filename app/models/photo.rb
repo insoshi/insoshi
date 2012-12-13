@@ -43,6 +43,21 @@ class Photo < ActiveRecord::Base
   before_save :update_photo_attributes
   after_save :log_activity
 
+  class << self
+    def migrate_to_carrierwave
+      photos_to_be_migrated = self.where(parent_id: nil, picture: nil)
+      num = photos_to_be_migrated.length
+      puts "there are #{num} photos to be migrated to carrierwave..."
+      photos_to_be_migrated.each do |photo|
+        puts "...migrating photo #{photo.id}"
+        photo.destroy_thumbnails
+        photo.update_attributes!(remote_picture_url: photo.public_filename)
+        photo.destroy_file
+      end
+      puts "All #{num} photos have been migrated to carrierwave!"
+    end
+  end
+
   mount_uploader :picture, ImageUploader
 
   # XXX temporary method while attachment-fu data is converted to carrierwave
