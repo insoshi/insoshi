@@ -27,6 +27,8 @@ class Photo < ActiveRecord::Base
   
   belongs_to :person
   belongs_to :group
+  belongs_to :photoable, :polymorphic => true
+
   has_attachment :content_type => :image, 
                  :storage => :s3,
                  :processor => 'Rmagick',
@@ -55,6 +57,20 @@ class Photo < ActiveRecord::Base
         photo.destroy_file
       end
       puts "All #{num} photos have been migrated to carrierwave!"
+    end
+
+    def polymorphisize
+      self.all(conditions: 'person_id IS NOT NULL').each do |person_photo|
+        person_photo.photoable_id = person_photo.person_id
+        person_photo.photoable_type = 'Person'
+        person_photo.save
+      end
+
+      self.all(conditions: 'group_id IS NOT NULL').each do |group_photo|
+        group_photo.photoable_id = group_photo.group_id
+        group_photo.photoable_type = 'Group'
+        group_photo.save
+      end
     end
   end
 

@@ -14,12 +14,37 @@ class Offer < ActiveRecord::Base
 
   extend Scopes
 
+  has_many :photos, :as => :photoable
+
   before_create :set_available_count
 
   validates :expiration_date, :total_available, :presence => true
 
   def considered_active?
     available_count > 0 && expiration_date >= DateTime.now
+  end
+
+  ## Photo helpers
+  def photo
+    # This should only have one entry, but be paranoid.
+    photos.find_all_by_primary(true).first
+  end
+
+  # Return all the photos other than the primary one
+  def other_photos
+    photos.length > 1 ? photos - [photo] : []
+  end
+
+  def main_photo
+    photo.nil? ? "g_default.png" : photo.picture_url
+  end
+
+  def thumbnail
+    photo.nil? ? "g_default_thumbnail.png" : photo.picture_url(:thumbnail)
+  end
+
+  def icon
+    photo.nil? ? "g_default_icon.png" : photo.picture_url(:icon)
   end
 
   private

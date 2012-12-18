@@ -303,6 +303,9 @@ fr:
       header: "Nouvelle offre"
       total_available: "Somme disponible"
       description_label: "Be sure to include your preferred means of communication, i.e. email. text or telephone."
+    new_photo:
+      header: "Offer photo upload"
+      upload_a_photo: "Publier une photo"
     show:
       header: "Offre"
       send: "Envoyez"

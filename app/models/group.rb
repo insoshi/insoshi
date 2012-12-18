@@ -10,7 +10,7 @@ class Group < ActiveRecord::Base
   has_one :forum
   has_many :reqs, :conditions => "biddable IS true", :order => "created_at DESC"
   has_many :offers, :order => "created_at DESC"
-  has_many :photos, :dependent => :destroy, :order => "created_at"
+  has_many :photos, :as => :photoable, :dependent => :destroy, :order => "created_at"
   has_many :exchanges, :order => "created_at DESC"
   has_many :memberships, :dependent => :destroy
   has_many :people, :through => :memberships, 

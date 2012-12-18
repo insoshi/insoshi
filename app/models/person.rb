@@ -96,7 +96,7 @@ class Person < ActiveRecord::Base
 
   has_many :connections
   has_many :contacts, :through => :connections, :conditions => {"connections.status" => Connection::ACCEPTED}
-  has_many :photos, :dependent => :destroy, :order => 'created_at'
+  has_many :photos, :as => :photoable, :dependent => :destroy, :order => 'created_at'
   has_many :requested_contacts, :through => :connections, :source => :contact#, :conditions => REQUESTED_AND_ACTIVE
 
   with_options :dependent => :destroy, :order => 'created_at DESC' do |person|

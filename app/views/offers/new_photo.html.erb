@@ -1,0 +1,14 @@
+<h2><%= t('offers.new_photo.header') %></h2>
+<%= error_messages_for :photo %>
+
+<%= form_for @photo, :url => {:action => "save_photo"}, :html => { :multipart => true } do |f| -%>
+
+  <div class="form_field">
+    <label for="photo"><%= t('groups.new_photo.upload_a_photo') %></label>
+    <%= f.file_field :picture %>
+  </div>
+  <div class="form_field">
+    <%= submit_tag t('button_upload'), :class => "button" %>
+    <%= f.submit t('button_cancel'), :id => "cancel", :class => "button" %>
+  </div>
+<% end -%>

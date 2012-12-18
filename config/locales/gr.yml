@@ -362,6 +362,9 @@ gr:
       header: "Νέα Προσφορά"
       total_available: "Διαθέσιμο Σύνολο"
       description_label: "Βεβαιωθείτε πως αναφέρετε προτιμώμενα μέσα επικοινωνίας, πχ προσωπικό μήνυμα, email ή τηλέφωνο."
+    new_photo:
+      header: "Offer photo upload"
+      upload_a_photo: "Ανέβασε μια φωτογραφία"
     show:
       header: "Προσφορά"
       send: "Αποστολή"

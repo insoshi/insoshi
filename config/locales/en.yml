@@ -248,6 +248,9 @@ en:
       header: "New offer"
       total_available: "Total available"
       description_label: "Be sure to include your preferred means of communication, i.e. email. text or telephone."
+    new_photo:
+      header: "Offer photo upload"
+      upload_a_photo: "Upload a photo"
     show:
       header: "Offer"
       send: "Send"

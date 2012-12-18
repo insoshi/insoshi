@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121211022304) do
+ActiveRecord::Schema.define(:version => 20121217201606) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -469,6 +469,8 @@ ActiveRecord::Schema.define(:version => 20121211022304) do
     t.datetime "updated_at"
     t.integer  "group_id"
     t.string   "picture"
+    t.integer  "photoable_id"
+    t.string   "photoable_type"
   end
 
   add_index "photos", ["parent_id"], :name => "index_photos_on_parent_id"

@@ -247,6 +247,9 @@ es:
       header: "Nueva oferta"
       total_available: "Total disponible"
       description_label: "Asegúrate de indicar tu medio preferido de comunicación."
+    new_photo:
+      header: "Offer photo upload"
+      upload_a_photo: "Descargar una foto"
     show:
       header: "Oferta"
       send: "Enviar"

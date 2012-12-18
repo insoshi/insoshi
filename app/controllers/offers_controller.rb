@@ -98,6 +98,38 @@ class OffersController < ApplicationController
     end
   end
 
+  def new_photo
+    @photo = Photo.new
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def save_photo
+    if params[:photo].nil?
+      # This is mainly to prevent exceptions on iPhones.
+      flash[:error] = t('error_browser_upload_fail')
+      redirect_to(offer_path(@offer)) and return
+    end
+    if params[:commit] == "Cancel"
+      flash[:notice] = t('notice_upload_canceled')
+      redirect_to(offer_path(@offer)) and return
+    end
+    
+    offer_data = { :photoable => @offer,
+                    :primary => @offer.photos.empty? }
+    @photo = Photo.new(params[:photo].merge(offer_data))
+    
+    respond_to do |format|
+      if @photo.save
+        flash[:success] = t('success_photo_uploaded')
+        redirect_to offer_path(@offer) and return
+      else
+        format.html { render :action => "new_photo" }
+      end
+    end
+  end
+
   # private
 
   def correct_person_required

@@ -1,5 +1,5 @@
   <h2><%= h @offer.name %><%= waiting_image %></h2>
-  <ul class="list full">
+  <ul class="full">
     <%= render :partial => @offer, :locals => {:full => true} %>
   </ul>
   <% if logged_in? %>
