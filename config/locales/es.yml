@@ -34,8 +34,8 @@ es:
   recent_street_cred: " Street Cred recientes"
   last_logged_in: "última sesión de inicio"
   post: "anuncio"
-  posted: "publicado"
-  earned: "ganado"
+  posted: "ha publicado"
+  earned: "ha ganado"
   for: "por"
   said: "ha dicho"
   reply_on: "contestado en"
@@ -477,7 +477,7 @@ es:
     minifeed:
       activity: "Actividades" 
       whats_going_on: "Novedades"
-      made_a: "hizo un"
+      made_a: "hizo una"
       created_a: "creó un"
       have_connected: "se ha conectado"
       commented: "realizó un comentario"
@@ -491,7 +491,7 @@ es:
       joined_the_group: "se unió al grupo"
       has_created_a_new: "ha creado un nuevo"
       offer_created: "ha creado una nueva oferta"
-      req_created: "ha realizado una nueva demanda"
+      req_created: "ha creado una nueva demanda"
     transact:
       for: "por"
     multiple_select_label: "Para seleccionar más de un elemento de la lista presionar y mantener la tecla Ctrl (Command para Mac)"
