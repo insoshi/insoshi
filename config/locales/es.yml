@@ -9,7 +9,7 @@ es:
   button_update: "Actualizar"
   button_cancel: "Cancelar"
   button_send: "Enviar"
-  button_upload: "Descargar"
+  button_upload: "Enviar"
   button_select: "Seleccionar"
   button_search: "Búsqueda"
   button_new_offer: "Nueva Oferta"
@@ -36,7 +36,7 @@ es:
   post: "anuncio"
   posted: "publicado"
   earned: "ganado"
-  for: "para"
+  for: "por"
   said: "ha dicho"
   reply_on: "contestado en"
   see_all: "Ver todo"
@@ -125,7 +125,7 @@ es:
       pending_request: "Solicitud  Pendiente"
       cancel_membership: "Cancelar al miembro"
       confirm: "¿Estás seguro de que quieres cancelar la subscripción a esta persona?"
-      accept_membership: "Aceptar la membresía"
+      accept_membership: "Aceptar miembro"
       header: "Miembros"
       no_members_yet: "Sin miembros (todavía)"
       admins: "Admins"
@@ -142,7 +142,7 @@ es:
       private_txns: "Private transactions"
     new_photo:
       header: "Descargar un grupo de fotografías"
-      upload_a_photo: "Descargar una foto:"
+      upload_a_photo: "Enviar una foto:"
     show:
       header: "Grupo:"
       blank_description: "La descripción del grupo esta en blanco."
@@ -170,7 +170,7 @@ es:
       discussion_topics: "Temas de discusión"
       add_a_new_topic: "Agregar un nuevo tema"
       community_exchanges: "Intercambios de la comunidad"
-      home: "Home"
+      home: "Inicio"
       forum: "Foro"
       requests: "Demandas"
       offers: "Ofertas"
@@ -183,13 +183,13 @@ es:
 
   home:
     menu:
-      skillbank: "Skillbank"
+      skillbank: "Servicios disponibles"
       about: "Acerca"
       practice: "Práctica"
       steps: "Pasos"
       contact: "Contacto"
       faq: "FAQ"
-      agreement: "Agradecimientos"
+      agreement: "acuerdo"
       your_groups: "Tus Grupos"
       more_groups: "ver más..."
       help: "Ayuda"
@@ -207,11 +207,11 @@ es:
       see_your_messages: "Entrar aquí  para ver sus mensajes"
     _dashboard:
       bids: "Tus demandas y ofertas"
-      no_active_bids: "No hay ofertas vigentes"
-      offers: "Tus ofertas vigentes"
-      no_active_offers: "No hay ofertas vigentes"
-      requests: "Tus ofertas vigentes"
-      no_active_requests: "No hay ofertas vigentes"
+      no_active_bids: "No hay ofertas activas"
+      offers: "Tus ofertas activas"
+      no_active_offers: "No hay ofertas activas"
+      requests: "Tus ofertas activas"
+      no_active_requests: "No hay ofertas activas"
     _graphs:
     _forum_preview:
       header: "Foro de discusiones"
@@ -265,12 +265,12 @@ es:
       description: "Descripción"
       openid_identifier: "OpenID"
       email: "Correo electrónico"
-      email_notification_preferences: "Notificación de preferencias en el correo electrónico"
+      email_notification_preferences: "Preferencias sobre las notificaciones por correo electrónico"
       email_notification_note: "Recibirás notificaciones vía email por cada evento que marques."
       requests_in_my_service_categories: "Solicitudes en mi categoría de servicios:"
       messages: "Mensajes:"
-      forum_posts: "Foro de publicaciones:"
-      broadcast_emails: "Newsletter:"
+      forum_posts: "Publicaciones en el foro:"
+      broadcast_emails: "Boletín de correo:"
       photos: "Fotos"
       add_a_photo: "Añadir una foto"
       addresses: "Direcciones"
@@ -303,7 +303,7 @@ es:
       will_be_displayed: "(será mostrado)"
       zipcode: "Código postal"
       which_services: "¿Qué tipo de servicios deseas ofrecer? (de manera opcional puedes ser notificado de nuevas peticiones de servicios)"
-      something_about_yourself: "Haz saber a otros miembros cuales son las habilidades que tu ofreces a tu comunidad."
+      something_about_yourself: "Haz saber a otros miembros cuales son las habilidades que ofreces a tu comunidad."
       neighborhood: "vecindario"
       password: "Contraseña"
       confirm_password: "confirmar contraseña"
@@ -338,21 +338,21 @@ es:
     _recent_activity:
       header: "Actividades recientes" 
     _recent_exchanges:
-      header: "Street Cred recientes(Cuenta principal)"
+      header: "Intercambios recientes(Cuenta principal)"
 
   reqs:
     partial:
       due: "Vencimiento"
       createdby: "Creado por"
     index:
-      header: "Requisiciones"
-      current: "Reciente"
+      header: "Demandas"
+      current: "actual"
       all: "Todo"
-      noreqs: "Todavía no hay peticiones"
+      noreqs: "Todavía no hay demandas"
     edit:
-      header: "Editar la petición"
+      header: "Editar la demanda"
     new:
-      header: "Nueva petición"
+      header: "Nueva demanda"
       people_to_be_notified: "Personas que deben ser notificadas"
       notify_members_email: "¿Notificar a los miembros arriba mencionados?"
     show:
@@ -363,14 +363,14 @@ es:
       private_message_to_requestor: "Mensaje privado al solicitante"
 
   exchanges:
-    record_transaction: "Record transaction"
+    record_transaction: "Registrar transacción"
     new:
-      enter_credit_for: "Transfer %{currency} to" 
+      enter_credit_for: "Transferir %{currency} a" 
       amount: "Cantidad"
-      for: "Para:"
+      for: "Por:"
       or_ask: "o preguntar"
       service_provided: "Servicios proveídos"
-      no_currencies: "esta persona no está utilizando ninguna monedas"
+      no_currencies: "esta persona no está utilizando ninguna moneda"
       enter_description: "Descripción del servicio aquí"
     notify:
       you_have_received_a_payment_of: "Has recibido un pago de"
@@ -450,7 +450,7 @@ es:
   transacts:
     index:
       header: "Tus Transacciones"
-      this_is_a: "Está es"
+      this_is_a: "Esto es un"
       opentransact: "OpenTransact"
       url: "URL"
     show:
@@ -477,18 +477,18 @@ es:
     minifeed:
       activity: "Actividades" 
       whats_going_on: "Novedades"
-      made_a: "Hacer"
-      created_a: "Crear"
-      have_connected: "Sigue conectado"
-      commented: "Realizar un comentario"
+      made_a: "hizo un"
+      created_a: "creó un"
+      have_connected: "se ha conectado"
+      commented: "realizó un comentario"
       forum_post: "Publicación en el Foro"
       new_discussion_topic: "nuevo tema de discusión"
-      made_post_on_forum_topic: "Publicar en el tema del foro"
-      hours_for: "horas para"
+      made_post_on_forum_topic: "publicó en el tema del foro"
+      hours_for: "horas por"
       profile_picture_changed: "(foto de perfil) ha cambiado"
       description_changed: "(descripción ha cambiado)"
-      created_the_group: "grupo creado"
-      joined_the_group: "unido al grupo"
+      created_the_group: "creó el grupo"
+      joined_the_group: "se unió al grupo"
       has_created_a_new: "ha creado un nuevo"
       offer_created: "ha creado una nueva oferta"
       req_created: "ha realizado una nueva demanda"
