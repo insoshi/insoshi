@@ -15,7 +15,7 @@ class OffersController < ApplicationController
                                   params[:page],
                                   AJAX_POSTS_PER_PAGE,
                                   params[:search]
-                                  ).order("updated_at desc")
+                                  ).order("offers.updated_at desc")
     respond_with @offers
   end
 
