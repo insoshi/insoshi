@@ -121,6 +121,7 @@ en:
       primary: "primary"
       add_a_photo: "Add a photo"
       private_txns: "Private transactions"
+      enable_forum: "Enable forum"
     members:
       pending_request: "Pending request"
       cancel_membership: "Cancel membership"

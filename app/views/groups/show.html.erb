@@ -16,7 +16,7 @@
         <%= render :partial => '/forums/forum_canvas' %>
       </div>
       <%= render :partial => 'forum_form' %>
-    <% end %>
+    <% end if @group.enable_forum %>
     <% tab.create('tab_requests', t('groups.show.requests')) do %>
       <div id="reqs_canvas">
         <%= render :partial => '/reqs/reqs_canvas' %>

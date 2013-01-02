@@ -33,6 +33,11 @@
 <%- end -%>
 
     <div class="form_row">
+      <label for="enable_forum" class="checkbox"><%= t('groups.edit.enable_forum') %></label>
+      <%= f.check_box :enable_forum %>
+    </div>
+
+    <div class="form_row">
       <label for="description"><%= t('groups.edit.description') %></label>
       <%= f.text_area :description %>
     </div>
@@ -87,10 +92,12 @@
 
 <%- end -%>
 <%= column_div :type => :secondary do -%>
+<% if @group.enable_forum %>
   <h2>Forum</h2>
   <p>
   <%= link_to "Edit Forum Preferences", edit_forum_path(@group.forum) %>
   </p>
+<% end %>
   <h2>Members</h2>
   <p>
     <%= link_to "Edit Member Roles", members_group_path(@group) %>

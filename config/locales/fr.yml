@@ -176,6 +176,7 @@ fr:
       primary: "primaire"
       add_a_photo: "ajouter une photo"
       private_txns: "Private transactions"
+      enable_forum: "Enable forum"
     members:
       pending_request: "Pending request"                
       cancel_membership: "Canceller l’abonnement"
