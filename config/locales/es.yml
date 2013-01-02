@@ -527,40 +527,40 @@ es:
 
   datetime:
      distance_in_words:
-       half_a_minute: "hace medio minuto" 
+       half_a_minute: "medio minuto" 
        less_than_x_seconds:
-         one:  "hace menos de 1 segundo" 
-         other: "hace menos de {count}} segundos"
+         one:  "menos de 1 segundo" 
+         other: "menos de %{count} segundos"
        x_seconds:
-         one:  "hace 1 segundo" 
-         other: "hace {{count}} segundos" 
+         one:  "1 segundo" 
+         other: "%{count} segundos" 
        less_than_x_minutes:
-         one:  "hace menos de 1 minuto" 
-         other: "hace menos de {{count}} minutos" 
+         one:  "menos de 1 minuto" 
+         other: "menos de %{count} minutos" 
        x_minutes:
-         one:  "hace 1 minuto" 
-         other: "hace {{count}} minutos" 
+         one:  "1 minuto" 
+         other: "%{count} minutos" 
        about_x_hours:
-         one:  "hace aproximadamente una hora" 
-         other: "hace aproximadamente {{count}} horas" 
+         one:  "aproximadamente una hora" 
+         other: "aproximadamente {{count}} horas" 
        x_days:
-         one:  "hace 1 día" 
-         other: "hace {{count}} días" 
+         one:  "1 día" 
+         other: "{{count}} días" 
        about_x_months:
-         one:  "hace aproximadamente 1 mes" 
-         other: "hace aproximadamente {{count}} meses" 
+         one:  "aproximadamente 1 mes" 
+         other: "aproximadamente {{count}} meses" 
        x_months:
-         one:  "hace 1 mes" 
-         other: "hace {{count}} meses" 
+         one:  "1 mes" 
+         other: "{{count}} meses" 
        about_x_years:
-         one:  "hace aproximadamente 1 año" 
-         other: "hace aproximadamente {{count}} años" 
+         one:  "aproximadamente 1 año" 
+         other: "aproximadamente {{count}} años" 
        over_x_years:
-         one:  "hace más de 1 año" 
-         other: "hace más de {{count}} años" 
+         one:  "más de 1 año" 
+         other: "más de {{count}} años" 
        almost_x_years:
-         one: "hace casi 1 año"
-         other: "hace casi {{count}} años"
+         one: "casi 1 año"
+         other: "casi {{count}} años"
 
   date:
     formats:
