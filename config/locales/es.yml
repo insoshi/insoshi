@@ -26,7 +26,7 @@ es:
   description: "Descripción"
   are_you_sure: "¿Estás seguro?"
   miles_away: "muy lejos"
-  ago: " "
+  ago: "tiempo atrás"
   estimated: "Estimado"
   payment: "pago"
   a_question: "una pregunta"
@@ -529,42 +529,42 @@ es:
     _footer:
       thankyou: "Gracias por apoyar el software libre."
 
-  datetime:
-     distance_in_words:
-       half_a_minute: "medio minuto" 
-       less_than_x_seconds:
-         one:  "menos de 1 segundo" 
-         other: "menos de %{count} segundos"
-       x_seconds:
-         one:  "1 segundo" 
-         other: "%{count} segundos" 
-       less_than_x_minutes:
-         one:  "menos de 1 minuto" 
-         other: "menos de %{count} minutos" 
-       x_minutes:
-         one:  "1 minuto" 
-         other: "%{count} minutos" 
-       about_x_hours:
-         one:  "aproximadamente una hora" 
-         other: "aproximadamente {{count}} horas" 
-       x_days:
-         one:  "1 día" 
-         other: "{{count}} días" 
-       about_x_months:
-         one:  "aproximadamente 1 mes" 
-         other: "aproximadamente {{count}} meses" 
-       x_months:
-         one:  "1 mes" 
-         other: "{{count}} meses" 
-       about_x_years:
-         one:  "aproximadamente 1 año" 
-         other: "aproximadamente {{count}} años" 
-       over_x_years:
-         one:  "más de 1 año" 
-         other: "más de {{count}} años" 
-       almost_x_years:
-         one: "casi 1 año"
-         other: "casi {{count}} años"
+  # datetime:
+  #   distance_in_words:
+  #     half_a_minute: "medio minuto" 
+  #     less_than_x_seconds:
+  #       one:  "menos de 1 segundo" 
+  #       other: "menos de {count}} segundos"
+  #     x_seconds:
+  #       one:  "1 segundo" 
+  #       other: "{{count}} segundos" 
+  #     less_than_x_minutes:
+  #       one:  "menos de 1 minuto" 
+  #       other: "menos de {{count}} minutos" 
+  #     x_minutes:
+  #       one:  "1 minuto" 
+  #       other: "{{count}} minutos" 
+  #     about_x_hours:
+  #       one:  "alrededor de 1 hora" 
+  #       other: "alrededor de {{count}} horas" 
+  #     x_days:
+  #       one:  "1 día" 
+  #       other: "{{count}} días" 
+  #     about_x_months:
+  #       one:  "alrededor de 1 mes" 
+  #       other: "alrededor de {{count}} meses" 
+  #     x_months:
+  #       one:  "1 mes" 
+  #       other: "{{count}} meses" 
+  #     about_x_years:
+  #       one:  "alrededor de 1 año" 
+  #       other: "alrededor de {{count}} años" 
+  #     over_x_years:
+  #       one:  "más de 1 año" 
+  #       other: "más de {{count}} años" 
+  #     almost_x_years:
+  #       one: "casi 1 año"
+  #       other: "casi {{count}} años"
 
   date:
     formats:
