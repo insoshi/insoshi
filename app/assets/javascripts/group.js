@@ -35,7 +35,6 @@ $(function() {
 
   route('home',     /^#home$/,                                     '/groups/[:group_id]');
   route('home',     /^#member_preferences\/(\d+)\/edit$/,          '/member_preferences/[:1]/edit');
-  route('home',     /^#graphs$/,                                   '/groups/[:group_id]/graphs');
 
   route('exchanges',/^#exchanges\/page=(\d+)/,                     '/groups/[:group_id]/exchanges?page=[:1]');
   route('requests', /^#reqs\/page=(\d+)/,                          '/groups/[:group_id]/reqs?page=[:1]');
