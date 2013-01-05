@@ -5,6 +5,14 @@ class Transact < Exchange
 
   after_create :perform_callback
 
+  module Scopes
+    def by_newest
+      order('created_at DESC').limit(10)
+    end
+  end
+
+  extend Scopes
+
   def create_req(memo)
     req = Req.new
     req.name = memo.blank? ? 'miscellaneous' : memo 

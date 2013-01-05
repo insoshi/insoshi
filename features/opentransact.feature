@@ -12,7 +12,27 @@ I want to access transactions on behalf of an account holder
     Given an account holder with asset "marbles"
     And an access token with scope "http://localhost:3000/scopes/list_payments.json?asset=marbles"
     When I request transactions for "marbles"
-    Then I should see transactions for "marbles"
+    Then I should see her transactions for "marbles"
+
+  Scenario: Unauthorized all transactions request because account holder is not an admin
+    Given an account holder with asset "marbles"
+    And an access token with scope "http://localhost:3000/scopes/list_all_payments.json?asset=marbles"
+    When I request transactions for "marbles"
+    Then I should see her transactions for "marbles"
+
+  Scenario: Successful all transactions request for system admin
+    Given an account holder with asset "marbles"
+    And the account holder is a system admin
+    And an access token with scope "http://localhost:3000/scopes/list_all_payments.json?asset=marbles"
+    When I request transactions for "marbles"
+    Then I should see all transactions for "marbles"
+
+  Scenario: Successful all transactions request for group admin
+    Given an account holder with asset "marbles"
+    And the account holder is an admin for the group with asset "marbles"
+    And an access token with scope "http://localhost:3000/scopes/list_all_payments.json?asset=marbles"
+    When I request transactions for "marbles"
+    Then I should see all transactions for "marbles"
 
   Scenario: Unknown asset specified
     Given an account holder with asset "marbles"
@@ -37,10 +57,10 @@ I want to access transactions on behalf of an account holder
     Given an account holder with asset "marbles"
     And an access token with scope "http://localhost:3000/scopes/list_payments.json"
     When I request transactions for "marbles"
-    Then I should see transactions for "marbles"
+    Then I should see her transactions for "marbles"
 
   Scenario: Successful transactions request with multiple scopes
     Given an account holder with asset "marbles"
     And an access token with scope "http://localhost:3000/scopes/wallet.json http://localhost:3000/scopes/list_payments.json"
     When I request transactions for "marbles"
-    Then I should see transactions for "marbles"
+    Then I should see her transactions for "marbles"

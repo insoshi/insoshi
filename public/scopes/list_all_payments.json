@@ -1,0 +1,8 @@
+{
+  "action": 
+    {
+    "_id":"read_all_payments",
+    "name":"view everyone's payments",
+    "icon_uri":"/images/icons/warning.gif"
+  }
+}

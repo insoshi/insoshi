@@ -6,6 +6,20 @@ module OscurrencyHelpers
                       :password => "quire")
   end
 
+  def make_system_admin
+    p = Person.find_by_email("patrick@example.com")
+    p.admin = true
+    p.save!
+  end
+
+  def make_group_admin(asset="coupons")
+    p = Person.find_by_email("patrick@example.com")
+    g = Group.find_by_asset(asset)
+    m = Membership.mem(p,g)
+    m.add_role('admin')
+    m.save
+  end
+
   def init_asset(asset="coupons")
     q = Person.find_by_email("quire@example.com")
     g = create_group("default group",q,asset)
@@ -15,12 +29,19 @@ module OscurrencyHelpers
                       :email => "patrick@example.com", 
                       :default_group => g,
                       :password => "patrick")
-    # group membership required before participating in currency 
+    # group membership required before participating in currency
     Membership.request(p,g,false)
+    o = create_person(:name => "Otis",
+                      :email => "otis@example.com",
+                      :default_group => g,
+                      :password => "otis")
+    # group membership required before participating in currency
+    Membership.request(o,g,false)
 
     2.times do
       create_exchange(q,p,g,1.0)
     end
+    create_exchange(o,q,g,2.0) # adding one more in which q is not a counterparty
   end
 
   def add_asset(asset)
