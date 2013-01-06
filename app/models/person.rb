@@ -158,7 +158,7 @@ class Person < ActiveRecord::Base
   #validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
 
   before_create :check_config_for_deactivation
-  before_create :set_default_group
+  before_create :set_language_and_default_group
   after_create :create_address
   after_create :join_mandatory_groups
   before_save :update_group_letter
@@ -318,8 +318,9 @@ class Person < ActiveRecord::Base
     addresses.create(:name => 'personal', :zipcode_plus_4 => (zipcode.presence || DEFAULT_ZIPCODE_STRING))
   end
 
-  def set_default_group
+  def set_language_and_default_group
     self.default_group_id = Person.global_prefs.default_group_id
+    self.language = Person.global_prefs.locale
   end
 
   def join_mandatory_groups
