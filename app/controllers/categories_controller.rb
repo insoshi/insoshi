@@ -32,7 +32,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new.xml
   def new
     @category = Category.new
-    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_categories = Category.by_long_name
 
     respond_to do |format|
       format.html # new.html.erb
@@ -43,7 +43,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1/edit
   def edit
     @category = Category.find(params[:id])
-    @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_categories = Category.by_long_name
   end
 
   # POST /categories
@@ -58,7 +58,7 @@ class CategoriesController < ApplicationController
         format.xml  { render :xml => @category, :status => :created, :location => @category }
       else
         @category = Category.new
-        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_categories = Category.by_long_name
         format.html { render :action => "new" }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }
       end
@@ -77,7 +77,7 @@ class CategoriesController < ApplicationController
         format.xml  { head :ok }
       else
         @category = Category.find(params[:id])
-        @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+        @all_categories = Category.by_long_name
         format.html { render :action => "edit" }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }
       end

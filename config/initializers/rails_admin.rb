@@ -244,6 +244,10 @@ end
 
     edit do
       field :name
+      field :parent_id do
+        properties[:collection] = [['',nil]] + Category.by_long_name.map {|c| [c.long_name, c.id]}
+        partial "select"
+      end
       field :description
     end
   end
@@ -255,6 +259,10 @@ end
 
     edit do
       field :name
+      field :parent_id do
+        properties[:collection] = [['',nil]] + Neighborhood.by_long_name.map {|n| [n.long_name, n.id]}
+        partial "select"
+      end
       field :description
     end
   end

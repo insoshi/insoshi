@@ -30,7 +30,7 @@ class NeighborhoodsController < ApplicationController
   # GET /neighborhoods/new.xml
   def new
     @neighborhood = Neighborhood.new
-    @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_neighborhoods = Neighborhood.by_long_name
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,7 +41,7 @@ class NeighborhoodsController < ApplicationController
   # GET /neighborhoods/1/edit
   def edit
     @neighborhood = Neighborhood.find(params[:id])
-    @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @all_neighborhoods = Neighborhood.by_long_name
   end
 
   # POST /neighborhoods
