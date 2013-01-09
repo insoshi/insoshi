@@ -12,6 +12,14 @@ Given /^an account holder with asset "([^"]*)"$/ do |asset|
   init_asset(asset)
 end
 
+Given /^the account holder is a system admin$/ do
+  make_system_admin
+end
+
+Given /^the account holder is an admin for the group with asset "([^"]*)"$/ do |asset|
+  make_group_admin(asset)
+end
+
 Given /^an account holder with email "([^"]*)" and asset "([^"]*)"$/ do |email, asset|
   # XXX for now, assume asset is already created
   g = Group.by_opentransact(asset)
@@ -42,13 +50,22 @@ When /^I request transactions for "([^"]*)"$/ do |asset|
   end
 end
 
-Then /^I should see transactions for "([^"]*)"$/ do |asset|
+Then /^I should see her transactions for "([^"]*)"$/ do |asset|
   if @transacts.length == 2 
     @transacts.each {|t| puts "#{t['amount']}: #{t['memo']} - #{t['txn_id']}"}
   else
     puts "Error: #{@transacts['error']}" if @transacts['error']
   end
   @transacts.should have(2).items
+end
+
+Then /^I should see all transactions for "([^"]*)"$/ do |asset|
+  if @transacts.length == 3
+    @transacts.each {|t| puts "#{t['amount']}: #{t['memo']} - #{t['txn_id']}"}
+  else
+    puts "Error: #{@transacts.inspect}"
+  end
+  @transacts.should have(3).items
 end
 
 Then /^I should receive error message "([^"]*)"$/ do |message|

@@ -24,6 +24,10 @@ class Capability < ActiveRecord::Base
     action_id == 'single_payment'
   end
 
+  def privileged?
+    action_id == 'read_all_payments'
+  end
+
   def asset(scope)
     scope_uri = URI.parse(scope)
     query_hash = scope_uri.query.nil? ? {} : CGI::parse(scope_uri.query)
@@ -37,7 +41,11 @@ class Capability < ActiveRecord::Base
   end
 
   def can_list?(g)
-    ['read_payments','all_access'].include?(action_id) && (self.group == g || self.group.nil?)
+    ['read_payments','read_all_payments','all_access'].include?(action_id) && (self.group == g || self.group.nil?)
+  end
+
+  def can_list_all?(g)
+    ['read_all_payments','all_access'].include?(action_id) && (self.group == g || self.group.nil?)
   end
 
   def can_pay?(g)

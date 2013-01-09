@@ -77,5 +77,4 @@ group :test do
   gem "guard-spork"
   gem "rspec-rails" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
   gem "spork"
-  gem "test-unit"
 end

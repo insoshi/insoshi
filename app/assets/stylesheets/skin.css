@@ -212,6 +212,12 @@ ul li.profile_icon_item {
   border: 1px solid #FFD324;
 }
 
+.privileged-scope-action {
+  background: #FCC;
+  color: #514721;
+  border: 1px solid #C66;
+}
+
 #sfmenu li.right_item {
   width: 120px;
 }

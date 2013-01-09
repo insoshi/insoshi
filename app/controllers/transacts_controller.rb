@@ -50,7 +50,15 @@ class TransactsController < ApplicationController
         return invalid_oauth_response(401,"Bad scope")
       end
     end
-    @transactions = current_person.transactions.select {|transact| transact.group == @group}
+
+    # if token specifies list_all capability but person is not admin, it is ok to just return person's transactions
+    unless includes_list_all_capability? && (current_token.person.admin? || current_token.person.is?(:admin, @group))
+      @transactions = current_person.transactions.select {|transact| transact.group == @group}
+    else
+      # show the 10 most recent
+      @transactions = Transact.by_newest
+    end
+
     respond_to do |format|
       format.html
       format.xml { render :xml => @transactions.to_xml(:root => "txns") }
@@ -184,6 +192,10 @@ class TransactsController < ApplicationController
 
   def includes_list_capability?
     current_token.capabilities.detect {|c| c.can_list?(@group)}
+  end
+
+  def includes_list_all_capability?
+    current_token.capabilities.detect {|c| c.can_list_all?(@group)}
   end
 
   def includes_payment_capability?

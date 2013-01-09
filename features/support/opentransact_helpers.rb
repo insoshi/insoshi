@@ -17,7 +17,7 @@ module OpentransactHelpers
 
   def create_access_token(scopes)
     # no longer associating group with access token
-    a = AccessToken.create! :person => Person.find_by_email('quire@example.com'), :client_application => ClientApplication.first
+    a = AccessToken.create! :person => Person.find_by_email('patrick@example.com'), :client_application => ClientApplication.first
     scopes.split.each do |scope|
       puts "parsing scope: #{scope}"
       a.capabilities << Capability.create!(:scope => scope)
