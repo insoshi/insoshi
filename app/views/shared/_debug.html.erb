@@ -1,15 +1,26 @@
   <div id="debug">
-    <a href="#" onclick="Element.toggle('env_debug_info');return false">
+    <a href="#" onclick="$('#env_debug_info').toggle();return false">
     env</a> |
-    <a href="#" onclick="Element.toggle('request_debug_info');return false">
+    <a href="#" onclick="$('#request_debug_info').toggle();return false">
     request</a>
     <fieldset id="env_debug_info" class="debug_info" style="display: none">
       <legend>env</legend>
-      <%= debug(request.env) %>
+      <%= ap(request.env.reject {|k, v| /[a-z]/ === k}, :html => true).html_safe %>
     </fieldset>
-    <fieldset id="request_debug_info" class="debug_info" 
-              style="display: none">
+    <fieldset id="request_debug_info" class="debug_info" style="display: none">
       <legend>request</legend>
-      <%= debug(request) %>
+      <% ignored = %w[
+        action_controller.instance
+        action_dispatch.backtrace_cleaner
+        action_dispatch.cookies
+        action_dispatch.logger
+        action_dispatch.request.flash_hash
+        action_dispatch.request.unsigned_session_cookie
+        action_dispatch.routes
+        rack.input
+        rack.request.cookie_hash
+        rack.request.cookie_string
+       ]%>
+      <%= ap(request.env.select {|k, v| /[a-z]/ === k}.except(*ignored), :html => true).html_safe %>
     </fieldset>
   </div>

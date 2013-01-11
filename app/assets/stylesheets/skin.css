@@ -8,6 +8,13 @@ body {padding-top: 45px;}
   }
 }
 
+pre.debug_dump pre {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+}
 
 /*
 #wrap{

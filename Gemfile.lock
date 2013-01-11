@@ -407,8 +407,6 @@ DEPENDENCIES
   girl_friday
   guard-spork
   heroku
-  jquery-rails
-  jquery-ui-rails
   json
   libv8 (= 3.11.8.3)
   oauth
