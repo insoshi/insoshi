@@ -7,7 +7,13 @@
     <%- else -%>
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
+    <%= stylesheet_link_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/base/jquery-ui.css" %>
+    <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css" %>
+    <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css" %>
     <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" %>
+    <%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" %>
+    <%= javascript_include_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tag %>
     <%= yield :jquery_support %>

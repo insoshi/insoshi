@@ -33,3 +33,4 @@ config/ultrasphinx/*.conf
 .sass-cache/
 .rvmrc
 .env
+/public/uploads

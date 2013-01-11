@@ -15,7 +15,7 @@ gem "exception_notification", :git => "https://github.com/smartinez87/exception_
 group :assets do
   gem "sass-rails"
   gem "uglifier"
-  gem 'jquery-ui-rails'
+  # gem 'jquery-ui-rails'
 end
 
 gem "audited-activerecord"
@@ -23,7 +23,7 @@ gem "rails3_acts_as_paranoid", "~>0.1.4"
 gem "acts_as_tree_rails3"
 gem "uuid"
 
-gem 'jquery-rails'
+# gem 'jquery-rails'
 
 #gem "rack", '= 1.2.2'   #Heroku seems to force this
 gem 'dynamic_form'
