@@ -1,105 +1,85 @@
-<%= column_div :type => :primary do -%>
-  <h2><%= t('groups.edit.header') %></h2>
-  <div id="profile_edit">
+<h2><%= t('groups.edit.header') %></h2>
+<div class="row">
+  <div class="span6">
 
-  <%= form_for(@group) do |f| %>
-    <%= f.error_messages %>
+    <%= form_for(@group) do |f| %>
+      <%= f.error_messages %>
+      <fieldset>
+        <legend><%= t('groups.edit.group_data') %></legend>
+        <div class="row">
+          <div class="span3">
+            <%= f.label :name, t('groups.edit.name') %>
+            <%= f.text_field :name, :class => "span3" %>
+            <%= f.label :description, t('groups.edit.description') %>
+            <%= f.text_area :description, :class => "span3", :rows => 10 %>
+          </div>
+          <div class="span3">
 
-    <div class="form_row">
-      <label for="name"><%= t('groups.edit.name') %></label>
-      <%= f.text_field :name %>
-    </div>
+            <%- if @group.adhoc_currency? -%>
 
-<%- if @group.adhoc_currency? -%>
-    <div class="form_row">
-      <label for="unit"><%= t('groups.edit.currency_unit_plural') %></label>
-      <%= f.text_field :unit %>
-    </div>
+              <%= f.label :unit, t('groups.edit.currency_unit_plural') %>
+              <%= f.text_field :unit, :class => "span3" %>
 
-    <div class="form_row">
-      <label for="asset"><%= t('groups.edit.asset') %></label>
-      <%= f.text_field :asset, :disabled => !@group.asset.nil? %>
-    </div>
+              <%= f.label :asset, t('groups.edit.asset') %>
+              <%= f.text_field :asset, :disabled => !@group.asset.nil?, :class => "span3" %>
 
-    <div class="form_row">
-      <label for="default_credit_limit"><%= t('groups.edit.default_credit_limit') %></label>
-      <%= f.text_field :default_credit_limit, :size => 5 %>
-    </div>
+              <%= f.label :default_credit_limit, t('groups.edit.default_credit_limit') %>
+              <%= f.text_field :default_credit_limit, :size => 5, :class => "span3" %>
 
-    <div class="form_row">
-      <label for="private_txns" class="checkbox"><%= t('groups.edit.private_txns') %></label>
-      <%= f.check_box :private_txns %>
-    </div>
-<%- end -%>
+              <%= f.label :private_txns, :class => "checkbox" do %>
+                <%= f.check_box :private_txns %>
+                <%= t('groups.edit.private_txns') %>
+              <% end -%>
 
-    <div class="form_row">
-      <label for="enable_forum" class="checkbox"><%= t('groups.edit.enable_forum') %></label>
-      <%= f.check_box :enable_forum %>
-    </div>
+            <%- end -%>
 
-    <div class="form_row">
-      <label for="description"><%= t('groups.edit.description') %></label>
-      <%= f.text_area :description %>
-    </div>
+            <%= f.label :enable_forum, :class => "checkbox" do %>
+              <%= f.check_box :enable_forum %>
+              <%= t('groups.edit.enable_forum') %>
+            <% end -%>
 
-    <div class="form_row">
-      <label for="mode"><% t('groups.edit.mode') %></label>
-      <%= f.select :mode, @group.get_groups_modes %>
-    </div>  
+            <%= f.label :mode, t('groups.edit.mode') %>
+            <%= f.select :mode, @group.get_groups_modes %>
+
+          </div>
+        </div>
+
+        <%= f.submit t('button_update'), :class => "btn btn-success" %>
+      </fieldset>
+    <% end %>
+  </div>
+  <div class="span3">
+    <legend><%= t('groups.edit.photos') %></legend>
     
-    <div class="form_row">
-      <%= f.submit t('button_update'), :class => "button" %>
-    </div>
-  <% end %>
-  
-  
-  <h3><%= t('groups.edit.photos') %></h3>
-  
     <% if @group.photos.empty? %>
       <%= image_tag @group.thumbnail %>
     <% else %>
-    <table>
-      <% @group.sorted_photos.collect_every(N_COLUMNS) do |row| %>
-      <tr>
-      <% row.each do |photo| %>
-        <td  style="padding-left: 1em;">
-          <%= image_tag photo.pic(:thumbnail) %>
-        </td>
-      <% end %>
-      </tr>
-      <tr>
-        <% row.each do |photo| %>
-        <td style="padding-left: 1em;">
+      <% @group.sorted_photos.each do |photo| %>
+        <div>
+          <%= image_tag photo.pic(:thumbnail), :style => "display: block;" %>
           <% if photo.primary? %>
-            <%= t('groups.edit.primary') %>
-          <% else %>
-            <%= link_to "select", photo_path(photo),
-                                          :method => :put %>
-          <% end %>
-          |
-          <%= link_to image_tag("icons/close.gif"), 
-                      delete_photo_group_path(@group)+"?photo_id=#{photo.id}",
-                      :method => :delete %>
-        </td>
-        <% end %>
-      </tr>
-      <% end %>
-    </table>
+              <%= t('groups.edit.primary') %>
+            <% else %>
+              <%= link_to "select", photo_path(photo),
+                                            :method => :put %>
+            <% end %>
+            |
+            <a href="<%= delete_photo_group_path(@group, :photo_id => photo.id) %>", data-method="delete">
+              <i class="icon-remove"></i>
+            </a>
+        </div>
+      <% end -%>
     <% end %>
     <br />
-    <%= button_to t('groups.edit.add_a_photo'), new_photo_group_path(@group), :class => "button" %>
+      <%= button_to t('groups.edit.add_a_photo'), new_photo_group_path(@group), :class => "btn btn-success" %>
   </div>
 
-<%- end -%>
-<%= column_div :type => :secondary do -%>
-<% if @group.enable_forum %>
-  <h2>Forum</h2>
-  <p>
-  <%= link_to "Edit Forum Preferences", edit_forum_path(@group.forum) %>
-  </p>
-<% end %>
-  <h2>Members</h2>
-  <p>
-    <%= link_to "Edit Member Roles", members_group_path(@group) %>
-  </p>
-<%- end -%>
+  <div class="span3">
+    <% if @group.enable_forum %>
+      <legend><%= t('groups.edit.forum') %></legend>
+      <p><%= link_to "Edit Forum Preferences", edit_forum_path(@group.forum) %></p>
+    <% end %>
+    <legend><%= t('groups.edit.members') %></legend>
+    <p><%= link_to "Edit Member Roles", members_group_path(@group) %></p>
+  </div>
+</div>
