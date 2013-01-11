@@ -1,6 +1,6 @@
 ### Quick Facts
 - ruby 1.9.x
-- rails 3.1.8
+- rails 3.2.11
 - heroku deployment
 - [Issues](https://github.com/oscurrency/oscurrency/issues)
 - [Demo site](http://demo.opensourcecurrency.org)
@@ -65,7 +65,6 @@ In addition to configuration through the web admin interface, outgoing email con
 ### How to start for Developers
 [Setting up development environment on Ubuntu](https://github.com/oscurrency/oscurrency/wiki/Setting-up-development-environment-on-ubuntu)
 
-[CentOS 5.6](http://www.soumplis.com/2011/07/07/oscurrency-and-thin-on-centos-5-6/)
 
 ### APIs
 - [Web Service API](https://github.com/oscurrency/oscurrency/wiki/Web-Service-API)

@@ -35,8 +35,6 @@ AWS::S3::Bucket.create(app_name)
 `heroku config:add SMTP_USER=#{APP_CONFIG['SMTP_USER']}`
 `heroku config:add SMTP_PASSWORD=#{APP_CONFIG['SMTP_PASSWORD']}`
 `heroku config:add S3_BUCKET_NAME=#{app_name}`
-`heroku config:add HEROKU_USER=#{APP_CONFIG['HEROKU_USER']}`
-`heroku config:add HEROKU_PASSWORD=#{APP_CONFIG['HEROKU_PASSWORD']}`
 
 # default values of preference object will be set to these.
 `heroku config:add APP_NAME=#{app_name}`
@@ -46,7 +44,7 @@ unless APP_CONFIG['SMTP_SERVER']
   `heroku addons:add sendgrid:starter`
 end
 
-`git push heroku master`
+`git push heroku rails329:master`
 `heroku run rake db:migrate`
 `heroku run rake install`
 `heroku run rake db:seed`
