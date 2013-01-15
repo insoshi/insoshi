@@ -5,6 +5,7 @@ class Person < ActiveRecord::Base
   extend PreferencesHelper
 
   acts_as_authentic do |c|
+    c.crypto_provider = Authlogic::CryptoProviders.const_get(ENV['CRYPTOPROVIDER'].to_sym) unless ENV['CRYPTOPROVIDER'].blank?
     c.openid_required_fields = ['http://axschema.org/contact/email',
       'http://axschema.org/namePerson/first',
       'http://axschema.org/namePerson/last',
