@@ -1,0 +1,9 @@
+<%- if account.group.display_balance? -%>
+  <li><%= account_link account, :label => t('balance'), :class => html_classes %></li>
+<%- end -%>
+<%- if account.group.display_paid? -%>
+  <li><%= account_link account, :label => t('paid'), :class => html_classes %></li>
+<%- end -%>
+<%- if account.group.display_earned? -%>
+  <li><%= account_link account, :label => t('earned'), :class => html_classes %></li>
+<%- end -%>

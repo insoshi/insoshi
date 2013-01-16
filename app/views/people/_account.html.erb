@@ -1,3 +1,3 @@
 <%- unless account.group && !account.group.adhoc_currency? -%>
-<li><%= account_link account %></li>
+  <%= render :partial => 'shared/account', :locals => {:account => account, :html_classes => ''} %>
 <%- end -%>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121106160945) do
+ActiveRecord::Schema.define(:version => 20130116013408) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(:version => 20121106160945) do
     t.integer  "group_id"
     t.decimal  "credit_limit", :precision => 8, :scale => 2
     t.decimal  "offset",       :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "paid",         :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "earned",       :precision => 8, :scale => 2, :default => 0.0
   end
 
   create_table "activities", :force => true do |t|
@@ -287,6 +289,9 @@ ActiveRecord::Schema.define(:version => 20121106160945) do
     t.decimal  "default_credit_limit", :precision => 8, :scale => 2
     t.string   "asset"
     t.boolean  "private_txns",                                       :default => false
+    t.boolean  "display_balance",                                    :default => true
+    t.boolean  "display_earned",                                     :default => false
+    t.boolean  "display_paid",                                       :default => false
   end
 
   create_table "groups_people", :id => false, :force => true do |t|

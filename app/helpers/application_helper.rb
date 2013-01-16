@@ -166,15 +166,23 @@ module ApplicationHelper
   end
 
   def account_link(account, options = {})
+    label = options[:label] || ""
+    metric = case label
+      when t('balance') then account.balance_with_initial_offset
+      when t('paid') then account.paid
+      when t('earned') then account.earned
+      else 0
+    end
+
     path = person_account_path(account.person,account) # XXX link to transactions
     img = image_tag("icons/bargraph.gif")
     unless account.group
       str = ""
     else
       credit_limit = account.credit_limit.nil? ? "" : "(limit: #{account.credit_limit.to_s})"
-      action = "#{account.balance_with_initial_offset} #{account.group.unit} #{credit_limit}"
+      action = "#{metric} #{account.group.unit} #{credit_limit}"
       str = link_to(img,path, options)
-      str << " "
+      str << " #{label}: "
       str << link_to_unless_current(action, path, options)
       # str.html_safe
     end

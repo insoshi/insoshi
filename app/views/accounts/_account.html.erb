@@ -4,9 +4,7 @@
     <%= link_to( image_tag( @person.main_photo, :class => "profile-image photo",
                                       :alt => h(@person.display_name) ), person_path(@person) ) %>
     <ul class="tools">
-      <li>
-        <%= account_link @account %>
-      </li>
+      <%= render :partial => 'shared/account', :locals => {:account => @account, :html_classes => ''} %>
     </ul>
   </div>
   </div>

@@ -27,6 +27,18 @@
     </div>
 
     <div class="form_row">
+      <label for="display_balance" class="checkbox"><%= t('groups.edit.display_balance') %></label>
+      <%= f.check_box :display_balance %>
+    </div>
+    <div class="form_row">
+      <label for="display_earned" class="checkbox"><%= t('groups.edit.display_earned') %></label>
+      <%= f.check_box :display_earned %>
+    </div>
+    <div class="form_row">
+      <label for="display_paid" class="checkbox"><%= t('groups.edit.display_paid') %></label>
+      <%= f.check_box :display_paid %>
+    </div>
+    <div class="form_row">
       <label for="private_txns" class="checkbox"><%= t('groups.edit.private_txns') %></label>
       <%= f.check_box :private_txns %>
     </div>

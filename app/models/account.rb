@@ -43,10 +43,12 @@ class Account < ActiveRecord::Base
   end
 
   def withdraw(amount)
+    self.paid += amount
     adjust_balance_and_save(-amount)
   end
 
   def deposit(amount)
+    self.earned += amount
     adjust_balance_and_save(amount)
   end
 

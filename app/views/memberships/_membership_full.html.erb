@@ -43,7 +43,7 @@
             <%- end -%>
             <li><%= email_link @person %></li>
             <%- if @membership.group.adhoc_currency? -%>
-              <li><%= account_link @account, :class => 'show-follow' %></li>
+              <%= render :partial => 'shared/account', :locals => {:account => @account, :html_classes => 'show-follow'} %>
             <%- end -%>
           <%- end -%>
           <%- if current_person.admin? -%>
@@ -57,7 +57,7 @@
         <% else -%>
           <%- if logged_in? -%>
             <%- if @membership.group.adhoc_currency? -%>
-            <li><%= account_link @account, :class => 'show-follow' %></li>
+              <%= render :partial => 'shared/account', :locals => {:account => @account, :html_classes => 'show-follow'} %>
             <%- end -%>
           <%- end -%>
         <%- end -%>
