@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130116013408) do
+ActiveRecord::Schema.define(:version => 20130116044808) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -528,6 +528,7 @@ ActiveRecord::Schema.define(:version => 20130116013408) do
     t.boolean  "protected_categories",    :default => false
     t.string   "mailchimp_list_id"
     t.boolean  "mailchimp_send_welcome",  :default => true
+    t.string   "logout_url",              :default => ""
   end
 
   create_table "rails_admin_histories", :force => true do |t|
