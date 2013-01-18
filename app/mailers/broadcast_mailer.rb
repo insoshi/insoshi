@@ -4,7 +4,6 @@ class BroadcastMailer < ActionMailer::Base
 
   def spew(person, subject, message, sent_at = Time.now)
     person = coerce(person, Person)
-    message = coerce(message, Message)
     @message = message
     @person = person
     @preferences_note = preferences_note(person)
