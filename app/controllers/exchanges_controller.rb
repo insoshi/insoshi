@@ -92,6 +92,7 @@ class ExchangesController < ApplicationController
       else
         flash[:error] = t('error_with_credit_transfer')
         @groups = Person.find(params[:person_id]).groups
+        @group = params[:group].nil? ? current_person.default_group : Group.find(params[:group])
         format.html { render :action => "new" }
         format.xml { render :xml => @exchange.errors, :status => :unprocessable_entity }
         format.json { render :json => @exchange.errors, :status => :unprocessable_entity }
