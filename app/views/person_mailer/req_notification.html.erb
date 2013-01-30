@@ -3,6 +3,6 @@
 <%= req_url(@req) %>
 
 <%= t('person_mailer.req_notification.description') %>:
-<%= @req.description %>
+<%= markdown @req.description.to_s %>
 
 <%= t('person_mailer.req_notification.requested_by') %>: <%= @req.person.display_name %>
