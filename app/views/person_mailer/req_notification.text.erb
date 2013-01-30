@@ -1,0 +1,8 @@
+
+[<%= @req.name %>] <%= t('person_mailer.req_notification.matches_a_skill_category_you_have') %>
+
+<%= req_url(@req) %>
+
+<%= strip_tags(@req.description.to_s) %>
+
+<%= t('person_mailer.req_notification.requested_by') %>: <%= @req.person.display_name %>
