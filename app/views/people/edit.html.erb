@@ -138,7 +138,7 @@
       <tr>
       <% row.each do |photo| %>
         <td  style="padding-left: 1em;">
-          <%= image_tag photo.public_filename(:thumbnail) %>
+          <%= image_tag photo.pic(:thumbnail) %>
         </td>
       <% end %>
       </tr>

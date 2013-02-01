@@ -340,11 +340,19 @@ module Technoweenie # :nodoc:
           Technoweenie::AttachmentFu::Backends::S3Backend.distribution_domain
         end
 
-        protected
-          # Called in the after_destroy callback
-          def destroy_file
+        # Called in the after_destroy callback
+        def destroy_file
+          unless filename.blank?
+            if parent_id.nil?
+              puts "...destroying S3Object for photo #{id}"
+            else
+              puts "...destroying S3Object for thumbnail photo #{id}"
+            end
             S3Object.delete full_filename, bucket_name
           end
+        end
+
+        protected
 
           def rename_file
             return unless @old_filename && @old_filename != filename

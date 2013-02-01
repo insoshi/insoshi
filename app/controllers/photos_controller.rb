@@ -35,7 +35,7 @@ class PhotosController < ApplicationController
     if params[:commit] == "Cancel"
       redirect_to edit_person_url(current_person) and return
     end
-    person_data = { :person => current_person,
+    person_data = { :photoable => current_person,
                     :primary => current_person.photos.empty? }
     # raise params.inspect
     @photo = Photo.new(params[:photo].merge(person_data))

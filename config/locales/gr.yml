@@ -236,6 +236,7 @@ gr:
       primary: "πρωτεύων"
       add_a_photo: "Προσθήκη Φωτογραφίας"
       private_txns: "Private transactions"
+      enable_forum: "Enable forum"
     members:
       pending_request: "Η Ζήτηση είναι σε εξέλιξη"
       cancel_membership: "Ακύρωση Συμμετοχής"
@@ -364,6 +365,9 @@ gr:
       header: "Νέα Προσφορά"
       total_available: "Διαθέσιμο Σύνολο"
       description_label: "Βεβαιωθείτε πως αναφέρετε προτιμώμενα μέσα επικοινωνίας, πχ προσωπικό μήνυμα, email ή τηλέφωνο."
+    new_photo:
+      header: "Offer photo upload"
+      upload_a_photo: "Ανέβασε μια φωτογραφία"
     show:
       header: "Προσφορά"
       send: "Αποστολή"

@@ -292,6 +292,7 @@ ActiveRecord::Schema.define(:version => 20130116044808) do
     t.boolean  "display_balance",                                    :default => true
     t.boolean  "display_earned",                                     :default => false
     t.boolean  "display_paid",                                       :default => false
+    t.boolean  "enable_forum",                                       :default => true
   end
 
   create_table "groups_people", :id => false, :force => true do |t|
@@ -473,6 +474,9 @@ ActiveRecord::Schema.define(:version => 20130116044808) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.string   "picture"
+    t.integer  "photoable_id"
+    t.string   "photoable_type"
   end
 
   add_index "photos", ["parent_id"], :name => "index_photos_on_parent_id"
@@ -529,6 +533,7 @@ ActiveRecord::Schema.define(:version => 20130116044808) do
     t.string   "mailchimp_list_id"
     t.boolean  "mailchimp_send_welcome",  :default => true
     t.string   "logout_url",              :default => ""
+    t.string   "locale"
   end
 
   create_table "rails_admin_histories", :force => true do |t|

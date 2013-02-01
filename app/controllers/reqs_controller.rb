@@ -19,7 +19,7 @@ class ReqsController < ApplicationController
                               params[:page],
                               AJAX_POSTS_PER_PAGE,
                               params[:search]
-                              ).order("updated_at desc")
+                              ).order("reqs.updated_at desc")
     respond_with @reqs
   end
 

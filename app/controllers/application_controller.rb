@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
         I18n.locale = current_person.language
       else
         session[:locale] = params[:locale] if params[:locale]
-        I18n.locale = session[:locale] || I18n.default_locale
+        I18n.locale = session[:locale] || global_prefs.locale || I18n.default_locale
       end
     end
 

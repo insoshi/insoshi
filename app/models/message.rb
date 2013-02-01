@@ -67,10 +67,9 @@ class Message < Communication
   def trashed?(person)
     case person
     when sender
-      !sender_deleted_at.nil? and sender_deleted_at > Person::TRASH_TIME_AGO
+      !sender_deleted_at.nil?
     when recipient
-      !recipient_deleted_at.nil? and 
-       recipient_deleted_at > Person::TRASH_TIME_AGO
+      !recipient_deleted_at.nil?
     end
   end
   

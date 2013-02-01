@@ -179,14 +179,14 @@ module Technoweenie # :nodoc:
       def self.extended(base)
         #base.class_inheritable_accessor :attachment_options
         base.class_attribute :attachment_options
-        base.before_destroy :destroy_thumbnails
-        base.before_validation :set_size_from_temp_path
-        base.after_save :after_process_attachment
-        base.after_destroy :destroy_file
-        base.after_validation :process_attachment
-        if defined?(::ActiveSupport::Callbacks)
-          base.define_callbacks :after_resize, :before_thumbnail_saved
-        end
+        #base.before_destroy :destroy_thumbnails
+        #base.before_validation :set_size_from_temp_path
+        #base.after_save :after_process_attachment
+        #base.after_destroy :destroy_file
+        #base.after_validation :process_attachment
+        #if defined?(::ActiveSupport::Callbacks)
+        #  base.define_callbacks :after_resize, :before_thumbnail_saved
+        #end
       end
 
       unless defined?(::ActiveSupport::Callbacks)
@@ -389,6 +389,11 @@ module Technoweenie # :nodoc:
         self.class.with_image(temp_path, &block)
       end
 
+      # Removes the thumbnails for the attachment, if it has any
+      def destroy_thumbnails
+        self.thumbnails.each { |thumbnail| thumbnail.destroy } if thumbnailable?
+      end
+
       protected
         # Generates a unique filename for a Tempfile.
         def random_tempfile_filename
@@ -496,10 +501,6 @@ module Technoweenie # :nodoc:
           end
         end
 
-        # Removes the thumbnails for the attachment, if it has any
-        def destroy_thumbnails
-          self.thumbnails.each { |thumbnail| thumbnail.destroy } if thumbnailable?
-        end
     end
   end
 end

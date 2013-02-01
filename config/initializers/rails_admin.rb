@@ -153,6 +153,10 @@ end
         properties[:collection] = Group.all.map {|g| [g.name,g.id]}
         partial "select"
       end
+      field :locale do
+        properties[:collection] = [['English','en'],['Spanish','es'],['French','fr'],['Greek','gr']]
+        partial "select"
+      end
       field :logout_url
       field :blog_feed_url
       field :new_member_notification

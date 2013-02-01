@@ -1,10 +1,8 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  domain: example.com
   server_name: server.example.net
   app_name: Example
-  smtp_server: smtp.example.com
   email_notifications: true
   email_verifications: false
   analytics: <script>Google analytics</script>

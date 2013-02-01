@@ -156,7 +156,7 @@ class GroupsController < ApplicationController
       redirect_to(edit_group_path(@group)) and return
     end
     
-    group_data = { :group => @group,
+    group_data = { :photoable => @group,
                     :primary => @group.photos.empty? }
     @photo = Photo.new(params[:photo].merge(group_data))
     
