@@ -5,17 +5,17 @@
     <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.display_name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<%= image_tag("login-bg.gif") %><%= organization_image(@person) %>&nbsp;<%= waiting_image %></h2>
     <%- end -%>
     <%- if admin? and not @person.active? -%>
-      <p class="error"><%= t('people.show.not_active') %></p>
+      <p class="alert alert-error"><%= t('people.show.not_active') %></p>
     <%- end -%>
     <%- if current_person?(@person) -%>
       <%- if current_person.description.blank? -%>
-        <div class="error">
+        <div class="alert alert-error">
           <%= t('people.show.description_blank') %>
           <%= link_to t('people.show.add_description'),
                       edit_person_path(@person) %>
         </div>
       <%- else -%>
-        <div class="notice">
+        <div class="alert">
           <%= t('people.show.own_profile') %>
           <%= link_to t('people.show.edit_it'), edit_person_path(@person) %>
         </div>

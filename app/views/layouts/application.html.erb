@@ -7,59 +7,66 @@
     <%- else -%>
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
+    <%= stylesheet_link_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/base/jquery-ui.css" %>
+    <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css" %>
+    <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css" %>
     <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" %>
+    <%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" %>
+    <%= javascript_include_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tag %>
     <%= yield :jquery_support %>
     <%= yield :head %>    
   </head>
   <body class="<%= @body || controller_name %>">
-    <div id="header-wrap">
-      <div id="header">
-        <h1>
-        <%- if params[:controller] == 'groups' and params[:action] == 'show' %>
-        <%= h @group.name %>
-        <%- elsif current_person -%>
-          <%= link_to global_prefs.app_name, group_path(current_person.default_group)  %>
-        <% else -%>
-          <%= link_to global_prefs.app_name, home_path %>
-        <%- end -%>
-        </h1>
-        <div> 
-          <p class="welcome">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <%- if params[:controller] == 'groups' and params[:action] == 'show' %>
+            <a class="brand"><%= h @group.name %></a>
+          <%- elsif current_person -%>
+            <%= link_to global_prefs.app_name, group_path(current_person.default_group), :class => "brand" %>
+          <% else -%>
+            <%= link_to global_prefs.app_name, home_path, :class => "brand" %>
+          <%- end -%>
+          <ul class="nav pull-right">
             <%- if logged_in? -%>
               <%- if current_person.admin? -%>
-                <%= link_to("Admin view", "/admin") %>
+                <li><%= link_to("Admin view", "/admin") %></li>
               <%- elsif session[:su_person] %>
-                <%= link_to("Back to admin", unsu_person_path(current_person) ) %>
+                <li><%= link_to("Back to admin", unsu_person_path(current_person) ) %></li>
               <%- end -%>
-            <%- else -%>
-              <%= link_to t('sessions.new.header'), login_path %>
-              <%= t('or') %>
-              <%= link_to t('people.new.header'), (global_prefs.alt_signup_link.blank? ? signup_path : global_prefs.alt_signup_link) %>
-              <%- if global_prefs.can_send_email? -%>
-              <br />
-              <%= link_to t('sessions.new.i_forgot_my_password'),
-                           new_password_reset_path %>
-              <%- end -%>             
-            <%- end -%>
-          </p>
-        </div>
-          <%- if logged_in? -%>
-            <ul id="sfmenu">
-              <li class="left_item">
               <% if global_prefs.groups %>
-                <a href="#"><%= t('home.menu.your_groups') %></a>
-                <ul>
-                  <%= render :partial => 'shared/membership', :collection => current_person.memberships.all(:include => 'group', :order => 'groups.name ASC') %>
-                  <li><%= link_to t('home.menu.more_groups'), groups_path, :id => 'moregroups' %></li>
-                </ul>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <%= t('home.menu.your_groups') %>
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <% if (memberships = current_person.memberships.all(:include => 'group', :order => 'groups.name ASC')).present? %>
+                      <% memberships.each do |membership| %>
+                        <% icon_class = membership.is?(:admin) ? 'wrench' : 'person' %>
+                        <li>
+                          <a href="<%= group_path(membership.group) %>">
+                            <i class="icon icon-<%= icon_class %>"></i>
+                            <%= h(membership.group.name) %>
+                          </a>
+                        </li>
+                      <% end -%>
+                      <li class="divider"></li>
+                    <% end -%>
+                    <li><%= link_to t('home.menu.more_groups'), groups_path, :id => 'moregroups' %></li>
+                  </ul>
+                </li>
               <% end %>
-              </li>
-              <li class="middle_item">
-                <%- if display_help? -%>
-                  <a href="#"><%= t('home.menu.help') %></a>
-                  <ul class="active">
+              <%- if display_help? -%>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <%= t('home.menu.help') %>
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
                     <li><%= link_to t('home.menu.about'), about_path if !global_prefs.about.blank? %></li>
                     <li><%= link_to t('home.menu.practice'), practice_path if !global_prefs.practice.blank? %></li>
                     <li><%= link_to t('home.menu.steps'), steps_path if !global_prefs.steps.blank? %></li>
@@ -67,49 +74,49 @@
                     <li><%= link_to t('home.menu.agreement'), agreement_path if !global_prefs.agreement.blank? %></li>
                     <li><%= link_to t('home.menu.faq'), questions_path if !global_prefs.questions.blank? %></li>
                   </ul>
-                <%- end -%>
-              </li>
-              <li class="profile_icon_item">
-                <%= image_link current_person, {:link => person_path(current_person)} %>
-              </li>
-              <li class="right_item">
-                <a href="#"><%= h current_person.display_name %></a>
-                <ul>
-                  <%= link_to t('home.menu.profile'), person_path(current_person) %>
-                  <%= link_to t('home.menu.inbox'), messages_path %>
-                  <%= link_to t('home.menu.sign_out'), logout_path %>
+                </li>
+              <%- end -%>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <%= h current_person.display_name %>
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to t('home.menu.profile'), person_path(current_person) %></li>
+                  <li><%= link_to t('home.menu.inbox'), messages_path %></li>
+                  <li><%= link_to t('home.menu.sign_out'), logout_path %></li>
                 </ul>
               </li>
-            </ul>
-          <%- end -%>
+              <li><%= image_link current_person, {:link => person_path(current_person), :link_options => {:style => "padding-top: 2px; padding-bottom: 2px;"}} %></li>
+            <%- else -%>
+              <li><%= link_to t('sessions.new.header'), login_path %></li>
+              <li><span class="navbar-text"><%= t('or') %></span></li>
+              <li><%= link_to t('people.new.header'), (global_prefs.alt_signup_link.blank? ? signup_path : global_prefs.alt_signup_link) %></li>
+              <%- if global_prefs.can_send_email? -%>
+                <li><%= link_to t('sessions.new.i_forgot_my_password'),
+                             new_password_reset_path %></li>
+              <%- end -%>
+            <%- end -%>
+          </ul>
         </div>
       </div>
     </div>
 
-    <div id="wrap">
-
-      <div id="content">
+    <div class="container">
         <% flash.each do |key, msg| %>
-          <%= content_tag :p, msg.html_safe, :class => "flash #{key}" %>
+          <%= content_tag :p, msg.html_safe, :class => "alert alert-#{key}" %>
         <% end %>
         <%= yield %>
-
-        
-        <div id="footer">
-          <p>
-		<%= render :partial => 'shared/powered_by' %>
-          </p>
-        </div>
-        <div id="license">
-          <p>
-            <%= render :partial => 'shared/license' %>
-          </p>
-        </div>
-      </div>
-      <%- if Rails.env.development? -%>
-        <div><%= render :partial => 'shared/debug' %></div>
-      <%- end -%> 
     </div>
+    <div id="footer" class="container">
+      <p><%= render :partial => 'shared/powered_by' %></p>
+      <p id="license">
+        <%= render :partial => 'shared/license' %>
+      </p>
+    </div>
+    <%- if Rails.env.development? -%>
+      <div class="container"><%= render :partial => 'shared/debug' %></div>
+    <%- end -%>
     <%= raw global_prefs.analytics %>
   </body>
 </html>

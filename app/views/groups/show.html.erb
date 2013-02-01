@@ -1,36 +1,37 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'group' } %>
-  <%= tabs_for do |tab| %>
-    <% tab.create('tab_home', t('groups.show.home')) do %>
-      <div id="home_canvas">
-        <%= render :partial => 'home_canvas' %>
-      </div>
-      <div id="empty_canvas" style='clear:both;'></div>
-    <% end %>
-    <% tab.create('tab_exchanges', t('groups.show.exchanges')) do %>
-      <div id="exchanges_canvas">
-        <%= render :partial => 'exchanges_canvas' %>
-      </div>
-    <% end if (@group.adhoc_currency? && !@group.private_txns?) %>
-    <% tab.create('tab_forum', t('groups.show.forum')) do %>
-      <div id="forum_canvas">
-        <%= render :partial => '/forums/forum_canvas' %>
-      </div>
-      <%= render :partial => 'forum_form' %>
-    <% end if @group.enable_forum %>
-    <% tab.create('tab_requests', t('groups.show.requests')) do %>
-      <div id="reqs_canvas">
-        <%= render :partial => '/reqs/reqs_canvas' %>
-      </div>
-    <% end if @group.adhoc_currency? %>
-    <% tab.create('tab_offers', t('groups.show.offers')) do %>
-      <div id="offers_canvas">
-        <%= render :partial => '/offers/offers_canvas' %>
-      </div>
-    <% end if @group.adhoc_currency? %>
-    <% tab.create('tab_people', t('groups.show.people')) do %>
-      <div id="people_canvas">
-        <%= render :partial => '/memberships/members_canvas' %>
-      </div>
-    <% end %>
-  <% end %>
-  
+
+<div>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab_home" data-toggle="tab"><%= t("groups.show.home") %></a></li>
+    <li><a href="#tab_exchanges" data-toggle="tab"><%= t("groups.show.exchanges") %></a></li>
+    <li><a href="#tab_forum" data-toggle="tab"><%= t("groups.show.forum") %></a></li>
+    <li><a href="#tab_requests" data-toggle="tab"><%= t("groups.show.requests") %></a></li>
+    <li><a href="#tab_offers" data-toggle="tab"><%= t("groups.show.offers") %></a></li>
+    <li><a href="#tab_people" data-toggle="tab"><%= t("groups.show.people") %></a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab_home">
+      <%= render 'home_canvas' %>
+    </div>
+    <div class="tab-pane" id="tab_exchanges">
+      <%= render 'exchanges_canvas' %>
+    </div>
+    <div class="tab-pane" id="tab_forum">
+      <%= render '/forums/forum_canvas' %>
+      <%= render 'forum_form' %>
+    </div>
+    <div class="tab-pane" id="tab_requests">
+      <%= render '/reqs/reqs_canvas' %>
+    </div>
+    <div class="tab-pane" id="tab_offers">
+      <%= render '/offers/offers_canvas' %>
+    </div>
+    <div class="tab-pane" id="tab_people">
+      <%= render '/memberships/members_canvas' %>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+
+</div>

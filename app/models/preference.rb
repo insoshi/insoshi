@@ -64,6 +64,8 @@ class Preference < ActiveRecord::Base
     email_notifications? or email_verifications?
   end
 
+  alias_attribute :faq, :questions
+
   private
     def decrypt(password)
       k = LocalEncryptionKey.find(:first)
