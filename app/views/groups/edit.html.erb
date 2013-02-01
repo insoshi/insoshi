@@ -75,7 +75,7 @@
       <tr>
       <% row.each do |photo| %>
         <td  style="padding-left: 1em;">
-          <%= image_tag photo.pic(:thumbnail) %>
+          <%= image_tag photo.picture_url(:thumbnail) %>
         </td>
       <% end %>
       </tr>

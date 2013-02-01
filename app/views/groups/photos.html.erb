@@ -1,7 +1,7 @@
 <% unless @photos.empty? %>
 <ul style="list-style-type: none;">
 <% @photos.each do |photo| %>
-  <li><%= image_tag(photo.pic) %></li>
+  <li><%= image_tag(photo.picture_url) %></li>
 <% end %>
 </ul>
 <% end %>
