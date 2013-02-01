@@ -44,7 +44,7 @@ unless APP_CONFIG['SMTP_SERVER']
   `heroku addons:add sendgrid:starter`
 end
 
-`git push heroku rails329:master`
+`git push heroku master`
 `heroku run rake db:migrate`
 `heroku run rake install`
 `heroku run rake db:seed`
