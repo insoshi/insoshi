@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130106003629) do
+ActiveRecord::Schema.define(:version => 20130201172020) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(:version => 20130106003629) do
     t.integer  "group_id"
     t.decimal  "credit_limit", :precision => 8, :scale => 2
     t.decimal  "offset",       :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "paid",         :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "earned",       :precision => 8, :scale => 2, :default => 0.0
   end
 
   create_table "activities", :force => true do |t|
@@ -287,6 +289,9 @@ ActiveRecord::Schema.define(:version => 20130106003629) do
     t.decimal  "default_credit_limit", :precision => 8, :scale => 2
     t.string   "asset"
     t.boolean  "private_txns",                                       :default => false
+    t.boolean  "display_balance",                                    :default => true
+    t.boolean  "display_earned",                                     :default => false
+    t.boolean  "display_paid",                                       :default => false
     t.boolean  "enable_forum",                                       :default => true
   end
 
@@ -460,7 +465,6 @@ ActiveRecord::Schema.define(:version => 20130106003629) do
     t.integer  "person_id"
     t.integer  "parent_id"
     t.string   "content_type"
-    t.string   "filename"
     t.string   "thumbnail"
     t.integer  "size"
     t.integer  "width"
@@ -527,6 +531,7 @@ ActiveRecord::Schema.define(:version => 20130106003629) do
     t.boolean  "protected_categories",    :default => false
     t.string   "mailchimp_list_id"
     t.boolean  "mailchimp_send_welcome",  :default => true
+    t.string   "logout_url",              :default => ""
     t.string   "locale"
   end
 
