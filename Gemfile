@@ -2,7 +2,7 @@
 
 source :rubygems
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -36,7 +36,7 @@ gem "aws-s3"
 gem "fog"
 gem "carrierwave"
 gem "rmagick", :require => 'RMagick'
-gem "json"
+gem "json", '1.7.7'
 gem "geokit-rails3"
 
 gem "will_paginate"
