@@ -52,7 +52,7 @@ class TransactsController < ApplicationController
     end
 
     # if token specifies list_all capability but person is not admin, it is ok to just return person's transactions
-    unless includes_list_all_capability? && (current_token.person.admin? || current_token.person.is?(:admin, @group))
+    unless oauth? && includes_list_all_capability? && (current_token.person.admin? || current_token.person.is?(:admin, @group))
       @transactions = current_person.transactions.select {|transact| transact.group == @group}
     else
       # show the 10 most recent
