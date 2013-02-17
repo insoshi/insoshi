@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130201172020) do
+ActiveRecord::Schema.define(:version => 20130217044852) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -462,7 +462,6 @@ ActiveRecord::Schema.define(:version => 20130201172020) do
   add_index "people", ["perishable_token"], :name => "index_people_on_perishable_token"
 
   create_table "photos", :force => true do |t|
-    t.integer  "person_id"
     t.integer  "parent_id"
     t.string   "content_type"
     t.string   "thumbnail"
@@ -472,7 +471,6 @@ ActiveRecord::Schema.define(:version => 20130201172020) do
     t.boolean  "primary"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "group_id"
     t.string   "picture"
     t.integer  "photoable_id"
     t.string   "photoable_type"

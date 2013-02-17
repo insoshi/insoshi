@@ -93,7 +93,7 @@ class PhotosController < ApplicationController
       @photo = Photo.find(params[:id])
       if @photo.nil?
         redirect_to edit_person_url(current_person)
-      elsif @photo.person != current_person
+      elsif @photo.photoable != current_person
         redirect_to home_url
       end
     end
