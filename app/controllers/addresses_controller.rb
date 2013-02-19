@@ -1,10 +1,9 @@
 class AddressesController < ApplicationController
   before_filter :login_required
   before_filter :correct_user_required
-  before_filter :find_person
 
   def index
-    @addresses = @person.addresses.find(:all)
+    @addresses = current_person.addresses.find(:all)
     respond_to do |format|
       format.xml { render :xml => @addresses }
     end
@@ -17,14 +16,14 @@ class AddressesController < ApplicationController
 
   def edit
     @states = State.find(:all, :order => "name").collect {|s| [s.name, s.id]}
-    @address = @person.addresses.find(params[:id])
+    @address = current_person.addresses.find(params[:id])
   end
 
   def create
     @address = Address.new(params[:address])
     begin
-      if @person.addresses << @address
-        redirect_to person_url(@person)
+      if current_person.addresses << @address
+        redirect_to person_url(current_person)
       else
         @states = State.find(:all, :order => "name").collect {|s| [s.name, s.id]}
         render :action => :new
@@ -37,10 +36,10 @@ class AddressesController < ApplicationController
   end
 
   def update
-    @address = @person.addresses.find(params[:id])
+    @address = current_person.addresses.find(params[:id])
     begin
       if @address.update_attributes(params[:address])
-        redirect_to person_url(@person)
+        redirect_to person_url(current_person)
       else
         @states = State.find(:all, :order => "name").collect {|s| [s.name, s.id]}
         render :action => :edit
@@ -53,15 +52,15 @@ class AddressesController < ApplicationController
   end
 
   def destroy
-    if @person.addresses.length > 1
-      @address = @person.addresses.find(params[:id])
+    if current_person.addresses.length > 1
+      @address = current_person.addresses.find(params[:id])
       @address.destroy
     else
       flash[:error] = t("error_at_least_one_address")
     end
 
     respond_to do |format|
-      format.html { redirect_to(person_url(@person)) }
+      format.html { redirect_to(person_url(current_person)) }
       format.xml  { head :ok }
     end
   end
@@ -69,11 +68,5 @@ class AddressesController < ApplicationController
 private
   def correct_user_required
     redirect_to home_url unless Person.find(params[:person_id]) == current_person
-  end
-
-  def find_person
-    @person_id = params[:person_id]
-    redirect_to home_url and return unless @person_id
-    @person = Person.find(@person_id)
   end
 end

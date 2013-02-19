@@ -3,7 +3,7 @@
 
   <%= error_messages_for :address %>
 
-  <%= form_for [@current_person, @address] do |form| %>
+  <%= form_for [current_person, @address] do |form| %>
     <%= render :partial => 'form', :object => form %>
     <div class="form_row">
       <%= form.submit t('button_create') %>

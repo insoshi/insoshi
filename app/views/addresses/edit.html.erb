@@ -3,7 +3,7 @@
 
   <%= error_messages_for :address %>
 
-  <%= form_for :address, :url => person_address_path(@person,@address), :html => {:method => :put} do |form| %>
+  <%= form_for :address, :url => person_address_path(current_person,@address), :html => {:method => :put} do |form| %>
     <%= render :partial => 'form', :object => form %>
     <div class="form_row">
       <%= form.submit t('button_update') %>

@@ -5,7 +5,9 @@ class Group < ActiveRecord::Base
   extend PreferencesHelper
   
   validates_presence_of :name, :person_id
-  attr_protected :mandatory
+
+  attr_accessible :name, :description, :mode, :unit, :adhoc_currency, :default_credit_limit
+  attr_accessible :asset, :private_txns, :enable_forum, :display_balance, :display_earned, :display_paid
 
   has_one :forum
   has_many :reqs, :conditions => "biddable IS true", :order => "created_at DESC"
