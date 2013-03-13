@@ -13,6 +13,21 @@ module RailsAdmin
       end
 
     end
+
+    module Sections
+      class List < RailsAdmin::Config::Sections::Base
+        #register_instance_option :scope do
+        #  Rails.logger.debug('test')
+        #end
+        def where(&block)
+          @abstract_model.instance_eval %Q{
+            def scoped
+              model.scoped.where(#{block.call})
+            end
+          }
+        end
+      end
+    end
   end
 end
 
@@ -38,10 +53,14 @@ end
     export
   end
 
-  config.included_models = [Account,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonActivated,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
+  config.included_models = [Account,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
 
   config.model Account do
     list do
+      where do
+        {:people => {deactivated:false}}
+      end
+
       field :person do
         label "Name"
       end
@@ -97,6 +116,9 @@ end
       'Deactivated account'
     end
     list do
+      where do
+        {:people => {deactivated:true}}
+      end
       field :person do
         label "Name"
       end
@@ -369,6 +391,9 @@ end
       :display_name
     end
     list do
+      where do
+        {:deactivated => false}
+      end
       field :last_logged_in_at do
         label "Last login"
       end
@@ -406,81 +431,6 @@ end
       field :business_name
       field :legal_business_name
       field :business_type
-      field :activity_status
-      field :plan_type
-      field :support_contact
-    end
-
-    edit do
-      field :name
-      field :email
-      field :password
-      field :password_confirmation
-      field :deactivated
-      field :email_verified
-      field :phone
-      field :admin
-      field :web_site_url
-      field :org
-      field :title
-      field :business_name
-      field :legal_business_name
-      field :business_type
-      field :activity_status
-      field :plan_type
-      field :support_contact
-      field :description, :text do
-        #ckeditor true
-      end
-      # generally not appropriate for admin to edit openid since it is an assertion
-    end
-  end
-
-  config.model PersonActivated do
-    object_label_method do
-      :display_name
-    end
-    label do
-      'Activated people'
-    end
-    list do
-      field :last_logged_in_at do
-        label "Last login"
-      end
-      field :name
-      field :business_name
-      field :email
-      field :deactivated do
-        label "Disabled"
-      end
-      field :email_verified
-      field :phone
-      field :admin
-      field :org
-      field :mailchimp_subscribed
-      field :openid_identifier
-      sort_by :last_logged_in_at
-    end
-
-    export do
-      field :last_logged_in_at do
-        label "Last login"
-      end
-      field :name
-      field :email
-      field :deactivated do
-        label "Disabled"
-      end
-      field :email_verified
-      field :phone
-      field :admin
-      field :org
-      field :web_site_url
-      field :org
-      field :title
-      field :business_name
-      field :legal_business_name
-      field :business_type 
       field :activity_status
       field :plan_type
       field :support_contact
@@ -519,6 +469,9 @@ end
       'Deactivated people'
     end
     list do
+      where do
+        {:deactivated => true}
+      end
       field :last_logged_in_at do
         label "Last login"
       end
