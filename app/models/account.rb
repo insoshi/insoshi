@@ -22,6 +22,8 @@ class Account < ActiveRecord::Base
 
   INITIAL_BALANCE = 0
 
+  default_scope joins(:person).where(people:{deactivated: false})
+
   def name
     unless read_attribute(:name).blank?
       read_attribute(:name)

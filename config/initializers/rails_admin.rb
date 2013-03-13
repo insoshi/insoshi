@@ -11,6 +11,7 @@ module RailsAdmin
       class AddToMailchimpList < RailsAdmin::Config::Actions::Base
         RailsAdmin::Config::Actions.register(self)
       end
+
     end
   end
 end
@@ -37,9 +38,64 @@ end
     export
   end
 
-  config.included_models = [Account,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
+  config.included_models = [Account,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonActivated,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
 
   config.model Account do
+    list do
+      field :person do
+        label "Name"
+      end
+      field :offset do
+        label "Starting Balance"
+      end
+      field :balance do
+        formatted_value do
+          (bindings[:object].balance_with_initial_offset).to_s
+        end
+      end
+      field :credit_limit
+      field :updated_at do
+        label "Last Transaction"
+      end
+    end
+
+    edit do
+      field :name
+      field :person do
+        label "Name"
+      end
+      field :offset do
+        label "Starting Balance"
+      end
+      field :balance do
+        formatted_value do
+          (bindings[:object].balance_with_initial_offset).to_s
+        end
+      end
+      field :credit_limit
+    end
+
+    export do
+      field :person
+      field :offset do
+        label "Starting Balance"
+      end
+      field :balance do
+        formatted_value do
+          (bindings[:object].balance_with_initial_offset).to_s
+        end
+      end
+      field :credit_limit
+      field :updated_at do
+        label "Last Transaction"
+      end
+    end
+  end
+
+  config.model AccountDeactivated do
+    label do
+      'Deactivated account'
+    end
     list do
       field :person do
         label "Name"
@@ -349,10 +405,135 @@ end
       field :title
       field :business_name
       field :legal_business_name
+      field :business_type
+      field :activity_status
+      field :plan_type
+      field :support_contact
+    end
+
+    edit do
+      field :name
+      field :email
+      field :password
+      field :password_confirmation
+      field :deactivated
+      field :email_verified
+      field :phone
+      field :admin
+      field :web_site_url
+      field :org
+      field :title
+      field :business_name
+      field :legal_business_name
+      field :business_type
+      field :activity_status
+      field :plan_type
+      field :support_contact
+      field :description, :text do
+        #ckeditor true
+      end
+      # generally not appropriate for admin to edit openid since it is an assertion
+    end
+  end
+
+  config.model PersonActivated do
+    object_label_method do
+      :display_name
+    end
+    label do
+      'Activated people'
+    end
+    list do
+      field :last_logged_in_at do
+        label "Last login"
+      end
+      field :name
+      field :business_name
+      field :email
+      field :deactivated do
+        label "Disabled"
+      end
+      field :email_verified
+      field :phone
+      field :admin
+      field :org
+      field :mailchimp_subscribed
+      field :openid_identifier
+      sort_by :last_logged_in_at
+    end
+
+    export do
+      field :last_logged_in_at do
+        label "Last login"
+      end
+      field :name
+      field :email
+      field :deactivated do
+        label "Disabled"
+      end
+      field :email_verified
+      field :phone
+      field :admin
+      field :org
+      field :web_site_url
+      field :org
+      field :title
+      field :business_name
+      field :legal_business_name
       field :business_type 
       field :activity_status
       field :plan_type
       field :support_contact
+    end
+
+    edit do
+      field :name
+      field :email
+      field :password
+      field :password_confirmation
+      field :deactivated
+      field :email_verified
+      field :phone
+      field :admin
+      field :web_site_url
+      field :org
+      field :title
+      field :business_name
+      field :legal_business_name
+      field :business_type
+      field :activity_status
+      field :plan_type
+      field :support_contact
+      field :description, :text do
+        #ckeditor true
+      end
+      # generally not appropriate for admin to edit openid since it is an assertion
+    end
+  end
+
+  config.model PersonDeactivated do
+    object_label_method do
+      :display_name
+    end
+    label do
+      'Deactivated people'
+    end
+    list do
+      field :last_logged_in_at do
+        label "Last login"
+      end
+      field :name
+      field :business_name
+      field :email
+      field :deactivated do
+        label "Disabled"
+      end
+      field :email_verified
+      field :phone
+      field :admin
+      field :org
+      field :openid_identifier
+      sort_by :last_logged_in_at
     end
 
     edit do
