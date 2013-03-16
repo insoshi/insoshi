@@ -1,6 +1,8 @@
 unless Rails.env == 'test'
 require Rails.root.join('lib', 'rails_admin_send_broadcast_email.rb')
 require Rails.root.join('lib', 'rails_admin_add_to_mailchimp_list.rb')
+require Rails.root.join('lib', 'rails_admin_list_scope.rb')
+
 RailsAdmin.config do |config|
 module RailsAdmin
   module Config
@@ -11,24 +13,8 @@ module RailsAdmin
       class AddToMailchimpList < RailsAdmin::Config::Actions::Base
         RailsAdmin::Config::Actions.register(self)
       end
-
     end
-
-    module Sections
-      class List < RailsAdmin::Config::Sections::Base
-        #register_instance_option :scope do
-        #  Rails.logger.debug('test')
-        #end
-        def where(&block)
-          @abstract_model.instance_eval %Q{
-            def scoped
-              model.scoped.where(#{block.call})
-            end
-          }
-        end
-      end
-    end
-  end
+   end
 end
 
   config.current_user_method { current_person } #auto-generated
@@ -57,8 +43,8 @@ end
 
   config.model Account do
     list do
-      where do
-        {:people => {deactivated:false}}
+      scope do
+        joins(:person).where( people: { deactivated:false } )
       end
 
       field :person do
@@ -116,8 +102,8 @@ end
       'Deactivated account'
     end
     list do
-      where do
-        {:people => {deactivated:true}}
+      scope do
+        joins(:person).where( people: { deactivated:true } )
       end
       field :person do
         label "Name"
@@ -391,8 +377,8 @@ end
       :display_name
     end
     list do
-      where do
-        {:deactivated => false}
+      scope do
+        where deactivated: false
       end
       field :last_logged_in_at do
         label "Last login"
@@ -469,8 +455,8 @@ end
       'Deactivated people'
     end
     list do
-      where do
-        {:deactivated => true}
+      scope do
+        where deactivated: true
       end
       field :last_logged_in_at do
         label "Last login"
