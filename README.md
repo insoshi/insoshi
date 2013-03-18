@@ -1,6 +1,6 @@
 ### Quick Facts
-- ruby 1.9.x
-- rails 3.2.11
+- ruby 1.9.3
+- rails 3.2.13
 - heroku deployment
 - [Issues](https://github.com/oscurrency/oscurrency/issues)
 - [Demo site](http://demo.opensourcecurrency.org)
