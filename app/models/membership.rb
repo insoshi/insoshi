@@ -7,7 +7,7 @@ class Membership < ActiveRecord::Base
   scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
   scope :active, :include => :person, :conditions => {'people.deactivated' => false}
   scope :listening, :include => [:member_preference, :person], :conditions => {'people.deactivated' => false, 'member_preferences.forum_notifications' => true}
-  scope :search_by, lambda { |text| {:include => :person, :conditions => ["lower(people.name) LIKE ? OR lower(people.business_name) LIKE ? OR lower(people.description) LIKE ?","%#{text}%".downcase,"%#{text}%".downcase,"%#{text}%".downcase]} }
+  scope :search_by, lambda { |text| {:include => :person, :conditions => ["people.name ILIKE ? OR people.business_name ILIKE ? OR people.description ILIKE ?","%#{text}%","%#{text}%","%#{text}%"]} }
 
   belongs_to :group
   belongs_to :person

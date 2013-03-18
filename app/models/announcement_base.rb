@@ -44,8 +44,7 @@ module AnnouncementBase
     end
 
     def search_by(text)
-      text = "%#{text.downcase}%"
-      where("LOWER(name) LIKE ? OR LOWER(description) LIKE ?", text, text)
+      where("name ILIKE ? OR description ILIKE ?", "%#{text}%", "%#{text}%")
     end
 
     def custom_search(category, group, active_only, page, posts_per_page, search=nil)
