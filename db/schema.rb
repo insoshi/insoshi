@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130217044852) do
+ActiveRecord::Schema.define(:version => 20130319015937) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -477,7 +477,6 @@ ActiveRecord::Schema.define(:version => 20130217044852) do
   end
 
   add_index "photos", ["parent_id"], :name => "index_photos_on_parent_id"
-  add_index "photos", ["person_id"], :name => "index_photos_on_person_id"
 
   create_table "plan_types", :force => true do |t|
     t.string   "name",        :limit => 100, :null => false
