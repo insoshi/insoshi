@@ -16,7 +16,7 @@ task :install => :environment do |t|
   p.admin = true
   p.email_verified = true
   p.save
-  address = Address.new(:name => 'personal', :person => p)
+  address = Address.new(person: p) # name is not used anywhere and cannot be mass assigned anyway
   address.save
 
   group_attributes = {:name => (ENV['APP_NAME'] || "Default Group"),
@@ -24,12 +24,12 @@ task :install => :environment do |t|
                       :mode => Group::PUBLIC,
                       :unit => 'hours',
                       :asset => 'hours',
-                      :owner => p,
                       :adhoc_currency => true
   }
 
-  g = Group.create!(group_attributes)
-  # mandatory is attr protected
+  g = Group.new(group_attributes)
+  g.owner = p
+  g.save!
   g.mandatory = true
   g.save
   pref.default_group_id = g.id
