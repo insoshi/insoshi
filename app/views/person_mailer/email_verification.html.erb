@@ -4,6 +4,6 @@
   <%= t('person_mailer.email_verification.message_default') %>
 <% end %>
 
-http://<%= @server_name %>/people/verify/<%= @code %>
+<a href="http://<%= @server_name %>/people/verify/<%= @code %>">http://<%= @server_name %>/people/verify/<%= @code %></a>
 
 <%= t('person_mailer.email_verification.thanks') %> 
