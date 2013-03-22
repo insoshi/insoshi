@@ -643,6 +643,7 @@ input#person_openid_identifier, input#person_session_openid_identifier {
 
 .req, .offer {
   margin: 10px;
+  border-bottom: 1px solid #eee; 
 }
 
 #flash_notice, #flash_error {
