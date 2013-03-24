@@ -1,0 +1,9 @@
+<% if PersonMailer.global_prefs.whitelist? %>
+  <%= t('person_mailer.email_verification.message_whitelist') %>
+<% else %>
+  <%= t('person_mailer.email_verification.message_default') %>
+<% end %>
+
+http://<%= @server_name %>/people/verify/<%= @code %>
+
+<%= t('person_mailer.email_verification.thanks') %> 
