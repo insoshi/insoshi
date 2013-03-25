@@ -23,7 +23,7 @@ class Address < ActiveRecord::Base
   belongs_to :person
   belongs_to :state
 
-  attr_accessible :address_line_1, :address_line_2, :address_line_3, :city, :state_id, :zipcode_plus_4
+  attr_accessible :address_line_1, :address_line_2, :address_line_3, :city, :state_id, :zipcode_plus_4, :address_privacy
 
   before_validation :geocode_address
   acts_as_mappable :lat_column_name => 'latitude', :lng_column_name => 'longitude'

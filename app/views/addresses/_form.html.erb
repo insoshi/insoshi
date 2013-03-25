@@ -1,4 +1,12 @@
 <div class="form_row">
+  <%= form.label t('addresses.form.share_address') %>
+   <% if @address.new_record? %>
+    <%= form.check_box :address_privacy, :checked => @current_person.org ? true : false %>
+   <% else %>
+    <%= form.check_box :address_privacy%>
+  <% end %>
+</div>
+<div class="form_row">
   <%= form.label t('addresses.form.address_line_1') %>
   <%= form.text_field :address_line_1 %>
 </div>
