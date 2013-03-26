@@ -74,6 +74,21 @@
       </div>
       <%- end -%>
     <%- end -%>
+    <% if @person.address %>
+      <div>
+        <%= image_tag "icons/clipboard.gif", :class => "icon", :alt => "Address" %>
+          <span class="small"><%= t('people.edit.address') %></span>
+          <span class="small"><%= h @person.address %></span>
+      </div>
+    <% end %>
+
+    <% if @person.web_site_url %>
+      <div>
+        <%= image_tag "icons/new_window.gif", :class => "icon", :alt => "Website" %>
+          <span class="small"><%= t('people.edit.web_site_url') %></span>
+          <span class="small"><%= h @person.web_site_url %></span>
+      </div>
+    <%- end -%>
     <%= markdown(@person.description) %>
   </div>
   <%- if @membership.group.adhoc_currency? -%>
