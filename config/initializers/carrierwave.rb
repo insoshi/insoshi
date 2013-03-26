@@ -7,6 +7,6 @@ CarrierWave.configure do |config|
    config.fog_directory  = ENV['S3_BUCKET_NAME']                    # required
    # config.fog_host       = "http://#{ENV['BUCKET']}.s3.amazonaws.com"            # optional, defaults to nil
    # config.fog_host       = "http://"           # optional, defaults to nil
-   config.fog_public     = false                                   # optional, defaults to true
+   # config.fog_public     = false                                   # optional, defaults to true
    # config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
 end

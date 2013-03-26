@@ -132,6 +132,7 @@ fr:
       city: "Ville"
       state: "Province"
       zipcode: "Code postal"
+      share_address: "Share address?"
 
   bids:
     bid:
