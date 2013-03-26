@@ -65,7 +65,6 @@ group :development, :test do
   gem "artifice"
   gem "opentransact"
   gem 'annotate'
-  gem 'libv8', '3.11.8.3'
   gem 'therubyracer'
 end
 
