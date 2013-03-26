@@ -331,7 +331,11 @@ class Person < ActiveRecord::Base
   end
 
   def address
-    addresses.where(:address_privacy => true).first
+    addresses.first
+  end
+
+  def shared_addresses
+    addresses.where(address_privacy: true)
   end
 
   ## Account helpers
