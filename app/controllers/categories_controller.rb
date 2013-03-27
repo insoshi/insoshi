@@ -21,10 +21,10 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @people = @category.people
+        @offers = @category.offers
       end
-      format.json { render :json => @category.as_json(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
-      format.xml  { render :xml => @category.to_xml(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
+      format.json { render :json => @category.as_json(:only => [:id,:name], :include => {:offers => {:methods => [:icon], :only => [:id,:name,:icon,:description]}}) }
+      format.xml  { render :xml => @category.to_xml(:only => [:id,:name], :include => {:offers => {:methods => [:icon], :only => [:id,:name,:icon,:description]}}) }
     end
   end
 
