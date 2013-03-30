@@ -210,6 +210,9 @@ end
     end
 
     edit do
+      group :default do
+        help "*** Some preferences require server restart to take effect after change ***"
+      end
       field :app_name
       field :server_name
       field :groups
@@ -230,6 +233,7 @@ end
       field :email_verifications
       field :protected_categories
       field :whitelist
+      field :public_uploads
       field :mailchimp_list_id do
         label "Mailchimp List ID"
       end
