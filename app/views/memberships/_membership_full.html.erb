@@ -74,13 +74,12 @@
       </div>
       <%- end -%>
     <%- end -%>
-    <% if @person.address %>
+    <% @person.shared_addresses.each do |shared_address| %>
       <div>
-        <%= image_tag "icons/clipboard.gif", :class => "icon", :alt => "Address" %>
-          <span class="small"><%= t('people.edit.address') %></span>
-          <span class="small"><%= h @person.address %></span>
+        <%= image_tag "icons/home.gif", :class => "icon", :alt => "Address" %>
+          <span class="medium"><%= h shared_address %></span>
       </div>
-    <%- end -%>
+    <% end %>
 
     <% if @person.web_site_url %>
       <div>

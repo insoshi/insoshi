@@ -190,6 +190,7 @@ gr:
       city: "Πόλη"
       state: "Νομός"
       zipcode: "Τ.Κ."
+      share_address: "Share address?"
 
   bids:
     bid:

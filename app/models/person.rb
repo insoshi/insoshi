@@ -334,6 +334,10 @@ class Person < ActiveRecord::Base
     addresses.first
   end
 
+  def shared_addresses
+    addresses.where(address_privacy: true)
+  end
+
   ## Account helpers
 
   def account(group)

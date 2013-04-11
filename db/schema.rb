@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319015937) do
+ActiveRecord::Schema.define(:version => 20130330192749) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -49,18 +49,19 @@ ActiveRecord::Schema.define(:version => 20130319015937) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "person_id"
-    t.string   "name",           :limit => 50
-    t.string   "address_line_1", :limit => 50
-    t.string   "address_line_2", :limit => 50
-    t.string   "address_line_3", :limit => 50
-    t.string   "city",           :limit => 50
+    t.string   "name",            :limit => 50
+    t.string   "address_line_1",  :limit => 50
+    t.string   "address_line_2",  :limit => 50
+    t.string   "address_line_3",  :limit => 50
+    t.string   "city",            :limit => 50
     t.string   "county_id"
     t.integer  "state_id"
-    t.string   "zipcode_plus_4", :limit => 10
-    t.decimal  "latitude",                     :precision => 12, :scale => 8
-    t.decimal  "longitude",                    :precision => 12, :scale => 8
+    t.string   "zipcode_plus_4",  :limit => 10
+    t.decimal  "latitude",                      :precision => 12, :scale => 8
+    t.decimal  "longitude",                     :precision => 12, :scale => 8
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "address_privacy",                                              :default => false
   end
 
   create_table "audits", :force => true do |t|
@@ -530,6 +531,7 @@ ActiveRecord::Schema.define(:version => 20130319015937) do
     t.boolean  "mailchimp_send_welcome",  :default => true
     t.string   "logout_url",              :default => ""
     t.string   "locale"
+    t.boolean  "public_uploads",          :default => false
   end
 
   create_table "rails_admin_histories", :force => true do |t|

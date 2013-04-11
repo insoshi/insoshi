@@ -1,3 +1,4 @@
+begin
 CarrierWave.configure do |config|
   config.fog_credentials = {
     :provider               => 'AWS',       # required
@@ -8,5 +9,10 @@ CarrierWave.configure do |config|
    # config.fog_host       = "http://#{ENV['BUCKET']}.s3.amazonaws.com"            # optional, defaults to nil
    # config.fog_host       = "http://"           # optional, defaults to nil
    # config.fog_public     = false                                   # optional, defaults to true
+   config.fog_public = Preference.first.public_uploads unless Rails.env.test?
    # config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
+end
+rescue
+  # Rescue from the error raised upon first migrating
+  nil
 end
