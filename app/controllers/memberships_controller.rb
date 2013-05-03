@@ -29,6 +29,8 @@ class MembershipsController < ApplicationController
   def show
     @person = @membership.person
     @account = @person.account(@membership.group)
+    @offers = @person.offers.active
+    @reqs = @person.reqs.all_active
     respond_to do |format|
       format.js
       format.html { redirect_to('/groups/' + @membership.group.id.to_s + '#memberships/' + @membership.id.to_s)}

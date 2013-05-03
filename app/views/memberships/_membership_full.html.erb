@@ -90,6 +90,32 @@
     <%- end -%>
     <%= markdown(@person.description) %>
   </div>
+
+  <h2>Offers</h2>
+  <% if @offers.empty? %>
+    <%= t('offers.index.nooffers') %>
+  <% else %>
+   <% @offers.each do |offer| %>
+    <h2><%= h offer.name %><%= waiting_image %></h2>
+    <ul class="list activity full">
+         <%= render :partial => offer, :locals => {:full => false} %>
+    </ul>
+   <% end %>
+  <% end %>
+
+  <h2>Requests</h2>
+  <% if @reqs.empty? %>
+    <%= t('reqs.home.menu._dashboard.no_active_requests') %>
+  <% else %>
+   <% @reqs.each do |req| %>
+    <h2><%= h req.name %><%= waiting_image %></h2>
+    <ul class="list activity full">
+         <%= render :partial => req, :locals => {:full => false} %>
+    </ul>
+   <% end %>
+  <% end %>
+
+
   <%- if @membership.group.adhoc_currency? -%>
     <%= render :partial => '/shared/recent_exchanges', :locals => {:group => @account.group} %>
   <%- end -%>
