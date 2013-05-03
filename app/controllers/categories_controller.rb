@@ -21,10 +21,13 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @people = @category.people
+        @offers = @category.offers
       end
+    #WARNING: Semantics of html and json/xml formatting are different!
+    #html renders offers for the skillbank (requested by issue 278, while
+    #Tom requires json/xml to stay the way it was as per comment https://github.com/oscurrency/oscurrency/pull/377#issuecomment-15572787
       format.json { render :json => @category.as_json(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
-      format.xml  { render :xml => @category.to_xml(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
+      format.xml { render :xml => @category.to_xml(:only => [:id,:name], :include => {:people => {:methods => [:icon, :notifications], :only => [:id,:name,:icon,:notifications,:deactivated]}}) }
     end
   end
 
