@@ -452,6 +452,9 @@ en:
     edit:
       header: "Editing message"
       content: "Content"
+    reply:
+      prefix: "> "
+      preambule: "%{user} wrote:\n"
 
   searches:
     header: "Search"

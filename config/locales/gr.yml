@@ -566,6 +566,10 @@ gr:
     edit:
       header: "Επεξεργασία μηνύματος"
       content: "Περιεχόμενο"
+    reply:
+      prefix: "> "
+      preambule: " %{user} έγραψε:"
+
 
   searches:
     header: "Αναζήτηση"

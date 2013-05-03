@@ -508,6 +508,10 @@ fr:
     edit:
       header: "Editing message"
       content: "Content"
+    reply:
+      prefix: "> "
+      preambule: "%{user} a écrit:"
+
 
   searches:
     header: "Search"

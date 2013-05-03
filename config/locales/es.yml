@@ -440,6 +440,10 @@ es:
     edit:
       header: "Editar Mensaje"
       content: "Contenido"
+    reply:
+      prefix: "> "
+      preambule: "%{user} escribió:"
+
 
   searches:
     header: "Buscar"
