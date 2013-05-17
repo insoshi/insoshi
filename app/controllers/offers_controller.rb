@@ -9,6 +9,8 @@ class OffersController < ApplicationController
 
   def index
     @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
+    @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
+
     @offers = Offer.custom_search(@selected_neighborhood || @selected_category,
                                   @group,
                                   active=params[:scope].nil?, # if a scope is not passed, just return actives
