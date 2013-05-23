@@ -18,7 +18,7 @@
     <%= render :partial => "shared/bid_message", :collection => commitment_messages(req) %>
     <%= render :partial => "shared/bid_message", :collection => accepted_messages(req) %>
     <%= t('reqs.partial.createdby') %> <%= person_link req.person %>
-    <%= time_ago_in_words(req.created_at) %> <%= t('ago') %>
+    <%= t 'ago_time', :date => time_ago_in_words(req.created_at) %>
     <% if can?(:update, req) -%>
       | <%= link_to t('button_edit'), edit_req_path(req), :class => 'show-follow' %>
     <% end -%>

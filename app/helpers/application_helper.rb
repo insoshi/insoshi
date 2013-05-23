@@ -219,7 +219,7 @@ module ApplicationHelper
       path = new_person_message_path(person)
     end
     img = image_tag("icons/email.gif")
-    action = reply.nil? ? "Send a message" : "Send reply"
+    action = reply.nil? ? t('exchanges.send_a_message') : "Send reply"
     opts = { :class => classes.join(' ') }
     str = link_to(img, path, opts)
     str << " "
@@ -247,7 +247,7 @@ def relative_time_ago_in_words(time)
   if time > Time.now
     t('in') + " " + time_ago_in_words(time)
   else
-    time_ago_in_words(time) + " " + t('ago')
+    t( 'ago_time', :date => time_ago_in_words(time) )
   end
 end
 

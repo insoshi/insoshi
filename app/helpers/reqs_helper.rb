@@ -16,7 +16,7 @@ module ReqsHelper
   end
 
   def accepted_messages(req)
-    req.accepted_bids.map {|bid| "Accepted bid from #{person_link bid.person} at #{time_ago_in_words(bid.accepted_at)} #{t('ago')}"}
+    req.accepted_bids.map {|bid| "Accepted bid from #{person_link bid.person} at #{t('ago_time', :date => time_ago_in_words(bid.accepted_at))}"}
   end
 
   def commitment_messages(req)

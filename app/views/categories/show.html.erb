@@ -1,11 +1,10 @@
 <%= column_div :type => :primary do -%>
   <h2><%=h @category.long_name %></h2>
-  <h2>Offers</h2>
-  <% if @offers.empty? %>
-    <h3><%= link_to t('offers.index.nooffers'), home_path %></h3>
+  <% if @people.empty? %>
+    <h3><%= link_to t('categories.show.go_back_to_edit_your_profile'), edit_person_path(current_person) %></h3>
   <%- else -%>
-  <ul class="list offers">
-    <%= render :partial => @offers%>
+  <ul class="list people">
+    <%= render :partial => @people %>
   </ul>
   <%- end -%>
 <%- end -%>

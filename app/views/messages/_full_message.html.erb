@@ -8,7 +8,7 @@
   </div>
   <%= markdown(full_message.content) %>
   <p class="meta tools">
-    <%= t('messages.show.sent') %> <%= time_ago_in_words full_message.created_at %> <%= t('ago') %> |
+    <%= t('messages.show.sent') %> <%= t('ago_time', :date => time_ago_in_words( full_message.created_at )) %> |
     <%= link_to t('messages.show.reply'), reply_message_path(full_message) %> |
     <% unless full_message.trashed?(current_person) -%>
       <%= link_to(t('messages.show.trash'), full_message, :method => :delete) %>

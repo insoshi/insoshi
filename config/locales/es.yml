@@ -27,6 +27,7 @@ es:
   are_you_sure: "¿Estás seguro?"
   miles_away: "muy lejos"
   ago: "tiempo atrás"
+  ago_time: "tiempo atrás %{date}"
   estimated: "Estimado"
   payment: "pago"
   a_question: "una pregunta"
@@ -371,6 +372,7 @@ es:
 
   exchanges:
     record_transaction: "Registrar transacción"
+    send_a_message: "Send a message"
     new:
       enter_credit_for: "Transferir %{currency} a" 
       amount: "Cantidad"
@@ -440,10 +442,6 @@ es:
     edit:
       header: "Editar Mensaje"
       content: "Contenido"
-    reply:
-      prefix: "> "
-      preambule: "%{user} escribió:"
-
 
   searches:
     header: "Buscar"

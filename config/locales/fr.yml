@@ -12,11 +12,11 @@ fr:
   button_upload: "Rafraîchir"
   button_select: "Choisir"
   button_search: "Rechercher"
-  button_new_offer: "New Offer"
-  button_new_req: "New Request"
+  button_new_offer: "Nouvelle offre"
+  button_new_req: "Nouvelle requête"
 
   filter_categories: "Categories"
-  filter_neighborhoods: "Neighborhoods"
+  filter_neighborhoods: "Quartiers"
 
   estimate: "Estimer"
   title: "Titre"
@@ -27,6 +27,7 @@ fr:
   are_you_sure: "Êtes-vous certains "
   miles_away: "km d'ici"
   ago: "Il y a"
+  ago_time: "Il y a %{date}"
   estimated: "Estimated"         
   payment: "Paiement"
   a_question: "une question"
@@ -48,8 +49,8 @@ fr:
   in: "dans"
   or: "or"
   active: "Actif"
-  all: "Tous les"
-  cancelled: "cancelled"
+  all: "Tous"
+  cancelled: "annulé"
 
   datetime:
     distance_in_words:
@@ -132,7 +133,7 @@ fr:
       city: "Ville"
       state: "Province"
       zipcode: "Code postal"
-      share_address: "Share address?"
+      share_address: "Partager adresse?"
 
   bids:
     bid:
@@ -232,10 +233,10 @@ fr:
       community_exchanges: "Échanges collectives"
       home: "Accueil"
       forum: "Forum"
-      requests: "Requête"
+      requests: "Requêtes"
       offers: "Offres"
       exchanges: "    Échanges"
-      people: "People"                
+      people: "Membres"                
     _people:
       header: "Groupe"
       all_members: "tout les membres"
@@ -243,25 +244,25 @@ fr:
 
   home:
     menu:
-      skillbank: "Skillbank"
-      about: "About"
-      practice: "Practice"
+      skillbank: "Banque"
+      about: "À propos de nous"
+      practice: "Comment ça fonctionne"
       steps: "Steps"
-      contact: "Contact"
+      contact: "Nous contacter"
       faq: "FAQ"
       agreement: "Agreement"
-      your_groups: "Your Groups"
-      more_groups: "more..."
+      your_groups: "vos groupes"
+      more_groups: "plus..."
       help: "Help"
       profile: "Profile"
       inbox: "Inbox"
-      sign_out: "Sign out"
+      sign_out: "Déconnecter"
     index:
-      header: "Home"
+      header: "Accueil"
       tab_exchanges: "Exchanges"
       community_exchanges_graph: "Community Exchanges Graph"
       tab_your_activity: "Votre activité"
-      edit_your_preferences: "Edit Your Preferences"
+      edit_your_preferences: "Modifier vos préférences"
       tab_graphs: "Graphique"
       unread_messages: "Vous avez des messages non-lus dans votre boîte aux lettres"
       see_your_messages: "Cliquer ici pour lire vos messages"
@@ -296,7 +297,7 @@ fr:
     partial:
       accept_offer: "Payez maintenant"
       expires: "Expire"
-      available_count: "Available count"
+      available_count: "Inventaire"
       created_by: "Crée par"
     index:
       header: "Les offres"
@@ -306,7 +307,7 @@ fr:
     new:
       header: "Nouvelle offre"
       total_available: "Somme disponible"
-      description_label: "Be sure to include your preferred means of communication, i.e. email. text or telephone."
+      description_label: "Soyez certain d'inclure votre moyen de communication préferé, c.a.d. courriel, msm, téléphone"
     new_photo:
       header: "Offer photo upload"
       upload_a_photo: "Publier une photo"
@@ -318,8 +319,8 @@ fr:
   people:
     edit:
       header: "Modifiez le profil"
-      business_details: "Business Details"
-      business_account: "This is a business account"
+      business_details: "Details d'organisation"
+      business_account: "Ceci est un compte organisationel"
       personal_details: "Détails personnels"
       name: "Nom"
       share_phone_number: "Partager le numéro de téléphone"
@@ -347,10 +348,10 @@ fr:
       change_password: "Changez le mot de passe"
       change_openid: "Changez OpenID"
       web_site_url: "Site Web"
-      business_name: "Business Name"
+      business_name: "Nom d'organisation"
       legal_business_name: "Business Legal Name"
-      business_type: "Business Type"
-      title: "Your Title"
+      business_type: "Le type d'organisation"
+      title: "Votre titre"
       activity_status: "Activity Status"
       plan_type: "Plan Type"
       support_contact: "Support Contact"
@@ -368,12 +369,12 @@ fr:
       no_invitations: "Aucune invitation pour l’instant"
     new:
       header: "Joindre"
-      business_account: "This is a business account"
+      business_account: "Ceci est un compte organisationel"
       email_address: "Adresse de courriel"
       comma_will_be_verified: "Va être vérifié"
       never_made_public: "jamais rendu publique"
       name: "Nom"
-      will_be_displayed: "  (va être vu"
+      will_be_displayed: "(va être vu)"
       zipcode: "code postal"
       which_services: "Quels services êtes-vous prêts a offrir (et possiblement recevoir des courriels pour vous avertir des nouvelles requêtes)"
       something_about_yourself: "Présentez aux autres members qui vous êtes et quelles sont les qualifications que vous apportez a la communauté."
@@ -412,7 +413,7 @@ fr:
     _recent_activity:
       header: "Activité récente"
     _recent_exchanges:
-      header: "Creddits"
+      header: "Crédits"
 
   reqs:
     partial:
@@ -438,20 +439,21 @@ fr:
       private_message_to_requestor: "Message confidentiel au requèrant"
 
   exchanges:
-    record_transaction: "Record transaction"
+    record_transaction: "Enregistré une transaction d'heures"
+    send_a_message: "Envoyer un message"
     new:
-      enter_credit_for: "Transfer %{currency} to" 
+      enter_credit_for: "Transférer %{currency} à" 
       amount: "montant"
       for: "Pour"
       or_ask: "ou demander"
       service_provided: "Service rendu"
       no_currencies: "Cette personne n’utilise pas de monnaie"
-      enter_description: "Enter description of service here"
+      enter_description: "Entre le description du service ici"
     notify:
-      you_have_received_a_payment_of: "You have received a payment of"
-      paid_you: "paid you"
-      payment_suspended: "Payment suspended: "
-      suspended_payment_of: "suspended payment of"
+      you_have_received_a_payment_of: "Vous avez reçu un paiement"
+      paid_you: "vous avez payé"
+      payment_suspended: "Paiement suspendu: "
+      suspended_payment_of: "paiement suspendu du"
 
   sessions:
     new:
@@ -508,10 +510,6 @@ fr:
     edit:
       header: "Editing message"
       content: "Content"
-    reply:
-      prefix: "> "
-      preambule: "%{user} a écrit:"
-
 
   searches:
     header: "Search"
@@ -556,12 +554,12 @@ fr:
     minifeed:
       activity: "Activité"
       whats_going_on: "Qu’est-ce-qui ce passe"
-      made_a: "made a"
-      created_a: "created a"
+      made_a: "a fait"
+      created_a: "a crée"
       have_connected: "have connected"
       commented: "made a comment"
-      forum_post: "forum post"
-      new_discussion_topic: "new discussion topic"
+      forum_post: "un envoi sur le forum"
+      new_discussion_topic: "un nouveau sujet"
       made_post_on_forum_topic: "made a post on the forum topic"
       hours_for: "hours for"
       profile_picture_changed: "'s profile picture has changed"
@@ -569,11 +567,11 @@ fr:
       created_the_group: "created the group"
       joined_the_group: "joined the group"
       has_created_a_new: "has created a new"
-      offer_created: "has created a new offer"
-      req_created: "has created a new request"
+      offer_created: "a crée une nouvelle offre"
+      req_created: "a crée une nouvelle requête"
     transact:
       for: "pour"
-    multiple_select_label: "For multiple selection in the list below, press and hold Ctrl key (or Command for Mac users)"
+    multiple_select_label: "Pour une sélection multiple, maintenir appuyé la touche de controle (commande pour mac)"
 
   person_mailer:
     connection_request:

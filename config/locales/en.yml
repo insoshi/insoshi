@@ -27,6 +27,7 @@ en:
   are_you_sure: "Are you sure?"
   miles_away: "miles away"
   ago: "ago"
+  ago_time: "%{date} ago"
   estimated: "Estimated"
   payment: "payment"
   a_question: "a question"
@@ -76,7 +77,7 @@ en:
       address_line_3: "Address line 3"
       city: "City"
       state: "State"
-      zipcode: "Zipcode"
+      zipcode: "Postal code"
       share_address: "Share address?"
 
   bids:
@@ -263,8 +264,8 @@ en:
   people:
     edit:
       header: "Edit profile"
-      business_details: "Business Details"
-      business_account: "This is a business account"
+      business_details: "Organization Details"
+      business_account: "This is an organization account"
       personal_details: "Personal details"
       name: "Name"
       share_phone_number: "Share phone number:"
@@ -292,9 +293,9 @@ en:
       change_password: "Change Password"
       change_openid: "Change OpenID"
       web_site_url: "Web Site URL"
-      business_name: "Business Name"
-      legal_business_name: "Business Legal Name"
-      business_type: "Business Type"
+      business_name: "Organization Name"
+      legal_business_name: "Organization Legal Name"
+      business_type: "Organization Type"
       title: "Your Title"
       activity_status: "Activity Status"
       plan_type: "Plan Type"
@@ -313,7 +314,7 @@ en:
       no_invitations: "No invitations (yet)"
     new:
       header: "Sign up"
-      business_account: "This is a business account"
+      business_account: "This is a organization account"
       email_address: "Email address"
       comma_will_be_verified: ", will be verified"
       never_made_public: "never made public"
@@ -383,6 +384,7 @@ en:
 
   exchanges:
     record_transaction: "Record transaction"
+    send_a_message: "Send a message"
     new:
       enter_credit_for: "Transfer %{currency} to" 
       amount: "amount"
@@ -452,9 +454,6 @@ en:
     edit:
       header: "Editing message"
       content: "Content"
-    reply:
-      prefix: "> "
-      preambule: "%{user} wrote:\n"
 
   searches:
     header: "Search"

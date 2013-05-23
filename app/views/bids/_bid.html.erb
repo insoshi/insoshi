@@ -17,8 +17,8 @@
   <%= h bid.unit %> <%= t('bid') %>: <%= h bid.estimated_hours %> - <%= t('bids.bid.expires') %> <%= relative_time_ago_in_words(bid.expiration_date) %>
   </p>
   <p class="meta">
-<% if bid.state != 'offered' %><%= t('bids.bid.accepted') %> <%= time_ago_in_words(bid.accepted_at) -%> <%= t('ago') %><br><% end %>   <%= t('bids.bid.submitted_by') %> <%= person_link bid.person %>
-  <%= time_ago_in_words(bid.created_at) %> <%= t('ago') %> 
+<% if bid.state != 'offered' %><%= t('bids.bid.accepted') %> <%= t( 'ago_time', :date => time_ago_in_words(bid.accepted_at)) -%> <br><% end %>   <%= t('bids.bid.submitted_by') %> <%= person_link bid.person %>
+  <%= t( 'ago_time', :date => time_ago_in_words(bid.created_at)) %>
     <% if admin? || current_person?(bid.person) -%>
       | <%= link_to t('button_delete'), req_bid_path(bid.req,bid), :confirm => t('are_you_sure'), :method => :delete %>
     <% end -%>

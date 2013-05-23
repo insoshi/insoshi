@@ -1,5 +1,5 @@
 <li>
-<%= link_to h(subcategory.name), subcategory %> (<%= subcategory.offers.length %>)
+<%= link_to h(subcategory.name), subcategory %> (<%= subcategory.people.length %>)
 <% if !subcategory.children.empty? %>
   <ul><%= render :partial => '/categories/subcategory', :collection => subcategory.children %></ul>
 <% end %>

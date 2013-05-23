@@ -27,6 +27,7 @@ gr:
   are_you_sure: "Είστε σίγουροι;"
   miles_away: "μίλια μακρυά"
   ago: "πριν"
+  ago_time: "%{date} πριν"
   estimated: "Εκτίμηση"
   payment: "πληρωμή"
   a_question: "μια ερώτηση"
@@ -497,6 +498,7 @@ gr:
 
   exchanges:
     record_transaction: "Record transaction"
+    send_a_message: "Send a message"
     new:
       enter_credit_for: "Transfer %{currency} to" 
       amount: "ποσό"
@@ -566,10 +568,6 @@ gr:
     edit:
       header: "Επεξεργασία μηνύματος"
       content: "Περιεχόμενο"
-    reply:
-      prefix: "> "
-      preambule: " %{user} έγραψε:"
-
 
   searches:
     header: "Αναζήτηση"

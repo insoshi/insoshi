@@ -5,7 +5,7 @@
     <%= image_tag "icons/comment.gif", :class => "icon" %>
   </div>
   <p class="meta"><%= person_link forum_post.person %> <%= t('posted') %>
-  <%= time_ago_in_words(forum_post.created_at) %> <%= t('ago') %>
+  <%= t('ago_time', :date => time_ago_in_words(forum_post.created_at)) %>
       <%- if can? :destroy, forum_post -%>
             <%= link_to t('button_delete'),forum_topic_post_path(@forum, @topic, forum_post),:class => 'delete_post' %>
       <%- end -%>
