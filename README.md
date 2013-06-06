@@ -71,6 +71,10 @@ In addition to configuration through the web admin interface, outgoing email con
 - [OpenTransact](http://opentransact.org)
 
 ### FAQs
+[Configuration](https://github.com/oscurrency/oscurrency/wiki/Configuration)
+
+[Privacy Considerations](https://github.com/oscurrency/oscurrency/wiki/Privacy-Considerations)
+
 [Screencasts](https://github.com/oscurrency/oscurrency/wiki/Screencasts)
 
 [A Very Important Note about the LICENSE](https://groups.google.com/forum/#!topic/opensourcecurrency/lvzRtLVwbXk)
