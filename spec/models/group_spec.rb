@@ -13,10 +13,11 @@ describe Group do
       :mode => Group::PUBLIC,
       :unit => "value for unit",
       :asset => "infinities",
-      :owner => @p,
       :adhoc_currency => true
     }
-    @g = Group.create!(@valid_attributes)
+    @g = Group.new(@valid_attributes)
+    @g.owner = @p
+    @g.save!
   end
 
   describe 'attributes' do
@@ -226,6 +227,8 @@ describe Group do
           @membership.save
           account = @p2.account(@g)
           account.balance = 10.0
+          account.earned = 100.0
+          account.paid = 90.0
           account.save!
           @e.customer = @p2
         end
@@ -241,6 +244,19 @@ describe Group do
           @e.destroy
           account_after_payment_deletion = @p2.account(@g)
           account_after_payment_deletion.balance.should == 10.0
+        end
+
+        it "should update account paid when a payment is created" do
+          @e.save!
+          payer_account_after_payment = @p2.account(@g)
+          payer_account_after_payment.paid.should == 91.0
+        end
+
+        it "should update account paid when a payment is deleted" do
+          @e.save!
+          @e.destroy
+          payer_account_after_payment_deletion = @p2.account(@g)
+          payer_account_after_payment_deletion.paid.should == 90.0
         end
       end
     end
