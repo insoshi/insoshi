@@ -1,10 +1,10 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
-//= require jquery
+//  require jquery
 //= require jquery_ujs
-//= require jquery.ui.tabs
-//= require jquery.ui.datepicker
-//= require jquery.ui.autocomplete
+//  require jquery.ui.tabs
+//  require jquery.ui.datepicker
+//  require jquery.ui.autocomplete
 //= require jquery.timeago
 //= require highcharts
 //= require jquery.ba-hashchange.min

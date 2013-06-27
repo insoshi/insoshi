@@ -1,27 +1,28 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'home' } %>
-<%= column_div :type => :primary do -%>
-  <%= tabs_for do |tab| %>
-    <% tab.create('skillbank',t('home.menu.skillbank')) do %>
-      <%= render :partial => 'categories' %>
-    <% end %>
-    <% tab.create('about',t('home.menu.about')) do %>
-      <%= render :partial => 'about' %>
-    <% end unless global_prefs.about.blank? %>
-    <% tab.create('practice',t('home.menu.practice')) do %>
-      <%= render :partial => 'practice' %>
-    <% end unless global_prefs.practice.blank? %>
-    <% tab.create('steps',t('home.menu.steps')) do %>
-      <%= render :partial => 'steps' %>
-    <% end unless global_prefs.steps.blank? %>
-    <% tab.create('contact',t('home.menu.contact')) do %>
-      <%= render :partial => 'contact' %>
-    <% end unless global_prefs.contact.blank? %>
-    <% tab.create('faq',t('home.menu.faq')) do %>
-      <%= render :partial => 'questions' %>
-    <% end unless global_prefs.questions.blank? %>
-  <% end %>
-<%- end -%>
 
-<%= column_div :type => :secondary do -%>
-  <%= render :partial => 'secondary_column' %>
-<%- end -%>
+<div class="row">
+  <div class="span9">
+    <% pages = %w[about practice steps contact faq].select {|p| global_prefs.send(p).present?} %>
+    <ul class="nav nav-tabs">
+      <li><a href="#skillbank" data-toggle="tab"><%= t("home.menu.skillbank") %></a></li>
+      <% pages.each do |page| %>
+        <li><a href="#<%= page %>" data-toggle="tab"><%= t("home.menu.#{page}") %></a></li>
+      <% end %>
+    </ul>
+
+    <div class="tab-content">
+      <div id='#skillbank'>
+        <%= render :partial => 'categories' %>
+      </div>
+      <% pages.each do |page| %>
+        <div id="#<%= page %>">
+          <%= render :partial => page %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+  <div class="span3">
+    <%= render :partial => 'secondary_column' %>
+  </div>
+</div>

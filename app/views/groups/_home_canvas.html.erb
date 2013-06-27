@@ -1,8 +1,23 @@
-  <div class="profile vcard">
-    <%- if @membership && @membership.is?(:admin) -%>
-      <%= render :partial => 'admin_message' %>
+<div class="profile vcard">
+  <%- if @membership && @membership.is?(:admin) -%>
+    <%- if @group.description.blank? -%>
+      <div class="alert alert-error">
+        <%= t('groups.show.blank_description') %>
+        <%= link_to t('groups.show.add_description'),
+                edit_group_path(@group) %>
+      </div>
+    <%- else -%>
+      <div class="alert">
+        <%= t('groups.show.you_are_viewing_your_group') %>
+        <%= link_to t('groups.show.click_here_to_edit_it'), edit_group_path(@group) %>
+      </div>
     <%- end -%>
-    <%= render :partial => 'shared/minifeed' %>
-    <%= display @group.description %>
-    <%= render :partial => 'toolbox' %>
+  <%- end -%>
+  <div class="row">
+    <div class="span9">
+      <%= display @group.description %>
+      <%= render 'toolbox' %>
+    </div>
+    <%= render 'shared/minifeed' %>
   </div>
+</div>

@@ -52,7 +52,7 @@
           </p>
         <%- end -%>
         <% flash.each do |key, msg| %>
-          <%= content_tag :p, msg.html_safe, :class => "flash #{key}" %>
+          <%= content_tag :p, msg.html_safe, :class => "alert alert-#{key}" %>
         <% end %>     
         <%= yield %>
         <div id="footer">

@@ -1,7 +1,21 @@
-<div style='width:320px;float:right;'>
+<div class="span3">
   <h2><%= t('shared.minifeed.activity') %></h2>
-<ul class="list activity small">
-    <%= render :partial => 'shared/minifeed_item',
-               :collection => Activity.group_feed(@group.id) %>
-</ul>
+  <ul class="list activity small">
+      <%= render :partial => 'shared/minifeed_item',
+                 :collection => Activity.group_feed(@group.id) %>
+    <%- Activity.group_feed(@group.id).each do |minifeed_item| %>
+      <%- if minifeed_item.item.present? -%>
+        <%- member = Membership.mem(minifeed_item.person,minifeed_item.group) -%>
+        <li>
+          <div class="profile-image">
+            <%= image_link minifeed_item.person, :link => member, :link_options => {:class => "show-follow"} %>
+          </div>
+          <p><%= minifeed_message minifeed_item %></p>
+          <p class="meta published">
+            <abbr class="timeago" title="<%= minifeed_item.created_at.utc %>"><%= minifeed_item.created_at %></abbr>
+          </p>
+        </li>
+      <%- end -%>
+    <% end -%>
+  </ul>
 </div>

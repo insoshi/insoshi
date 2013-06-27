@@ -1,48 +1,61 @@
-        <div class="toolbox">
-          <%= image_tag @group.main_photo, :class => "profile-image photo",
-                                        :alt => h(@group.name) %>
-            <ul class="tools">
-            <%- if @membership.try(:person).try(:org) %>
-              <li><span class="label"><%= t('groups.show.contact') %></span>: <%= @membership.person.name %></li>
-            <%- end %>
-            <%- if @group.adhoc_currency? %>
-              <%- if @membership %>
-                <%- if @membership.account.credit_limit %>
-                  <li><%= t('groups.show.your_credit_limit') %> <%= @membership.account.credit_limit %> <%= @group.unit %></li>
-                <%- end -%>
-              <%- else -%>
-                <%- if @group.default_credit_limit %>
-                  <li><%= t('groups.show.default_credit_limit') %> <%= @group.default_credit_limit %> <%= @group.unit %></li>
-                <%- end -%>
-              <%- end -%>
-            <%- end -%>
-            <%- if @membership %>
-              <% if @group.asset %>
-              <li>
-                <%= link_to t('groups.show.your_activity'), transacts_path(@group.asset), :target => '_blank' %>
-              </li>
-              <% end %>
-              <li><%= link_to t('home.index.edit_your_preferences'), edit_member_preference_path(@membership.member_preference), :class => "show-follow" %></li>
-            <%- end -%>
-            <%- if Membership.pending?(current_person, @group) -%>
-              <li>
-                <%= t('groups.show.you_have_requested_to_be_a_member_of') %> <strong><%= h @group.name %></strong>
-              </li>
-            <%- end -%>
-            <%- if group_owner?(current_person,@group) -%>
-              <li>
-                <%= t('groups.show.you_are_group_admin') %>
-                <%= link_to t('groups.show.delete_it'), group_path(@group), :confirm => t('are_you_sure'), :method => :delete %>
-              </li>
-              <li>
-                <%= t('groups.show.mode') %> <%= @group.get_groups_modes[@group.mode][0] %>
-              </li>
-              <% if @group.asset %>
-              <li>
-                <%= t('groups.show.asset_name') %> <%= link_to @group.asset, transacts_path(@group.asset), :target => '_blank' %>
-              </li>
-              <% end %>
-            <%- end -%>
-            <%= render :partial => 'membership' %>
-          </ul>
-        </div>
+<div class="toolbox">
+  <%= image_tag @group.main_photo, :class => "profile-image photo",
+                                :alt => h(@group.name) %>
+  <ul class="tools">
+    <%- if @membership.try(:person).try(:org) %>
+      <li>
+        <span class="label"><%= t('groups.show.contact') %></span>:
+        <%= @membership.person.name %>
+      </li>
+    <%- end %>
+    <%- if @group.adhoc_currency? %>
+      <%- if @membership %>
+        <%- if @membership.account.credit_limit %>
+          <li>
+            <%= t('groups.show.your_credit_limit') %>
+            <%= @membership.account.credit_limit %>
+            <%= @group.unit %>
+          </li>
+        <%- end -%>
+      <%- else -%>
+        <%- if @group.default_credit_limit %>
+          <li>
+            <%= t('groups.show.default_credit_limit') %>
+            <%= @group.default_credit_limit %>
+            <%= @group.unit %>
+          </li>
+        <%- end -%>
+      <%- end -%>
+    <%- end -%>
+    <%- if @membership %>
+      <% if @group.asset %>
+      <li>
+        <%= link_to t('groups.show.your_activity'), transacts_path(@group.asset), :target => '_blank' %>
+      </li>
+      <% end %>
+      <li>
+        <%= link_to t('home.index.edit_your_preferences'), edit_member_preference_path(@membership.member_preference), :class => "show-follow" %>
+      </li>
+    <%- end -%>
+    <%- if Membership.pending?(current_person, @group) -%>
+      <li>
+        <%= t('groups.show.you_have_requested_to_be_a_member_of') %> <strong><%= h @group.name %></strong>
+      </li>
+    <%- end -%>
+    <%- if group_owner?(current_person,@group) -%>
+      <li>
+        <%= t('groups.show.you_are_group_admin') %>
+        <%= link_to t('groups.show.delete_it'), group_path(@group), :confirm => t('are_you_sure'), :method => :delete %>
+      </li>
+      <li>
+        <%= t('groups.show.mode') %> <%= @group.get_groups_modes[@group.mode][0] %>
+      </li>
+      <% if @group.asset %>
+        <li>
+          <%= t('groups.show.asset_name') %> <%= link_to @group.asset, transacts_path(@group.asset), :target => '_blank' %>
+        </li>
+      <% end %>
+    <%- end -%>
+    <%= render :partial => 'membership' %>
+  </ul>
+</div>
