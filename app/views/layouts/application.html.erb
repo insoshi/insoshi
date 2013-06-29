@@ -104,7 +104,7 @@
 
     <div class="container">
         <% flash.each do |key, msg| %>
-          <%= content_tag :p, msg.html_safe, :class => "alert alert-#{key}" %>
+          <%= content_tag :p, msg.html_safe, :class => "alert #{bootstrap_class(key)}" %>
         <% end %>
         <%= yield %>
     </div>

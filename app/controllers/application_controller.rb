@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_person
   helper_method :logged_in?
+  helper_method :bootstrap_class
 
   before_filter :require_activation, :admin_warning,
                 :set_person_locale
@@ -49,6 +50,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # :secret => '71a8c82e6d248750397d166001c5e308'
 
   protected
+    def bootstrap_class(flash_key)
+      {notice: 'alert-success',
+       success: 'alert-success',
+       error: 'alert-error',
+       alert: 'alert-info'}[flash_key] || ''
+    end
+
     def logged_in?
       !!current_person
     end
