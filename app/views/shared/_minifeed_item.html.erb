@@ -1,4 +1,4 @@
-<%- unless minifeed_item.item.nil? -%>
+<%- if minifeed_item.item.present? -%>
   <%- member = Membership.mem(minifeed_item.person,minifeed_item.group) -%>
   <li>
   <div class="profile-image">
