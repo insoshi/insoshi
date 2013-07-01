@@ -1,17 +1,6 @@
 <div class="profile vcard">
   <%- if @membership && @membership.is?(:admin) -%>
-    <%- if @group.description.blank? -%>
-      <div class="alert alert-error">
-        <%= t('groups.show.blank_description') %>
-        <%= link_to t('groups.show.add_description'),
-                edit_group_path(@group) %>
-      </div>
-    <%- else -%>
-      <div class="alert">
-        <%= t('groups.show.you_are_viewing_your_group') %>
-        <%= link_to t('groups.show.click_here_to_edit_it'), edit_group_path(@group) %>
-      </div>
-    <%- end -%>
+    <%= render 'shared/group_admin_alert' %>
   <%- end -%>
   <div class="row">
     <div class="span9">

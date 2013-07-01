@@ -1,23 +1,51 @@
-  <div class="form_row">
-    <%= f.label t('title') %>
-    <%= f.text_field :name, :size => 40, :maxlength => 255 %>
+<div class="span5">
+  <div class="control-group">
+    <%= f.label t('title'), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :size => 40, :maxlength => 255 %>
+    </div>
   </div>
-  <div class="form_row">
-    <%= f.label t('estimated') + ' ' + t('payment') %>
-    <%= f.text_field :estimated_hours, :size => 5, :disabled => estimate_disabled %>&nbsp;<span><%= @group.unit %></span>
+  <div class="control-group">
+    <%= f.label t('description'), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :rows => 5 %>
+    </div>
   </div>
-  <div class="form_row">
-    <%= f.label t('due_date') %>
-    <%= f.text_field :due_date, :size => 7 %>
+  <div class="control-group">
+    <%= f.label t('filter_categories'), :class => 'control-label' %>
+    <div class="controls">
+      <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
+    </div>
   </div>
-  <div class="form_row full">
-    <%= f.label t('description') %>
-    <p class='formatting'><%= t('offers.new.description_label') %></p>
-    <%= f.text_area :description, :rows => 5 %>
+</div>
+<div class="span5">
+  <div class="control-group">
+    <%= f.label t('estimated') + ' ' + t('payment'), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :estimated_hours, :size => 5, :disabled => estimate_disabled %>&nbsp;<span><%= @group.unit %></span>
+    </div>
   </div>
-  <div class="form_row full">
-    <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
+  <div class="control-group">
+    <%= f.label t('due_date'), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :due_date, :size => 7 %>
+    </div>
   </div>
-  <div class="form_row full">
-    <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'req' } %>
+  <div class="control-group">
+    <%= f.label t('filter_neighborhoods'), :class => 'control-label' %>
+    <div class="controls">
+      <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'req' } %>
+    </div>
   </div>
+<% if notify_members %>
+  <div class="control-group">
+    <label for="notifications" class="control-label checkbox"><%= t('reqs.new.notify_members_email') %></label>
+    <div class="controls">
+      <%= check_box_tag 'req[notifications]', '1', true %>
+    </div>
+  </div>
+<% end %>
+  <div class="form-actions">
+    <%= f.submit submit_text, :class => 'btn btn-primary' %><%= waiting_image %>
+  </div>
+</div>

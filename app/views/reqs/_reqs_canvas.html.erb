@@ -1,4 +1,4 @@
-<span class='req' style='float:right;'><%= link_to t('button_new_req'), new_group_req_path(@group), {:class => 'show-follow button'} %></span>
+<span class='req' style='float:right;'><%= link_to t('button_new_req'), new_group_req_path(@group), {:class => 'show-follow btn btn-primary'} %></span>
 <%= form_tag group_reqs_path(@group), :method => :get, :class => 'search_form' do %>
   <p>
     <%= text_field_tag :search, params[:search] %>

@@ -374,7 +374,7 @@ en:
     new:
       header: "New request"
       people_to_be_notified: "People to be notified"
-      notify_members_email: "Notify members shown above?"
+      notify_members_email: "Notify members?"
     show:
       header: "Request"
       bids: "Bids"
