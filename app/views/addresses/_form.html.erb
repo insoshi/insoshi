@@ -1,32 +1,46 @@
-<div class="form_row">
-  <% if @address.new_record? %>
-    <%= form.check_box :address_privacy, :checked => @current_person.org ? true : false %>
-  <% else %>
-    <%= form.check_box :address_privacy%>
+<div class="control-group">
+  <%= form.label :address_privacy, :class => 'checkbox' do %>
+    <% if @address.new_record? %>
+      <%= form.check_box :address_privacy, :checked => @current_person.org ? true : false %>
+    <% else %>
+      <%= form.check_box :address_privacy%>
+    <% end %>
+    <%= t('addresses.form.share_address') %>
   <% end %>
-  <span style="font-size:14px;font-weight:bold;"><%= t('addresses.form.share_address') %></span>
 </div>
-<div class="form_row">
-  <%= form.label t('addresses.form.address_line_1') %>
-  <%= form.text_field :address_line_1 %>
+<div class="control-group">
+  <%= form.label t('addresses.form.address_line_1'), :class => 'control-label' %>
+  <div class="controls">
+    <%= form.text_field :address_line_1 %>
+  </div>
 </div>
-<div class="form_row">
-  <%= form.label t('addresses.form.address_line_2') %>
-  <%= form.text_field :address_line_2 %>
+<div class="control-group">
+  <%= form.label t('addresses.form.address_line_2'), :class => 'control-label' %>
+  <div class="controls">
+    <%= form.text_field :address_line_2 %>
+  </div>
 </div>
-<div class="form_row">
-  <%= form.label t('addresses.form.address_line_3') %>
-  <%= form.text_field :address_line_3 %>
+<div class="control-group">
+  <%= form.label t('addresses.form.address_line_3'), :class => 'control-label' %>
+  <div class="controls">
+    <%= form.text_field :address_line_3 %>
+  </div>
 </div>
-<div class="form_row">
-  <%= form.label t('addresses.form.city') %>
-  <%= form.text_field :city %>
+<div class="control-group">
+  <%= form.label t('addresses.form.city'), :class => 'control-label' %>
+  <div class="controls">
+    <%= form.text_field :city %>
+  </div>
 </div>
-<div class="form_row">
-  <%= form.label t('addresses.form.state') %>
-  <%= form.select :state_id, @states %>
+<div class="control-group">
+  <%= form.label t('addresses.form.state'), :class => 'control-label' %>
+  <div class="controls">
+    <%= form.select :state_id, @states %>
+  </div>
 </div>
-<div class="form_row">
-  <%= form.label t('addresses.form.zipcode') %>
-  <%= form.text_field :zipcode_plus_4, :size => 10 %>
+<div class="control-group">
+  <%= form.label t('addresses.form.zipcode'), :class => 'control-label' %>
+  <div class="controls">
+    <%= form.text_field :zipcode_plus_4, :size => 10 %>
+  </div>
 </div>

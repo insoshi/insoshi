@@ -1,5 +1,5 @@
-<%= column_div :type => :primary do -%>
-  <div class="profile vcard">
+<div class="span10">
+<div class="profile vcard">
     <%- if @person.openid_identifier.nil? -%>
       <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span></h2>
     <%- else -%>
@@ -89,9 +89,4 @@
   </div>
 
   <%= render :partial => '/shared/recent_activity' %>
-<%- end -%>
-
-<%= column_div :type => :secondary do -%>
-  <%= render :partial => 'searches/box' %>
-<%- end -%>
-
+</div>

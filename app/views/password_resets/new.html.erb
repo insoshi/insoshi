@@ -1,10 +1,14 @@
-<%= column_div :type => :primary do -%>
+<div class="span3">
   <h2><%= t('password_resets.new.header') %></h2>
   <%= form_tag password_resets_path do %>
-    <div class="form_row">
-      <label for="email"><%= t('sessions.new.email_address') %></label>
-      <%= text_field_tag :email %>
+    <div class="control-group">
+      <label for="email" class="control-label"><%= t('sessions.new.email_address') %></label>
+      <div class="controls">
+        <%= email_field_tag :email %>
+      </div>
     </div>
-    <%= submit_tag "Reset Password" %>
+    <div class="form-actions">
+      <%= submit_tag t('password_resets.new.header'), :class => 'btn btn-primary' %>
+    </div>
   <% end %>
-<%- end -%>
+</div>

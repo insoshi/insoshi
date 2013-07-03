@@ -1,27 +1,31 @@
-<%= column_div :type => :primary do -%>
-  <h2><%= t('sessions.new.header') %></h2>
-
-  <%= form_for @person_session do |f| -%>
+  <%= form_for @person_session, :html => {:class => 'form-signin'} do |f| -%>
+    <h2 class="form-signin-heading"><%= t('sessions.new.header') %></h2>
     <%= f.error_messages %>
 <span id="standard">
-    <div class="form_row">
-      <label for="email"><%= t('sessions.new.email_address') %></label>
-      <%= f.text_field :email %>
+  <div class="control-group">
+      <%= f.label t('sessions.new.email_address'), :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :email %>
+      </div>
     </div>
     <%= set_focus_to "email" %>
 
-    <div class="form_row">
-      <label for="password"><%= t('sessions.new.password') %></label>
-      <%= f.password_field :password %>
+    <div class="control-group">
+      <%= f.label t('sessions.new.password'), :class => 'control-label' %>
+      <div class="controls">
+        <%= f.password_field :password %>
+      </div>
     </div>
 </span>
-    <div class="form_row" id="openid">
-      <label for="openid_url"><%= t('sessions.new.openid') %></label>
-      <%= f.text_field :openid_identifier %>
+    <div class="control-group" id="openid">
+      <%= f.label t('sessions.new.openid'), :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :openid_identifier %>
+      </div>
     </div>
 
-    <div class="form_row">
-      <%= f.submit t('sessions.new.button_signin'), :class => "button" %>
+    <div class="form-actions">
+      <%= f.submit t('sessions.new.button_signin'), :class => "btn btn-large btn-primary" %>
     </div>
 
 <div style="text-align: center; font-size: 12px; padding: 10px;">
@@ -36,4 +40,3 @@
 
 </div>
   <% end -%>
-<%- end -%>

@@ -1,4 +1,6 @@
-<div class="form_row">
-  <label for="language"><%= t('people._language.language') %></label>
-  <%= f.select :language, [[t('people._language.english'),'en'],[t('people._language.spanish'),'es'],[t('people._language.french'),'fr'],[t('people._language.greek'),'gr']] %>
+<div class="control-group">
+  <%= f.label t('people._language.language'), :class => 'control-label' %>
+  <div class="controls">
+    <%= f.select :language, [[t('people._language.english'),'en'],[t('people._language.spanish'),'es'],[t('people._language.french'),'fr'],[t('people._language.greek'),'gr']] %>
+  </div>
 </div>

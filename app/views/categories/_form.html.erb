@@ -1,13 +1,17 @@
 <%= form_for(@category) do |f| %>
-  <div class="form_row">
-    <%= f.label t('categories.form.name') %>
-    <%= f.text_field :name %>
+  <div class="control-group">
+    <%= f.label t('categories.form.name'), :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name %>
+    </div>
   </div>
-  <div class="form_row full">
-    <label for="parent_id"><%= t('categories.form.parent_category') %></label>
-    <%= render(:partial => "select_categories") %>
+  <div class="control-group">
+    <%= f.label t('categories.form.parent_category'), :class => 'control-label' %>
+    <div class="controls">
+      <%= render(:partial => "select_categories") %>
+    </div>
   </div>
-  <div class="form_row">
-    <%= f.submit t('button_create') %>
+  <div class="form-actions">
+    <%= f.submit t('button_create'), :class => 'btn btn-primary' %>
   </div>
 <% end %>

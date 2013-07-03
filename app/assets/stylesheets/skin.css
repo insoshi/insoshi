@@ -357,45 +357,6 @@ div.desc-message{
 ul.categories
 {
 }
-ul.categories ul
-{
-    margin-bottom:0px;
-}
-ul.categories li
-{
-    border:1px solid #ddd;
-    padding:5px;
-    margin:0px;
-    margin-left:20px;
-    font-size:12px;
-    color:#333;
-}
-ul.categories a
-{
-    color:#333;
-}
-ul.categories li ul li.selected
-{
-    background:white;
-}
-ul.categories li.selected a
-{
-    text-decoration:underline;
-}
-ul.categories a.categoryMenuItem, ul.categories li.selected a.selected
-{
-    color:#777;
-}
-a.categoryMenuItem:hover
-{
-  text-decoration:underline;
-}
-ul.categories li ul li
-{
-    border:0px;
-    list-style-type:disc;
-    background:white;
-}
 
 .categorycol
 {
@@ -538,3 +499,27 @@ input#person_openid_identifier, input#person_session_openid_identifier {
   padding-left: 250px;
 }
 
+.form-signin {
+  max-width: 300px;
+  padding: 19px 29px 29px;
+  margin: 0 auto 20px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+          box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+  font-size: 16px;
+  height: auto;
+  margin-bottom: 15px;
+  padding: 7px 9px;
+}

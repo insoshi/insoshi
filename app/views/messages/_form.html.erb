@@ -17,13 +17,13 @@
   <%= form_for(:message,
     :url => (@recipient ? person_messages_path(@recipient) : messages_path(@message)), :html => {:id => 'new_message', :class => 'form-horizontal'}) do |f| %>
     <div class="span4">
-    <div class="form-control">
+    <div class="control-group">
       <%= f.label t('to').mb_chars.capitalize, :class => 'control-label' %>
       <div class="controls">
         <%= text_field_tag :recipient, (@recipient ? h(@recipient.name) : ''), :id => 'recipient_autocomplete', :class => 'recipient_autocomplete', :placeholder => t('messages.new.to.placeholder') %>
       </div>
     </div>
-    <div class="form-control">
+    <div class="control-group">
       <%= f.label t('messages.show.subject'), :class => 'control-label' %>
       <div class="controls">
         <%= f.text_field :subject, :id => "message_subject" %>
@@ -31,7 +31,7 @@
     </div>
     </div>
     <div class="span7">
-    <div class="form-control">
+    <div class="control-group">
       <div class="controls">
       <%- if @message.reply? -%>
       <%= f.text_area :content, :id => "message_body", :value => content, :rows => 10 %>
