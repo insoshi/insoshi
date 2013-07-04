@@ -12,7 +12,7 @@
   </p>
   <p class="meta">
   <%= t('topics.partial.created_by') %> <%= person_link topic.person %>
-  <%= time_ago_in_words(topic.created_at) %> <%= t('ago') %>
+  <%= t('ago_time', :date => time_ago_in_words(topic.created_at)) %> 
     <%- if can? :destroy, topic -%>
       <%= link_to t('button_delete'), forum_topic_path(topic.forum, topic), :class => "delete_topic" %>
     <%- end -%>

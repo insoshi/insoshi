@@ -47,8 +47,18 @@ class Account < ActiveRecord::Base
     adjust_balance_and_save(-amount)
   end
 
+  def withdraw_and_decrement_earned(amount)
+    self.earned -= amount
+    adjust_balance_and_save(-amount)
+  end
+
   def deposit(amount)
     self.earned += amount
+    adjust_balance_and_save(amount)
+  end
+
+  def deposit_and_decrement_paid(amount)
+    self.paid -= amount
     adjust_balance_and_save(amount)
   end
 

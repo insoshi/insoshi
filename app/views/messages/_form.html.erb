@@ -26,11 +26,12 @@
     </div>
     <div class="form_row">
       <label for="message_body"><%= t('messages.new.body') %></label>
-      <%= f.text_area :content, :id => "message_body" %>
       <%- if @message.reply? -%>
+        <%= f.text_area :content, :id => "message_body", :value => content %>
         <%= f.hidden_field :parent_id %>
         <%= set_focus_to "message_body" %>
       <%- else -%>
+        <%= f.text_area :content, :id => "message_body" %>
         <%= set_focus_to "message_subject" %>
       <%- end -%>
     </div>

@@ -9,7 +9,7 @@
   </div>
   <p><span class="field"><%= t('from').capitalize %>:</span> <%= person_link message.sender %></p>
   <p class="meta published">
-    <%= time_ago_in_words message.created_at %> <%= t('ago') %>
+    <%= t( 'ago_time', :date => time_ago_in_words( message.created_at)) %> 
   </p>
   <p title="Subject">
     <%= link_to sanitize(truncate(message.subject, 30)),

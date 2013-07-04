@@ -19,8 +19,8 @@
     Due: <%= relative_time_ago_in_words(bid.req.due_date) %>
   </p>
   <p class="meta">
-<% if bid.state != 'offered' %>Accepted <%= time_ago_in_words(bid.accepted_at) -%> <%= t('ago') %><br><% end %>   Submitted by <%= person_link bid.person %>
-    <%= time_ago_in_words(bid.created_at) %> <%= t('ago') %>
+<% if bid.state != 'offered' %>Accepted <%= t 'ago_time', :date => time_ago_in_words(bid.accepted_at) -%> <br><% end %>   Submitted by <%= person_link bid.person %>
+    <%= t 'ago_time', :date => time_ago_in_words(bid.created_at) %>
     <% if admin? || current_person?(bid.person) -%>
     | <%= link_to "Delete", req_bid_path(bid.req,bid), :confirm => 'Are you sure?', :method => :delete %>
     <% end -%>

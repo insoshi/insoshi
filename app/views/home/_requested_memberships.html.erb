@@ -9,8 +9,7 @@
         <p><%= person_link request.person %> <%= t('home._requested_memberships.requests_membership_for') %>
         <%= group_link request.group %></p>
         <p class="meta published">
-          <%= time_ago_in_words(request.created_at) %> 
-          <%= t('ago') %>
+          <%= t('ago_time', :date => time_ago_in_words(request.created_at)) %> 
         </p>
         <p>
           <%= link_to t('home._requested_memberships.view_group'), group_path(request.group) %> |

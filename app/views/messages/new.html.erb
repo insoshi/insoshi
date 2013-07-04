@@ -1,5 +1,10 @@
 <%= column_div :type => :primary do -%>
-  <%= render :partial => 'form' %>
+  <%- if @message.reply? %>
+    <%= render :partial => 'form',:locals => {:content => content} %>
+  <%- else %>
+    <%= render :partial => 'form' %>
+  <% end %>
+
 <%- end -%>
 
 <%= column_div :type => :secondary do -%>

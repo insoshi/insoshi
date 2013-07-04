@@ -7,7 +7,7 @@
   <%= person_link sent_exchange.worker %><%= " received #{sent_exchange.amount.to_s} hours for " %><%= link_to h(sent_exchange.metadata.name), sent_exchange.metadata %>
   </p>
   <p class="meta published">
-  <%= time_ago_in_words(sent_exchange.created_at).capitalize %> <%= t('ago') %>
+  <%= ( t 'ago_time', :date => time_ago_in_words(sent_exchange.created_at)).capitalize %>
   <% unless sent_exchange.created_at + MAX_DAYS_SUSPEND_PAYMENT.days < Time.now %>
   | <%= link_to "Suspend Payment", person_exchange_path( sent_exchange.worker, sent_exchange ), :confirm => 'Are you sure?', :method => :delete %>
   <% end -%>

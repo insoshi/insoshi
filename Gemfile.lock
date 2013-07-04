@@ -216,7 +216,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.1)
     mime-types (1.21)
-    multi_json (1.7.0)
+    multi_json (1.7.7)
     multi_xml (0.5.1)
     multipart-post (1.1.5)
     nested_form (0.3.1)
@@ -264,8 +264,8 @@ GEM
       activesupport (= 3.2.13)
       bundler (~> 1.0)
       railties (= 3.2.13)
-    rails3_acts_as_paranoid (0.1.4)
-      activerecord (~> 3.1)
+    rails3_acts_as_paranoid (0.2.5)
+      activerecord (~> 3.2)
     rails_admin (0.4.0)
       bootstrap-sass (~> 2.1)
       builder (~> 3.0)
@@ -419,7 +419,7 @@ DEPENDENCIES
   rack
   rack-test
   rails (= 3.2.13)
-  rails3_acts_as_paranoid (~> 0.1.4)
+  rails3_acts_as_paranoid
   rails_admin
   redcarpet
   rmagick

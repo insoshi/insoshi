@@ -19,7 +19,7 @@
   <%= t('offers.partial.available_count') %>: <%= offer.available_count %>
     <br>
     <%= t('offers.partial.created_by') %> <%= person_link offer.person %>
-    <%= time_ago_in_words(offer.created_at) %> <%= t('ago') %>
+    <%= t('ago_time', :date => time_ago_in_words(offer.created_at)) %>
     <% if can?(:update, offer) -%>
       | <%= link_to t('button_edit'), edit_offer_path(offer), :class => 'show-follow' %>
     <% end -%>

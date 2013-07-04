@@ -162,8 +162,8 @@ class Exchange < ActiveRecord::Base
         if group.nil?
           raise "no group specified"
         else
-          worker.account(group).withdraw(amount)
-          customer.account(group).deposit(amount)
+          worker.account(group).withdraw_and_decrement_earned(amount)
+          customer.account(group).deposit_and_decrement_paid(amount)
           if self.metadata.class == Req
             unless self.metadata.biddable?
               self.metadata.destroy

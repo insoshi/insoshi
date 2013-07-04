@@ -127,7 +127,6 @@ class Person < ActiveRecord::Base
   has_many :addresses
   has_many :client_applications
   has_many :tokens, :class_name => "OauthToken", :order => "authorized_at DESC", :include => [:client_application]
-  has_many :transactions, :class_name=>"Transact", :finder_sql=> proc {"select exchanges.* from exchanges where (customer_id=#{id} or worker_id=#{id}) order by created_at desc"}
 
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :neighborhoods
@@ -175,6 +174,11 @@ class Person < ActiveRecord::Base
   # We suggest using this admin as the primary administrative contact.
   def Person.find_first_admin
     where(:admin => true).order(:created_at).first
+  end
+
+  def transactions
+    txns_table = Transact.arel_table
+    Transact.where(txns_table[:worker_id].eq(self.id).or(txns_table[:customer_id].eq(self.id))).order('created_at DESC')
   end
 
   # Display name based upon entity type

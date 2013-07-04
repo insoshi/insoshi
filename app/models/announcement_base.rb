@@ -33,23 +33,21 @@ module AnnouncementBase
       where(:group_id => group)
     end
 
-    def for_category(cat)
-      cat = cat.id if cat.is_a? Category
-      includes(:categories).where(:'categories.id' => cat)
-    end
-
-    def for_neighborhood(nei)
-      nei = nei.id if nei.is_a? Neighborhood
-      includes(:neighborhoods).where(:'neighborhoods.id' => nei)
+    def for_filter(filter)
+      if filter.is_a? Category
+        includes(:categories).where(:'categories.id' => filter.id)
+      elsif filter.is_a? Neighborhood
+        includes(:neighborhoods).where(:'neighborhoods.id' => filter.id)
+      end
     end
 
     def search_by(text)
       where("name ILIKE ? OR description ILIKE ?", "%#{text}%", "%#{text}%")
     end
 
-    def custom_search(category, group, active_only, page, posts_per_page, search=nil)
+    def custom_search(filter, group, active_only, page, posts_per_page, search=nil)
       rel = self
-      rel = rel.for_category(category) if category
+      rel = rel.for_filter(filter) if filter
       rel = rel.for_group(group) if group
       rel = rel.search_by(search) if search
       rel = rel.active if active_only

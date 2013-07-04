@@ -67,8 +67,16 @@ class MessagesController < ApplicationController
                                     :recipient    => recipient)
 
     @recipient = not_current_person(original_message)
+    original_text = "" 
+    if not original_message.content.empty?
+        original_text << t('messages.reply.preambule', :user=> @recipient.name) 
+        original_message.content.split("\n").each do |mailline|
+            original_text << t('messages.reply.prefix') << mailline 
+        end
+    end
+
     respond_to do |format|
-      format.html { render :action => "new" }
+      format.html { render :action => "new", :locals => {:content => original_text} }
     end    
   end
 
