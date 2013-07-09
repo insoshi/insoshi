@@ -9,7 +9,11 @@
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
     <%= stylesheet_link_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/base/jquery-ui.css" %>
-    <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css" %>
+    <%- if session[:theme] %>
+      <%= stylesheet_link_tag theme_url(session[:theme]) %>
+    <%- else -%>
+      <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css" %>
+    <%- end -%>
     <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css" %>
     <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css" %>
     <%= stylesheet_link_tag "application" %>
@@ -32,6 +36,7 @@
           <% else -%>
             <%= link_to global_prefs.app_name, home_path, :class => "brand" %>
           <%- end -%>
+          <%= select_tag :theme, theme_options, {:include_blank => true, :onchange => 'url=document.location.protocol + "//" + document.location.host + document.location.pathname;document.location=url+"?theme="+this.value'} %>
           <ul class="nav pull-right">
             <%- if logged_in? -%>
               <%- if current_person.admin? -%>

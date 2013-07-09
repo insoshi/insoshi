@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
   helper_method :bootstrap_class
 
   before_filter :require_activation, :admin_warning,
-                :set_person_locale
+                :set_person_locale,
+                :set_theme
 
   layout proc{ |c| c.request.xhr? ? false : "application" }
 
@@ -109,6 +110,17 @@ class ApplicationController < ActionController::Base
 
     def current_ability
       @current_ability ||= Ability.new(current_person, current_token)
+    end
+
+    def set_theme
+      if params[:theme]
+        session[:theme] = params[:theme]
+        uri = URI(request.url)
+        new_params = CGI.parse(uri.query)
+        new_params.delete('theme')
+        uri.query = URI.encode_www_form(new_params)
+        redirect_to uri.to_s.chomp('?')
+      end
     end
 
     def set_person_locale

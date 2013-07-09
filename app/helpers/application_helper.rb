@@ -16,6 +16,30 @@ module ApplicationHelper
     opts.merge!(:class => "active") if current_page_pre22?(options)
     content_tag(:li, link_to(name, options, html_options, &block), opts)
   end
+
+  def theme_options
+    theme_matrix.keys.map {|theme_name| "<option>#{theme_name}</option>"}.join
+  end
+
+  def theme_matrix
+    {"default" => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css",
+      "amelia" => "http://bootswatch.com/amelia/bootstrap.min.css",
+      "cerulean" => "http://bootswatch.com/cerulean/bootstrap.min.css",
+      "cosmo" => "http://bootswatch.com/cosmo/bootstrap.min.css",
+      "cyborg" => "http://bootswatch.com/cyborg/bootstrap.min.css",
+      "flatly" => "http://bootswatch.com/flatly/bootstrap.min.css",
+      "journal" => "http://bootswatch.com/journal/bootstrap.min.css",
+      "readable" => "http://bootswatch.com/readable/bootstrap.min.css",
+      "simplex" => "http://bootswatch.com/simplex/bootstrap.min.css",
+      "slate" => "http://bootswatch.com/slate/bootstrap.min.css",
+      "spacelab" => "http://bootswatch.com/spacelab/bootstrap.min.css",
+      "superhero" => "http://bootswatch.com/superhero/bootstrap.min.css",
+      "united" => "http://bootswatch.com/united/bootstrap.min.css"}
+  end
+
+  def theme_url(theme_name)
+      theme_matrix[theme_name] || "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css"
+  end
   
   ## Menu helpers
 
