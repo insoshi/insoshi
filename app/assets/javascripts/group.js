@@ -21,6 +21,11 @@ $(function() {
   OSCURRENCY.delete_fadeout_time = 4000;
   OSCURRENCY.offers_mode = ''
   OSCURRENCY.reqs_mode = ''
+  OSCURRENCY.search_methods = {'#people':'/memberships',
+                               '#memberships':'/memberships',
+                               '#requests':'/reqs',
+                               '#reqs':'/reqs',
+                               '#offers':'/offers'};
 
   $("#tabs").tabs({
     select: function(event, ui) {
@@ -237,7 +242,13 @@ $(function() {
     });
 
   $('.search_form').live('submit',function() {
-      $.get($(this).attr('action'),$(this).serialize(),null,'script');
+      current_tab = window.location.hash.split('/')[0];
+      search_method = OSCURRENCY.search_methods[current_tab];
+      if(null == search_method) {
+        alert('tab '+current_tab+' is not supported for search');
+      } else {
+        $.get('/groups/'+OSCURRENCY.group_id+search_method,$(this).serialize(),null,'script');
+      }
       return false;
     });
 
