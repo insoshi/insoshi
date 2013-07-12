@@ -27,17 +27,6 @@ $(function() {
                                '#reqs':'/reqs',
                                '#offers':'/offers'};
 
-  $("#tabs").tabs({
-    select: function(event, ui) {
-      // even if you try calling select, this only gets called if it is not already selected 
-      OSCURRENCY.tab = ui.tab.hash;
-    },
-    fx: {}
-    });
-
-  // render jquery tabs - they are created with "display: none" to prevent FOUC
-  $('ul.ui-tabs-nav').show();
-
   route('home',     /^#home$/,                                     '/groups/[:group_id]');
   route('home',     /^#member_preferences\/(\d+)\/edit$/,          '/member_preferences/[:1]/edit');
 
@@ -176,7 +165,6 @@ $(function() {
       var tab = "";
       var a = [];
       if(hash.length != 0) {
-        var t = $("#tabs");
         a = resolve(hash);
         tab = a[0];
         js_url = a[1];
@@ -187,8 +175,8 @@ $(function() {
         }
 
         if(tab != OSCURRENCY.tab) {
-          // for responding to back/forward buttons
-          t.tabs('select',tab);
+          $('#nav-js a[href="'+tab+'"]').tab('show');
+          OSCURRENCY.tab=tab;
         }
         if(js_url.length != 0) {
           $.ajaxSetup({cache:true});
