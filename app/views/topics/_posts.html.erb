@@ -1,5 +1,5 @@
-  <%= will_paginate(@posts) %>
+  <%= will_paginate(@posts, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
   <ul class="list topic full">
     <%= render :partial => 'forum_post', :collection => @posts %>
   </ul>
-  <%= will_paginate(@posts) %>
+  <%= will_paginate(@posts, :renderer => BootstrapPaginationHelper::LinkRenderer) %>

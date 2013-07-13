@@ -5,8 +5,8 @@
 <%= render :partial => '/reqs/neighborhoods', :locals => {:filtered_obj => 'req', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
 <% end %>
 <h2 style="display:inline;"><%= t('reqs.index.header') %> &nbsp;</h2><span style="margin-left:20px;"><%= link_to t('active'), reqs_path, :class => active_reqs_class %> | <%= link_to t('all'), reqs_path, :class => all_reqs_class %> <%= waiting_image %>
-      <%= will_paginate(@reqs) %>
+      <%= will_paginate(@reqs, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
       <ul class="list activity full">
         <%= render :partial => '/reqs/req', :collection => @reqs %>
       </ul>
-      <%= will_paginate(@reqs) %>
+      <%= will_paginate(@reqs, :renderer => BootstrapPaginationHelper::LinkRenderer) %>

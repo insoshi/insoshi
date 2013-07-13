@@ -4,9 +4,9 @@
 <%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'person', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
 <% end %>
       <h2><%= t('groups.show.people') %><%= waiting_image %></h2>
-      <%= will_paginate(@memberships) %>
+      <%= will_paginate(@memberships, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
       <ul class="list activity full">
         <%= render :partial => '/memberships/member', :collection => @memberships, :locals => {:short => true} %>
       </ul>
       <div style='clear:both;'></div>
-      <%= will_paginate(@memberships) %>
+      <%= will_paginate(@memberships, :renderer => BootstrapPaginationHelper::LinkRenderer) %>

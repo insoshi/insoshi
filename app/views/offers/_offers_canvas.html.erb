@@ -5,8 +5,8 @@
 <%= render :partial => '/offers/neighborhoods', :locals => {:filtered_obj => 'offer', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
 <% end %>
 <h2 style="display:inline;"><%= t('groups.show.offers') %> &nbsp;</h2><span style="margin-left:20px;"><%= link_to t('active'), offers_path, :class => active_offers_class %> | <%= link_to t('all'), offers_path, :class => all_offers_class %> <%= waiting_image %>
-<%= will_paginate(@offers) %>
+<%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
 <ul class="list activity full">
   <%= render :partial => '/offers/offer', :collection => @offers %>
 </ul>
-<%= will_paginate(@offers) %>
+<%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>

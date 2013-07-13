@@ -5,8 +5,8 @@
       <%= submit_tag t('button_submit'), :class => "btn btn-primary" %>
   <% end %>
 <%- end -%>
-<%= will_paginate(@topics) %>
+<%= will_paginate(@topics, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
 <ol class="list forum full">
   <%= render :partial => 'topics/topic', :collection => @topics %>
 </ol>
-<%= will_paginate(@topics) %>
+<%= will_paginate(@topics, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
