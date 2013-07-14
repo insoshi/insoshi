@@ -19,21 +19,25 @@ $(function() {
   OSCURRENCY.post_allowed = true;
   OSCURRENCY.notice_fadeout_time = 8000;
   OSCURRENCY.delete_fadeout_time = 4000;
-  OSCURRENCY.offers_mode = ''
-  OSCURRENCY.reqs_mode = ''
-  OSCURRENCY.search_methods = {'#people':'/memberships',
-                               '#memberships':'/memberships',
-                               '#requests':'/reqs',
-                               '#reqs':'/reqs',
-                               '#offers':'/offers'};
+  OSCURRENCY.offers_mode = '';
+  OSCURRENCY.reqs_mode = '';
+  OSCURRENCY.searchable_tabs = ['#people','#memberships','#reqs','#requests','#offers'];
 
   route('home',     /^#home$/,                                     '/groups/[:group_id]');
   route('home',     /^#member_preferences\/(\d+)\/edit$/,          '/member_preferences/[:1]/edit');
 
   route('exchanges',/^#exchanges\/page=(\d+)/,                     '/groups/[:group_id]/exchanges?page=[:1]');
+  route('requests', /^#reqs\/page=(\d+)\/search=(.+)/,             '/groups/[:group_id]/reqs?page=[:1]&search=[:2]');
   route('requests', /^#reqs\/page=(\d+)/,                          '/groups/[:group_id]/reqs?page=[:1]');
+  route('requests', /^#reqs\/search=(.+)/,                         '/groups/[:group_id]/reqs?search=[:1]');
+  route('requests', /^#requests\/search=(.+)/,                     '/groups/[:group_id]/reqs?search=[:1]');
+  route('offers',   /^#offers\/page=(\d+)\/search=(.+)/,           '/groups/[:group_id]/offers?page=[:1]&search=[:2]');
   route('offers',   /^#offers\/page=(\d+)/,                        '/groups/[:group_id]/offers?page=[:1]');
+  route('offers',   /^#offers\/search=(.+)/,                       '/groups/[:group_id]/offers?search=[:1]');
+  route('people',   /^#people\/page=(\d+)\/search=(.+)/,           '/groups/[:group_id]/memberships?page=[:1]&search=[:2]');
   route('people',   /^#people\/page=(\d+)/,                        '/groups/[:group_id]/memberships?page=[:1]');
+  route('people',   /^#people\/search=(.+)/,                       '/groups/[:group_id]/memberships?search=[:1]');
+  route('people',   /^#memberships\/search=(.+)/,                  '/groups/[:group_id]/memberships?search=[:1]');
   route('forum',    /^#forum\/page=(\d+)/,                         '/groups/[:group_id]/forum?page=[:1]');
 
   route('requests', /^#reqs\/(\d+)$/,                              '/reqs/[:1]');
@@ -231,11 +235,10 @@ $(function() {
 
   $('.search_form').live('submit',function() {
       current_tab = window.location.hash.split('/')[0];
-      search_method = OSCURRENCY.search_methods[current_tab];
-      if(null == search_method) {
+      if(-1 == OSCURRENCY.searchable_tabs.indexOf(current_tab)) {
         alert('tab '+current_tab+' is not supported for search');
       } else {
-        $.get('/groups/'+OSCURRENCY.group_id+search_method,$(this).serialize(),null,'script');
+        window.location.hash = current_tab + '/' + $(this).serialize();
       }
       return false;
     });
