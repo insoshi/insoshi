@@ -1,7 +1,7 @@
 <h2><%= t('searches.header') + " " + search_type %></h2>
 <%= form_tag searches_path, :method => :get, :id => "frmSearch", :class => "form-search" do %>
   <fieldset title="Search Insoshi">
-    <%= text_field_tag :q, h(params[:q]), :id => "txtSearch", :class => "txt search-query",
+    <%= text_field_tag :q, h(params[:q]), :id => "txtSearch", :class => "txt",
                                           :maxlength => 50 %>
     <%= submit_tag t('button_search'), :name => nil, :id => "btnSearch",
                              :class => "btn"  %>

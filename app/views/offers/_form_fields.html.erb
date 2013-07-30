@@ -1,17 +1,6 @@
 <div class="span5">
-  <div class="control-group">
-    <%= f.label t('title'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :name, :size => 40, :maxlength => 255 %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label t('description'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :description, :rows => 5 %>
-    <span class='help-block'><%= t('offers.new.description_label') %></span>
-    </div>
-  </div>
+  <%= f.text_field :name, :label => t("title"), :size => 40, :maxlength => 255 %>
+  <%= f.text_area :description, :label => t("description"), :help => t('offers.new.description_label'), :rows => 5 %>
   <div class="control-group">
     <%= f.label t('filter_categories'), :class => 'control-label' %>
     <div class="controls">
@@ -20,31 +9,16 @@
   </div>
 </div>
 <div class="span5">
-  <div class="control-group">
-    <%= f.label t('estimate'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :price, :size => 5 %>&nbsp;<span class='small'><%= @group.unit %></span>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label t('expiration_date'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :expiration_date, :size => 7 %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label t('offers.new.total_available'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :total_available, :size => 2, :value => 1 %>
-    </div>
-  </div>
+  <%= f.text_field :price, :label => t('estimate'), :help => @group.unit, :size => 5 %>
+  <%= f.text_field :expiration_date, :label => t('expiration_date'), :size => 7 %>
+  <%= f.text_field :total_available, :label => t('offers.new.total_available'), :size => 2, :value => 1 %>
   <div class="control-group">
     <%= f.label t('filter_neighborhoods'), :class => 'control-label' %>
     <div class="controls">
       <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'offer' } %>
     </div>
   </div>
-  <div class="form-actions">
-    <%= f.submit submit_text, :class => 'btn btn-primary' %><%= waiting_image %>
-  </div>
+  <%= f.actions do %>
+    <%= f.primary submit_text %><%= waiting_image %>
+  <% end %>
 </div>

@@ -3,25 +3,14 @@
 <%- end -%>
 <div class="span8">
 <div style='width:320px;float:left;'>
-<h2><%= t('home.index.edit_your_preferences') %></h2>
-<%= form_for @member_preference, :html => {:class => 'form-horizontal'} do |f| %>
-  <%= f.error_messages %>
+<h2><%= t('people.edit.email_notification_preferences') %></h2>
+<%= bootstrap_form_for @member_preference, :html => {:class => 'form-horizontal edit_member_preference'} do |f| %>
     <div style='padding-left:10px;'>
-      <div class="control-group">
-        <%= f.label t('people.edit.requests_in_my_service_categories'), :class => 'control-label' %>
-      <div class="controls">
-        <%= f.check_box :req_notifications %>
-      </div>
-    </div>
-    <div class="control-group">
-      <%= f.label t('people.edit.forum_posts'), :class => 'control-label' %>
-      <div class="controls">
-        <%= f.check_box :forum_notifications %>
-      </div>
-    </div>
-    <div class="form-actions">
-        <%= f.submit 'Update', :class => 'btn btn-primary' %><%= waiting_image %>
-    </div>
+      <%= f.check_box :req_notifications, label: t('people.edit.requests_in_my_service_categories') %>
+      <%= f.check_box :forum_notifications, label: t('people.edit.forum_posts') %>
+      <%= f.actions do %>
+        <%= f.primary "Update" %><%= waiting_image %>
+      <% end %>
     </div>
 <% end %>
 </div>

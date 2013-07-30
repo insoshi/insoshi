@@ -1,7 +1,0 @@
-<h2>Edit post</h2>
-
-<%= error_messages_for :post %>
-
-<%= render :partial => 'forum_form',
-           :locals => { :url => forum_topic_post_path(@forum, @topic, @post),
-                        :method => :put } %>

@@ -333,7 +333,7 @@ fr:
       email: "Courriel"
       email_notification_preferences: "Préférences pour les avertissements par courriel"
       email_notification_note: "Vous recevrez un avertissement par courriel pour tous les types d’événement qui sont cochés"
-      requests_in_my_service_categories: "Les requêtes dans mes catégories de service:"
+      requests_in_my_service_categories: "Les requêtes dans mes catégories de service"
       messages: "Messages"
       forum_posts: "Les entrées du forum"
       broadcast_emails: "Newsletter"

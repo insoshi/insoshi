@@ -1,4 +1,4 @@
 <h2><%= t('reqs.edit.header') %></h2>
-<%= form_for @req, :html => {:id => 'edit_req', :class => 'form-horizontal'} do |f| %>
+<%= bootstrap_form_for @req, :html => {:id => 'edit_req', :class => 'form-horizontal'} do |f| %>
   <%= render :partial => 'form_fields', :locals => {:f => f, :estimate_disabled => true, :notify_members => false, :submit_text => t('button_update')} %>
 <% end %>

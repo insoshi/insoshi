@@ -1,7 +1,7 @@
 $('#forum_canvas').html("<%= escape_javascript(render :partial => 'group_posts') %>");
 if(0 == $('#forum_form').html().length)
 {
-  $('#forum_form').html("<%= escape_javascript(render :partial => 'post_form') %>");
+  $('#forum_form').html("<%= escape_javascript(render :partial => 'shared/post_form') %>");
 }
 $('#forum_canvas').linkify();
 setTimeout(update_topic,<%= @refresh_milliseconds %>);

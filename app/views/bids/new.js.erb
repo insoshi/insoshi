@@ -1,1 +1,1 @@
-$('#new_bid').before('<div><%= escape_javascript(error_messages_for(:bid)) %></div>');
+$('#bid_canvas').html("<%= escape_javascript(render 'shared/bid_form') %>");

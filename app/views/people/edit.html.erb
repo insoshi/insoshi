@@ -5,14 +5,8 @@
 
   <h3><%= t('people.edit.personal_details') %></h3>
 
-    <%= error_messages_for :person %>
-    <%= form_for @person do |f| %>
-      <div class="control-group">
-        <%= f.label t('people.edit.name'), :class => 'control-label' %>
-        <div class="controls">
-          <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
-        </div>
-      </div>
+    <%= bootstrap_form_for @person do |f| %>
+      <%= f.text_field :name, :label => t('people.edit.name'), :maxlength => Person::MAX_NAME %>
 
       <% if can?(:create, @category) %>
         <span class="categoryAdd"><%= link_to t('people.edit.add_new_category'), new_category_path %></span>
@@ -32,38 +26,18 @@
           </div>
       </div>
 
-      <div class="control-group">
-        <%= f.label t('people.edit.description'), :class => 'control-label' %>
-        <div class="controls">
-          <%= f.text_area :description, :rows => 10 %>
-        </div>
-      </div>
+      <%= f.text_area :description, label: t('people.edit.description'), rows: 10 %>
 
       <%= render :partial => 'language', :locals => {:f => f} %>
 
-      <div class="control-group">
-        <%= f.label t('people.edit.email'), :class => 'control-label' %>
-        <div class="controls">
-          <%= f.email_field :email %>
-        </div>
-      </div>
+      <%= f.email_field :email, label: t('people.edit.email') %>
 
-      <div class="control-group">
-        <%= f.label t('people.edit.web_site_url'), :class => 'control-label' %>
-        <div class="controls">
-          <%= f.text_field :web_site_url %>
-        </div>
-      </div>
+      <%= f.text_field :web_site_url, label: t('people.edit.web_site_url') %>
 
-      <div class="control-group">
-        <%= f.label t('people.edit.phone'), :class => 'control-label' %>
-        <div class="controls">
-          <%= f.text_field :phone %>
-        </div>
-      </div>
-      <%= f.label :phoneprivacy, :class => 'checkbox' do %>
-          <%= f.check_box :phoneprivacy %>
-          <%= t('people.edit.share_phone_number') %>
+      <%= f.text_field :phone, label: t('people.edit.phone') %>
+
+      <%= f.control_group :phoneprivacy do %>
+          <%= f.check_box :phoneprivacy, label: t('people.edit.share_phone_number') %>
       <% end %>
 
       <%- if global_prefs.email_notifications? -%>
@@ -76,13 +50,11 @@
           <%= t('people.edit.email_notification_note') %>
         </p>
 
-        <%= f.label :message_notifications, :class => "checkbox" do %>
-          <%= f.check_box :message_notifications %>
-          <%= t('people.edit.messages') %>
+        <%= f.control_group :message_notifications do %>
+          <%= f.check_box :message_notifications, label: t('people.edit.messages')%>
         <% end %>
-        <%= f.label :broadcast_emails, :class => "checkbox" do %>
-          <%= f.check_box :broadcast_emails %>
-          <%= t('people.edit.broadcast_emails') %>
+        <%= f.control_group :broadcast_emails do %>
+          <%= f.check_box :broadcast_emails, label: t('people.edit.broadcast_emails')%>
         <% end %>
       <%- end -%>
 
@@ -90,31 +62,15 @@
       <div id="business_details">
         <h3><%= t('people.edit.business_details') %></h3>
 
-        <%= f.label :org, :class => "checkbox" do %>
-          <%= f.check_box :org %>
-          <%= t('people.edit.business_account') %>
+        <%= f.control_group :org do %>
+          <%= f.check_box :org, label: t('people.edit.business_account') %>
         <% end %>
 
-        <div class="control-group">
-          <%= f.label t('people.edit.business_name'), :class => 'control-label' %>
-          <div class="controls">
-            <%= f.text_field :business_name %>
-          </div>
-        </div>
+        <%= f.text_field :business_name, label: t('people.edit.business_name') %>
 
-        <div class="control-group">
-          <%= f.label t('people.edit.legal_business_name'), :class => 'control-label' %>
-          <div class="controls">
-            <%= f.text_field :legal_business_name %>
-          </div>
-        </div>
+        <%= f.text_field :legal_business_name, label: t('people.edit.legal_business_name') %>
 
-        <div class="control-group">
-          <%= f.label t('people.edit.title'), :class => 'control-label' %>
-          <div class="controls">
-            <%= f.text_field :title %>
-          </div>
-        </div>
+        <%= f.text_field :title, label: t('people.edit.title') %>
 
         <div class="control-group">
           <%= f.label t('people.edit.business_type'), :class => 'control-label' %>
@@ -182,44 +138,30 @@
 <div class='span5'>
   <h2><%= t('people.edit.change_your_password') %></h2>
 
-  <%= form_for @person, :html => { :id => "change_password" } do |f| %>
-
-    <div class="control-group">
-      <%= f.label t('people.edit.new_password'), :class => 'control-label' %>
-      <div class="controls">
+    <%= bootstrap_form_for @person, :html => { :id => "change_password" } do |f| %>
         <%= f.password_field :password,
+                             :label => t('people.edit.new_password'),
                              :size => 34,
                              :maxlength => Person::MAX_PASSWORD %>
-      </div>
-    </div>
 
-    <div class="control-group">
-      <%= f.label t('people.edit.confirm_password'), :class => 'control-label' %>
-      <div class="controls">
         <%= f.password_field :password_confirmation,
+                             :label => t('people.edit.confirm_password'),
                              :size => 34,
                              :maxlength => Person::MAX_PASSWORD,
                              :value => "" %>
-      </div>
-    </div>
-    <div class="form-actions">
-      <%= submit_tag t('people.edit.change_password'), :class => "btn btn-primary" %>
-    </div>
-    <input type="hidden" name="type" value="password_edit" />
-  <% end %>
+        <input type="hidden" name="type" value="password_edit" />
+        <%= f.actions do %>
+          <%= f.primary t('people.edit.change_password') %>
+        <% end %>
+    <% end %>
 
   <h2>OpenID</h2>
 
-  <%= form_for @person, :html => { :id => "openid_form" } do |f| %>
-    <div class="control-group">
-      <%= f.label t('people.edit.openid_identifier' ), :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :openid_identifier %>
-      </div>
-    </div>
-    <div class="form-actions">
-      <%= submit_tag t('people.edit.change_openid'), :class => "btn btn-primary" %>
-    </div>
+  <%= bootstrap_form_for @person, :html => { :id => "openid_form" } do |f| %>
+    <%= f.text_field :openid_identifier, label: t('people.edit.openid_identifier') %>
+    <%= f.actions do %>
+      <%= f.primary t('people.edit.change_openid') %>
+    <% end %>
     <input type="hidden" name="type" value="openid_edit" />
 
   <% end %>

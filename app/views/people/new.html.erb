@@ -4,61 +4,25 @@
   <h2><%= t('people.new.header') %> <%= t('for') %> <%= global_prefs.app_name %></h2>
   <%- end -%>
 
-  <%= error_messages_for :person %>
   <%= display global_prefs.registration_intro %>
-  <%= form_for @person, :html => {:class => 'form-horizontal'} do |f| -%>
+  <%= bootstrap_form_for @person, :help => :block, :html => {:class => 'form-horizontal'} do |f| -%>
 <div class="span5">
-  <div class="control-group">
-    <%= f.label t('people._language.language'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.select :language, [[t('people._language.english'),'en'],[t('people._language.spanish'),'es'],[t('people._language.french'),'fr'],[t('people._language.greek'),'gr']], {:selected => params[:locale]}, {:onchange => "document.location='/signup?locale=' + this.value"} %>
-    </div>
-  </div>
+  <%= f.select :language, [[t('people._language.english'),'en'],[t('people._language.spanish'),'es'],[t('people._language.french'),'fr'],[t('people._language.greek'),'gr']], {:label => t('people._language.language'), :selected => params[:locale]}, {:onchange => "document.location='/signup?locale=' + this.value"} %>
   <fieldset id="creds">
 <span id="standard">
-  <div class="control-group">
-      <%= f.label t('people.new.email_address'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.email_field :email %>
-      <span class="help-block"><%= t('people.new.never_made_public') %><%= t('people.new.comma_will_be_verified') if global_prefs.email_verifications? %></span>
-    </div>
+    <%= f.email_field :email, label: t('people.new.email_address'), help: email_help  %>
     <%= set_focus_to "person_email" %>  
-  </div>
 
-  <div class="control-group">
-    <%= f.label t('people.new.name'), :class => 'control-label' %> 
-    <div class="controls">
-      <%= f.text_field :name, :maxlength => Person::MAX_NAME %>
-      <span class="help-block"><%= t('people.new.will_be_displayed') %></span>
-    </div>
-  </div>
+    <%= f.text_field :name, label: t('people.new.name'), help: t('people.new.will_be_displayed'), maxlength: Person::MAX_NAME %>
 
   <% if @person.openid_identifier.blank? %>
-    <div class="control-group">
-      <%= f.label t('people.new.password'), :class => 'control-label' %>
-      <div class="controls">
-        <%= f.password_field :password, :maxlength => Person::MAX_PASSWORD %>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <%= f.label t('people.new.confirm_password'), :class => 'control-label' %>
-      <div class="controls">
-      <%= f.password_field :password_confirmation, 
-                           :maxlength => Person::MAX_PASSWORD,
-                           :value => "" %>
-      </div>
-    </div>
+    <%= f.password_field :password, label: t('people.new.password'), maxlength: Person::MAX_PASSWORD %>
+    <%= f.password_field :password_confirmation, label: t('people.new.confirm_password'), maxlength: Person::MAX_PASSWORD, value: "" %>
   <%- end -%>
 </span>
 
 <span id="openid">
-  <div class="control-group">
-    <%= f.label t('people.new.openid_url'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :openid_identifier %>
-    </div>
-  </div>
+    <%= f.text_field :openid_identifier, label: t('people.new.openid_url') %>
 </span>
 </fieldset>
 
@@ -77,12 +41,7 @@
 </div>
 <div class="span5">
   
-  <div class="control-group">
-    <%= f.label t('people.new.something_about_yourself'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :description, :rows => 6 %>
-    </div>
-  </div>  
+  <%= f.text_area :description, label: t('people.new.something_about_yourself'), rows: 6 %>
 
   <div class="control-group">
     <%= f.label t('people.new.neighborhood'), :class => 'control-label' %>
@@ -91,25 +50,17 @@
     </div>
   </div>
 
-  <div class="control-group">
-    <%= f.label t('people.new.zipcode'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :zipcode %>
-    </div>
-  </div>
+  <%= f.text_field :zipcode, label: t('people.new.zipcode') %>
 
-    <%= f.label :org, :class => 'checkbox' do %>
-      <%= f.check_box :org %>
-      <%= t('people.new.business_account') %>
+    <%= f.control_group :org do %>
+      <%= f.check_box :org, label: t('people.new.business_account') %>
+    <% end %>
+    <%= f.control_group :accept_agreement do %>
+      <%= f.check_box :accept_agreement, label: member_agreement_label.html_safe  %> 
     <% end %>
 
-    <%= f.label :accept_agreement, :class => 'checkbox' do %>
-      <%= f.check_box :accept_agreement %> 
-      <%= t('people.new.i_accept_the') %> <%= link_to t('people.new.member_agreement'), agreement_path, :target => '_blank', :class => 'small' %>
+    <%= f.actions do %>
+      <% f.primary t('people.new.signup_button') %>
     <% end %>
-
-  <div class="form-actions">
-    <%= submit_tag t('people.new.signup_button'), :class => "btn btn-primary" %>
-  </div>
 </div>
   <% end %>

@@ -1,28 +1,14 @@
-  <%= form_for @person_session, :html => {:class => 'form-signin'} do |f| -%>
+  <%= bootstrap_form_for @person_session, :html => {:class => 'form-signin'} do |f| -%>
     <h2 class="form-signin-heading"><%= t('sessions.new.header') %></h2>
-    <%= f.error_messages %>
 <span id="standard">
-  <div class="control-group">
-      <%= f.label t('sessions.new.email_address'), :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :email %>
-      </div>
-    </div>
+    <%= f.text_field :email, label: t('sessions.new.email_address') %>
     <%= set_focus_to "email" %>
 
-    <div class="control-group">
-      <%= f.label t('sessions.new.password'), :class => 'control-label' %>
-      <div class="controls">
-        <%= f.password_field :password %>
-      </div>
-    </div>
+    <%= f.password_field :password, label: t('sessions.new.password') %>
 </span>
-    <div class="control-group" id="openid">
-      <%= f.label t('sessions.new.openid'), :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :openid_identifier %>
-      </div>
-    </div>
+<span id="openid">
+    <%= f.text_field :openid_identifier, label: t('sessions.new.openid') %>
+</span>
 
     <div class="form-actions">
       <%= f.submit t('sessions.new.button_signin'), :class => "btn btn-large btn-primary" %>

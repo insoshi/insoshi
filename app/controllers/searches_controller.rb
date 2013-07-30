@@ -17,7 +17,8 @@ class SearchesController < ApplicationController
     end
 
     if query.blank?
-      @results,@page_results = []
+      @results = []
+      @page_results = @results.paginate()
     else
       klass = model.constantize
       @results = klass.search(query).all

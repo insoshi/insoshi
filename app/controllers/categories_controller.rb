@@ -60,7 +60,6 @@ class CategoriesController < ApplicationController
         format.html { redirect_to(@category) }
         format.xml  { render :xml => @category, :status => :created, :location => @category }
       else
-        @category = Category.new
         @all_categories = Category.by_long_name
         format.html { render :action => "new" }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }
@@ -79,7 +78,6 @@ class CategoriesController < ApplicationController
         format.html { redirect_to(@category) }
         format.xml  { head :ok }
       else
-        @category = Category.find(params[:id])
         @all_categories = Category.by_long_name
         format.html { render :action => "edit" }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }

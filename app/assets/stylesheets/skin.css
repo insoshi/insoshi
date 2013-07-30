@@ -277,7 +277,6 @@ form#blogpost #post_title, form#blogpost #post_body {
   border-bottom: 1px solid #ccc;
   float: left;
   height: 24px;
-  margin-top: -24px;
   position: relative;
   width: 100%;
 }

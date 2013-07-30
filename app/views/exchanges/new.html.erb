@@ -3,8 +3,6 @@
   <h2><%= t('exchanges.new.enter_credit_for', :currency => @group.unit.pluralize) %> <%= h @person.display_name %></h2>
   <% unless @groups.empty? %>
 
-  <%= error_messages_for :exchange %>
-
   <% if params[:offer] %>
     <%= render :partial => 'exchange_offer_form' %>
   <% else %>

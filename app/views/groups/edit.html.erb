@@ -2,61 +2,48 @@
 <div class="row">
   <div class="span6">
 
-    <%= form_for(@group) do |f| %>
+    <%= bootstrap_form_for(@group) do |f| %>
       <%= f.error_messages %>
       <fieldset>
         <legend><%= t('.group_data') %></legend>
         <div class="row">
           <div class="span3">
-            <%= f.label :name, t('.name') %>
-            <%= f.text_field :name, :class => "span3" %>
-            <%= f.label :description, t('.description') %>
-            <%= f.text_area :description, :class => "span3", :rows => 10 %>
+            <%= f.text_field :name, label: t('.name'), class: "span3" %>
+            <%= f.text_area :description, label: t('.description'), class: "span3", rows: 10 %>
           </div>
           <div class="span3">
 
             <%- if @group.adhoc_currency? -%>
+              <%= f.text_field :unit, label: t('.currency_unit_plural'), class: "span3" %>
+              <%= f.text_field :asset, disabled: !@group.asset.nil?, label: t('.asset'), class: "span3" %>
+              <%= f.text_field :default_credit_limit, label: t('.default_credit_limit'), size: 5, class: "span3" %>
 
-              <%= f.label :unit, t('.currency_unit_plural') %>
-              <%= f.text_field :unit, :class => "span3" %>
-
-              <%= f.label :asset, t('.asset') %>
-              <%= f.text_field :asset, :disabled => !@group.asset.nil?, :class => "span3" %>
-
-              <%= f.label :default_credit_limit, t('.default_credit_limit') %>
-              <%= f.text_field :default_credit_limit, :size => 5, :class => "span3" %>
-
-              <%= f.label :display_balance, :class => "checkbox" do %>
-                <%= f.check_box :display_balance %>
-                <%= t('.display_balance') %>
+              <%= f.control_group :display_balance do %>
+                <%= f.check_box :display_balance, label: t('.display_balance') %>
               <% end -%>
-              <%= f.label :display_earned, :class => "checkbox" do %>
-                <%= f.check_box :display_earned %>
-                <%= t('.display_earned') %>
+              <%= f.control_group :display_earned do %>
+                <%= f.check_box :display_earned, label: t('.display_earned') %>
               <% end -%>
-              <%= f.label :display_paid, :class => "checkbox" do %>
-                <%= f.check_box :display_paid %>
-                <%= t('.display_paid') %>
+              <%= f.control_group :display_paid do %>
+                <%= f.check_box :display_paid, label: t('.display_paid') %>
               <% end -%>
-              <%= f.label :private_txns, :class => "checkbox" do %>
-                <%= f.check_box :private_txns %>
-                <%= t('.private_txns') %>
+              <%= f.control_group :private_txns do %>
+                <%= f.check_box :private_txns, label: t('.private_txns') %>
               <% end -%>
 
             <%- end -%>
 
-            <%= f.label :enable_forum, :class => "checkbox" do %>
-              <%= f.check_box :enable_forum %>
-              <%= t('.enable_forum') %>
+            <%= f.control_group :enable_forum do %>
+              <%= f.check_box :enable_forum, label: t('.enable_forum') %>
             <% end -%>
 
-            <%= f.label :mode, t('.mode') %>
-            <%= f.select :mode, @group.get_groups_modes %>
+            <%= f.select :mode, @group.get_groups_modes, label: t('.mode') %>
 
           </div>
         </div>
-
-        <%= f.submit t('button_update'), :class => "btn btn-success" %>
+        <%= f.actions do %>
+          <%= f.primary t('button_update') %>
+        <% end %>
       </fieldset>
     <% end %>
   </div>
@@ -82,20 +69,20 @@
         </div>
       <% end -%>
     <% end %>
-    <br />
-      <%= button_to t('.add_a_photo'), new_photo_group_path(@group), :class => "btn btn-success" %>
+    <br /><br />
+      <%= button_to t('.add_a_photo'), new_photo_group_path(@group), :class => "btn btn-primary" %>
   </div>
 
   <div class="span3">
     <% if @group.enable_forum %>
-      <%= form_for(@group.forum, remote: true) do |f| %>
+      <%= bootstrap_form_for(@group.forum, remote: true) do |f| %>
         <legend><%= t('.forum') %></legend>
-        <%= f.error_messages %>
-        <%= f.label :worldwritable, :class => "checkbox" do %>
-          <%= f.check_box :worldwritable %>
-          <%= t('forums.edit.world_writable') %>
+        <%= f.control_group :worldwritable do %>
+          <%= f.check_box :worldwritable, label: t('forums.edit.world_writable') %>
         <% end -%>
-        <%= f.submit t('button_update'), :class => "btn btn-success" %>
+        <%= f.actions do %>
+          <%= f.primary t('button_update') %>
+        <% end %>
       <% end %>
 
     <% end %>

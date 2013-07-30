@@ -1,5 +1,13 @@
 module PeopleHelper
 
+  def email_help
+    t('people.new.never_made_public') + (t('people.new.comma_will_be_verified') if global_prefs.email_verifications?)
+  end
+
+  def member_agreement_label
+    t('people.new.i_accept_the') + ' ' + link_to(t('people.new.member_agreement'), agreement_path, :target => '_blank', :class => 'small')
+  end
+
   def message_links(people)
     people.map { |p| email_link(p)}
   end

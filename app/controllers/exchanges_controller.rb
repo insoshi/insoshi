@@ -39,7 +39,6 @@ class ExchangesController < ApplicationController
         @group = current_person.default_group
       end
       @req = Req.new
-      @req.name = t('exchanges.new.enter_description')
     end
 
     # XXX @groups not used in new ajax ui

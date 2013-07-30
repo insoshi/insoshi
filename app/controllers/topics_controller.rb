@@ -11,17 +11,12 @@ class TopicsController < ApplicationController
   def show
     @group = @forum.group
     @posts = @topic.posts.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    @post = ForumPost.new
     respond_to do |format|
       format.html
       format.js do
         @refresh_milliseconds = global_prefs.topic_refresh_seconds * 1000
       end
-    end
-  end
-
-  def new
-    respond_to do |format|
-      format.html
     end
   end
 

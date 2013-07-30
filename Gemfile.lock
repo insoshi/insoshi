@@ -89,6 +89,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (2.2.2.0)
       sass (~> 3.2)
+    bootstrap_form (0.3.2)
     builder (3.0.4)
     calendar_helper (0.2.4)
       open4
@@ -404,6 +405,7 @@ DEPENDENCIES
   aws-s3
   better_errors
   binding_of_caller
+  bootstrap_form (~> 0.3.2)
   calendar_helper
   cancan
   capybara

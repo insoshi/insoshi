@@ -1,9 +1,0 @@
-<h2>New post</h2>
-
-<%= error_messages_for :post %>
-
-<%= render :partial => 'forum_form',
-           :locals => { :url => forum_topic_posts_path(@forum, @topic),
-                        :method => :post } %>
-
-<%= link_to 'Back', forum_topic_path(@forum, @topic) %>

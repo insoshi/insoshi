@@ -18,36 +18,17 @@ class PostsController < ApplicationController
     end
   end
 
-  # Forum posts don't get shown individually.
-  # def show
-  # end
-
-  def new
-    @post = model.new
-
-    respond_to do |format|
-      format.html { render :action => "forum_new" }
-    end
-  end
-
-  def edit
-    respond_to do |format|
-      format.html { render :action => "forum_edit" }
-    end
-  end
-
   def create
-    @post = @topic.posts.build(params[:post])
+    @post = @topic.posts.build(params[:forum_post])
     @post.person = current_person
+
     authorize! :create, @post
 
     respond_to do |format|
       if @post.save
         flash[:success] = t('success_post_created')
-        format.html { redirect_to forum_topic_url(@forum, @topic, :posts => @topic.posts.count) }
         format.js
       else
-        format.html { render :action => "forum_new" }
         format.js {render :action => 'new'}
       end
     end
@@ -65,7 +46,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = model.find(params[:id])
+    @post = ForumPost.find(params[:id])
     authorize! :destroy, @post
     @post.destroy
     flash[:notice] = t('success_post_destroyed')

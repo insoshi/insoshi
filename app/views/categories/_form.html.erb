@@ -1,17 +1,12 @@
-<%= form_for(@category) do |f| %>
-  <div class="control-group">
-    <%= f.label t('categories.form.name'), :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :name %>
-    </div>
-  </div>
+<%= bootstrap_form_for(@category) do |f| %>
+  <%= f.text_field :name, label: t('categories.form.name') %>
   <div class="control-group">
     <%= f.label t('categories.form.parent_category'), :class => 'control-label' %>
     <div class="controls">
       <%= render(:partial => "select_categories") %>
     </div>
   </div>
-  <div class="form-actions">
-    <%= f.submit t('button_create'), :class => 'btn btn-primary' %>
-  </div>
+  <%= f.actions do %>
+    <%= f.primary t('button_create') %>
+  <% end %>
 <% end %>
