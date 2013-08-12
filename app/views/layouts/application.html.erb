@@ -40,8 +40,6 @@
             <form accept-charset="UTF-8" class="search_form span4" method="get">
               <%= text_field_tag :search, params[:search], :placeholder => t('button_search'), :class => 'search_input' %>
             </form>
-          <%- else -%>
-            <%= select_tag :theme, theme_options, {:include_blank => true, :onchange => 'url=document.location.protocol + "//" + document.location.host + document.location.pathname;document.location=url+"?theme="+this.value'} %>
           <%- end -%>
           <ul class="nav pull-right">
             <%- if logged_in? -%>
