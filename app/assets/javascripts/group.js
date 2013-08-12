@@ -343,8 +343,8 @@ $(function() {
     });
 
   $.fn.make_filter_visible = function() {
-      $(this).parent().children().removeClass('filter_selected');
-      $(this).addClass('filter_selected');
+      $(this).parent().children().removeClass('label');
+      $(this).addClass('label');
   };
 
   $('.toggle-category').live('click',function() {
