@@ -5,7 +5,7 @@ Oscurrency::Application.routes.draw do
   resources :person_sessions
   resources :password_resets, :only => [:new, :create, :edit, :update]
   resources :member_preferences
-  resources :neighborhoods
+  resources :neighborhoods, :only => [:show]
 
   # XXX in 2.3.x, this was easier -> map.resources :transacts, :as => "transacts/:asset"
   get    "transacts(/:asset)(.:format)"          => "transacts#index",   :as => 'transacts'

@@ -1,14 +1,10 @@
-<h2>Profile photo upload</h2>
-<%= error_messages_for :photo %>
+<h2><%= t('people.edit.add_a_photo') %></h2>
 
-<%= form_for @photo, :html => { :multipart => true } do |f| -%>
+<%= bootstrap_form_for @photo, :html => { :multipart => true } do |f| -%>
 
-  <div class="form_field">
-    <label for="photo">Upload a photo:</label>
-    <%= f.file_field :picture %>
-  </div>
-  <div class="form_field">
-    <%= submit_tag 'Upload', :class => "button" %>
-    <%= f.submit "Cancel", :id => "cancel", :class => "button" %>
-  </div>
+  <%= f.file_field :picture, label: t('groups.new_photo.upload_a_photo') %>
+  <%= f.actions do %>
+    <%= f.primary "Upload" %>
+    <%= f.submit "Cancel", :id => "cancel", :class => "btn" %>
+  <% end %>
 <% end -%>

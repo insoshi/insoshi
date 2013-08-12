@@ -111,7 +111,6 @@ class PeopleController < ApplicationController
   end
 
   def edit
-    logger.info "XXX id: #{params[:id]}"
     @category = Category.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }

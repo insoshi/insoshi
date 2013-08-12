@@ -1,8 +1,4 @@
-<%= column_div :type => :primary do -%>
+<div class="span4">
   <h2><%= t('categories.new.header') %></h2>
-  <%= error_messages_for :category %>
   <%= render :partial => 'form' %>
-<%- end -%>
-
-<%= column_div :type => :secondary do -%>
-<%- end -%>
+</div>

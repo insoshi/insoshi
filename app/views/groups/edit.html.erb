@@ -1,117 +1,91 @@
-<%= column_div :type => :primary do -%>
-  <h2><%= t('groups.edit.header') %></h2>
-  <div id="profile_edit">
+<h2><%= t('.header') %></h2>
+<div class="row">
+  <div class="span6">
 
-  <%= form_for(@group) do |f| %>
-    <%= f.error_messages %>
+    <%= bootstrap_form_for(@group) do |f| %>
+      <fieldset>
+        <legend><%= t('.group_data') %></legend>
+        <div class="row">
+          <div class="span3">
+            <%= f.text_field :name, label: t('.name'), class: "span3" %>
+            <%= f.text_area :description, label: t('.description'), class: "span3", rows: 10 %>
+          </div>
+          <div class="span3">
 
-    <div class="form_row">
-      <label for="name"><%= t('groups.edit.name') %></label>
-      <%= f.text_field :name %>
-    </div>
+            <%- if @group.adhoc_currency? -%>
+              <%= f.text_field :unit, label: t('.currency_unit_plural'), class: "span3" %>
+              <%= f.text_field :asset, disabled: !@group.asset.nil?, label: t('.asset'), class: "span3" %>
+              <%= f.text_field :default_credit_limit, label: t('.default_credit_limit'), size: 5, class: "span3" %>
 
-<%- if @group.adhoc_currency? -%>
-    <div class="form_row">
-      <label for="unit"><%= t('groups.edit.currency_unit_plural') %></label>
-      <%= f.text_field :unit %>
-    </div>
+              <%= f.control_group :display_balance do %>
+                <%= f.check_box :display_balance, label: t('.display_balance') %>
+              <% end -%>
+              <%= f.control_group :display_earned do %>
+                <%= f.check_box :display_earned, label: t('.display_earned') %>
+              <% end -%>
+              <%= f.control_group :display_paid do %>
+                <%= f.check_box :display_paid, label: t('.display_paid') %>
+              <% end -%>
+              <%= f.control_group :private_txns do %>
+                <%= f.check_box :private_txns, label: t('.private_txns') %>
+              <% end -%>
 
-    <div class="form_row">
-      <label for="asset"><%= t('groups.edit.asset') %></label>
-      <%= f.text_field :asset, :disabled => !@group.asset.nil? %>
-    </div>
+            <%- end -%>
 
-    <div class="form_row">
-      <label for="default_credit_limit"><%= t('groups.edit.default_credit_limit') %></label>
-      <%= f.text_field :default_credit_limit, :size => 5 %>
-    </div>
+            <%= f.control_group :enable_forum do %>
+              <%= f.check_box :enable_forum, label: t('.enable_forum') %>
+            <% end -%>
 
-    <div class="form_row">
-      <label for="display_balance" class="checkbox"><%= t('groups.edit.display_balance') %></label>
-      <%= f.check_box :display_balance %>
-    </div>
-    <div class="form_row">
-      <label for="display_earned" class="checkbox"><%= t('groups.edit.display_earned') %></label>
-      <%= f.check_box :display_earned %>
-    </div>
-    <div class="form_row">
-      <label for="display_paid" class="checkbox"><%= t('groups.edit.display_paid') %></label>
-      <%= f.check_box :display_paid %>
-    </div>
-    <div class="form_row">
-      <label for="private_txns" class="checkbox"><%= t('groups.edit.private_txns') %></label>
-      <%= f.check_box :private_txns %>
-    </div>
-<%- end -%>
+            <%= f.select :mode, @group.get_groups_modes, label: t('.mode') %>
 
-    <div class="form_row">
-      <label for="enable_forum" class="checkbox"><%= t('groups.edit.enable_forum') %></label>
-      <%= f.check_box :enable_forum %>
-    </div>
-
-    <div class="form_row">
-      <label for="description"><%= t('groups.edit.description') %></label>
-      <%= f.text_area :description %>
-    </div>
-
-    <div class="form_row">
-      <label for="mode"><% t('groups.edit.mode') %></label>
-      <%= f.select :mode, @group.get_groups_modes %>
-    </div>  
+          </div>
+        </div>
+        <%= f.actions do %>
+          <%= f.primary t('button_update') %>
+        <% end %>
+      </fieldset>
+    <% end %>
+  </div>
+  <div class="span3">
+    <legend><%= t('.photos') %></legend>
     
-    <div class="form_row">
-      <%= f.submit t('button_update'), :class => "button" %>
-    </div>
-  <% end %>
-  
-  
-  <h3><%= t('groups.edit.photos') %></h3>
-  
     <% if @group.photos.empty? %>
       <%= image_tag @group.thumbnail %>
     <% else %>
-    <table>
-      <% @group.sorted_photos.collect_every(N_COLUMNS) do |row| %>
-      <tr>
-      <% row.each do |photo| %>
-        <td  style="padding-left: 1em;">
-          <%= image_tag photo.picture_url(:thumbnail) %>
-        </td>
-      <% end %>
-      </tr>
-      <tr>
-        <% row.each do |photo| %>
-        <td style="padding-left: 1em;">
+      <% @group.sorted_photos.each do |photo| %>
+        <div>
+          <%= image_tag photo.picture_url(:thumbnail), :style => "display: block;" %>
           <% if photo.primary? %>
-            <%= t('groups.edit.primary') %>
-          <% else %>
-            <%= link_to "select", photo_path(photo),
-                                          :method => :put %>
-          <% end %>
-          |
-          <%= link_to image_tag("icons/close.gif"), 
-                      delete_photo_group_path(@group)+"?photo_id=#{photo.id}",
-                      :method => :delete %>
-        </td>
-        <% end %>
-      </tr>
-      <% end %>
-    </table>
+              <%= t('.primary') %>
+            <% else %>
+              <%= link_to "select", photo_path(photo),
+                                            :method => :put %>
+            <% end %>
+            |
+            <a href="<%= delete_photo_group_path(@group, :photo_id => photo.id) %>", data-method="delete">
+              <i class="icon-remove"></i>
+            </a>
+        </div>
+      <% end -%>
     <% end %>
-    <br />
-    <%= button_to t('groups.edit.add_a_photo'), new_photo_group_path(@group), :class => "button" %>
+    <br /><br />
+      <%= button_to t('.add_a_photo'), new_photo_group_path(@group), :class => "btn btn-primary" %>
   </div>
 
-<%- end -%>
-<%= column_div :type => :secondary do -%>
-<% if @group.enable_forum %>
-  <h2>Forum</h2>
-  <p>
-  <%= link_to "Edit Forum Preferences", edit_forum_path(@group.forum) %>
-  </p>
-<% end %>
-  <h2>Members</h2>
-  <p>
-    <%= link_to "Edit Member Roles", members_group_path(@group) %>
-  </p>
-<%- end -%>
+  <div class="span3">
+    <% if @group.enable_forum %>
+      <%= bootstrap_form_for(@group.forum, remote: true) do |f| %>
+        <legend><%= t('.forum') %></legend>
+        <%= f.control_group :worldwritable do %>
+          <%= f.check_box :worldwritable, label: t('forums.edit.world_writable') %>
+        <% end -%>
+        <%= f.actions do %>
+          <%= f.primary t('button_update') %>
+        <% end %>
+      <% end %>
+
+    <% end %>
+    <legend><%= t('.members') %></legend>
+    <p><%= link_to "Edit Member Roles", members_group_path(@group) %></p>
+  </div>
+</div>

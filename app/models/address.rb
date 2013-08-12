@@ -44,7 +44,7 @@ class Address < ActiveRecord::Base
     if geo.success
       self.latitude, self.longitude = geo.lat, geo.lng
     else
-      errors.add(:base, 'Could not geocode address.')
+      errors.add(:address_line_1, 'Could not geocode address.')
     end    
   end
 

@@ -60,7 +60,7 @@ class Ability
     end
 
     can :read, Neighborhood
-    can [:create,:update], Neighborhood do |neighborhood|
+    can [:create,:update,:destroy], Neighborhood do |neighborhood|
       person.admin?
     end
 
@@ -90,6 +90,11 @@ class Ability
     end
     can :destroy, ForumPost do |post|
       person.is?(:admin,post.topic.forum.group) || post.person == person || person.admin?
+    end
+
+    can [:read,:create], Forum
+    can [:update,:destroy], Forum do |forum|
+      person.is?(:admin,forum.group) || person.admin?
     end
 
     can :read, Membership

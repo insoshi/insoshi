@@ -1,2 +1,3 @@
-$('#new_post')[0].reset();
+$('#forum_form').html("<%= escape_javascript(render :partial => 'shared/post_form') %>");
+$('#new_post').find('#forum_post_body').val('');
 $.getScript("<%= forum_topic_url(@forum, @topic) %>");

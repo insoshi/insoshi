@@ -1,22 +1,18 @@
-<%= render :partial => 'shared/minifeed' %>
+<%- if @member_preference.membership.is?(:admin) -%>
+  <%= render 'shared/group_admin_alert' %>
+<%- end -%>
+<div class="span8">
 <div style='width:320px;float:left;'>
-<h2>Edit Email Notification Prefs</h2>
-<%= form_for(@member_preference) do |f| %>
-  <%= f.error_messages %>
+<h2><%= t('people.edit.email_notification_preferences') %></h2>
+<%= bootstrap_form_for @member_preference, :html => {:class => 'form-horizontal edit_member_preference'} do |f| %>
     <div style='padding-left:10px;'>
-      <p>
-      <label for="req_notifications"
-             class="checkbox"><%= t('people.edit.requests_in_my_service_categories') %></label>
-      <%= f.check_box :req_notifications %>
-      </p>
-      <p>
-      <label for="forum_notifications"
-             class="checkbox"><%= t('people.edit.forum_posts') %></label>
-      <%= f.check_box :forum_notifications %>
-      </p>
-      <p>
-        <%= f.submit 'Update' %><%= waiting_image %>
-      </p>
+      <%= f.check_box :req_notifications, label: t('people.edit.requests_in_my_service_categories') %>
+      <%= f.check_box :forum_notifications, label: t('people.edit.forum_posts') %>
+      <%= f.actions do %>
+        <%= f.primary "Update" %><%= waiting_image %>
+      <% end %>
     </div>
 <% end %>
 </div>
+</div>
+<%= render :partial => 'shared/minifeed' %>

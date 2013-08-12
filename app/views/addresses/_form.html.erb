@@ -1,32 +1,21 @@
-<div class="form_row">
-  <% if @address.new_record? %>
-    <%= form.check_box :address_privacy, :checked => @current_person.org ? true : false %>
-  <% else %>
-    <%= form.check_box :address_privacy%>
+  <%= form.control_group :address_privacy do %>
+    <% if @address.new_record? %>
+      <%= form.check_box :address_privacy, checked: @current_person.org? ? true : false, label: t('addresses.form.share_address') %>
+    <% else %>
+      <%= form.check_box :address_privacy, label: t('addresses.form.share_address') %>
+    <% end %>
   <% end %>
-  <span style="font-size:14px;font-weight:bold;"><%= t('addresses.form.share_address') %></span>
-</div>
-<div class="form_row">
-  <%= form.label t('addresses.form.address_line_1') %>
-  <%= form.text_field :address_line_1 %>
-</div>
-<div class="form_row">
-  <%= form.label t('addresses.form.address_line_2') %>
-  <%= form.text_field :address_line_2 %>
-</div>
-<div class="form_row">
-  <%= form.label t('addresses.form.address_line_3') %>
-  <%= form.text_field :address_line_3 %>
-</div>
-<div class="form_row">
-  <%= form.label t('addresses.form.city') %>
-  <%= form.text_field :city %>
-</div>
-<div class="form_row">
-  <%= form.label t('addresses.form.state') %>
-  <%= form.select :state_id, @states %>
-</div>
-<div class="form_row">
-  <%= form.label t('addresses.form.zipcode') %>
-  <%= form.text_field :zipcode_plus_4, :size => 10 %>
-</div>
+
+  <%= form.text_field :address_line_1, label: t('addresses.form.address_line_1') %>
+
+  <%= form.text_field :address_line_2, label: t('addresses.form.address_line_2') %>
+
+  <%= form.text_field :address_line_3, label: t('addresses.form.address_line_3') %>
+
+  <%= form.text_field :city, label: t('addresses.form.city') %>
+
+  <%= form.control_group do %>
+    <%= form.select :state_id, @states, label: {text: t('addresses.form.state')} %>
+  <% end %>
+
+  <%= form.text_field :zipcode_plus_4, label: t('addresses.form.zipcode'), size: 10 %>

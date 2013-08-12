@@ -39,7 +39,6 @@ class ExchangesController < ApplicationController
         @group = current_person.default_group
       end
       @req = Req.new
-      @req.name = t('exchanges.new.enter_description')
     end
 
     # XXX @groups not used in new ajax ui
@@ -96,7 +95,7 @@ class ExchangesController < ApplicationController
         format.html { render :action => "new" }
         format.xml { render :xml => @exchange.errors, :status => :unprocessable_entity }
         format.json { render :json => @exchange.errors, :status => :unprocessable_entity }
-        format.js { render :nothing => true } # XXX
+        format.js { render :action => "new" }
       end
     end
   end

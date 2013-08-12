@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
 
   before_filter :login_required
-  before_filter :correct_user_required, :only => [ :edit, :update, :destroy ]
+  before_filter :correct_user_required, :only => [ :update, :destroy ]
   
   def index
     @photos = current_person.photos
@@ -19,13 +19,6 @@ class PhotosController < ApplicationController
     end
   end
   
-  def edit
-    @display_photo = @photo
-    respond_to do |format|
-      format.html
-    end
-  end
-
   def create
     if params[:photo].nil?
       # This is mainly to prevent exceptions on iPhones.

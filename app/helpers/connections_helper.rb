@@ -1,2 +1,0 @@
-module ConnectionsHelper
-end

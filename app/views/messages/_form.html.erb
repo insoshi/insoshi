@@ -1,12 +1,5 @@
   <h2><%= t('messages.new.header') %></h2>
   <p><%= formatting_note %></p>
-
-  <%= error_messages_for :message %>
-  
-  <%- unless @preview.nil? -%>
-    <h3><%= t('messages.new.preview') %></h3>
-    <%= display @preview %>
-  <%- end -%>
   
   <%- if @recipient -%>
     <%= image_link @recipient, :image => :thumbnail, :id => 'recipient_avatar' %>
@@ -14,29 +7,18 @@
     <%= link_to image_tag('default_thumbnail.png'), '#', :id => 'recipient_avatar' %>
   <%- end -%>
 
-  <%= form_for(:message,
-              :url => (@recipient ? person_messages_path(@recipient) : messages_path(@message)), :html => {:id => 'new_message'}) do |f| %>
-    <div class="form_row full">
-      <label for="recipient"><%= t('to').mb_chars.capitalize %></label>
-      <%= text_field_tag :recipient, (@recipient ? h(@recipient.name) : ''), :id => 'recipient_autocomplete', :class => 'recipient_autocomplete', :placeholder => t('messages.new.to.placeholder') %>
-    </div>
-    <div class="form_row full">
-      <label for="message_subject"><%= t('messages.show.subject') %></label>
-      <%= f.text_field :subject, :id => "message_subject" %>
-    </div>
-    <div class="form_row">
-      <label for="message_body"><%= t('messages.new.body') %></label>
+  <%= bootstrap_form_for(@message, :url => (@recipient ? person_messages_path(@recipient) : messages_path(@message)), :html => {:id => 'new_message', :class => 'form-horizontal'}) do |f| %>
+      <%= f.text_field :recipient, :value => (@recipient ? h(@recipient.name) : ''), :id => 'recipient_autocomplete', :class => 'recipient_autocomplete',  :placeholder => t('messages.new.to.placeholder'), :label => t('to').mb_chars.capitalize %>
+      <%= f.text_field :subject, :id => "message_subject", :label => t('messages.show.subject') %>
       <%- if @message.reply? -%>
-        <%= f.text_area :content, :id => "message_body", :value => content %>
+      <%= f.text_area :content, :id => "message_body", :value => content, :rows => 10 %>
         <%= f.hidden_field :parent_id %>
         <%= set_focus_to "message_body" %>
       <%- else -%>
-        <%= f.text_area :content, :id => "message_body" %>
+        <%= f.text_area :content, :id => "message_body", :rows => 10 %>
         <%= set_focus_to "message_subject" %>
       <%- end -%>
-    </div>
-    <div class="form_row">
-      <%= f.submit t('button_send'), :class => "button", :id => "message_submit" %>
-      <%= waiting_image %>
-    </div>
+    <%= f.actions do %>
+      <%= f.primary t('button_send'), :id => "message_submit" %><%= waiting_image %>
+    <% end %>
   <% end %>

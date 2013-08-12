@@ -11,10 +11,6 @@ class ForumsController < ApplicationController
     end
   end
 
-  def edit
-    @forum = Forum.find(params[:id])
-  end
-
   def update
     @forum = Forum.find(params[:id])
     respond_to do |format|

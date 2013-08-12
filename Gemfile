@@ -15,7 +15,7 @@ gem "exception_notification", :git => "https://github.com/smartinez87/exception_
 group :assets do
   gem "sass-rails"
   gem "uglifier"
-  gem 'jquery-ui-rails'
+  # gem 'jquery-ui-rails'
 end
 
 gem "audited-activerecord"
@@ -23,7 +23,7 @@ gem "rails3_acts_as_paranoid"
 gem "acts_as_tree_rails3"
 gem "uuid"
 
-gem 'jquery-rails'
+# gem 'jquery-rails'
 
 #gem "rack", '= 1.2.2'   #Heroku seems to force this
 gem 'dynamic_form'
@@ -54,6 +54,7 @@ gem "ar_after_transaction"
 gem 'valid_email', :require => 'valid_email/email_validator'
 gem "calendar_helper"
 gem "gibbon", :git => "git://github.com/amro/gibbon.git"
+gem "bootstrap_form", "~> 0.3.2"
 
 group :development, :test do
   gem "heroku"
@@ -66,6 +67,12 @@ group :development, :test do
   gem "opentransact"
   gem 'annotate'
   gem 'therubyracer'
+end
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
 end
 
 group :test do

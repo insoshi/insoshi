@@ -91,12 +91,11 @@ class MessagesController < ApplicationController
     end
   
     respond_to do |format|
-      if !preview? and @message.save
+      if @message.save
         flash[:notice] = t('success_message_sent') 
         format.html { redirect_to messages_url }
         format.js
       else
-        @preview = @message.content if preview?
         format.html { render :action => "new" }
         format.js { render :action => "new" }
       end

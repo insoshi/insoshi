@@ -3,16 +3,10 @@
 <%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'person', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
 <%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'person', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
 <% end %>
-<%= form_tag group_memberships_path(@group), :method => :get, :class => 'search_form' do %>
-  <p>
-    <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag t('button_search'), :name => nil %>
-  </p>
-<% end %>
       <h2><%= t('groups.show.people') %><%= waiting_image %></h2>
-      <%= will_paginate(@memberships) %>
+      <%= will_paginate(@memberships, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
       <ul class="list activity full">
         <%= render :partial => '/memberships/member', :collection => @memberships, :locals => {:short => true} %>
       </ul>
       <div style='clear:both;'></div>
-      <%= will_paginate(@memberships) %>
+      <%= will_paginate(@memberships, :renderer => BootstrapPaginationHelper::LinkRenderer) %>

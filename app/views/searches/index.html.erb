@@ -1,16 +1,12 @@
-<%= column_div :type => :primary do %>
-  <h2><%= t('searches.search_results') %></h2>
-  <%= will_paginate(@page_results) %>
-    <%- if @page_results.empty? -%>
-      <h3><%= t('searches.no_result') %></h3>
-    <%- else -%>
-      <ul class="list people">
-        <%= render :partial => partial(@page_results), :collection => @results %>
-      </ul>
-    <%- end -%>
-  <%= will_paginate(@page_results) %>
-<%- end -%>
-
-<%= column_div :type => :secondary do %>
-  <%= render :partial => 'searches/box' %>
-<%- end -%>
+<h2><%= t('searches.search_results') %></h2>
+<div class="span10">
+  <%= will_paginate(@page_results, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
+  <%- if @page_results.empty? -%>
+    <h3><%= t('searches.no_result') %></h3>
+  <%- else -%>
+    <ul class="list people">
+      <%= render :partial => partial(@page_results), :collection => @results %>
+    </ul>
+  <%- end -%>
+  <%= will_paginate(@page_results, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
+</div>

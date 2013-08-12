@@ -1,13 +1,11 @@
 <%= column_div :type => :primary do -%>
   <h2><%= t('addresses.edit.header') %></h2>
 
-  <%= error_messages_for :address %>
-
-  <%= form_for :address, :url => person_address_path(current_person,@address), :html => {:method => :put} do |form| %>
+  <%= bootstrap_form_for @address, :url => person_address_path(current_person,@address), :html => {:method => :put} do |form| %>
     <%= render :partial => 'form', :object => form %>
-    <div class="form_row">
-      <%= form.submit t('button_update') %>
-    </div>
+    <%= form.actions do %>
+      <%= form.primary t('button_update') %>
+    <% end %>
   <% end %>
 <% end %>
 

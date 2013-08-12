@@ -1,4 +1,4 @@
-<%= column_div :type => :primary do -%>
+<div class="span10">
   <% if @worker %>
       <h2><%= t('transacts.new.header_simple') %> <%= h @amount %> <%= h @group.unit %> <%= t('to') %> <%= h @worker.name %> </h2> 
   <% else %>
@@ -8,48 +8,60 @@
   <%= error_messages_for :transact %>
 
 <% if @worker %>
-  <div class="profile vcard">
+  <div class="profile vcard span3">
     <div class="toolbox">
       <%= image_tag @worker.main_photo, :class => "profile-image photo",
                                         :alt => h(@worker.name) %>
     </div>
   </div>
-  <div>
-    <%= form_tag transacts_path(:asset => params[:asset]) do %>
-      <div class="form_row">
-        <label for="amount"><%= t('transacts.new.amount') %></label>
-        <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= h @group.unit %>
+  <div class="span5">
+    <%= form_tag transacts_path(:asset => params[:asset]), :class => 'form-horizontal' do %>
+      <div class="control-group">
+        <label for="amount" class="control-label"><%= t('transacts.new.amount') %></label>
+        <div class="controls">
+          <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= h @group.unit %>
+        </div>
       </div>
-      <div class="form_row">
-        <label for="memo"><%= t('transacts.new.memo') %></label> 
-        <%= text_field_tag(:memo,params[:memo],:size => 20) %>
+      <div class="control-group">
+        <label for="note" class="control-label"><%= t('transacts.new.memo') %></label> 
+        <div class="controls">
+          <%= text_field_tag(:note,params[:note],:size => 20) %>
+        </div>
       </div>
       <%= hidden_field_tag(:to,params[:to]) %>
       <%= hidden_field_tag(:callback_url,params[:callback_url]) %>
       <%= hidden_field_tag(:redirect_url,params[:redirect_url]) %>
-  <div class="status-btn">
-    <input type="submit" name="update" value="<%= t('transacts.new.pay_now') %>" id="update-submit" class="button"/>
+  <div class="form-actions">
+    <%= submit_tag t('transacts.new.pay_now'), :class => 'btn btn-primary' %>
   </div>
   <br><br>
 </div>
   <% end %>
 <% else %>
-  <%= form_tag transacts_path(:asset => params[:asset]) do %>
-    <div class="form_row">
-      <label for="to"><%= t('transacts.new.to') %></label>
-      <%= text_field_tag(:to,params[:to],:size => 40) %>
+  <div class="span6">
+  <%= form_tag transacts_path(:asset => params[:asset]), :class => 'form-horizontal' do %>
+    <div class="control-group">
+      <label for="to" class="control-label"><%= t('transacts.new.to') %></label>
+      <div class="controls">
+        <%= text_field_tag(:to,params[:to],:size => 40) %>
+      </div>
     </div>
-    <div class="form_row">
-      <label for="amount"><%= t('transacts.new.amount') %></label>
-      <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= h @group.unit %>
+    <div class="control-group">
+      <label for="amount" class="control-label"><%= t('transacts.new.amount') %></label>
+      <div class="controls">
+        <%= text_field_tag(:amount,params[:amount],:size => 3) %> <%= h @group.unit %>
+      </div>
     </div>
-    <div class="form_row">
-      <label for="memo"><%= t('transacts.new.memo') %></label> 
-      <%= text_field_tag(:memo,params[:memo],:size => 40) %>
+    <div class="control-group">
+      <label for="note" class="control-label"><%= t('transacts.new.memo') %></label> 
+      <div class="controls">
+        <%= text_field_tag(:note,params[:note],:size => 40) %>
+      </div>
     </div>
-  <div class="status-btn">
-    <input type="submit" name="update" value="<%= t('transacts.new.pay_now') %>" id="update-submit" class="button"/>
+  <div class="form-actions">
+    <%= submit_tag t('transacts.new.pay_now'), :class => 'btn btn-primary' %>
   </div>
   <% end %>
+  </div>
 <% end %>
-<%- end -%>
+</div>

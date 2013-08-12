@@ -1,17 +1,16 @@
-<%= column_div :type => :primary do -%>
-  <h2><%= t('groups.index.header') %></h2>
+<h2><%= t('groups.index.header') %></h2>
+<div class="span8">
   <% unless @groups.empty? -%>
-    <%= will_paginate %>
+    <%= will_paginate(:renderer => BootstrapPaginationHelper::LinkRenderer) %>
     <ul class="list people">
       <%= render :partial => @groups %>
     </ul>
-    <%= will_paginate %>
+    <%= will_paginate(:renderer => BootstrapPaginationHelper::LinkRenderer) %>
   <% else %>
     <h3><%= t('groups.index.no_groups_yet') %></h3>
   <% end -%>
+</div>
 
-<%- end -%>
-
-<%= column_div :type => :secondary do -%>
-  <%= render :partial => 'shared/add_group_button' %>
-<%- end -%>
+<div class="span3">
+  <%= render :partial => 'shared/add_button', :locals => { :button_text => t('groups.new.header'), :new_resource_path => new_group_path } %>
+</div>

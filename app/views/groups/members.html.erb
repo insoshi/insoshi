@@ -1,10 +1,9 @@
-
-<%= column_div :type => :primary do -%>
+<div class="span8">
   <h2><%= link_to h(@group.name), group_path(@group) %></h2>
   
   <% unless @pending.empty? -%>
     <h3><%= t('groups.members.pending_request') %></h3>
-    <%= will_paginate(@pending) %>
+    <%= will_paginate(@pending, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
     <ul class="grid contacts medium">
       <%- @pending.each do |contact| -%>
         <li class="contact">
@@ -26,13 +25,13 @@
       <%- end -%>
 
     </ul>
-    <%= will_paginate(@pending) %>
+    <%= will_paginate(@pending, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
   <% end -%>
 
   <h3><%= t('groups.members.header') %></h3>
 
   <% unless @memberships.empty? -%>
-    <%= will_paginate(@memberships) %>
+    <%= will_paginate(@memberships, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
     <ul class="grid contacts medium">
       <%- @memberships.each do |membership| -%>
         <% contact = membership.person %>
@@ -58,7 +57,7 @@
       <%- end -%>
 
     </ul>
-    <%= will_paginate(@memberships) %>
+    <%= will_paginate(@memberships, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
   <% else %>
     <h3><%= t('groups.members.no_members_yet') %></h3>
   <% end -%>
@@ -83,5 +82,4 @@
     </li>
   </ul>
 
-<%- end -%>
-
+</div>

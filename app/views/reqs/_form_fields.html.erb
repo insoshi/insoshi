@@ -1,23 +1,28 @@
-  <div class="form_row">
-    <%= f.label t('title') %>
-    <%= f.text_field :name, :size => 40, :maxlength => 255 %>
+<div class="span5">
+  <%= f.text_field :name, :label => t('title'), :size => 40, :maxlength => 255 %>
+  <%= f.text_area :description, :label => t('description'), :rows => 5 %>
+  <div class="control-group">
+    <%= f.label t('filter_categories'), :class => 'control-label' %>
+    <div class="controls">
+      <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
+    </div>
   </div>
-  <div class="form_row">
-    <%= f.label t('estimated') + ' ' + t('payment') %>
-    <%= f.text_field :estimated_hours, :size => 5, :disabled => estimate_disabled %>&nbsp;<span><%= @group.unit %></span>
+</div>
+<div class="span5">
+  <%= f.text_field :estimated_hours, :label => t('estimated') + ' ' + t('payment'), :help => @group.unit, :size => 5, :disabled => estimate_disabled %>
+  <%= f.text_field :due_date, :label => t('due_date'), :size => 7 %>
+  <div class="control-group">
+    <%= f.label t('filter_neighborhoods'), :class => 'control-label' %>
+    <div class="controls">
+      <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'req' } %>
+    </div>
   </div>
-  <div class="form_row">
-    <%= f.label t('due_date') %>
-    <%= f.text_field :due_date, :size => 7 %>
-  </div>
-  <div class="form_row full">
-    <%= f.label t('description') %>
-    <p class='formatting'><%= t('offers.new.description_label') %></p>
-    <%= f.text_area :description, :rows => 5 %>
-  </div>
-  <div class="form_row full">
-    <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
-  </div>
-  <div class="form_row full">
-    <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'req' } %>
-  </div>
+  <% if notify_members %>
+    <%= f.control_group :notifications, label: {text: t('reqs.new.notify_members_email')} do %>
+    <%= f.check_box :notifications, checked: true %>
+  <% end %>
+<% end %>
+  <%= f.actions do %>
+    <%= f.primary submit_text %><%= waiting_image %>
+  <% end %>
+</div>

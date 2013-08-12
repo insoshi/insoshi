@@ -1,7 +1,4 @@
 <h2><%= t('offers.edit.header') %></h2>
-<%= form_for @offer, :html => {:id => 'edit_offer'} do |f| %>
-  <%= render :partial => 'form_fields', :locals => {:f => f} %>
-  <div class="form_row">
-    <%= f.submit t('button_update') %><%= waiting_image %>
-  </div>
+<%= bootstrap_form_for @offer, :html => {:id => 'edit_offer', :class => 'form-horizontal'} do |f| %>
+  <%= render :partial => 'form_fields', :locals => {:f => f, :submit_text => t('button_update')} %>
 <% end %>

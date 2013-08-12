@@ -19,27 +19,25 @@ $(function() {
   OSCURRENCY.post_allowed = true;
   OSCURRENCY.notice_fadeout_time = 8000;
   OSCURRENCY.delete_fadeout_time = 4000;
-  OSCURRENCY.offers_mode = ''
-  OSCURRENCY.reqs_mode = ''
-
-  $("#tabs").tabs({
-    select: function(event, ui) {
-      // even if you try calling select, this only gets called if it is not already selected 
-      OSCURRENCY.tab = ui.tab.hash;
-    },
-    fx: {}
-    });
-
-  // render jquery tabs - they are created with "display: none" to prevent FOUC
-  $('ul.ui-tabs-nav').show();
+  OSCURRENCY.offers_mode = '';
+  OSCURRENCY.reqs_mode = '';
+  OSCURRENCY.searchable_tabs = ['#people','#memberships','#reqs','#requests','#offers'];
 
   route('home',     /^#home$/,                                     '/groups/[:group_id]');
   route('home',     /^#member_preferences\/(\d+)\/edit$/,          '/member_preferences/[:1]/edit');
 
   route('exchanges',/^#exchanges\/page=(\d+)/,                     '/groups/[:group_id]/exchanges?page=[:1]');
+  route('requests', /^#reqs\/page=(\d+)\/search=(.+)/,             '/groups/[:group_id]/reqs?page=[:1]&search=[:2]');
   route('requests', /^#reqs\/page=(\d+)/,                          '/groups/[:group_id]/reqs?page=[:1]');
+  route('requests', /^#reqs\/search=(.+)/,                         '/groups/[:group_id]/reqs?search=[:1]');
+  route('requests', /^#requests\/search=(.+)/,                     '/groups/[:group_id]/reqs?search=[:1]');
+  route('offers',   /^#offers\/page=(\d+)\/search=(.+)/,           '/groups/[:group_id]/offers?page=[:1]&search=[:2]');
   route('offers',   /^#offers\/page=(\d+)/,                        '/groups/[:group_id]/offers?page=[:1]');
+  route('offers',   /^#offers\/search=(.+)/,                       '/groups/[:group_id]/offers?search=[:1]');
+  route('people',   /^#people\/page=(\d+)\/search=(.+)/,           '/groups/[:group_id]/memberships?page=[:1]&search=[:2]');
   route('people',   /^#people\/page=(\d+)/,                        '/groups/[:group_id]/memberships?page=[:1]');
+  route('people',   /^#people\/search=(.+)/,                       '/groups/[:group_id]/memberships?search=[:1]');
+  route('people',   /^#memberships\/search=(.+)/,                  '/groups/[:group_id]/memberships?search=[:1]');
   route('forum',    /^#forum\/page=(\d+)/,                         '/groups/[:group_id]/forum?page=[:1]');
 
   route('requests', /^#reqs\/(\d+)$/,                              '/reqs/[:1]');
@@ -171,7 +169,6 @@ $(function() {
       var tab = "";
       var a = [];
       if(hash.length != 0) {
-        var t = $("#tabs");
         a = resolve(hash);
         tab = a[0];
         js_url = a[1];
@@ -182,8 +179,8 @@ $(function() {
         }
 
         if(tab != OSCURRENCY.tab) {
-          // for responding to back/forward buttons
-          t.tabs('select',tab);
+          $('#nav-js a[href="'+tab+'"]').tab('show');
+          OSCURRENCY.tab=tab;
         }
         if(js_url.length != 0) {
           $.ajaxSetup({cache:true});
@@ -237,7 +234,12 @@ $(function() {
     });
 
   $('.search_form').live('submit',function() {
-      $.get($(this).attr('action'),$(this).serialize(),null,'script');
+      current_tab = window.location.hash.split('/')[0];
+      if(-1 == OSCURRENCY.searchable_tabs.indexOf(current_tab)) {
+        alert('tab '+current_tab+' is not supported for search');
+      } else {
+        window.location.hash = current_tab + '/' + $(this).serialize();
+      }
       return false;
     });
 

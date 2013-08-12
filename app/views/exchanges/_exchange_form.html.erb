@@ -1,20 +1,19 @@
   <h2><%= t('exchanges.new.enter_credit_for', :currency => @group.unit.pluralize) %> <%= h @person.display_name %></h2>
 
-  <%= error_messages_for :exchange %>
-
-  <%= form_for :exchange, :url => person_exchanges_path(@person), :html => {:id => 'new_exchange'} do |f| %>
+  <div class="span4">
+  <%= bootstrap_form_for @exchange, :url => person_exchanges_path(@person), :html => {:id => 'new_exchange', :class => 'form_horizontal'} do |f| %>
     <%= f.hidden_field :group_id, :value => @group.id %>
-    <div class="form_row">
-      <%= f.label t('exchanges.new.amount') %>
-      <%= f.text_field :amount, :size => 2 %>&nbsp;<span class="small"><%= @group.unit %></span>
-    </div>
+    <%= f.text_field :amount, label: t('exchanges.new.amount'), help: @group.unit, size: 2 %>
     <%= fields_for :req do |r| %>
-      <div class="form_row">
-        <%= r.label t('exchanges.new.service_provided') %>
-        <%= r.text_field :name, :onclick => "this.value='';" %>
+      <div class="control-group">
+        <%= r.label t('exchanges.new.service_provided'), :class => 'control-label' %>
+        <div class="controls">
+          <%= r.text_field :name, placeholder: t('exchanges.new.enter_description') %>
+        </div>
       </div>
     <% end %>
-    <div class="form_row">
-      <%= f.submit t('button_submit') %><%= waiting_image %>
-    </div>
+    <%= f.actions do %>
+      <%= f.primary t('button_submit') %><%= waiting_image %>
+    <% end %>
+  </div>
   <% end %>
