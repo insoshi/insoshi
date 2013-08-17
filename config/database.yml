@@ -1,13 +1,17 @@
 development:
-  adapter: postgresql
-  database: oscurrency_development
+  #adapter: postgresql
+  #database: oscurrency_development
+  adapter: sqlite3
+  database: db/oscurrency_development.sqlite3
   hostname: localhost
   username: <%= ENV['PG_USER'] ? ENV['PG_USER'] : 'postgres' %>
   password: <%= ENV['PG_PWD'] ? ENV['PG_PWD'] : 'spindreck' %>
   
 test:
-  adapter: postgresql
-  database: oscurrency_development
+  #adapter: postgresql
+  #database: oscurrency_test
+  adapter: sqlite3
+  database: db/oscurrency_test.sqlite3
   hostname: localhost
   username: <%= ENV['PG_USER'] ? ENV['PG_USER'] : 'root' %>
   password: <%= ENV['PG_PWD'] ? ENV['PG_PWD'] : '' %>

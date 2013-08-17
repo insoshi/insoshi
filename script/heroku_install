@@ -47,4 +47,3 @@ end
 `git push heroku master`
 `heroku run rake db:migrate`
 `heroku run rake install`
-`heroku run rake db:seed`
