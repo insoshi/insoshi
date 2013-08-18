@@ -63,6 +63,8 @@ In addition to configuration through the web admin interface, outgoing email con
 - [File an issue](https://github.com/oscurrency/oscurrency/issues)
 
 ### How to start for Developers
+[Easy Developer Environment with Nitrous.IO](https://github.com/oscurrency/oscurrency/wiki/Easy-Developer-Environment-with-Nitrous.IO)
+
 [Setting up development environment on Ubuntu](https://github.com/oscurrency/oscurrency/wiki/Setting-up-development-environment-on-ubuntu)
 
 
