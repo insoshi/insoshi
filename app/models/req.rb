@@ -7,7 +7,7 @@ class Req < ActiveRecord::Base
 
   extend Searchable(:name, :description)
 
-  scope :active, :conditions => ["active IS ? AND due_date >= ?", true, DateTime.now]
+  scope :active, lambda { where("active = ? AND due_date >= ?", true, DateTime.now) }
   scope :biddable, where("biddable = ?", true)
   scope :current, lambda { where("due_date >= ?", DateTime.now) }
   scope :without_approved_bid,

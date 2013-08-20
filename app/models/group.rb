@@ -10,7 +10,7 @@ class Group < ActiveRecord::Base
   attr_accessible :asset, :private_txns, :enable_forum, :display_balance, :display_earned, :display_paid
 
   has_one :forum
-  has_many :reqs, :conditions => ["biddable IS ?",true], :order => "created_at DESC"
+  has_many :reqs, :conditions => ["biddable = ?",true], :order => "created_at DESC"
   has_many :offers, :order => "created_at DESC"
   has_many :photos, :as => :photoable, :dependent => :destroy, :order => "created_at"
   has_many :exchanges, :order => "created_at DESC"
