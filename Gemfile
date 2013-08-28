@@ -75,6 +75,10 @@ group :development do
   gem 'meta_request'
 end
 
+group :production do
+  gem 'memcachier'
+end
+
 group :test do
   gem "capybara"
   gem "cucumber"
