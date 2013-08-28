@@ -57,6 +57,8 @@ end
         formatted_value do
           (bindings[:object].balance_with_initial_offset).to_s
         end
+        sortable "accounts.balance + accounts.offset"
+        sort_reverse true
       end
       field :credit_limit
       field :updated_at do
@@ -115,6 +117,8 @@ end
         formatted_value do
           (bindings[:object].balance_with_initial_offset).to_s
         end
+        sortable "accounts.balance + accounts.offset"
+        sort_reverse true
       end
       field :credit_limit
       field :updated_at do
