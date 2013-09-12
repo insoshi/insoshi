@@ -1,7 +1,7 @@
 module PeopleHelper
 
   def email_help
-    t('people.new.never_made_public') + (t('people.new.comma_will_be_verified') if global_prefs.email_verifications?)
+    t('people.new.never_made_public') + (global_prefs.email_verifications? ? t('people.new.comma_will_be_verified') : '')
   end
 
   def member_agreement_label
