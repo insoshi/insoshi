@@ -48,6 +48,9 @@
           <%- end -%>
           <%- if current_person.admin? -%>
             <li>
+              <%= link_to t('people.show.switch_user'), su_person_path(@person) %>
+            </li>
+            <li>
             <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
             <%= link_to activity, 
                         person_path(@person, :task => "deactivated"),
