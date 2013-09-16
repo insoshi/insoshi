@@ -300,6 +300,8 @@ en:
       activity_status: "Activity Status"
       plan_type: "Plan Type"
       support_contact: "Support Contact"
+      primary: "primary"
+      address_select_note: "Choose primary address for use in distance calculations"
     groups:
       no_groups: "No groups (yet)"
       new_group: "New group"

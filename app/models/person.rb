@@ -19,6 +19,7 @@ class Person < ActiveRecord::Base
   #  attr_accessor :password, :verify_password, :new_password, :password_confirmation
   attr_accessor :sorted_photos, :accept_agreement
   attr_accessible *attribute_names, :as => :admin
+  attr_accessible :address_ids, :as => :admin
   attr_accessible :password, :password_confirmation, :as => :admin
   attr_accessible :email, :password, :password_confirmation, :name
   attr_accessible :business_name, :legal_business_name, :business_type_id
@@ -124,7 +125,7 @@ class Person < ActiveRecord::Base
   has_many :groups_not_hidden, :through => :memberships, :source => :group, :conditions => "status = 0 and mode != 2", :order => "name ASC"
 
   has_many :accounts
-  has_many :addresses
+  has_many :addresses, :inverse_of => :person
   has_many :client_applications
   has_many :tokens, :class_name => "OauthToken", :order => "authorized_at DESC", :include => [:client_application]
 
@@ -320,7 +321,9 @@ class Person < ActiveRecord::Base
   end
 
   def create_address
-    addresses.create(:name => 'personal', :zipcode_plus_4 => (zipcode.presence || DEFAULT_ZIPCODE_STRING))
+    if 0 == addresses.length
+      addresses.create(:name => 'personal', :primary => true, :zipcode_plus_4 => (zipcode.presence || DEFAULT_ZIPCODE_STRING))
+    end
   end
 
   def set_language_and_default_group
@@ -335,7 +338,11 @@ class Person < ActiveRecord::Base
   end
 
   def address
-    addresses.first
+    primary_address || addresses.first
+  end
+
+  def primary_address
+    addresses.find_all_by_primary(true).first
   end
 
   def shared_addresses
@@ -393,6 +400,10 @@ class Person < ActiveRecord::Base
     # flatten yields [primary, other one, another one]
     @sorted_photos ||= photos.partition(&:primary).flatten
     #@sorted_photos ||= photos.order("(CASE WHEN primary THEN 1 WHEN primary IS NULL THEN 2 ELSE 3 END)")
+  end
+
+  def sorted_addresses
+    @sorted_addresses ||= addresses.partition(&:primary).flatten
   end
 
   def change_password?(passwords)

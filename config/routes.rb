@@ -83,7 +83,11 @@ Oscurrency::Application.routes.draw do
     resources :messages
     resources :accounts
     resources :exchanges
-    resources :addresses
+    resources :addresses do
+      member do
+        post :choose
+      end
+    end
     resources :photos
     resources :connections
   end

@@ -13,6 +13,9 @@ class Ability
     end
 
     # need these for rails_admin
+    can [:read,:create,:update,:destroy], Address
+    can [:read,:create,:update,:destroy], State
+
     can [:read,:create], Person
     can :update, Person do |target_person|
       target_person == person || person.admin?
@@ -113,7 +116,6 @@ class Ability
       person.is?(:admin,account.group)
     end
     can :export, Account
-
 
     can :read, Offer
     can :create, Offer do |offer|

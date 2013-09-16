@@ -1,4 +1,4 @@
-<li>
+<p>
 <%= h address.address_line_1 %><br/>
 <% unless address.address_line_2.blank? %>
 <%= h address.address_line_2 %><br/>
@@ -7,6 +7,5 @@
 <%= h address.address_line_3 %><br/>
 <% end %>
 <%= h address.city %>, <%- unless address.state.blank? -%><%= h address.state.abbreviation %><%- end -%> <%= h address.zipcode_plus_4 %><br/>
-<%= link_to t('button_edit'), edit_person_address_path(address.person,address) %> | <%= link_to image_tag("icons/close.gif"), person_address_path(address.person,address), :method => :delete %>
-<br/>
-</li>
+<%= address.primary? ? t('people.edit.primary') : link_to( t('button_select'), choose_person_address_path(current_person,address), method: 'post', title: t('people.edit.address_select_note')) %> | <%= link_to t('button_edit'), edit_person_address_path(address.person,address) %> | <%= link_to image_tag("icons/close.gif"), person_address_path(address.person,address), :method => :delete %>
+</p>

@@ -129,7 +129,7 @@
 
   <br />
   <h3><%= t('people.edit.addresses') %></h3>
-  <%= render :partial => 'address', :collection => @person.addresses %>
+  <%= render :partial => 'address', :collection => @person.sorted_addresses %>
   <br />
   <%= link_to t('people.edit.add_address'), new_person_address_path(@person), :class => 'btn btn-primary' %>
   <br />

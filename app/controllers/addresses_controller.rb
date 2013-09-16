@@ -65,6 +65,20 @@ class AddressesController < ApplicationController
     end
   end
 
+  def choose
+    @address = current_person.addresses.find(params[:id])
+    @old_primary_addresses = current_person.addresses.where(primary: true).all
+    respond_to do |format|
+      if @address.update_attributes!(primary: true)
+        @old_primary_addresses.each {|a| a.update_attributes(primary: false)}
+        flash[:success] = t('success_profile_updated')
+      else
+        flash[:error] = t('error_invalid_action')
+      end
+      format.html { redirect_to(edit_person_path(current_person)) }
+    end
+  end
+
 private
   def correct_user_required
     redirect_to home_url unless Person.find(params[:person_id]) == current_person

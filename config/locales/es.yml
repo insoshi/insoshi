@@ -290,6 +290,8 @@ es:
       change_password: "Cambiar contraseña"
       change_openid: "Cambiar  OpenID"
       web_site_url: "URL del sitio web"
+      primary: "principal"
+      address_select_note: "Choose primary address for use in distance calculations"
     groups:
       no_groups: "Todavía no hay grupos"
       new_group: "Grupo Nuevo"

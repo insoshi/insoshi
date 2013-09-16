@@ -414,6 +414,8 @@ gr:
       activity_status: "Activity Status"
       plan_type: "Plan Type"
       support_contact: "Support Contact"
+      primary: "πρωτεύων"
+      address_select_note: "Choose primary address for use in distance calculations"
     groups:
       no_groups: "Καμία ομάδα (ακόμη)"
       new_group: "Νέα Ομάδα"

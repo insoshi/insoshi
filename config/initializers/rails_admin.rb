@@ -39,7 +39,33 @@ end
     export
   end
 
-  config.included_models = [Account,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
+  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
+
+  config.model Address do
+    configure :person, :belongs_to_association
+    object_label_method do
+      :address_line_1
+    end
+
+    list do
+      field :address_line_1
+      field :city
+      field :zipcode_plus_4
+    end
+
+    edit do
+      field :address_line_1
+      field :address_line_2
+      field :address_line_3
+      field :city
+      field :state
+      field :zipcode_plus_4
+      field :address_privacy do
+        label "Public"
+      end
+      field :primary
+    end
+  end
 
   config.model Account do
     list do
@@ -451,6 +477,7 @@ end
       field :description, :text do
         #ckeditor true
       end
+      field :addresses
       # generally not appropriate for admin to edit openid since it is an assertion
     end
   end
@@ -504,6 +531,7 @@ end
       field :description, :text do
         #ckeditor true
       end
+      field :addresses
       # generally not appropriate for admin to edit openid since it is an assertion
     end
   end
