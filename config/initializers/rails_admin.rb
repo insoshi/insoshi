@@ -285,10 +285,10 @@ end
       field :customer
       field :worker
       field :amount
-      field :metadata do
+      field :notes do
         label "Memo"
         formatted_value do
-          value.name
+          bindings[:object].memo
         end
       end
     end

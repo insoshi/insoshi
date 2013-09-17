@@ -57,6 +57,13 @@ class Exchange < ActiveRecord::Base
     end
   end
 
+  # memo is a method for displaying a transaction's note in the admin interface
+  # previously, a txn created by an admin set metadata.name to 'admin transfer'.
+  # this is no longer the case as such txns copy self.notes to metadata.name.
+  def memo
+    metadata.name == 'admin transfer' ? self.notes : metadata.name
+  end
+
   def self.total_on(date)
     Exchange.sum(:amount, :conditions => ["date(created_at) = ?", date])
   end
@@ -83,7 +90,7 @@ class Exchange < ActiveRecord::Base
   def check_metadata
     unless self.metadata
       req = Req.new
-      req.name = 'admin transfer'
+      req.name = self.notes
       req.estimated_hours = self.amount
       req.due_date = Time.now
       req.person = self.customer
