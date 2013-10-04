@@ -1,12 +1,30 @@
-<span class='offer' style='float:right;'><%= link_to t('button_new_offer'), new_group_offer_path(@group), {:class => 'show-follow btn btn-primary'} %></span>
-<div><%= link_to t('filter_categories'), home_path, :class => "toggle-category label" %> | <%= link_to t('filter_neighborhoods'), home_path, :class => "toggle-neighborhood" %></div>
+<span class='offer' style='float:right;'>
+  <%= link_to t('button_new_offer'), new_group_offer_path(@group), {:class => 'show-follow btn btn-primary'} %>
+</span>
+
+<div>
+  <%= link_to t('filter_categories'), home_path, :class => "toggle-category label" %> | <%= link_to t('filter_neighborhoods'), home_path, :class => "toggle-neighborhood" %>
+</div>
+
 <% cache('offer_filters', :expires_in => 24.hours) do %>
-<%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'offer', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
-<%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'offer', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
+
+  <%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'offer', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
+  <%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'offer', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
+
 <% end %>
-<h2 style="display:inline;"><%= t('groups.show.offers') %> &nbsp;</h2><span style="margin-left:20px;"><%= link_to t('active'), offers_path, :class => active_offers_class %> | <%= link_to t('all'), offers_path, :class => all_offers_class %> <%= waiting_image %>
+
+<h2 style="display:inline;">
+  <%= t('groups.show.offers') %> &nbsp;
+</h2>
+
+<span style="margin-left:20px;">
+  <%= link_to t('active'), offers_path, :class => active_offers_class %> | <%= link_to t('all'), offers_path, :class => all_offers_class %> <%= waiting_image %>
+</span>
+
 <%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
+
 <ul class="list activity full">
   <%= render :partial => '/offers/offer', :collection => @offers %>
 </ul>
+
 <%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
