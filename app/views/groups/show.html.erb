@@ -13,6 +13,36 @@
   </ul>
 
   <div class="tab-content">
+
+    <!-- content to be displayed in a row -->
+    <div class="row">
+      <div class="span12">
+
+        <div class="tab-pane active" id="tab_home">
+          <div id="home_canvas">
+          <%= render 'home_canvas' %>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+    <!-- end of: content to be displayed in a row -->
+
+    <!-- Content to be displayed in two rows -->
+    <div class="row">
+      <div class="span6">
+        Section Left
+      </div>
+      <div class="span6">
+        Section Right
+      </div>
+    </div>
+    <!-- end of content to be displayed in two rows -->
+
+  <div>
+
+
+  <div class="tab-content">
     <div class="tab-pane active" id="tab_home">
       <div id="home_canvas">
       <%= render 'home_canvas' %>
