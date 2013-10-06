@@ -33,7 +33,7 @@ module OffersHelper
     categories.each { | c | html << c + ', ' }
 
     # remove the accessive ', ' from the last position
-    html = html[ 0..-2 ]
+    html = html[0..-3] << '</div>'
 
     html
   end
