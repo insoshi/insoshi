@@ -40,18 +40,8 @@
         
         <br/>
 
-        <% if can?(:update, offer) -%>
-          <%= link_to t('button_edit'), edit_offer_path(offer), :class => 'show-follow' %>
-        <% end -%>
-        
-        <% if can?(:new_photo, offer) -%>
-          | <%= link_to t('offers.new_photo.upload_a_photo'), new_photo_offer_path(offer) %>
-        <% end -%>
-        
-        <% if can?(:destroy, offer) -%>
-          | <%= link_to t('button_delete'), offer, :class => "delete_offer" %>
-        <% end -%>
-        
+        <%= render partial: 'offer_edit_buttons', locals: {offer: offer} %>
+
         <br>
         
         <% if !current_person.address.nil? && !offer.person.address.nil? && !current_person?(offer.person) -%>
@@ -68,10 +58,8 @@
   <div>
 
   <div class="profile-image" style="display:none;">
-    <%= offer_image_link offer, :image => ( (full rescue false) ? :main_photo : :thumbnail) %>
-    <%= (full rescue false) ? "" : image_tag("icons/new.gif", :class => "icon", :alt => "Offer") %>
+    <%= offer_image_link offer, :image => :main_photo %>
   </div>
-  
   
 
 </div>

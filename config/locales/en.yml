@@ -244,6 +244,7 @@ en:
       expires: "Expires"
       available_count: "Available count"
       created_by: "Created by"
+      listed_in: "Listed in:"
     index:
       header: "Offers"
       nooffers: "No offers (yet!)"
