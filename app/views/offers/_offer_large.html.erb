@@ -10,7 +10,9 @@
   <div class="row-fluid">
     
     <div class="span4">
-      <%= offer_image_link offer, :image => :main_photo %>
+      <div class="border-right">
+        <%= offer_image_link offer, :image => :main_photo %>
+      </div>
     </div>
 
     <div class="span8">
@@ -61,8 +63,10 @@
   </div>
   <!-- end of content to be displayed in two rows -->
   
-  <%= markdown offer.description.to_s %>
-  
+  <div class="padded-top">
+    <%= markdown offer.description.to_s %>
+  <div>
+
   <div class="profile-image" style="display:none;">
     <%= offer_image_link offer, :image => ( (full rescue false) ? :main_photo : :thumbnail) %>
     <%= (full rescue false) ? "" : image_tag("icons/new.gif", :class => "icon", :alt => "Offer") %>
