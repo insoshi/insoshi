@@ -18,7 +18,24 @@ module OffersHelper
   def formatted_offer_categories(categories)
     text = ""
     categories.each {|c| text << c + "<br>"}
-    text.html_safe
+    text.html_safe 
+  end
+
+  # 
+  # function `horizontal_formatted_offer_categories` outputs an html string
+  # that includes a prefix ( ie: Listed in: ) enclosed in <span> tags and the
+  # following to be a comma seperated list of names.
+  # 
+  def horizontal_formatted_offer_categories( categories, prefix_text = 'Listed in:')
+    html = "<div class='horizontal-categories'><span>#{prefix_text}</span>&nbsp;"
+    
+    # Adding categories with commas - note extra comma to end
+    categories.each { | c | html << c + ', ' }
+
+    # remove the accessive ', ' from the last position
+    html = html[ 0..-2 ]
+
+    html
   end
 
   # Return an offer's image link.

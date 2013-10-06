@@ -1,8 +1,10 @@
+
   <h2><%= h @offer.name %><%= waiting_image %></h2>
-  <div>
-    <%= render :partial => 'offers/offer_large', :locals => { :offer => @offer, :full => true} %>
-    <%#= render :partial => @offer, :locals => {:full => true} %>
-  </div>
+  
+  <!-- offer partial -->
+  <%= render :partial => 'offers/offer_large', :locals => { :offer => @offer } %>
+  <!-- end of offer partial -->
+
   <% if logged_in? %>
     <% unless (!@offer.considered_active? || current_person?(@offer.person)) %>
       <%= form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
