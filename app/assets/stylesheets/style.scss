@@ -11,12 +11,14 @@
   padding-top: 20px;
 }
 
-.border-left {
-  border-left: 1px solid #ddd;
-  padding-left: 20px;
-}
+@media screen and ( min-width: 768px ) {
+  .border-left {
+    border-left: 1px solid #ddd;
+    padding-left: 20px;
+  }
 
-.border-right {
-  border-right:1px solid #ddd;
-  padding-right: 2px;
+  .border-right {
+    border-right:1px solid #ddd;
+    padding-right: 2px;
+  }
 }
