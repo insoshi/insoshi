@@ -26,9 +26,6 @@
         
       <%#= display formatted_offer_categories(offer.long_categories), :class => "meta" %>
       
-      <p>
-        <%= markdown((full rescue false) ? offer.description.to_s : first_n_words(offer.description)) %>
-      </p>
       
       <p class="meta">
       
@@ -62,6 +59,7 @@
   </div>
   <!-- end of content to be displayed in two rows -->
   
+  <%= markdown offer.description.to_s %>
   
   <div class="profile-image" style="display:none;">
     <%= offer_image_link offer, :image => ( (full rescue false) ? :main_photo : :thumbnail) %>
