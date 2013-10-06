@@ -2,6 +2,7 @@
 *  require vendor
 *= require skin
 *= require bootstrap_form
+*= require style
 *  require jquery.ui.datepicker
 */
 

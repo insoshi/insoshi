@@ -2,11 +2,17 @@
   
   <a name="offer_<%= offer.id %>"></a>
   
+  <%== horizontal_formatted_offer_categories offer.long_categories %>
+  
+  <h2><%= h offer.name %><%= waiting_image %></h2>
+
   <!-- Content to be displayed in two rows -->
   <div class="row-fluid">
+    
     <div class="span4">
       <%= offer_image_link offer, :image => :main_photo %>
     </div>
+
     <div class="span8">
       <p>
         <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h offer.price %> <%= offer.unit %>)
@@ -18,7 +24,7 @@
         <%= t('offers.partial.expires') %> <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
       </p>
         
-      <%= display formatted_offer_categories(offer.long_categories), :class => "meta" %>
+      <%#= display formatted_offer_categories(offer.long_categories), :class => "meta" %>
       
       <p>
         <%= markdown((full rescue false) ? offer.description.to_s : first_n_words(offer.description)) %>
