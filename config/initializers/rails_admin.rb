@@ -41,7 +41,12 @@ end
 
   config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
 
+  config.model State do
+    visible false
+  end
+
   config.model Address do
+    visible false
     configure :person, :belongs_to_association
     object_label_method do
       :address_line_1
@@ -464,6 +469,9 @@ end
       field :deactivated
       field :email_verified
       field :phone
+      field :phoneprivacy do
+        label "Share Phone?"
+      end
       field :admin
       field :web_site_url
       field :org
@@ -518,6 +526,9 @@ end
       field :deactivated
       field :email_verified
       field :phone
+      field :phoneprivacy do
+        label "Share Phone?"
+      end
       field :admin
       field :web_site_url
       field :org

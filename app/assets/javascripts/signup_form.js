@@ -15,6 +15,16 @@ show_standard = function() {
 
 $(function() {
   $('#openid').hide();
+  if($('#person_org:checked').val() != 1) {
+    $('#business_info').hide();
+  }
+  $('#person_org').click(function() {
+    if($('#business_info').is(':visible')) {
+      $('#business_info').hide();
+    } else {
+    $('#business_info').show();
+    }
+  });
   $('#new_person').submit(function() {
       if( $('#person_accept_agreement:checked').val() != 1 ) {
         alert('please accept member agreement');

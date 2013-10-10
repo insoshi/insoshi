@@ -15,7 +15,7 @@
   <%= form.text_field :city, label: t('addresses.form.city') %>
 
   <%= form.control_group do %>
-    <%= form.select :state_id, @states, label: {text: t('addresses.form.state')} %>
+    <%= form.select :state_id, @states, label: {text: t('addresses.form.state')}, include_blank: true %>
   <% end %>
 
   <%= form.text_field :zipcode_plus_4, label: t('addresses.form.zipcode'), size: 10 %>

@@ -35,6 +35,7 @@ class Person < ActiveRecord::Base
   attr_accessible :sponsor
   attr_accessible :broadcast_emails
   attr_accessible :web_site_url
+  attr_accessible :org
 
   extend Searchable(:name, :business_name, :description)
 
@@ -144,7 +145,7 @@ class Person < ActiveRecord::Base
   validates :name, :presence => true, :length => { :maximum => MAX_NAME }
   validates :description, :length => { :maximum => MAX_DESCRIPTION }
   validates :email, :presence => true, :uniqueness => true, :email => true
-  validates :business_name, :length => { :maximum => 100 }
+  validates :business_name, :length => { :maximum => 100 }, :presence => true, :if => lambda { |p| p.org }
   validates :legal_business_name, :length => { :maximum => 100 }
   validates :business_type, :presence => true, :if => lambda { |p| p.org }
   #  validates_presence_of     :password,              :if => :password_required?
@@ -322,7 +323,8 @@ class Person < ActiveRecord::Base
 
   def create_address
     if 0 == addresses.length
-      addresses.create(:name => 'personal', :primary => true, :zipcode_plus_4 => (zipcode.presence || DEFAULT_ZIPCODE_STRING))
+      # share address if this is an org
+      addresses.create(:name => 'personal', :address_privacy => org, :primary => true, :zipcode_plus_4 => (zipcode.presence || DEFAULT_ZIPCODE_STRING))
     end
   end
 

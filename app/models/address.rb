@@ -39,7 +39,12 @@ class Address < ActiveRecord::Base
 
 
   def Address.string_representation(address_line_1, address_line_2, address_line_3, city,  state, zipcode_plus_4)
-    [address_line_1, address_line_2, address_line_3, city, state, zipcode_plus_4].collect(&:presence).compact.join(", ")
+    # Don't include City and State unless address_line_1 is present
+    if address_line_1.blank?
+      zipcode_plus_4
+    else
+      [address_line_1, address_line_2, address_line_3, city, state, zipcode_plus_4].collect(&:presence).compact.join(", ")
+    end
   end
   
   
