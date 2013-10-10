@@ -299,10 +299,19 @@ end
     end
 
     edit do
-      field :group
-      field :customer
-      field :worker
+      field :worker do
+        label "Credits in"
+      end
+      field :customer do
+        label "Credits out"
+      end
       field :amount
+      field :group_id, :enum do
+        label "Unit"
+        enum_method do
+          :group_id_enum
+        end
+      end
       field :notes, :text
       #field :metadata
     end
