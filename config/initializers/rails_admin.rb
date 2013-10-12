@@ -39,7 +39,7 @@ end
     export
   end
 
-  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
+  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted]
 
   config.model State do
     visible false
@@ -314,6 +314,27 @@ end
       end
       field :notes, :text
       #field :metadata
+    end
+  end
+
+  config.model ExchangeDeleted do
+    label do
+      'Deleted exchange'
+    end
+    list do
+      scope do
+        only_deleted
+      end
+      field :created_at
+      field :customer
+      field :worker
+      field :amount
+      field :notes do
+        label "Memo"
+        formatted_value do
+          bindings[:object].memo
+        end
+      end
     end
   end
 

@@ -148,7 +148,7 @@ class Ability
 
     can :read, Exchange
     can :destroy, Exchange do |exchange|
-      exchange.customer == person || person.admin?
+      (exchange.class != ExchangeDeleted) && (exchange.customer == person || person.admin?)
     end
     can :create, Exchange do |exchange|
       unless exchange.group
