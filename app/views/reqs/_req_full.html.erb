@@ -14,6 +14,23 @@
   <!-- Fluid container - for two rows -->
   <div class="row-fluid">
 
+    <div class="span6">
+      
+      <div class="profile-image">
+        <%= image_link @req.person, :image => :thumbnail %>
+        <%= image_tag "icons/new.gif", :class => "icon", :alt => "Request" %>
+      </div>
+
+    </div>
+
+    <div class="span6">
+      <!-- Request - bids -->
+      <% if @req.active? %>
+        <%= render :partial => '/reqs/bids' %>
+      <%- end -%>
+    
+    </div>
+
   </div>
     
   <ul class="list full">
@@ -25,8 +42,6 @@
 
   </div>  
 
-  <% if @req.active? %>
-    <%= render :partial => '/reqs/bids' %>
-  <%- end -%>
+  
 
 </div<>
