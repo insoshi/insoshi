@@ -212,10 +212,16 @@ module ApplicationHelper
     end
   end
 
-  def exchange_link(person, group = nil, options = {})
-    img = image_tag("icons/switch.gif")
-    path = new_person_exchange_path(person, ({:group => group.id} unless group.nil?))
-    action = t('exchanges.record_transaction')
+  def exchange_link(counterparty, group = nil, options = {})
+    if 'debit' == options[:transact]
+      path = new_person_exchange_path(current_person, ({:group => group.id, :customer => counterparty.id}))
+      action = t('exchanges.debit')
+      img = image_tag("icons/remove.gif")
+    else
+      path = new_person_exchange_path(counterparty, ({:group => group.id} unless group.nil?))
+      action = t('exchanges.credit')
+      img = image_tag("icons/add.gif")
+    end
     str = link_to(img,path,options)
     str << " "
     str << link_to_unless_current(action, path, options)

@@ -75,9 +75,6 @@ describe Group do
       end
 
       it "should allow a member to make a forum post" do
-        Membership.request(@p2,@g,false)
-        @membership = Membership.mem(@p2,@g)
-        @ability = Ability.new(@p2)
         @forum_post = @topic.posts.build(:body => "Should we talk about the weather?")
         @forum_post.person = @p2
         @ability.should be_able_to(:create,@forum_post)
@@ -148,6 +145,26 @@ describe Group do
         account.credit_limit = 0.5
         account.save!
         @ability.should_not be_able_to(:create,@e)
+      end
+
+      it "should not allow an individual member to make a worker initiated payment" do
+        # @p2 is worker/seller
+        @membership.roles = ['individual']
+        @membership.save
+        @e_seller_initiated = Exchange.new(customer_id: @p.id, group_id: @g.id, amount: 1.0)
+        @e_seller_initiated.metadata = @req
+        @e_seller_initiated.worker = @p2
+        @ability.should_not be_able_to(:create,@e_seller_initiated)
+      end
+
+      it "should allow a point of sale operator to make a worker initiated payment" do
+        # @p2 is worker/seller
+        @membership.roles = ['point_of_sale_operator']
+        @membership.save
+        @e_seller_initiated = Exchange.new(customer_id: @p.id, group_id: @g.id, amount: 1.0)
+        @e_seller_initiated.metadata = @req
+        @e_seller_initiated.worker = @p2
+        @ability.should be_able_to(:create,@e_seller_initiated)
       end
 
       describe 'delegated payments with oauth' do

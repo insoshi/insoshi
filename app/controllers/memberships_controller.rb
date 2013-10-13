@@ -27,6 +27,7 @@ class MembershipsController < ApplicationController
   end
 
   def show
+    @current_membership = Membership.mem(current_person,@membership.group)
     @person = @membership.person
     @account = @person.account(@membership.group)
     @offers = @person.offers.active

@@ -442,7 +442,8 @@ fr:
       private_message_to_requestor: "Message confidentiel au requèrant"
 
   exchanges:
-    record_transaction: "Enregistré une transaction d'heures"
+    credit: "avoir crédit"
+    debit: "débiter"
     send_a_message: "Envoyer un message"
     new:
       enter_credit_for: "Transférer %{currency} à" 

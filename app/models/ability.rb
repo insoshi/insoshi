@@ -160,11 +160,16 @@ class Ability
         unless membership
           false
         else
-          unless (access_token.nil? || access_token.authorized_for?(exchange.amount))
+          payer = exchange.customer || person
+          # reject oauth payment if it exceeds amount user authorized
+          if access_token.present? and not access_token.authorized_for?(exchange.amount)
+            false
+          # now it's not logged-in person's account we test but customer's account
+          elsif !(payer.account(exchange.group).authorized?(exchange.amount))
             false
           else
-            account = person.account(exchange.group)
-            account && (account.authorized? exchange.amount)
+            # in oauth land, token always represents payer, so oauth payment is forbidden if exchange.customer != person.
+            exchange.customer == person || (access_token.nil? and ((membership.is?(:point_of_sale_operator) and exchange.worker == person) || membership.is?(:admin) || person.admin?))
           end
         end
       end

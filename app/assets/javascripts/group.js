@@ -48,6 +48,7 @@ $(function() {
   route('offers',   /^#offers\/new$/,                              '/groups/[:group_id]/offers/new');
 
   route('people',   /^#people\/(.+)\/exchanges\/new$/,             '/people/[:1]/exchanges/new?group='+OSCURRENCY.group_id);
+  route('people',/^#people\/(.+)\/exchanges\/new\/customer=(\d+)$/,'/people/[:1]/exchanges/new?group='+OSCURRENCY.group_id+'&customer=[:2]');
   route('offers',   /^#people\/(.+)\/exchanges\/new\/offer=(\d+)$/,'/people/[:1]/exchanges/new?offer=[:2]');
   route('people',   /^#people\/(.+)\/messages\/new$/,              '/people/[:1]/messages/new');
   route('people',   /^#people\/(.+)\/accounts\/(\d+)/,             '/people/[:1]/accounts/[:2]');
