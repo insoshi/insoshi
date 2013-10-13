@@ -8,7 +8,7 @@
   <%== horizontal_formatted_offer_categories @req.long_categories %>
   
   <h2>
-    <%= h @req.name %><%#= waiting_image %>
+    <%= h @req.name %><%= waiting_image %>
   </h2>
 
   <!-- Fluid container - for two rows -->
@@ -24,6 +24,7 @@
     </div>
 
     <div class="span6">
+      
       <!-- Request - bids -->
       <% if @req.active? %>
         <%= render :partial => '/reqs/bids' %>
@@ -44,4 +45,4 @@
 
   
 
-</div<>
+</div>

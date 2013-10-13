@@ -1,14 +1,28 @@
-    <h2><%= t('reqs.show.bids') %>:</h2>
-    <ul class="list full bids">
-      <% if @req.bids.empty? -%>
-        <h3 class="blankslate"><%= t('reqs.show.nobids') %></h3>
-      <% else %>
-        <%= render :partial => "/bids/bid", :collection => @req.bids %>
-      <%- end -%>
-    </ul>
-    <% unless current_person?(@req.person) -%>
-      <h2><%= t('reqs.show.newbid') %></h2>
-      <div id="bid_canvas">
-        <%= render 'shared/bid_form' %>
-      </div>
-    <%- end -%>
+<h3>
+  <%= t('reqs.show.bids') %>:
+</h3>
+
+<% if @req.bids.empty? -%>
+  <!-- There are no bids! -->
+  <h5 class="blankslate">
+    <%= t('reqs.show.nobids') %>
+  </h5>
+<% else %>
+  <!-- Dislaying list of bids! -->
+  <ul class="list full bids">
+    <%= render :partial => "/bids/bid", :collection => @req.bids %>
+  </ul>
+<% end %>
+
+<hr/>
+
+<% if current_person?(@req.person) -%>
+  <h2>
+    <%= t('reqs.show.newbid') %>
+  </h2>
+  
+  <div id="bid_canvas">
+    <%= render 'shared/bid_form' %>
+  </div>
+
+<%- end -%>
