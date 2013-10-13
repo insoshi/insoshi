@@ -26,7 +26,7 @@ module OffersHelper
   # that includes a prefix ( ie: Listed in: ) enclosed in <span> tags and the
   # following to be a comma seperated list of names.
   # 
-  def horizontal_formatted_offer_categories( categories, prefix_text = 'Listed in:')
+  def horizontal_formatted_offer_categories( categories, prefix_text = t('offers.partial.listed_in'))
     html = "<div class='horizontal-categories'><span>#{prefix_text}</span>&nbsp;"
     
     # Adding categories with commas - note extra comma to end
@@ -34,8 +34,6 @@ module OffersHelper
 
     # remove the accessive ', ' from the last position
     html = html[0..-3] << '</div>'
-
-    html
   end
 
   # Return an offer's image link.

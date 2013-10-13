@@ -358,6 +358,7 @@ gr:
       expires: "Λήγει"
       available_count: "Διαθέσιμο Υπόλοιπο"
       created_by: "Δημιουργήθηκε από"
+      listed_in: "Listed in:"
     index:
       header: "Προσφορά"
       nooffers: "Καμία Προσφορά (ακόμη!)"

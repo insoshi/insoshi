@@ -299,6 +299,7 @@ fr:
       expires: "Expire"
       available_count: "Inventaire"
       created_by: "Crée par"
+      listed_in: "Listed in:"
     index:
       header: "Les offres"
       nooffers: "Aucune offre pour l’instant"

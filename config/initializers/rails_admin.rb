@@ -39,9 +39,14 @@ end
     export
   end
 
-  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType]
+  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted]
+
+  config.model State do
+    visible false
+  end
 
   config.model Address do
+    visible false
     configure :person, :belongs_to_association
     object_label_method do
       :address_line_1
@@ -294,12 +299,42 @@ end
     end
 
     edit do
-      field :group
+      field :worker do
+        label "Credits in"
+      end
+      field :customer do
+        label "Credits out"
+      end
+      field :amount
+      field :group_id, :enum do
+        label "Unit"
+        enum_method do
+          :group_id_enum
+        end
+      end
+      field :notes, :text
+      #field :metadata
+    end
+  end
+
+  config.model ExchangeDeleted do
+    label do
+      'Deleted exchange'
+    end
+    list do
+      scope do
+        only_deleted
+      end
+      field :created_at
       field :customer
       field :worker
       field :amount
-      field :notes, :text
-      #field :metadata
+      field :notes do
+        label "Memo"
+        formatted_value do
+          bindings[:object].memo
+        end
+      end
     end
   end
 
@@ -464,6 +499,9 @@ end
       field :deactivated
       field :email_verified
       field :phone
+      field :phoneprivacy do
+        label "Share Phone?"
+      end
       field :admin
       field :web_site_url
       field :org
@@ -518,6 +556,9 @@ end
       field :deactivated
       field :email_verified
       field :phone
+      field :phoneprivacy do
+        label "Share Phone?"
+      end
       field :admin
       field :web_site_url
       field :org

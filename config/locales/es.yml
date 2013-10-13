@@ -243,6 +243,7 @@ es:
       expires: "Caduca"
       available_count: "Saldo disponible"
       created_by: "Creado por"
+      listed_in: "Listed in:"
     index:
       header: "Ofertas"
       nooffers: "No hay ofertas (todavía)"

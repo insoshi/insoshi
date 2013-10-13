@@ -81,6 +81,10 @@ class Exchange < ActiveRecord::Base
     Exchange.sum(:amount, :conditions => ["DATE_TRUNC('month',created_at) = ?", date])
   end
 
+  def group_id_enum
+    Group.where(adhoc_currency:true).map {|g| [g.unit,g.id]}
+  end
+
   private
 
   # Hack to create a new Request when Exchanges are
