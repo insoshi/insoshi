@@ -16,7 +16,7 @@
 
 <hr/>
 
-<% if current_person?(@req.person) -%>
+<% unless current_person?(@req.person) -%>
   <h2>
     <%= t('reqs.show.newbid') %>
   </h2>
