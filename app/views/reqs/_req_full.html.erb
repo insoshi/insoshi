@@ -69,8 +69,12 @@
             </ul>
             
             <% if !current_person.address.nil? && !@req.person.address.nil? && !current_person?(@req.person) -%>
-              <%= number_with_precision(@req.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
+              <% distance = number_with_precision(@req.person.address.distance_to(current_person.address), :precision => 1) %>
+              <% if distance < 300 %>
+                <%= distance.to_s %> <%= t('miles_away') %>
+              <% end %>
             <% end -%>
+            
           </p>
 
           <p>
@@ -85,13 +89,20 @@
         <%= render :partial => "shared/bid_message", :collection => commitment_messages(@req) %>
         <%= render :partial => "shared/bid_message", :collection => accepted_messages(@req)   %>
       </div>
+
+      <!-- list of current bids -->
+
+      <% if @req.active? %>
+        <hr/>
+        <%= render :partial => '/reqs/bids' %>
+      <% end %>
     </div>
 
     <div class="span6">
 
       <!-- Request - bids -->
       <% if @req.active? %>
-        <%= render :partial => '/reqs/bids' %>
+        <%= render :partial => '/reqs/bids_form' %>
       <%- end -%>
     
     </div>
