@@ -1,0 +1,39 @@
+<div class="req req_id_<%= req.id %>">
+  <a name="req_<%= req.id %>"></a>
+  
+  <div class="profile-image">
+    <%= image_link req.person, :image => :thumbnail %>
+    <%= image_tag "icons/new.gif", :class => "icon", :alt => "Request" %>
+  </div>
+  <p>
+  <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h req.estimated_hours %> <%= h req.unit %>)
+  <%= t('reqs.partial.due') %>: <%= relative_time_ago_in_words(req.due_date) %>
+  </p>
+    <%= display formatted_req_categories(req.long_categories), :class => "meta" %>
+  <p>
+    <%= markdown((full rescue false) ? req.description.to_s : first_n_words(req.description)) %>
+  </p>
+  <p class="meta">
+    <%= render :partial => "shared/bid_message", :collection => approved_messages(req) %>
+    <%= render :partial => "shared/bid_message", :collection => completed_messages(req) %>
+    <%= render :partial => "shared/bid_message", :collection => commitment_messages(req) %>
+    <%= render :partial => "shared/bid_message", :collection => accepted_messages(req) %>
+    <%= t('reqs.partial.createdby') %> <%= person_link req.person %>
+    <%= t 'ago_time', :date => time_ago_in_words(req.created_at) %>
+    <% if can?(:update, req) -%>
+      | <%= link_to t('button_edit'), edit_req_path(req), :class => 'show-follow' %>
+    <% end -%>
+    <% if req.biddable? %>
+      <% if can?(:destroy, req) -%>
+        | <%= link_to t('button_delete'), req, :class => 'delete_req' %>
+      <% end -%>
+      <% if can?(:deactivate, req) && req.considered_active? -%>
+        | <%= link_to t('button_deactivate'), deactivate_req_path(req), :class => 'deactivate_req' %>
+      <% end -%>
+    <% end -%>
+    <br>
+    <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>
+      <%= number_with_precision(req.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
+    <% end -%>
+  </p>
+</div>

@@ -1,7 +1,32 @@
-  <h2><%= h @req.name %><%= waiting_image %></h2>
+<!-- Request Tags -->
+
+<div class="req req_id_<%= @req.id %>">
+  
+  <a name="req_<%= @req.id %>"></a>
+
+  <!-- Categories on top of the title -->
+  <%== horizontal_formatted_offer_categories @req.long_categories %>
+  
+  <h2>
+    <%= h @req.name %><%#= waiting_image %>
+  </h2>
+
+  <!-- Fluid container - for two rows -->
+  <div class="row-fluid">
+
+  </div>
+    
   <ul class="list full">
-    <%= render :partial => @req, :locals => {:full => true} %>
+    <%# render :partial => 'req/req_large', :locals => {:full => true, :req => @req } %>
+    <% render :partial => @req, :locals => {:full => true} %>
   </ul>
+
+  <div class="list full">
+
+  </div>  
+
   <% if @req.active? %>
     <%= render :partial => '/reqs/bids' %>
   <%- end -%>
+
+</div<>
