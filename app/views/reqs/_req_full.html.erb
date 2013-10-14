@@ -70,11 +70,11 @@
             
             <% if !current_person.address.nil? && !@req.person.address.nil? && !current_person?(@req.person) -%>
               <% distance = number_with_precision(@req.person.address.distance_to(current_person.address), :precision => 1) %>
-              <% if distance < 300 %>
+              <% if distance.to_i < 300 %>
                 <%= distance.to_s %> <%= t('miles_away') %>
               <% end %>
             <% end -%>
-            
+
           </p>
 
           <p>
