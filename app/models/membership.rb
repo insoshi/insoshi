@@ -22,7 +22,7 @@ class Membership < ActiveRecord::Base
   INVITED   = 1 # deprecated
   PENDING   = 2
 
-  ROLES = %w[individual admin moderator org]
+  ROLES = %w[individual admin moderator org point_of_sale_operator]
 
   class << self
     def custom_search(category,group,page,posts_per_page,search=nil)

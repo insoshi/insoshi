@@ -374,7 +374,8 @@ es:
       private_message_to_requestor: "Mensaje privado al solicitante"
 
   exchanges:
-    record_transaction: "Registrar transacción"
+    credit: "acreditar"
+    debit: "adeudar"
     send_a_message: "Send a message"
     new:
       enter_credit_for: "Transferir %{currency} a" 

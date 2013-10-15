@@ -38,6 +38,9 @@ class ExchangesController < ApplicationController
       else
         @group = current_person.default_group
       end
+      if params[:customer]
+        @customer_id = params[:customer]
+      end
       @req = Req.new
     end
 
@@ -56,7 +59,9 @@ class ExchangesController < ApplicationController
   def create
     @exchange = Exchange.new(params[:exchange]) # amount and group_id are the only accessible fields
     @exchange.worker = @person
-    @exchange.customer = current_person
+    unless @exchange.customer.present?
+      @exchange.customer = current_person
+    end
 
     if params[:offer]
       @offer = Offer.find(params[:offer][:id])
@@ -70,7 +75,7 @@ class ExchangesController < ApplicationController
       @req.group = @exchange.group
       @req.estimated_hours = @exchange.amount
       @req.due_date = Time.now
-      @req.person = current_person
+      @req.person = @exchange.customer
       @req.biddable = false
       @req.save!
 

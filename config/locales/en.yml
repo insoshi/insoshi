@@ -386,7 +386,8 @@ en:
       private_message_to_requestor: "Private message to requestor"
 
   exchanges:
-    record_transaction: "Record transaction"
+    credit: "Credit"
+    debit: "Debit"
     send_a_message: "Send a message"
     new:
       enter_credit_for: "Transfer %{currency} to" 
