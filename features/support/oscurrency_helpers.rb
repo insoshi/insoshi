@@ -73,10 +73,12 @@ module OscurrencyHelpers
       :mode => Group::PUBLIC,
       :unit => asset,
       :asset => asset,
-      :owner => person,
       :adhoc_currency => true
     }
-    g = Group.create!(valid_attributes)
+    g = Group.new(valid_attributes)
+    g.owner = person
+    g.save
+    g
   end
 
   def create_person(options = {})

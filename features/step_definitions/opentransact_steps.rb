@@ -4,7 +4,7 @@ Given /^a client application$/ do
 end
 
 Given /^using opentransact gem$/ do
-  @using_opentransact_gem = true
+  @using_opentransact_gem = false
 end
 
 Given /^an account holder with asset "([^"]*)"$/ do |asset|
