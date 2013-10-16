@@ -114,6 +114,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+    columnize (0.3.6)
     connection_pool (1.0.0)
     cucumber (1.2.1)
       builder (>= 2.1.2)
@@ -127,6 +128,13 @@ GEM
     dalli (2.6.0)
     database_cleaner (0.9.1)
     debug_inspector (0.0.2)
+    debugger (1.3.0)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.1.1)
+      debugger-ruby_core_source (~> 1.1.7)
+    debugger-linecache (1.1.2)
+      debugger-ruby_core_source (>= 1.1.1)
+    debugger-ruby_core_source (1.1.7)
     diff-lcs (1.1.3)
     dynamic_form (1.1.4)
     erubis (2.7.0)
@@ -415,6 +423,7 @@ DEPENDENCIES
   cucumber-rails
   dalli
   database_cleaner
+  debugger
   dynamic_form
   exception_notification!
   feed-normalizer
@@ -438,6 +447,7 @@ DEPENDENCIES
   rails3_acts_as_paranoid
   rails_admin
   redcarpet
+  remotipart
   rmagick
   rspec-rails
   ruby-openid

@@ -12,6 +12,9 @@
   <%= f.text_field :price, :label => t('estimate'), :help => @group.unit, :size => 5 %>
   <%= f.text_field :expiration_date, :label => t('expiration_date'), :size => 7 %>
   <%= f.text_field :total_available, :label => t('offers.new.total_available'), :size => 2, :value => 1 %>
+  <%= f.fields_for :photos do |i| %> 
+    <%= i.file_field :picture, label: t('groups.new_photo.upload_a_photo') %> 
+  <% end %>
   <div class="control-group">
     <%= f.label t('filter_neighborhoods'), :class => 'control-label' %>
     <div class="controls">

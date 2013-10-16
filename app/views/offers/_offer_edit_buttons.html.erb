@@ -2,10 +2,6 @@
   <%= link_to t('button_edit'), edit_offer_path(offer), :class => 'show-follow' %>
 <% end -%>
 
-<% if can?(:new_photo, offer) -%>
-  | <%= link_to t('offers.new_photo.upload_a_photo'), new_photo_offer_path(offer) %>
-<% end -%>
-
 <% if can?(:destroy, offer) -%>
   | <%= link_to t('button_delete'), offer, :class => "delete_offer" %>
 <% end -%>

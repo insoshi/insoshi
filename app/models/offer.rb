@@ -14,12 +14,14 @@ class Offer < ActiveRecord::Base
 
   extend Scopes
 
-  has_many :photos, :as => :photoable
+  has_many :photos, :as => :photoable, dependent: :destroy
 
   before_create :set_available_count
 
   validates :expiration_date, :total_available, :presence => true
 
+  accepts_nested_attributes_for :photos, :allow_destroy => true
+  
   def considered_active?
     available_count > 0 && expiration_date >= DateTime.now
   end

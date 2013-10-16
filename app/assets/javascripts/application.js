@@ -2,6 +2,7 @@
 // This file is automatically included by javascript_include_tag :defaults
 //  require jquery
 //= require jquery_ujs
+//= require jquery.remotipart
 //  require jquery.ui.tabs
 //  require jquery.ui.datepicker
 //  require jquery.ui.autocomplete
