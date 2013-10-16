@@ -51,7 +51,7 @@ class OffersController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
-        @photo = @offer.photos.build
+        @photo = @offer.photos.build if @offer.photos.blank?
         format.html { render :action => "new" }
         format.js { render :action => "new" }
         format.xml  { render :xml => @offer.errors, :status => :unprocessable_entity }
