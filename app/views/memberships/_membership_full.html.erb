@@ -152,7 +152,7 @@
   <div class="row-fluid">
 
     <div class="activity-container">
-      <h2>Offers</h2>
+      <h3>Offers</h3>
       
       <% if @offers.empty? %>
         <%= t('offers.index.nooffers') %>
@@ -170,14 +170,18 @@
 
   </div>
 
+
+  <br/>
+  <br/>
+
   <div class="activity-container">
-    <h2>Requests</h2>
+    <h3>Requests</h3>
     <% if @reqs.empty? %>
       <%= t('reqs.home.menu._dashboard.no_active_requests') %>
     <% else %>
       <% @reqs.each do |req| %>
         <div class="activity-inner">
-          <h2><%= h req.name %><%= waiting_image %></h2>
+          <h4><%= h req.name %><%= waiting_image %></h4>
           <ul class="list activity full">
             <%= render :partial => req, :locals => {:full => false} %>
           </ul>

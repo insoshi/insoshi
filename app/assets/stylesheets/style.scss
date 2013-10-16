@@ -33,7 +33,11 @@
     margin-bottom: 10px;
   }
 
-  .activity-inner:last-child {
+  .activity-inner:first-child {
+    border-top: 1px solid silver;
+  }
+
+  .req, .offer {
     border-bottom: none;
   }
 
