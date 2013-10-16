@@ -1,12 +1,25 @@
+  <%= display @person.formatted_categories, :class => "meta" %>
+  
   <div class="profile vcard">
+    
     <%- if @person.openid_identifier.nil? -%>
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>&nbsp;<%= organization_image(@person) %><%= waiting_image %></h2>
+    
+      <h2>
+        <%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>&nbsp;<%= organization_image(@person) %><%= waiting_image %>
+      </h2>
+    
     <%- else -%>
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.display_name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<%= image_tag("login-bg.gif") %><%= organization_image(@person) %>&nbsp;<%= waiting_image %></h2>
+
+      <h2>
+        <%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.display_name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<%= image_tag("login-bg.gif") %><%= organization_image(@person) %>&nbsp;<%= waiting_image %>
+      </h2>
+    
     <%- end -%>
+    
     <%- if admin? and not @person.active? -%>
       <p class="alert alert-error"><%= t('people.show.not_active') %></p>
     <%- end -%>
+    
     <%- if current_person?(@person) -%>
       <%- if current_person.description.blank? -%>
         <div class="alert alert-error">
@@ -14,6 +27,7 @@
           <%= link_to t('people.show.add_description'),
                       edit_person_path(@person) %>
         </div>
+      
       <%- else -%>
         <div class="alert">
           <%= t('people.show.own_profile') %>
@@ -28,6 +42,7 @@
         </div>
       <%- end -%>
     <%- end -%>
+
     <div class="toolbox">
       <%= image_tag @person.main_photo, :class => "profile-image photo",
                                         :alt => h(@person.display_name) %>
@@ -69,15 +84,17 @@
         <%- end -%>
       </ul>
     </div>
+    
     <ul>
       <%= render :partial => 'shared/neighborhood', :collection => @person.neighborhoods %>
     </ul>
-    <%= display @person.formatted_categories, :class => "meta" %>
+    
+    
     <% if @person.phoneprivacy? %>
-    <% unless @person.phone.nil? %>
-      <div>
-        <%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> <span class="small"><%= t('people.show.phone') %></span> <span class="added small"><%= h @person.phone %></span>
-      </div>
+      <% unless @person.phone.nil? %>
+        <div>
+          <%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> <span class="small"><%= t('people.show.phone') %></span> <span class="added small"><%= h @person.phone %></span>
+        </div>
       <%- end -%>
     <%- end -%>
     <% @person.shared_addresses.each do |shared_address| %>
