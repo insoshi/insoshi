@@ -149,30 +149,42 @@
 
   <hr/>
 
-  <h2>Offers</h2>
-  <% if @offers.empty? %>
-    <%= t('offers.index.nooffers') %>
-  <% else %>
-   <% @offers.each do |offer| %>
-    <h2><%= h offer.name %><%= waiting_image %></h2>
-    <ul class="list activity full">
-         <%= render :partial => offer, :locals => {:full => false} %>
-    </ul>
-   <% end %>
-  <% end %>
+  <div class="row-fluid">
 
-  <h2>Requests</h2>
-  <% if @reqs.empty? %>
-    <%= t('reqs.home.menu._dashboard.no_active_requests') %>
-  <% else %>
-   <% @reqs.each do |req| %>
-    <h2><%= h req.name %><%= waiting_image %></h2>
-    <ul class="list activity full">
-         <%= render :partial => req, :locals => {:full => false} %>
-    </ul>
-   <% end %>
-  <% end %>
+    <div class="activity-container">
+      <h2>Offers</h2>
+      
+      <% if @offers.empty? %>
+        <%= t('offers.index.nooffers') %>
+      <% else %>
+        <% @offers.each do |offer| %>
+          <div class="activity-inner">  
+            <h4><%= h offer.name %><%= waiting_image %></h4>
+            <ul class="list activity full">
+              <%= render :partial => offer, :locals => {:full => false} %>
+            </ul>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
 
+  </div>
+
+  <div class="activity-container">
+    <h2>Requests</h2>
+    <% if @reqs.empty? %>
+      <%= t('reqs.home.menu._dashboard.no_active_requests') %>
+    <% else %>
+      <% @reqs.each do |req| %>
+        <div class="activity-inner">
+          <h2><%= h req.name %><%= waiting_image %></h2>
+          <ul class="list activity full">
+            <%= render :partial => req, :locals => {:full => false} %>
+          </ul>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 
   <%- if @membership.group.adhoc_currency? -%>
     <%= render :partial => '/shared/recent_exchanges', :locals => {:group => @account.group} %>
