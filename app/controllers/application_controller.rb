@@ -71,6 +71,13 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def access_denied
+      store_location
+      flash[:notice] = t('notice_login_required')
+      redirect_to login_url
+      return false
+    end
+
     def require_no_person
       if current_person
         store_location
