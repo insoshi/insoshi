@@ -11,7 +11,7 @@
   <%- end -%>
   </p>
   <p class="meta published">
-    <%= ( t 'ago_time', :date => time_ago_in_words(exchange.created_at)).capitalize %>
+    <%= datetime_format(exchange.created_at) %>
   </p>
 
 </li>
