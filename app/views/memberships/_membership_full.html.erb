@@ -1,12 +1,23 @@
+  <strong style="display:inline">Associated with&nbsp;:&nbsp;</strong><%= display @person.listed_categories, :class => "meta", :style => 'display:inline;' %>
+  
   <div class="profile vcard">
+    
+    <!-- Profile title -->
     <%- if @person.openid_identifier.nil? -%>
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>&nbsp;<%= organization_image(@person) %><%= waiting_image %></h2>
+      <h2>
+        <%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>&nbsp;<%= organization_image(@person) %><%= waiting_image %>
+      </h2>
     <%- else -%>
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.display_name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<%= image_tag("login-bg.gif") %><%= organization_image(@person) %>&nbsp;<%= waiting_image %></h2>
-    <%- end -%>
+      <h2>
+        <%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.display_name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<%= image_tag("login-bg.gif") %><%= organization_image(@person) %>&nbsp;<%= waiting_image %>
+      </h2>
+    <%- end -%><!-- profile title -->
+
     <%- if admin? and not @person.active? -%>
       <p class="alert alert-error"><%= t('people.show.not_active') %></p>
     <%- end -%>
+
+    <!-- display warning messages -->
     <%- if current_person?(@person) -%>
       <%- if current_person.description.blank? -%>
         <div class="alert alert-error">
@@ -14,114 +25,202 @@
           <%= link_to t('people.show.add_description'),
                       edit_person_path(@person) %>
         </div>
+      
       <%- else -%>
         <div class="alert">
           <%= t('people.show.own_profile') %>
           <%= link_to t('people.show.edit_it'), edit_person_path(@person) %>
         </div>
       <%- end -%>
+
       <%- if current_person.address && Person::DEFAULT_ZIPCODE_STRING == current_person.address.zipcode_plus_4 %>
-        <div class="error">
+        <div class="alert alert-error">
           <%= link_to t('people.show.update_location'),
                       edit_person_path(@person) %>. 
           <%= t('people.show.address_remain_private') %>
         </div>
       <%- end -%>
-    <%- end -%>
-    <div class="toolbox">
-      <%= image_tag @person.main_photo, :class => "profile-image photo",
-                                        :alt => h(@person.display_name) %>
+    
+    <%- end -%><!-- display warning messages -->
 
-        <ul class="tools">
-          <%- if @person.org %>
-            <li><span class="label"><%= t('groups.show.contact') %></span>: <%= @person.name %></li>
-          <%- end %>
-        <%- unless current_person?(@person) -%>
-          <%- if logged_in? -%>
-            <%- if @membership.group.adhoc_currency? -%>
-                <li><%= exchange_link @person, @membership.group, :transact => 'credit', :class => 'show-follow' %></li>
-              <%- if @current_membership.is?(:point_of_sale_operator) || @current_membership.is?(:admin) %>
-                <li><%= exchange_link @person, @membership.group, :transact => 'debit', :class => 'show-follow' %></li>
+
+      <div class="row-fluid">
+
+        <div class="span3">
+          <%= image_tag @person.main_photo, :class => "profile-image photo",
+                                            :alt => h(@person.display_name) %>
+        </div>
+
+        <div class="span5">
+          <ul>
+            <%= render :partial => 'shared/neighborhood', :collection => @person.neighborhoods %>
+          </ul>
+          
+          
+          <% if @person.phoneprivacy? %>
+            <% unless @person.phone.nil? %>
+              <div>
+                <%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> <span class="small"><%= t('people.show.phone') %></span> <span class="added small"><%= h @person.phone %></span>
+              </div>
+            <%- end -%>
+          <%- end -%>
+          <% @person.shared_addresses.each do |shared_address| %>
+            <div>
+              <%= image_tag "icons/home.gif", :class => "icon", :alt => "Address" %>
+                <span class="medium"><%= h shared_address %></span>
+            </div>
+          <% end %>
+
+          <% if @person.web_site_url %>
+            <div>
+              <%= image_tag "icons/new_window.gif", :class => "icon", :alt => "Website" %>
+                <span class="small"><%= t('people.edit.web_site_url') %></span>
+                <span class="small"><%= h @person.web_site_url %></span>
+            </div>
+          <%- end -%>
+
+          <%= markdown(@person.description) %>
+        
+        </div>
+
+        <div class="span4">
+          <div class="toolbox">
+            <ul class="tools">
+            
+              <%- if @person.org %>
+                <li>
+                  <span class="label"><%= t('groups.show.contact') %></span>: <%= @person.name %>
+                </li>
+              <%- end %>
+
+              <%- unless current_person?(@person) -%>
+                <%- if logged_in? -%>
+                  <%- if @membership.group.adhoc_currency? -%>
+                      
+                    <li>
+                      <%= exchange_link @person, @membership.group, :transact => 'credit', :class => 'show-follow' %>
+                    </li>
+                      
+                    <%- if @current_membership.is?(:point_of_sale_operator) || @current_membership.is?(:admin) %>
+                      <li>
+                        <%= exchange_link @person, @membership.group, :transact => 'debit', :class => 'show-follow' %>
+                      </li>
+                    <%- end -%>
+                    
+                  <%- end -%>
+                    
+                  <li>
+                    <%= email_link @person %>
+                  </li>
+                    
+                  <%- if @membership.group.adhoc_currency? -%>
+                    <%= render :partial => 'shared/account', :locals => {:account => @account, :html_classes => 'show-follow'} %>
+                  <%- end -%>
+                <%- end -%>
+                
+                <%- if current_person.admin? -%>
+                  <li>
+                    <%= link_to t('people.show.switch_user'), su_person_path(@person) %>
+                  </li>
+                  <li>
+                    <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
+                    <%= link_to activity, 
+                                person_path(@person, :task => "deactivated"),
+                                :method => :put %>
+                  </li>
+                <%- end -%>
+                
+              <% else -%>
+                <%- if logged_in? -%>
+                  <%- if @membership.group.adhoc_currency? -%>
+                    <%= render :partial => 'shared/account', :locals => {:account => @account, :html_classes => 'show-follow'} %>
+                  <%- end -%>
+                <%- end -%>
               <%- end -%>
-            <%- end -%>
-            <li><%= email_link @person %></li>
-            <%- if @membership.group.adhoc_currency? -%>
-              <%= render :partial => 'shared/account', :locals => {:account => @account, :html_classes => 'show-follow'} %>
-            <%- end -%>
-          <%- end -%>
-          <%- if current_person.admin? -%>
-            <li>
-              <%= link_to t('people.show.switch_user'), su_person_path(@person) %>
-            </li>
-            <li>
-            <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
-            <%= link_to activity, 
-                        person_path(@person, :task => "deactivated"),
-                        :method => :put %>
-            </li>
-          <%- end -%>
-        <% else -%>
-          <%- if logged_in? -%>
-            <%- if @membership.group.adhoc_currency? -%>
-              <%= render :partial => 'shared/account', :locals => {:account => @account, :html_classes => 'show-follow'} %>
-            <%- end -%>
-          <%- end -%>
-        <%- end -%>
-      </ul>
-    </div>
-    <ul>
-      <%= render :partial => 'shared/neighborhood', :collection => @person.neighborhoods %>
-    </ul>
-    <%= display @person.formatted_categories, :class => "meta" %>
-    <% if @person.phoneprivacy? %>
-    <% unless @person.phone.nil? %>
-      <div>
-        <%= image_tag "icons/phone.gif", :class => "icon", :alt => "Phone" %> <span class="small"><%= t('people.show.phone') %></span> <span class="added small"><%= h @person.phone %></span>
-      </div>
-      <%- end -%>
-    <%- end -%>
-    <% @person.shared_addresses.each do |shared_address| %>
-      <div>
-        <%= image_tag "icons/home.gif", :class => "icon", :alt => "Address" %>
-          <span class="medium"><%= h shared_address %></span>
-      </div>
-    <% end %>
+            </ul>
+          </div>
+        </div> <!-- span4 -->
 
-    <% if @person.web_site_url %>
-      <div>
-        <%= image_tag "icons/new_window.gif", :class => "icon", :alt => "Website" %>
-          <span class="small"><%= t('people.edit.web_site_url') %></span>
-          <span class="small"><%= h @person.web_site_url %></span>
-      </div>
-    <%- end -%>
-    <%= markdown(@person.description) %>
+
+
+      </div> <!-- row fluid -->
+  
+  </div> <!-- profile v-card -->
+
+  <hr/>
+
+  <div class="row-fluid">
+
+    <div class="activity-container">
+      <h3>Offers</h3>
+      
+      <% if @offers.empty? %>
+        <%= t('offers.index.nooffers') %>
+      <% else %>
+        <% @offers.each do |offer| %>
+          <div class="activity-inner">  
+            <h4><%= h offer.name %><%= waiting_image %></h4>
+            <ul class="list activity full">
+              <%= render :partial => offer, :locals => {:full => false} %>
+            </ul>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
   </div>
 
-  <h2>Offers</h2>
-  <% if @offers.empty? %>
-    <%= t('offers.index.nooffers') %>
-  <% else %>
-   <% @offers.each do |offer| %>
-    <h2><%= h offer.name %><%= waiting_image %></h2>
-    <ul class="list activity full">
-         <%= render :partial => offer, :locals => {:full => false} %>
-    </ul>
-   <% end %>
-  <% end %>
 
-  <h2>Requests</h2>
-  <% if @reqs.empty? %>
-    <%= t('reqs.home.menu._dashboard.no_active_requests') %>
-  <% else %>
-   <% @reqs.each do |req| %>
-    <h2><%= h req.name %><%= waiting_image %></h2>
-    <ul class="list activity full">
-         <%= render :partial => req, :locals => {:full => false} %>
-    </ul>
-   <% end %>
-  <% end %>
+  <br/>
+  <br/>
+
+  <div class="activity-container">
+    <h3>Requests</h3>
+    <% if @reqs.empty? %>
+      <%= t('reqs.home.menu._dashboard.no_active_requests') %>
+    <% else %>
+      <% @reqs.each do |req| %>
+        <div class="activity-inner">
+          <h4><%= h req.name %><%= waiting_image %></h4>
+          <ul class="list activity full">
+            <%= render :partial => req, :locals => {:full => false} %>
+          </ul>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <br/>
+  <br/>
+
+  <%- unless @person.recent_activity.empty? -%>
+  
+    <div class="activity-container">
+      <h3><%= t('people._recent_exchanges.header') %></h3>
+      
+      <%- unless @person.last_logged_in_at.nil? or current_person?(@person) -%>
+
+        <p class="meta">
+          <%= @person.display_name %> <%= t('last_logged_in') %>
+          <%= t 'ago_time', :date => time_ago_in_words(@person.last_logged_in_at) %> 
+        </p>    
+
+      <%- end -%>
+
+      <ul class="list activity full">
+         <%= render :partial => 'shared/exchange',
+                    :collection => @person.received_group_exchanges(@group) %>
+      </ul>
+
+    </div>
+    
+
+  
+<%- end -%>
 
 
   <%- if @membership.group.adhoc_currency? -%>
-    <%= render :partial => '/shared/recent_exchanges', :locals => {:group => @account.group} %>
+    <% render :partial => '/shared/recent_exchanges', :locals => {:group => @account.group} %>
   <%- end -%>
+
+
