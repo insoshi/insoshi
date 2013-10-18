@@ -190,6 +190,37 @@
     <% end %>
   </div>
 
+  <br/>
+  <br/>
+
+  <%- unless @person.recent_activity.empty? -%>
+  
+    <div class="activity-container">
+      <h3><%= t('people._recent_exchanges.header') %></h3>
+      
+      <%- unless @person.last_logged_in_at.nil? or current_person?(@person) -%>
+
+        <p class="meta">
+          <%= @person.display_name %> <%= t('last_logged_in') %>
+          <%= t 'ago_time', :date => time_ago_in_words(@person.last_logged_in_at) %> 
+        </p>    
+
+      <%- end -%>
+
+      <ul class="list activity full">
+         <%= render :partial => 'shared/exchange',
+                    :collection => @person.received_group_exchanges(@group) %>
+      </ul>
+
+    </div>
+    
+
+  
+<%- end -%>
+
+
   <%- if @membership.group.adhoc_currency? -%>
-    <%= render :partial => '/shared/recent_exchanges', :locals => {:group => @account.group} %>
+    <% render :partial => '/shared/recent_exchanges', :locals => {:group => @account.group} %>
   <%- end -%>
+
+
