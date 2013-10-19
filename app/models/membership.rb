@@ -15,6 +15,7 @@ class Membership < ActiveRecord::Base
   has_many :activities, :as => :item #, :dependent => :destroy
 
   validates_presence_of :person_id, :group_id
+  before_create :set_roles_mask
   after_create :create_member_preference
 
   # Status codes.
@@ -23,6 +24,7 @@ class Membership < ActiveRecord::Base
   PENDING   = 2
 
   ROLES = %w[individual admin moderator org point_of_sale_operator]
+  EXCLUDE_ROLES = %w[individual moderator org] # reserved for future use
 
   class << self
     def custom_search(category,group,page,posts_per_page,search=nil)
@@ -48,6 +50,10 @@ class Membership < ActiveRecord::Base
 
   def account
     group.adhoc_currency? ? person.account(group) : nil
+  end
+
+  def set_roles_mask
+    self.roles_mask = group.roles_mask
   end
 
   def create_member_preference

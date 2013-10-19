@@ -9,6 +9,12 @@
           <div class="span3">
             <%= f.text_field :name, label: t('.name'), class: "span3" %>
             <%= f.text_area :description, label: t('.description'), class: "span3", rows: 10 %>
+            <%= t('.default_member_roles') %></br>
+            <% for role in (Membership::ROLES - Membership::EXCLUDE_ROLES) %>
+              <%= check_box_tag "group[default_roles][]", role, @group.default_roles.include?(role) %>
+              <%=h role.humanize %><br />
+            <% end %>
+            <%= hidden_field_tag "group[default_roles][]", "" %>
           </div>
           <div class="span3">
 

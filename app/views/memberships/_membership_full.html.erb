@@ -209,7 +209,7 @@
 
       <ul class="list activity full">
          <%= render :partial => 'shared/exchange',
-                    :collection => @person.received_group_exchanges(@group) %>
+                    :collection => @person.received_group_exchanges(@membership.group) %>
       </ul>
 
     </div>

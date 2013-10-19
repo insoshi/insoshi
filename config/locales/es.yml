@@ -126,6 +126,7 @@ es:
       add_a_photo: "agregar una fotografia"
       private_txns: "Private transactions"
       enable_forum: "Enable forum"
+      default_member_roles: "Default Member Roles"
     members:
       pending_request: "Solicitud  Pendiente"
       cancel_membership: "Cancelar al miembro"
