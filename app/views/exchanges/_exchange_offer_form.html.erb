@@ -1,16 +1,31 @@
-      <%= form_for :exchange, :url => person_exchanges_path(@person), :html => {:id => 'new_exchange'} do |f| %>
-        <div class="form_row">
-          <%= f.label :amount %>
-          <%= f.text_field :amount, :size => 3, :value => @offer.price, :disabled => true %>&nbsp;<span class="small"><%= @offer.unit %></span>
-        </div>
-        <%= fields_for :offer do |o| %>
-          <div class="form_row">
-            <%= o.label 'For:' %>
-            <%= o.text_field :name, :value => @offer.name, :disabled => true %> &nbsp; <span class="offer"><%= link_to "or ask #{h @offer.person.display_name} a question", @offer, :class => "meta show-follow" %></span>
-          </div>
-          <%= o.hidden_field :id %>
-        <% end %>
-        <div class="form_row">
-          <%= f.submit t('button_submit') %><%= waiting_image %>
-        </div>
-      <% end %>
+<%= form_for :exchange, :url => person_exchanges_path(@person), :html => {:id => 'new_exchange'} do |f| %>
+  <div class="form_row">
+    <%= f.label :amount %>
+    <%= f.text_field :amount, :size => 3, :value => @offer.price, :disabled => true, "data-offer_price"=> @offer.price %>&nbsp;<span class="small" ><%= @offer.unit %></span>
+  </div>
+  <%= fields_for :offer do |o| %>
+    <div class="form_row">
+      <%= o.label 'For:' %>
+      <%= o.text_field :name, :value => @offer.name, :disabled => true %> &nbsp; <span class="offer"><%= link_to "or ask #{h @offer.person.display_name} a question", @offer, :class => "meta show-follow" %></span>
+    </div>
+    <%= o.hidden_field :id %>
+  <% end %>
+  
+  <%if @offer.available_count > 1%>
+    <%= t('offers.partial.available_count') %>: <%= select_tag 'offer[count]', options_for_select(Array.new(@offer.available_count) {|i| [i+1, i+1]} ) %>
+    <br>
+  <% end %>
+
+  <div class="form_row">
+    <%= f.submit t('button_submit') %><%= waiting_image %>
+  </div>
+<% end %>
+
+<script>
+  $(document).ready(function(){
+    $("#offer_count").change(function(){
+      $("#exchange_amount").val( $("#exchange_amount").data('offer_price') * $(this).val());
+    });  
+  });
+
+</script>

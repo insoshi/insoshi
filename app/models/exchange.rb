@@ -16,7 +16,9 @@
 class Exchange < ActiveRecord::Base
   include ActivityLogger
   acts_as_paranoid
-
+  
+  attr_accessor  :offer_count
+  
   belongs_to :customer, :class_name => "Person", :foreign_key => "customer_id"
   belongs_to :worker, :class_name => "Person", :foreign_key => "worker_id"
   belongs_to :metadata, :polymorphic => :true
@@ -30,6 +32,7 @@ class Exchange < ActiveRecord::Base
   validate :worker_is_not_customer
 
   attr_accessible :amount, :group_id
+  
   attr_accessible :customer_id
   attr_accessible *attribute_names, :as => :admin
   attr_readonly :amount
@@ -147,7 +150,7 @@ class Exchange < ActiveRecord::Base
 
   def decrement_offer_available_count
     if self.metadata.class == Offer
-      self.metadata.available_count -= 1
+      self.metadata.available_count -= self.offer_count || 1
       self.metadata.save
     end
   end
