@@ -118,13 +118,22 @@
           <%= content_tag :p, msg.html_safe, :class => "alert #{bootstrap_class(key)}" %>
         <% end %>
         <%= yield %>
+        
+        <hr/>
+
+        <footer>
+          Example Footer
+        </footer>
     </div>
+
+    <!-- Site footer -->
     <div id="footer" class="container">
       <p><%= render :partial => 'shared/powered_by' %></p>
       <p id="license">
         <%= render :partial => 'shared/license' %>
       </p>
     </div>
+    
     <%- if Rails.env.development? -%>
       <div class="container"><%= render :partial => 'shared/debug' %></div>
     <%- end -%>
