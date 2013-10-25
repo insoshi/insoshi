@@ -218,9 +218,3 @@
   
 <%- end -%>
 
-
-  <%- if @membership.group.adhoc_currency? -%>
-    <% render :partial => '/shared/recent_exchanges', :locals => {:group => @account.group} %>
-  <%- end -%>
-
-
