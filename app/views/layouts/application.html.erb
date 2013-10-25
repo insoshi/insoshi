@@ -119,19 +119,35 @@
         <% end %>
         <%= yield %>
         
-        <hr/>
 
-        <footer>
-          Example Footer
-        </footer>
-    </div>
+      <!-- Styling for the footer -->
+      <hr/>
 
-    <!-- Site footer -->
-    <div id="footer" class="container">
-      <p><%= render :partial => 'shared/powered_by' %></p>
-      <p id="license">
-        <%= render :partial => 'shared/license' %>
-      </p>
+      <footer>
+        <%# Getting the administrator object to generate content %>
+        <div class="row-fluid">
+          <div class="span8">
+            <div>
+              <!-- The license information -->
+            </div>
+            <div>  
+              <!-- The admin contact information -->
+            </div>
+          </div>
+          <div class="span4">
+            <!-- Logo -->
+          </div>
+        </div>
+
+        <% admin = get_admin() %>
+
+        <%# Printing useful information %>
+        <p><%= "#{admin.email}" %></p>
+        <p><%= render :partial => 'shared/powered_by' %></p>
+        <p id="license">
+          <%= render :partial => 'shared/license' %>
+        </p>
+      </footer>
     </div>
     
     <%- if Rails.env.development? -%>
