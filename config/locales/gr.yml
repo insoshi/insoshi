@@ -239,6 +239,7 @@ gr:
       add_a_photo: "Προσθήκη Φωτογραφίας"
       private_txns: "Private transactions"
       enable_forum: "Enable forum"
+      default_member_roles: "Default Member Roles"
     members:
       pending_request: "Η Ζήτηση είναι σε εξέλιξη"
       cancel_membership: "Ακύρωση Συμμετοχής"

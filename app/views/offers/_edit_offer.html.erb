@@ -1,4 +1,4 @@
 <h2><%= t('offers.edit.header') %></h2>
-<%= bootstrap_form_for @offer, :html => {:id => 'edit_offer', :class => 'form-horizontal'} do |f| %>
+<%= bootstrap_form_for @offer, :html => {:id => 'edit_offer', :class => 'form-horizontal'}, :remote => true do |f| %>
   <%= render :partial => 'form_fields', :locals => {:f => f, :submit_text => t('button_update')} %>
 <% end %>

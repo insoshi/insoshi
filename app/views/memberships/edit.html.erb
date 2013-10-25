@@ -1,6 +1,6 @@
 <h2>Edit membership for <%= h @membership.person.display_name %></h2>
 <%= form_for(@membership) do |f| %>
-  <% for role in Membership::ROLES %>
+  <% for role in (Membership::ROLES - Membership::EXCLUDE_ROLES) %>
     <%= check_box_tag "membership[roles][]", role, @membership.roles.include?(role) %>
     <%=h role.humanize %><br />
   <% end %>

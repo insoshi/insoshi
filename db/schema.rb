@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130915223119) do
+ActiveRecord::Schema.define(:version => 20131019020332) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -295,6 +295,7 @@ ActiveRecord::Schema.define(:version => 20130915223119) do
     t.boolean  "display_earned",                                     :default => false
     t.boolean  "display_paid",                                       :default => false
     t.boolean  "enable_forum",                                       :default => true
+    t.integer  "roles_mask"
   end
 
   create_table "groups_people", :id => false, :force => true do |t|

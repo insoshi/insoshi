@@ -1,4 +1,4 @@
 <h2><%= t('offers.new.header') %></h2>
-<%= bootstrap_form_for @offer, :url => group_offers_path(@group), :html => {:id => 'new_offer', :class => 'form-horizontal'} do |f| %>
+<%= bootstrap_form_for @offer, :url => group_offers_path(@group), :html => {:id => 'new_offer', :class => 'form-horizontal'}, :remote => true do |f| %>
   <%= render :partial => 'form_fields', :locals => {:f => f, :submit_text => t('button_create')} %>
 <% end %>

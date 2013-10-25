@@ -8,6 +8,7 @@ class Group < ActiveRecord::Base
 
   attr_accessible :name, :description, :mode, :unit, :adhoc_currency, :default_credit_limit
   attr_accessible :asset, :private_txns, :enable_forum, :display_balance, :display_earned, :display_paid
+  attr_accessible :default_roles
 
   has_one :forum
   has_many :reqs, :conditions => ["biddable = ?",true], :order => "created_at DESC"
@@ -49,6 +50,16 @@ class Group < ActiveRecord::Base
 
   def default_group?
     id == Group.global_prefs.default_group_id
+  end
+
+  def default_roles=(roles)
+    self.roles_mask = (roles & Membership::ROLES).map { |r| 2**Membership::ROLES.index(r) }.sum
+  end
+
+  def default_roles
+    Membership::ROLES.reject do |r|
+      ((roles_mask || 0) & 2**Membership::ROLES.index(r)).zero?
+    end
   end
   
   class << self

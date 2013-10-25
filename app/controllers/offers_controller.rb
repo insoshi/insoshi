@@ -29,6 +29,7 @@ class OffersController < ApplicationController
     @all_categories = Category.by_long_name
     @all_neighborhoods = Neighborhood.by_long_name
     @selected_neighborhoods = current_person.neighborhoods
+    @photo = @offer.photos.build
     respond_to do |format|
       format.js
       format.html { redirect_to group_path(@group, :anchor => 'offers/new') }
@@ -50,6 +51,7 @@ class OffersController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
+        @photo = @offer.photos.build if @offer.photos.blank?
         format.html { render :action => "new" }
         format.js { render :action => "new" }
         format.xml  { render :xml => @offer.errors, :status => :unprocessable_entity }
@@ -61,6 +63,7 @@ class OffersController < ApplicationController
     @group = @offer.group
     @all_categories = Category.by_long_name
     @all_neighborhoods = Neighborhood.by_long_name
+    @photo = @offer.photos.build if @offer.photos.blank?
     respond_to do |format|
       format.js
     end
@@ -79,6 +82,7 @@ class OffersController < ApplicationController
         format.js
         format.xml  { head :ok }
       else
+        @photo = @offer.photos.build if @offer.photos.blank?
         #format.html { render :action => "edit" }
         format.js {render :action => 'edit'}
         format.xml  { render :xml => @offer.errors, :status => :unprocessable_entity }

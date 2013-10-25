@@ -57,6 +57,7 @@ gem "gibbon", :git => "git://github.com/amro/gibbon.git"
 gem "bootstrap_form", "~> 0.3.2"
 
 group :development, :test do
+  gem 'debugger'
   gem "heroku"
   gem 'sqlite3'
   gem "silent-postgres"
@@ -88,3 +89,5 @@ group :test do
   gem "rspec-rails" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
   gem "spork"
 end
+gem 'remotipart'
+
