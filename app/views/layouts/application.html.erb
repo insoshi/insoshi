@@ -126,27 +126,39 @@
       <footer>
         <%# Getting the administrator object to generate content %>
         <div class="row-fluid">
-          <div class="span8">
+          <div class="span6">
+
+            <% admin = get_admin() %>
+            
+            <div>  
+              <!-- The admin contact information -->
+              If you are experiencing any technical difficulties, please contact <%= admin.name %> for assitance.
+              <br/>
+              
+              <i class="icon-envelope-alt"></i> 
+              <a href="mailto:<%= admin.email %>">
+                <%= admin.email %>
+              </a>
+              <% if ! admin.phone.nil? && admin.phone.length > 0 %>
+                <br/>
+                <i class="icon-phone"></i> <%= admin.phone %>
+              <% end %>
+
+            </div>
+
             <div>
               <!-- The license information -->
             </div>
-            <div>  
-              <!-- The admin contact information -->
-            </div>
+
           </div>
-          <div class="span4">
+          <div class="span6 text-right">
+            <%= render :partial => 'shared/license' %>
+            <br/>
+            <%= render :partial => 'shared/powered_by' %>
             <!-- Logo -->
           </div>
         </div>
 
-        <% admin = get_admin() %>
-
-        <%# Printing useful information %>
-        <p><%= "#{admin.email}" %></p>
-        <p><%= render :partial => 'shared/powered_by' %></p>
-        <p id="license">
-          <%= render :partial => 'shared/license' %>
-        </p>
       </footer>
     </div>
     
