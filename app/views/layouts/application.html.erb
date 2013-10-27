@@ -118,12 +118,14 @@
           <%= content_tag :p, msg.html_safe, :class => "alert #{bootstrap_class(key)}" %>
         <% end %>
         <%= yield %>
-        
+    </div>
 
+    <div class="container">
       <!-- Styling for the footer -->
       <hr/>
 
       <footer>
+
         <%# Getting the administrator object to generate content %>
         <div class="row-fluid">
           <div class="span6">
@@ -146,12 +148,11 @@
 
               <% if ! admin.web_site_url.nil? && admin.web_site_url.length > 0 %>
                 <br/>
-                <i class="icon-globe"> <%= admin.web_site_url %>
+                <i class="icon-globe"></i>
+                <a href="<%= admin.web_site_url %>">
+                  <%= admin.web_site_url %>
+                </a>
               <% end %>
-            </div>
-
-            <div>
-              <!-- The license information -->
             </div>
 
           </div>
@@ -164,6 +165,7 @@
         </div>
 
       </footer>
+    
     </div>
     
     <%- if Rails.env.development? -%>
