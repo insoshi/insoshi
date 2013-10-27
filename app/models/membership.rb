@@ -15,7 +15,7 @@ class Membership < ActiveRecord::Base
   has_many :activities, :as => :item #, :dependent => :destroy
 
   validates_presence_of :person_id, :group_id
-  before_create :set_roles_mask
+  before_create :add_default_roles
   after_create :create_member_preference
 
   # Status codes.
@@ -52,8 +52,10 @@ class Membership < ActiveRecord::Base
     group.adhoc_currency? ? person.account(group) : nil
   end
 
-  def set_roles_mask
-    self.roles_mask = group.roles_mask
+  def add_default_roles
+    group.default_roles.each do |default_role|
+      self.add_role(default_role)
+    end
   end
 
   def create_member_preference
