@@ -144,6 +144,10 @@
                 <i class="icon-phone"></i> <%= admin.phone %>
               <% end %>
 
+              <% if ! admin.web_site_url.nil? && admin.web_site_url.length > 0 %>
+                <br/>
+                <i class="icon-globe"> <%= admin.web_site_url %>
+              <% end %>
             </div>
 
             <div>
@@ -163,6 +167,7 @@
     </div>
     
     <%- if Rails.env.development? -%>
+      <hr/>
       <div class="container"><%= render :partial => 'shared/debug' %></div>
     <%- end -%>
     <%= raw global_prefs.analytics %>
