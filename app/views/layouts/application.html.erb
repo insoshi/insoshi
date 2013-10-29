@@ -119,13 +119,57 @@
         <% end %>
         <%= yield %>
     </div>
-    <div id="footer" class="container">
-      <p><%= render :partial => 'shared/powered_by' %></p>
-      <p id="license">
-        <%= render :partial => 'shared/license' %>
-      </p>
+
+    <div class="container">
+      <!-- Styling for the footer -->
+      <hr/>
+
+      <footer>
+
+        <%# Getting the administrator object to generate content %>
+        <div class="row-fluid">
+          <div class="span6">
+
+            <% admin = get_admin() %>
+            
+            <div>  
+              <!-- The admin contact information -->
+              If you are experiencing any technical difficulties, please contact <%= admin.name %> for assitance.
+              <br/>
+              
+              <i class="icon-envelope-alt"></i> 
+              <a href="mailto:<%= admin.email %>">
+                <%= admin.email %>
+              </a>
+              <% if ! admin.phone.nil? && admin.phone.length > 0 && admin.phoneprivacy == true %>
+                <br/>
+                <i class="icon-phone"></i> <%= admin.phone %>
+              <% end %>
+
+              <% if ! admin.web_site_url.nil? && admin.web_site_url.length > 0 %>
+                <br/>
+                <i class="icon-globe"></i>
+                <a href="<%= admin.web_site_url %>">
+                  <%= admin.web_site_url %>
+                </a>
+              <% end %>
+            </div>
+
+          </div>
+          <div class="span6 text-right">
+            <%= render :partial => 'shared/license' %>
+            <br/>
+            <%= render :partial => 'shared/powered_by' %>
+            <!-- Logo -->
+          </div>
+        </div>
+
+      </footer>
+    
     </div>
+    
     <%- if Rails.env.development? -%>
+      <hr/>
       <div class="container"><%= render :partial => 'shared/debug' %></div>
     <%- end -%>
     <%= raw global_prefs.analytics %>

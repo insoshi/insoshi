@@ -50,6 +50,11 @@ module PeopleHelper
     # activities_helper_spec due to an RSpec bug.
     link_to(h(text), person, html_options)
   end
+
+  
+  def get_admin 
+    Person.where( :admin => true ).first
+  end
     
   private
     
