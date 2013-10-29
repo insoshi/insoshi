@@ -141,7 +141,7 @@
               <a href="mailto:<%= admin.email %>">
                 <%= admin.email %>
               </a>
-              <% if ! admin.phone.nil? && admin.phone.length > 0 && admin.phoneprivacy == true %>
+              <% if !admin.phone.blank? && admin.phoneprivacy? %>
                 <br/>
                 <i class="icon-phone"></i> <%= admin.phone %>
               <% end %>

@@ -53,7 +53,7 @@ module PeopleHelper
 
   
   def get_admin 
-    Person.where( :admin => true ).first
+    Person.find_first_admin
   end
     
   private
