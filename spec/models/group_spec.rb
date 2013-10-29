@@ -117,6 +117,53 @@ describe Group do
         @offer = Offer.new(:name => "Pizza", :group => @g, :price => 5, :expiration_date => Date.today,:total_available => 1, :person => @p2)
         @ability.should be_able_to(:create,@offer)
       end
+
+    end
+
+    describe 'reqs made by people' do
+      before(:each) do
+        @p = people(:quentin)
+        @p2 = people(:aaron)
+        @nocurrency_valid_attributes = {
+          :name => "group name",
+          :description => "value for description",
+          :mode => Group::PUBLIC,
+          :adhoc_currency => false
+        }
+        @g_nocurrency = Group.new(@nocurrency_valid_attributes)
+        @g_nocurrency.owner = @p
+        @g_nocurrency.save!
+
+        Membership.request(@p2,@g_nocurrency,false)
+        @membership = Membership.mem(@p2,@g_nocurrency)
+        @ability = Ability.new(@p2)
+      end
+
+      it "should allow a member of a group without a currency to create a request" do
+        @req = Req.new(person: @p2, group: @g_nocurrency, name:'test req', description:'test req description', estimated_hours:3, due_date:1.day.from_now, biddable:true, active:true)
+        @req.save!
+        @req.should be_valid
+      end
+
+      it "should allow a member of a group without a currency to approve a bid" do
+        @pref = Account.global_prefs
+        @pref.default_group_id = @g.id
+        @pref.save!
+
+        @req = Req.new(person: @p2, group: @g_nocurrency, name:'test req', description:'test req description', estimated_hours:3, due_date:1.day.from_now, biddable:true, active:true)
+        @req.save!
+       
+        @bid_valid_attributes = {
+          estimated_hours: 3
+        }
+        @bid = @req.bids.new(@bid_valid_attributes)
+        @bid.person = @p
+        @bid.save!
+        @bid.accept!
+        @bid.req.ability = @ability
+        @bid.pay!
+        @bid.should be_valid
+      end
     end
 
     describe 'exchanges made by members' do

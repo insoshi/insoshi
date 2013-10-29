@@ -12,6 +12,7 @@
 #
 
 class Account < ActiveRecord::Base
+  extend PreferencesHelper
   belongs_to :person
   belongs_to :group
 
@@ -74,7 +75,8 @@ class Account < ActiveRecord::Base
       exchange.worker = to
       exchange.amount = amount
       exchange.metadata = metadata
-      exchange.group_id = metadata.group_id
+      # XXX maybe cleaner to let the exchange object assign group_id itself?
+      exchange.group_id = metadata.group.adhoc_currency? ? metadata.group_id : global_prefs.default_group_id
       # permission depends on current_user and policy of group specified in request
       if metadata.ability.can? :create, exchange
         exchange.save!

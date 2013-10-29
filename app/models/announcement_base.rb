@@ -15,7 +15,6 @@ module AnnouncementBase
     has_and_belongs_to_many :neighborhoods
 
     validates :group_id, :name, :presence => true
-    validate :group_has_a_currency
     validate :group_includes_person_as_a_member
     validate :maximum_categories
 

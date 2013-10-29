@@ -67,7 +67,8 @@ class ExchangesController < ApplicationController
       @offer = Offer.find(params[:offer][:id])
       @exchange.amount = @offer.price
       @exchange.metadata = @offer
-      @exchange.group = @offer.group
+      # XXX maybe cleaner to let the exchange object assign group_id itself?
+      @exchange.group_id = @offer.group.adhoc_currency? ? @offer.group_id : global_prefs.default_group_id
     else
       @req = Req.new(params[:req])
 
