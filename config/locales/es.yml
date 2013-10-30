@@ -386,6 +386,7 @@ es:
       service_provided: "Servicios proveídos"
       no_currencies: "esta persona no está utilizando ninguna moneda"
       enter_description: "Descripción del servicio aquí"
+      quantity: "Cantidad"
     notify:
       you_have_received_a_payment_of: "Has recibido un pago de"
       paid_you: "te ha pagado"

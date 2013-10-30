@@ -454,6 +454,7 @@ fr:
       service_provided: "Service rendu"
       no_currencies: "Cette personne n’utilise pas de monnaie"
       enter_description: "Entre le description du service ici"
+      quantity: "Quantité"
     notify:
       you_have_received_a_payment_of: "Vous avez reçu un paiement"
       paid_you: "vous avez payé"

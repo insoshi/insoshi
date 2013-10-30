@@ -512,6 +512,7 @@ gr:
       service_provided: "Παρεχόμενη Υπηρεσία"
       no_currencies: "Αυτό το πρόσωπο δεν χρησιμοποιεί κανένα νόμισμα"
       enter_description: "Εισάγετε περιγραφή της υπηρεσίας εδώ"
+      quantity: "ποσότητα"
     notify:
       you_have_received_a_payment_of: "Έχετε λάβει μια πληρωμή από"
       paid_you: "σας πλήρωσε"

@@ -12,8 +12,10 @@
   <% end %>
   
   <%if @offer.available_count > 1%>
-    <%= t('offers.partial.available_count') %>: <%= select_tag 'offer[count]', options_for_select(Array.new(@offer.available_count) {|i| [i+1, i+1]} ) %>
-    <br>
+    <div class="form_row">
+      <div style='margin-bottom: 5px;'><%= t('exchanges.new.quantity') %>:</div>
+      <%= select_tag 'offer[count]', options_for_select(Array.new(@offer.available_count) {|i| [i+1, i+1]} ) %>
+    </div>
   <% end %>
 
   <div class="form_row">

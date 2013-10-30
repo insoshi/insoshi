@@ -26,6 +26,15 @@ class Offer < ActiveRecord::Base
     available_count > 0 && expiration_date >= DateTime.now
   end
 
+  def calculate_amount(count)
+    return nil unless (count.blank? or count.is_a?(Fixnum))
+    if count.blank?
+      price
+    else
+      price * count if (count > 0 && count <= available_count)
+    end
+  end
+
   ## Photo helpers
   def photo
     # This should only have one entry, but be paranoid.

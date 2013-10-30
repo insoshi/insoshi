@@ -65,7 +65,7 @@ class ExchangesController < ApplicationController
 
     if params[:offer]
       @offer = Offer.find(params[:offer][:id])
-      @exchange.amount = calculate_offer_amount
+      @exchange.amount = @offer.calculate_amount(get_offer_count)
       @exchange.offer_count = get_offer_count
       @exchange.metadata = @offer
       # XXX maybe cleaner to let the exchange object assign group_id itself?
@@ -119,18 +119,6 @@ class ExchangesController < ApplicationController
   private
   
   def get_offer_count
-    if params[:offer][:count].blank?
-      1
-    else
-      params[:offer][:count].to_i if (params[:offer][:count].to_i > 0 && params[:offer][:count].to_i <= @offer.available_count)
-    end
-  end
-  
-  def calculate_offer_amount
-    if params[:offer][:count].blank? 
-      @offer.price
-    else
-      @offer.price * params[:offer][:count].to_i if (params[:offer][:count].to_i > 0 && params[:offer][:count].to_i <= @offer.available_count)
-    end
+    @offer_count ||= params[:offer][:count].blank? ? 1 : params[:offer][:count].to_i
   end
 end
