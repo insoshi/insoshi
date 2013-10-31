@@ -169,7 +169,7 @@ class Ability
             false
           else
             # in oauth land, token always represents payer, so oauth payment is forbidden if exchange.customer != person.
-            exchange.customer == person || (access_token.nil? and ((membership.is?(:point_of_sale_operator) and exchange.worker == person) || membership.is?(:admin) || person.admin?))
+            payer == person || (access_token.nil? and ((membership.is?(:point_of_sale_operator) and exchange.worker == person) || membership.is?(:admin) || person.admin?))
           end
         end
       end

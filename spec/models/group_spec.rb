@@ -183,6 +183,11 @@ describe Group do
         @ability_nonmember.should_not be_able_to(:create,@e)
       end
 
+      it "should allow a regular member of a group to make an exchange" do
+        # if the customer is not specified, the current_person is the payer
+        @ability.should be_able_to(:create,@e)
+      end
+
       it "should not allow an individual member to make an unauthorized payment" do
         @e.customer = @p2
         @membership.roles = ['individual']
