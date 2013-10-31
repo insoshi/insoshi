@@ -329,10 +329,10 @@ gr:
     _dashboard:
       bids: "Οι ενεργές δηλώσεις σας"
       no_active_bids: "Δεν υπάρχουν ενεργές δηλώσεις"
-      offers: "Οι ενεργές προσφορές σας"
-      no_active_offers: "Δεν υπάρχουν ενεργές προσφορές"
-      requests: "Οι ενεργές ζητήσεις σας"
-      no_active_requests: "Δεν υπάρχουν ενεργές ζητήσεις"
+      offers: "Οι προσφορές σας"
+      no_active_offers: "Δεν υπάρχουν προσφορές"
+      requests: "Οι ζητήσεις σας"
+      no_active_requests: "Δεν υπάρχουν ζητήσεις"
     _graphs:
     _forum_preview:
       header: "Φόρουμ Συζητήσεων"

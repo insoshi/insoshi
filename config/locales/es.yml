@@ -214,10 +214,10 @@ es:
     _dashboard:
       bids: "Tus demandas y ofertas"
       no_active_bids: "No hay ofertas activas"
-      offers: "Tus ofertas activas"
-      no_active_offers: "No hay ofertas activas"
-      requests: "Tus ofertas activas"
-      no_active_requests: "No hay ofertas activas"
+      offers: "Tus ofertas"
+      no_active_offers: "No hay ofertas"
+      requests: "Tus ofertas"
+      no_active_requests: "No hay ofertas"
     _graphs:
     _forum_preview:
       header: "Foro de discusiones"

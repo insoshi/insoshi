@@ -16,6 +16,11 @@ class GroupsController < ApplicationController
   def show
     membership_display
 
+    if @group.adhoc_currency?
+      @transactions = current_person.transactions.where(group_id: @group.id).limit(3)
+    end
+    @your_offers = current_person.offers.where(group_id: @group.id).order('created_at DESC')
+    @your_reqs = current_person.reqs.where(group_id: @group.id).order('created_at DESC')
     respond_to do |format|
       format.html do
         @forum = @group.forum

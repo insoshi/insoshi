@@ -270,10 +270,10 @@ fr:
     _dashboard:
       bids: "Vos enchères actives"
       no_active_bids: "Aucune enchère active"
-      offers: "Vous offres en activités"
-      no_active_offers: "Aucune offre active"
-      requests: "Vos requêtes actives"
-      no_active_requests: "Aucune requêtes actives"
+      offers: "Vous offres"
+      no_active_offers: "Aucune offre"
+      requests: "Vos requêtes"
+      no_active_requests: "Aucune requêtes"
     _graphs:
     _forum_preview:
       header: "Forum de discussion"

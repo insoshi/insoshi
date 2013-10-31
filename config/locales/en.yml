@@ -215,10 +215,10 @@ en:
     _dashboard:
       bids: "Your Active Bids/Work"
       no_active_bids: "No active bids"
-      offers: "Your Active Offers"
-      no_active_offers: "No active offers"
-      requests: "Your Active Requests"
-      no_active_requests: "No active requests"
+      offers: "Your Offers"
+      no_active_offers: "No offers"
+      requests: "Your Requests"
+      no_active_requests: "No requests"
     _graphs:
     _forum_preview:
       header: "Discussion Forum"
