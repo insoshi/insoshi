@@ -281,10 +281,6 @@ def relative_time_ago_in_words(time)
   end
 end
 
-  def datetime_format(datetime)
-    datetime.to_time.strftime("%m/%d/%Y %H:%M:%S") unless datetime.blank? && datetime.kind_of?(Time)
-  end
-
   private
   
     def inflect(word, number)
