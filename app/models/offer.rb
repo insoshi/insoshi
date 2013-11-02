@@ -38,7 +38,8 @@ class Offer < ActiveRecord::Base
   ## Photo helpers
   def photo
     # This should only have one entry, but be paranoid.
-    photos.find_all_by_primary(true).first
+    # assuming an offer only has at most one photo even though it is a has_many relationship
+    photos.first
   end
 
   # Return all the photos other than the primary one
