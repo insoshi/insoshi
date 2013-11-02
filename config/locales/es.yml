@@ -18,7 +18,7 @@ es:
   filter_categories: "Categorías"
   filter_neighborhoods: "Vecindarios"
 
-  estimate: "Estimación"
+  estimate: "Precio"
   title: "Título"
   bid: "oferta"
   due_date: "Fecha de vencimiento"
