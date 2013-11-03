@@ -18,7 +18,8 @@ gr:
   filter_categories: "Κατηγορίες"
   filter_neighborhoods: "Περιοχές"
 
-  estimate: "Preis"
+  price: "Preis"
+  estimate: "Εκτίμηση"
   title: "Τίτλος"
   bid: "δήλωση"
   due_date: "Καταληκτική Ημερομηνία"

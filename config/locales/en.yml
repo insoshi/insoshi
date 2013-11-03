@@ -18,7 +18,8 @@ en:
   filter_categories: "Categories"
   filter_neighborhoods: "Neighborhoods"
 
-  estimate: "Price"
+  price: "Price"
+  estimate: "Estimate"
   title: "Title"
   bid: "bid"
   due_date: "Due date"
