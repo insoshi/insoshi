@@ -23,7 +23,11 @@ class ApplicationController < ActionController::Base
         unless @group.nil?
           redirect_to @group
         else
-          redirect_to index
+          unless @person.nil?
+            redirect_to @person
+          else
+            redirect_to index
+          end
         end
       end
       format.js do

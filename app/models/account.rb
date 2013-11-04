@@ -16,8 +16,8 @@ class Account < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
 
-  attr_accessible :credit_limit, :offset, :as => :admin
-  attr_accessible :credit_limit, :offset
+  attr_accessible :credit_limit, :offset, :reserve, :reserve_percent, :as => :admin
+  attr_accessible :credit_limit, :offset, :reserve, :reserve_percent
 
   before_update :check_credit_limit
 
@@ -70,7 +70,7 @@ class Account < ActiveRecord::Base
 
   def self.transfer(from, to, amount, metadata)
     transaction do
-      exchange = Exchange.new()
+      exchange = ExchangeAndFee.new()
       exchange.customer = from
       exchange.worker = to
       exchange.amount = amount

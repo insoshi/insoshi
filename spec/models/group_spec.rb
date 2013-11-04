@@ -64,6 +64,12 @@ describe Group do
         @membership_sneaky_admin.save
         @ability_sneaky_admin.should_not be_able_to(:update,@membership)
       end
+
+      it "should allow an admin to update her own membership" do
+        @membership.roles = ['individual','admin']
+        @membership.save
+        @ability.should be_able_to(:update,@membership)
+      end
     end
 
     describe 'forum posts made by non-members' do
@@ -168,12 +174,9 @@ describe Group do
 
     describe 'exchanges made by members' do
       before(:each) do
-        @req = Req.create!(:name => 'Generic',:estimated_hours => 0, :group => @g, :due_date => Time.now, :person => @p2, :active => false)
-        @e = Exchange.new
-        @e.metadata = @req
+        @e = @g.exchange_and_fees.build(amount: 1.0)
         @e.worker = @p
-        @e.group = @g
-        @e.amount = 1.0
+        @e.notes = 'Generic'
       end
 
       it "should not allow a non-member of a group to make an exchange" do
@@ -327,6 +330,50 @@ describe Group do
           payer_account_after_payment_deletion = @p2.account(@g)
           payer_account_after_payment_deletion.paid.should == 90.0
         end
+
+        it "should allow a transaction fee to be sent to a reserve account" do
+          @p3 = people(:buzzard)
+          Membership.request(@p3,@g,false)
+          @membership_buzzard = Membership.mem(@p3,@g)
+          @membership_buzzard.save!
+          @account_buzzard = @membership_buzzard.account
+          @account_buzzard.balance = 10.0
+          @account_buzzard.reserve_percent = 0.1
+          @account_buzzard.reserve = true
+          @account_buzzard.save!
+
+          @membership_quentin = Membership.mem(@p,@g)
+          @account_quentin = @membership_quentin.account
+          @account_quentin.balance = 10.0
+          @account_quentin.save!
+
+          @e.customer = @p2
+          @e.save!
+
+          account_buzzard_after_payment = @p3.account(@g)
+          account_buzzard_after_payment.balance.should == 10.1
+
+          account_quentin_after_payment = @p.account(@g)
+          account_quentin_after_payment.balance.should == 10.9
+        end
+
+        it "should not allow the sum of reserve percentages to exceed 1" do
+          @membership.roles = ['individual','admin']
+          @membership.save
+
+          @p3 = people(:buzzard)
+          Membership.request(@p3,@g,false)
+          @membership_buzzard = Membership.mem(@p3,@g)
+          @membership_buzzard.save!
+
+          @account_buzzard = @membership_buzzard.account
+          @account_buzzard.balance = 10.0
+          @account_buzzard.reserve_percent = 1.01
+          @account_buzzard.reserve = true
+
+          @ability.should_not be_able_to(:update,@account_buzzard)
+        end
+
       end
     end
   end

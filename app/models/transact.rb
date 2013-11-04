@@ -1,4 +1,4 @@
-class Transact < Exchange
+class Transact < ExchangeAndFee
   extend PreferencesHelper
   attr_accessor :to, :memo, :callback_url, :redirect_url
   attr_accessible :callback_url, :redirect_url

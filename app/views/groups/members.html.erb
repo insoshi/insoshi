@@ -73,6 +73,18 @@
     <%- end -%>
   </ul>
 
+  <h3>Reserve Accounts (<%= @group.sum_reserves %>%)</h3>
+  <ul class="grid contacts medium">
+    <%- @group.reserves.each do |reserve| -%>
+      <% reserve.name += ' (' + reserve.account(@group).reserve_percent.to_s + ')' %>
+      <li class="contact">
+      <%= image_link reserve, :image_options => { :class => "photo" },
+                              :link_options => { :class => "url" },
+                              :image => :bounded_icon, :vcard => true, :truncate => 24 %>
+      </li>
+    <%- end -%>
+  </ul>
+
   <h3><%= t('groups.members.created_by') %></h3>
   <ul class="grid contacts medium">
     <li class="contact">

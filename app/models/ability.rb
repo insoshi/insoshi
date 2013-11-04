@@ -104,7 +104,7 @@ class Ability
     can :create, Membership
     can :destroy, Membership, :person => person
     can [:update,:suscribe,:unsuscribe], Membership do |membership|
-      person.is?(:admin,membership.group) && !membership.is?(:admin)
+      person.is?(:admin,membership.group) and !(membership.is?(:admin) and (person != membership.person))
     end
 
     can :update, MemberPreference do |member_preference|
@@ -113,7 +113,8 @@ class Ability
 
     can :read, Account
     can :update, Account do |account|
-      person.is?(:admin,account.group)
+      # XXX excluding the specified account from the sum would be correct math but probably not worth it
+      person.is?(:admin,account.group) and ((account.reserve_percent || 0) + account.group.sum_reserves) < 1.0
     end
     can :export, Account
 

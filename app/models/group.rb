@@ -15,7 +15,9 @@ class Group < ActiveRecord::Base
   has_many :offers, :order => "created_at DESC"
   has_many :photos, :as => :photoable, :dependent => :destroy, :order => "created_at"
   has_many :exchanges, :order => "created_at DESC"
+  has_many :exchange_and_fees, :order => "created_at DESC"
   has_many :memberships, :dependent => :destroy
+  has_many :accounts, :dependent => :destroy
   has_many :people, :through => :memberships, 
     :conditions => "status = 0", :order => "name DESC"
   has_many :pending_request, :through => :memberships, :source => "person",
@@ -83,6 +85,14 @@ class Group < ActiveRecord::Base
     admins = memberships.with_role('admin').map {|m| m.person}
     admins << owner if admins.empty?
     admins
+  end
+
+  def reserves
+    accounts.where(reserve: true).map {|a| a.person}
+  end
+
+  def sum_reserves
+    accounts.where(reserve: true).map(&:reserve_percent).inject(:+) || 0
   end
 
   def public?

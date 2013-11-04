@@ -4,14 +4,6 @@ class AccountsController < ApplicationController
   load_and_authorize_resource :account, :through => :person
 
   def index
-#    @accounts = @person.accounts
-    # remove accounts associated with deleted groups
-    @accounts.delete_if {|account| account.group.nil? }
-
-    respond_to do |format|
-      format.xml { render :xml => @accounts.to_xml(:include => {:group => {:methods => [:thumbnail, :icon], :only => [:id,:name,:description,:unit,:thumbnail,:icon]} }) }
-      format.json { render :json => @accounts.as_json(:include => {:group => {:methods => [:thumbnail, :icon], :only => [:id,:name,:description,:unit,:thumbnail,:icon]} }) }
-    end
   end
 
   def update
