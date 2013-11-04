@@ -3,7 +3,7 @@ class ExchangeAndFee < Exchange
 
   def withdraw_fee
     group.accounts.where(reserve: true).each do |a|
-      e=group.exchanges.build(amount: a.reserve_percent)
+      e=group.exchanges.build(amount: amount*a.reserve_percent)
       e.metadata = metadata
       e.customer = worker
       e.worker = a.person

@@ -348,13 +348,14 @@ describe Group do
           @account_quentin.save!
 
           @e.customer = @p2
+          @e.amount = 2.00
           @e.save!
 
           account_buzzard_after_payment = @p3.account(@g)
-          account_buzzard_after_payment.balance.should == 10.1
+          account_buzzard_after_payment.balance.should == 10.2
 
           account_quentin_after_payment = @p.account(@g)
-          account_quentin_after_payment.balance.should == 10.9
+          account_quentin_after_payment.balance.should == 11.8
         end
 
         it "should not allow the sum of reserve percentages to exceed 1" do
