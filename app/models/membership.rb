@@ -27,21 +27,24 @@ class Membership < ActiveRecord::Base
   EXCLUDE_ROLES = %w[individual moderator org] # reserved for future use
 
   class << self
+    # For issue #272, people should be ordered by display name(display_name in person.rb) which is business_name or name
+    # The following sql is for getting business_name + name
+    # case when people.business_name is null then '' else people.business_name end) || people.name
     def custom_search(category,group,page,posts_per_page,search=nil)
       unless category
         group.memberships.active.search_by(search).paginate(:page => page,
                                                             :conditions => ['status = ?', Membership::ACCEPTED],
-                                                            :order => 'memberships.created_at DESC, people.business_name ASC, people.name ASC',
+                                                            :order => "lower((case when people.business_name is null then '' else people.business_name end) || people.name) ASC",
                                                             :include => :person,
                                                             :per_page => posts_per_page)
       else
         category.people.all(:joins => :memberships,
                             :select => "people.*,memberships.id as categorized_membership",
                             :conditions => {:memberships => {:group_id => group.id},
-                                            :people => {:deactivated => false}}
+                                            :people => {:deactivated => false}},
+                            :order => "lower((case when people.business_name is null then '' else people.business_name end) || people.name) ASC"
         ).map {|p| Membership.find(p.categorized_membership)}.paginate(:page => page,
                                                                        :conditions => ['status = ?', Membership::ACCEPTED],
-                                                                       :order => 'memberships.created_at DESC, people.business_name ASC, people.name ASC',
                                                                        :include => :person,
                                                                        :per_page => posts_per_page)
       end
