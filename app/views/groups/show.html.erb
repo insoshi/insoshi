@@ -6,7 +6,9 @@
 <%- if @group.adhoc_currency? and not @group.private_txns? -%>
     <li><a href="#tab_exchanges" data-toggle="tab"><%= t("groups.show.exchanges") %></a></li>
 <%- end -%>
+<%- if @group.enable_forum? -%>
     <li><a href="#tab_forum" data-toggle="tab"><%= t("groups.show.forum") %></a></li>
+<%- end -%>
     <li><a href="#tab_requests" data-toggle="tab"><%= t("groups.show.requests") %></a></li>
     <li><a href="#tab_offers" data-toggle="tab"><%= t("groups.show.offers") %></a></li>
     <li><a href="#tab_people" data-toggle="tab"><%= t("groups.show.people") %></a></li>
@@ -26,12 +28,14 @@
       </div>
     </div>
 <%- end -%>
+<%- if @group.enable_forum? -%>
     <div class="tab-pane" id="tab_forum">
       <div id="forum_canvas">
       <%= render '/forums/forum_canvas' %>
       </div>
       <%= render 'forum_form' %>
     </div>
+<%- end -%>
     <div class="tab-pane" id="tab_requests">
       <div id="reqs_canvas">
       <%= render '/reqs/reqs_canvas' %>
