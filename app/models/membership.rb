@@ -117,6 +117,23 @@ class Membership < ActiveRecord::Base
       end
     end
 
+    def invite(person, group, send_mail = nil)
+      if send_mail.nil?
+        send_mail = global_prefs.email_notifications?
+      end
+      if Membership.exist?(person, group)
+        nil
+      else
+        transaction do
+          invitation = Invitation.create(person: person, group: group)
+          if send_mail
+            after_transaction { PersonMailerQueue.invitation_notification(invitation) }
+          end
+        end
+        true
+      end
+    end
+
     # Accept a membership request.
     def accept(person, group)
       transaction do

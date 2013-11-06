@@ -4,6 +4,7 @@
   <%- end -%>
   <div class="row">
     <div class="span9">
+      <%= render :partial => 'invitations' %>
       <%- if @group.adhoc_currency? and @membership %>
         <%= render :partial => 'shared/account', :locals => {:account => @membership.account, :html_classes => 'show-follow'} %>
         <%- if @transactions.length > 0 %>

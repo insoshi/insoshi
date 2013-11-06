@@ -6,6 +6,7 @@ Oscurrency::Application.routes.draw do
   resources :password_resets, :only => [:new, :create, :edit, :update]
   resources :member_preferences
   resources :neighborhoods, :only => [:show]
+  resources :invitations, :only => [:edit, :update]
 
   # XXX in 2.3.x, this was easier -> map.resources :transacts, :as => "transacts/:asset"
   get    "transacts(/:asset)(.:format)"          => "transacts#index",   :as => 'transacts'
@@ -78,6 +79,8 @@ Oscurrency::Application.routes.draw do
       get :verify_email
       get :su
       get :unsu
+      get :invite
+      post :send_invite
       get :common_contacts
     end
     resources :messages

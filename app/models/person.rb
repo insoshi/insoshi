@@ -135,6 +135,7 @@ class Person < ActiveRecord::Base
   has_many :offers
   has_many :reqs
   has_many :bids
+  has_many :invitations, :order => 'created_at DESC'
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
   belongs_to :sponsor, :class_name => "Person", :foreign_key => "sponsor_id"
   belongs_to :support_contact, :class_name => "Person", :foreign_key => "support_contact_id"

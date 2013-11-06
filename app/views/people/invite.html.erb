@@ -1,0 +1,16 @@
+<div class="span10">
+  <h2>Invite <%= @person.name %> to group</h2>
+    <div class="toolbox">
+      <%= image_tag @person.main_photo, :class => "profile-image photo",
+        :alt => h(@person.name) %>
+    </div>
+  <%= form_tag send_invite_person_path(@person) do %>
+    <p>
+      <%= label_tag "group invite" %>
+      Invite <%= @person.name %> to <%= select_tag(:group_id, options_from_collection_for_select(@groups,:id,:name)) %>
+    </p>
+    <p>
+      <%= submit_tag "Send Invite!" %>
+    </p>
+  <%- end -%>
+</div>

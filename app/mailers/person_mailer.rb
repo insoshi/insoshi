@@ -66,7 +66,31 @@ class PersonMailer < ActionMailer::Base
          :subject => formatted_subject("You have been accepted to join #{membership.group.name}")
         )
   end
-  
+
+  def invitation_notification(invitation)
+    invitation = coerce(invitation, Invitation)
+    @invitation = invitation
+    @server = server
+    @url = edit_invitation_path(invitation)
+    @preferences_note = preferences_note(invitation.person)
+    mail(:to => invitation.person.email,
+         :from => "Invitation notification <invitation@#{domain}>",
+         :subject => formatted_subject("Invitation from group #{invitation.group.name}")
+        )
+  end
+
+  def invitation_accepted(invitation)
+    invitation = coerce(invitation, Invitation)
+    @invitation = invitation
+    @server = server
+    @url = members_group_path(invitation.group)
+    @preferences_note = preferences_note(invitation.group.owner)
+    mail(:to => invitation.group.owner.email,
+         :from => "Invitation accepted <invitation@#{domain}>",
+         :subject => formatted_subject("#{invitation.person.name} accepted the invitation")
+        )
+  end
+
   def forum_post_notification(subscriber, forum_post)
     subscriber = coerce(subscriber, Person)
     forum_post = coerce(forum_post, ForumPost)

@@ -1,0 +1,22 @@
+<%- unless @invitations.empty? -%>
+   <h2><%= t('home._invitations.header') %></h2>
+   <ul class="list requests small">
+     <%- @invitations.each do |invitation| -%>
+       <li>
+         <div class="profile-image">
+           <%= group_image_link invitation.group %>
+         </div>
+         <p><%= t('home._invitations.invitation_for') %>
+         <%= group_link invitation.group %></p>
+         <p class="meta published">
+           <%= time_ago_in_words(invitation.created_at) %> 
+           <%= t('ago') %>
+         </p>
+         <p>
+           <%= link_to t('home._invitations.respond'), edit_invitation_path(invitation) %> |
+           <%= link_to t('home._invitations.view_group'), group_path(invitation.group) %>
+         </p>
+       </li>
+     <%- end -%>
+   </ul>
+ <%- end -%>

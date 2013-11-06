@@ -23,6 +23,7 @@ class GroupsController < ApplicationController
     @your_reqs = current_person.reqs.where(group_id: @group.id).order('created_at DESC')
     respond_to do |format|
       format.html do
+        @invitations = current_person.invitations.where(accepted_at: nil)
         @forum = @group.forum
         @topics = Topic.find_recently_active(@forum, params[:page]) 
         @reqs = Req.custom_search(nil,

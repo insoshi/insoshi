@@ -1,0 +1,7 @@
+<h2>Group Invite</h2>
+<p><%= group_image_link @invitation.group, :image => :thumbnail %></p>
+<p>You have been invited to join the group <%= group_link @invitation.group %></p>
+<%= form_for(@invitation) do |f| %>
+  <%= f.submit "Accept" %>
+  <%= f.submit "Decline" %>
+<% end %>
