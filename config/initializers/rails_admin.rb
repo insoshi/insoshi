@@ -41,6 +41,8 @@ end
 
   config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted]
 
+  config.default_items_per_page = 100
+
   config.model State do
     visible false
   end
