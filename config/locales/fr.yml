@@ -52,6 +52,7 @@ fr:
   active: "Actif"
   all: "Tous"
   cancelled: "annulé"
+  return_to: "réintégrer "
 
   datetime:
     distance_in_words:

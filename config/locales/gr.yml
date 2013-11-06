@@ -53,6 +53,7 @@ gr:
   active: "ενεργός"
   all: "όλα"
   cancelled: "cancelled"
+  return_to: "επιστρέψετε στην "
 
   datetime:
     distance_in_words:

@@ -52,6 +52,7 @@ en:
   active: "Active"
   all: "All"
   cancelled: "cancelled"
+  return_to: "return to "
 
   oauth:
     authorize:

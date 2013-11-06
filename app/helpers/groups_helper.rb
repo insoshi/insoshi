@@ -9,7 +9,11 @@ module GroupsHelper
   def group_image_link(group, options = {})
     link = options[:link] || group
     image = options[:image] || :icon
-    image_options = { :title => h(group.name), :alt => h(group.name) }
+    unless options[:image_options].nil?
+      title_prefix = options[:image_options][:class] == 'default-group-link' ? t('return_to') : ''
+    end
+    group_title = title_prefix + h(group.name)
+    image_options = { :title => group_title, :alt => group_title }
     unless options[:image_options].nil?
       image_options.merge!(options[:image_options]) 
     end

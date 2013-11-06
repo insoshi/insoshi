@@ -52,6 +52,7 @@ es:
   active: "Activo"
   all: "Todos"
   cancelled: "cancelado"
+  return_to: "volver a "
 
   oauth:
     authorize:
