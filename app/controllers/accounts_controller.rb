@@ -18,7 +18,9 @@ class AccountsController < ApplicationController
 
   def show
     @account = Account.find(params[:id])
-    @exchanges = @person.received_group_exchanges(@account.group_id)
+    unless (@account.group.private_txns? and not current_person?(@person))
+      @exchanges = @person.received_group_exchanges(@account.group_id)
+    end
     respond_to do |format|
       format.html
       format.js

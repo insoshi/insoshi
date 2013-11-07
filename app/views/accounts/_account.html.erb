@@ -8,7 +8,7 @@
     </ul>
   </div>
   </div>
-
+<%- unless (@account.group.private_txns? and !current_person?(@person)) %>
   <h2><%= t('recent_street_cred') %></h2>
   
 <%- unless @person.recent_activity.empty? -%>
@@ -24,4 +24,5 @@
      <%= render :partial => 'shared/exchange',
                 :collection => @exchanges %>
   </ul>
+<%- end -%>
 <%- end -%>

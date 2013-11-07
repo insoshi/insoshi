@@ -195,7 +195,7 @@
 
   <br/>
   <br/>
-
+<%- unless @membership.group.private_txns? %>
   <%- unless @person.recent_activity.empty? -%>
   
     <div class="activity-container">
@@ -218,6 +218,6 @@
     </div>
     
 
-  
+  <%- end -%> 
 <%- end -%>
 
