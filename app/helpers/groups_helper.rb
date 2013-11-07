@@ -12,7 +12,7 @@ module GroupsHelper
     unless options[:image_options].nil?
       title_prefix = options[:image_options][:class] == 'default-group-link' ? t('return_to') : ''
     end
-    group_title = title_prefix + h(group.name)
+    group_title = (title_prefix || '') + h(group.name)
     image_options = { :title => group_title, :alt => group_title }
     unless options[:image_options].nil?
       image_options.merge!(options[:image_options]) 
