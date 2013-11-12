@@ -1,7 +1,7 @@
 <%= form_for :exchange, :url => person_exchanges_path(@person), :html => {:id => 'new_exchange'} do |f| %>
   <div class="form_row">
     <%= f.label :amount %>
-    <%= f.text_field :amount, :size => 3, :value => @offer.price, :disabled => true, "data-offer_price"=> @offer.price %>&nbsp;<span class="small" ><%= @offer.unit %></span>
+    <%= f.text_field :amount, :value=>number_with_precision(f.object.amount, precision: 2),  :size => 3, :value => @offer.price, :disabled => true, "data-offer_price"=> @offer.price %>&nbsp;<span class="small" ><%= @offer.unit %></span>
   </div>
   <%= fields_for :offer do |o| %>
     <div class="form_row">

@@ -192,9 +192,9 @@ module ApplicationHelper
   def account_link(account, options = {})
     label = options[:label] || ""
     metric = case label
-      when t('balance') then account.balance_with_initial_offset
-      when t('paid') then account.paid
-      when t('earned') then account.earned
+      when t('balance') then   number_with_precision(account.balance_with_initial_offset, precision: 2)  
+      when t('paid') then   number_with_precision(account.paid, precision: 2) 
+      when t('earned') then  number_with_precision(account.earned, precision: 2) 
       else 0
     end
 

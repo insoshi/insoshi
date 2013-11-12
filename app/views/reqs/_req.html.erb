@@ -5,7 +5,7 @@
     <%= image_tag "icons/new.gif", :class => "icon", :alt => "Request" %>
   </div>
   <p>
-  <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h req.estimated_hours %> <%= h req.unit %>)
+  <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h  number_with_precision(req.estimated_hours, precision: 2)  %> <%= h req.unit %>)
   <%= t('reqs.partial.due') %>: <%= relative_time_ago_in_words(req.due_date) %>
   </p>
     <%= display formatted_req_categories(req.long_categories), :class => "meta" %>

@@ -6,7 +6,7 @@
     <%- if @customer_id.present? %>
       <%= f.hidden_field :customer_id, :value => @customer_id %>
     <%- end %>
-    <%= f.text_field :amount, label: t('exchanges.new.amount'), help: @group.unit, size: 2 %>
+    <%= f.text_field :amount, :value=>number_with_precision(f.object.amount, precision: 2), label: t('exchanges.new.amount'), help: @group.unit, size: 2 %>
     <%= fields_for :req do |r| %>
       <div class="control-group">
         <%= r.label t('exchanges.new.service_provided'), :class => 'control-label' %>
