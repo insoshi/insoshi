@@ -9,7 +9,8 @@
   </div>
 </div>
 <div class="span5">
-  <%= f.text_field :price, :label => t('price'), :help => @group.unit || Group.find(global_prefs.default_group_id).unit, :size => 5 %>
+  <%#= f.text_field :price, :label => t('price'), :help => @group.unit || Group.find(global_prefs.default_group_id).unit, :size => 5 %>
+  <%= f.text_field :price,  :value=>number_with_precision(f.object.price, precision: 2),  :label => t('price'), :help => @group.unit || Group.find(global_prefs.default_group_id).unit, :size => 5 %>
   <%= f.text_field :expiration_date, :label => t('expiration_date'), :size => 7 %>
   <%= f.text_field :total_available, :label => t('offers.new.total_available'), :size => 2, :value => 1 %>
   <%= f.fields_for :photos do |i| %> 
