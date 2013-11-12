@@ -30,7 +30,7 @@ class Address < ActiveRecord::Base
   attr_accessible :person_attributes, :allow_destroy => true
   accepts_nested_attributes_for :person, :allow_destroy => true
 
-  before_validation :geocode_address
+  after_commit :geocode_address, :if => :persisted?
   acts_as_mappable :lat_column_name => 'latitude', :lng_column_name => 'longitude'
   
   def to_s
@@ -46,17 +46,20 @@ class Address < ActiveRecord::Base
       [address_line_1, address_line_2, address_line_3, city, state, zipcode_plus_4].collect(&:presence).compact.join(", ")
     end
   end
-  
+ 
+  def perform
+    geo = GeoKit::Geocoders::MultiGeocoder.geocode(self.to_s)
+    if geo.success
+      update_column(:latitude, geo.lat)
+      update_column(:longitude, geo.lng)
+      save!
+    else
+      Rails.logger.info "Address#perform fail"
+    end    
+  end
   
   private
   def geocode_address
-    geo = GeoKit::Geocoders::MultiGeocoder.geocode(self.to_s)
-    if geo.success
-      self.latitude, self.longitude = geo.lat, geo.lng
-    else
-      errors.add(:address_line_1, 'Could not geocode address.')
-    end    
+    AddressQueue.push(:id => self.id)
   end
-
-
 end
