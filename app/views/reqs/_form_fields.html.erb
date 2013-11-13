@@ -9,7 +9,7 @@
   </div>
 </div>
 <div class="span5">
-  <%= f.text_field :estimated_hours, :label => t('estimated') + ' ' + t('payment'), :help => @group.unit || Group.find(global_prefs.default_group_id).unit, :size => 5, :disabled => estimate_disabled %>
+  <%= f.text_field :estimated_hours, :value=>number_with_precision(f.object.estimated_hours, precision: 2), :label => t('estimated') + ' ' + t('payment'), :help => @group.unit || Group.find(global_prefs.default_group_id).unit, :size => 5, :disabled => estimate_disabled %>
   <%= f.text_field :due_date, :label => t('due_date'), :size => 7 %>
   <div class="control-group">
     <%= f.label t('filter_neighborhoods'), :class => 'control-label' %>
