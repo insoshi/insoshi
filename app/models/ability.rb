@@ -23,6 +23,8 @@ class Ability
     can :add_to_mailchimp_list, Person
     can :export, Person
 
+    can [:read, :create, :update, :destroy], PrivacySetting # XXX change this!
+
     can :read, BusinessType
     can [:create,:update,:destroy], BusinessType do |bt|
       person.admin?
@@ -120,7 +122,7 @@ class Ability
 
     can :read, Offer
     can :create, Offer do |offer|
-      Membership.mem(person,offer.group)
+      Membership.mem(person,offer.group) # XXX check for approved membership for groups that require approval
     end
     can [:update,:new_photo,:save_photo], Offer do |offer|
       person.is?(:admin,offer.group) || offer.person == person || person.admin?
@@ -133,7 +135,7 @@ class Ability
 
     can :read, Req
     can :create, Req do |req|
-      Membership.mem(person,req.group)
+      Membership.mem(person,req.group) # XXX check for approved membership for groups that require approval
     end
     can :update, Req do |req|
       referenced = req.has_accepted_bid? # no update after someone has bid on it
@@ -158,7 +160,7 @@ class Ability
         true
       else
         membership = Membership.mem(person,exchange.group)
-        unless membership
+        unless membership # XXX check for approved membership for groups that require approval
           false
         else
           payer = exchange.customer || person

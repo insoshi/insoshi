@@ -16,38 +16,24 @@ class GroupsController < ApplicationController
   def show
     membership_display
 
-    if @group.adhoc_currency?
-      @transactions = current_person.transactions.where(group_id: @group.id).limit(3)
+    if membership
+      if @group.adhoc_currency?
+        @transactions = current_person.transactions.where(group_id: @group.id).limit(3)
+      end
+      @your_offers = current_person.offers.where(group_id: @group.id).order('created_at DESC')
+      @your_reqs = current_person.reqs.where(group_id: @group.id).order('created_at DESC')
+      @invitations = current_person.invitations.where(accepted_at: nil)
     end
-    @your_offers = current_person.offers.where(group_id: @group.id).order('created_at DESC')
-    @your_reqs = current_person.reqs.where(group_id: @group.id).order('created_at DESC')
-    @invitations = current_person.invitations.where(accepted_at: nil)
     respond_to do |format|
       format.html do
         @forum = @group.forum
-        @topics = Topic.find_recently_active(@forum, params[:page]) 
-        @reqs = Req.custom_search(nil,
-                           @group, 
-                           active=true,
-                           1, # params[:page] 
-                           AJAX_POSTS_PER_PAGE,
-                           nil
-                           )
-        @offers = Offer.custom_search(nil,
-                               @group,
-                               active=true,
-                               1, #params[:page]
-                               AJAX_POSTS_PER_PAGE,
-                               nil
-                               )
+        @topics = Topic.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+        @reqs = Req.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+        @offers = Offer.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
         unless @group.private_txns?
           @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
         end
-        @memberships = @group.memberships.active.paginate(:page => params[:page],
-                                              :conditions => ['status = ?', Membership::ACCEPTED],
-                                              :order => 'memberships.created_at DESC',
-                                              :include => :person,
-                                              :per_page => AJAX_POSTS_PER_PAGE)
+        @memberships = Membership.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
       end
       format.js
       format.xml { render :xml => @group.to_xml(:methods => [:icon,:thumbnail], :only => [:id,:name,:description,:mode,:person_id,:created_at,:updated_at,:unit,:icon,:thumbnail]) }

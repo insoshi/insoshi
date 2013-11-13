@@ -54,6 +54,13 @@ en:
   cancelled: "cancelled"
   return_to: "return to "
 
+  privacy_settings:
+    edit:
+      viewable_requests: "Visitors can view requests"
+      viewable_offers: "Visitors can view offers"
+      viewable_forum: "Visitors can view forum"
+      viewable_members: "Visitors can view members"
+
   oauth:
     authorize:
       authorize_access_to_your_account: "Authorize access to your account"
@@ -580,6 +587,7 @@ en:
   notice_bid_removed: "Bid was removed."
   notice_category_updated: "Category was successfully updated."
   notice_forum_updated: "Forum was successfully updated."
+  notice_privacy_settings_updated: "Privacy settings successfully updated."
   notice_in_progress: "Work on this feature is in progress."
   notice_group_updated: "Group was successfully updated."
   notice_invite_contacts: "You have invite some of your contacts to"

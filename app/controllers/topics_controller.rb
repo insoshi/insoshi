@@ -23,6 +23,7 @@ class TopicsController < ApplicationController
   def create
     @body = "yui-skin-sam" 
     @topic.person = current_person
+    @post = ForumPost.new
 
     respond_to do |format|
       if @topic.save

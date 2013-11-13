@@ -14,12 +14,16 @@ class MembershipsController < ApplicationController
     @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
-    @memberships = Membership.custom_search(@selected_neighborhood || @selected_category, 
+    if @group.authorized_to_view_members?(current_person)
+      @memberships = Membership.custom_search(@selected_neighborhood || @selected_category, 
                                             @group, 
                                             params[:page], 
                                             AJAX_POSTS_PER_PAGE, 
                                             params[:search]
                                             )
+    else
+      @memberships = Membership.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+    end
 
     respond_to do |format|
       format.js
@@ -27,14 +31,19 @@ class MembershipsController < ApplicationController
   end
 
   def show
+    @group = membership.group
     @current_membership = Membership.mem(current_person,@membership.group)
     @person = @membership.person
     @account = @person.account(@membership.group)
     @offers = @person.offers.active
     @reqs = @person.reqs.all_active
     respond_to do |format|
-      format.js
-      format.html { redirect_to('/groups/' + @membership.group.id.to_s + '#memberships/' + @membership.id.to_s)}
+      if @group.authorized_to_view_members?(current_person)
+        format.js
+        format.html { redirect_to('/groups/' + @membership.group.id.to_s + '#memberships/' + @membership.id.to_s)}
+      else
+        raise CanCan::AccessDenied.new("Not authorized!", :read, Membership)
+      end
     end
   end
 

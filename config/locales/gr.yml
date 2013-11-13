@@ -55,6 +55,13 @@ gr:
   cancelled: "cancelled"
   return_to: "επιστρέψετε στην "
 
+  privacy_settings:
+    edit:
+      viewable_requests: "Visitors can view requests"
+      viewable_offers: "Visitors can view offers"
+      viewable_forum: "Visitors can view forum"
+      viewable_members: "Visitors can view members"
+
   datetime:
     distance_in_words:
       half_a_minute: "μισό λεπτό"
@@ -749,6 +756,7 @@ gr:
   notice_bid_removed: "Η δήλωση αφαιρέθηκε."
   notice_category_updated: "Η Κατηγορία ενημερώθηκε επιτυχώς."
   notice_forum_updated: "Το Φόρουμ ενημερώθηκε επιτυχώς."
+  notice_privacy_settings_updated: "Privacy settings successfully updated."
   notice_in_progress: "Η εργασία για αυτό το χαρακτηριστικό είναι σε εξέλιξη."
   notice_group_updated: "Η Ομάδα ενημερώθηκε επιτυχώς."
   notice_invite_contacts: "Έχετε προσκαλέσει κάποιες επαφές σας σε"

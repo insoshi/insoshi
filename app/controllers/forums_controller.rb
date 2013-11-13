@@ -5,7 +5,12 @@ class ForumsController < ApplicationController
 
   def show
     @forum = @group.forum
-    @topics = Topic.find_recently_active(@forum, params[:page]) 
+    if @group.authorized_to_view_forum?(current_person)
+      @topics = Topic.find_recently_active(@forum, params[:page]) 
+    else
+      @topics = Topic.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+    end
+
     respond_to do |format|
       format.js
     end
@@ -16,9 +21,10 @@ class ForumsController < ApplicationController
     respond_to do |format|
       if @forum.update_attributes(params[:forum])
         flash[:notice] = t('notice_forum_updated')
-        format.html {redirect_to edit_group_path(@forum.group)}
+        format.js
       else
-        format.html { render :action => "edit" }
+        flash[:error] = t('error_invalid_action')
+        format.js
       end
     end
   end

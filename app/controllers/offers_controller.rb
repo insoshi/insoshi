@@ -11,18 +11,28 @@ class OffersController < ApplicationController
     @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
-    @offers = Offer.custom_search(@selected_neighborhood || @selected_category,
+    if @group.authorized_to_view_offers?(current_person)
+      @offers = Offer.custom_search(@selected_neighborhood || @selected_category,
                                   @group,
                                   active=params[:scope].nil?, # if a scope is not passed, just return actives
                                   params[:page],
                                   AJAX_POSTS_PER_PAGE,
                                   params[:search]
                                   ).order("offers.updated_at desc")
+    else
+      @offers = Offer.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+    end
+
     respond_with @offers
   end
 
   def show
-    respond_with @offer
+    @group = @offer.group
+    if @group.authorized_to_view_offers?(current_person)
+      respond_with @offer
+    else
+      raise CanCan::AccessDenied.new("Not authorized!", :read, Offer)
+    end
   end
 
   def new

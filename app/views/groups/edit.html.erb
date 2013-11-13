@@ -82,6 +82,7 @@
     <% if @group.enable_forum %>
       <%= bootstrap_form_for(@group.forum, remote: true) do |f| %>
         <legend><%= t('.forum') %></legend>
+        <div id='forum_admin'></div>
         <%= f.control_group :worldwritable do %>
           <%= f.check_box :worldwritable, label: t('forums.edit.world_writable') %>
         <% end -%>
@@ -91,6 +92,26 @@
       <% end %>
 
     <% end %>
+    <%= bootstrap_form_for(@group.privacy_setting, remote: true) do |f| %>
+      <legend><%= t('groups.edit.privacy') %></legend>
+      <div id='privacy_setting_admin'></div>
+      <%= f.control_group :viewable_reqs do %>
+        <%= f.check_box :viewable_reqs, label: t('privacy_settings.edit.viewable_requests') %>
+      <%- end -%>
+      <%= f.control_group :viewable_offers do %>
+        <%= f.check_box :viewable_offers, label: t('privacy_settings.edit.viewable_offers') %>
+      <%- end -%>
+      <%= f.control_group :viewable_forum do %>
+        <%= f.check_box :viewable_forum, label: t('privacy_settings.edit.viewable_forum') %>
+      <%- end -%>
+      <%= f.control_group :viewable_members do %>
+        <%= f.check_box :viewable_members, label: t('privacy_settings.edit.viewable_members') %>
+      <%- end -%>
+      <%= f.actions do %>
+        <%= f.primary t('button_update') %>
+      <% end %>
+    <% end %>
+
     <legend><%= t('.members') %></legend>
     <p><%= link_to "Edit Member Roles", members_group_path(@group) %></p>
   </div>

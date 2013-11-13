@@ -11,6 +11,7 @@ class Group < ActiveRecord::Base
   attr_accessible :default_roles
 
   has_one :forum
+  has_one :privacy_setting
   has_many :reqs, :conditions => ["biddable = ?",true], :order => "created_at DESC"
   has_many :offers, :order => "created_at DESC"
   has_many :photos, :as => :photoable, :dependent => :destroy, :order => "created_at"
@@ -34,6 +35,7 @@ class Group < ActiveRecord::Base
   validate :changing_asset_name_only_allowed_if_empty
   after_create :create_owner_membership
   after_create :create_forum
+  after_create :create_privacy_setting
   after_create :log_activity
   before_update :update_member_credit_limits
   
@@ -106,7 +108,23 @@ class Group < ActiveRecord::Base
   def owner?(person)
     self.owner == person
   end
-  
+ 
+  def authorized_to_view_reqs?(person)
+    privacy_setting.viewable_reqs? or Membership.exist?(person, self)
+  end
+
+  def authorized_to_view_offers?(person)
+    privacy_setting.viewable_offers? or Membership.exist?(person, self)
+  end
+
+  def authorized_to_view_forum?(person)
+    privacy_setting.viewable_forum? or Membership.exist?(person, self)
+  end
+
+  def authorized_to_view_members?(person)
+    privacy_setting.viewable_members? or Membership.exist?(person, self)
+  end
+
   ## Photo helpers
   def photo
     # This should only have one entry, but be paranoid.
