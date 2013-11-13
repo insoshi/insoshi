@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131106013648) do
+ActiveRecord::Schema.define(:version => 20131112115749) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -465,6 +465,7 @@ ActiveRecord::Schema.define(:version => 20131106013648) do
     t.integer  "plan_type_id"
     t.integer  "support_contact_id"
     t.boolean  "mailchimp_subscribed",     :default => false
+    t.string   "time_zone"
   end
 
   add_index "people", ["admin"], :name => "index_people_on_admin"
@@ -546,6 +547,16 @@ ActiveRecord::Schema.define(:version => 20131106013648) do
     t.boolean  "public_uploads",          :default => false
   end
 
+  create_table "privacy_settings", :force => true do |t|
+    t.integer  "group_id"
+    t.boolean  "viewable_reqs",    :default => true
+    t.boolean  "viewable_offers",  :default => true
+    t.boolean  "viewable_forum",   :default => true
+    t.boolean  "viewable_members", :default => true
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+  end
+
   create_table "rails_admin_histories", :force => true do |t|
     t.string   "message"
     t.string   "username"
@@ -584,6 +595,12 @@ ActiveRecord::Schema.define(:version => 20131106013648) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "time_zones", :force => true do |t|
+    t.string   "time_zone"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "topics", :force => true do |t|
