@@ -193,7 +193,7 @@ end
   end
 
   config.model Req do
-    label "Request" 
+    label "Request"
     label_plural "Requests"
     list do
       field :name
@@ -283,6 +283,7 @@ end
       field :questions
       field :contact
       field :analytics
+      field :display_orgicon
     end
   end
 
