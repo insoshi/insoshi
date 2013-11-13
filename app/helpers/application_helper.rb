@@ -273,13 +273,21 @@ module ApplicationHelper
     end
   end
 
-def relative_time_ago_in_words(time)
-  if time > Time.now
-    t('in') + " " + time_ago_in_words(time)
-  else
-    t( 'ago_time', :date => time_ago_in_words(time) )
+  def relative_time_ago_in_words(time)
+    if time > Time.now
+      t('in') + " " + time_ago_in_words(time)
+    else
+      t( 'ago_time', :date => time_ago_in_words(time) )
+    end
   end
-end
+
+  def current_datetime_format
+    if current_person && current_person.date_style
+      TimeZone::Date_Style[current_person.date_style]
+    else
+      TimeZone::Date_Style[TimeZone.first.date_style]
+    end
+  end
 
   private
   
