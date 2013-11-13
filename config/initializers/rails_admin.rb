@@ -39,7 +39,7 @@ end
     export
   end
 
-  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted]
+  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone]
 
   config.default_items_per_page = 100
 
@@ -578,6 +578,17 @@ end
       # generally not appropriate for admin to edit openid since it is an assertion
     end
   end
+
+  config.model TimeZone do
+    label "Time Zone"
+    label_plural "Time Zone"
+    field :time_zone, :enum do
+      enum do
+        ActiveSupport::TimeZone.zones_map.map {|x|[x[1], x[0]]}
+      end
+    end
+  end
+
 end
 
 end

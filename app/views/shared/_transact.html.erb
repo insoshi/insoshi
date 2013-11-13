@@ -12,6 +12,6 @@
   <%= counterparty_action(transact) %><%= counterparty(transact).name %>) <%= t('shared.transact.for')%> <%= link_to h(transact.metadata.name), transact.metadata %>
   </p>
   <p class="meta published">
-    <%= (t 'ago_time', :date => time_ago_in_words(transact.created_at)).capitalize %>
+    <%= transact.created_at %>
   </p>
 </li>

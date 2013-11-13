@@ -296,6 +296,7 @@ es:
       web_site_url: "URL del sitio web"
       primary: "principal"
       address_select_note: "Choose primary address for use in distance calculations"
+      time_zone: "Zona Horaria"
     groups:
       no_groups: "Todavía no hay grupos"
       new_group: "Grupo Nuevo"

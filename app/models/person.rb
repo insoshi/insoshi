@@ -30,7 +30,7 @@ class Person < ActiveRecord::Base
   attr_accessible :zipcode
   attr_accessible :phone, :phoneprivacy
   attr_accessible :accept_agreement
-  attr_accessible :language
+  attr_accessible :language, :time_zone
   attr_accessible :openid_identifier
   attr_accessible :sponsor
   attr_accessible :broadcast_emails

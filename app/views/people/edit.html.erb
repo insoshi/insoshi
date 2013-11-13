@@ -30,6 +30,13 @@
 
       <%= render :partial => 'language', :locals => {:f => f} %>
 
+      <div class="control-group">
+        <label class="control-label" for="time_zone"><%= t('people.edit.time_zone') %></label>
+        <div class="controls">
+          <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {:default => f.object.time_zone || TimeZone.first.time_zone}, {:id => 'time_zone'} %>
+        </div>
+      </div>
+
       <%= f.email_field :email, label: t('people.edit.email') %>
 
       <%= f.text_field :web_site_url, label: t('people.edit.web_site_url') %>

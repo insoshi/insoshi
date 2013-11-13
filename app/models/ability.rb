@@ -15,6 +15,7 @@ class Ability
     # need these for rails_admin
     can [:read,:create,:update,:destroy], Address
     can [:read,:create,:update,:destroy], State
+    can [:read,:update], TimeZone
 
     can [:read,:create], Person
     can :update, Person do |target_person|

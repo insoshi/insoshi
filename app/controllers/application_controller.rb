@@ -14,6 +14,8 @@ class ApplicationController < ActionController::Base
                 :set_person_locale,
                 :set_theme
 
+  around_filter :set_time_zone
+
   layout proc{ |c| c.request.xhr? ? false : "application" }
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -190,6 +192,15 @@ class ApplicationController < ActionController::Base
               <a href="#{edit_person_path(current_person)}">#{t('notice_change_it_here')}</a>.)
           end
         end
+      end
+    end
+
+    # set timezone, only absolute format time will be affected
+    def set_time_zone(&block)
+      if current_user && current_user.time_zone
+        Time.use_zone(current_user.time_zone, &block)
+      else
+        Time.use_zone(TimeZone.first.time_zone, &block)
       end
     end
 end

@@ -361,6 +361,7 @@ fr:
       support_contact: "Support Contact"
       primary: "primaire"
       address_select_note: "Choose primary address for use in distance calculations"
+      time_zone: "Time Zone"
     groups:
       no_groups: "Présentement aucun groupe"
       new_group: "Nouveau groupe"

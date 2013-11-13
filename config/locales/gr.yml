@@ -420,6 +420,7 @@ gr:
       support_contact: "Support Contact"
       primary: "πρωτεύων"
       address_select_note: "Choose primary address for use in distance calculations"
+      time_zone: "Ζώνη ώρας"
     groups:
       no_groups: "Καμία ομάδα (ακόμη)"
       new_group: "Νέα Ομάδα"
