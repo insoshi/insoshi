@@ -54,6 +54,13 @@ es:
   cancelled: "cancelado"
   return_to: "volver a "
 
+  privacy_settings:
+    edit:
+      viewable_requests: "Visitors can view requests"
+      viewable_offers: "Visitors can view offers"
+      viewable_forum: "Visitors can view forum"
+      viewable_members: "Visitors can view members"
+
   oauth:
     authorize:
       authorize_access_to_your_account: "Autoriza el acceso a tu cuenta"
@@ -667,6 +674,7 @@ es:
   notice_bid_removed: "La oferta se ha borrado."
   notice_category_updated: "La Categoria ha sido actualizada."
   notice_forum_updated: "El Foro ha sido actualizado."
+  notice_privacy_settings_updated: "Privacy settings successfully updated."
   notice_in_progress: "Estamos trabajando sobre está funcionalidad."
   notice_group_updated: "El Grupo se ha actualizado."
   notice_invite_contacts: "Has invitado a algunos de tus contactos a"

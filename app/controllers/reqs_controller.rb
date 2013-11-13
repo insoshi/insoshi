@@ -14,13 +14,18 @@ class ReqsController < ApplicationController
     @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
-    @reqs = Req.custom_search(@selected_neighborhood || @selected_category,
+    if @group.authorized_to_view_reqs?(current_person)
+      @reqs = Req.custom_search(@selected_neighborhood || @selected_category,
                               @group,
                               active=params[:scope].nil?, # if a scope is not passed, just return actives
                               params[:page],
                               AJAX_POSTS_PER_PAGE,
                               params[:search]
                               ).order("reqs.updated_at desc")
+    else
+      @reqs = Req.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+    end
+
     respond_with @reqs
   end
 
@@ -30,16 +35,17 @@ class ReqsController < ApplicationController
     @req = Req.find(params[:id])
     @bid = Bid.new
     @bid.estimated_hours = @req.estimated_hours
+    @group = @req.group
 
-    unless @req.group.nil?
-      if logged_in?
-        unless Membership.exist?(current_person,@req.group)
-          flash[:notice] = t('notice_bid_requires_membership')
-        end
-      end
+    unless Membership.exist?(current_person,@req.group)
+      flash[:notice] = t('notice_bid_requires_membership')
     end
 
-    respond_with @req
+    if @group.authorized_to_view_reqs?(current_person)
+      respond_with @req
+    else
+      raise CanCan::AccessDenied.new("Not authorized!", :read, Req)
+    end
   end
 
   # GET /reqs/new

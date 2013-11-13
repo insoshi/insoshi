@@ -1,10 +1,8 @@
 <h2><%= t('groups.show.discussion_topics') %><%= waiting_image %></h2>
-<%- if logged_in? -%>
-  <%= bootstrap_form_for Topic.new, :url => forum_topics_path(@forum), :html => {:id => 'new_topic', :class => 'form-inline'} do |f| %>
-      <%= f.text_field :name, :placeholder => t('forums.show.add_new_topic'), :label => :none %>
-      <%= f.primary t('button_submit') %>
-  <% end %>
-<%- end -%>
+<%= bootstrap_form_for Topic.new, :url => forum_topics_path(@forum), :html => {:id => 'new_topic', :class => 'form-inline'} do |f| %>
+    <%= f.text_field :name, :placeholder => t('forums.show.add_new_topic'), :label => :none %>
+    <%= f.primary t('button_submit') %>
+<% end %>
 <%= will_paginate(@topics, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
 <ol class="list forum full">
   <%= render :partial => 'topics/topic', :collection => @topics %>
