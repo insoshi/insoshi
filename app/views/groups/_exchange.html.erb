@@ -6,7 +6,7 @@
   </div>
   <p>
   <% unless exchange.group.nil? %>
-    <%= membership_link member, :class => "url fn show-follow" %> <%= t('earned') + " " + number_with_precision(exchange.amount, precision: 2).to_s + " " + exchange.group.unit + " " + t('for') %> <%= link_to h(exchange.metadata.name), exchange.metadata, :class => "show-follow" %>
+    <%= membership_link member, :class => "url fn show-follow" %> <%= t('earned') + " " + nice_decimal(exchange.amount) + " " + exchange.group.unit + " " + t('for') %> <%= link_to h(exchange.metadata.name), exchange.metadata, :class => "show-follow" %>
   <%- end -%>
   </p>
   <p class="meta published">

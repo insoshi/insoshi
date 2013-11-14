@@ -5,7 +5,7 @@
         <%- if @membership.account.credit_limit %>
           <li>
             <%= t('groups.show.your_credit_limit') %>
-            <%= @membership.account.credit_limit %>
+            <%= nice_decimal(@membership.account.credit_limit) %>
             <%= @group.unit %>
           </li>
         <%- end -%>
@@ -13,7 +13,7 @@
         <%- if @group.default_credit_limit %>
           <li>
             <%= t('groups.show.default_credit_limit') %>
-            <%= @group.default_credit_limit %>
+            <%= nice_decimal(@group.default_credit_limit) %>
             <%= @group.unit %>
           </li>
         <%- end -%>

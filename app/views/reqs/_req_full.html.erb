@@ -78,7 +78,7 @@
           </p>
 
           <p>
-            <%= link_to h(@req.name), @req, :class => "show-follow" %> (<%= h @req.estimated_hours %> <%= h @req.unit %>)
+            <%= link_to h(@req.name), @req, :class => "show-follow" %> (<%= h nice_decimal(@req.estimated_hours) %> <%= h @req.unit %>)
           </p>
         </div>
       </div>

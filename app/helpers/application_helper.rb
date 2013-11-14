@@ -192,9 +192,9 @@ module ApplicationHelper
   def account_link(account, options = {})
     label = options[:label] || ""
     metric = case label
-      when t('balance') then   number_with_precision(account.balance_with_initial_offset, precision: 2)  
-      when t('paid') then   number_with_precision(account.paid, precision: 2) 
-      when t('earned') then  number_with_precision(account.earned, precision: 2) 
+      when t('balance') then   nice_decimal(account.balance_with_initial_offset)  
+      when t('paid') then   nice_decimal(account.paid) 
+      when t('earned') then  nice_decimal(account.earned) 
       else 0
     end
 
@@ -203,7 +203,7 @@ module ApplicationHelper
     unless account.group
       str = ""
     else
-      credit_limit = account.credit_limit.nil? ? "" : "(limit: #{account.credit_limit.to_s})"
+      credit_limit = account.credit_limit.nil? ? "" : "(limit: #{nice_decimal(account.credit_limit)})"
       action = "#{metric} #{account.group.unit} #{credit_limit}"
       str = link_to(img,path, options)
       str << " #{label}: "
@@ -280,6 +280,11 @@ def relative_time_ago_in_words(time)
     t( 'ago_time', :date => time_ago_in_words(time) )
   end
 end
+
+def nice_decimal(decimal)
+  number_with_precision(decimal, precision: 2)
+end
+
 
   private
   

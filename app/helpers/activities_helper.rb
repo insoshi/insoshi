@@ -29,7 +29,7 @@ module ActivitiesHelper
       %(#{person_link(person)} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.).html_safe
     when "Exchange"
       exchange = activity.item
-      %(#{person_link(person)} #{t('earned')} #{exchange.amount} #{exchange.group.unit} #{t('for')} 
+      %(#{person_link(person)} #{t('earned')} #{nice_decimal(exchange.amount)} #{exchange.group.unit} #{t('for')} 
       #{metadata_link(exchange.metadata)} #{t('in')} #{group_link(exchange.group)}.).html_safe
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
@@ -62,7 +62,7 @@ module ActivitiesHelper
       %(#{h person.display_name} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.).html_safe
     when "Exchange"
       exchange = activity.item
-      %(#{h person.display_name} #{t('earned')} #{exchange.amount} #{exchange.group.unit} #{t('for')} 
+      %(#{h person.display_name} #{t('earned')} #{ nice_decimal(exchange.amount)} #{exchange.group.unit} #{t('for')} 
       #{metadata_link(exchange.metadata)} #{t('in')} #{group_link(exchange.group)}.).html_safe
     else
       raise "Invalid activity type #{activity_type(activity).inspect}"
