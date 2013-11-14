@@ -466,6 +466,7 @@ ActiveRecord::Schema.define(:version => 20131113170834) do
     t.integer  "support_contact_id"
     t.boolean  "mailchimp_subscribed",     :default => false
     t.string   "time_zone"
+    t.string   "date_style"
   end
 
   add_index "people", ["admin"], :name => "index_people_on_admin"
@@ -600,8 +601,9 @@ ActiveRecord::Schema.define(:version => 20131113170834) do
 
   create_table "time_zones", :force => true do |t|
     t.string   "time_zone"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "date_style", :default => "mm/dd/yy"
   end
 
   create_table "topics", :force => true do |t|
