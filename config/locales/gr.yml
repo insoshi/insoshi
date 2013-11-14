@@ -428,6 +428,7 @@ gr:
       primary: "πρωτεύων"
       address_select_note: "Choose primary address for use in distance calculations"
       time_zone: "Ζώνη ώρας"
+      date_style: "στυλ ημερομηνίας"
     groups:
       no_groups: "Καμία ομάδα (ακόμη)"
       new_group: "Νέα Ομάδα"

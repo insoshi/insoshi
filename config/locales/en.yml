@@ -314,6 +314,7 @@ en:
       primary: "primary"
       address_select_note: "Choose primary address for use in distance calculations"
       time_zone: "Time Zone"
+      date_style: "Date Style"
     groups:
       no_groups: "No groups (yet)"
       new_group: "New group"

@@ -304,6 +304,7 @@ es:
       primary: "principal"
       address_select_note: "Choose primary address for use in distance calculations"
       time_zone: "Zona Horaria"
+      date_style: "Estilo de la fecha"
     groups:
       no_groups: "Todavía no hay grupos"
       new_group: "Grupo Nuevo"

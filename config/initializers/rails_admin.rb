@@ -588,6 +588,11 @@ end
         ActiveSupport::TimeZone.zones_map.map {|x|[x[1], x[0]]}
       end
     end
+    field :date_style, :enum do
+      enum do
+        TimeZone::Date_Style.keys
+      end
+    end
   end
 
 end
