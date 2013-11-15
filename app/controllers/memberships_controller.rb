@@ -31,7 +31,7 @@ class MembershipsController < ApplicationController
   end
 
   def show
-    @group = membership.group
+    @group = @membership.group
     @current_membership = Membership.mem(current_person,@membership.group)
     @person = @membership.person
     @account = @person.account(@membership.group)
