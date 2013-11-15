@@ -101,10 +101,12 @@ class GroupsController < ApplicationController
 
   def members
     @body = "noajax"
-    @memberships = @group.memberships.paginate(:page => params[:page],
-                                          :conditions => ['status = ?', Membership::ACCEPTED],
-                                          :include => :person,
-                                          :per_page => RASTER_PER_PAGE)
+    @memberships = Membership.custom_search(nil,
+                                            @group,
+                                            params[:page],
+                                            RASTER_PER_PAGE,
+                                            params[:search]
+                                            )
 
     @pending = @group.pending_request.paginate(:page => params[:page],
                                           :per_page => RASTER_PER_PAGE)

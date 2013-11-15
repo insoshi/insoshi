@@ -237,6 +237,11 @@ $(function() {
   $('.search_form').live('submit',function() {
       current_tab = window.location.hash.split('/')[0];
       if(-1 == OSCURRENCY.searchable_tabs.indexOf(current_tab)) {
+        var frags = window.location.pathname.split('/');
+        if ('groups' == frags[1] && 'members' ==  frags[3]) {
+          window.location = '/groups/' + OSCURRENCY.group_id + '/members?search=' + $(this).children('input').attr('value');
+          return false;
+        }
         alert('tab '+current_tab+' is not supported for search');
       } else {
         window.location.hash = current_tab + '/' + $(this).serialize();
