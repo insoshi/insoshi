@@ -509,9 +509,3 @@ input#person_openid_identifier, input#person_session_openid_identifier {
   margin-bottom: 15px;
   padding: 7px 9px;
 }
-
-.search_form {
-  padding-top: 5px;
-  margin-left: 0px;
-  margin-bottom: 0px;
-}

@@ -38,7 +38,7 @@
             <%= link_to global_prefs.app_name, home_path, :class => "brand" %>
           <%- end -%>
           <%- if logged_in? -%>
-            <form accept-charset="UTF-8" class="search_form span4" method="get">
+            <form accept-charset="UTF-8" class="search_form navbar-form span2" method="get">
               <%= text_field_tag :search, params[:search], :placeholder => t('button_search'), :class => 'search_input' %>
             </form>
           <%- end -%>
