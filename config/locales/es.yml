@@ -665,6 +665,10 @@ es:
               too_short: "es demasiado corto (mínimo %{count} caracteres)."
               too_long: "es demasiado largo (máximo %{count} caracteres)."
 
+  notice_member_to_view_forum: "You must be a member to view forum."
+  notice_member_to_view_people: "You must be a member to view people."
+  notice_member_to_view_offers: "You must be a member to view offers."
+  notice_member_to_view_requests: "You must be a member to view requests."
   notice_warning_your_email_address: "Advertencia: tu dirección de correo electrónico está todavía en"
   notice_change_it_here: "Cámbiala aqui"
   notice_bid_accepted: "Oferta aceptada. Mensaje enviado al solicitante para confirmar"

@@ -22,6 +22,10 @@ pre.debug_dump pre {
   margin-right: 3px;
 }
 
+.group-photo {
+  margin-left: 25px;
+}
+
 .status-btn {
   padding: 10px 10px 0px 0px;
   text-align: center;

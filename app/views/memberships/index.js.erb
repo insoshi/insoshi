@@ -1,1 +1,6 @@
+<%- if @authorized -%>
 $('#people_canvas').html("<%= escape_javascript(render :partial => 'members_canvas') %>");
+<%- else -%>
+$('#people_canvas').html("");
+<%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'people_canvas'} %>
+<%- end -%>

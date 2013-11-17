@@ -11,7 +11,8 @@ class OffersController < ApplicationController
     @selected_category = params[:category_id].nil? ? nil : Category.find(params[:category_id])
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
-    if @group.authorized_to_view_offers?(current_person)
+    @authorized = @group.authorized_to_view_offers?(current_person)
+    if @authorized
       @offers = Offer.custom_search(@selected_neighborhood || @selected_category,
                                   @group,
                                   active=params[:scope].nil?, # if a scope is not passed, just return actives
@@ -20,6 +21,7 @@ class OffersController < ApplicationController
                                   params[:search]
                                   ).order("offers.updated_at desc")
     else
+      flash[:notice] = t('notice_member_to_view_offers')
       @offers = Offer.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
     end
 

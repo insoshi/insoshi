@@ -24,7 +24,11 @@ class Ability
     can :add_to_mailchimp_list, Person
     can :export, Person
 
-    can [:read, :create, :update, :destroy], PrivacySetting # XXX change this!
+    can :read, PrivacySetting
+    can :update, PrivacySetting do |ps|
+      membership = Membership.mem(person,ps.group)
+      (membership && membership.is?(:admin)) || person.admin?
+    end
 
     can :read, BusinessType
     can [:create,:update,:destroy], BusinessType do |bt|

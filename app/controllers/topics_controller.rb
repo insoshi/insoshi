@@ -10,7 +10,12 @@ class TopicsController < ApplicationController
 
   def show
     @group = @forum.group
-    @posts = @topic.posts.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    @authorized = @group.authorized_to_view_forum?(current_person)
+    if @authorized
+      @posts = @topic.posts.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    else
+      @posts = ForumPost.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+    end
     @post = ForumPost.new
     respond_to do |format|
       format.html

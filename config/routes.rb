@@ -8,6 +8,7 @@ Oscurrency::Application.routes.draw do
   resources :neighborhoods, :only => [:show]
   resources :invitations, :only => [:edit, :update]
   resources :privacy_settings, :only => [:update]
+  resources :posts, :only => [:index]
 
   # XXX in 2.3.x, this was easier -> map.resources :transacts, :as => "transacts/:asset"
   get    "transacts(/:asset)(.:format)"          => "transacts#index",   :as => 'transacts'

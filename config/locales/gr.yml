@@ -748,6 +748,10 @@ gr:
               too_short: "είναι πολύ μικρή (το ελάχιστο είναι %{count} χαρακτήρες)."
               too_long: "είναι πολύ μεγάλη (το μέγιστο είναι %{count} χαρακτήρες)."
 
+  notice_member_to_view_forum: "You must be a member to view forum."
+  notice_member_to_view_people: "You must be a member to view people."
+  notice_member_to_view_offers: "You must be a member to view offers."
+  notice_member_to_view_requests: "You must be a member to view requests."
   notice_warning_your_email_address: "Προειδοποίηση: η διεύθυνση του email σας είναι ακόμη"
   notice_change_it_here: "Αλλάξτε το εδώ"
   notice_bid_accepted: "Η δήλωση έγινε αποδεκτή. Στάλθηκε μήνυμα στον συμμετέχοντα"

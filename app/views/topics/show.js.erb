@@ -1,3 +1,4 @@
+<%- if @authorized -%>
 $('#forum_canvas').html("<%= escape_javascript(render :partial => 'group_posts') %>");
 if(0 == $('#forum_form').html().length)
 {
@@ -5,3 +6,4 @@ if(0 == $('#forum_form').html().length)
 }
 $('#forum_canvas').linkify();
 setTimeout(update_topic,<%= @refresh_milliseconds %>);
+<%- end -%>
