@@ -1,4 +1,5 @@
 <%- if @authorized -%>
+$('#people_filter').show();
 $('#people_canvas').html("<%= escape_javascript(render :partial => 'members_canvas') %>");
 <%- else -%>
 $('#people_canvas').html("");

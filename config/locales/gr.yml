@@ -52,8 +52,10 @@ gr:
   hours: "ώρες"
   active: "ενεργός"
   all: "όλα"
+  all_members: "όλα Μέλη"
   cancelled: "cancelled"
   return_to: "επιστρέψετε στην "
+  view_by: "View by"
 
   privacy_settings:
     edit:
@@ -495,6 +497,7 @@ gr:
       createdby: "Δημιουργήθηκε από"
     index:
       header: "Ζήτηση"
+      active_requests: "ενεργός Ζήτηση"
       current: "Τρέχουσες"
       all: "Όλες"
       noreqs: "Καμία ζήτηση (ακόμη!)"

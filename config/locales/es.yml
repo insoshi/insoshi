@@ -51,8 +51,10 @@ es:
   or: "o"
   active: "Activo"
   all: "Todos"
+  all_members: "Todos Miembros"
   cancelled: "cancelado"
   return_to: "volver a "
+  view_by: "View by"
 
   privacy_settings:
     edit:
@@ -369,6 +371,7 @@ es:
       createdby: "Creado por"
     index:
       header: "Demandas"
+      active_requests: "Activo Demandas"
       current: "actual"
       all: "Todo"
       noreqs: "Todavía no hay demandas"

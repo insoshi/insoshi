@@ -1,4 +1,5 @@
 <%- if @authorized -%>
+$('#requests_filter').show();
 $('#reqs_canvas').html("<%= escape_javascript(render :partial => 'reqs_canvas') %>");
 $('#reqs_canvas').linkify();
 <%- else -%>

@@ -51,8 +51,10 @@ fr:
   or: "or"
   active: "Actif"
   all: "Tous"
+  all_members: "Tous Membres"
   cancelled: "annulé"
   return_to: "réintégrer "
+  view_by: "View by"
 
   privacy_settings:
     edit:
@@ -436,6 +438,7 @@ fr:
       createdby: "Crée par"
     index:
       header: "Requêtes"
+      active_requests: "Actif Requêtes"
       current: "Courant"
       all: "Tout"
       noreqs: "Aucune requête présentement"

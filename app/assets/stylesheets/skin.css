@@ -372,6 +372,10 @@ ul.categories
   padding-right:85px;
 }
 
+#filter_reqs_by, #filter_offers_by, #filter_memberships_by {
+  width: 140px;
+}
+
 p.formatting
 {
     color:#333;

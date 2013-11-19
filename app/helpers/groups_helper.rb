@@ -43,4 +43,16 @@ module GroupsHelper
       "#"
     end
   end
+
+  def reqs_options
+    options_for_select([[t('reqs.index.active_requests'),1],[t('filter_categories'),2],[t('filter_neighborhoods'),3]])
+  end
+
+  def offers_options
+    options_for_select([[t('offers.index.active_offers'),1],[t('filter_categories'),2],[t('filter_neighborhoods'),3]])
+  end
+
+  def memberships_options
+    options_for_select([[t('all_members'),1],[t('filter_categories'),2],[t('filter_neighborhoods'),3]])
+  end
 end

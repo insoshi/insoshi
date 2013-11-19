@@ -22,6 +22,9 @@ $(function() {
   OSCURRENCY.offers_mode = '';
   OSCURRENCY.reqs_mode = '';
   OSCURRENCY.searchable_tabs = ['#people','#memberships','#reqs','#requests','#offers'];
+  OSCURRENCY.no_filter_option = 1;
+  OSCURRENCY.categories_filter_option = 2;
+  OSCURRENCY.neighborhoods_filter_option = 3;
 
   route('home',     /^#home$/,                                     '/groups/[:group_id]');
   route('home',     /^#member_preferences\/(\d+)\/edit$/,          '/member_preferences/[:1]/edit');
@@ -182,6 +185,12 @@ $(function() {
         if(tab != OSCURRENCY.tab) {
           $('#nav-js a[href="'+tab+'"]').tab('show');
           OSCURRENCY.tab=tab;
+          var current_filter = window.location.hash.split('/')[0] + '_filter'; 
+          $(current_filter + ' span.neighborhood_filter').hide();
+          $(current_filter + ' span.category_filter').hide();
+          $('#filter_reqs_by').val(OSCURRENCY.no_filter_option);
+          $('#filter_offers_by').val(OSCURRENCY.no_filter_option);
+          $('#filter_memberships_by').val(OSCURRENCY.no_filter_option);
         }
         if(js_url.length != 0) {
           $.ajaxSetup({cache:true});
@@ -338,6 +347,22 @@ $(function() {
     window.location.hash = '#people/neighborhood_id=' + this.value;
     });
 
+  $('#filter_reqs_by, #filter_offers_by, #filter_memberships_by').live('change',function() {
+    var current_hash_root = window.location.hash.split('/')[0]; 
+    var current_filter = current_hash_root + '_filter';
+    if(OSCURRENCY.categories_filter_option == this.value) {
+      $(current_filter + ' span.category_filter').show();
+      $(current_filter + ' span.neighborhood_filter').hide();
+    } else if (OSCURRENCY.neighborhoods_filter_option == this.value) {
+      $(current_filter + ' span.category_filter').hide();
+      $(current_filter + ' span.neighborhood_filter').show();
+    } else {
+      $(current_filter + ' span.neighborhood_filter').hide();
+      $(current_filter + ' span.category_filter').hide();
+      window.location.hash = current_hash_root;
+    }
+    });
+
   $('a.show-follow').live('click',function() {
     window.location.hash = url2hash(this.href);
     return false;
@@ -346,25 +371,6 @@ $(function() {
   $('a.email-link:not(.noajax)').live('click',function() {
     window.location.hash = url2hash(this.href);
     return false;
-    });
-
-  $.fn.make_filter_visible = function() {
-      $(this).parent().children().removeClass('label');
-      $(this).addClass('label');
-  };
-
-  $('.toggle-category').live('click',function() {
-      $(this).make_filter_visible();
-      $('span.category_filter').show();
-      $('span.neighborhood_filter').hide();
-      return false;
-    });
-
-  $('.toggle-neighborhood').live('click',function() {
-      $(this).make_filter_visible();
-      $('span.category_filter').hide();
-      $('span.neighborhood_filter').show();
-      return false;
     });
 
   function change_offers_mode(mode) {
@@ -379,18 +385,6 @@ $(function() {
     }
   }
 
-  $('.toggle-active-offers').live('click',function() {
-      $(this).make_filter_visible();
-      change_offers_mode('');
-      return false;
-    });
-
-  $('.toggle-all-offers').live('click',function() {
-      $(this).make_filter_visible();
-      change_offers_mode('all');
-      return false;
-    });
-
   function change_reqs_mode(mode) {
     if(mode != OSCURRENCY.reqs_mode) {
       OSCURRENCY.reqs_mode = mode;
@@ -402,18 +396,6 @@ $(function() {
       }
     }
   }
-
-  $('.toggle-active-reqs').live('click',function() {
-      $(this).make_filter_visible();
-      change_reqs_mode('');
-      return false;
-    });
-
-  $('.toggle-all-reqs').live('click',function() {
-      $(this).make_filter_visible();
-      change_reqs_mode('all');
-      return false;
-    });
 
   $(window).trigger('hashchange');
 });

@@ -51,8 +51,10 @@ en:
   or: "or"
   active: "Active"
   all: "All"
+  all_members: "All Members"
   cancelled: "cancelled"
   return_to: "return to "
+  view_by: "View by"
 
   privacy_settings:
     edit:
@@ -381,6 +383,7 @@ en:
       createdby: "Created By"
     index:
       header: "Requests"
+      active_requests: "Active Requests"
       current: "Current"
       all: "All"
       noreqs: "No requests (yet!)"
