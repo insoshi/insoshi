@@ -7,7 +7,6 @@ class Membership < ActiveRecord::Base
   scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
   scope :active, :include => :person, :conditions => {'people.deactivated' => false}
   scope :listening, :include => [:member_preference, :person], :conditions => {'people.deactivated' => false, 'member_preferences.forum_notifications' => true}
-  scope :search_by, lambda { |text| {:include => :person, :conditions => ["people.name ILIKE ? OR people.business_name ILIKE ? OR people.description ILIKE ?","%#{text}%","%#{text}%","%#{text}%"]} }
 
   belongs_to :group
   belongs_to :person
@@ -27,6 +26,10 @@ class Membership < ActiveRecord::Base
   EXCLUDE_ROLES = %w[individual moderator org] # reserved for future use
 
   class << self
+    def search_by(text)
+      includes(:person).where(Person.arel_table[:name].matches("%#{text}%").or(Person.arel_table[:business_name].matches("%#{text}%")).or(Person.arel_table[:description].matches("%#{text}%")))
+    end
+
     # For issue #272, people should be ordered by display name(display_name in person.rb) which is business_name or name
     # The following sql is for getting business_name + name
     # case when people.business_name is null then '' else people.business_name end) || people.name

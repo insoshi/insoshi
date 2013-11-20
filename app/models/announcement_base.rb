@@ -41,7 +41,7 @@ module AnnouncementBase
     end
 
     def search_by(text)
-      where("name ILIKE ? OR description ILIKE ?", "%#{text}%", "%#{text}%")
+      where(arel_table[:name].matches("%#{text}%").or(arel_table[:description].matches("%#{text}%")))
     end
 
     def custom_search(filter, group, active_only, page, posts_per_page, search=nil)
