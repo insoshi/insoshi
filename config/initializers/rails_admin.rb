@@ -39,7 +39,7 @@ end
     export
   end
 
-  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone]
+  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone, PublicBid]
 
   config.default_items_per_page = 100
 
@@ -592,6 +592,16 @@ end
       enum do
         TimeZone::Date_Style.keys
       end
+    end
+  end
+
+  config.model PublicBid do
+    label "Public bids for request"
+
+    field :public_bid do
+      label 'Allow users who make requests to public/private bids'
+      # If admin set this to false, users who make requests will not have option to public/private bids, and all bids will be public
+      # If true, users who make requests will be able to public/private bids. The bids are private by default.
     end
   end
 

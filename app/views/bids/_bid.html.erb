@@ -1,3 +1,11 @@
+<%#
+    display this bid, only when(1 or 2 or 3 or 4)
+    1. admin close the public/private bids feature
+    2. user who made the request chooses to public its bids
+    3. current user made this request
+    4. current user made this bid
+ %>
+<% if PublicBid.close? || bid.req.public_bid || current_person?(bid.req.person) || current_person?(bid.person) %>
 <li class="bid">
   <a name="bid_<%= bid.id %>"></a>
   <div class="profile-image">
@@ -28,3 +36,4 @@
     <% end -%>
   </p>
 </li>
+<% end %>

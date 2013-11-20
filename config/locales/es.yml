@@ -381,6 +381,7 @@ es:
       header: "Nueva demanda"
       people_to_be_notified: "Personas que deben ser notificadas"
       notify_members_email: "¿Notificar a los miembros arriba mencionados?"
+      public_bid: "Licitaciones públicas?"
     show:
       header: "Solicitar Servicio"
       bids: "Ofertas"
