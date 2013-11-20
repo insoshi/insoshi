@@ -106,3 +106,5 @@ US_BUSINESS_TYPES = [
 US_BUSINESS_TYPES.each do |value|
   type = BusinessType.find_or_create_by_name(value, :description => "")
 end
+
+TimeZone.find_or_create_by_time_zone('Pacific Time (US & Canada)')

@@ -5,7 +5,5 @@ class CreateTimeZones < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    TimeZone.create!(:time_zone => 'Pacific Time (US & Canada)')
   end
 end
