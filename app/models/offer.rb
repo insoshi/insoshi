@@ -48,15 +48,15 @@ class Offer < ActiveRecord::Base
   end
 
   def main_photo
-    photo.nil? ? "g_default.png" : photo.picture_url
+    photo.nil? ? (person.photo.nil? ? "g_default.png" : person.photo.picture_url) : photo.picture_url
   end
 
   def thumbnail
-    photo.nil? ? "g_default_thumbnail.png" : photo.picture_url(:thumbnail)
+    photo.nil? ? (person.photo.nil? ? "g_default_thumbnail.png" : person.photo.picture_url(:thumbnail)) : photo.picture_url(:thumbnail)
   end
 
   def icon
-    photo.nil? ? "g_default_icon.png" : photo.picture_url(:icon)
+    photo.nil? ? (person.photo.nil? ? "g_default_icon.png" : person.photo.picture_url(:icon)) : photo.picture_url(:icon)
   end
 
   private
