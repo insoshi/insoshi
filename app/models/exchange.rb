@@ -15,6 +15,7 @@
 
 class Exchange < ActiveRecord::Base
   include ActivityLogger
+  include ActionView::Helpers::NumberHelper
   acts_as_paranoid
   
   attr_accessor  :offer_count
@@ -192,9 +193,9 @@ class Exchange < ActiveRecord::Base
 
   def send_payment_notification_to_worker
     exchange_note = Message.new()
-    subject = I18n.translate('exchanges.notify.you_have_received_a_payment_of') + " " + self.amount.to_s + " " +  self.group.unit + " " + I18n.translate('for') + " " + self.metadata.name 
+    subject = I18n.translate('exchanges.notify.you_have_received_a_payment_of') + " " + nice_decimal(self.amount) + " " +  self.group.unit + " " + I18n.translate('for') + " " + self.metadata.name 
     exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject 
-    exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.paid_you') + " " + self.amount.to_s + " " + self.group.unit + "."
+    exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.paid_you') + " " + nice_decimal(self.amount) + " " + self.group.unit + "."
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
     exchange_note.save!
@@ -202,11 +203,15 @@ class Exchange < ActiveRecord::Base
 
   def send_suspend_payment_notification_to_worker
     exchange_note = Message.new()
-    subject = I18n.translate('exchanges.notify.payment_suspended') + self.amount.to_s + " " + self.group.unit + " - " + I18n.translate('by') + " " + self.metadata.name
+    subject = I18n.translate('exchanges.notify.payment_suspended') + nice_decimal(self.amount) + " " + self.group.unit + " - " + I18n.translate('by') + " " + self.metadata.name
     exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject 
-    exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.suspended_payment_of') + " " + self.amount.to_s + " " + self.group.unit + "."
+    exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.suspended_payment_of') + " " + nice_decimal(self.amount) + " " + self.group.unit + "."
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
     exchange_note.save!
+  end
+
+  def nice_decimal(decimal)
+    number_with_precision(decimal, precision: 2)
   end
 end

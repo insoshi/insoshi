@@ -4,7 +4,7 @@
     <%= image_tag "icons/switch.gif", :class => "icon", :alt => "Payment" %>
   </div>
   <p>
-  <%= person_link sent_exchange.worker %><%= " received #{sent_exchange.amount.to_s} hours for " %><%= link_to h(sent_exchange.metadata.name), sent_exchange.metadata %>
+  <%= person_link sent_exchange.worker %><%= " received #{nice_decimal(sent_exchange.amount)} hours for " %><%= link_to h(sent_exchange.metadata.name), sent_exchange.metadata %>
   </p>
   <p class="meta published">
   <%= ( t 'ago_time', :date => time_ago_in_words(sent_exchange.created_at)).capitalize %>

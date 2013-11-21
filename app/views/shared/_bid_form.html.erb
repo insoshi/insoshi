@@ -1,5 +1,5 @@
 <%= bootstrap_form_for @bid, :url => req_bids_path(@req), :html => {:id => 'new_bid'} do |f| %>
-    <%= f.text_field :estimated_hours, label: t('estimate'), help: @req.unit, size: 2 %>
+    <%= f.text_field :estimated_hours, :value => nice_decimal(f.object.estimated_hours),  label: t('estimate'), help: @req.unit, size: 2 %>
     <%= f.text_field :expiration_date, label: t('expiration_date'), size: 8 %>
     <%= f.text_area :private_message_to_requestor, label: t('reqs.show.private_message_to_requestor'), rows: 5 %>
     <%= f.actions do %>
