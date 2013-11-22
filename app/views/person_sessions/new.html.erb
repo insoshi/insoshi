@@ -19,10 +19,12 @@
   <%- if global_prefs.can_send_email? -%>
     <%= link_to t('sessions.new.i_forgot_my_password'), new_password_reset_path %> ::
   <%- end -%>
+  <% if OpenId.open? %>
     <span id="noscript" style="display:none;">
       <span id="openid_link"><a href="#" onclick="show_openid(); return false;"><%= t('sessions.new.login_using_openid') %></a></span>
       <span id="standard_link"><a href="#" onclick="show_standard(); return false;"><%= t('sessions.new.back_to_regular_login') %></a></span>
     </span>
+  <% end %>
 
 </div>
   <% end -%>

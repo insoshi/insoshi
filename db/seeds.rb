@@ -108,3 +108,5 @@ US_BUSINESS_TYPES.each do |value|
 end
 
 TimeZone.find_or_create_by_time_zone('Pacific Time (US & Canada)')
+
+OpenId.find_or_create_by_open_id(true)

@@ -26,12 +26,14 @@
 </span>
 </fieldset>
 
-<div style="text-align: center; font-size: 12px; padding: 10px;">
-    <span id="noscript" style="display:none;">
-      <span id="openid_link"><a href="#" onclick="show_openid(); return false;"><%= t('people.new.or_signup_with_openid') %></a></span>
-      <span id="standard_link"><a href="#" onclick="show_standard(); return false;"><%= t('people.new.back_to_regular_signup') %></a></span>
-    </span>
-</div>
+  <% if OpenId.open? %>
+    <div style="text-align: center; font-size: 12px; padding: 10px;">
+      <span id="noscript" style="display:none;">
+        <span id="openid_link"><a href="#" onclick="show_openid(); return false;"><%= t('people.new.or_signup_with_openid') %></a></span>
+        <span id="standard_link"><a href="#" onclick="show_standard(); return false;"><%= t('people.new.back_to_regular_signup') %></a></span>
+      </span>
+    </div>
+  <% end %>
   <div class="control-group">
     <%= f.label t('people.new.which_services'), :class => 'control-label' %>
     <div class="controls">

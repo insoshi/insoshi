@@ -39,7 +39,7 @@ end
     export
   end
 
-  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone]
+  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone, OpenId]
 
   config.default_items_per_page = 100
 
@@ -592,6 +592,14 @@ end
       enum do
         TimeZone::Date_Style.keys
       end
+    end
+  end
+
+  config.model OpenId do
+    label "Open ID"
+    label_plural "Open ID"
+    field :open_id do
+      label 'Turn on/off Open ID feature'
     end
   end
 

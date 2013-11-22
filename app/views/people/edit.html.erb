@@ -164,15 +164,16 @@
         <% end %>
     <% end %>
 
-  <h2>OpenID</h2>
+  <% if OpenId.open? %>
+    <h2>OpenID</h2>
 
-  <%= bootstrap_form_for @person, :html => { :id => "openid_form" } do |f| %>
-    <%= f.text_field :openid_identifier, label: t('people.edit.openid_identifier') %>
-    <%= f.actions do %>
-      <%= f.primary t('people.edit.change_openid') %>
+    <%= bootstrap_form_for @person, :html => { :id => "openid_form" } do |f| %>
+      <%= f.text_field :openid_identifier, label: t('people.edit.openid_identifier') %>
+      <%= f.actions do %>
+        <%= f.primary t('people.edit.change_openid') %>
+      <% end %>
+      <input type="hidden" name="type" value="openid_edit" />
     <% end %>
-    <input type="hidden" name="type" value="openid_edit" />
-
   <% end %>
 
 </div>

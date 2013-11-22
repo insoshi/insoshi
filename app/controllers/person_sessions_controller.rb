@@ -10,6 +10,11 @@ class PersonSessionsController < ApplicationController
 
 
   def create
+    # actually when the OpenID feature is closed, the parameter openid_identifier must be empty,
+    # unless someone hack the website, so these two lines is just for security
+    if OpenId.close? && !params[:person_session][:openid_identifier].blank?
+      raise ActionController::RoutingError.new('Not Found')
+    end
     @person_session = PersonSession.new(params[:person_session])
     @person_session.save do |result|
       if result
