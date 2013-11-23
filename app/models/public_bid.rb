@@ -1,7 +1,7 @@
-class PublicBid < ActiveRecord::Base
+class PublicBid
 
   def self.open?
-    PublicBid.first.public_bid
+    Preference.first.public_private_bid
   end
 
   def self.close?
