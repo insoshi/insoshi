@@ -296,6 +296,10 @@ class Person < ActiveRecord::Base
     Message.where(:recipient_id => id, :recipient_read_at => nil).exists?
   end
 
+  def unread_messages_count
+    Message.where(:recipient_id => id, :recipient_read_at => nil).count
+  end
+
   def formatted_categories
     categories_long_name('<br>')
   end
