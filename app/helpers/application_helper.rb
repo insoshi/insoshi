@@ -1,4 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
+
 module ApplicationHelper
 
   def current_page_pre22?(options)
@@ -152,7 +153,7 @@ module ApplicationHelper
   end
 
   def markdown_parser
-    @markdown_parser ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(:hard_wrap => true))
+    @markdown_parser ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(:hard_wrap => true, :filter_html => true, :safe_links_only => true))
   end
 
   # Display text by sanitizing and formatting.
