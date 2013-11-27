@@ -517,3 +517,7 @@ input#person_openid_identifier, input#person_session_openid_identifier {
   margin-bottom: 15px;
   padding: 7px 9px;
 }
+
+.badge-error {
+    background-color: #b94a48;
+}

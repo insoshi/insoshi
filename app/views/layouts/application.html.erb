@@ -88,6 +88,16 @@
                   </ul>
                 </li>
               <%- end -%>
+              <li>
+                <a href="<%= messages_path %>">
+                  <%= t('home.menu.inbox') %>
+                  <%- if current_person.has_unread_messages? -%>
+                    <span class="badge badge-error "><%= current_person.unread_messages_count %></span>
+                  <%- else -%>
+                    <span class="badge ">0</span>
+                  <%- end -%>
+                </a>
+              </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <%= h current_person.display_name %>
@@ -95,7 +105,6 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li><%= link_to t('home.menu.profile'), person_path(current_person) %></li>
-                  <li><%= link_to t('home.menu.inbox'), messages_path %></li>
                   <li><%= link_to t('home.menu.sign_out'), logout_path %></li>
                 </ul>
               </li>
