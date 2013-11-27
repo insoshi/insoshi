@@ -32,6 +32,6 @@ module ReqsHelper
   end
 
   def formatted_req_categories(categories)
-    (categories.map(&:to_s).join("<br>") + "<br>").html_safe
+    (categories.map{|c| h(c.to_s)}.join("<br>") + "<br>").html_safe
   end
 end

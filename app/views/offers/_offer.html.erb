@@ -17,7 +17,7 @@
     <%= t('offers.partial.expires') %> <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
   </p>
     
-  <%= display formatted_offer_categories(offer.long_categories), :class => "meta" %>
+  <%= formatted_offer_categories(offer.long_categories) %>
   
   <p>
     <%= markdown(first_n_words(offer.description)) %>

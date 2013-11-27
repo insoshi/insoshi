@@ -8,7 +8,7 @@
   <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h  nice_decimal(req.estimated_hours)  %> <%= h req.unit %>)
   <%= t('reqs.partial.due') %>: <%= relative_time_ago_in_words(req.due_date) %>
   </p>
-    <%= display formatted_req_categories(req.long_categories), :class => "meta" %>
+    <%= formatted_req_categories(req.long_categories) %>
   <p>
     <%= markdown((full rescue false) ? req.description.to_s : first_n_words(req.description)) %>
   </p>

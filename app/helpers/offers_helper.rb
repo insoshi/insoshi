@@ -17,8 +17,8 @@ module OffersHelper
 
   def formatted_offer_categories(categories)
     text = ""
-    categories.each {|c| text << c + "<br>"}
-    text.html_safe 
+    categories.each {|c| text << h(c) + "<br>"}
+    text.html_safe
   end
 
   # 
@@ -30,7 +30,7 @@ module OffersHelper
     html = "<div class='horizontal-categories'><span>#{prefix_text}</span>&nbsp;"
     
     # Adding categories with commas - note extra comma to end
-    categories.each { | c | html << c + ', ' }
+    categories.each { | c | html << h(c) + ', ' }
 
     # remove the accessive ', ' from the last position
     html = html[0..-3] << '</div>'
