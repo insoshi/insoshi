@@ -96,7 +96,7 @@ class ExchangesController < ApplicationController
         format.json { render :json => @exchange, :status => :created, :location => [@person, @exchange] }
         format.js
       else
-        flash[:error] = t('error_with_credit_transfer')
+        flash[:error] = @exchange.errors.to_a.join(', ')
         @groups = Person.find(params[:person_id]).groups
         @group = params[:group].nil? ? current_person.default_group : Group.find(params[:group])
         format.html { render :action => "new" }
