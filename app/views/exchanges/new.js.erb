@@ -1,5 +1,5 @@
 <% if params[:offer] %>
-  $('#offers_canvas').html('<h2><%= h @offer.name %></h2><%= escape_javascript(render :partial => "exchange_offer_form") %>');
+  $('#offers_canvas').html('<div class="span5"><h2><%= h @offer.name %></h2><%= escape_javascript(render :partial => "exchange_offer_form") %></div>');
   <%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'offers_canvas'} %>
 <% else %>
   $('#people_canvas').html('<%= escape_javascript(render :partial => "exchange_form") %>');
