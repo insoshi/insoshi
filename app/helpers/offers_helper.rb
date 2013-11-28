@@ -17,7 +17,7 @@ module OffersHelper
 
   def formatted_offer_categories(categories)
     text = ""
-    categories.each {|c| text << h(c) + "<br>"}
+    categories.each {|c| text << h(c) + "<br>".html_safe}
     text.html_safe
   end
 
