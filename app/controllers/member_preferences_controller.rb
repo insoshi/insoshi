@@ -9,7 +9,7 @@ class MemberPreferencesController < ApplicationController
     @group = @member_preference.membership.group
 
     respond_to do |format|
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
     end
   end
 
@@ -18,7 +18,7 @@ class MemberPreferencesController < ApplicationController
     #@member_preference = MemberPreference.find(params[:id])
     @group = @member_preference.membership.group
     respond_to do |format|
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
     end
   end
 

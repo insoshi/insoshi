@@ -14,7 +14,7 @@ class ForumsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
     end
   end
 

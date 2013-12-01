@@ -7,12 +7,16 @@ class PostsController < ApplicationController
   def index
     respond_to do |format|
       format.js do
-        seconds = global_prefs.topic_refresh_seconds
-        @refresh_milliseconds = seconds * 1000
-        @topic.update_viewer(current_person)
-        # Exclude your own to avoid picking up the one you just posted
-        @posts = @topic.posts_since_last_refresh(params[:after].to_i, current_person.id)
-        @viewers = @topic.current_viewers(seconds * 2)
+        if request.xhr?
+          seconds = global_prefs.topic_refresh_seconds
+          @refresh_milliseconds = seconds * 1000
+          @topic.update_viewer(current_person)
+          # Exclude your own to avoid picking up the one you just posted
+          @posts = @topic.posts_since_last_refresh(params[:after].to_i, current_person.id)
+          @viewers = @topic.current_viewers(seconds * 2)
+        else
+          render :action => 'reject'
+        end
       end
       format.html { redirect_to forum_topic_url(@forum, @topic) }
     end

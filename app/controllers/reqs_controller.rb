@@ -28,7 +28,9 @@ class ReqsController < ApplicationController
       @reqs = Req.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
     end
 
-    respond_with @reqs
+    respond_with @reqs do |format|
+      format.js {render :action => 'reject' if not request.xhr?}
+    end
   end
 
   # GET /reqs/1
@@ -44,7 +46,9 @@ class ReqsController < ApplicationController
     end
 
     if @group.authorized_to_view_reqs?(current_person)
-      respond_with @req
+      respond_with @req do |format|
+        format.js {render :action => 'reject' if not request.xhr?}
+      end
     else
       raise CanCan::AccessDenied.new("Not authorized!", :read, Req)
     end
@@ -57,7 +61,7 @@ class ReqsController < ApplicationController
     @selected_neighborhoods = current_person.neighborhoods
 
     respond_to do |format|
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
       format.html { redirect_to group_path(@group, :anchor => 'reqs/new') }
     end
   end
@@ -70,7 +74,7 @@ class ReqsController < ApplicationController
     @all_neighborhoods = Neighborhood.by_long_name
 
     respond_to do |format|
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
     end
   end
 

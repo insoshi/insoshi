@@ -35,7 +35,7 @@ class GroupsController < ApplicationController
         end
         @memberships = Membership.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
       end
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
       format.xml { render :xml => @group.to_xml(:methods => [:icon,:thumbnail], :only => [:id,:name,:description,:mode,:person_id,:created_at,:updated_at,:unit,:icon,:thumbnail]) }
     end
 
@@ -89,7 +89,7 @@ class GroupsController < ApplicationController
   def exchanges
     @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
     respond_to do |format|
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
     end
   end
 
@@ -118,7 +118,7 @@ class GroupsController < ApplicationController
   def graphs
     @num_months = 6
     respond_to do |format|
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
     end
   end
 

@@ -20,7 +20,11 @@ class TopicsController < ApplicationController
     respond_to do |format|
       format.html
       format.js do
-        @refresh_milliseconds = global_prefs.topic_refresh_seconds * 1000
+        if request.xhr?
+          @refresh_milliseconds = global_prefs.topic_refresh_seconds * 1000
+        else
+          render :action => 'reject'
+        end
       end
     end
   end

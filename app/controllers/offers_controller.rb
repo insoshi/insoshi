@@ -25,13 +25,17 @@ class OffersController < ApplicationController
       @offers = Offer.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
     end
 
-    respond_with @offers
+    respond_with @offers do |format|
+      format.js {render :action => 'reject' if not request.xhr?}
+    end
   end
 
   def show
     @group = @offer.group
     if @group.authorized_to_view_offers?(current_person)
-      respond_with @offer
+      respond_with @offer do |format|
+        format.js {render :action => 'reject' if not request.xhr?}
+      end
     else
       raise CanCan::AccessDenied.new("Not authorized!", :read, Offer)
     end
@@ -43,7 +47,7 @@ class OffersController < ApplicationController
     @selected_neighborhoods = current_person.neighborhoods
     @photo = @offer.photos.build
     respond_to do |format|
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
       format.html { redirect_to group_path(@group, :anchor => 'offers/new') }
     end
   end
@@ -77,7 +81,7 @@ class OffersController < ApplicationController
     @all_neighborhoods = Neighborhood.by_long_name
     @photo = @offer.photos.build if @offer.photos.blank?
     respond_to do |format|
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
     end
   end
 

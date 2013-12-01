@@ -41,14 +41,14 @@ class ApplicationController < ActionController::Base
           else
             'empty_canvas'
           end
-        render :partial => '/shared/flash_messages', :locals => {:canvas_id => canvas}
+        if request.xhr?
+          render :partial => '/shared/flash_messages', :locals => {:canvas_id => canvas}
+        else
+          render :action => 'reject'
+        end
       end
     end
   end
-
-  #ActiveScaffold.set_defaults do |config|
-  #  config.ignore_columns.add [ :created_at, :updated_at, :audits]
-  #end
 
 #  audit Req, Offer, Bid, Exchange, Account, Person, :only => [:create, :update, :destroy]
 

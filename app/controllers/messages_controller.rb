@@ -54,7 +54,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
     end
   end
 

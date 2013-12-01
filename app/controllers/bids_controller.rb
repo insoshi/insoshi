@@ -51,7 +51,7 @@ class BidsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to @req }
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
     end
   end
 

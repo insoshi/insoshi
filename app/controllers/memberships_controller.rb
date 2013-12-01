@@ -28,7 +28,7 @@ class MembershipsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js
+      format.js {render :action => 'reject' if not request.xhr?}
     end
   end
 
@@ -41,7 +41,7 @@ class MembershipsController < ApplicationController
     @reqs = @person.reqs.all_active
     respond_to do |format|
       if @group.authorized_to_view_members?(current_person)
-        format.js
+        format.js {render :action => 'reject' if not request.xhr?}
         format.html { redirect_to('/groups/' + @membership.group.id.to_s + '#memberships/' + @membership.id.to_s)}
       else
         raise CanCan::AccessDenied.new("Not authorized!", :read, Membership)
