@@ -5,13 +5,13 @@ module ActivitiesHelper
     person = activity.person
     case activity_type(activity)
     when "Connection"
-      %(#{person_link(activity.item.person)} #{t('and')} #{person_link(activity.item.contact)} 
+      %(#{person_link(activity.item.person)} #{t('and')} #{person_link(activity.item.contact)}
       #{t('shared.minifeed.have_connected')}.).html_safe
     when "ForumPost"
       post = activity.item
       %(#{person_link(person)} #{t('shared.minifeed.made_post_on_forum_topic')}: #{topic_link(post.topic)}.).html_safe
     when "Topic"
-      %(#{person_link(person)} #{t('shared.minifeed.created_a')} #{t('shared.minifeed.new_discussion_topic')} 
+      %(#{person_link(person)} #{t('shared.minifeed.created_a')} #{t('shared.minifeed.new_discussion_topic')}
       #{topic_link(activity.item)}.).html_safe
     when "Photo"
       %(#{person_link(person)}#{t('shared.minifeed.profile_picture_changed')}.).html_safe
@@ -35,7 +35,7 @@ module ActivitiesHelper
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
   end
-  
+
   def minifeed_message(activity)
     person = activity.person
     case activity_type(activity)
@@ -59,7 +59,7 @@ module ActivitiesHelper
       %(#{h person.display_name} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.).html_safe
     when "Offer"
       offer = activity.item
-      %(#{h person.display_name} #{t('shared.minifeed.offer_created')}: #{offer_link(offer.name, offer)}.).html_safe
+      %(#{h person.display_name} #{t('shared.minifeed.offer_created')}: #{offer.considered_active? ? offer_link(offer.name, offer) : offer.name}.).html_safe
     when "Exchange"
       exchange = activity.item
       %(#{h person.display_name} #{t('earned')} #{ nice_decimal(exchange.amount)} #{h exchange.group.unit} #{t('for')}
@@ -68,7 +68,7 @@ module ActivitiesHelper
       raise "Invalid activity type #{activity_type(activity).inspect}"
     end
   end
-  
+
   # Given an activity, return the right icon.
   def feed_icon(activity)
     img = case activity_type(activity)
@@ -97,11 +97,11 @@ module ActivitiesHelper
             end
     image_tag("icons/#{img}", :class => "icon")
   end
-  
+
   def someones(person, commenter, link = true)
     link ? "#{person_link(person)}'s" : "#{h person.display_name}'s"
   end
-  
+
   def topic_link(text, topic = nil)
     if topic.nil?
       topic = text              # Eh?  This makes no sense...
@@ -129,11 +129,11 @@ module ActivitiesHelper
   end
 
   private
-  
+
     # Return the type of activity.
     # We switch on the class.to_s because the class itself is quite long
     # (due to ActiveRecord).
     def activity_type(activity)
-      activity.item.class.to_s      
+      activity.item.class.to_s
     end
 end
