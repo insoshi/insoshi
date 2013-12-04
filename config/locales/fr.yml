@@ -446,9 +446,9 @@ fr:
       header: "Modifiez la requête"
     new:
       header: "Nouvelle requête"
-
       people_to_be_notified: "Personne à contacter"
       notify_members_email: "Contactez les members ci-dessous"
+      public_bid: "Appels d'offres publics?"
     show:
       header: "Requete"
       bids: "Enchères"

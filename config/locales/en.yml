@@ -393,6 +393,7 @@ en:
       header: "New request"
       people_to_be_notified: "People to be notified"
       notify_members_email: "Notify members?"
+      public_bid: "Public bids?"
     show:
       header: "Request"
       bids: "Bids"

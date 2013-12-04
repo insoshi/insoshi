@@ -507,6 +507,7 @@ gr:
       header: "Νέα Ζήτηση"
       people_to_be_notified: "Άνθρωποι που θα ειδοποιούνται"
       notify_members_email: "Να ειδοποιούνται τα μέλη που φαίνονται παραπάνω;"
+      public_bid: "Δημόσιες προσφορές;"
     show:
       header: "Ζήτηση"
       bids: "Δηλώσεις"

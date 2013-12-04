@@ -271,6 +271,9 @@ end
       field :protected_categories
       field :whitelist
       field :public_uploads
+      field :public_private_bid do
+        label "Public/Private Bids"
+      end
       field :mailchimp_list_id do
         label "Mailchimp List ID"
       end
