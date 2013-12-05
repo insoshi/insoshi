@@ -94,6 +94,12 @@ describe Message do
                                    :parent    => @message)
     @next_message.conversation.should == @message.conversation
   end
+
+  it "should not include unread trashed messages in inbox count" do
+    @message.save!
+    @message.trash(@recipient)
+    @recipient.inbox_messages_count.should == 0
+  end
     
   describe "email notifications" do
     

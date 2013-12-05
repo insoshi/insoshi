@@ -91,8 +91,8 @@
               <li>
                 <a href="<%= messages_path %>">
                   <%= t('home.menu.inbox') %>
-                  <%- if current_person.has_unread_messages? -%>
-                    <span class="badge badge-error "><%= current_person.unread_messages_count %></span>
+                  <%- if current_person.has_inbox_messages? -%>
+                    <span class="badge badge-error "><%= current_person.inbox_messages_count %></span>
                   <%- else -%>
                     <span class="badge ">0</span>
                   <%- end -%>
