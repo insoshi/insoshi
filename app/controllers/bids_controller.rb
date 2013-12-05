@@ -1,6 +1,7 @@
 class BidsController < ApplicationController
-  before_filter :login_required, :only => [:new,:edit,:create,:update,:destroy]
-  before_filter :setup
+  load_resource :req
+  load_and_authorize_resource :bid, :through => :req
+  before_filter :login_required
 
   # POST /bids
   # POST /bids.xml
@@ -51,7 +52,7 @@ class BidsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to @req }
-      format.js {render :action => 'reject' if not request.xhr?}
+      format.js
     end
   end
 
@@ -64,14 +65,8 @@ class BidsController < ApplicationController
     respond_to do |format|
       flash[:success] = t('notice_bid_removed')
       format.html { redirect_to req_url(@req) }
+      format.js
       #format.xml  { head :ok }
     end
-  end
-
-  private
-
-  def setup
-    @req = Req.find(params[:req_id])
-    @body = "req"
   end
 end

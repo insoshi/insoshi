@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131113170834) do
+ActiveRecord::Schema.define(:version => 20131123064517) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -547,6 +547,7 @@ ActiveRecord::Schema.define(:version => 20131113170834) do
     t.string   "locale"
     t.boolean  "public_uploads",          :default => false
     t.boolean  "display_orgicon",         :default => true
+    t.boolean  "public_private_bid",      :default => false
   end
 
   create_table "privacy_settings", :force => true do |t|
@@ -584,6 +585,7 @@ ActiveRecord::Schema.define(:version => 20131113170834) do
     t.boolean  "notifications",                                 :default => false
     t.integer  "group_id"
     t.boolean  "active",                                        :default => false
+    t.boolean  "public_bid",                                    :default => false
   end
 
   create_table "states", :force => true do |t|

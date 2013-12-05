@@ -269,7 +269,7 @@ $(function() {
       return false;
     });
 
-  $('.delete_topic, .delete_post, .delete_req, .delete_offer').live('click', function() {
+  $('.delete_topic, .delete_post, .delete_req, .delete_offer, .delete_bid').live('click', function() {
       if(confirm('Delete?'))
       {
         var data = {'_method': 'delete'}

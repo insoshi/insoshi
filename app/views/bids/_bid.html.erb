@@ -5,8 +5,8 @@
     3. current user made this request
     4. current user made this bid
  %>
-<% if PublicBid.close? || bid.req.public_bid || current_person?(bid.req.person) || current_person?(bid.person) %>
-<li class="bid">
+<% if can? :read, bid %>
+  <li class="bid bid_id_<%= bid.id %>">
   <a name="bid_<%= bid.id %>"></a>
   <div class="profile-image">
     <%= image_link bid.person, :image => :thumbnail %>
@@ -27,8 +27,8 @@
   <p class="meta">
 <% if bid.state != 'offered' %><%= t('bids.bid.accepted') %> <%= t( 'ago_time', :date => time_ago_in_words(bid.accepted_at)) -%> <br><% end %>   <%= t('bids.bid.submitted_by') %> <%= person_link bid.person %>
   <%= t( 'ago_time', :date => time_ago_in_words(bid.created_at)) %>
-    <% if admin? || current_person?(bid.person) -%>
-      | <%= link_to t('button_delete'), req_bid_path(bid.req,bid), :confirm => t('are_you_sure'), :method => :delete %>
+    <% if can? :destroy, bid -%>
+      | <%= link_to t('button_delete'), req_bid_path(bid.req,bid), :class => 'delete_bid' %>
     <% end -%>
     <br>
     <% if current_person?(bid.req.person) && !current_person.address.nil? && !bid.person.address.nil? && !current_person?(bid.person) -%>

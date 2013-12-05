@@ -33,13 +33,15 @@ class ApplicationController < ActionController::Base
         end
       end
       format.js do
-        canvas = case params[:action] 
-          when 'new_req','create_req','update' # from bids#update payment denied
+        canvas = case params[:controller] 
+          when 'reqs','bids'
             'reqs_canvas'
-          when 'new_offer','create_offer'
+          when 'offers'
             'offers_canvas'
+          when 'exchanges'
+            'people_canvas'
           else
-            'empty_canvas'
+            'home_canvas'
           end
         if request.xhr?
           render :partial => '/shared/flash_messages', :locals => {:canvas_id => canvas}
