@@ -9,9 +9,13 @@ namespace :heroku do
 
     next unless amazon_credentials = auth_to_amazon(ui, APP_CONFIG)
 
+    print "Creating new heroku app... "
     heroku_app = heroku.post_app.body
+    puts "done."
 
+    print "Creating new S3 bucket... "
     AWS::S3::Bucket.create(heroku_app['name'])
+    puts "done."
 
     config_vars = {
       'BUNDLE_WITHOUT' => "development:test",
@@ -30,22 +34,37 @@ namespace :heroku do
       'SMTP_PASSWORD' => APP_CONFIG['SMTP_PASSWORD']
     }
 
+    print "Setting config vars... "
     heroku.put_config_vars(heroku_app['name'], config_vars)
+    puts "done."
 
+    print "Setting up mail server "
     if APP_CONFIG['SMTP_SERVER']
+      print "using provided credentials... "
       heroku.put_config_vars(heroku_app['name'], smtp_vars)
     else
+      print "using SendGrid addon... "
       heroku.post_addon(heroku_app['name'], 'sendgrid:starter')
     end
+    puts "done."
 
+    print "Setting up memcache... "
     heroku.post_addon(heroku_app['name'], 'memcachier')
+    puts "done."
 
     git = Git.open(Dir.pwd, :log => Logger.new(STDOUT))
 
+    print "Deploying to Heroku... "
     git.add_remote('heroku', "git@heroku.com:#{heroku_app['name']}.git")
     git.push('heroku', 'master')
+    puts "done."
 
+    print "Running first time install on Heroku... "
     heroku.post_ps(heroku_app['name'], 'rake install')
+    puts "done."
+
+    puts "Deploy completed successfully. App is now available at http://#{heroku_app['name']}.herokuapp.com"
+    puts "Thanks!"
   end
 
   def auth_to_heroku(ui, config)
