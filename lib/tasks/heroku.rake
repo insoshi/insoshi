@@ -29,32 +29,49 @@ namespace :heroku do
       :secret_access_key => amazon_secret
     )
 
+    begin
+      AWS::S3::Service.buckets
+    rescue AWS::S3::S3Exception => e
+      puts e.message
+      next
+    end
+
     heroku_app = heroku.post_app.body
 
     AWS::S3::Bucket.create(heroku_app['name'])
 
-    # `git remote add heroku git@heroku.com:#{app_name}.git`
+    config_vars = {
+      'BUNDLE_WITHOUT' => "development:test",
+      'AMAZON_ACCESS_KEY_ID' => amazon_id,
+      'AMAZON_SECRET_ACCESS_KEY' => amazon_secret,
+      'APP_NAME' => heroku_app['name'],
+      'SERVER_NAME' => "#{heroku_app['name']}.herokuapp.com",
+      'S3_BUCKET_NAME' => heroku_app['name']
+    }
 
-    # `heroku config:add BUNDLE_WITHOUT="development:test"`
-    # `heroku config:add AMAZON_ACCESS_KEY_ID=#{APP_CONFIG['AMAZON_ACCESS_KEY_ID']}`
-    # `heroku config:add AMAZON_SECRET_ACCESS_KEY=#{APP_CONFIG['AMAZON_SECRET_ACCESS_KEY']}`
-    # `heroku config:add SMTP_DOMAIN=#{APP_CONFIG['SMTP_DOMAIN']}`
-    # `heroku config:add SMTP_SERVER=#{APP_CONFIG['SMTP_SERVER']}`
-    # `heroku config:add SMTP_PORT=#{APP_CONFIG['SMTP_PORT']}`
-    # `heroku config:add SMTP_USER=#{APP_CONFIG['SMTP_USER']}`
-    # `heroku config:add SMTP_PASSWORD=#{APP_CONFIG['SMTP_PASSWORD']}`
-    # `heroku config:add S3_BUCKET_NAME=#{app_name}`
+    smtp_vars = {
+      'SMTP_DOMAIN' APP_CONFIG['SMTP_DOMAIN'],
+      'SMTP_SERVER' => APP_CONFIG['SMTP_SERVER'],
+      'SMTP_PORT' => APP_CONFIG['SMTP_PORT'],
+      'SMTP_USER' => APP_CONFIG['SMTP_USER'],
+      'SMTP_PASSWORD' => APP_CONFIG['SMTP_PASSWORD']
+    }
 
-    # # default values of preference object will be set to these.
-    # `heroku config:add APP_NAME=#{app_name}`
-    # `heroku config:add SERVER_NAME=#{app_name + '.' + 'herokuapp.com'}`
-    # `heroku addons:add memcachier`
-    # unless APP_CONFIG['SMTP_SERVER']
-    #   `heroku addons:add sendgrid:starter`
-    # end
+    heroku.put_config_vars(heroku_app['name'], config_vars)
 
-    # `git push heroku master`
-    # `heroku run rake install`
+    heroku.put_config_vars(heroku_app['name'], smtp_vars)
+
+    heroku.put_addon(heroku_app['name'], 'memcachier')
+    unless APP_CONFIG['SMTP_SERVER']
+      heroku.put_addon(heroku_app['name'], 'sendgrid:starter')
+    end
+
+    git = Git.open(working_dir, :log => Logger.new(STDOUT))
+
+    git.add_remote('heroku', "git@heroku.com:#{heroku_app['name']}.git")
+    git.push('heroku', 'master')
+
+    heroku.post_ps(heroku_app['name'], 'rake install')
   end
 
   desc "Updates an existing heroku app with the latest oscurrency build"
