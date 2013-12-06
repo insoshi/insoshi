@@ -270,6 +270,7 @@ end
       field :email_verifications
       field :protected_categories
       field :whitelist
+      field :openid
       field :public_uploads
       field :public_private_bid do
         label "Public/Private Bids"
