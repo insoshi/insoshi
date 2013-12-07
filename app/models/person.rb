@@ -43,8 +43,6 @@ class Person < ActiveRecord::Base
   MAX_NAME = 40
   MAX_DESCRIPTION = 5000
   TRASH_TIME_AGO = 1.month
-  SEARCH_LIMIT = 20
-  SEARCH_PER_PAGE = 8
   MESSAGES_PER_PAGE = 5
   EXCHANGES_PER_PAGE = 10
   NUM_RECENT_MESSAGES = 3
@@ -242,9 +240,8 @@ class Person < ActiveRecord::Base
 
   ## Message methods
 
-  def received_messages(page = 1)
-    _received_messages.
-    paginate(:page => page, :per_page => MESSAGES_PER_PAGE)
+  def received_messages(page = 1, text)
+    _received_messages.search_by(text).paginate(:page => page, :per_page => MESSAGES_PER_PAGE)
   end
 
   def sent_messages(page = 1)

@@ -250,6 +250,9 @@ $(function() {
         if ('groups' == frags[1] && 'members' ==  frags[3]) {
           window.location = '/groups/' + OSCURRENCY.group_id + '/members?search=' + $(this).children('input').attr('value');
           return false;
+        } else if ('messages' == frags[1]) {
+          window.location = '/messages?search=' + $(this).children('input').attr('value');
+          return false;
         }
         alert('tab '+current_tab+' is not supported for search');
       } else {

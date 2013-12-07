@@ -1,16 +1,10 @@
-require 'texticle/searchable'
-
 class Message < Communication
   extend PreferencesHelper
   include ActionView::Helpers::TextHelper
   
   attr_accessor :reply, :parent, :send_mail
 
-  extend Searchable(:subject, :content)
-
   MAX_CONTENT_LENGTH = 5000
-  SEARCH_LIMIT = 20
-  SEARCH_PER_PAGE = 8
 
   attr_accessible :subject, :content
   
@@ -27,7 +21,13 @@ class Message < Communication
   after_create :update_recipient_last_contacted_at,
                :set_replied_to, :send_receipt_reminder
                #:save_recipient
-  
+
+  class << self
+    def search_by(text)
+      where(Message.arel_table[:subject].matches("%#{text}%").or(Message.arel_table[:content].matches("%#{text}%")))
+    end
+  end
+
   def parent
     return @parent unless @parent.nil?
     return Message.find(parent_id) unless parent_id.nil?

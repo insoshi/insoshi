@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
 
   # GET /messages
   def index
-    @messages = current_person.received_messages(params[:page])
+    @messages = current_person.received_messages(params[:page],params[:search])
     respond_to do |format|
       format.html { render :template => "messages/index" }
     end
