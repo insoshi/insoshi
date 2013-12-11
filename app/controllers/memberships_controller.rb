@@ -19,12 +19,12 @@ class MembershipsController < ApplicationController
       @memberships = Membership.custom_search(@selected_neighborhood || @selected_category, 
                                             @group, 
                                             params[:page], 
-                                            AJAX_POSTS_PER_PAGE, 
+                                            ajax_posts_per_page, 
                                             params[:search]
                                             )
     else
       flash[:notice] = t('notice_member_to_view_people')
-      @memberships = Membership.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+      @memberships = Membership.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
     end
 
     respond_to do |format|

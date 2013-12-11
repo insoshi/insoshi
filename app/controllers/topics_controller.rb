@@ -12,9 +12,9 @@ class TopicsController < ApplicationController
     @group = @forum.group
     @authorized = @group.authorized_to_view_forum?(current_person)
     if @authorized
-      @posts = @topic.posts.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+      @posts = @topic.posts.paginate(:page => params[:page], :per_page => ajax_posts_per_page)
     else
-      @posts = ForumPost.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+      @posts = ForumPost.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
     end
     @post = ForumPost.new
     respond_to do |format|

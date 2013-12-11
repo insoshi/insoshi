@@ -132,6 +132,15 @@
 
     <div class="container">
       <!-- Styling for the footer -->
+        <%- if logged_in? -%>
+          <div style='margin-top: 20px;'>
+          <%= t('per_page') %>: 
+          <% [5,10,25,50,100].each do |ppp| %>
+            <% selected_classes =  current_person.posts_per_page == ppp ? 'btn btn-small btn-primary' : '' %>
+            <%= link_to ppp.to_s, person_path(current_person), {:class => "per_page #{selected_classes}", 'data-ppp' => ppp} %>
+          <% end %>
+        <% end %>
+        </div>
       <hr/>
 
       <footer>

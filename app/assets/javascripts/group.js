@@ -287,6 +287,15 @@ $(function() {
     return false;
   });
 
+  $('.per_page').live('click', function() {
+    var number_clicked = $(this).attr('data-ppp');
+    var data = {'_method': 'put', 'person': {'posts_per_page': number_clicked}}
+    $('.per_page').removeClass('btn btn-small btn-primary');
+    $(this).addClass('btn btn-small btn-primary');
+    $.post($(this).attr('href'),data,null,'script');
+    return false;
+  });
+
   $('a.pay_now').live('click', function() {
     window.location.hash = url2hash(this.href);
     return false;

@@ -6,6 +6,14 @@ class PeopleController < ApplicationController
   before_filter :login_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
 
+  def set_posts_per_page
+    Rails.logger.info "XXX set_posts_per_page"
+    flash[:notice] = 'set_posts_per_page!'
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def index
     if params[:sort]
       if "alpha" == params[:sort]
@@ -171,10 +179,12 @@ class PeopleController < ApplicationController
           if result
             flash[:success] = t('success_profile_updated')
             format.html { redirect_to(@person) }
+            format.js
           else
             @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
             @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
             format.html { render :action => "edit" }
+            format.js
           end
         end
       end

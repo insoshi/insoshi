@@ -36,6 +36,7 @@ class Person < ActiveRecord::Base
   attr_accessible :broadcast_emails
   attr_accessible :web_site_url
   attr_accessible :org
+  attr_accessible :posts_per_page
 
   extend Searchable(:name, :business_name, :description)
 
