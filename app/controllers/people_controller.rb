@@ -6,14 +6,6 @@ class PeopleController < ApplicationController
   before_filter :login_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
 
-  def set_posts_per_page
-    Rails.logger.info "XXX set_posts_per_page"
-    flash[:notice] = 'set_posts_per_page!'
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def index
     if params[:sort]
       if "alpha" == params[:sort]
