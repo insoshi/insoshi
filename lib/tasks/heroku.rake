@@ -11,6 +11,8 @@ namespace :heroku do
 
     print "Creating new heroku app... "
     heroku_app = heroku.post_app.body
+    APP_CONFIG["HEROKU_APP"] = heroku_app['name']
+    File.open("config/config.yml", 'w+') {|f| f.write(APP_CONFIG.to_yaml) }
     puts "done."
 
     print "Creating new S3 bucket... "
@@ -32,7 +34,7 @@ namespace :heroku do
 
     print "Setting up mail server "
 
-    smtp_credentials = collect_smtp_credentials
+    smtp_credentials = collect_smtp_credentials(ui, APP_CONFIG)
 
     if smtp_credentials['server']
       print "using provided credentials... "
@@ -57,6 +59,7 @@ namespace :heroku do
     git = Git.open(Dir.pwd, :log => Logger.new(STDOUT))
 
     print "Deploying to Heroku... "
+    git.remove_remote('heroku')
     git.add_remote('heroku', "git@heroku.com:#{heroku_app['name']}.git")
     git.push('heroku', 'master')
     puts "done."
@@ -68,6 +71,38 @@ namespace :heroku do
     puts "Deploy completed successfully. App is now available at http://#{heroku_app['name']}.herokuapp.com"
     puts "Thanks!"
   end
+
+  desc "Updates an existing heroku app with the latest oscurrency build"
+  task :update => :environment do
+    APP_CONFIG = YAML.load_file("config/config.yml")
+
+    ui = HighLine.new
+
+    next unless heroku = auth_to_heroku(ui, APP_CONFIG)
+
+    heroku_app = heroku.get_app(APP_CONFIG["HEROKU_APP"]).body
+
+    git = Git.open(Dir.pwd, :log => Logger.new(STDOUT))
+
+    if ui.agree("Do you want to fetch the latest code from GitHub? ")
+      print "Getting latest OSCurrency code... "
+      git.pull('origin', 'master')
+      puts "done."
+    end
+
+    print "Deploying to Heroku... "
+    git.push('heroku', 'master')
+    puts "done."
+
+    print "Running database migrations... "
+    heroku.post_ps(heroku_app['name'], 'rake db:migrate')
+    puts "done."
+
+    puts "Update completed successfully. App is now available at http://#{heroku_app['name']}.herokuapp.com"
+    puts "Thanks!"
+  end
+
+
 
   def auth_to_heroku(ui, config)
     heroku_api_key = config['HEROKU_API_KEY'] || ui.ask("Enter your Heroku API key: ")
@@ -119,12 +154,6 @@ namespace :heroku do
     end
 
     {:server => smtp_server, :domain => smtp_domain, :port => smtp_port, :user => smtp_user, :password => smtp_password}
-  end
-
-
-  desc "Updates an existing heroku app with the latest oscurrency build"
-  task :update => :environment do
-    # TODO
   end
 
 end
