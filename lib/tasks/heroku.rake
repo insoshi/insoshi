@@ -26,21 +26,23 @@ namespace :heroku do
       'S3_BUCKET_NAME' => heroku_app['name']
     }
 
-    smtp_vars = {
-      'SMTP_DOMAIN' => APP_CONFIG['SMTP_DOMAIN'],
-      'SMTP_SERVER' => APP_CONFIG['SMTP_SERVER'],
-      'SMTP_PORT' => APP_CONFIG['SMTP_PORT'],
-      'SMTP_USER' => APP_CONFIG['SMTP_USER'],
-      'SMTP_PASSWORD' => APP_CONFIG['SMTP_PASSWORD']
-    }
-
     print "Setting config vars... "
     heroku.put_config_vars(heroku_app['name'], config_vars)
     puts "done."
 
     print "Setting up mail server "
-    if APP_CONFIG['SMTP_SERVER']
+
+    smtp_credentials = collect_smtp_credentials
+
+    if smtp_credentials['server']
       print "using provided credentials... "
+      smtp_vars = {
+        'SMTP_SERVER' => smtp_credentials['smtp_server'],
+        'SMTP_DOMAIN'=> smtp_credentials['smtp_domain'],
+        'SMTP_PORT' => smtp_credentials['smtp_port'],
+        'SMTP_USER' => smtp_credentials['smtp_user'],
+        'SMTP_PASSWORD' => smtp_credentials['smtp_password']
+      }
       heroku.put_config_vars(heroku_app['name'], smtp_vars)
     else
       print "using SendGrid addon... "
@@ -103,6 +105,20 @@ namespace :heroku do
     end
 
     {:id => amazon_id, :secret => amazon_secret}
+  end
+
+  def collect_smtp_credentials(ui, config)
+
+    smtp_server = config['SMTP_SERVER'] || ui.ask("Enter your SMTP server address (or leave blank to use SendGrid): ")
+
+    unless smtp_server.blank?
+      smtp_domain = config['SMTP_DOMAIN'] || ui.ask("Enter your SMTP domain: ")
+      smtp_port = config['SMTP_PORT'] || ui.ask("Enter your SMTP port: ")
+      smtp_user = config['SMTP_USER'] || ui.ask("Enter your SMTP user: ")
+      smtp_password = config['SMTP_PASSWORD'] || ui.ask("Enter your SMTP password: ")
+    end
+
+    {:server => smtp_server, :domain => smtp_domain, :port => smtp_port, :user => smtp_user, :password => smtp_password}
   end
 
 
