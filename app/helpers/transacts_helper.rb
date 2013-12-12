@@ -11,4 +11,12 @@ module TransactsHelper
       "-#{nice_decimal(t.amount)} #{units} (" + t('transacts.helper.paid_to') + " "
     end
   end
+
+  def counterparty_link(counterparty, group, ajaxified)
+    if ajaxified
+      link_to counterparty.name, Membership.mem(counterparty, group), :class => 'show-follow'
+    else
+      link_to counterparty.name, counterparty
+    end
+  end
 end
