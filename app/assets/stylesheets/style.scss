@@ -58,4 +58,12 @@
   .pay_now {
     margin-bottom: 20px;
   }
+
+  .primary-paynow-button {
+    text-align: center;
+    
+    .pay_now{
+      margin-bottom: 0px;
+    }
+  }
 }
