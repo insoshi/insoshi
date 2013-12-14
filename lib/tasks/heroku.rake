@@ -13,7 +13,7 @@ namespace :heroku do
     heroku_app = heroku.post_app.body
     APP_CONFIG["HEROKU_APP"] = heroku_app['name']
     File.open("config/config.yml", 'w+') {|f| f.write(APP_CONFIG.to_yaml) }
-    puts "done."
+    puts "done creating #{APP_CONFIG['HEROKU_APP']}."
 
     print "Creating new S3 bucket... "
     AWS::S3::Bucket.create(heroku_app['name'])
@@ -59,14 +59,16 @@ namespace :heroku do
     git = Git.open(Dir.pwd, :log => Logger.new(STDOUT))
 
     print "Deploying to Heroku... "
-    git.remove_remote('heroku')
-    git.add_remote('heroku', "git@heroku.com:#{heroku_app['name']}.git")
+    git.add_remote('heroku', "git@heroku.com:#{heroku_app['name']}.git") if git.remote('heroku').url.nil?
     git.push('heroku', 'master')
     puts "done."
 
     print "Running first time install on Heroku... "
     heroku.post_ps(heroku_app['name'], 'rake install')
     puts "done."
+
+    print "Restarting Heroku instance... "
+    heroku.post_ps_restart(heroku_app['name']) # in case authlogic is not properly loaded
 
     puts "Deploy completed successfully. App is now available at http://#{heroku_app['name']}.herokuapp.com"
     puts "Thanks!"
@@ -96,6 +98,10 @@ namespace :heroku do
 
     print "Running database migrations... "
     heroku.post_ps(heroku_app['name'], 'rake db:migrate')
+    puts "done."
+
+    print "Running database seed data (rare)... "
+    heroku.post_ps(heroku_app['name'], 'rake db:seed')
     puts "done."
 
     puts "Update completed successfully. App is now available at http://#{heroku_app['name']}.herokuapp.com"
@@ -145,7 +151,6 @@ namespace :heroku do
   def collect_smtp_credentials(ui, config)
 
     smtp_server = config['SMTP_SERVER'] || ui.ask("Enter your SMTP server address (or leave blank to use SendGrid): ")
-
     unless smtp_server.blank?
       smtp_domain = config['SMTP_DOMAIN'] || ui.ask("Enter your SMTP domain: ")
       smtp_port = config['SMTP_PORT'] || ui.ask("Enter your SMTP port: ")
@@ -153,7 +158,7 @@ namespace :heroku do
       smtp_password = config['SMTP_PASSWORD'] || ui.ask("Enter your SMTP password: ")
     end
 
-    {:server => smtp_server, :domain => smtp_domain, :port => smtp_port, :user => smtp_user, :password => smtp_password}
+    {'server' => smtp_server, 'domain' => smtp_domain, 'port' => smtp_port, 'user' => smtp_user, 'password' => smtp_password}
   end
 
 end
