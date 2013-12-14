@@ -68,7 +68,7 @@
   <hr/>
   <p class="text-center primary-paynow-button">
     <% if offer.price > 0 %>
-      <%= link_to t('offers.partial.accept_offer'), new_person_exchange_path(offer.person, :offer => offer.id), {:class => 'btn btn-large btn-primary pay_now'} %>
+      <%= link_to t('offers.partial.accept_offer'), new_person_exchange_path(offer.person, :offer => offer.id), {:class => 'btn btn-large btn-success pay_now'} %>
     <% end %>
   </p>
   <hr/>
