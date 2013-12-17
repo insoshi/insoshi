@@ -10,7 +10,7 @@ class ForumsController < ApplicationController
       @topics = Topic.find_recently_active(@forum, params[:page]) 
     else
       flash[:notice] = t('notice_member_to_view_forum')
-      @topics = Topic.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+      @topics = Topic.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
     end
 
     respond_to do |format|

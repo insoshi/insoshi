@@ -1,6 +1,6 @@
 ### Quick Facts
 - ruby 1.9.3
-- rails 3.2.13
+- rails 3.2.16
 - heroku deployment
 - [Issues](https://github.com/oscurrency/oscurrency/issues)
 - [Demo site](http://demo.opensourcecurrency.org)
@@ -16,7 +16,7 @@
 - Email Notification for matched requests
 - [Android native app w/OpenTransact](https://play.google.com/store/apps/details?id=org.opensourcecurrency.hack)
 - OpenID compatibility
-- [heroku installation script](https://github.com/oscurrency/oscurrency/blob/master/script/heroku_install)
+- Easy Heroku installation and update script
 
 ### Install
 
@@ -24,13 +24,13 @@ Our public Git repository is hosted on GitHub and can be viewed at
 
   https://github.com/oscurrency/oscurrency
 
-You can clone the the repository with the command:
+You can install a new deployment on Heroku with the command:
 
-    $ git clone git://github.com/oscurrency/oscurrency.git
+    $ rake heroku:install
 
-Edit config/config.yml and run heroku_install:
+Update a Heroku deployment with:
 
-    $ script/heroku_install
+    $ rake heroku:update
 
 ### Admin user
 
@@ -76,8 +76,6 @@ In addition to configuration through the web admin interface, outgoing email con
 [Configuration](https://github.com/oscurrency/oscurrency/wiki/Configuration)
 
 [Privacy Considerations](https://github.com/oscurrency/oscurrency/wiki/Privacy-Considerations)
-
-[Screencasts](https://github.com/oscurrency/oscurrency/wiki/Screencasts)
 
 [A Very Important Note about the LICENSE](https://groups.google.com/forum/#!topic/opensourcecurrency/lvzRtLVwbXk)
 

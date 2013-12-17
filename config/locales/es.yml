@@ -55,6 +55,7 @@ es:
   cancelled: "cancelado"
   return_to: "volver a "
   view_by: "View by"
+  per_page: "por página"
 
   privacy_settings:
     edit:

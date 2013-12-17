@@ -34,3 +34,4 @@ config/ultrasphinx/*.conf
 .rvmrc
 .env
 /public/uploads
+.ruby-version

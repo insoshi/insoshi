@@ -171,10 +171,12 @@ class PeopleController < ApplicationController
           if result
             flash[:success] = t('success_profile_updated')
             format.html { redirect_to(@person) }
+            format.js
           else
             @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
             @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
             format.html { render :action => "edit" }
+            format.js
           end
         end
       end

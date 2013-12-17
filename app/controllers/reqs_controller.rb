@@ -20,12 +20,12 @@ class ReqsController < ApplicationController
                               @group,
                               active=params[:scope].nil?, # if a scope is not passed, just return actives
                               params[:page],
-                              AJAX_POSTS_PER_PAGE,
+                              ajax_posts_per_page,
                               params[:search]
                               ).order("reqs.updated_at desc")
     else
       flash[:notice] = t('notice_member_to_view_requests')
-      @reqs = Req.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+      @reqs = Req.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
     end
 
     respond_with @reqs do |format|
@@ -90,7 +90,7 @@ class ReqsController < ApplicationController
 
     respond_to do |format|
       if @req.save
-        @reqs = Req.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil).order("updated_at desc")
+        @reqs = Req.custom_search(nil,@group,active=true,page=1,ajax_posts_per_page,nil).order("updated_at desc")
         flash[:notice] = t('success_request_created')
         #respond_with @req
         #format.html { redirect_to(@req) }
@@ -115,7 +115,7 @@ class ReqsController < ApplicationController
     respond_to do |format|
       if @req.update_attributes(params[:req])
         flash[:notice] = t('notice_request_updated')
-        @reqs = Req.custom_search(nil,@group,active=true,page=1,AJAX_POSTS_PER_PAGE,nil).order("updated_at desc")
+        @reqs = Req.custom_search(nil,@group,active=true,page=1,ajax_posts_per_page,nil).order("updated_at desc")
         format.html { redirect_to(@req) }
         format.js
         format.xml  { head :ok }

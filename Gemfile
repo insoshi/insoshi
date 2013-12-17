@@ -58,7 +58,7 @@ gem "bootstrap_form", "~> 0.3.2"
 
 group :development, :test do
   gem 'debugger'
-  gem "heroku"
+  gem "heroku-api"
   gem 'sqlite3'
   gem "silent-postgres"
   gem "rack"
@@ -74,6 +74,8 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
+  gem 'highline'
+  gem 'git'
 end
 
 group :production do

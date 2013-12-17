@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131206033356) do
+ActiveRecord::Schema.define(:version => 20131210042825) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -467,6 +467,7 @@ ActiveRecord::Schema.define(:version => 20131206033356) do
     t.boolean  "mailchimp_subscribed",     :default => false
     t.string   "time_zone"
     t.string   "date_style"
+    t.integer  "posts_per_page",           :default => 25
   end
 
   add_index "people", ["admin"], :name => "index_people_on_admin"

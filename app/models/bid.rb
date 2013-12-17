@@ -101,7 +101,9 @@ class Bid < ActiveRecord::Base
       bid_note.subject = "BID: #{estimated_hours} hours - #{req.name}"
       bid_note.content = ""
       bid_note.content << "#{private_message_to_requestor}\n--\n\n" if private_message_to_requestor.present?
-      bid_note.content << "See your <a href=\"#{req_url(self.req, :host => server)}\">request</a> to consider bid"
+      unless server.empty?
+        bid_note.content << "See your <a href=\"#{req_url(self.req, :host => server)}\">request</a> to consider bid"
+      end
       bid_note.sender = self.person
       bid_note.recipient = self.req.person
     end
@@ -111,7 +113,11 @@ class Bid < ActiveRecord::Base
     touch :accepted_at
     Message.create! do |bid_note|
       bid_note.subject = "Bid accepted for #{req.name}"
-      bid_note.content = "See the <a href=\"#{req_url(self.req, :host => server)}\">request</a> to commit to bid"
+      unless server.empty?
+        bid_note.content = "See the <a href=\"#{req_url(self.req, :host => server)}\">request</a> to commit to bid"
+      else
+        bid_note.content = ''
+      end
       bid_note.sender = self.req.person
       bid_note.recipient = self.person
     end
@@ -121,7 +127,11 @@ class Bid < ActiveRecord::Base
     touch :committed_at
     Message.create! do |bid_note|
       bid_note.subject = "Bid committed for #{req.name}"
-      bid_note.content = "Commitment made for your <a href=\"#{req_url(self.req, :host => server)}\">request</a>. This is an automated message"
+      unless server.empty?
+        bid_note.content = "Commitment made for your <a href=\"#{req_url(self.req, :host => server)}\">request</a>. This is an automated message"
+      else
+        bid_note.content = ''
+      end
       bid_note.sender = self.person
       bid_note.recipient = self.req.person
     end
@@ -131,7 +141,11 @@ class Bid < ActiveRecord::Base
     touch :completed_at
     Message.create! do |bid_note|
       bid_note.subject = "Work completed for #{req.name}"
-      bid_note.content = "Work completed for your <a href=\"#{req_url(self.req, :host => server)}\">request</a>. Please approve transaction! This is an automated message"
+      unless server.empty?
+        bid_note.content = "Work completed for your <a href=\"#{req_url(self.req, :host => server)}\">request</a>. Please approve transaction! This is an automated message"
+      else
+        bid_note.content = ''
+      end
       bid_note.sender = self.person
       bid_note.recipient = self.req.person
     end

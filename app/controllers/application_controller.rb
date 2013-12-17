@@ -59,6 +59,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # :secret => '71a8c82e6d248750397d166001c5e308'
 
   protected
+    def ajax_posts_per_page
+      current_person.posts_per_page 
+    end
+
     def bootstrap_class(flash_key)
       {notice: 'alert-success',
        success: 'alert-success',

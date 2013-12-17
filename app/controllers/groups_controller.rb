@@ -27,13 +27,13 @@ class GroupsController < ApplicationController
     respond_to do |format|
       format.html do
         @forum = @group.forum
-        @topics = Topic.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
-        @reqs = Req.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
-        @offers = Offer.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+        @topics = Topic.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
+        @reqs = Req.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
+        @offers = Offer.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
         unless @group.private_txns?
-          @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+          @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => ajax_posts_per_page)
         end
-        @memberships = Membership.where('1=0').paginate(:page => 1, :per_page => AJAX_POSTS_PER_PAGE)
+        @memberships = Membership.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
       end
       format.js {render :action => 'reject' if not request.xhr?}
       format.xml { render :xml => @group.to_xml(:methods => [:icon,:thumbnail], :only => [:id,:name,:description,:mode,:person_id,:created_at,:updated_at,:unit,:icon,:thumbnail]) }
@@ -87,7 +87,7 @@ class GroupsController < ApplicationController
   end
  
   def exchanges
-    @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => AJAX_POSTS_PER_PAGE)
+    @exchanges = @group.exchanges.paginate(:page => params[:page], :per_page => ajax_posts_per_page)
     respond_to do |format|
       format.js {render :action => 'reject' if not request.xhr?}
     end
