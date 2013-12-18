@@ -3,6 +3,8 @@ require 'texticle/searchable'
 class Req < ActiveRecord::Base
   include ActivityLogger
   include AnnouncementBase
+  include HasPhotos
+
   extend PreferencesHelper
 
   extend Searchable(:name, :description)
