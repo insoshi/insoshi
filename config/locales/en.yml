@@ -473,6 +473,7 @@ en:
       read: "Read"
       message_sent_to: "Message sent to"
       message_from: "Message from"
+      show_offer: "Show offer"
     edit:
       header: "Editing message"
       content: "Content"

@@ -461,6 +461,7 @@ es:
       read: "Leer"
       message_sent_to: "Mensaje enviado a"
       message_from: "Mensaje de"
+      show_offer: "mostrar la oferta"
     edit:
       header: "Editar Mensaje"
       content: "Contenido"
