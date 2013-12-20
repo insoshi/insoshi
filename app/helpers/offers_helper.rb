@@ -36,7 +36,7 @@ module OffersHelper
     html = html[0..-3] << '</div>'
   end
 
-  # Return an offer's image link.
+  # Return an offer(or request)'s image link.
   # The default is to display the offer's icon linked to a larger photo.
   # this method is also used for request(req)
   def offer_image_link(offer, options = {})

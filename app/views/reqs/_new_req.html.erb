@@ -1,4 +1,4 @@
 <h2><%= t('reqs.new.header') %></h2>
-<%= bootstrap_form_for @req, :url => group_reqs_path(@group), :html => {:id => 'new_req', :class => 'form-horizontal'} do |f| %>
+<%= bootstrap_form_for @req, :url => group_reqs_path(@group), :html => {:id => 'new_req', :class => 'form-horizontal'}, :remote => true do |f| %>
   <%= render :partial => 'form_fields', :locals => {:f => f, :estimate_disabled => false, :notify_members => true, :submit_text => t('button_create')} %>
 <% end %>
