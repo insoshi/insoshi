@@ -233,7 +233,7 @@ $(function() {
       });
     });
 
-  $('.edit_member_preference, #new_bid, .edit_bid, #new_req, #edit_req,  #new_topic, #new_post, #new_exchange, #new_wall_post, #tabs #new_message').live('submit',function() {
+  $('.edit_member_preference, #new_bid, .edit_bid,  #new_topic, #new_post, #new_exchange, #new_wall_post, #tabs #new_message').live('submit',function() {
       if(OSCURRENCY.post_allowed) {
         OSCURRENCY.post_allowed = false;
         $.post($(this).attr('action'),$(this).serialize(),null,'script');

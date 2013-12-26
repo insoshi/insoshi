@@ -1,7 +1,7 @@
 <div class="req req_id_<%= req.id %>">
   <a name="req_<%= req.id %>"></a>
   <div class="profile-image">
-    <%= image_link req.person, :image => :thumbnail %>
+    <%= offer_image_link req, :image => :thumbnail %>
     <%= image_tag "icons/new.gif", :class => "icon", :alt => "Request" %>
   </div>
   <p>
