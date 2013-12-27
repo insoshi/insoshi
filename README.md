@@ -67,6 +67,7 @@ In addition to configuration through the web admin interface, outgoing email con
 
 [Setting up development environment on Ubuntu](https://github.com/oscurrency/oscurrency/wiki/Setting-up-development-environment-on-ubuntu)
 
+[A Guide for Non-Developers who want to deploy OSCurrency](https://github.com/oscurrency/oscurrency/wiki/Heroku-Deployment-Guide)
 
 ### APIs
 - [Web Service API](https://github.com/oscurrency/oscurrency/wiki/Web-Service-API)
