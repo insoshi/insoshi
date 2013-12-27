@@ -10,6 +10,14 @@
   <%= render :partial => 'message_nav' %>
   
   <h3 class="subject"><%= sanitize @message.subject %></h3>
+  <%# show offer if there is %>
+  <% talkable = @message.conversation.talkable %>
+  <% if talkable && talkable.class == Offer %>
+    <div class="talkable-link-div">
+      <%= link_to "Show offer", "#{group_path(talkable.group)}/#offers/#{talkable.id}" %>
+    </div>
+  <% end %>
+
   <ul class="list person">
     <% all_messages =  @message.conversation.messages %>
     <%= render :partial => 'full_message',

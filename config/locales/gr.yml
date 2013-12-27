@@ -587,6 +587,7 @@ gr:
       read: "Ανάγνωση"
       message_sent_to: "Μήνυμα προς"
       message_from: "Μήνυμα από"
+      show_offer: "δείχνουν προσφορά"
     edit:
       header: "Επεξεργασία μηνύματος"
       content: "Περιεχόμενο"

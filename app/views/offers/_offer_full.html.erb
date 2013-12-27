@@ -6,6 +6,9 @@
   <% if logged_in? %>
     <% unless (!@offer.considered_active? || current_person?(@offer.person)) %>
       <%= form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
+        <%= f.text_field :talkable_id, :type => 'hidden', :value => @offer.id %>
+        <%= f.text_field :talkable_type, :type => 'hidden', :value => @offer.class.to_s %>
+
         <%= fields_for :offer do |o| %>
           <%= o.hidden_field :id %>
         <% end %>
