@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131210042825) do
+ActiveRecord::Schema.define(:version => 20131220090028) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
     t.decimal  "balance",         :precision => 8, :scale => 2, :default => 0.0
     t.integer  "person_id"
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "group_id"
     t.decimal  "credit_limit",    :precision => 8, :scale => 2
     t.decimal  "offset",          :precision => 8, :scale => 2, :default => 0.0
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.integer  "item_id"
     t.integer  "person_id"
     t.string   "item_type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "group_id"
   end
 
@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
   create_table "activity_statuses", :force => true do |t|
     t.string   "name",        :limit => 100, :null => false
     t.string   "description"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "addresses", :force => true do |t|
@@ -61,8 +61,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.string   "zipcode_plus_4",  :limit => 10
     t.decimal  "latitude",                      :precision => 12, :scale => 8
     t.decimal  "longitude",                     :precision => 12, :scale => 8
-    t.datetime "created_at",                                                                      :null => false
-    t.datetime "updated_at",                                                                      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "address_privacy",                                              :default => false
     t.boolean  "primary",                                                      :default => false
   end
@@ -95,8 +95,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.decimal  "estimated_hours",              :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "actual_hours",                 :precision => 8, :scale => 2, :default => 0.0
     t.datetime "expiration_date"
-    t.datetime "created_at",                                                                  :null => false
-    t.datetime "updated_at",                                                                  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "accepted_at"
     t.datetime "committed_at"
     t.datetime "completed_at"
@@ -110,24 +110,24 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
   create_table "broadcast_emails", :force => true do |t|
     t.string   "subject"
     t.text     "message"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "sent",       :default => false, :null => false
   end
 
   create_table "business_types", :force => true do |t|
     t.string   "name",        :limit => 100, :null => false
     t.string   "description"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "capabilities", :force => true do |t|
     t.integer  "group_id"
     t.integer  "oauth_token_id"
     t.string   "scope"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "invalidated_at"
   end
 
@@ -135,8 +135,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.string   "name"
     t.text     "description"
     t.integer  "parent_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "categories_offers", :id => false, :force => true do |t|
@@ -171,8 +171,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.string   "key",          :limit => 50
     t.string   "secret",       :limit => 50
     t.integer  "person_id"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "description"
   end
 
@@ -189,8 +189,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.datetime "recipient_read_at"
     t.datetime "replied_at"
     t.string   "type"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "parent_id"
     t.integer  "conversation_id"
   end
@@ -205,13 +205,15 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.integer  "contact_id"
     t.integer  "status"
     t.datetime "accepted_at"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "connections", ["person_id", "contact_id"], :name => "index_connections_on_person_id_and_contact_id"
 
   create_table "conversations", :force => true do |t|
+    t.integer "talkable_id"
+    t.string  "talkable_type"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -223,16 +225,16 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.datetime "locked_at"
     t.datetime "failed_at"
     t.text     "locked_by"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "queue"
   end
 
   create_table "email_verifications", :force => true do |t|
     t.integer  "person_id"
     t.string   "code"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "email_verifications", ["code"], :name => "index_email_verifications_on_code"
@@ -241,8 +243,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.integer  "customer_id"
     t.integer  "worker_id"
     t.decimal  "amount",        :precision => 8, :scale => 2, :default => 0.0
-    t.datetime "created_at",                                                   :null => false
-    t.datetime "updated_at",                                                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "group_id"
     t.integer  "metadata_id"
     t.string   "metadata_type"
@@ -259,8 +261,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.string   "authors"
     t.datetime "date_published"
     t.datetime "last_updated"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "feeds", :force => true do |t|
@@ -274,8 +276,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.string   "name"
     t.text     "description"
     t.integer  "topics_count",  :default => 0,     :null => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "group_id"
     t.boolean  "worldwritable", :default => false
   end
@@ -285,26 +287,26 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.text     "description"
     t.integer  "mode",                                               :default => 0,     :null => false
     t.integer  "person_id"
-    t.datetime "created_at",                                                            :null => false
-    t.datetime "updated_at",                                                            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "unit"
     t.boolean  "adhoc_currency",                                     :default => false
     t.boolean  "mandatory",                                          :default => false
     t.decimal  "default_credit_limit", :precision => 8, :scale => 2
     t.string   "asset"
     t.boolean  "private_txns",                                       :default => false
-    t.boolean  "enable_forum",                                       :default => true
     t.boolean  "display_balance",                                    :default => true
     t.boolean  "display_earned",                                     :default => false
     t.boolean  "display_paid",                                       :default => false
+    t.boolean  "enable_forum",                                       :default => true
     t.integer  "roles_mask"
   end
 
   create_table "groups_people", :id => false, :force => true do |t|
     t.integer  "group_id"
     t.integer  "person_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "invitations", :force => true do |t|
@@ -324,8 +326,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.boolean  "req_notifications",   :default => true
     t.boolean  "forum_notifications", :default => true
     t.integer  "membership_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "memberships", :force => true do |t|
@@ -333,8 +335,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.integer  "person_id"
     t.integer  "status"
     t.datetime "accepted_at"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "roles_mask"
   end
 
@@ -342,8 +344,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.string   "name"
     t.text     "description"
     t.integer  "parent_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "neighborhoods_offers", :id => false, :force => true do |t|
@@ -373,8 +375,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
   create_table "oauth_nonces", :force => true do |t|
     t.string   "nonce"
     t.integer  "timestamp"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "oauth_nonces", ["nonce", "timestamp"], :name => "index_oauth_nonces_on_nonce_and_timestamp", :unique => true
@@ -387,8 +389,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.string   "secret",                :limit => 50
     t.datetime "authorized_at"
     t.datetime "invalidated_at"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "callback_url"
     t.string   "verifier",              :limit => 20
     t.string   "scope"
@@ -404,8 +406,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.decimal  "price",           :precision => 8, :scale => 2, :default => 0.0
     t.datetime "expiration_date"
     t.integer  "person_id"
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "total_available"
     t.integer  "available_count"
     t.integer  "group_id"
@@ -436,8 +438,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.datetime "last_contacted_at"
     t.datetime "last_logged_in_at"
     t.integer  "forum_posts_count",        :default => 0,     :null => false
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "admin",                    :default => false, :null => false
     t.boolean  "deactivated",              :default => false, :null => false
     t.boolean  "connection_notifications", :default => true
@@ -485,8 +487,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.integer  "width"
     t.integer  "height"
     t.boolean  "primary"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "picture"
     t.integer  "photoable_id"
     t.string   "photoable_type"
@@ -497,8 +499,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
   create_table "plan_types", :force => true do |t|
     t.string   "name",        :limit => 100, :null => false
     t.string   "description"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "posts", :force => true do |t|
@@ -508,8 +510,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.string   "title"
     t.text     "body"
     t.string   "type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "posts", ["blog_id"], :name => "index_posts_on_blog_id"
@@ -519,8 +521,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
   create_table "preferences", :force => true do |t|
     t.boolean  "email_notifications",     :default => false, :null => false
     t.boolean  "email_verifications",     :default => false, :null => false
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text     "analytics"
     t.string   "server_name"
     t.string   "app_name"
@@ -544,8 +546,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.boolean  "protected_categories",    :default => false
     t.string   "mailchimp_list_id"
     t.boolean  "mailchimp_send_welcome",  :default => true
-    t.string   "locale"
     t.string   "logout_url",              :default => ""
+    t.string   "locale"
     t.boolean  "public_uploads",          :default => false
     t.boolean  "display_orgicon",         :default => true
     t.boolean  "public_private_bid",      :default => false
@@ -568,9 +570,9 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 5
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.integer  "year",       :limit => 8
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_histories_on_item_and_table_and_month_and_year"
@@ -581,8 +583,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.decimal  "estimated_hours", :precision => 8, :scale => 2, :default => 0.0
     t.datetime "due_date"
     t.integer  "person_id"
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "biddable",                                      :default => true
     t.boolean  "notifications",                                 :default => false
     t.integer  "group_id"
@@ -593,14 +595,14 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
   create_table "states", :force => true do |t|
     t.string   "name",         :limit => 25, :null => false
     t.string   "abbreviation", :limit => 2,  :null => false
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "statuses", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "time_zones", :force => true do |t|
@@ -615,8 +617,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
     t.integer  "person_id"
     t.string   "name"
     t.integer  "forum_posts_count", :default => 0, :null => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"
@@ -624,8 +626,8 @@ ActiveRecord::Schema.define(:version => 20131210042825) do
   create_table "viewers", :force => true do |t|
     t.integer  "topic_id"
     t.integer  "person_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

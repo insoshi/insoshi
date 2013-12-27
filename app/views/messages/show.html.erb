@@ -14,7 +14,7 @@
   <% talkable = @message.conversation.talkable %>
   <% if talkable && talkable.class == Offer %>
     <div class="talkable-link-div">
-      <%= link_to "Show offer", "#{group_path(talkable.group)}/#offers/#{talkable.id}" %>
+      <%= link_to t('messages.show.show_offer'), "#{group_path(talkable.group)}/#offers/#{talkable.id}" %>
     </div>
   <% end %>
 
