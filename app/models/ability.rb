@@ -74,7 +74,10 @@ class Ability
       person.admin?
     end
 
-    can [:read, :create], Group
+    can [:read], Group
+    can [:create], Group do
+      Preference.first.groups?
+    end
     can [:new_req,:create_req], Group
     can [:new_offer,:create_offer], Group
     can [:update,:new_photo,:save_photo,:delete_photo,:destroy], Group do |group|
