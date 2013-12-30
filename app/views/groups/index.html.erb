@@ -11,6 +11,8 @@
   <% end -%>
 </div>
 
-<div class="span3">
-  <%= render :partial => 'shared/add_button', :locals => { :button_text => t('groups.new.header'), :new_resource_path => new_group_path } %>
-</div>
+<% if Preference.first.groups? %>
+  <div class="span3">
+    <%= render :partial => 'shared/add_button', :locals => { :button_text => t('groups.new.header'), :new_resource_path => new_group_path } %>
+  </div>
+<% end %>
