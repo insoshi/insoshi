@@ -99,7 +99,7 @@ class Exchange < ActiveRecord::Base
   def check_metadata
     unless self.metadata
       req = Req.new
-      req.name = self.notes
+      req.name = self.notes.presence || 'admin transfer'
       req.estimated_hours = self.amount
       req.due_date = Time.now
       req.person = self.customer
