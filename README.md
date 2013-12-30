@@ -16,7 +16,7 @@
 - Email Notification for matched requests
 - [Android native app w/OpenTransact](https://play.google.com/store/apps/details?id=org.opensourcecurrency.hack)
 - OpenID compatibility
-- Easy Heroku installation and update script
+- [Easy Heroku installation and update](https://github.com/oscurrency/oscurrency/wiki/Heroku-Deployment-Guide)
 
 ### Install
 
@@ -31,6 +31,8 @@ You can install a new deployment on Heroku with the command:
 Update a Heroku deployment with:
 
     $ rake heroku:update
+    
+**Tutorial for Heroku install**: [A Guide for Non-Developers who want to deploy OSCurrency](https://github.com/oscurrency/oscurrency/wiki/Heroku-Deployment-Guide)
 
 ### Admin user
 
@@ -66,8 +68,6 @@ In addition to configuration through the web admin interface, outgoing email con
 [Easy Developer Environment with Nitrous.IO](https://github.com/oscurrency/oscurrency/wiki/Easy-Developer-Environment-with-Nitrous.IO)
 
 [Setting up development environment on Ubuntu](https://github.com/oscurrency/oscurrency/wiki/Setting-up-development-environment-on-ubuntu)
-
-[A Guide for Non-Developers who want to deploy OSCurrency](https://github.com/oscurrency/oscurrency/wiki/Heroku-Deployment-Guide)
 
 ### APIs
 - [Web Service API](https://github.com/oscurrency/oscurrency/wiki/Web-Service-API)
