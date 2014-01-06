@@ -617,6 +617,7 @@ gr:
       url: "URL"
     show:
       header: "Συναλλαγή"
+      show_transact: "Εμφάνιση transact"
     new:
       header: "Πλήρωσε κάποιον"
       header_simple: "Πληρωμή"

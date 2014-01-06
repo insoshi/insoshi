@@ -502,6 +502,7 @@ en:
       url: "URL"
     show:
       header: "Transaction"
+      show_transact: "Show transact"
     new:
       header: "Pay someone"
       header_simple: "Pay"

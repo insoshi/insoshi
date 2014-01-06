@@ -15,6 +15,11 @@
   <% if talkable && talkable.class == Offer %>
     <div class="talkable-link-div">
       <%= link_to t('messages.show.show_offer'), "#{group_path(talkable.group)}/#offers/#{talkable.id}" %>
+      &nbsp;|&nbsp;
+
+      <% if @message.conversation.exchange %>
+        <%= link_to t('transacts.show_transact'), "/transacts/#{@message.conversation.exchange.group.asset}/#{@message.conversation.exchange.id}" %>
+      <% end %>
     </div>
   <% end %>
 

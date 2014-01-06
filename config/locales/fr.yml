@@ -558,6 +558,7 @@ fr:
       url: "URL"
     show:
       header: "Transaction"
+      show_transact: "Afficher opérations"
     new:
       header: "Payez quelqu’un"
       header_simple: "Payez"

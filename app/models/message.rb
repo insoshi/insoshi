@@ -2,7 +2,7 @@ class Message < Communication
   extend PreferencesHelper
   include ActionView::Helpers::TextHelper
   
-  attr_accessor :reply, :parent, :send_mail, :talkable_id, :talkable_type
+  attr_accessor :reply, :parent, :send_mail, :talkable_id, :talkable_type, :exchange
 
   MAX_CONTENT_LENGTH = 5000
 
@@ -121,7 +121,7 @@ class Message < Communication
     # This is the parent message's conversation unless there is no parent,
     # in which case we create a new conversation.
     def assign_conversation
-      self.conversation = parent.nil? ? Conversation.create(:talkable_id => talkable_id, :talkable_type => talkable_type) :
+      self.conversation = parent.nil? ? Conversation.create(:talkable_id => talkable_id, :talkable_type => talkable_type, :exchange => self.exchange) :
                                         parent.conversation
     end
   

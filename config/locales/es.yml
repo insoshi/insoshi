@@ -491,6 +491,7 @@ es:
       url: "URL"
     show:
       header: "Transacción"
+      show_transact: "Mostrar realizar transacciones"
     new:
       header: "Pagar un servicio"
       header_simple: "Pagar"

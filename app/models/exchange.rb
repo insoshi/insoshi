@@ -198,6 +198,7 @@ class Exchange < ActiveRecord::Base
     exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.paid_you') + " " + nice_decimal(self.amount) + " " + self.group.unit + "."
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
+    exchange_note.exchange = self
     exchange_note.save!
   end
 
