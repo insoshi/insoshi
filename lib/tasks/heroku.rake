@@ -36,7 +36,7 @@ namespace :heroku do
 
     smtp_credentials = collect_smtp_credentials(ui, APP_CONFIG)
 
-    if smtp_credentials['server']
+    unless smtp_credentials['server'].blank?
       print "using provided credentials... "
       smtp_vars = {
         'SMTP_SERVER' => smtp_credentials['smtp_server'],
