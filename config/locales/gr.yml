@@ -718,6 +718,9 @@ gr:
       email:
         invalid: "is invalid."
 
+  preferences:
+    default_profile_picture: "Προεπιλεγμένη εικόνα προφίλ"
+
   activerecord:
     attributes:
       person:

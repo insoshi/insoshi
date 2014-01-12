@@ -657,6 +657,9 @@ fr:
       email:
         invalid: "is invalid."
 
+  preferences:
+    default_profile_picture: "Photo de profil par défaut"
+
   activerecord:
     attributes:
       person:
