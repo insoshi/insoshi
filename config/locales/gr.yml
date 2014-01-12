@@ -720,6 +720,7 @@ gr:
 
   preferences:
     default_profile_picture: "Προεπιλεγμένη εικόνα προφίλ"
+    default_group_picture: "Προεπιλεγμένη εικόνα της ομάδας"
 
   activerecord:
     attributes:

@@ -588,6 +588,7 @@ en:
 
   preferences:
     default_profile_picture: "Default profile picture"
+    default_group_picture: "Default group picture"
 
 
   notice_member_to_view_forum: "You must be a member to view forum."

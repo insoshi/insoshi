@@ -248,6 +248,12 @@ end
       end
     end
 
+    configure :default_group_picture do
+      pretty_value do
+        %{<a href="/photos/default_group_picture" target="_blank">Change default group image</a>}
+      end
+    end
+
     list do
       field :app_name
     end
@@ -295,6 +301,7 @@ end
       field :analytics
       field :display_orgicon
       field :default_profile_picture
+      field :default_group_picture
     end
   end
 

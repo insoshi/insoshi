@@ -1,0 +1,13 @@
+<h2><%= t('preferences.default_group_picture') %></h2>
+
+<%= image_tag @photo.picture_url %>
+
+<%= bootstrap_form_for @photo, :url => '/photos/update_default_group_picture', :html => { :multipart => true } do |f| -%>
+
+    <input type='hidden' name='id' value="<%= @photo.id %>" />
+    <%= f.file_field :picture, label: t('groups.new_photo.upload_a_photo') %>
+    <%= f.actions do %>
+        <%= f.primary "Upload" %>
+        <%= f.submit "Cancel", :id => "cancel", :class => "btn" %>
+    <% end %>
+<% end -%>

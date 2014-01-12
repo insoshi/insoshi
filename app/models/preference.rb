@@ -71,6 +71,10 @@ class Preference < ActiveRecord::Base
     self.photos.find_by_picture_for('profile')
   end
 
+  def default_group_picture
+    self.photos.find_by_picture_for('group')
+  end
+
   alias_attribute :faq, :questions
 
   class << self
@@ -80,6 +84,14 @@ class Preference < ActiveRecord::Base
         Preference.first.default_profile_picture.picture_url(version)
       else
         Preference.first.default_profile_picture.picture_url
+      end
+    end
+
+    def group_image version = nil
+      if version
+        Preference.first.default_group_picture.picture_url(version)
+      else
+        Preference.first.default_group_picture.picture_url
       end
     end
 

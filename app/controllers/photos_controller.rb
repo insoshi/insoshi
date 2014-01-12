@@ -2,8 +2,9 @@ class PhotosController < ApplicationController
 
   before_filter :login_required
   before_filter :correct_user_required, :only => [ :update, :destroy ]
-  before_filter :admin_required, :only => [:default_profile_picture, :update_default_profile_picture]
+  before_filter :admin_required, :only => [:default_profile_picture, :update_default_profile_picture, :default_group_picture, :update_default_group_picture]
   before_filter :must_be_default_profile_picture, :only => :update_default_profile_picture
+  before_filter :must_be_default_group_picture, :only => :update_default_group_picture
 
   
   def index
@@ -85,10 +86,6 @@ class PhotosController < ApplicationController
 
   def default_profile_picture
     @photo = Preference.first.default_profile_picture
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   def update_default_profile_picture
@@ -98,6 +95,21 @@ class PhotosController < ApplicationController
       format.html do
         flash[:error] = t('error_invalid_image')
         redirect_to default_profile_picture_photos_url
+      end
+    end
+  end
+
+  def default_group_picture
+    @photo = Preference.first.default_group_picture
+  end
+
+  def update_default_group_picture
+    if @photo.update_attributes(params[:photo])
+      redirect_to default_group_picture_photos_url
+    else
+      format.html do
+        flash[:error] = t('error_invalid_image')
+        redirect_to default_group_picture_photos_url
       end
     end
   end
@@ -116,6 +128,13 @@ class PhotosController < ApplicationController
     def must_be_default_profile_picture
       @photo = Photo.find(params[:id])
       if @photo.nil? || @photo != Preference.first.default_profile_picture
+        redirect_to home_url
+      end
+    end
+
+    def must_be_default_group_picture
+      @photo = Photo.find(params[:id])
+      if @photo.nil? || @photo != Preference.first.default_group_picture
         redirect_to home_url
       end
     end

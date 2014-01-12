@@ -659,6 +659,7 @@ fr:
 
   preferences:
     default_profile_picture: "Photo de profil par défaut"
+    default_group_picture: "Photo de groupe par défaut"
 
   activerecord:
     attributes:
