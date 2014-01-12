@@ -49,6 +49,9 @@ class Preference < ActiveRecord::Base
 
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
 
+  # default profile picture and default group picture
+  has_many :photos, :as => :photoable, :dependent => :destroy, :order => 'created_at'
+
   # Can we send mail with the present configuration?
   def can_send_email?
     not (ENV['SMTP_DOMAIN'].blank? or ENV['SMTP_SERVER'].blank?)
@@ -64,7 +67,23 @@ class Preference < ActiveRecord::Base
     email_notifications? or email_verifications?
   end
 
+  def default_profile_picture
+    self.photos.find_by_picture_for('profile')
+  end
+
   alias_attribute :faq, :questions
+
+  class << self
+
+    def profile_image version = nil
+      if version
+        Preference.first.default_profile_picture.picture_url(version)
+      else
+        Preference.first.default_profile_picture.picture_url
+      end
+    end
+
+  end
 
   private
     def decrypt(password)

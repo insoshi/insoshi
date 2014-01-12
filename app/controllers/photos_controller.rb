@@ -2,6 +2,9 @@ class PhotosController < ApplicationController
 
   before_filter :login_required
   before_filter :correct_user_required, :only => [ :update, :destroy ]
+  before_filter :admin_required, :only => [:default_profile_picture, :update_default_profile_picture]
+  before_filter :must_be_default_profile_picture, :only => :update_default_profile_picture
+
   
   def index
     @photos = current_person.photos
@@ -79,6 +82,25 @@ class PhotosController < ApplicationController
       format.html { redirect_to edit_person_url(current_person) }
     end
   end
+
+  def default_profile_picture
+    @photo = Preference.first.default_profile_picture
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def update_default_profile_picture
+    if @photo.update_attributes(params[:photo])
+      redirect_to default_profile_picture_photos_url
+    else
+      format.html do
+        flash[:error] = t('error_invalid_image')
+        redirect_to default_profile_picture_photos_url
+      end
+    end
+  end
   
   private
   
@@ -87,6 +109,13 @@ class PhotosController < ApplicationController
       if @photo.nil?
         redirect_to edit_person_url(current_person)
       elsif @photo.photoable != current_person
+        redirect_to home_url
+      end
+    end
+
+    def must_be_default_profile_picture
+      @photo = Photo.find(params[:id])
+      if @photo.nil? || @photo != Preference.first.default_profile_picture
         redirect_to home_url
       end
     end

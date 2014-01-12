@@ -242,6 +242,12 @@ end
   end
 
   config.model Preference do
+    configure :default_profile_picture do
+      pretty_value do
+        %{<a href="/photos/default_profile_picture" target="_blank">Change default profile image</a>}
+      end
+    end
+
     list do
       field :app_name
     end
@@ -288,6 +294,7 @@ end
       field :contact
       field :analytics
       field :display_orgicon
+      field :default_profile_picture
     end
   end
 

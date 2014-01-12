@@ -108,3 +108,11 @@ US_BUSINESS_TYPES.each do |value|
 end
 
 TimeZone.find_or_create_by_time_zone('Pacific Time (US & Canada)')
+
+# default profile picture
+preference = Preference.first
+if preference.photos.where(:picture_for => 'profile').first.nil?
+  photo = preference.photos.new(:picture_for => 'profile')
+  photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
+  photo.save!
+end

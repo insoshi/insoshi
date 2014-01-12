@@ -390,19 +390,19 @@ class Person < ActiveRecord::Base
   end
 
   def main_photo
-    photo.nil? ? "default.png" : photo.picture_url
+    photo.nil? ? Preference.profile_image : photo.picture_url
   end
 
   def thumbnail
-    photo.nil? ? "default_thumbnail.png" : photo.picture_url(:thumbnail)
+    photo.nil? ? Preference.profile_image(:thumbnail) : photo.picture_url(:thumbnail)
   end
 
   def icon
-    photo.nil? ? "default_icon.png" : photo.picture_url(:icon)
+    photo.nil? ? Preference.profile_image(:icon) : photo.picture_url(:icon)
   end
 
   def bounded_icon
-    photo.nil? ? "default_icon.png" : photo.picture_url(:icon)
+    photo.nil? ? Preference.profile_image(:icon) : photo.picture_url(:icon)
   end
 
   # Return the photos ordered by primary first, then by created_at.
