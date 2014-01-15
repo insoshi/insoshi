@@ -6,9 +6,10 @@
   <div class="col_content">
     <p><%= membership_link member, :class => "url fn show-follow" %>&nbsp;<%= organization_image(person) if global_prefs.display_orgicon? %></p>
     <% if defined? short %>
-    <%= display person.listed_categories, :class => "meta" %>
+      <%= display person.listed_categories, :class => "meta" %>
+      <%= display truncate(person.description, :length => 150), :class => "note" %>
     <% else %>
-    <%= display person.description, :class => "note" %>
+      <%= display person.description, :class => "note" %>
     <% end %>
   </div>
 </li>
