@@ -1,6 +1,7 @@
 <%- if @authorized -%>
 $('#people_filter').show();
 $('#people_canvas').html("<%= escape_javascript(render :partial => 'members_canvas') %>");
+$('#posts_per_page').show();
 <%- else -%>
 $('#people_canvas').html("");
 <%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'people_canvas'} %>

@@ -36,8 +36,8 @@ class Topic < ActiveRecord::Base
     find(:all, :order => "created_at DESC", :limit => NUM_RECENT)
   end
 
-  def self.find_recently_active(forum, page = 1)
-    topics = forum.topics.paginate(:page => page)
+  def self.find_recently_active(forum, params_per_page, page = 1)
+    topics = forum.topics.paginate(:page => page, :per_page => params_per_page)
   end
 
   def update_viewer(person)

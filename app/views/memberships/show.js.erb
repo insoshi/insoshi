@@ -1,4 +1,5 @@
 $('#people_filter').hide();
+$('#posts_per_page').hide();
 $('#people_canvas').html('<%= escape_javascript(render :partial => 'membership_full', :locals => {:membership => @membership, :offers => @offers, :reqs => @reqs}) %>');
 $('#people_canvas').linkify();
 <%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'people_canvas'} %>

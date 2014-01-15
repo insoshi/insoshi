@@ -7,7 +7,7 @@ class ForumsController < ApplicationController
     @forum = @group.forum
     @authorized = @group.authorized_to_view_forum?(current_person)
     if @authorized
-      @topics = Topic.find_recently_active(@forum, params[:page]) 
+      @topics = Topic.find_recently_active(@forum, ajax_posts_per_page, params[:page])
     else
       flash[:notice] = t('notice_member_to_view_forum')
       @topics = Topic.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
