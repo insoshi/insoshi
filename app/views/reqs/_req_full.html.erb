@@ -8,7 +8,7 @@
   <%== horizontal_formatted_offer_categories @req.long_categories %>
   
   <h2>
-    <%= h @req.name %><%= waiting_image %>
+    <%= h "#{@req.name} R#{@req.id}" %><%= waiting_image %>
   </h2>
   <p>
     <strong><%= t('reqs.partial.due') %></strong>: <%= relative_time_ago_in_words(@req.due_date) %>
