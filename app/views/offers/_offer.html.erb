@@ -9,7 +9,7 @@
   
   <p>
     <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h   nice_decimal(offer.price)  %> <%= offer.unit %>)
-    
+    <%= "No O#{offer.id}" %>
     <% if offer.available_count > 0 && offer.expiration_date > Time.now && !current_person?(offer.person) %>
       <%= link_to t('offers.partial.accept_offer'), new_person_exchange_path(offer.person, :offer => offer.id), {:class => 'pay_now'} %>
     <% end %>
