@@ -1,0 +1,2 @@
+class window.LinksOnNewWindow
+  constructor: () ->

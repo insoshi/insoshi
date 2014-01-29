@@ -409,6 +409,7 @@ DEPENDENCIES
   cancan
   capybara
   carrierwave
+  coffee-rails
   cucumber
   cucumber-rails
   dalli
