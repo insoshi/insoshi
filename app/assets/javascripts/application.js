@@ -19,4 +19,4 @@
 //= require req_new_form.js
 //= require signup_form.js
 //= require site.js
-//= require links_on_new_winow
+//= require links_on_new_window
