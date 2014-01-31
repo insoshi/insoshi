@@ -1,6 +1,5 @@
 <div class="span5">
-  
-  <% f.text_field :name, :label => t("title"), :size => 40, :maxlength => 255 %>
+  <%= f.text_field :name, :label => t("title"), :size => 40, :maxlength => 255 %>
   <%= f.text_area :description, :label => t("description"), :help => t('offers.new.description_label'), :rows => 5 %>
   <div class="control-group">
     <%= f.label t('filter_categories'), :class => 'control-label' %>

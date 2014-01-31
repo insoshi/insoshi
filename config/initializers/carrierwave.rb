@@ -1,4 +1,4 @@
-=begin
+begin
 CarrierWave.configure do |config|
   config.fog_credentials = {
     :provider               => 'AWS',       # required
@@ -15,4 +15,4 @@ end
 rescue
   # Rescue from the error raised upon first migrating
   nil
-=end
+end

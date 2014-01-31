@@ -57,7 +57,7 @@ class OffersController < ApplicationController
     @offer.person = current_person
     @all_categories = Category.by_long_name
     @all_neighborhoods = Neighborhood.by_long_name
-    binding.pry
+
     respond_to do |format|
       if @offer.save
         flash[:notice] = t('success_offer_created') if @offer.save
