@@ -2,11 +2,10 @@
   <a name="req_<%= req.id %>"></a>
   <div class="profile-image">
     <%= offer_image_link req, :image => :thumbnail %>
-    <%= image_tag "icons/new.gif", :class => "icon", :alt => "Request" %>
   </div>
   <p>
+    <span class="btn btn-info btn-mini">#<%= req.id %></span>
   <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h  nice_decimal(req.estimated_hours)  %> <%= h req.unit %>)
-  <%= "No R#{req.id}" %>
   <%= t('reqs.partial.due') %>: <%= relative_time_ago_in_words(req.due_date) %>
   </p>
     <%= formatted_req_categories(req.long_categories) %>
