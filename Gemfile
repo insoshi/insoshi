@@ -18,6 +18,7 @@ group :assets do
   # gem 'jquery-ui-rails'
 end
 
+gem "coffee-rails"
 gem "audited-activerecord"
 gem "rails3_acts_as_paranoid"
 gem "acts_as_tree_rails3"

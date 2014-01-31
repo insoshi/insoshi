@@ -71,3 +71,12 @@
     margin-left: 102px;
   }
 }
+
+/* Styling for offers form */
+
+/* The description is expands under other form filds */
+#edit_offer, #edit_req {
+  textarea {
+    max-width: 100%;
+  }
+}
