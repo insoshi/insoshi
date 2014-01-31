@@ -3,7 +3,7 @@
   <%- if @recipient -%>
     <%= image_link @recipient, :image => :thumbnail, :id => 'recipient_avatar' %>
   <%- else -%>
-    <%= link_to image_tag('default_thumbnail.png'), '#', :id => 'recipient_avatar' %>
+    <%= link_to image_tag(Preference.profile_image(:thumbnail)), '#', :id => 'recipient_avatar' %>
   <%- end -%>
 
   <%= bootstrap_form_for(@message, :url => (@recipient ? person_messages_path(@recipient) : messages_path(@message)), :html => {:id => 'new_message', :class => 'form-horizontal'}) do |f| %>
