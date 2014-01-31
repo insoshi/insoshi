@@ -56,10 +56,10 @@ module ActivitiesHelper
       %(#{h person.display_name} #{t('shared.minifeed.joined_the_group')} '#{group_link(Group.find(activity.item.group))}').html_safe
     when "Req"
       req = activity.item
-      %(#{h person.display_name} #{t('shared.minifeed.req_created')}: #{req_link(req.name, req)}.).html_safe
+      %(#{h person.display_name} #{t('shared.minifeed.req_created')}: #{req_link("#{req.name} R#{req.id}", req)}.).html_safe
     when "Offer"
       offer = activity.item
-      %(#{h person.display_name} #{t('shared.minifeed.offer_created')}: #{offer.considered_active? ? offer_link(offer.name, offer) : offer.name}.).html_safe
+      %(#{h person.display_name} #{t('shared.minifeed.offer_created')}: #{offer.considered_active? ? offer_link("#{offer.name} O#{offer.id}", offer) : "#{offer.name} O#{offer.id}"}.).html_safe
     when "Exchange"
       exchange = activity.item
       %(#{h person.display_name} #{t('earned')} #{ nice_decimal(exchange.amount)} #{h exchange.group.unit} #{t('for')}
