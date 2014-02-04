@@ -82,6 +82,8 @@ end
 
       field :person do
         label "Name"
+        searchable [{Person => :name}]
+        queryable true
       end
       field :offset do
         label "Starting Balance"
