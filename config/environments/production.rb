@@ -19,7 +19,10 @@ Oscurrency::Application.configure do
   # just comment this out and Rails will serve the files
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # * bypass force_ssl by setting SKIP_FORCE_SSL to anything other than false
+  unless (ENV['SKIP_FORCE_SSL'] && 'false' != ENV['SKIP_FORCE_SSL'])
+    config.force_ssl = true
+  end
 
   # See everything in the log (default is :info)
   # config.log_level = :debug
