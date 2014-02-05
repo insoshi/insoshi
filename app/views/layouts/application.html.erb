@@ -139,10 +139,11 @@
             <% selected_classes =  current_person.posts_per_page == ppp ? 'btn btn-small btn-primary' : '' %>
             <%= link_to ppp.to_s, person_path(current_person), {:class => "per_page #{selected_classes}", 'data-ppp' => ppp} %>
           <% end %>
+          </div>
         <% end %>
-        </div>
+    </div>
       <hr/>
-
+      <div class="container">
       <footer>
 
         <%# Getting the administrator object to generate content %>
@@ -184,7 +185,7 @@
         </div>
 
       </footer>
-    
+    </div> 
     </div>
     
     <%- if Rails.env.development? -%>
