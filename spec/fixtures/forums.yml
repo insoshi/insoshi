@@ -4,3 +4,4 @@ one:
   name: MyString
   description: MyText
   topics_count: 1
+  group: one
