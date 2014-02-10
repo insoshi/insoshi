@@ -173,7 +173,7 @@ describe Person do
     end
 
     it "should not include a person who logged in too long ago" do
-      @person.last_logged_in_at = Person::TIME_AGO_FOR_MOSTLY_ACTIVE - 1
+      @person.last_logged_in_at = Person::TIME_AGO_FOR_MOSTLY_ACTIVE.ago - 1
       @person.save
       Person.mostly_active.should_not contain(@person)
     end
