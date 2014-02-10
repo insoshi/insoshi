@@ -54,7 +54,7 @@ class Connection < ActiveRecord::Base
         send_mail = global_prefs.email_notifications? &&
           contact.connection_notifications?
       end
-      if person == contact or Connection.exists?(person, contact)
+      if person == contact or Connection.exist?(person, contact)
         nil
       else
         transaction do

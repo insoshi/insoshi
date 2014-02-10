@@ -2,10 +2,10 @@ require 'rubygems'
 require 'spork'
 
 Spork.prefork do
-  # Loading more in this block will cause your tests to run faster. However, 
+  # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
-  
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
@@ -35,7 +35,7 @@ RSpec.configure do |config|
   matchers_files.each do |path|
     require File.join(matchers_path, path)
   end
-  
+
   # Custom matchers includes
   config.include(CustomModelMatchers)
 
@@ -50,7 +50,7 @@ RSpec.configure do |config|
   def uploaded_file(filename, content_type = "image/png")
     t = Tempfile.new(filename)
     t.binmode
-    path = File.join(RAILS_ROOT, "spec", "images", filename)
+    path = File.join(::Rails.root, "spec", "images", filename)
     FileUtils.copy_file(path, t.path)
     (class << t; self; end).class_eval do
       alias local_path path
@@ -59,7 +59,7 @@ RSpec.configure do |config|
     end
     return t
   end
-  
+
   def mock_photo(options = {})
     photo = mock_model(Photo)
     photo.stub!(:public_filename).and_return("photo.png")
@@ -67,13 +67,13 @@ RSpec.configure do |config|
     photo.stub!(:primary?).and_return(photo.primary)
     photo
   end
-  
+
   # Write response body to output file.
   # This can be very helpful when debugging specs that test HTML.
   def output_body(response)
     File.open("tmp/index.html", "w") { |f| f.write(response.body) }
   end
-  
+
   # Make a user an admin.
   # All fixture people are not admins by default, to protect against mistakes.
   def admin!(person)
@@ -88,7 +88,7 @@ RSpec.configure do |config|
   end
 
   def enable_email_notifications
-    Preference.find(:first).update_attributes(:email_verifications => true)      
+    Preference.find(:first).update_attributes(:email_verifications => true)
   end
 end
 
