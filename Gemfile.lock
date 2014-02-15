@@ -335,7 +335,6 @@ GEM
       libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
-    silent-postgres (0.1.1)
     simple-rss (1.2.3)
     simple_oauth (0.1.9)
     slop (3.3.3)
@@ -445,7 +444,6 @@ DEPENDENCIES
   rspec-rails
   ruby-openid
   sass-rails
-  silent-postgres
   spork
   sqlite3
   texticle

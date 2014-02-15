@@ -61,7 +61,6 @@ group :development, :test do
   gem 'debugger'
   gem "heroku-api"
   gem 'sqlite3'
-  gem "silent-postgres"
   gem "rack"
   gem "rack-test"
   gem "awesome_print"
