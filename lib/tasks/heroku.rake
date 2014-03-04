@@ -16,6 +16,8 @@ namespace :heroku do
       heroku_app = heroku.post_app.body
     end
 
+    branch = ui.ask("Enter the name of the branch you wish to deploy (leave blank for master): ") || 'master'
+
     app_name = heroku_app['name']
 
     APP_CONFIG["HEROKU_APP"] = app_name
@@ -67,7 +69,7 @@ namespace :heroku do
 
     print "Deploying to Heroku... "
     git.add_remote('heroku', "git@heroku.com:#{app_name}.git") if git.remote('heroku').url.nil?
-    git.push('heroku', 'master')
+    git.push('heroku', branch)
     puts "done."
 
     print "Running first time install on Heroku... "
@@ -93,16 +95,18 @@ namespace :heroku do
 
     app_name = heroku_app['name']
 
+    branch = ui.ask("Enter the name of the branch you wish to deploy (leave blank for master): ") || 'master'
+
     git = Git.open(Dir.pwd, :log => Logger.new(STDOUT))
 
     if ui.agree("Do you want to fetch the latest code from GitHub? ")
       print "Getting latest OSCurrency code... "
-      git.pull('origin', 'master')
+      git.pull('origin', branch)
       puts "done."
     end
 
     print "Deploying to Heroku... "
-    git.push('heroku', 'master')
+    git.push('heroku', branch)
     puts "done."
 
     print "Running database migrations... "
