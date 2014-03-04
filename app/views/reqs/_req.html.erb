@@ -34,5 +34,7 @@
       <%= number_with_precision(req.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
     <% end -%>
   </p>
-  <%= formatted_req_categories(req.long_categories) %>
+  <div class="bottom-req-category-list">
+    <%= formatted_req_categories(req.long_categories) %>
+  </div>
 </div>
