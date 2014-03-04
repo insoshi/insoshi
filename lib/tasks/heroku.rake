@@ -9,27 +9,36 @@ namespace :heroku do
 
     next unless amazon_credentials = auth_to_amazon(ui, APP_CONFIG)
 
-    print "Creating new heroku app... "
-    heroku_app = heroku.post_app.body
-    APP_CONFIG["HEROKU_APP"] = heroku_app['name']
+    if name_input = ui.ask("Enter the name of an existing Heroku app container (or leave blank to create a new one): ")
+      heroku_app = heroku.get_app(name_input).body
+    else
+      print "Creating new heroku app... "
+      heroku_app = heroku.post_app.body
+    end
+
+    branch = ui.ask("Enter the name of the branch you wish to deploy (leave blank for master): ") || 'master'
+
+    app_name = heroku_app['name']
+
+    APP_CONFIG["HEROKU_APP"] = app_name
     File.open("config/config.yml", 'w+') {|f| f.write(APP_CONFIG.to_yaml) }
     puts "done creating #{APP_CONFIG['HEROKU_APP']}."
 
     print "Creating new S3 bucket... "
-    AWS::S3::Bucket.create(heroku_app['name'])
+    AWS::S3::Bucket.create(app_name)
     puts "done."
 
     config_vars = {
       'BUNDLE_WITHOUT' => "development:test",
       'AMAZON_ACCESS_KEY_ID' => amazon_credentials[:id],
       'AMAZON_SECRET_ACCESS_KEY' => amazon_credentials[:secret],
-      'APP_NAME' => heroku_app['name'],
-      'SERVER_NAME' => "#{heroku_app['name']}.herokuapp.com",
-      'S3_BUCKET_NAME' => heroku_app['name']
+      'APP_NAME' => app_name,
+      'SERVER_NAME' => "#{app_name}.herokuapp.com",
+      'S3_BUCKET_NAME' => app_name
     }
 
     print "Setting config vars... "
-    heroku.put_config_vars(heroku_app['name'], config_vars)
+    heroku.put_config_vars(app_name, config_vars)
     puts "done."
 
     print "Setting up mail server "
@@ -45,32 +54,32 @@ namespace :heroku do
         'SMTP_USER' => smtp_credentials['smtp_user'],
         'SMTP_PASSWORD' => smtp_credentials['smtp_password']
       }
-      heroku.put_config_vars(heroku_app['name'], smtp_vars)
+      heroku.put_config_vars(app_name, smtp_vars)
     else
       print "using SendGrid addon... "
-      heroku.post_addon(heroku_app['name'], 'sendgrid:starter')
+      heroku.post_addon(app_name, 'sendgrid:starter')
     end
     puts "done."
 
     print "Setting up memcache... "
-    heroku.post_addon(heroku_app['name'], 'memcachier')
+    heroku.post_addon(app_name, 'memcachier')
     puts "done."
 
     git = Git.open(Dir.pwd, :log => Logger.new(STDOUT))
 
     print "Deploying to Heroku... "
-    git.add_remote('heroku', "git@heroku.com:#{heroku_app['name']}.git") if git.remote('heroku').url.nil?
-    git.push('heroku', 'master')
+    git.add_remote('heroku', "git@heroku.com:#{app_name}.git") if git.remote('heroku').url.nil?
+    git.push('heroku', branch)
     puts "done."
 
     print "Running first time install on Heroku... "
-    heroku.post_ps(heroku_app['name'], 'rake install')
+    heroku.post_ps(app_name, 'rake install')
     puts "done."
 
     print "Restarting Heroku instance... "
-    heroku.post_ps_restart(heroku_app['name']) # in case authlogic is not properly loaded
+    heroku.post_ps_restart(app_name) # in case authlogic is not properly loaded
 
-    puts "Deploy completed successfully. App is now available at http://#{heroku_app['name']}.herokuapp.com"
+    puts "Deploy completed successfully. App is now available at http://#{app_name}.herokuapp.com"
     puts "Thanks!"
   end
 
@@ -84,27 +93,31 @@ namespace :heroku do
 
     heroku_app = heroku.get_app(APP_CONFIG["HEROKU_APP"]).body
 
+    app_name = heroku_app['name']
+
+    branch = ui.ask("Enter the name of the branch you wish to deploy (leave blank for master): ") || 'master'
+
     git = Git.open(Dir.pwd, :log => Logger.new(STDOUT))
 
     if ui.agree("Do you want to fetch the latest code from GitHub? ")
       print "Getting latest OSCurrency code... "
-      git.pull('origin', 'master')
+      git.pull('origin', branch)
       puts "done."
     end
 
     print "Deploying to Heroku... "
-    git.push('heroku', 'master')
+    git.push('heroku', branch)
     puts "done."
 
     print "Running database migrations... "
-    heroku.post_ps(heroku_app['name'], 'rake db:migrate')
+    heroku.post_ps(app_name, 'rake db:migrate')
     puts "done."
 
     print "Running database seed data (rare)... "
-    heroku.post_ps(heroku_app['name'], 'rake db:seed')
+    heroku.post_ps(app_name, 'rake db:seed')
     puts "done."
 
-    puts "Update completed successfully. App is now available at http://#{heroku_app['name']}.herokuapp.com"
+    puts "Update completed successfully. App is now available at http://#{app_name}.herokuapp.com"
     puts "Thanks!"
   end
 
