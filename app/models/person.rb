@@ -241,7 +241,7 @@ class Person < ActiveRecord::Base
 
   ## Message methods
 
-  def received_messages(page = 1, text)
+  def received_messages(page = 1, text = "")
     _received_messages.search_by(text).paginate(:page => page, :per_page => MESSAGES_PER_PAGE)
   end
 

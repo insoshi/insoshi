@@ -82,6 +82,8 @@ end
 
       field :person do
         label "Name"
+        searchable [{Person => :name}]
+        queryable true
       end
       field :offset do
         label "Starting Balance"
@@ -308,8 +310,14 @@ end
   config.model Exchange do
     list do
       field :created_at
-      field :customer
-      field :worker
+      field :customer do
+        searchable [{Person => :name}]
+        queryable true
+      end
+      field :worker do
+        searchable :workers_exchanges => :name
+        queryable true
+      end
       field :amount
       field :notes do
         label "Memo"
@@ -347,8 +355,14 @@ end
         only_deleted
       end
       field :created_at
-      field :customer
-      field :worker
+      field :customer do
+        searchable [{Person => :name}]
+        queryable true
+      end
+      field :worker do
+        searchable :workers_exchanges => :name
+        queryable true
+      end
       field :amount
       field :notes do
         label "Memo"
