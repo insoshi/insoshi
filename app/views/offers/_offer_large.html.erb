@@ -30,8 +30,6 @@
         <%= t('offers.partial.expires') %> <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
       </p>
         
-      <%#= display formatted_offer_categories(offer.long_categories), :class => "meta" %>
-          
       <p class="meta">
         <br/>
         <%= t('offers.partial.available_count') %>: <%= offer.available_count %>

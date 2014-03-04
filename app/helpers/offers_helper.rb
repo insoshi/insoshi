@@ -15,12 +15,6 @@ module OffersHelper
     end
   end
 
-  def formatted_offer_categories(categories)
-    text = ""
-    categories.each {|c| text << h(c) + "<br>".html_safe}
-    text.html_safe
-  end
-
   # 
   # function `horizontal_formatted_offer_categories` outputs an html string
   # that includes a prefix ( ie: Listed in: ) enclosed in <span> tags and the
