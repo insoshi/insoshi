@@ -3,6 +3,7 @@ rvm:
   - 1.9.3
 
 script:
+  - bundle exec rake db:migrate
   - bundle exec rake db:test:prepare
   - bundle exec rspec
 
