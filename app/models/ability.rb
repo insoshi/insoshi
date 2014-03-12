@@ -157,17 +157,21 @@ class Ability
       person.is?(:admin,req.group) || req.person == person || person.admin?
     end
 
-    can :read, Bid do |bid|
-      PublicBid.close? || bid.req.public_bid || bid.req.person == person || bid.person == person
-    end
-    can :create, Bid do |bid|
-      Membership.mem(person,bid.req.group)
-    end
-    can :update, Bid do |bid|
-      bid.person == person || bid.req.person == person
-    end
-    can :destroy, Bid do |bid|
-      person.admin? || bid.person == person
+    if person.admin?
+      can [:read,:create,:update,:destroy], Bid
+    else  
+      can :read, Bid do |bid|
+        PublicBid.close? || bid.req.public_bid || bid.req.person == person || bid.person == person
+      end
+      can :create, Bid do |bid|
+        Membership.mem(person,bid.req.group)
+      end
+      can :update, Bid do |bid|
+        person.admin? || bid.person == person || bid.req.person == person
+      end
+      can :destroy, Bid do |bid|
+        bid.person == person
+      end
     end
 
     can :read, Exchange
