@@ -54,7 +54,7 @@
         <%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'req', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
         
         <span class="pos-super">
-          &nbsp;or&nbsp;&nbsp;
+          &nbsp;<%= t('or') %>&nbsp;&nbsp;
           <%= link_to t('button_new_req'), new_group_req_path(@group), {:class => 'show-follow btn btn-primary'} %>
         </span>
       
@@ -82,7 +82,7 @@
         <%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'offer', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
       
         <span class='pos-super'>
-          &nbsp;or&nbsp;&nbsp;
+          &nbsp;<%= t('or') %>&nbsp;&nbsp;
           <%= link_to t('button_new_offer'), new_group_offer_path(@group), {:class => 'show-follow btn btn-primary'} %>
         </span>
         
