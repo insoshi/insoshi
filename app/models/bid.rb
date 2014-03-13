@@ -27,10 +27,11 @@ class Bid < ActiveRecord::Base
   before_validation :setup, :on => :create
   after_create :trigger_offered
 
-  belongs_to :req
+  belongs_to :req, inverse_of: :bids
   belongs_to :person
   belongs_to :group
   attr_readonly :estimated_hours
+  accepts_nested_attributes_for :req
 
   validates :person_id, :presence => true
   validates :estimated_hours, :presence => true, :numericality => { :greater_than => 0 }

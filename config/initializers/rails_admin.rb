@@ -39,7 +39,7 @@ end
     export
   end
 
-  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone, Bid]
+  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone, Form, Message]
 
   config.default_items_per_page = 100
 
@@ -627,18 +627,57 @@ end
     end
   end
 
-  config.model Bid do
-    label "Form / message"
-    label_plural "Forms / messages"
-    list do
-      field :req
-      field :person
-      field :state
-      field :private_message_to_requestor
-    end
-    edit do
-      field :req
-    end
+  # config.model Form do
+  #   label "Form / message"
+  #   label_plural "Forms / messages"
+  #   list do
+  #     field :req do
+  #       label "Form"
+  #     end
+  #     field :person
+  #     field :state
+  #     field :private_message_to_requestor
+  #   end
+  #   edit do
+  #     # configure :req do
+  #     #   partial 'req_offered_bids'
+  #     # end
+  #     # field :req
+  #     # field :req do
+  #     #   visible true
+  #     #   help ""
+  #     #   default_value do
+  #     #     bindings[:object].req.name
+  #     #   end
+  #     # end
+  #     # field :req_id do
+  #     #   render do
+  #     #     bindings[:object].req.name
+  #     #   end
+  #     # end
+  #     field :req do
+  #       label "Request"
+  #     end
+  #     field :state
+
+  #     # field :req do
+  #     #   nested_form false
+  #     # end
+  #   end
+
+  #   def custom_field
+  #     "Thehe #{req_url(self.req, :host => self.server)}"
+  #   end
+  # end
+  config.model Form do
+    label "Form"
+    label "Forms"
+  end
+
+  config.model Message do
+    label "Message"
+    label_plural "Messages"
+
   end
 
 end
