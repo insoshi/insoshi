@@ -106,6 +106,9 @@ GEM
       activesupport (>= 3.2.0)
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
+    ckeditor (4.0.10)
+      mime-types
+      orm_adapter (~> 0.5.0)
     coderay (1.0.8)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -231,6 +234,7 @@ GEM
     multi_json (1.8.2)
     multi_xml (0.5.1)
     multipart-post (1.1.5)
+    mustache (0.99.5)
     nested_form (0.3.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -248,6 +252,7 @@ GEM
       multi_json
       multi_xml
       oauth (~> 0.4.4)
+    orm_adapter (0.5.0)
     pg (0.14.1)
     polyglot (0.3.3)
     pry (0.9.10)
@@ -408,6 +413,7 @@ DEPENDENCIES
   cancan
   capybara
   carrierwave
+  ckeditor
   coffee-rails
   cucumber
   cucumber-rails
@@ -428,6 +434,7 @@ DEPENDENCIES
   json (= 1.7.7)
   memcachier
   meta_request
+  mustache
   oauth
   oauth-plugin!
   open_id_authentication!

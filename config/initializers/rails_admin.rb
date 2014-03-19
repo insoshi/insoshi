@@ -627,57 +627,39 @@ end
     end
   end
 
-  # config.model Form do
-  #   label "Form / message"
-  #   label_plural "Forms / messages"
-  #   list do
-  #     field :req do
-  #       label "Form"
-  #     end
-  #     field :person
-  #     field :state
-  #     field :private_message_to_requestor
-  #   end
-  #   edit do
-  #     # configure :req do
-  #     #   partial 'req_offered_bids'
-  #     # end
-  #     # field :req
-  #     # field :req do
-  #     #   visible true
-  #     #   help ""
-  #     #   default_value do
-  #     #     bindings[:object].req.name
-  #     #   end
-  #     # end
-  #     # field :req_id do
-  #     #   render do
-  #     #     bindings[:object].req.name
-  #     #   end
-  #     # end
-  #     field :req do
-  #       label "Request"
-  #     end
-  #     field :state
-
-  #     # field :req do
-  #     #   nested_form false
-  #     # end
-  #   end
-
-  #   def custom_field
-  #     "Thehe #{req_url(self.req, :host => self.server)}"
-  #   end
-  # end
   config.model Form do
     label "Form"
-    label "Forms"
+    label_plural "Forms"
+
+    list do
+      field :title
+      field :text
+      field :message_type
+      field :lang
+    end
+
+    edit do
+      field :title, :text do
+        ckeditor do true end
+      end
+      field :text, :text do
+        ckeditor do true end
+      end
+      field :message_type do
+        read_only true
+      end
+      field :lang do
+        properties[:collection] = ['en','es','fr','gr']
+        partial 'select'
+      end
+    end
+
+    
   end
 
   config.model Message do
     label "Message"
     label_plural "Messages"
-
   end
 
 end

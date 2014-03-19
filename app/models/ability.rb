@@ -17,7 +17,7 @@ class Ability
     can [:read,:create,:update,:destroy], State
     can [:read,:update], TimeZone
 
-    can [:read,:create,:update,:destroy], Form
+    can [:read,:create,:update], Form
     can [:read,:create,:update,:destroy], Message
 
     can [:read,:create], Person
