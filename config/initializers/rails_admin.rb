@@ -39,7 +39,7 @@ end
     export
   end
 
-  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone, Form, Message]
+  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone, SystemMessageTemplate, Message]
 
   config.default_items_per_page = 100
 
@@ -627,9 +627,10 @@ end
     end
   end
 
-  config.model Form do
+  config.model SystemMessageTemplate do
     label "Form"
     label_plural "Forms"
+
 
     list do
       field :title

@@ -99,12 +99,12 @@ class Bid < ActiveRecord::Base
 
   def trigger_offered
     Message.create! do |bid_note|
-      form = Form.with_type('offered')
-      bid_note.subject = Mustache.render(form.title, :estimated_hours => estimated_hours, :req_name => req.name)
+      form = SystemMessageTemplate.with_type('offered', I18n.locale.to_s)
+      bid_note.subject = form.trigger_offered_subject( estimated_hours, req.name)
       bid_note.content = ""
       bid_note.content << "#{private_message_to_requestor}\n--\n\n" if private_message_to_requestor.present?
       unless server.empty?
-        bid_note.content << Mustache.render(form.text, :request_url => req_url(self.req, :host => server))
+        bid_note.content << form.trigger_content(self.req, server)
       end
       bid_note.sender = self.person
       bid_note.recipient = self.req.person
@@ -114,10 +114,11 @@ class Bid < ActiveRecord::Base
   def trigger_accepted
     touch :accepted_at
     Message.create! do |bid_note|
-      form = Form.with_type('accepted')
-      bid_note.subject = Mustache.render(form.title, :req_name => req.name)
+      form = SystemMessageTemplate.with_type('accepted', I18n.locale.to_s)
+      bid_note.subject = form.trigger_subject(req.name)
       unless server.empty?
         bid_note.content = Mustache.render(form.text, :request_url => req_url(self.req, :host => server))
+        bid_note.content = form.trigger_content(self.req, server)
       else
         bid_note.content = ''
       end
@@ -129,10 +130,10 @@ class Bid < ActiveRecord::Base
   def trigger_committed
     touch :committed_at
     Message.create! do |bid_note|
-      form = Form.with_type('commited', I18n.locale.to_s)
-      bid_note.subject = Mustache.render(form.title, :req_name => req.name)
+      form = SystemMessageTemplate.with_type('commited', I18n.locale.to_s)
+      bid_note.subject = form.trigger_subject(req.name)
       unless server.empty?
-        bid_note.content = Mustache.render(form.text, :request_url => req_url(self.req, :host => server))
+        bid_note.content = form.trigger_content(self.req, server)
       else
         bid_note.content = ''
       end
@@ -145,9 +146,9 @@ class Bid < ActiveRecord::Base
     touch :completed_at
     Message.create! do |bid_note|
       form = Form.with_type('completed', I18n.locale.to_s)
-      bid_note.subject = Mustache.render(form.title, :req_name => req.name)
+      bid_note.subject = form.trigger_subject(req.name)
       unless server.empty?
-        bid_note.content = Mustache.render(form.text, :request_url => req_url(self.req, :host => server))
+        bid_note.content = form.trigger_content(self.req, server)
       else
         bid_note.content = ''
       end

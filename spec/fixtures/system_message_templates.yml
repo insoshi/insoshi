@@ -3,9 +3,11 @@
 one:
   title: MyString
   text: MyString
-  type: 
+  message_type: offered
+  lang: en
 
 two:
   title: MyString
   text: MyString
-  type: 
+  message_type: dsdsds
+  lang: en

@@ -4,7 +4,7 @@ Ckeditor.setup do |config|
   # Load and configure the ORM. Supports :active_record (default), :mongo_mapper and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require "ckeditor/orm/active_record"
+  #require "ckeditor/orm/active_record"
 
   # Allowed image file types for upload.
   # Set to nil or [] (empty array) for all file types
@@ -18,8 +18,8 @@ Ckeditor.setup do |config|
   config.authorize_with :cancan
 
   # Asset model classes
-  # config.picture_model { Ckeditor::Picture }
-  # config.attachment_file_model { Ckeditor::AttachmentFile }
+  config.picture_model { null }
+  config.attachment_file_model { null }
 
   # Paginate assets
   # config.default_per_page = 24

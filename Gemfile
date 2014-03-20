@@ -57,7 +57,8 @@ gem "calendar_helper"
 gem "gibbon", :git => "git://github.com/amro/gibbon.git"
 gem "bootstrap_form", "~> 0.3.2"
 gem "mustache"
-gem "ckeditor"
+gem "ckeditor", :git => "git@github.com:galetahub/ckeditor.git"
+gem "mini_magick"
 
 group :development, :test do
   gem 'debugger'

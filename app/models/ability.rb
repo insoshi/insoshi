@@ -13,12 +13,12 @@ class Ability
     end
 
     # need these for rails_admin
-    can [:read,:create,:update,:destroy], Address
-    can [:read,:create,:update,:destroy], State
+    can [:manage], Address
+    can [:manage], State
     can [:read,:update], TimeZone
 
-    can [:read,:create,:update], Form
-    can [:read,:create,:update,:destroy], Message
+    can [:read,:create,:update], SystemMessageTemplate
+    can [:manage], Message
 
     can [:read,:create], Person
     can :update, Person do |target_person|
@@ -159,22 +159,18 @@ class Ability
     can :deactivate, Req do |req|
       person.is?(:admin,req.group) || req.person == person || person.admin?
     end
-
-    if person.admin?
-      can [:read,:create,:update,:destroy], Bid
-    else  
-      can :read, Bid do |bid|
-        PublicBid.close? || bid.req.public_bid || bid.req.person == person || bid.person == person
-      end
-      can :create, Bid do |bid|
-        Membership.mem(person,bid.req.group)
-      end
-      can :update, Bid do |bid|
-        person.admin? || bid.person == person || bid.req.person == person
-      end
-      can :destroy, Bid do |bid|
-        bid.person == person
-      end
+  
+    can :read, Bid do |bid|
+      PublicBid.close? || bid.req.public_bid || bid.req.person == person || bid.person == person
+    end
+    can :create, Bid do |bid|
+      Membership.mem(person,bid.req.group)
+    end
+    can :update, Bid do |bid|
+      person.admin? || bid.person == person || bid.req.person == person
+    end
+    can :destroy, Bid do |bid|
+      bid.person == person
     end
 
     can :read, Exchange

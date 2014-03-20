@@ -1,4 +1,4 @@
-class Form < ActiveRecord::Base
+class SystemMessageTemplate < ActiveRecord::Base
   attr_accessible :text
   attr_accessible :title
   attr_accessible :message_type
@@ -11,6 +11,36 @@ class Form < ActiveRecord::Base
 
   TITLE_VARS = [ '{{estimated_hours}}', '{{req_name}}', '{{amount}}', '{{group_unit}}', '{{metadata_name}}' ]
   TEXT_VARS = [ '{{request_url}}', '{{customer_name}}', '{{amount}}', '{{group_unit}}' ]
+
+  def trigger_offered_subject estimated_hours, req_name
+    Mustache.render(self.title, :estimated_hours => estimated_hours, :req_name => req_name)
+  end
+
+  def trigger_subject request_name
+    Mustache.render(self.title, :req_name => request_name)
+  end
+
+  def trigger_content request, server
+    Mustache.render(self.text, :request_url => req_url(request, :host => server))
+  end
+
+  def payment_notification_subject amount, group_unit, metadata_name
+    Mustache.render(
+      self.title,
+      :amount => amount,
+      :group_unit => group_unit,
+      :metadata_name => metadata_name
+    )
+  end
+
+  def payment_notification_text customer_name, amount, group_unit
+    Mustache.render(
+      self.text,
+      :customer_name => customer_name,
+      :amount => amount,
+      :group_unit => group_unit
+    )
+  end
 
   def self.with_type_and_language type, lang
     self.where(:message_type => type.to_s, :lang => lang.to_s).first!

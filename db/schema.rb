@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140319130752) do
+ActiveRecord::Schema.define(:version => 20140313162005) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -163,22 +163,6 @@ ActiveRecord::Schema.define(:version => 20140319130752) do
   add_index "categories_reqs", ["category_id"], :name => "index_categories_reqs_on_category_id"
   add_index "categories_reqs", ["req_id", "category_id"], :name => "index_categories_reqs_on_req_id_and_category_id"
 
-  create_table "ckeditor_assets", :force => true do |t|
-    t.string   "data_file_name",                  :null => false
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
-    t.integer  "assetable_id"
-    t.string   "assetable_type",    :limit => 30
-    t.string   "type",              :limit => 30
-    t.integer  "width"
-    t.integer  "height"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-  end
-
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
-
   create_table "client_applications", :force => true do |t|
     t.string   "name"
     t.string   "url"
@@ -288,15 +272,6 @@ ActiveRecord::Schema.define(:version => 20140319130752) do
   end
 
   add_index "feeds", ["person_id", "activity_id"], :name => "index_feeds_on_person_id_and_activity_id"
-
-  create_table "forms", :force => true do |t|
-    t.string   "title"
-    t.string   "text"
-    t.string   "message_type"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.string   "lang"
-  end
 
   create_table "forums", :force => true do |t|
     t.string   "name"
@@ -630,6 +605,15 @@ ActiveRecord::Schema.define(:version => 20140319130752) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "system_message_templates", :force => true do |t|
+    t.string   "title"
+    t.string   "text"
+    t.string   "message_type"
+    t.string   "lang"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "time_zones", :force => true do |t|

@@ -127,7 +127,7 @@ FORM_TYPES = [
 ]
 
 FORM_TYPES.each do |value|
-  Form.create(:title => value[0], :text => value[1], :message_type => value[2], :lang => value[3])
+  SystemMessageTemplate.create(:title => value[0], :text => value[1], :message_type => value[2], :lang => value[3])
 end
 
 # default profile picture
