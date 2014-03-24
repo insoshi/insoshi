@@ -192,7 +192,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def send_payment_notification_to_worker
-    form = SystemMessageTemplate.with_type('send_payment_notyfication', I18n.locale.to_s)
+    form = SystemMessageTemplate.with_type_and_language('send_payment_notyfication', I18n.locale.to_s)
     exchange_note = Message.new(:talkable_id => self.metadata.id, :talkable_type => self.metadata.class.to_s)
     subject = form.payment_notification_subject(nice_decimal(self.amount), self.group.unit, self.metadata.name)
     exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject 
@@ -204,7 +204,7 @@ class Exchange < ActiveRecord::Base
   end
 
   def send_suspend_payment_notification_to_worker
-    form = SystemMessageTemplate.with_type('send_suspend_payment_notyfication', I18n.locale.to_s)
+    form = SystemMessageTemplate.with_type_and_language('send_suspend_payment_notyfication', I18n.locale.to_s)
     exchange_note = Message.new()
     subject = form.payment_notification_subject(nice_decimal(self.amount), self.group.unit, self.metadata.name)
     exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject 

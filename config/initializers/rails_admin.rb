@@ -630,7 +630,17 @@ end
   config.model SystemMessageTemplate do
     label "Form"
     label_plural "Forms"
-
+    field :title, :text do
+      ckeditor do true end
+    end
+    field :text, :text do
+      ckeditor do true end
+    end
+    field :message_type
+    field :lang do
+      properties[:collection] = ['en','es','fr','gr']
+      partial 'select'
+    end
 
     list do
       field :title
@@ -646,14 +656,15 @@ end
       field :text, :text do
         ckeditor do true end
       end
-      field :message_type do
-        read_only true
-      end
+      # field :message_type do
+      #   read_only true
+      # end
       field :lang do
         properties[:collection] = ['en','es','fr','gr']
         partial 'select'
       end
     end
+
 
     
   end

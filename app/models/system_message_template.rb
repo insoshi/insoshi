@@ -8,6 +8,7 @@ class SystemMessageTemplate < ActiveRecord::Base
   validates_presence_of :message_type
   validates :title, :presence => true, :if => :has_title_vars?
   validates :text, :presence => true, :if => :has_text_vars?
+  validates_uniqueness_of :message_type
 
   TITLE_VARS = [ '{{estimated_hours}}', '{{req_name}}', '{{amount}}', '{{group_unit}}', '{{metadata_name}}' ]
   TEXT_VARS = [ '{{request_url}}', '{{customer_name}}', '{{amount}}', '{{group_unit}}' ]
@@ -20,8 +21,8 @@ class SystemMessageTemplate < ActiveRecord::Base
     Mustache.render(self.title, :req_name => request_name)
   end
 
-  def trigger_content request, server
-    Mustache.render(self.text, :request_url => req_url(request, :host => server))
+  def trigger_content request_url
+    Mustache.render(self.text, :request_url => request_url)
   end
 
   def payment_notification_subject amount, group_unit, metadata_name
