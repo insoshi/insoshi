@@ -30,7 +30,7 @@ send_payment_notyfication:
   <<: *DEFAULT_PAYMENTS
 
 send_suspend_payment_notyfication:
-  message_type: send_payment_notyfication
+  message_type: send_suspend_payment_notyfication
   <<: *DEFAULT_PAYMENTS
 
 bad_fixture:

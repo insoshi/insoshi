@@ -630,17 +630,6 @@ end
   config.model SystemMessageTemplate do
     label "Form"
     label_plural "Forms"
-    field :title, :text do
-      ckeditor do true end
-    end
-    field :text, :text do
-      ckeditor do true end
-    end
-    field :message_type
-    field :lang do
-      properties[:collection] = ['en','es','fr','gr']
-      partial 'select'
-    end
 
     list do
       field :title
@@ -650,23 +639,18 @@ end
     end
 
     edit do
-      field :title, :text do
-        ckeditor do true end
+      field :title, :text
+      field :text, :text
+      field :message_type do
+        properties[:collection] = SystemMessageTemplate.select(:message_type).uniq.all.map {|x| x.message_type}
+        partial "select"
       end
-      field :text, :text do
-        ckeditor do true end
-      end
-      # field :message_type do
-      #   read_only true
-      # end
       field :lang do
-        properties[:collection] = ['en','es','fr','gr']
+        properties[:collection] = I18n.available_locales.map {|x| x.to_s}
         partial 'select'
       end
     end
 
-
-    
   end
 
   config.model Message do
