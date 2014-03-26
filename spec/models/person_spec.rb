@@ -137,7 +137,7 @@ describe Person do
 
       @person.deactivated = true
       @person.save
-      @person.plan_type.name.should == 'Closed'
+      @person.plan_type.name.should eq('Closed')
     end
 
     it "should reactivate a person" do
