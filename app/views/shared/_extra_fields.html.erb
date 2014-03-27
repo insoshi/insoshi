@@ -1,0 +1,22 @@
+<p class='formatting'><%= t('shared.multiple_select_label') %></p>
+<% @extra_fields.each do |field| %>
+	<%= field.title %>
+	<% case field.field_type %>
+	<% when 'text_field' %>
+		<%= f.text_field key %>
+		<%= f.text_field value %>
+	<% when 'text_area' %>
+		<%= f.text_field key %>
+		<%= f.text_area field.key.to_sym %>
+	<% end %>
+<% end %>
+<%#=
+    collection_select( model_name,
+                      'neighborhood_ids',
+                      @all_neighborhoods,
+                      :id,
+                      :long_name,
+                      {:selected => logged_in? ? current_person.neighborhoods.map(&:id) : []},
+                      {:multiple => true, :size => '8'}
+                      )
+%>

@@ -170,6 +170,8 @@ class Ability
       person.admin? || bid.person == person
     end
 
+    can [:read,:create,:update,:destroy], FormSignupField
+
     can :read, Exchange
     can :destroy, Exchange do |exchange|
       (exchange.class != ExchangeDeleted) && (exchange.customer == person || person.admin?)

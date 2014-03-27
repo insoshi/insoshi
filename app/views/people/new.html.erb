@@ -52,6 +52,22 @@
     </div>
   </div>
 
+  <%# TODO nie zapomnieć o t('people.new.neighborhood') %>
+  <div class="control-group">
+    <%= f.label "Extra fields", :class => 'control-label' %>
+    <div class="controls">
+    <% i = 0 %>
+    <%= f.fields_for :person_metadata do |pm| %>
+
+      <%= pm.label :key %>
+      <%= pm.text_field :key %>
+      <%= pm.label :value %>
+      <%= pm.text_field :value %>
+
+    <% end %>
+    </div>
+  </div>
+ 
   <%= f.text_field :zipcode, label: t('people.new.zipcode') %>
 
     <%= f.control_group :org do %>

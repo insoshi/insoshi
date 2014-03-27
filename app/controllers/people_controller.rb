@@ -49,15 +49,22 @@ class PeopleController < ApplicationController
   def new
     @body = "register single-col"
     @person = Person.new
+    FormSignupField.count.times { @person.person_metadata.build }
+
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @extra_fields = FormSignupField.all
     respond_to do |format|
       format.html
     end
   end
 
   def create
+    binding.pry
     @person = Person.new(params[:person])
+    params[:person][:person_metadata_attributes].each do |key, value|
+      @person.person_metadata.build(value)
+    end   
     @person.email_verified = false if global_prefs.email_verifications?
     @person.save do |result|
       respond_to do |format|

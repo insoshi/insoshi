@@ -39,7 +39,10 @@ end
     export
   end
 
-  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone]
+  config.included_models = [Account,Address,State,AccountDeactivated,
+    Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,
+    PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,
+    ActivityStatus,PlanType, ExchangeDeleted, TimeZone, FormSignupField]
 
   config.default_items_per_page = 100
 
@@ -609,6 +612,36 @@ end
       end
       field :addresses
       # generally not appropriate for admin to edit openid since it is an assertion
+    end
+  end
+
+  config.model FormSignupField do
+    label "Signup field"
+    label_plural "Signup fields"
+
+    list do
+      field :title
+      field :field_type
+      field :mandatory
+      field :order
+    end
+
+    edit do
+      field :title
+      field :key
+      field :field_type do
+        properties[:collection] = [
+          ['Single line text input', 'text_field'],
+          ['Paragraph text input', 'text_area'],
+          ['Dropdown choice', 'collection_select']
+        ]
+        partial "select"
+      end
+      field :mandatory
+      field :order do
+        properties[:collection] = (1..(FormSignupField.count+1))
+        partial "select"
+      end
     end
   end
 
