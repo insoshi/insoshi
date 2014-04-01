@@ -350,6 +350,7 @@ en:
       back_to_regular_signup: "back to regular signup"
       openid_url: "OpenID URL"
       signup_button: "Sign up"
+      field_is_required: "is required"
     request_memberships:
       header: "Membership request for your groups"
       respond: "Respond"

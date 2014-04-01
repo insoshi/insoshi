@@ -483,6 +483,7 @@ end
     object_label_method do
       :display_name
     end
+    
     list do
       scope do
         where deactivated: false
@@ -555,6 +556,7 @@ end
       end
       field :addresses
       # generally not appropriate for admin to edit openid since it is an assertion
+      field :person_metadata
     end
   end
 

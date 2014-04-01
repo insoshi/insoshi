@@ -37,6 +37,8 @@ class Person < ActiveRecord::Base
   attr_accessible :web_site_url
   attr_accessible :org
   attr_accessible :posts_per_page
+  attr_accessible :person_metadata_attributes
+  attr_accessible :id
 
   extend Searchable(:name, :business_name, :description)
 
@@ -142,7 +144,7 @@ class Person < ActiveRecord::Base
   belongs_to :business_type
   belongs_to :activity_status
   belongs_to :plan_type
-  accepts_nested_attributes_for :person_metadata
+  accepts_nested_attributes_for :person_metadata, :allow_destroy => true
 
   validates :name, :presence => true, :length => { :maximum => MAX_NAME }
   validates :description, :length => { :maximum => MAX_DESCRIPTION }

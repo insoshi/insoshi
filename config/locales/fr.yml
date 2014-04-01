@@ -409,6 +409,7 @@ fr:
       header: "Enregistrez votre groupe"
       respond: "Répondre"
       no_membership_request: "No membership request (yet)"
+      field_is_required: "is required"
     show:
       header: "Profil"
       support_contact: "Support Contact"

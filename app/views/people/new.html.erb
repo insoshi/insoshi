@@ -52,27 +52,8 @@
     </div>
   </div>
 
-  <%# TODO nie zapomnieć o t('people.new.neighborhood') %>
+  <%= render :partial => "person_metadata", :locals => {:f => f, :person => @person, :extra_fields => @extra_fields} %>
 
-  <% i = 0 %>
-  <%# @extra_fields %>
-  <%= f.fields_for :person_metadata do |pm| %>
-
-    <% case @extra_fields[i].field_type %>
-    <% when 'text_field' %>
-      <%= pm.text_field :value, label: @extra_fields[i].title %>
-      <%= @person.errors.message[:"person_metadata.#{@extra_fields[i].key}"] unless @person.nil? %>
-    <% when 'text_area' %>
-      <%= pm.text_area :value, label: @extra_fields[i].title, rows: 6%>
-      <%= @person.errors.message[:"person_metadata.#{@extra_fields[i].key}"] unless @person.nil? %>
-    <% when 'collection_select' %>
-      <%= pm.text_area :value, label: @extra_fields[i].title %>
-      <%=  %>
-    <% end %>
-    <%= pm.hidden_field :key, :value => @extra_fields[i].key %>
-    <% i = i + 1 %>
-  <% end %>
- 
   <%= f.text_field :zipcode, label: t('people.new.zipcode') %>
 
     <%= f.control_group :org do %>

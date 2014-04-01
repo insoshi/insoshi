@@ -53,7 +53,7 @@ class PeopleController < ApplicationController
 
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-    @extra_fields = FormSignupField.order("form_signup_fields.order ASC").all
+    @extra_fields = FormSignupField.all_with_order
     respond_to do |format|
       format.html
     end
@@ -84,8 +84,7 @@ class PeopleController < ApplicationController
           @body = "register single-col"
           @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
-          @extra_fields = FormSignupField.order("form_signup_fields.order ASC").all
-          flash[:error] = @person.errors.full_messages.to_s
+          @extra_fields = FormSignupField.all_with_order
           format.html { render :action => 'new' }
         end
       end
@@ -122,6 +121,8 @@ class PeopleController < ApplicationController
     @category = Category.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @extra_fields = FormSignupField.all_with_order
+    FormSignupField.count.times { @person.person_metadata.build } 
     respond_to do |format|
       format.html
     end

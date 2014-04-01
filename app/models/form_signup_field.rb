@@ -7,4 +7,6 @@ class FormSignupField < ActiveRecord::Base
     :in => %w(text_field text_area collection_select),
     :message => "%s is not included in the list"
   validates_uniqueness_of :key, :order
+
+  scope :all_with_order, -> { order("form_signup_fields.order ASC").all }
 end
