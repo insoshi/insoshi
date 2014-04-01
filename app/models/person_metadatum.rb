@@ -5,7 +5,6 @@ class PersonMetadatum < ActiveRecord::Base
   belongs_to :person, :inverse_of => :person_metadata
   validate :allow_validation
 
-
     def allow_validation
       var = FormSignupField
         .find(:first, :conditions => {:key => self.key})
