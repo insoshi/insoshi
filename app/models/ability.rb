@@ -170,8 +170,8 @@ class Ability
       person.admin? || bid.person == person
     end
 
-    can [:read,:create,:update,:destroy], FormSignupField
-    can [:create,:update,:destroy], PersonMetadatum
+    can [:read, :create,:update,:destroy], FormSignupField
+    can [:read, :create,:update,:destroy], PersonMetadatum
 
     can :read, Exchange
     can :destroy, Exchange do |exchange|
