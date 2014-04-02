@@ -42,7 +42,8 @@ end
   config.included_models = [Account,Address,State,AccountDeactivated,
     Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,
     PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,
-    ActivityStatus,PlanType, ExchangeDeleted, TimeZone, FormSignupField]
+    ActivityStatus,PlanType, ExchangeDeleted, TimeZone, FormSignupField,
+    PersonMetadatum]
 
   config.default_items_per_page = 100
 
@@ -531,6 +532,7 @@ end
     end
 
     edit do
+      field :person_metadata
       field :name
       field :email
       field :password
@@ -556,7 +558,7 @@ end
       end
       field :addresses
       # generally not appropriate for admin to edit openid since it is an assertion
-      field :person_metadata
+      
     end
   end
 
@@ -660,6 +662,14 @@ end
         TimeZone::Date_Style.keys
       end
     end
+  end
+
+
+  config.model PersonMetadatum do
+    field :id
+    field :key
+    field :value
+    field :person_id
   end
 
 end

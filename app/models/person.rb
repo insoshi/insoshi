@@ -137,13 +137,14 @@ class Person < ActiveRecord::Base
   has_many :reqs
   has_many :bids
   has_many :invitations, :order => 'created_at DESC'
-  has_many :person_metadata
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
   belongs_to :sponsor, :class_name => "Person", :foreign_key => "sponsor_id"
   belongs_to :support_contact, :class_name => "Person", :foreign_key => "support_contact_id"
   belongs_to :business_type
   belongs_to :activity_status
   belongs_to :plan_type
+
+  has_many :person_metadata#, :inverse_of => :person
   accepts_nested_attributes_for :person_metadata, :allow_destroy => true
 
   validates :name, :presence => true, :length => { :maximum => MAX_NAME }
