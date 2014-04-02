@@ -63,7 +63,7 @@ class PeopleController < ApplicationController
     @person = Person.new(params[:person])
     params[:person][:person_metadata_attributes].each do |key, value|
       @person.person_metadata.build(value)
-    end   
+    end
     @person.email_verified = false if global_prefs.email_verifications?
     @person.save do |result|
       respond_to do |format|
@@ -122,7 +122,9 @@ class PeopleController < ApplicationController
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @extra_fields = FormSignupField.all_with_order
-    FormSignupField.count.times { @person.person_metadata.build } 
+    if @person.person_metadata.nil?
+      FormSignupField.count.times { @person.person_metadata.build } 
+    end
     respond_to do |format|
       format.html
     end

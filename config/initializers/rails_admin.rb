@@ -641,6 +641,9 @@ end
         ]
         partial "select"
       end
+      field :options do
+        help 'Required - only when "Dropdown choice" is selected'
+      end
       field :mandatory
       field :order do
         properties[:collection] = (1..(FormSignupField.count+1))

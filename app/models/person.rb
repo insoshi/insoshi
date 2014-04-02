@@ -175,7 +175,14 @@ class Person < ActiveRecord::Base
   before_update :set_old_description
   after_update :log_activity_description_changed
   before_destroy :destroy_activities, :destroy_feeds
-
+  after_validation do
+    return if(self.person_metadata.empty?)
+    destroy_array = []
+    self.person_metadata.each do |metadata|
+      destroy_array << metadata if metadata.value.nil?
+    end
+    self.person_metadata.destroy(destroy_array)
+  end
 
   # Return the first admin created.
   # We suggest using this admin as the primary administrative contact.

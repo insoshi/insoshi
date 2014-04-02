@@ -1,6 +1,6 @@
 class PersonMetadatum < ActiveRecord::Base
   attr_accessible :id, :key, :person_id, :value, :person_metadatum
-  #attr_accessible :person_attributes, :allow_destroy => true
+  attr_accessible :person_attributes, :allow_destroy => true
   attr_accessible *attribute_names, :as => :admin
 
   belongs_to :person, :inverse_of => :person_metadata
