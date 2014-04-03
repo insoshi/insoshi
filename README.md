@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/oscurrencyVRL/oscurrency.png?branch=master)](https://travis-ci.org/oscurrencyVRL/oscurrency)
+
 ### Quick Facts
 - ruby 1.9.3
 - rails 3.2.16
@@ -31,7 +33,7 @@ You can install a new deployment on Heroku with the command:
 Update a Heroku deployment with:
 
     $ rake heroku:update
-    
+
 **Tutorial for Heroku install**: [A Guide for Non-Developers who want to deploy OSCurrency](https://github.com/oscurrency/oscurrency/wiki/Heroku-Deployment-Guide)
 
 ### Admin user
