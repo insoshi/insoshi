@@ -23,11 +23,11 @@ class FormSignupField < ActiveRecord::Base
 
   private
     def change_order
-      ActiveRecord::Base.transaction do
-        binding.pry
-        field_to_change = FormSignupField.where(order: self.order).first
-        field_to_change.order = self.order_was
-        field_to_change.save
-      end
+      # ActiveRecord::Base.transaction do
+      #   binding.pry
+      #   field_to_change = FormSignupField.where(order: self.order).first
+      #   field_to_change.order = self.order_was
+      #   field_to_change.save
+      # end
     end
 end
