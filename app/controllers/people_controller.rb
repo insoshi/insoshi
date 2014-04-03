@@ -5,6 +5,7 @@ class PeopleController < ApplicationController
   #before_filter :login_or_oauth_required, :only => [ :index, :show, :edit, :update ]
   before_filter :login_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
+  #before_filter :set_up_metadata, :only => [:edit]
 
   def index
     if params[:sort]
@@ -122,9 +123,11 @@ class PeopleController < ApplicationController
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @extra_fields = FormSignupField.all_with_order
-    if @person.person_metadata.nil?
-      FormSignupField.count.times { @person.person_metadata.build } 
-    end
+
+    set_up_metadata
+
+    num_builds = FormSignupField.count - @person.person_metadata.count
+    num_builds.times { @person.person_metadata.build } 
     respond_to do |format|
       format.html
     end
@@ -261,5 +264,19 @@ class PeopleController < ApplicationController
 
     def cancel?
       params["commit"] == t('button_cancel');
+    end
+
+    def set_up_metadata
+      # after deleting field from FieldsForSignupForms
+      # uset up data for specific user
+      @extra_fields
+      @person.person_metadata.each do |metadata|
+        obj = @extra_fields.select do |field|
+          field.id = metadata.form_signup_field_id
+        end
+        if obj.empty?
+          metadata.destroy
+        end
+      end
     end
 end

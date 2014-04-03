@@ -6,16 +6,18 @@ class PersonMetadatum < ActiveRecord::Base
   belongs_to :person, :inverse_of => :person_metadata
   validate :allow_validation
 
-    def allow_validation
-      var = FormSignupField
-        .find(:first, :conditions => {:key => self.key})
-      if var.nil?
-        mandatory = false
-      else
-        mandatory = var.mandatory
-      end
-      if mandatory && self.value.empty?
-        errors.add(key.to_sym, "is required")
-      end
+  belongs_to :form_signup_field
+
+  def allow_validation
+    var = FormSignupField
+      .find(:first, :conditions => {:key => self.key})
+    if var.nil?
+      mandatory = false
+    else
+      mandatory = var.mandatory
     end
+    if mandatory && self.value.empty?
+      errors.add(key.to_sym, "is required")
+    end
+  end
 end

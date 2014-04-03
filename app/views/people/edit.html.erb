@@ -50,7 +50,6 @@
       <% end %>
 
       <%= render :partial => "person_metadata", :locals => {:f => f, :person => @person, :extra_fields => @extra_fields} %>
-      
       <%- if global_prefs.email_notifications? -%>
 
         <br />
