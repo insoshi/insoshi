@@ -60,5 +60,9 @@ module Oscurrency
         exception_recipients: ENV['EXCEPTION_NOTIFICATION'].split,
         email_prefix: "[#{ENV['APP_NAME']}] "
     end
+
+    config.generators do |g|
+      g.test_framework :rspec
+    end
   end
 end

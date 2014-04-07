@@ -2,6 +2,8 @@ unless Rails.env == 'test'
 require Rails.root.join('lib', 'rails_admin_send_broadcast_email.rb')
 require Rails.root.join('lib', 'rails_admin_add_to_mailchimp_list.rb')
 require Rails.root.join('lib', 'rails_admin_list_scope.rb')
+require Rails.root.join('lib', 'rails_admin_refund_money.rb')
+require Rails.root.join('lib', 'rails_admin_dispute_link.rb')
 
 RailsAdmin.config do |config|
 module RailsAdmin
@@ -11,6 +13,12 @@ module RailsAdmin
         RailsAdmin::Config::Actions.register(self)
       end
       class AddToMailchimpList < RailsAdmin::Config::Actions::Base
+        RailsAdmin::Config::Actions.register(self)
+      end
+      class RefundMoney < RailsAdmin::Config::Actions::Base
+        RailsAdmin::Config::Actions.register(self)
+      end
+      class DisputeLink < RailsAdmin::Config::Actions::Base
         RailsAdmin::Config::Actions.register(self)
       end
     end
@@ -33,14 +41,15 @@ end
     new
     send_broadcast_email
     add_to_mailchimp_list
+    refund_money
+    dispute_link
     show
     edit
     delete
     export
   end
 
-  config.included_models = [Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,PlanType, ExchangeDeleted, TimeZone]
-
+  config.included_models = [Charge,RecurringFee,RecurringStripeFee,FixedTransactionFee,PercentTransactionFee,FixedTransactionStripeFee,PercentTransactionStripeFee,Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,FeePlan, ExchangeDeleted, TimeZone]
   config.default_items_per_page = 100
 
   config.model State do
@@ -464,18 +473,97 @@ end
     end
   end
 
-  config.model PlanType do
+  config.model FeePlan do
     list do
       field :name
+      field :description
       sort_by :name
     end
-
     edit do
-      field :name
-      field :description
+      exclude_fields :people
+  end
+
+  config.model RecurringFee do
+    field :amount
+    field :interval, :enum do
+      enum do
+        ['month','year']
+      end
+    end
+    field :recipient
+    field :fee_plan
+  end
+
+  config.model RecurringStripeFee do
+    field :amount
+    field :interval, :enum do
+      enum do
+        ['month','year']
+      end      
+    end
+    field :fee_plan 
+    list do
+      field :plan
     end
   end
 
+  config.model FixedTransactionFee do
+    field :amount
+    field :recipient
+    field :fee_plan
+  end
+
+  config.model PercentTransactionFee do
+    field :percent do
+      pretty_value do
+        (bindings[:object].percent * 100).to_s
+      end
+    end
+    field :recipient
+    field :fee_plan
+  end
+
+  config.model FixedTransactionStripeFee do
+    field :amount
+    field :fee_plan
+  end
+
+  config.model PercentTransactionStripeFee do
+    field :percent do
+      pretty_value do
+        (bindings[:object].percent * 100).to_s
+      end
+    end
+    field :fee_plan
+  end
+
+  
+  config.model Charge do
+    label 'Charges'
+    list do
+      scope do
+        joins(:person).where( people: { deactivated:false} )
+      end
+      
+      field :person do
+        label "Billed person"
+        searchable [{Person => :email}]
+        queryable true
+      end
+      field :amount
+      field :description
+      field :status do
+        label "State"
+      end
+      field :created_at do
+        label "Date"
+      end
+    end
+    
+  end
+    
+  end
+  
   config.model Person do
     object_label_method do
       :display_name
@@ -494,9 +582,12 @@ end
         label "Disabled"
       end
       field :email_verified
+      field :requires_credit_card
       field :phone
       field :admin
       field :org
+      field :plan_type
+      field :stripe_id
       field :mailchimp_subscribed
       field :openid_identifier
       sort_by :last_logged_in_at
@@ -512,6 +603,7 @@ end
         label "Disabled"
       end
       field :email_verified
+      field :requires_credit_card
       field :phone
       field :admin
       field :org
@@ -522,7 +614,7 @@ end
       field :legal_business_name
       field :business_type
       field :activity_status
-      field :plan_type
+      field :fee_plan
       field :support_contact
     end
 
@@ -533,6 +625,7 @@ end
       field :password_confirmation
       field :deactivated
       field :email_verified
+      field :requires_credit_card
       field :phone
       field :phoneprivacy do
         label "Share Phone?"
@@ -545,7 +638,7 @@ end
       field :legal_business_name
       field :business_type
       field :activity_status
-      field :plan_type
+      field :fee_plan
       field :support_contact
       field :description, :text do
         #ckeditor true
@@ -576,9 +669,12 @@ end
         label "Disabled"
       end
       field :email_verified
+      field :requires_credit_card
       field :phone
       field :admin
       field :org
+      field :fee_plan
+      field :stripe_id
       field :openid_identifier
       sort_by :last_logged_in_at
     end
@@ -590,6 +686,7 @@ end
       field :password_confirmation
       field :deactivated
       field :email_verified
+      field :requires_credit_card
       field :phone
       field :phoneprivacy do
         label "Share Phone?"
@@ -602,7 +699,7 @@ end
       field :legal_business_name
       field :business_type
       field :activity_status
-      field :plan_type
+      field :fee_plan
       field :support_contact
       field :description, :text do
         #ckeditor true

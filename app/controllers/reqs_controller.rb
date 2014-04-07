@@ -4,6 +4,7 @@ class ReqsController < ApplicationController
 
   skip_before_filter :require_activation, :only => [:show, :index]
   before_filter :login_required, :except => [:show, :index]
+  before_filter :credit_card_required, :except => [:show, :index]
   before_filter :login_or_oauth_required, :only => [:show, :index]
   load_resource :group
   load_and_authorize_resource :req, :through => :group, :shallow => true

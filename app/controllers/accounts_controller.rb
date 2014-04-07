@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_filter :login_or_oauth_required
+  before_filter :login_or_oauth_required, :credit_card_required
   load_resource :person
   load_and_authorize_resource :account, :through => :person
 

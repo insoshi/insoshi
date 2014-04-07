@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140112071748) do
+ActiveRecord::Schema.define(:version => 20140312192533) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -163,6 +163,16 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
   add_index "categories_reqs", ["category_id"], :name => "index_categories_reqs_on_category_id"
   add_index "categories_reqs", ["req_id", "category_id"], :name => "index_categories_reqs_on_req_id_and_category_id"
 
+  create_table "charges", :force => true do |t|
+    t.string   "stripe_id"
+    t.string   "description"
+    t.float    "amount"
+    t.string   "status"
+    t.integer  "person_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "client_applications", :force => true do |t|
     t.string   "name"
     t.string   "url"
@@ -272,6 +282,19 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
   end
 
   add_index "feeds", ["person_id", "activity_id"], :name => "index_feeds_on_person_id_and_activity_id"
+
+  create_table "fees", :force => true do |t|
+    t.integer  "fee_plan_id"
+    t.string   "type"
+    t.integer  "recipient_id"
+    t.decimal  "percent",      :precision => 8, :scale => 7, :default => 0.0
+    t.decimal  "amount",       :precision => 8, :scale => 2, :default => 0.0
+    t.string   "interval"
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
+  end
+
+  add_index "fees", ["fee_plan_id"], :name => "index_fees_on_fee_plan_id"
 
   create_table "forums", :force => true do |t|
     t.string   "name"
@@ -572,7 +595,7 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 8
+    t.integer  "year",       :limit => 5
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end

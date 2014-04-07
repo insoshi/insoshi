@@ -1,0 +1,18 @@
+created: 1326853478
+livemode: false
+id: evt_00000000000000
+type: charge.dispute.closed
+object: event
+data:
+  object:
+    charge: ch_test
+    amount: 200
+    created: 1381515417
+    status: lost
+    livemode: false
+    currency: usd
+    object: dispute
+    reason: general
+    balance_transaction: txn_00000000000000
+    evidence_due_by: 1383177599
+    evidence: Here is some evidence

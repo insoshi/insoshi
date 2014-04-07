@@ -1,7 +1,7 @@
 class SearchesController < ApplicationController
   include ApplicationHelper
 
-  before_filter :login_required
+  before_filter :login_required, :credit_card_required
 
   def index
     
