@@ -7,11 +7,10 @@ class FormSignupField < ActiveRecord::Base
   validates_inclusion_of :field_type,
     :in => %w(text_field text_area collection_select),
     :message => "%s is not included in the list"
-  validates_uniqueness_of :key
+  validates_uniqueness_of :key, :title
+  validates :options, :presence => true, :if => :collection_select?
 
   scope :all_with_order, -> { order("form_signup_fields.order ASC").all }
-
-  before_update :change_order
 
   def get_options_for_dropdown
     self.options.split(",").map { |s| s.gsub(/\s/,'') }
@@ -21,13 +20,7 @@ class FormSignupField < ActiveRecord::Base
     self.find_by field_type: field_type
   end
 
-  private
-    def change_order
-      # ActiveRecord::Base.transaction do
-      #   binding.pry
-      #   field_to_change = FormSignupField.where(order: self.order).first
-      #   field_to_change.order = self.order_was
-      #   field_to_change.save
-      # end
-    end
+  def collection_select?
+    field_type == "collection_select"
+  end
 end
