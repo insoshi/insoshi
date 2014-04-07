@@ -60,7 +60,10 @@ namespace :heroku do
       heroku.post_addon(app_name, 'sendgrid:starter')
     end
     puts "done."
-
+    
+    print "Setting up scheduler"
+    heroku.post_addon(app_name, 'scheduler')
+      
     print "Setting up memcache... "
     heroku.post_addon(app_name, 'memcachier')
     puts "done."
