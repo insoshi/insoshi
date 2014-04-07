@@ -2,7 +2,7 @@ class TopicsController < ApplicationController
   load_resource :forum
   load_and_authorize_resource :topic, :through => :forum
   
-  before_filter :login_required
+  before_filter :login_required, :credit_card_required
   
   def index
     redirect_to forum_url(params[:forum_id])

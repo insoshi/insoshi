@@ -10,17 +10,26 @@ class Ability
 
     if person.admin?
       can :dashboard
+      can [:read,:create,:destroy], Fee
+      can [:read,:create,:destroy], StripeFee
+      can [:read,:create,:update,:destroy], FixedTransactionFee
+      can [:read,:create,:update,:destroy], PercentTransactionFee
+      can [:read,:create,:update,:destroy], RecurringFee
+      can [:read,:create,:update,:destroy], FixedTransactionStripeFee
+      can [:read,:create,:update,:destroy], PercentTransactionStripeFee
+      can [:read,:create,:update,:destroy], RecurringStripeFee
+      can [:read, :refund_money, :dispute_link], Charge
     end
 
     # need these for rails_admin
     can [:read,:create,:update,:destroy], Address
     can [:read,:create,:update,:destroy], State
     can [:read,:update], TimeZone
-
     can [:read,:create], Person
     can :update, Person do |target_person|
       target_person == person || person.admin?
     end
+
     can :add_to_mailchimp_list, Person
     can :export, Person
 
@@ -40,8 +49,8 @@ class Ability
       person.admin?
     end
 
-    can :read, PlanType
-    can [:create,:update,:destroy], PlanType do |pt|
+    can :read, FeePlan
+    can [:create,:update,:destroy], FeePlan do |fp|
       person.admin?
     end
 

@@ -1,4 +1,5 @@
 quentin:
+  id: 1
   email: quentin@example.com
   name: Quentin
   description: I'm Quentin
@@ -12,8 +13,9 @@ quentin:
   connection_notifications: true
   message_notifications: true
   email_verified: true
-
+  stripe_id: test_cus_1
 aaron:
+  id: 2
   email: aaron@example.com
   name: Aaron
   description: I'm Aaron
@@ -26,6 +28,7 @@ aaron:
   connection_notifications: true
   message_notifications: true
   email_verified: true
+  fee_plan_id: 1
 
 buzzard:
   email: buzzard@example.com
@@ -53,6 +56,7 @@ kelly:
   deactivated: false
   connection_notifications: true
   message_notifications: true
+  stripe_id: test_cus_2
   
 admin:
   email: admin@example.com
@@ -89,4 +93,3 @@ email_unverified:
   perishable_token: <%= Authlogic::Random.friendly_token %>
   created_at: <%= 1.day.ago.to_s :db %>
   email_verified: false 
-  

@@ -1,0 +1,54 @@
+created: 1326853478
+data:
+  object:
+    amount_due: 0
+    attempt_count: 0
+    attempted: false
+    charge:
+    closed: false
+    currency: usd
+    customer: cus_00000000000000
+    date: 1372666861
+    discount:
+    ending_balance:
+    id: in_00000000000000
+    lines:
+      count: 1
+      data:
+      - amount: 100
+        currency: usd
+        description:
+        id: su_27H6QevcfQVghi
+        livemode: true
+        object: line_item
+        period:
+          end: 1378023661
+          start: 1375345261
+        plan:
+          amount: 2000
+          currency: usd
+          id: gold
+          interval: month
+          interval_count: 1
+          livemode: false
+          name: Gold Special
+          object: plan
+          trial_period_days:
+        proration: false
+        quantity: 1
+        type: subscription
+      object: list
+      url: /v1/invoices/in_27H6EmDDBU0Xza/lines
+    livemode: false
+    next_payment_attempt: 1372670461
+    object: invoice
+    paid: true
+    period_end: 1372666861
+    period_start: 1372666861
+    starting_balance: 0
+    subtotal: 0
+    total: 0
+id: evt_00000000000000
+livemode: false
+object: event
+type: invoice.created

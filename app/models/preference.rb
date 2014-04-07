@@ -80,18 +80,22 @@ class Preference < ActiveRecord::Base
   class << self
 
     def profile_image version = nil
-      if version
-        Preference.first.default_profile_picture.picture_url(version)
-      else
-        Preference.first.default_profile_picture.picture_url
+      unless Preference.first.default_profile_picture.blank?
+        if version
+          Preference.first.default_profile_picture.picture_url(version)
+        else
+          Preference.first.default_profile_picture.picture_url
+        end
       end
     end
 
     def group_image version = nil
-      if version
-        Preference.first.default_group_picture.picture_url(version)
-      else
-        Preference.first.default_group_picture.picture_url
+      unless Preference.first.default_group_picture.blank?
+        if version
+          Preference.first.default_group_picture.picture_url(version)
+        else
+          Preference.first.default_group_picture.picture_url
+        end
       end
     end
 

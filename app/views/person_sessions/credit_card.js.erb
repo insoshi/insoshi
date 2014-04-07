@@ -1,0 +1,2 @@
+$('#offers_canvas').html('<%= escape_javascript(render :partial => 'credit_card', :locals => { :remote => true}) %>');
+<%= render :partial => '/shared/flash_messages', :locals => {:canvas_id => 'offers_canvas'} %>

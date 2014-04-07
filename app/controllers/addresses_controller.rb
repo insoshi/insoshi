@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   before_filter :login_required
+  before_filter :credit_card_required
   before_filter :correct_user_required
 
   def index

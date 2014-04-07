@@ -1,0 +1,7 @@
+two_dollars:
+  stripe_id: ch_test
+  description: test
+  amount: 2
+  status: paid
+  person_id: 2 #aaron
+  

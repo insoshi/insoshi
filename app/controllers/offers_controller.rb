@@ -2,7 +2,7 @@ class OffersController < ApplicationController
 
   respond_to :html, :xml, :json, :js
 
-  before_filter :login_required
+  before_filter :login_required, :credit_card_required
   load_resource :group
   load_and_authorize_resource :offer, :through => :group, :shallow => true
   before_filter :correct_person_required, :only => [:edit, :update, :destroy]

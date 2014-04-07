@@ -87,6 +87,12 @@ en:
       deleted: "deleted"
       export: "export"
       exported: "exported"
+      refund_money:
+        title: "Refund money"
+        breadcrumb: "Refund money"
+        menu: "Refund money"
+      dispute_link:
+        menu: "Go to Stripe dispute page"   
       send_broadcast_email:
         menu: "Send Now!"
       add_to_mailchimp_list:

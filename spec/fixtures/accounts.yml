@@ -1,0 +1,62 @@
+quentins:
+  id: 1
+  name: quentin
+  balance: 100
+  person_id: 1
+  group_id: 1
+  paid: 0
+  earned: 0
+
+aarons:
+  id: 2
+  name: aaron
+  balance: 100
+  person_id: 2
+  group_id: 1
+  paid: 0
+  earned: 0
+  
+buzzards:
+  id: 3
+  name: buzzard
+  balance: 100
+  person_id: 3
+  group_id: 1
+  paid: 0
+  earned: 0
+  
+kellys:
+  id: 4
+  name: kelly
+  balance: 100
+  person_id: 4
+  group_id: 1
+  paid: 0
+  earned: 0
+      
+admins:
+  id: 5
+  name: admin
+  balance: 0
+  person_id: 5
+  group_id: 1
+  paid: 0
+  earned: 0
+  
+reserves:
+  id: 6
+  name: reserve
+  balance: 0
+  person_id: 6
+  group_id: 1
+  paid: 0
+  earned: 0
+
+mixed:
+  id: 7
+  name: mixed
+  balance: 100
+  person_id: 7
+  group_id: 1
+  paid: 0
+  earned: 0  

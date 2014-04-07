@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :credit_card_required
 
   def edit
     @invitation = current_person.invitations.find(params[:id])

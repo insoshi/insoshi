@@ -1,0 +1,3 @@
+with_stripe:
+  id: 1
+  name: 'with stripe'
