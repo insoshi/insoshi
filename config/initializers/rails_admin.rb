@@ -481,20 +481,39 @@ end
     end
     edit do
       exclude_fields :people
+      field :fixed_transaction_stripe_fees do
+        label "Fixed transaction cash fees"
+      end
+      field :percent_transaction_stripe_fees do
+        label "Percent transaction cash fees"
+      end
+      field :recurring_stripe_fees do
+        label "Recurring cash fees"
+      end
+      field :fixed_transaction_fees
+      field :percent_transaction_fees
+      field :recurring_fees
+       
   end
 
-  config.model RecurringFee do
+  config.model FixedTransactionStripeFee do
+    label "Fixed transaction cash fee"
     field :amount
-    field :interval, :enum do
-      enum do
-        ['month','year']
+    field :fee_plan
+  end
+
+  config.model PercentTransactionStripeFee do
+    label "Percent transaction cash fee"
+    field :percent do
+      pretty_value do
+        (bindings[:object].percent * 100).to_s
       end
     end
-    field :recipient
     field :fee_plan
   end
 
   config.model RecurringStripeFee do
+    label "Recurring cash fee"
     field :amount
     field :interval, :enum do
       enum do
@@ -522,18 +541,15 @@ end
     field :recipient
     field :fee_plan
   end
-
-  config.model FixedTransactionStripeFee do
+  
+  config.model RecurringFee do
     field :amount
-    field :fee_plan
-  end
-
-  config.model PercentTransactionStripeFee do
-    field :percent do
-      pretty_value do
-        (bindings[:object].percent * 100).to_s
+    field :interval, :enum do
+      enum do
+        ['month','year']
       end
     end
+    field :recipient
     field :fee_plan
   end
 
