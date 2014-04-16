@@ -44,14 +44,21 @@ module AnnouncementBase
       where(arel_table[:name].matches("%#{text}%").or(arel_table[:description].matches("%#{text}%")))
     end
 
+    def for_active_person
+      joins(:person)
+      .where(:people => {:deactivated => false})
+    end
+
     def custom_search(filter, group, active_only, page, posts_per_page, search=nil)
       rel = self
       rel = rel.for_filter(filter) if filter
       rel = rel.for_group(group) if group
       rel = rel.search_by(search) if search
       rel = rel.active if active_only
+      rel = rel.for_active_person
       rel.paginate(:page => page, :per_page => posts_per_page)
     end
+
   end
 
   def maximum_categories

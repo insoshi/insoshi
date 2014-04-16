@@ -149,6 +149,39 @@ describe Person do
       @person.email_verified = true
       @person.should be_active
     end
+
+    it "should hide and show connected requests after deactivation and then activation of user" do
+      group = created_group_id(@person)
+      @person.default_group_id = group.id
+      @person.save
+      create_request_like(@person, group)
+
+      Req.custom_search(nil, group, true, 1, 25, nil).should_not be_empty
+      @person.deactivated = true
+      @person.save
+
+      Req.custom_search(nil, group, true, 1, 25, nil).should be_empty
+      @person.deactivated = false
+      @person.save      
+      Req.custom_search(nil, group, true, 1, 25, nil).should_not be_empty
+    end
+
+    it "should hide and show connected offers after deactivation and then activation of user" do
+      group = created_group_id(@person)
+      @person.default_group_id = group.id
+      @person.save
+      create_offer_like(@person, group)
+
+      Offer.custom_search(nil, group, true, 1, 25, nil).should_not be_empty
+      @person.deactivated = true
+      @person.save
+
+      Offer.custom_search(nil, group, true, 1, 25, nil).should be_empty
+      @person.deactivated = false
+      @person.save      
+      Offer.custom_search(nil, group, true, 1, 25, nil).should_not be_empty
+    end
+
   end
 
   describe "mostly active" do
@@ -212,6 +245,45 @@ describe Person do
   end
 
   protected
+
+    def create_request_like(person, group)
+      request = Req.new( {
+        :name => 'test req',
+        :due_date => DateTime.now+1,
+        })
+      request.person_id = person.id
+      request.group_id = group.id
+      request.valid?
+      request.save!
+      request
+    end
+
+    def create_offer_like(person, group)
+      offer = Offer.new({
+        :description => 'test offer description',
+        :total_available => 1,
+        :group_id => group.id,
+        :name => 'test offer',
+        :expiration_date => DateTime.now + 1.day
+        })
+      offer.person_id = person.id
+      
+      offer.valid?
+      offer.save!
+      offer
+    end
+
+    def created_group_id(person)
+      group = Group.new({
+        :name => "test group",
+        :description => "test group description"
+        })
+      group.update_attribute(:person_id, person.id)
+
+      group.valid?
+      group.save!
+      group
+    end
 
     def create_person(options = {})
       record = Person.new({ :email => 'quire@example.com',
