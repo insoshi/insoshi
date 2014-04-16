@@ -46,7 +46,7 @@ describe Transact do
     cash_perc_fee.save!
     @e.save!
     t = Transact.first
-    t.paid_fees.should == {:"trade-credits" => 2, :cash => 2, :txn_id => t.id}
+    t.paid_fees.should == {:trade_credits => 2, :cash => 2, :txn_id => t.id}
     paid_fees(t).should == "Charged fees: Trade Credits: 2.0 Cash: 2.0$"
   end
   

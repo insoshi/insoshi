@@ -65,7 +65,7 @@ class Transact < ExchangeAndFee
       tc_fees_perc_sum = customers_plan.percent_transaction_fees.sum(:percent)
       tc_transaction_fee = tc_fees_sum + (tc_fees_perc_sum * amount)
     end
-    {:"trade-credits" => tc_transaction_fee, :cash => cash_transaction_fee, :txn_id => self.id }
+    {:trade_credits => tc_transaction_fee, :cash => cash_transaction_fee, :txn_id => self.id }
   end
 
   protected

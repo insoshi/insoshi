@@ -6,7 +6,7 @@
 <ul>
 <% @all_fees.each do |fee| %>
 	<li>
-	Trade Credits: <%= fee[:"trade-credits"] %> 
+	Trade Credits: <%= fee[:trade_credits] %> 
 	Cash: <%= fee[:cash] %>
 	<%= link_to "Transaction page", transact_path(fee[:txn_id]) %>
 	</li>

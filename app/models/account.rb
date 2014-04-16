@@ -103,9 +103,9 @@ class Account < ActiveRecord::Base
     recurring_tc_fees = person.fee_plan.recurring_fees.where(:interval => interval).sum(:amount)
     recurring_cash_fees = person.fee_plan.recurring_stripe_fees.where(:interval => interval).sum(:amount)
     # Nice hash for user.
-    { :transactions => { :"trade-credits" => tc_transaction_fees, 
+    { :transactions => { :trade_credits => tc_transaction_fees, 
                         :cash => cash_transaction_fees },
-      :"#{interval}" => { :"trade-credits" => recurring_tc_fees,
+      :"#{interval}" => { :trade_credits => recurring_tc_fees,
                          :cash => recurring_cash_fees } }  
   end
 

@@ -44,8 +44,8 @@ describe Account do
      RecurringStripeFee.new(fee_plan: @fee_plan, amount: 1, interval: interval).save! 
      @e.save!
      StripeFee.apply_stripe_transaction_fees(interval)
-     fees_hash = { :transactions => { :"trade-credits" => 2, :cash => 2 },
-                   :"#{interval}" => {:"trade-credits" => 1, :cash => 1 } }
+     fees_hash = { :transactions => { :trade_credits => 2, :cash => 2 },
+                   :"#{interval}" => {:trade_credits => 1, :cash => 1 } }
      @p.account(@g).fees_sum_invoice_for(interval).should == fees_hash  
     end
     
