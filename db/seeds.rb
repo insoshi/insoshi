@@ -108,6 +108,7 @@ US_BUSINESS_TYPES.each do |value|
 end
 
 TimeZone.find_or_create_by_time_zone('Pacific Time (US & Canada)')
+plan = FeePlan.create!(:name => "default", :description => "default plan for all people")
 
 # default profile picture
 preference = Preference.first
@@ -119,6 +120,7 @@ if preference.nil?
   p.save!
   p.admin = true
   p.email_verified = true
+  p.fee_plan = plan
   p.save
   address = Address.new(person: p) # name is not used anywhere and cannot be mass assigned anyway
   address.save

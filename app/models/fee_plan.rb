@@ -19,6 +19,8 @@ class FeePlan < ActiveRecord::Base
   accepts_nested_attributes_for :percent_transaction_fees
   accepts_nested_attributes_for :fixed_transaction_stripe_fees
   accepts_nested_attributes_for :percent_transaction_stripe_fees
+  
+  before_destroy :subscribe_people_to_default_plan
 
   default_scope :order => 'name ASC'
 
@@ -88,6 +90,14 @@ class FeePlan < ActiveRecord::Base
           end
         end
       end
+    end
+  end
+  
+  def subscribe_people_to_default_plan
+    default_plan = FeePlan.find_by_name("default")
+    self.people.each do |person|
+      person.fee_plan = default_plan
+      person.save!
     end
   end
   

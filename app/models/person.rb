@@ -177,6 +177,7 @@ class Person < ActiveRecord::Base
   before_create :set_language_and_default_group
   after_create :create_address
   after_create :join_mandatory_groups
+  after_create :subscribe_to_default_plan
   before_save :update_group_letter
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
@@ -508,6 +509,10 @@ class Person < ActiveRecord::Base
   
 
   protected
+  
+  def subscribe_to_default_plan
+    self.update_attribute(:fee_plan, FeePlan.find_by_name("default")) if self.fee_plan.nil?
+  end  
 
   def map_openid_registration(sreg_registration, ax_registration)
     unless sreg_registration.nil?
