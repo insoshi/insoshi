@@ -108,7 +108,7 @@ US_BUSINESS_TYPES.each do |value|
 end
 
 TimeZone.find_or_create_by_time_zone('Pacific Time (US & Canada)')
-plan = FeePlan.create!(:name => "default", :description => "default plan for all people")
+plan = FeePlan.create!(:name => "default", :description => "Default plan for all people. Please don't delete it or your app may stop running properly.")
 
 # default profile picture
 preference = Preference.first
