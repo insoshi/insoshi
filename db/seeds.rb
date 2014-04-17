@@ -142,15 +142,19 @@ if preference.nil?
   p.default_group_id = g.id
   p.save!
 end
-
-if preference.photos.where(:picture_for => 'profile').first.nil?
-  photo = preference.photos.new(:picture_for => 'profile')
-  photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
-  photo.save!
-end
-# default group picture
-if preference.photos.where(:picture_for => 'group').first.nil?
-  photo = preference.photos.new(:picture_for => 'group')
-  photo.picture = File.open(File.join(Rails.root, 'public/images/g_default.png'))
-  photo.save!
+  
+unless ENV['AMAZON_SECRET_ACCESS_KEY'].nil? || ENV['AMAZON_ACCESS_KEY_ID'].nil?    
+  if preference.photos.where(:picture_for => 'profile').first.nil?
+    photo = preference.photos.new(:picture_for => 'profile')
+    photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
+    photo.save!
+  end
+  # default group picture
+  if preference.photos.where(:picture_for => 'group').first.nil?
+    photo = preference.photos.new(:picture_for => 'group')
+    photo.picture = File.open(File.join(Rails.root, 'public/images/g_default.png'))
+    photo.save!
+  end
+else
+    puts "\nYou don't have AWS S3 account set up properly. Please put your AWS S3 credentails in amazon_s3.yml file in config folder. Installation will finish, but you won't see any pictures."
 end
