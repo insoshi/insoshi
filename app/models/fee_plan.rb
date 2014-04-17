@@ -2,7 +2,7 @@ class FeePlan < ActiveRecord::Base
   validates_presence_of	:name
   validates_length_of :name,  :maximum => 100
   validates_length_of :description,  :maximum => 255
-
+  validate :child_class_errors
   has_many :people, :dependent => :restrict
   has_many :fees
   has_many :stripe_fees
@@ -73,4 +73,22 @@ class FeePlan < ActiveRecord::Base
       StripeOps.subscribe_to_plan(person.stripe_id, recurring_stripe_fee_id)
     end
   end
+  
+  private
+  
+  def child_class_errors
+    ["", "stripe_"].each do |fee_type|
+      [:"fixed_transaction_#{fee_type}fees",
+       :"percent_transaction_#{fee_type}fees",
+       :"recurring_#{fee_type}fees"].each do |fees_in_plan|
+        self.send(fees_in_plan).each do |fee|
+          fee.valid?
+          fee.errors.full_messages.each do |msg|
+            self.errors.add(:base, "#{fee.class} error: #{msg}")
+          end
+        end
+      end
+    end
+  end
+  
 end

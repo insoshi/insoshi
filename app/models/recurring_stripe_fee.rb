@@ -2,6 +2,7 @@ class RecurringStripeFee < StripeFee
   validates_numericality_of :amount, :greater_than => 0.5, message: "Minimal Stripe fee is 0.5$"
   validates :interval, inclusion: { in: ['month', 'year'], message: "%{value} is not a valid interval." }
   validates_presence_of :fee_plan
+  validate :plan_already_exists?
   belongs_to :fee_plan, :inverse_of => :recurring_stripe_fees
   # Consistency
   before_create :retrieve_interval_and_amount
@@ -17,11 +18,7 @@ class RecurringStripeFee < StripeFee
     if self.valid?
       plan_name = create_plan_id
       stripe_ret = StripeOps.create_stripe_plan(self.amount, self.interval, plan_name)
-      if stripe_ret.kind_of? Stripe::Plan
-        self.plan = plan_name
-      else
-        return false
-      end
+      self.plan = plan_name if stripe_ret.kind_of? Stripe::Plan
     end
   end
   
@@ -47,6 +44,13 @@ class RecurringStripeFee < StripeFee
       "#{self.interval.capitalize}ly: #{self.percent}%" 
     else
       "#{self.interval.capitalize}ly: #{self.amount}$"
+    end
+  end
+  
+  def plan_already_exists?
+    stripe_ret = StripeOps.retrieve_plan(create_plan_id)
+    if stripe_ret.kind_of?(Stripe::Plan)
+      errors.add(:base, "already exists on Stripe.")
     end
   end
   
