@@ -327,6 +327,14 @@ class Person < ActiveRecord::Base
     reqs.current.biddable.order('created_at DESC')
   end
 
+  def reqs_for_group(group)
+    reqs.biddable.where(group_id: group.id).order('created_at DESC')
+  end
+
+  def offers_for_group(group)
+    offers.where(group_id: group.id).order('created_at DESC')
+  end
+
   def current_and_active_bids
     bids.where("state != ? AND NOT (state = ? AND expiration_date < ?)", 'approved', 'offered', DateTime.now).order('created_at DESC')
   end

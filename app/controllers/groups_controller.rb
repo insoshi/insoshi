@@ -20,8 +20,8 @@ class GroupsController < ApplicationController
       if @group.adhoc_currency?
         @transactions = current_person.transactions.where(group_id: @group.id).limit(3)
       end
-      @your_offers = current_person.offers.where(group_id: @group.id).order('created_at DESC')
-      @your_reqs = current_person.reqs.where(group_id: @group.id).order('created_at DESC')
+      @your_offers = current_person.offers_for_group(@group)
+      @your_reqs = current_person.reqs_for_group(@group)
       @invitations = current_person.invitations.where(accepted_at: nil)
     end
     respond_to do |format|

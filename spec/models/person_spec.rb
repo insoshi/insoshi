@@ -244,12 +244,31 @@ describe Person do
     end
   end
 
+  describe "your requests" do
+    it "should not include requests associated with direct payments" do
+      group = created_group_id(@person)
+      @person.default_group_id = group.id
+      @person.save
+      pseudo_req = create_request_like(@person, group, false)
+      @person.reqs_for_group(group).should_not contain(pseudo_req)
+    end
+
+    it "should include real requests" do
+      group = created_group_id(@person)
+      @person.default_group_id = group.id
+      @person.save
+      real_req = create_request_like(@person, group, true)
+      @person.reqs_for_group(group).should contain(real_req)
+    end
+  end
+
   protected
 
-    def create_request_like(person, group)
+    def create_request_like(person, group, biddable = true)
       request = Req.new( {
         :name => 'test req',
         :due_date => DateTime.now+1,
+        :biddable => biddable
         })
       request.person_id = person.id
       request.group_id = group.id
