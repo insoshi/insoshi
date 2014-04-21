@@ -166,7 +166,6 @@ class Person < ActiveRecord::Base
   before_save :update_group_letter
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
-
   before_update :set_old_description
   after_update :log_activity_description_changed
   before_destroy :destroy_activities, :destroy_feeds
@@ -326,6 +325,14 @@ class Person < ActiveRecord::Base
 
   def current_and_active_reqs
     reqs.current.biddable.order('created_at DESC')
+  end
+
+  def reqs_for_group(group)
+    reqs.biddable.where(group_id: group.id).order('created_at DESC')
+  end
+
+  def offers_for_group(group)
+    offers.where(group_id: group.id).order('created_at DESC')
   end
 
   def current_and_active_bids

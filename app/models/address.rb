@@ -52,7 +52,6 @@ class Address < ActiveRecord::Base
     if geo.success
       update_column(:latitude, geo.lat)
       update_column(:longitude, geo.lng)
-      save!
     else
       Rails.logger.info "Address#perform fail"
     end    
