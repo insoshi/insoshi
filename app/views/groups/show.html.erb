@@ -37,28 +37,55 @@
     </div>
 <%- end -%>
     <div class="tab-pane" id="tab_requests">
+      
       <div id="requests_filter">
-        <span class='req' style='float:right;'>
+
+        <h2 style="display:inline;"><%= t('reqs.index.header') %> &nbsp;</h2><%= waiting_image %>
+        
+        <span class="pos-super">
+          <%= t('view_by') %> 
+          &nbsp;
+        </span>
+
+        <%= select_tag "filter_reqs_by", reqs_options %>
+        
+        <%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'req', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
+        
+        <%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'req', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
+        
+        <span class="pos-super">
+          &nbsp;<%= t('or') %>&nbsp;&nbsp;
           <%= link_to t('button_new_req'), new_group_req_path(@group), {:class => 'show-follow btn btn-primary'} %>
         </span>
-        <h2 style="display:inline;"><%= t('reqs.index.header') %> &nbsp;</h2><%= waiting_image %>
-        <%= t('view_by') %> <%= select_tag "filter_reqs_by", reqs_options %>
-        <%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'req', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
-        <%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'req', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
+      
       </div>
+      
       <div id="reqs_canvas">
-      <%= render '/reqs/reqs_canvas' %>
+        <%= render '/reqs/reqs_canvas' %>
       </div>
+
     </div>
     <div class="tab-pane" id="tab_offers">
       <div id="offers_filter">
-        <span class='offer' style='float:right;'>
+
+        <h2 style="display:inline;"><%= t('groups.show.offers') %> &nbsp;</h2><%= waiting_image %>
+          
+        <span class='pos-super'>
+          <%= t('view_by') %> 
+          &nbsp;
+        </span>
+        
+        <%= select_tag "filter_offers_by", offers_options %>
+        
+        <%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'offer', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
+        
+        <%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'offer', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
+      
+        <span class='pos-super'>
+          &nbsp;<%= t('or') %>&nbsp;&nbsp;
           <%= link_to t('button_new_offer'), new_group_offer_path(@group), {:class => 'show-follow btn btn-primary'} %>
         </span>
-        <h2 style="display:inline;"><%= t('groups.show.offers') %> &nbsp;</h2><%= waiting_image %>
-        <%= t('view_by') %> <%= select_tag "filter_offers_by", offers_options %>
-        <%= render :partial => '/shared/categories', :locals => {:filtered_obj => 'offer', :selected_category => (@selected_category.nil? ? 0 : @selected_category.id)} %>
-        <%= render :partial => '/shared/neighborhoods', :locals => {:filtered_obj => 'offer', :selected_neighborhood => (@selected_neighborhood.nil? ? 0 : @selected_neighborhood.id)} %>
+        
       </div>
       <div id="offers_canvas">
       <%= render '/offers/offers_canvas' %>
