@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ForumPost do
 
+  fixtures :topics, :forums, :groups
+
   before(:each) do
     @post = ForumPost.new(:body => "Hey there")
     @post.topic  = topics(:one)
