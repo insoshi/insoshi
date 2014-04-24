@@ -2,6 +2,8 @@
   <h2><%= t('offers.show.header') %></h2>
 <ul class="list full">
 <%= render :partial => @offer %>
+<p><%= paid_fees(@transact_received) + " for received hours." if @transact_received %></p>
+<p><%= paid_fees(@transact_paid) + " for paid hours." if @transact_paid %></p>
 </ul>
 <% unless current_person?(@offer.person) %>
   <%= form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
