@@ -47,18 +47,21 @@ describe StripeFee do
     @e.notes = 'Generic'
   end
   
+  describe 'recurring fees validations' do 
+    it 'should have valid interval' do
+      sr_fee = RecurringStripeFee.new(interval: 'month', fee_plan: @fee_plan, amount: 1)
+      sr_fee.should be_valid
+      sr_fee.interval = 'year'
+      sr_fee.should be_valid
+      sr_fee.interval = '2 weeks'
+      sr_fee.should_not be_valid
+    end
+  end
+  
   describe 'recurring fees' do
-      
-      it 'should have valid interval' do
-        sr_fee = RecurringStripeFee.new(interval: 'month', fee_plan: @fee_plan, amount: 1)
-        sr_fee.should be_valid
-        sr_fee.interval = 'year'
-        sr_fee.should be_valid
-        sr_fee.interval = '2 weeks'
-        sr_fee.should_not be_valid
-      end
-      
       before(:each) do
+        #clear StripeMock instance after every test.
+        StripeMock.instance.plans.clear
         @sr_fee = RecurringStripeFee.new(interval: 'month', fee_plan: @fee_plan, amount: 1)
         @sr_fee.save!
       end

@@ -52,16 +52,14 @@ describe Fee do
     end
     
     it "should charge the recipient a fixed transaction fee" do
-      fee = FixedTransactionFee.new(fee_plan: @fee_plan, amount: 0.1, recipient: @p3)
-      fee.save!
+      FixedTransactionFee.new(fee_plan: @fee_plan, amount: 0.1, recipient: @p3).save!
       @e.save!
       account_after_payment = @p.account(@g)
       account_after_payment.balance.should == 1.9
     end
     
     it "should charge the recipient a percentage transaction fee" do
-      fee = PercentTransactionFee.new(fee_plan: @fee_plan, percent: 10, recipient: @p3)
-      fee.save!
+      PercentTransactionFee.new(fee_plan: @fee_plan, percent: 10, recipient: @p3).save!
       @e.save!
       # Without fee it's 2.0. Fee is 10%, so 2.0 - 10% * 2.0 = 1.8
       account_after_payment = @p.account(@g)
@@ -71,8 +69,7 @@ describe Fee do
     ['month', 'year'].each do |interval|
       
       it "should charge the recipient a #{interval}ly fixed recurring fee" do
-        fee = RecurringFee.new(fee_plan: @fee_plan, amount: 0.1, recipient: @p3, interval: interval)
-        fee.save!
+        RecurringFee.new(fee_plan: @fee_plan, amount: 0.1, recipient: @p3, interval: interval).save!
         @e.save!
         @fee_plan.apply_recurring_fees(interval)
         account_after_payment = @p.account(@g)
@@ -80,10 +77,8 @@ describe Fee do
       end
       
       it "should be included in #{interval}ly billing history of fees" do
-        fixed_fee = FixedTransactionFee.new(fee_plan: @fee_plan, amount: 0.1, recipient: @p3)
-        fixed_fee.save!
-        percent_fee = PercentTransactionFee.new(fee_plan: @fee_plan, percent: 10, recipient: @p3)
-        percent_fee.save!
+        FixedTransactionFee.new(fee_plan: @fee_plan, amount: 0.1, recipient: @p3).save!
+        PercentTransactionFee.new(fee_plan: @fee_plan, percent: 10, recipient: @p3).save!
         @e.save!
         Fee.transaction_tc_fees_sum_for(@p, interval).should == 0.3
       end

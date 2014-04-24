@@ -26,6 +26,7 @@ class FeePlan < ActiveRecord::Base
 
   def apply_recurring_fees(interval)
     group = Preference.first.default_group
+    recurring_fees = self.fees.where(:type => "RecurringFee")
     recurring_fees.each do |f|
       if interval == f.interval
         self.people.each do |payer|
@@ -40,6 +41,8 @@ class FeePlan < ActiveRecord::Base
   end
 
   def apply_transaction_fees(txn)
+    percent_transaction_fees = self.fees.where(:type => "PercentTransactionFee")
+    fixed_transaction_fees = self.fees.where(:type => "FixedTransactionFee")
     percent_transaction_fees.each do |fee|
         e=txn.group.exchanges.build(amount: txn.amount*fee.percent)
         e.metadata = txn.metadata

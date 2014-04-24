@@ -602,7 +602,7 @@ end
       field :phone
       field :admin
       field :org
-      field :plan_type
+      field :fee_plan
       field :stripe_id
       field :mailchimp_subscribed
       field :openid_identifier
