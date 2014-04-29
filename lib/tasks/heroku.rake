@@ -50,11 +50,11 @@ namespace :heroku do
     unless smtp_credentials['server'].blank?
       print "using provided credentials... "
       smtp_vars = {
-        'SMTP_SERVER' => smtp_credentials['smtp_server'],
-        'SMTP_DOMAIN'=> smtp_credentials['smtp_domain'],
-        'SMTP_PORT' => smtp_credentials['smtp_port'],
-        'SMTP_USER' => smtp_credentials['smtp_user'],
-        'SMTP_PASSWORD' => smtp_credentials['smtp_password']
+        'SMTP_SERVER' => smtp_credentials['server'],
+        'SMTP_DOMAIN'=> smtp_credentials['domain'],
+        'SMTP_PORT' => smtp_credentials['port'],
+        'SMTP_USER' => smtp_credentials['user'],
+        'SMTP_PASSWORD' => smtp_credentials['password']
       }
       heroku.put_config_vars(app_name, smtp_vars)
     else
