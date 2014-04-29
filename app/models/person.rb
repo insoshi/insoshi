@@ -94,15 +94,15 @@ class Person < ActiveRecord::Base
     def by_newest
       order("created_at DESC")
     end
-    
+
     def with_stripe_plans
       where('people.stripe_id IS NOT NULL AND people.fee_plan_id IS NOT NULL')
     end
-    
+
     def subscribed_to_stripe
       where('people.stripe_id IS NOT NULL')
     end
-    
+
   end
 
   extend Scopes
@@ -179,6 +179,7 @@ class Person < ActiveRecord::Base
   after_create :join_mandatory_groups
   after_create :subscribe_to_default_plan
   before_save :update_group_letter
+  before_save :update_fee_plan_if_deactivated
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
   before_update :set_old_description
@@ -496,23 +497,23 @@ class Person < ActiveRecord::Base
     reset_perishable_token!
     after_transaction { PersonMailerQueue.email_verification(self) }
   end
-  
+
   def have_monetary_fee_plan?
     self.fee_plan.contains_stripe_fees? unless self.fee_plan.nil?
   end
-  
+
   def credit_card_required?
     self.have_monetary_fee_plan? && # only for persons with monetary fee plans
     self.stripe_id.nil? && # Customer not created yet
     self.requires_credit_card # Admin can override it to false so person won't need to enter credit card data
   end
-  
+
 
   protected
-  
+
   def subscribe_to_default_plan
     self.update_attribute(:fee_plan, FeePlan.find_by_name("default")) if self.fee_plan.nil?
-  end  
+  end
 
   def map_openid_registration(sreg_registration, ax_registration)
     unless sreg_registration.nil?
@@ -547,6 +548,13 @@ class Person < ActiveRecord::Base
 
   def update_group_letter
     self.first_letter = display_name.mb_chars.first.upcase.to_s
+  end
+
+  def update_fee_plan_if_deactivated
+    if self.deactivated?
+      self.fee_plan_id =
+          Person.global_prefs.default_deactivated_fee_plan_id
+    end
   end
 
   def check_config_for_deactivation

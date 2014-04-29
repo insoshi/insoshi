@@ -27,9 +27,9 @@ RSpec.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
   config.mock_with :rspec
-  
+
   config.before(:all) do
-      StripeMock.start 
+      StripeMock.start
       # Creates test_cus_1 customer which is used in fixtures for quentin.
       StripeOps.create_customer(4242424242424242, '06/50', 5432, 'quentin', 'quentin@example.com')
       # Switch to true for debugging mode
