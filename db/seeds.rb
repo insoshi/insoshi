@@ -107,6 +107,10 @@ US_BUSINESS_TYPES.each do |value|
   type = BusinessType.find_or_create_by_name(value, :description => "")
 end
 
+PLAN_TYPE = ["Closed", "Deactivated plan types"]
+
+pt_por_deactivated = PlanType.create(:name => PLAN_TYPE[0], :description => PLAN_TYPE[1])
+
 TimeZone.find_or_create_by_time_zone('Pacific Time (US & Canada)')
 
 # default profile picture
@@ -140,6 +144,7 @@ if preference.nil?
   preference.save!
 
   p.default_group_id = g.id
+  p.default_deactivated_plan_type_id = pt_por_deactivated.id
   p.save!
 end
 

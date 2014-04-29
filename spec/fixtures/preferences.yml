@@ -6,3 +6,4 @@ one:
   email_notifications: true
   email_verifications: false
   analytics: <script>Google analytics</script>
+  default_deactivated_plan_type_id: 0

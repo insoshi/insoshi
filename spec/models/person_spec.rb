@@ -129,6 +129,17 @@ describe Person do
       @person.should be_deactivated
     end
 
+    it "after deactivate should be in 'Closed' plan" do
+      @pref = preferences(:one)
+      @plan_type = plan_types(:closed)
+      @pref.default_deactivated_plan_type_id = @plan_type.id
+      @pref.save
+
+      @person.deactivated = true
+      @person.save
+      @person.plan_type.name.should eq('Closed')
+    end
+
     it "should reactivate a person" do
       @person.toggle(:deactivated)
       @person.should be_deactivated

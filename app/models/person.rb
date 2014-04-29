@@ -164,6 +164,7 @@ class Person < ActiveRecord::Base
   after_create :create_address
   after_create :join_mandatory_groups
   before_save :update_group_letter
+  before_save :update_plan_type_if_deactivated
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
   before_update :set_old_description
@@ -501,6 +502,13 @@ class Person < ActiveRecord::Base
 
   def update_group_letter
     self.first_letter = display_name.mb_chars.first.upcase.to_s
+  end
+
+  def update_plan_type_if_deactivated
+    if self.deactivated?
+      self.plan_type_id = 
+          Person.global_prefs.default_deactivated_plan_type_id
+    end
   end
 
   def check_config_for_deactivation
