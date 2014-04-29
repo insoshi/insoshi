@@ -1,5 +1,5 @@
 class TransactsController < ApplicationController
-  skip_before_filter :require_activation
+  skip_before_filter :require_activation, :credit_card_required
   prepend_before_filter :activate_authlogic
   oauthenticate :strategies => :token, :except => [:about_user,:wallet,:scopes,:new]
   oauthenticate :strategies => [], :only => :new

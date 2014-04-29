@@ -1,5 +1,6 @@
 class OauthClientsController < ApplicationController
   before_filter :login_required, :except => [:create]
+  before_filter :credit_card_required, :except => [:create]
   before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
  
   def index

@@ -108,6 +108,7 @@ US_BUSINESS_TYPES.each do |value|
 end
 
 TimeZone.find_or_create_by_time_zone('Pacific Time (US & Canada)')
+plan = FeePlan.create!(:name => "default", :description => "Default plan for all people. Please don't delete it or your app may stop running properly.")
 
 # default profile picture
 preference = Preference.first
@@ -119,6 +120,7 @@ if preference.nil?
   p.save!
   p.admin = true
   p.email_verified = true
+  p.fee_plan = plan
   p.save
   address = Address.new(person: p) # name is not used anywhere and cannot be mass assigned anyway
   address.save
@@ -142,15 +144,19 @@ if preference.nil?
   p.default_group_id = g.id
   p.save!
 end
-
-if preference.photos.where(:picture_for => 'profile').first.nil?
-  photo = preference.photos.new(:picture_for => 'profile')
-  photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
-  photo.save!
-end
-# default group picture
-if preference.photos.where(:picture_for => 'group').first.nil?
-  photo = preference.photos.new(:picture_for => 'group')
-  photo.picture = File.open(File.join(Rails.root, 'public/images/g_default.png'))
-  photo.save!
+  
+unless ENV['AMAZON_SECRET_ACCESS_KEY'].nil? || ENV['AMAZON_ACCESS_KEY_ID'].nil?    
+  if preference.photos.where(:picture_for => 'profile').first.nil?
+    photo = preference.photos.new(:picture_for => 'profile')
+    photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
+    photo.save!
+  end
+  # default group picture
+  if preference.photos.where(:picture_for => 'group').first.nil?
+    photo = preference.photos.new(:picture_for => 'group')
+    photo.picture = File.open(File.join(Rails.root, 'public/images/g_default.png'))
+    photo.save!
+  end
+else
+    puts "\nYou don't have AWS S3 account set up properly. Please put your AWS S3 credentails in amazon_s3.yml file in config folder. Installation will finish, but you won't see any pictures."
 end

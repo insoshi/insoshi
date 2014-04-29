@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   include ApplicationHelper
   
-  before_filter :login_required
+  before_filter :login_required, :credit_card_required
   before_filter :get_instance_vars
 
   def index

@@ -1,6 +1,7 @@
 class ActivitiesController < ApplicationController
 
   before_filter :authorize_user, :only => :destroy
+  before_filter :credit_card_required
 
   # This gets called after activity destruction for some reason.
   def show

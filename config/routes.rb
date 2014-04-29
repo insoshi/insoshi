@@ -89,6 +89,8 @@ Oscurrency::Application.routes.draw do
       get :su
       get :unsu
       get :invite
+      get :transaction_history
+      post :transaction_history
       post :send_invite
       get :common_contacts
     end
@@ -114,6 +116,7 @@ Oscurrency::Application.routes.draw do
   match '/signup' => 'people#new', :as => :signup
   match '/login' => 'person_sessions#new', :as => :login
   match '/logout' => 'person_sessions#destroy', :as => :logout
+  match '/credit_card' => 'person_sessions#credit_card', :as => :credit_card
   match '/refreshblog' => 'feed_posts#refresh_blog', :as => :refreshblog
   match '/about' => 'home#about', :as => :about
   match '/practice' => 'home#practice', :as => :practice
@@ -130,6 +133,7 @@ Oscurrency::Application.routes.draw do
   match '/oauth/scopes' => 'transacts#scopes', :as => :scopes
   match '/oauth/revoke' => 'oauth#revoke', :as => :revoke
   match '/oauth' => 'oauth#index', :as => :oauth
+  match '/stripe_callback' => 'stripe#handle_callback'
   match '/about_user' => 'transacts#about_user', :as => :about_user
   match '/user_info' => 'transacts#user_info', :as => :user_info
   match '/wallet' => 'transacts#wallet', :as => :wallet

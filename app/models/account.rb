@@ -85,6 +85,29 @@ class Account < ActiveRecord::Base
       end
     end
   end
+  
+  def fees_invoice_for(interval)
+    all_fees = Array.new
+    today = Date.today
+    person.transactions.where(:worker_id => person.id)
+          .by_time(today.method("beginning_of_#{interval}").call, today.method("end_of_#{interval}").call)
+          .each { |txn| all_fees << txn.paid_fees }
+    all_fees
+ end
+  
+  def fees_sum_invoice_for(interval)
+    # All transaction fees aggregated for whole month for the customer.
+    cash_transaction_fees = Charge.charges_sum_for(person_id, interval)
+    tc_transaction_fees = Fee.transaction_tc_fees_sum_for(person, interval)
+    # Take month fees too.
+    recurring_tc_fees = person.fee_plan.recurring_fees.where(:interval => interval).sum(:amount)
+    recurring_cash_fees = person.fee_plan.recurring_stripe_fees.where(:interval => interval).sum(:amount)
+    # Nice hash for user.
+    { :transactions => { :trade_credits => tc_transaction_fees, 
+                        :cash => cash_transaction_fees },
+      :"#{interval}" => { :trade_credits => recurring_tc_fees,
+                         :cash => recurring_cash_fees } }  
+  end
 
   private
 
@@ -95,4 +118,5 @@ class Account < ActiveRecord::Base
       end
     end
   end
+  
 end

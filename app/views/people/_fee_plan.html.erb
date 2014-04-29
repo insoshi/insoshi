@@ -1,0 +1,31 @@
+<b> Fee plan </b>
+<% unless fee_plan.blank? %>
+	<p> Name: <%= fee_plan.name %> </p>
+	<p> Description: <%= fee_plan.description %> </p>
+	<% unless fee_plan.all_fees.blank? %>
+		<b> Fees in this plan: </b>
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th> Type </th>
+				<th> Percent </th>
+				<th> Amount </th>
+				<th> Interval </th>
+			</thead>
+			<tbody>
+				<% fee_plan.all_fees.each do |fee| %>
+					<tr>
+						<td> <%= fee.type.underscore.humanize %> </td>
+						<td> <%= fee.percent %> </td>
+						<td> <%= fee.amount %> </td>
+						<td> <%= fee.interval %> </td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	<% else %>
+		<p> Your plan does not have any fees. </p>
+	<% end %>
+<% else %>
+	<p> You don't have any fee plan assigned. </p>
+<% end %>
+

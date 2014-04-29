@@ -1,6 +1,12 @@
 # Methods added to this helper will be available to all templates in the application.
 
 module ApplicationHelper
+  
+  def stripe_include_tag
+    content_for(:head) do
+      javascript_include_tag "https://js.stripe.com/v2/"
+    end
+  end
 
   def current_page_pre22?(options)
     url_string = CGI.escapeHTML(url_for(options))

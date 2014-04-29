@@ -2,7 +2,7 @@ class OffersController < ApplicationController
 
   respond_to :html, :xml, :json, :js
 
-  before_filter :login_required
+  before_filter :login_required, :credit_card_required
   load_resource :group
   load_and_authorize_resource :offer, :through => :group, :shallow => true
   before_filter :correct_person_required, :only => [:edit, :update, :destroy]
@@ -32,6 +32,8 @@ class OffersController < ApplicationController
 
   def show
     @group = @offer.group
+    @transact_paid = Transact.where(:metadata_id => @offer.id, :worker_id => @offer.person_id).first
+    @transact_received = Transact.where(:metadata_id => @offer.id, :customer_id => @offer.person_id).first
     if @group.authorized_to_view_offers?(current_person)
       respond_with @offer do |format|
         format.js {render :action => 'reject' if not request.xhr?}

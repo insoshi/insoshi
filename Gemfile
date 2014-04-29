@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 
 source 'https://rubygems.org'
+source 'https://code.stripe.com'
 ruby "1.9.3"
 gem 'rails', '3.2.16'
 
@@ -37,7 +38,7 @@ gem "aws-s3"
 gem "fog"
 gem "carrierwave"
 gem "rmagick", :require => 'RMagick'
-gem "json", '1.7.7'
+gem "json", '~> 1.8.1'
 gem "geokit-rails3"
 
 gem "will_paginate"
@@ -56,6 +57,7 @@ gem 'valid_email', :require => 'valid_email/email_validator'
 gem "calendar_helper"
 gem "gibbon", :git => "git://github.com/amro/gibbon.git"
 gem "bootstrap_form", "~> 0.3.2"
+gem "stripe", '~> 1.10.1'
 
 group :development, :test do
   gem 'debugger'
@@ -76,6 +78,7 @@ group :development do
   gem 'meta_request'
   gem 'highline'
   gem 'git'
+  gem 'pry'
 end
 
 group :production do
@@ -83,13 +86,14 @@ group :production do
 end
 
 group :test do
+  gem "rspec-rails", "~> 2.14"
   gem "capybara"
   gem "cucumber"
   gem "cucumber-rails"
   gem "database_cleaner"
   gem "guard-spork"
-  gem "rspec-rails" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
   gem "spork"
+  gem 'stripe-ruby-mock','~> 1.10.1.6'
 end
 gem 'remotipart'
 

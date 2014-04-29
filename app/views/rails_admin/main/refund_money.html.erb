@@ -1,0 +1,10 @@
+<p> You're about to refund money for this charge: </p>
+<p> Person: <%= @object.person.name %> </p>
+<p> Description: <%= @object.description %> </p>
+<p> Date: <%= @object.created_at.strftime("%B %d, %Y %H:%M") %> </p>
+<p> 100% refund is <%= @object.amount %> $ </p>
+
+<%= form_tag refund_money_path do %>
+	<%= text_field_tag :amount, nil, placeholder: "Enter amount to refund" %> $
+	<%= submit_tag "Refund!", class: "btn btn-primary" %>
+<% end %>

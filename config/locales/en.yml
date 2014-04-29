@@ -349,6 +349,7 @@ en:
       or_signup_with_openid: "or Signup with OpenID"
       back_to_regular_signup: "back to regular signup"
       openid_url: "OpenID URL"
+      select_plan: "Please select fee plan."
       signup_button: "Sign up"
     request_memberships:
       header: "Membership request for your groups"
@@ -417,6 +418,7 @@ en:
       quantity: "Quantity"
     notify:
       you_have_received_a_payment_of: "You have received a payment of"
+      you_have_been_billed_a_fee: "You have been billed a fee"
       paid_you: "paid you"
       payment_suspended: "Payment suspended: "
       suspended_payment_of: "suspended payment of"
