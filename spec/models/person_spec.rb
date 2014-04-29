@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Person do
 
+  fixtures :fee_plans
+
   before(:each) do
     @person = people(:quentin)
   end
@@ -254,7 +256,7 @@ describe Person do
       Person.active.should_not contain(@person)
     end
   end
-  
+
   describe "stripe associated methods" do
     before(:each) do
       @fee_plan = FeePlan.new(name: 'with stripe plans')
@@ -263,16 +265,16 @@ describe Person do
       stripe_fee.save!
       @person.fee_plan = @fee_plan
     end
-    
+
     it "should return true if person got fee plan with any stripe fees" do
       @person.have_monetary_fee_plan?.should be_true
     end
-    
+
     it "should return true if person needs to submit their credit card credentials" do
       @person.stripe_id = nil
       @person.credit_card_required?.should be_true
     end
-    
+
     it "should be possible for admin to override forcing credit card credentials" do
       @person.requires_credit_card = false
       @person.credit_card_required?.should_not be_true

@@ -107,7 +107,7 @@ US_BUSINESS_TYPES.each do |value|
   type = BusinessType.find_or_create_by_name(value, :description => "")
 end
 
-deactivated_fee_plan = PlanType.create(:name => "Closed", :description => "Deactivated plan types")
+deactivated_fee_plan = FeePlan.create(:name => "Closed", :description => "Deactivated plan types")
 
 TimeZone.find_or_create_by_time_zone('Pacific Time (US & Canada)')
 plan = FeePlan.create!(:name => "default", :description => "Default plan for all people. Please don't delete it or your app may stop running properly.")
@@ -151,8 +151,8 @@ if preference.nil?
   p.default_group_id = g.id
   p.save!
 end
-  
-unless ENV['AMAZON_SECRET_ACCESS_KEY'].nil? || ENV['AMAZON_ACCESS_KEY_ID'].nil?    
+
+unless ENV['AMAZON_SECRET_ACCESS_KEY'].nil? || ENV['AMAZON_ACCESS_KEY_ID'].nil?
   if preference.photos.where(:picture_for => 'profile').first.nil?
     photo = preference.photos.new(:picture_for => 'profile')
     photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
