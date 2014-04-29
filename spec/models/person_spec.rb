@@ -131,13 +131,13 @@ describe Person do
 
     it "after deactivate should be in 'Closed' plan" do
       @pref = preferences(:one)
-      @plan_type = plan_types(:closed)
-      @pref.default_deactivated_plan_type_id = @plan_type.id
+      @fee_plan = fee_plans(:closed)
+      @pref.default_deactivated_fee_plan_id = @fee_plan.id
       @pref.save
 
       @person.deactivated = true
       @person.save
-      @person.plan_type.name.should eq('Closed')
+      @person.fee_plan.name.should eq('Closed')
     end
 
     it "should reactivate a person" do
@@ -173,7 +173,7 @@ describe Person do
 
       Req.custom_search(nil, group, true, 1, 25, nil).should be_empty
       @person.deactivated = false
-      @person.save      
+      @person.save
       Req.custom_search(nil, group, true, 1, 25, nil).should_not be_empty
     end
 
@@ -189,7 +189,7 @@ describe Person do
 
       Offer.custom_search(nil, group, true, 1, 25, nil).should be_empty
       @person.deactivated = false
-      @person.save      
+      @person.save
       Offer.custom_search(nil, group, true, 1, 25, nil).should_not be_empty
     end
 
@@ -297,7 +297,7 @@ describe Person do
         :expiration_date => DateTime.now + 1.day
         })
       offer.person_id = person.id
-      
+
       offer.valid?
       offer.save!
       offer

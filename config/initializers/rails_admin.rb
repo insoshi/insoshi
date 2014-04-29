@@ -304,8 +304,8 @@ end
       field :display_orgicon
       field :default_profile_picture
       field :default_group_picture
-      field :default_deactivated_plan_type_id do
-        properties[:collection] = PlanType.all.map {|g| [g.name,g.id]}
+      field :default_deactivated_fee_plan_id do
+        properties[:collection] = FeePlan.all.map {|g| [g.name,g.id]}
         partial "select"
       end
     end

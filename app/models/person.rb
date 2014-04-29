@@ -23,7 +23,7 @@ class Person < ActiveRecord::Base
   attr_accessible :password, :password_confirmation, :as => :admin
   attr_accessible :email, :password, :password_confirmation, :name
   attr_accessible :business_name, :legal_business_name, :business_type_id
-  attr_accessible :title, :activity_status_id, :plan_type_id, :support_contact_id
+  attr_accessible :title, :activity_status_id, :fee_plan_id, :support_contact_id
   attr_accessible :description, :connection_notifications
   attr_accessible :message_notifications
   attr_accessible :category_ids, :address_ids, :neighborhood_ids
@@ -140,7 +140,7 @@ class Person < ActiveRecord::Base
   belongs_to :support_contact, :class_name => "Person", :foreign_key => "support_contact_id"
   belongs_to :business_type
   belongs_to :activity_status
-  belongs_to :plan_type
+  belongs_to :fee_plan
 
   validates :name, :presence => true, :length => { :maximum => MAX_NAME }
   validates :description, :length => { :maximum => MAX_DESCRIPTION }
@@ -164,7 +164,7 @@ class Person < ActiveRecord::Base
   after_create :create_address
   after_create :join_mandatory_groups
   before_save :update_group_letter
-  before_save :update_plan_type_if_deactivated
+  before_save :update_fee_plan_if_deactivated
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
   before_update :set_old_description
@@ -504,10 +504,10 @@ class Person < ActiveRecord::Base
     self.first_letter = display_name.mb_chars.first.upcase.to_s
   end
 
-  def update_plan_type_if_deactivated
+  def update_fee_plan_if_deactivated
     if self.deactivated?
-      self.plan_type_id = 
-          Person.global_prefs.default_deactivated_plan_type_id
+      self.fee_plan_id =
+          Person.global_prefs.default_deactivated_fee_plan_id
     end
   end
 

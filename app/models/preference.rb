@@ -43,7 +43,7 @@ class Preference < ActiveRecord::Base
                   :blog_feed_url,
                   :googlemap_api_key,
                   :default_group_id, :display_orgicon,
-                  :default_deactivated_plan_type_id
+                  :default_deactivated_fee_plan_id
   attr_accessible *attribute_names, :as => :admin
 
   validate :enforce_singleton, :on => :create
