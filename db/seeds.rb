@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
@@ -117,7 +119,7 @@ FORM_TYPES = [
   ['Bid accepted for {{req_name}}','See your <a href=\"{{request_url}}\">request</a> to consider bid','accepted','en'],
   ['Bid committed for {{req_name}}','Commitment made for your <a href=\"{{request_url}}\">request</a>. This is an automated message','commited','en'],
   ['Work completed for {{req_name}}','Work completed for your <a href=\"{{request_url}}\">request</a>. Please approve transaction! This is an automated message','completed','en'],
-  
+
   ['You have received a payment of {{amount}} {{group_unit}} for {{metadata_name}}','{{customer_name}} paid you {{amount}} {{group_unit}}.','send_payment_notyfication','en'],
   ['Has recibido un pago de {{amount}} {{group_unit}} por {{metadata_name}}','{{customer_name}} te ha pagado {{amount}} {{group_unit}}.','send_payment_notyfication','es'],
   ['Vous avez reçu un paiement {{amount}} {{group_unit}} pour {{metadata_name}}','{{customer_name}} vous avez payé {{amount}} {{group_unit}}.','send_payment_notyfication','fr'],

@@ -822,7 +822,7 @@ end
 
   config.model Message do
     label "Message"
-    label_plural "Messages"\
+    label_plural "Messages"
   end
 
 end
