@@ -5,7 +5,6 @@ class PeopleController < ApplicationController
   #before_filter :login_or_oauth_required, :only => [ :index, :show, :edit, :update ]
   before_filter :login_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
-  #before_filter :set_up_metadata, :only => [:edit]
 
   def index
     if params[:sort]
@@ -267,8 +266,6 @@ class PeopleController < ApplicationController
     end
 
     def set_up_metadata
-      # after deleting field from FieldsForSignupForms
-      # uset up data for specific user
       @extra_fields
       @person.person_metadata.each do |metadata|
         obj = @extra_fields.select do |field|
