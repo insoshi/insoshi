@@ -40,6 +40,8 @@ class Person < ActiveRecord::Base
   attr_accessible :web_site_url
   attr_accessible :org
   attr_accessible :posts_per_page
+  attr_accessible :person_metadata_attributes
+  attr_accessible :id
 
   extend Searchable(:name, :business_name, :description)
 
@@ -154,6 +156,9 @@ class Person < ActiveRecord::Base
   belongs_to :activity_status
   belongs_to :fee_plan
 
+  has_many :person_metadata#, :inverse_of => :person
+  accepts_nested_attributes_for :person_metadata, :allow_destroy => true
+
   validates :name, :presence => true, :length => { :maximum => MAX_NAME }
   validates :description, :length => { :maximum => MAX_DESCRIPTION }
   validates :email, :presence => true, :uniqueness => true, :email => true
@@ -191,16 +196,25 @@ class Person < ActiveRecord::Base
   # so validation will be checked once again and then should pass.
   # If trade credits or free fee plan was choosed return true, so no credit card is needed.
   def credit_card_is_required_if_monetary_fee_plan_was_choosed
-     if self.have_monetary_fee_plan?
-       if self.stripe_id.nil?
-         errors.add(:credit_card, "Credit card required!")
-         return false
-       else
-         return true
-       end
-     else
-       return true
-     end
+    if self.have_monetary_fee_plan?
+      if self.stripe_id.nil?
+        errors.add(:credit_card, "Credit card required!")
+        return false
+      else
+        return true
+      end
+    else
+      return true
+    end
+  end
+
+  after_validation do
+    return if(self.person_metadata.empty?)
+    destroy_array = []
+    self.person_metadata.each do |metadata|
+      destroy_array << metadata if metadata.value.nil?
+    end
+    self.person_metadata.destroy(destroy_array)
   end
 
   # Return the first admin created.

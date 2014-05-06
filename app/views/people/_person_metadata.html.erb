@@ -1,0 +1,24 @@
+<% i = 0 %>
+<%= f.fields_for :person_metadata do |pm| %>
+  <% if i < extra_fields.count %>
+    <% unless person.errors[:"person_metadata.#{extra_fields[i].key}"].empty? %>
+      <div class="error-field">
+    <% end %>
+
+    <% case extra_fields[i].field_type %>
+    <% when 'text_field' %>
+      <%= pm.text_field :value, label: extra_fields[i].title %>
+    <% when 'text_area' %>
+      <%= pm.text_area :value, label: extra_fields[i].title, rows: 6 %>
+    <% when 'collection_select' %>
+      <%= pm.select :value, extra_fields[i].get_options_for_dropdown, label: extra_fields[i].title %>
+    <% end %>
+
+    <%= render partial: "person_metadata_error", locals: {p: person, extra_field: extra_fields[i]} %>
+    <%= pm.hidden_field :key, :value => extra_fields[i].key %>
+    <% unless person.errors[:"person_metadata.#{extra_fields[i].key}"].empty? %>
+      </div>
+    <% end %>
+  <% end %>
+  <% i = i + 1 %>
+<% end %>

@@ -60,6 +60,7 @@ gem "bootstrap_form", "~> 0.3.2"
 gem "stripe", '~> 1.10.1'
 
 group :development, :test do
+  gem 'pry'
   gem 'debugger'
   gem "heroku-api"
   gem 'sqlite3'

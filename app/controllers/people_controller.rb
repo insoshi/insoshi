@@ -50,8 +50,11 @@ class PeopleController < ApplicationController
   def new
     @body = "register single-col"
     @person = Person.new
+    FormSignupField.count.times { @person.person_metadata.build }
+
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @extra_fields = FormSignupField.all_with_order
     respond_to do |format|
       format.html
     end
@@ -60,11 +63,14 @@ class PeopleController < ApplicationController
   def create
     person = params[:person]
     @person = Person.new(person)
+    params[:person][:person_metadata_attributes].each do |key, value|
+      @person.person_metadata.build(value)
+    end
     @person.email_verified = false if global_prefs.email_verifications?
-    
+
     @person.save do |result|
       respond_to do |format|
-        if result        
+        if result
           flash[:notice] = handle_create_notifications
           format.html { redirect_to(home_url) }
         else
@@ -80,14 +86,15 @@ class PeopleController < ApplicationController
               format.html { redirect_to home_url }
             else
               @person.errors.add(:stripe, stripe_ret)
-            end  
-            
+            end
+
           end
-          
+
           @body = "register single-col"
           @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           flash[:error] = @person.errors.messages.values.join(", ")
+          @extra_fields = FormSignupField.all_with_order
           format.html { render :action => 'new' }
         end
       end
@@ -102,7 +109,7 @@ class PeopleController < ApplicationController
     logger.warn warning
     redirect_to home_url
   end
-  
+
   def handle_create_notifications
     if global_prefs.can_send_email? && !global_prefs.new_member_notification.blank?
       PersonMailerQueue.registration_notification(@person)
@@ -136,6 +143,12 @@ class PeopleController < ApplicationController
     @category = Category.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @extra_fields = FormSignupField.all_with_order
+
+    set_up_metadata
+
+    num_builds = FormSignupField.count - @person.person_metadata.count
+    num_builds.times { @person.person_metadata.build }
     respond_to do |format|
       format.html
     end
@@ -204,7 +217,7 @@ class PeopleController < ApplicationController
       end
     end
   end
-  
+
   def transaction_history
     # Do not allow other person seeing other people fees.
     if can?(:view_transactions, Person.find(params[:id]))
@@ -287,5 +300,17 @@ class PeopleController < ApplicationController
 
     def cancel?
       params["commit"] == t('button_cancel');
+    end
+
+    def set_up_metadata
+      @extra_fields
+      @person.person_metadata.each do |metadata|
+        obj = @extra_fields.select do |field|
+          field.id = metadata.form_signup_field_id
+        end
+        if obj.empty?
+          metadata.destroy
+        end
+      end
     end
 end

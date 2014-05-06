@@ -55,6 +55,8 @@
     </div>
   </div>
 
+  <%= render :partial => "person_metadata", :locals => {:f => f, :person => @person, :extra_fields => @extra_fields} %>
+
   <%= f.text_field :zipcode, label: t('people.new.zipcode') %>
 
     <%= f.control_group :org do %>

@@ -49,7 +49,14 @@ end
     export
   end
 
-  config.included_models = [Charge,RecurringFee,RecurringStripeFee,FixedTransactionFee,PercentTransactionFee,FixedTransactionStripeFee,PercentTransactionStripeFee,Account,Address,State,AccountDeactivated,Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,ActivityStatus,FeePlan, ExchangeDeleted, TimeZone]
+  config.included_models = [Charge,RecurringFee,RecurringStripeFee,
+    FixedTransactionFee,PercentTransactionFee,FixedTransactionStripeFee,
+    PercentTransactionStripeFee, Account,Address,State,AccountDeactivated,
+    Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,
+    PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,
+    ActivityStatus,FeePlan, ExchangeDeleted, TimeZone, FormSignupField,
+    PersonMetadatum]
+
   config.default_items_per_page = 100
 
   config.model State do
@@ -497,7 +504,7 @@ end
       field :fixed_transaction_fees
       field :percent_transaction_fees
       field :recurring_fees
-       
+
   end
 
   config.model FixedTransactionStripeFee do
@@ -522,9 +529,9 @@ end
     field :interval, :enum do
       enum do
         ['month','year']
-      end      
+      end
     end
-    field :fee_plan 
+    field :fee_plan
     list do
       field :plan
     end
@@ -545,7 +552,7 @@ end
     field :recipient
     field :fee_plan
   end
-  
+
   config.model RecurringFee do
     field :amount
     field :interval, :enum do
@@ -557,14 +564,14 @@ end
     field :fee_plan
   end
 
-  
+
   config.model Charge do
     label 'Charges'
     list do
       scope do
         joins(:person).where( people: { deactivated:false} )
       end
-      
+
       field :person do
         label "Billed person"
         searchable [{Person => :email}]
@@ -579,15 +586,16 @@ end
         label "Date"
       end
     end
-    
+
   end
-    
+
   end
-  
+
   config.model Person do
     object_label_method do
       :display_name
     end
+
     list do
       scope do
         where deactivated: false
@@ -639,6 +647,7 @@ end
     end
 
     edit do
+      field :person_metadata
       field :name
       field :email
       field :password
@@ -665,6 +674,7 @@ end
       end
       field :addresses
       # generally not appropriate for admin to edit openid since it is an assertion
+
     end
   end
 
@@ -729,6 +739,39 @@ end
     end
   end
 
+  config.model FormSignupField do
+    label "Signup field"
+    label_plural "Signup fields"
+
+    list do
+      field :title
+      field :field_type
+      field :mandatory
+      field :order
+    end
+
+    edit do
+      field :title
+      field :key
+      field :field_type do
+        properties[:collection] = [
+          ['Single line text input', 'text_field'],
+          ['Paragraph text input', 'text_area'],
+          ['Dropdown choice', 'collection_select']
+        ]
+        partial "select"
+      end
+      field :options do
+        help 'Required - only when "Dropdown choice" is selected'
+      end
+      field :mandatory
+      field :order do
+        properties[:collection] = (1..(FormSignupField.count+1))
+        partial "select"
+      end
+    end
+  end
+
   config.model TimeZone do
     label "Time Zone"
     label_plural "Time Zone"
@@ -742,6 +785,14 @@ end
         TimeZone::Date_Style.keys
       end
     end
+  end
+
+
+  config.model PersonMetadatum do
+    field :id
+    field :key
+    field :value
+    field :person_id
   end
 
 end

@@ -464,6 +464,7 @@ gr:
       back_to_regular_signup: "Επιστροφή στην κανονική εγγραφή"
       openid_url: "OpenID URL"
       signup_button: "Εγγραφή"
+      field_is_required: "is required"
     request_memberships:
       header: "Αίτηση συμμετοχής για τις ομάδες σας"
       respond: "Απάντηση"
