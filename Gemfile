@@ -58,6 +58,8 @@ gem "calendar_helper"
 gem "gibbon", :git => "git://github.com/amro/gibbon.git"
 gem "bootstrap_form", "~> 0.3.2"
 gem "stripe", '~> 1.10.1'
+gem "mustache"
+gem "mini_magick"
 
 group :development, :test do
   gem 'pry'

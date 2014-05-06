@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+DEFAULT_PAYMENTS: &DEFAULT_PAYMENTS
+  title: "{{amount}} {{group_unit}} for {{metadata_name}}"
+  text: "{{customer_name}} paid you {{amount}} {{group_unit}}"
+  lang: en
+
+DEFAULT_OFFERS: &DEFAULT_OFFERS
+  title: "{{req_name}}"
+  text: "{{request_url}}"
+  lang: en
+
+offered:
+  message_type: offered
+  <<: *DEFAULT_OFFERS
+
+accepted:
+  message_type: accepted
+  <<: *DEFAULT_OFFERS
+
+commited:
+  message_type: commited
+  <<: *DEFAULT_OFFERS
+
+completed:
+  message_type: completed
+  <<: *DEFAULT_OFFERS
+
+send_payment_notyfication:
+  message_type: send_payment_notyfication
+  <<: *DEFAULT_PAYMENTS
+
+send_suspend_payment_notyfication:
+  message_type: send_suspend_payment_notyfication
+  <<: *DEFAULT_PAYMENTS
+
+bad_fixture:
+  message_type: bad_type
+  title: hehe mana kk
+  text: text text test text text test 

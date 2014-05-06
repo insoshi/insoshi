@@ -231,9 +231,12 @@ GEM
       railties
     method_source (0.8.1)
     mime-types (1.25.1)
+    mini_magick (3.7.0)
+      subexec (~> 0.2.1)
     multi_json (1.9.2)
     multi_xml (0.5.1)
     multipart-post (2.0.0)
+    mustache (0.99.5)
     nested_form (0.3.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -358,6 +361,7 @@ GEM
       dante (>= 0.2.0)
       jimson-temp
       stripe (>= 1.10.1)
+    subexec (0.2.3)
     systemu (2.5.2)
     texticle (2.0.3)
       activerecord (~> 3.0)
@@ -428,6 +432,8 @@ DEPENDENCIES
   json (~> 1.8.1)
   memcachier
   meta_request
+  mini_magick
+  mustache
   oauth
   oauth-plugin!
   open_id_authentication!

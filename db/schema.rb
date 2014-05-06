@@ -666,6 +666,15 @@ ActiveRecord::Schema.define(:version => 20140403075352) do
 
   add_index "stripe_fees", ["fee_plan_id"], :name => "index_stripe_fees_on_fee_plan_id"
 
+  create_table "system_message_templates", :force => true do |t|
+    t.string   "title"
+    t.string   "text"
+    t.string   "message_type"
+    t.string   "lang"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "time_zones", :force => true do |t|
     t.string   "time_zone"
     t.datetime "created_at",                         :null => false

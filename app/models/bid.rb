@@ -27,10 +27,11 @@ class Bid < ActiveRecord::Base
   before_validation :setup, :on => :create
   after_create :trigger_offered
 
-  belongs_to :req
+  belongs_to :req, inverse_of: :bids
   belongs_to :person
   belongs_to :group
   attr_readonly :estimated_hours
+  accepts_nested_attributes_for :req
 
   validates :person_id, :presence => true
   validates :estimated_hours, :presence => true, :numericality => { :greater_than => 0 }
@@ -98,11 +99,12 @@ class Bid < ActiveRecord::Base
 
   def trigger_offered
     Message.create! do |bid_note|
-      bid_note.subject = "BID: #{estimated_hours} hours - #{req.name}"
+      form = SystemMessageTemplate.with_type_and_language('offered', I18n.locale.to_s)
+      bid_note.subject = form.trigger_offered_subject( estimated_hours, req.name)
       bid_note.content = ""
       bid_note.content << "#{private_message_to_requestor}\n--\n\n" if private_message_to_requestor.present?
       unless server.empty?
-        bid_note.content << "See your <a href=\"#{req_url(self.req, :host => server)}\">request</a> to consider bid"
+        bid_note.content << form.trigger_content(req_url(req, :host => server))
       end
       bid_note.sender = self.person
       bid_note.recipient = self.req.person
@@ -112,9 +114,10 @@ class Bid < ActiveRecord::Base
   def trigger_accepted
     touch :accepted_at
     Message.create! do |bid_note|
-      bid_note.subject = "Bid accepted for #{req.name}"
+      form = SystemMessageTemplate.with_type_and_language('accepted', I18n.locale.to_s)
+      bid_note.subject = form.trigger_subject(req.name)
       unless server.empty?
-        bid_note.content = "See the <a href=\"#{req_url(self.req, :host => server)}\">request</a> to commit to bid"
+        bid_note.content = form.trigger_content(req_url(req, :host => server))
       else
         bid_note.content = ''
       end
@@ -126,9 +129,10 @@ class Bid < ActiveRecord::Base
   def trigger_committed
     touch :committed_at
     Message.create! do |bid_note|
-      bid_note.subject = "Bid committed for #{req.name}"
+      form = SystemMessageTemplate.with_type_and_language('commited', I18n.locale.to_s)
+      bid_note.subject = form.trigger_subject(req.name)
       unless server.empty?
-        bid_note.content = "Commitment made for your <a href=\"#{req_url(self.req, :host => server)}\">request</a>. This is an automated message"
+        bid_note.content = form.trigger_content(req_url(req, :host => server))
       else
         bid_note.content = ''
       end
@@ -140,9 +144,10 @@ class Bid < ActiveRecord::Base
   def trigger_completed
     touch :completed_at
     Message.create! do |bid_note|
-      bid_note.subject = "Work completed for #{req.name}"
+      form = SystemMessageTemplate.with_type_and_language('completed', I18n.locale.to_s)
+      bid_note.subject = form.trigger_subject(req.name)
       unless server.empty?
-        bid_note.content = "Work completed for your <a href=\"#{req_url(self.req, :host => server)}\">request</a>. Please approve transaction! This is an automated message"
+        bid_note.content = form.trigger_content(req_url(req, :host => server))
       else
         bid_note.content = ''
       end

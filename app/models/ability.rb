@@ -22,20 +22,24 @@ class Ability
     end
 
     # need these for rails_admin
-    can [:read,:create,:update,:destroy], Address
-    can [:read,:create,:update,:destroy], State
+    can [:manage], Address
+    can [:manage], State
     can [:read,:update], TimeZone
+
+    can [:read,:create,:update], SystemMessageTemplate
+    can [:manage], Message
+
     can [:read,:create], Person
     can :update, Person do |target_person|
       target_person == person || person.admin?
     end
-    
+
     can :add_to_mailchimp_list, Person
     can :export, Person
     can :view_transactions, Person do |transact_owner|
       person.id == transact_owner.id
     end
-    
+
     can :read, PrivacySetting
     can :update, PrivacySetting do |ps|
       membership = Membership.mem(person,ps.group)
@@ -176,10 +180,10 @@ class Ability
       Membership.mem(person,bid.req.group)
     end
     can :update, Bid do |bid|
-      bid.person == person || bid.req.person == person
+      person.admin? || bid.person == person || bid.req.person == person
     end
     can :destroy, Bid do |bid|
-      person.admin? || bid.person == person
+      bid.person == person
     end
 
     can [:read, :create,:update,:destroy], FormSignupField
