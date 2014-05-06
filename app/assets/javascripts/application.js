@@ -20,4 +20,3 @@
 //= require signup_form.js
 //= require site.js
 //= require links_on_new_window
-//= require ckeditor/init

@@ -1,7 +1,6 @@
 
 Oscurrency::Application.routes.draw do
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
-  mount Ckeditor::Engine => '/ckeditor'
 
   resources :person_sessions
   resources :password_resets, :only => [:new, :create, :edit, :update]
