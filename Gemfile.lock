@@ -433,6 +433,7 @@ DEPENDENCIES
   open_id_authentication!
   opentransact
   pg
+  pry
   rack
   rack-test
   rails (= 3.2.16)

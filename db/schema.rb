@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140112071748) do
+ActiveRecord::Schema.define(:version => 20140403075352) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -273,6 +273,17 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
 
   add_index "feeds", ["person_id", "activity_id"], :name => "index_feeds_on_person_id_and_activity_id"
 
+  create_table "form_signup_fields", :force => true do |t|
+    t.string   "key"
+    t.string   "title"
+    t.boolean  "mandatory",  :default => false
+    t.string   "field_type"
+    t.integer  "order"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "options"
+  end
+
   create_table "forums", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -480,6 +491,15 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
   add_index "people", ["name"], :name => "index_people_on_name"
   add_index "people", ["perishable_token"], :name => "index_people_on_perishable_token"
 
+  create_table "person_metadata", :force => true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.integer  "person_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.integer  "form_signup_field_id"
+  end
+
   create_table "photos", :force => true do |t|
     t.integer  "parent_id"
     t.string   "content_type"
@@ -572,7 +592,7 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 8
+    t.integer  "year",       :limit => 5
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end

@@ -23,7 +23,6 @@ describe FormSignupField do
   it "shoud have 2 elements" do
     @form_signup_field.save
     @form_signup_field2.save
-    binding.pry
 
     FormSignupField.all_with_order.count.should eq(2)
   end
@@ -31,7 +30,6 @@ describe FormSignupField do
   it "fields should be in proper order" do
     @form_signup_field.save
     @form_signup_field2.save
-    binding.pry
 
     fields = FormSignupField.all_with_order
     fields[0].title.should eq("Test title 2")
