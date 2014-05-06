@@ -81,7 +81,6 @@ group :development do
   gem 'meta_request'
   gem 'highline'
   gem 'git'
-  gem 'pry'
 end
 
 group :production do
