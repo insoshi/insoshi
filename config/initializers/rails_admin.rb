@@ -52,7 +52,7 @@ end
   config.included_models = [Charge,RecurringFee,RecurringStripeFee,
     FixedTransactionFee,PercentTransactionFee,FixedTransactionStripeFee,
     PercentTransactionStripeFee, Account,Address,State,AccountDeactivated,
-    Preference,Exchange,ForumPost,FeedPost,BroadcastEmail,Person,
+    Preference,ExchangeAndFee,ForumPost,FeedPost,BroadcastEmail,Person,
     PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,
     ActivityStatus,FeePlan, ExchangeDeleted, TimeZone, FormSignupField,
     PersonMetadatum, SystemMessageTemplate, Message]
@@ -327,7 +327,7 @@ end
     end
   end
 
-  config.model Exchange do
+  config.model ExchangeAndFee do
     list do
       field :created_at
       field :customer do
