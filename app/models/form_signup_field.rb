@@ -23,4 +23,38 @@ class FormSignupField < ActiveRecord::Base
   def collection_select?
     field_type == "collection_select"
   end
+
+
+  rails_admin do
+    label "Signup field"
+    label_plural "Signup fields"
+
+    list do
+      field :title
+      field :field_type
+      field :mandatory
+      field :order
+    end
+
+    edit do
+      field :title
+      field :key
+      field :field_type do
+        properties[:collection] = [
+          ['Single line text input', 'text_field'],
+          ['Paragraph text input', 'text_area'],
+          ['Dropdown choice', 'collection_select']
+        ]
+        partial "select"
+      end
+      field :options do
+        help 'Required - only when "Dropdown choice" is selected'
+      end
+      field :mandatory
+      field :order do
+        properties[:collection] = 1..(FormSignupField.count + 1)
+        partial "select"
+      end
+    end
+  end
 end
