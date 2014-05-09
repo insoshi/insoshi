@@ -12,14 +12,14 @@ class FeePlan < ActiveRecord::Base
   has_many :fixed_transaction_fees, :dependent => :destroy, :inverse_of => :fee_plan
   has_many :percent_transaction_fees, :dependent => :destroy, :inverse_of => :fee_plan
   has_many :recurring_fees, :dependent => :destroy, :inverse_of => :fee_plan
-  
+
   accepts_nested_attributes_for :recurring_fees
   accepts_nested_attributes_for :recurring_stripe_fees
   accepts_nested_attributes_for :fixed_transaction_fees
   accepts_nested_attributes_for :percent_transaction_fees
   accepts_nested_attributes_for :fixed_transaction_stripe_fees
   accepts_nested_attributes_for :percent_transaction_stripe_fees
-  
+
   before_destroy :subscribe_people_to_default_plan
 
   default_scope :order => 'name ASC'
@@ -45,7 +45,7 @@ class FeePlan < ActiveRecord::Base
     fixed_transaction_fees = self.fees.where(:type => "FixedTransactionFee")
     percent_transaction_fees.each do |fee|
         e=txn.group.exchanges.build(amount: txn.amount*fee.percent)
-        e.metadata = txn.metadata
+        e.metadata = txn
         e.customer = txn.worker
         e.worker = fee.recipient
         e.notes = 'Percent transaction fee'
@@ -54,33 +54,33 @@ class FeePlan < ActiveRecord::Base
 
     fixed_transaction_fees.each do |fee|
         e=txn.group.exchanges.build(amount: fee.amount)
-        e.metadata = txn.metadata
+        e.metadata = txn
         e.customer = txn.worker
         e.worker = fee.recipient
         e.notes = 'Fixed transaction fee'
         e.save!
     end
   end
-  
+
   def contains_stripe_fees?
     self.stripe_fees.any? ||
     self.fixed_transaction_stripe_fees.any? ||
     self.percent_transaction_stripe_fees.any? ||
     self.recurring_stripe_fees.any?
   end
-  
+
   def all_fees
     @all ||= self.fees + self.stripe_fees
   end
-  
+
   def subscribe_payers_to_stripe(recurring_stripe_fee_id)
     self.people.subscribed_to_stripe.each do |person|
       StripeOps.subscribe_to_plan(person.stripe_id, recurring_stripe_fee_id)
     end
   end
-  
+
   private
-  
+
   def child_class_errors
     ["", "stripe_"].each do |fee_type|
       [:"fixed_transaction_#{fee_type}fees",
@@ -95,7 +95,7 @@ class FeePlan < ActiveRecord::Base
       end
     end
   end
-  
+
   def subscribe_people_to_default_plan
     default_plan = FeePlan.find_by_name("default")
     self.people.each do |person|
@@ -103,5 +103,5 @@ class FeePlan < ActiveRecord::Base
       person.save!
     end
   end
-  
+
 end
