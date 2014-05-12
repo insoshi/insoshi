@@ -1,0 +1,11 @@
+account_one:
+  balance: 0
+  credit_limit: 0
+  person: frank
+  group: one
+
+account_two:
+  balance: 0
+  credit_limit: 0
+  person: doug
+  group: one
