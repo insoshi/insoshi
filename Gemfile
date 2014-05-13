@@ -36,7 +36,7 @@ gem "texticle"
 gem "aws-s3"
 gem "fog"
 gem "carrierwave"
-gem "rmagick", :require => 'RMagick'
+gem "rmagick"
 gem "json", '1.7.7'
 gem "geokit-rails3"
 
