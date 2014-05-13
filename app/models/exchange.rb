@@ -4,22 +4,22 @@
 # Table name: exchanges
 #
 #  id          :integer(4)      not null, primary key
-#  customer_id :integer(4)      
-#  worker_id   :integer(4)      
-#  req_id      :integer(4)      
+#  customer_id :integer(4)
+#  worker_id   :integer(4)
+#  req_id      :integer(4)
 #  amount      :decimal(8, 2)   default(0.0)
-#  created_at  :datetime        
-#  updated_at  :datetime     
-#  deleted_at  :time   
+#  created_at  :datetime
+#  updated_at  :datetime
+#  deleted_at  :time
 #
 
 class Exchange < ActiveRecord::Base
   include ActivityLogger
   include ActionView::Helpers::NumberHelper
   acts_as_paranoid
-  
+
   attr_accessor  :offer_count
-  
+
   belongs_to :customer, :class_name => "Person", :foreign_key => "customer_id"
   belongs_to :worker, :class_name => "Person", :foreign_key => "worker_id"
   belongs_to :metadata, :polymorphic => :true
@@ -31,9 +31,10 @@ class Exchange < ActiveRecord::Base
   validate :group_has_a_currency_and_includes_both_counterparties_as_members
   validate :amount_is_positive
   validate :worker_is_not_customer
+  validate :customer_has_sufficient_balance
 
   attr_accessible :amount, :group_id
-  
+
   attr_accessible :customer_id
   attr_accessible *attribute_names, :as => :admin
   attr_readonly :amount
@@ -149,6 +150,15 @@ class Exchange < ActiveRecord::Base
     end
   end
 
+  def customer_has_sufficient_balance
+    account = customer.account(group)
+    if account && account.credit_limit
+      if account.balance + account.credit_limit < amount
+        errors.add(:customer, 'Customer has insufficient credit')
+      end
+    end
+  end
+
   def decrement_offer_available_count
     if self.metadata.class == Offer
       self.metadata.available_count -= self.offer_count || 1
@@ -193,8 +203,8 @@ class Exchange < ActiveRecord::Base
 
   def send_payment_notification_to_worker
     exchange_note = Message.new(:talkable_id => self.metadata.id, :talkable_type => self.metadata.class.to_s)
-    subject = I18n.translate('exchanges.notify.you_have_received_a_payment_of') + " " + nice_decimal(self.amount) + " " +  self.group.unit + " " + I18n.translate('for') + " " + self.metadata.name 
-    exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject 
+    subject = I18n.translate('exchanges.notify.you_have_received_a_payment_of') + " " + nice_decimal(self.amount) + " " +  self.group.unit + " " + I18n.translate('for') + " " + self.metadata.name
+    exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
     exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.paid_you') + " " + nice_decimal(self.amount) + " " + self.group.unit + "."
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
@@ -205,7 +215,7 @@ class Exchange < ActiveRecord::Base
   def send_suspend_payment_notification_to_worker
     exchange_note = Message.new()
     subject = I18n.translate('exchanges.notify.payment_suspended') + nice_decimal(self.amount) + " " + self.group.unit + " - " + I18n.translate('by') + " " + self.metadata.name
-    exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject 
+    exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
     exchange_note.content = self.customer.name + " " + I18n.translate('exchanges.notify.suspended_payment_of') + " " + nice_decimal(self.amount) + " " + self.group.unit + "."
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker

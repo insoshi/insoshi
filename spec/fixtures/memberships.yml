@@ -1,0 +1,9 @@
+frank_one:
+  group: one
+  person: frank
+  status: 0
+
+doug_one:
+  group: one
+  person: doug
+  status: 0
