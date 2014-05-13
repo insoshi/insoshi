@@ -32,60 +32,60 @@ CATEGORIES.each do |value|
 end
 
 US_STATES = [
-    [ 'Alabama', 'AL' ], 
-    [ 'Alaska', 'AK' ], 
-    [ 'Arizona', 'AZ' ], 
-    [ 'Arkansas', 'AR' ], 
-    [ 'California', 'CA' ], 
-    [ 'Colorado', 'CO' ], 
-    [ 'Connecticut', 'CT' ], 
-    [ 'Delaware', 'DE' ], 
-    [ 'District Of Columbia', 'DC' ], 
-    [ 'Florida', 'FL' ], 
-    [ 'Georgia', 'GA' ], 
-    [ 'Guam', 'GU' ], 
-    [ 'Hawaii', 'HI' ], 
-    [ 'Idaho', 'ID' ], 
-    [ 'Illinois', 'IL' ], 
-    [ 'Indiana', 'IN' ], 
-    [ 'Iowa', 'IA' ], 
-    [ 'Kansas', 'KS' ], 
-    [ 'Kentucky', 'KY' ], 
-    [ 'Louisiana', 'LA' ], 
-    [ 'Maine', 'ME' ], 
-    [ 'Maryland', 'MD' ], 
-    [ 'Massachusetts', 'MA' ], 
-    [ 'Michigan', 'MI' ], 
-    [ 'Minnesota', 'MN' ], 
-    [ 'Mississippi', 'MS' ], 
-    [ 'Missouri', 'MO' ], 
-    [ 'Montana', 'MT' ], 
-    [ 'Nebraska', 'NE' ], 
-    [ 'Nevada', 'NV' ], 
-    [ 'New Hampshire', 'NH' ], 
-    [ 'New Jersey', 'NJ' ], 
-    [ 'New Mexico', 'NM' ], 
-    [ 'New York', 'NY' ], 
-    [ 'North Carolina', 'NC' ], 
-    [ 'North Dakota', 'ND' ], 
+    [ 'Alabama', 'AL' ],
+    [ 'Alaska', 'AK' ],
+    [ 'Arizona', 'AZ' ],
+    [ 'Arkansas', 'AR' ],
+    [ 'California', 'CA' ],
+    [ 'Colorado', 'CO' ],
+    [ 'Connecticut', 'CT' ],
+    [ 'Delaware', 'DE' ],
+    [ 'District Of Columbia', 'DC' ],
+    [ 'Florida', 'FL' ],
+    [ 'Georgia', 'GA' ],
+    [ 'Guam', 'GU' ],
+    [ 'Hawaii', 'HI' ],
+    [ 'Idaho', 'ID' ],
+    [ 'Illinois', 'IL' ],
+    [ 'Indiana', 'IN' ],
+    [ 'Iowa', 'IA' ],
+    [ 'Kansas', 'KS' ],
+    [ 'Kentucky', 'KY' ],
+    [ 'Louisiana', 'LA' ],
+    [ 'Maine', 'ME' ],
+    [ 'Maryland', 'MD' ],
+    [ 'Massachusetts', 'MA' ],
+    [ 'Michigan', 'MI' ],
+    [ 'Minnesota', 'MN' ],
+    [ 'Mississippi', 'MS' ],
+    [ 'Missouri', 'MO' ],
+    [ 'Montana', 'MT' ],
+    [ 'Nebraska', 'NE' ],
+    [ 'Nevada', 'NV' ],
+    [ 'New Hampshire', 'NH' ],
+    [ 'New Jersey', 'NJ' ],
+    [ 'New Mexico', 'NM' ],
+    [ 'New York', 'NY' ],
+    [ 'North Carolina', 'NC' ],
+    [ 'North Dakota', 'ND' ],
     [ 'Northern Mariana Islands', 'MP' ],
-    [ 'Ohio', 'OH' ], 
-    [ 'Oklahoma', 'OK' ], 
-    [ 'Oregon', 'OR' ], 
-    [ 'Pennsylvania', 'PA' ], 
-    [ 'Puerto Rico', 'PR' ], 
-    [ 'Rhode Island', 'RI' ], 
-    [ 'South Carolina', 'SC' ], 
-    [ 'South Dakota', 'SD' ], 
-    [ 'Tennessee', 'TN' ], 
-    [ 'Texas', 'TX' ], 
-    [ 'Utah', 'UT' ], 
-    [ 'Vermont', 'VT' ], 
-    [ 'Virginia', 'VA' ], 
+    [ 'Ohio', 'OH' ],
+    [ 'Oklahoma', 'OK' ],
+    [ 'Oregon', 'OR' ],
+    [ 'Pennsylvania', 'PA' ],
+    [ 'Puerto Rico', 'PR' ],
+    [ 'Rhode Island', 'RI' ],
+    [ 'South Carolina', 'SC' ],
+    [ 'South Dakota', 'SD' ],
+    [ 'Tennessee', 'TN' ],
+    [ 'Texas', 'TX' ],
+    [ 'Utah', 'UT' ],
+    [ 'Vermont', 'VT' ],
+    [ 'Virginia', 'VA' ],
     [ 'Virgin Islands', 'VI' ],
-    [ 'Washington', 'WA' ], 
-    [ 'West Virginia', 'WV' ], 
-    [ 'Wisconsin', 'WI' ], 
+    [ 'Washington', 'WA' ],
+    [ 'West Virginia', 'WV' ],
+    [ 'Wisconsin', 'WI' ],
     [ 'Wyoming', 'WY' ]
   ]
 
@@ -114,7 +114,7 @@ preference = Preference.first
 if preference.nil?
   # first install
   using_email = !!((ENV['SMTP_DOMAIN'] && ENV['SMTP_SERVER']) || ENV['SENDGRID_USERNAME']) # explicit true
-  preference = Preference.create!(:app_name => (ENV['APP_NAME'] || "APP_NAME is Blank"), :server_name => ENV['SERVER_NAME'], :smtp_server => ENV['SMTP_SERVER'] || '', :email_notifications => using_email) 
+  preference = Preference.create!(:app_name => (ENV['APP_NAME'] || "APP_NAME is Blank"), :server_name => ENV['SERVER_NAME'], :smtp_server => ENV['SMTP_SERVER'] || '', :email_notifications => using_email)
   p = Person.new(:name => "admin", :email => "admin@example.com", :password => "admin", :password_confirmation => "admin", :description => "")
   p.save!
   p.admin = true
@@ -143,14 +143,18 @@ if preference.nil?
   p.save!
 end
 
-if preference.photos.where(:picture_for => 'profile').first.nil?
-  photo = preference.photos.new(:picture_for => 'profile')
-  photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
-  photo.save!
-end
-# default group picture
-if preference.photos.where(:picture_for => 'group').first.nil?
-  photo = preference.photos.new(:picture_for => 'group')
-  photo.picture = File.open(File.join(Rails.root, 'public/images/g_default.png'))
-  photo.save!
+unless ENV['AMAZON_SECRET_ACCESS_KEY'].nil? || ENV['AMAZON_ACCESS_KEY_ID'].nil?
+  if preference.photos.where(:picture_for => 'profile').first.nil?
+    photo = preference.photos.new(:picture_for => 'profile')
+    photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
+    photo.save!
+  end
+  # default group picture
+  if preference.photos.where(:picture_for => 'group').first.nil?
+    photo = preference.photos.new(:picture_for => 'group')
+    photo.picture = File.open(File.join(Rails.root, 'public/images/g_default.png'))
+    photo.save!
+  end
+else
+    puts "\nYou don't have AWS S3 account set up properly. Please put your AWS S3 credentails in amazon_s3.yml file in config folder. Installation will finish, but you won't see any pictures."
 end
