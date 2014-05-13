@@ -18,6 +18,10 @@ group :assets do
   # gem 'jquery-ui-rails'
 end
 
+group :debug do
+  gem 'debugger'
+end
+
 gem "coffee-rails"
 gem "audited-activerecord"
 gem "rails3_acts_as_paranoid"
