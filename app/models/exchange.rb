@@ -153,8 +153,8 @@ class Exchange < ActiveRecord::Base
   def customer_has_sufficient_balance
     account = customer.account(group)
     if account && account.credit_limit
-      if account.balance + account.credit_limit < amount
-        errors.add(:customer, 'Customer has insufficient credit')
+      if account.available_balance < amount
+        errors.add(:customer, 'Customer has insufficient balance')
       end
     end
   end
