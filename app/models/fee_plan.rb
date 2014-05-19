@@ -21,6 +21,44 @@ class FeePlan < ActiveRecord::Base
   accepts_nested_attributes_for :percent_transaction_stripe_fees
 
   before_destroy :subscribe_people_to_default_plan
+  default_scope :order => 'name ASC'
+
+  class << self
+    def apply_fees(interval)
+      Rails.logger.info "Applying per-#{interval} fees"
+      FeePlan.all.each do |p|
+        p.apply_recurring_fees(interval)
+      end
+    end
+
+    def daily_check_for_recurring_fees(time)
+      matched_intervals = []
+      # if day is last day of month
+      if time.day == Date.new(time.year,time.month,-1).day
+        matched_intervals << 'month'
+        apply_fees('month')
+      end
+      # if day is last day of year
+      if 12 == time.month
+        if time.day == Date.new(time.year,12,-1).day
+          matched_intervals << 'year'
+          apply_fees('year')
+        end
+      end
+      matched_intervals
+    end
+  end
+
+  def does_not_include_bogus_recurring_stripe_fee
+    if has_a_recurring_stripe_fee?
+      recurring_stripe_fees.each do |stripe_fee|
+        stripe_plan = Stripe::Plan.retrieve(stripe_fee.plan)
+      end
+    end
+  rescue Stripe::InvalidRequestError => e
+    Rails.logger.info "does_not_include_bogus_recurring_stripe_fee: #{e.message}"
+    errors.add(:enabled, "cannot be set with stripe plan that does not exist")
+  end
 
   default_scope :order => 'name ASC'
 
