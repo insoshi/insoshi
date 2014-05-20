@@ -4,11 +4,11 @@
 # Table name: accounts
 #
 #  id         :integer(4)      not null, primary key
-#  name       :string(255)     
+#  name       :string(255)
 #  balance    :decimal(8, 2)   default(0.0)
-#  person_id  :integer(4)      
-#  created_at :datetime        
-#  updated_at :datetime        
+#  person_id  :integer(4)
+#  created_at :datetime
+#  updated_at :datetime
 #
 
 class Account < ActiveRecord::Base
@@ -109,9 +109,13 @@ class Account < ActiveRecord::Base
                          :cash => recurring_cash_fees } }  
   end
 
+  def available_balance
+    balance + offset + credit_limit
+  end
+
   private
 
-  def check_credit_limit 
+  def check_credit_limit
     if credit_limit_changed?
       if (not credit_limit.nil?) and (credit_limit + balance_with_initial_offset < 0)
         raise CanCan::AccessDenied.new("Denied: Updating credit limit for #{person.display_name} would put account in prohibited state.", :update, Account)

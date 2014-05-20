@@ -14,6 +14,7 @@ quentin:
   message_notifications: true
   email_verified: true
   stripe_id: test_cus_1
+
 aaron:
   id: 2
   email: aaron@example.com
@@ -57,7 +58,7 @@ kelly:
   connection_notifications: true
   message_notifications: true
   stripe_id: test_cus_2
-  
+
 admin:
   email: admin@example.com
   name: admin
@@ -92,4 +93,30 @@ email_unverified:
   persistence_token: <%= Authlogic::Random.hex_token %>
   perishable_token: <%= Authlogic::Random.friendly_token %>
   created_at: <%= 1.day.ago.to_s :db %>
-  email_verified: false 
+  email_verified: false
+
+frank:
+  email: frank@example.com
+  name: frank
+  description: I'm Frank
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
+  created_at: <%= 1.day.ago.to_s :db %>
+  deactivated: false
+  connection_notifications: true
+  message_notifications: true
+
+doug:
+  email: doug@example.com
+  name: doug
+  description: I'm doug
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
+  created_at: <%= 1.day.ago.to_s :db %>
+  deactivated: false
+  connection_notifications: true
+  message_notifications: true

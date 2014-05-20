@@ -15,7 +15,7 @@ aarons:
   group_id: 1
   paid: 0
   earned: 0
-  
+
 buzzards:
   id: 3
   name: buzzard
@@ -24,7 +24,7 @@ buzzards:
   group_id: 1
   paid: 0
   earned: 0
-  
+
 kellys:
   id: 4
   name: kelly
@@ -33,7 +33,7 @@ kellys:
   group_id: 1
   paid: 0
   earned: 0
-      
+
 admins:
   id: 5
   name: admin
@@ -42,7 +42,7 @@ admins:
   group_id: 1
   paid: 0
   earned: 0
-  
+
 reserves:
   id: 6
   name: reserve
@@ -59,4 +59,16 @@ mixed:
   person_id: 7
   group_id: 1
   paid: 0
-  earned: 0  
+  earned: 0
+
+account_one:
+  balance: 0
+  credit_limit: 0
+  person: frank
+  group: one
+
+account_two:
+  balance: 0
+  credit_limit: 0
+  person: doug
+  group: one

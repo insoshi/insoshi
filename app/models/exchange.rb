@@ -31,6 +31,7 @@ class Exchange < ActiveRecord::Base
   validate :group_has_a_currency_and_includes_both_counterparties_as_members
   validate :amount_is_positive
   validate :worker_is_not_customer
+  validate :customer_has_sufficient_balance
 
   attr_accessible :amount, :group_id
 
@@ -165,6 +166,15 @@ class Exchange < ActiveRecord::Base
     end
   end
 
+  def customer_has_sufficient_balance
+    account = customer.account(group)
+    if account && account.credit_limit
+      if account.available_balance < amount
+        errors.add(:customer, 'Customer has insufficient balance')
+      end
+    end
+  end
+
   def decrement_offer_available_count
     if self.metadata.class == Offer
       self.metadata.available_count -= self.offer_count || 1
@@ -230,6 +240,7 @@ class Exchange < ActiveRecord::Base
     subject = form.payment_notification_subject(nice_decimal(self.amount), self.group.unit, self.metadata.name)
     exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
     exchange_note.content = form.payment_notification_text(self.customer.name, nice_decimal(self.amount), self.group.unit)
+
     exchange_note.sender = self.customer
     exchange_note.recipient = self.worker
     exchange_note.save!

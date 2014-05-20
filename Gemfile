@@ -19,6 +19,10 @@ group :assets do
   # gem 'jquery-ui-rails'
 end
 
+group :debug do
+  gem 'debugger'
+end
+
 gem "coffee-rails"
 gem "audited-activerecord"
 gem "rails3_acts_as_paranoid"
@@ -37,8 +41,8 @@ gem "texticle"
 gem "aws-s3"
 gem "fog"
 gem "carrierwave"
-gem "rmagick", :require => 'RMagick'
 gem "json", '~> 1.8.1'
+gem "rmagick"
 gem "geokit-rails3"
 
 gem "will_paginate"
@@ -73,6 +77,10 @@ group :development, :test do
   gem "opentransact"
   gem 'annotate'
   gem 'therubyracer'
+end
+
+group :debug do
+  gem 'debugger'
 end
 
 group :development do
