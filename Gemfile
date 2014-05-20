@@ -19,10 +19,6 @@ group :assets do
   # gem 'jquery-ui-rails'
 end
 
-group :debug do
-  gem 'debugger'
-end
-
 gem "coffee-rails"
 gem "audited-activerecord"
 gem "rails3_acts_as_paranoid"
@@ -66,8 +62,6 @@ gem "mustache"
 gem "mini_magick"
 
 group :development, :test do
-  gem 'pry'
-  gem 'debugger'
   gem "heroku-api"
   gem 'sqlite3'
   gem "rack"
@@ -80,6 +74,7 @@ group :development, :test do
 end
 
 group :debug do
+  gem 'pry'
   gem 'debugger'
 end
 
