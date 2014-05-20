@@ -1,7 +1,7 @@
 <% i = 0 %>
 <%= f.fields_for :person_metadata do |pm| %>
   <% if i < extra_fields.count %>
-    <% unless person.errors[:"person_metadata.#{extra_fields[i].key}"].empty? %>
+    <% unless person.errors["person_metadata.#{extra_fields[i].key}"].empty? %>
       <div class="error-field">
     <% end %>
 
@@ -16,7 +16,7 @@
 
     <%= render partial: "person_metadata_error", locals: {p: person, extra_field: extra_fields[i]} %>
     <%= pm.hidden_field :key, :value => extra_fields[i].key %>
-    <% unless person.errors[:"person_metadata.#{extra_fields[i].key}"].empty? %>
+    <% unless person.errors["person_metadata.#{extra_fields[i].key}"].empty? %>
       </div>
     <% end %>
   <% end %>

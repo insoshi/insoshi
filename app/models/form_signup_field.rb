@@ -10,7 +10,7 @@ class FormSignupField < ActiveRecord::Base
   validates_uniqueness_of :key, :title
   validates :options, :presence => true, :if => :collection_select?
 
-  scope :all_with_order, -> { order(order: :asc) }
+  scope :all_with_order, -> { order('"order" ASC') }
 
   def get_options_for_dropdown
     self.options.split(",").map { |s| s.gsub(/\s/,'') }
