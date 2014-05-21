@@ -11,21 +11,21 @@
 	  <fieldset id="creds">
 	<span id="standard">
 	    <%= f.email_field :email, label: t('people.new.email_address'), help: email_help  %>
-	    <%= set_focus_to "person_email" %>  
-	
+	    <%= set_focus_to "person_email" %>
+
 	    <%= f.text_field :name, label: t('people.new.name'), help: t('people.new.will_be_displayed'), maxlength: Person::MAX_NAME %>
-	
+
 	  <% if @person.openid_identifier.blank? %>
 	    <%= f.password_field :password, label: t('people.new.password'), maxlength: Person::MAX_PASSWORD %>
 	    <%= f.password_field :password_confirmation, label: t('people.new.confirm_password'), maxlength: Person::MAX_PASSWORD, value: "" %>
 	  <%- end -%>
 	</span>
-	
+
 	<span id="openid">
 	    <%= f.text_field :openid_identifier, label: t('people.new.openid_url') %>
 	</span>
 	</fieldset>
-	
+
 	  <% if global_prefs.openid? %>
 	    <div style="text-align: center; font-size: 12px; padding: 10px;">
 	      <span id="noscript" style="display:none;">
@@ -41,11 +41,19 @@
 	    </div>
 	  </div>
 	  <div class="control-group">
-	  	<%= f.collection_select(:fee_plan_id, FeePlan.order(&:name), :id, :name, {:prompt => t( 'people.new.select_plan') } )%>
+      <%= f.label "Fee Plan", :class => 'control-label' %>
+      <div class="controls">
+        <% FeePlan.order(&:name).each do |plan| %>
+          <%= f.radio_button(:fee_plan_id, plan.id, label: plan.name) %>
+          <% plan.fees.each do |fee| %>
+            <%= print_fee(fee) %>
+          <% end %>
+        <% end %>
+      </div>
 	  </div>
 </div>
 <div class="span5">
-  
+
   <%= f.text_area :description, label: t('people.new.something_about_yourself'), rows: 6 %>
 
   <div class="control-group">
@@ -72,15 +80,15 @@
         </div>
     </div>
     <%= f.control_group :accept_agreement do %>
-      <%= f.check_box :accept_agreement, label: member_agreement_label.html_safe  %> 
+      <%= f.check_box :accept_agreement, label: member_agreement_label.html_safe  %>
     <% end %>
-	
+
 	<div id="stripe_data">
 		<%= f.text_field :credit_card, label: t('people.stripe.credit_card'), placeholder: "XXXX XXXX XXXX XXXX" %>
 		<%= f.text_field :expire, label: t('people.stripe.expiration'), placeholder: "MM/YYYY", :maxlength => 7 %>
 		<%= f.text_field :cvc, label: t('people.stripe.cvc') %>
 	</div>
-    
+
     <%= f.actions do %>
       <% f.primary t('people.new.signup_button') %>
     <% end %>

@@ -19,10 +19,10 @@ module PeopleHelper
     image = options[:image] || :icon
     image_options = { :title => h(person.display_name), :alt => h(person.display_name) }
     unless options[:image_options].nil?
-      image_options.merge!(options[:image_options]) 
+      image_options.merge!(options[:image_options])
     end
     link_options =  { :title => h(person.display_name) }
-    unless options[:link_options].nil?                    
+    unless options[:link_options].nil?
       link_options.merge!(options[:link_options])
     end
     content = image_tag(person.send(image), image_options)
@@ -30,7 +30,7 @@ module PeopleHelper
     # (with a 'vcard' class).
     if options[:vcard]
       name = options[:truncate] ? person.display_name.truncate(options[:truncate]) : person.display_name
-      content = %(#{content}#{content_tag(:span, h(name), 
+      content = %(#{content}#{content_tag(:span, h(name),
                                                  :class => "fn" )}).html_safe
     end
     link_to(content, link, link_options)
@@ -51,13 +51,30 @@ module PeopleHelper
     link_to(h(text), person, html_options)
   end
 
-  
-  def get_admin 
+
+  def get_admin
     Person.find_first_admin
   end
-    
+
+  def print_fee(fee)
+    case(fee.type)
+    when("FixedTransactionFee")
+      "Fixed transaction fee of #{fee.amount}"
+    when("PercentageTransactionFee")
+      "Percentage transaction fee of #{fee.percent}%"
+    when("RecurringFee")
+      "Recurring fee of #{fee.amount} per #{fee.period}"
+    when("FixedTransactionStripeFee")
+      "Fixed transaction fee of #{number_to_currency(fee.amount)}"
+    when("PercentageTransactionStripeFee")
+      "Percentage transaction fee of #{fee.percent}%"
+    when("RecurringStripeFee")
+      "Recurring fee of #{number_to_currency(fee.amount)} per #{fee.period}"
+    end
+  end
+
   private
-    
+
     # Make captioned images.
     def captioned(images, captions)
       images.zip(captions).map do |image, caption|
