@@ -63,13 +63,13 @@ module PeopleHelper
     when("PercentageTransactionFee")
       "Percentage transaction fee of #{fee.percent}%"
     when("RecurringFee")
-      "Recurring fee of #{fee.amount} per #{fee.period}"
+      "Recurring fee of #{fee.amount} per #{fee.interval}"
     when("FixedTransactionStripeFee")
       "Fixed transaction fee of #{number_to_currency(fee.amount)}"
     when("PercentageTransactionStripeFee")
       "Percentage transaction fee of #{fee.percent}%"
     when("RecurringStripeFee")
-      "Recurring fee of #{number_to_currency(fee.amount)} per #{fee.period}"
+      "Recurring fee of #{number_to_currency(fee.amount)} per #{fee.interval}"
     end
   end
 
