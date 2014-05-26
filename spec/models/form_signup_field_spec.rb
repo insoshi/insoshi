@@ -32,8 +32,8 @@ describe FormSignupField do
     @form_signup_field2.save
 
     fields = FormSignupField.all_with_order
-    fields[0].title.should eq("Test title 2")
-    fields[1].title.should eq("Test title 1")
+    fields[0].title.should eq("Test title 1")
+    fields[1].title.should eq("Test title 2")
   end
 
   describe "field_type is collection_select" do
