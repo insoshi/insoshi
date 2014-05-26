@@ -45,9 +45,13 @@
       <div class="controls">
         <% FeePlan.order(&:name).each do |plan| %>
           <%= f.radio_button(:fee_plan_id, plan.id, label: plan.name) %>
-          <% plan.all_fees.each do |fee| %>
-            <%= print_fee(fee) %>
-          <% end %>
+          <p><%= plan.description %></p>
+          <ul>
+            <% plan.all_fees.each do |fee| %>
+              <li><%= print_fee(fee) %></li>
+            <% end %>
+          </ul>
+          <hr />
         <% end %>
       </div>
 	  </div>
