@@ -67,28 +67,13 @@ class PeopleController < ApplicationController
       @person.person_metadata.build(value)
     end
     @person.email_verified = false if global_prefs.email_verifications?
-
+    update_credit_card(@person)
     @person.save do |result|
       respond_to do |format|
         if result
           flash[:notice] = handle_create_notifications
           format.html { redirect_to(home_url) }
         else
-          # If monetary plan type was choosed and model is free of errors besides it, check stripe.
-          errors_messages = @person.errors.messages
-          if errors_messages.size == 1 && errors_messages.keys.include?(:credit_card)
-            #Try stripe
-            stripe_ret = StripeOps.create_customer(person[:credit_card], person[:expire], person[:cvc], person[:name], person[:email])
-            if stripe_ret.kind_of?(Stripe::Customer)
-              @person.stripe_id = stripe_ret[:id]
-              @person.save
-              flash[:notice] = handle_create_notifications
-              format.html { redirect_to home_url }
-            else
-              @person.errors.add(:stripe, stripe_ret)
-            end
-
-          end
 
           @body = "register single-col"
           @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
@@ -201,6 +186,7 @@ class PeopleController < ApplicationController
       #when 'openid_edit'
     else
       @person.attributes = params[:person]
+      update_credit_card(@person)
       @person.save do |result|
         respond_to do |format|
           if result
@@ -282,35 +268,53 @@ class PeopleController < ApplicationController
   end
 
   private
-    def correct_person_required
-      @person = Person.find(params[:id])
-      unless(params[:task].blank?)
-        can_change_status = case params[:task]
-        when 'deactivated'
-          current_person.admin? || (global_prefs.whitelist? && current_person.activator?)
-        when 'activator'
-          current_person.admin?
-        end
-        flash[:error] = t('error_admin_access_required') unless can_change_status
-        redirect_to person_path(@person) unless can_change_status
+
+  def correct_person_required
+    @person = Person.find(params[:id])
+    unless(params[:task].blank?)
+      can_change_status = case params[:task]
+      when 'deactivated'
+        current_person.admin? || (global_prefs.whitelist? && current_person.activator?)
+      when 'activator'
+        current_person.admin?
+      end
+      flash[:error] = t('error_admin_access_required') unless can_change_status
+      redirect_to person_path(@person) unless can_change_status
+    else
+      redirect_to home_url unless ( current_person.admin? or Person.find(params[:id]) == current_person )
+    end
+  end
+
+  def cancel?
+    params["commit"] == t('button_cancel');
+  end
+
+  def set_up_metadata
+    @extra_fields
+    @person.person_metadata.each do |metadata|
+      obj = @extra_fields.select do |field|
+        field.id = metadata.form_signup_field_id
+      end
+      if obj.empty?
+        metadata.destroy
+      end
+    end
+  end
+
+  def update_credit_card(person)
+    if person.credit_card
+
+      if person.stripe_id
+        stripe_ret = StripeOps.create_customer(person.credit_card, person.expire, person.cvc, person.name, person.email)
       else
-        redirect_to home_url unless ( current_person.admin? or Person.find(params[:id]) == current_person )
+        stripe_ret = StripeOps.create_customer(person.credit_card, person.expire, person.cvc, person.name, person.email)
+      end
+
+      if stripe_ret.kind_of?(Stripe::Customer)
+        person.stripe_id = stripe_ret[:id]
+      else
+        person.errors.add(:stripe, stripe_ret)
       end
     end
-
-    def cancel?
-      params["commit"] == t('button_cancel');
-    end
-
-    def set_up_metadata
-      @extra_fields
-      @person.person_metadata.each do |metadata|
-        obj = @extra_fields.select do |field|
-          field.id = metadata.form_signup_field_id
-        end
-        if obj.empty?
-          metadata.destroy
-        end
-      end
-    end
+  end
 end

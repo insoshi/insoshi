@@ -56,8 +56,6 @@ class Person < ActiveRecord::Base
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 12.months
   DEFAULT_ZIPCODE_STRING = '89001'
-  # These constants should be methods, but I couldn't figure out how to use
-  # methods in the has_many associations.  I hope you can do better.
 
   module Scopes
 
@@ -129,8 +127,6 @@ class Person < ActiveRecord::Base
   :limit => FEED_SIZE,
   :conditions => ["people.deactivated = ?", false],
   :include => :person
-
-  #  has_many :page_views, :order => 'created_at DESC'
 
   has_many :own_groups, :class_name => "Group", :foreign_key => "person_id", :order => "name ASC"
   has_many :memberships
