@@ -94,7 +94,7 @@ en:
 
   bids:
     bid:
-      expires: "expires"    
+      expires: "expires"
       accepted: "Accepted"
       submitted_by: "Submitted by"
 
@@ -376,7 +376,7 @@ en:
       french: "French"
       greek: "Greek"
     _recent_activity:
-      header: "Recent Activity" 
+      header: "Recent Activity"
     _recent_exchanges:
       header: "Credits"
 
@@ -409,7 +409,7 @@ en:
     debit: "Debit"
     send_a_message: "Send a message"
     new:
-      enter_credit_for: "Transfer %{currency} to" 
+      enter_credit_for: "Transfer %{currency} to"
       amount: "amount"
       for: "For:"
       or_ask: "or ask"
@@ -419,7 +419,7 @@ en:
       quantity: "Quantity"
     notify:
       you_have_received_a_payment_of: "You have received a payment of"
-      you_have_been_billed_a_fee: "You have been billed a fee"
+      you_have_been_billed_a_fee: "You have been charged a fee"
       paid_you: "paid you"
       payment_suspended: "Payment suspended: "
       suspended_payment_of: "suspended payment of"
