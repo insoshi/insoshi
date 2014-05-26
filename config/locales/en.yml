@@ -318,6 +318,8 @@ en:
       address_select_note: "Choose primary address for use in distance calculations"
       time_zone: "Time Zone"
       date_style: "Date Style"
+      update_card: "Update Card"
+      cvc: "CVC"
     groups:
       no_groups: "No groups (yet)"
       new_group: "New group"
