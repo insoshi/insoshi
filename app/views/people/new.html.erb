@@ -43,7 +43,7 @@
 	  <div class="control-group">
       <%= f.label "Fee Plan", :class => 'control-label' %>
       <div class="controls">
-        <% FeePlan.order(&:name).each do |plan| %>
+        <% FeePlan.where(available: true).order(&:name).each do |plan| %>
           <%= f.radio_button(:fee_plan_id, plan.id, label: plan.name) %>
           <p><%= plan.description %></p>
           <ul>
