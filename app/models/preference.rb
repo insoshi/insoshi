@@ -90,6 +90,7 @@ class Preference < ActiveRecord::Base
       photo = Preference.first.photos.new(:picture_for => 'profile')
       photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
       photo.save!
+      version.nil? ? photo.picture_url : photo.picture_url(version)
     end
 
     def group_image version = nil
@@ -103,6 +104,7 @@ class Preference < ActiveRecord::Base
       photo = Preference.first.photos.new(:picture_for => 'group')
       photo.picture = File.open(File.join(Rails.root, 'public/images/g_default.png'))
       photo.save!
+      version.nil? ? photo.picture_url : photo.picture_url(version)
     end
 
   end
