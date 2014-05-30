@@ -85,6 +85,11 @@ class Preference < ActiveRecord::Base
       else
         Preference.first.default_profile_picture.picture_url
       end
+    rescue NoMethodError => e
+      # default_profile_picture will be nil the first time profile_image() is called. create it here.
+      photo = Preference.first.photos.new(:picture_for => 'profile')
+      photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
+      photo.save!
     end
 
     def group_image version = nil
@@ -93,6 +98,11 @@ class Preference < ActiveRecord::Base
       else
         Preference.first.default_group_picture.picture_url
       end
+    rescue NoMethodError => e
+      # default_group_picture will be nil the first time group_image() is called. create it here.
+      photo = Preference.first.photos.new(:picture_for => 'group')
+      photo.picture = File.open(File.join(Rails.root, 'public/images/g_default.png'))
+      photo.save!
     end
 
   end
