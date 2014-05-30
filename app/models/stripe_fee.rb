@@ -3,7 +3,7 @@ class StripeFee < ActiveRecord::Base
   attr_readonly :fee_plan
   validates :fee_plan, presence: true
   before_create :convert_percents
-  
+
   def self.transaction_stripe_fees_sum_for(person, interval)
     today = Date.today
     fees_sum = person.fee_plan.fixed_transaction_stripe_fees.sum(:amount)
@@ -17,17 +17,23 @@ class StripeFee < ActiveRecord::Base
     end
     cash_fees_sum
   end
-  
-  # Cash fees are aggregated and submitted to credit card processing in batches. 
-  # Currently, weekly to Stripe. 
+
+  # Cash fees are aggregated and submitted to credit card processing in batches.
+  # Currently, weekly to Stripe.
   def self.apply_stripe_transaction_fees(interval)
-    desc = "#{interval}ly transaction fees sum"            
+    desc = "#{interval}ly transaction fees sum"
     Person.with_stripe_plans.each do |person|
-      amount_to_charge = StripeFee.transaction_stripe_fees_sum_for(person, interval)
-      StripeOps.charge(amount_to_charge, person.stripe_id, desc) unless amount_to_charge.zero?
+      amount_to_charge = StripeFee.transaction_stripe_fees_sum_for(person, interval) + person.rollover_balance
+      if amount_to_charge > 0.5
+        StripeOps.charge(amount_to_charge, person.stripe_id, desc)
+        amount_to_charge = 0
+      end
+      person.rollover_balance = amount_to_charge
+      person.save!
+
     end
   end
-  
+
   protected
   # Method to be inherited into all other percent fees.
   # DB only supports numbers like 1.34343 and possibly user will
