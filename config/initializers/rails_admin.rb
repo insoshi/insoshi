@@ -504,6 +504,7 @@ end
       field :fixed_transaction_fees
       field :percent_transaction_fees
       field :recurring_fees
+      field :available
 
   end
 

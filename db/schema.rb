@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140403075352) do
+ActiveRecord::Schema.define(:version => 20140528175903) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20140403075352) do
     t.decimal  "earned",          :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "reserve_percent", :precision => 8, :scale => 7, :default => 0.0
     t.boolean  "reserve",                                       :default => false
+    t.decimal  "rollover_charge",                               :default => 0.0
   end
 
   create_table "activities", :force => true do |t|
@@ -264,10 +265,11 @@ ActiveRecord::Schema.define(:version => 20140403075352) do
   end
 
   create_table "fee_plans", :force => true do |t|
-    t.string   "name",        :limit => 100, :null => false
+    t.string   "name",        :limit => 100,                    :null => false
     t.string   "description"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.boolean  "available",                  :default => false
   end
 
   create_table "feed_posts", :force => true do |t|
