@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140528175903) do
+ActiveRecord::Schema.define(:version => 20140530132324) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -516,6 +516,7 @@ ActiveRecord::Schema.define(:version => 20140528175903) do
     t.integer  "posts_per_page",           :default => 25
     t.string   "stripe_id"
     t.boolean  "requires_credit_card",     :default => true
+    t.decimal  "rollover_balance",         :default => 0.0
   end
 
   add_index "people", ["admin"], :name => "index_people_on_admin"
