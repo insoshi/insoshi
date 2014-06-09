@@ -32,20 +32,9 @@ class FeePlan < ActiveRecord::Base
     end
 
     def daily_check_for_recurring_fees(time)
-      matched_intervals = []
-      # if day is last day of month
-      if time.day == Date.new(time.year,time.month,-1).day
-        matched_intervals << 'month'
-        apply_fees('month')
+      Person.all.each do |person|
+        FeeSchedule.new(person).charge
       end
-      # if day is last day of year
-      if 12 == time.month
-        if time.day == Date.new(time.year,12,-1).day
-          matched_intervals << 'year'
-          apply_fees('year')
-        end
-      end
-      matched_intervals
     end
   end
 
@@ -62,9 +51,12 @@ class FeePlan < ActiveRecord::Base
 
   default_scope :order => 'name ASC'
 
+  def recurring_fees
+    @recurring_fees ||= self.fees.where(:type => "RecurringFee")
+  end
+
   def apply_recurring_fees(interval)
     group = Preference.first.default_group
-    recurring_fees = self.fees.where(:type => "RecurringFee")
     recurring_fees.each do |f|
       if interval == f.interval
         self.people.each do |payer|
