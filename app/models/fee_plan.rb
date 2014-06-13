@@ -24,12 +24,6 @@ class FeePlan < ActiveRecord::Base
   default_scope :order => 'name ASC'
 
   class << self
-    def apply_fees(interval)
-      Rails.logger.info "Applying per-#{interval} fees"
-      FeePlan.all.each do |p|
-        p.apply_recurring_fees(interval)
-      end
-    end
 
     def daily_check_for_recurring_fees(time)
       Person.all.each do |person|
@@ -53,21 +47,6 @@ class FeePlan < ActiveRecord::Base
 
   def recurring_fees
     @recurring_fees ||= self.fees.where(:type => "RecurringFee")
-  end
-
-  def apply_recurring_fees(interval)
-    group = Preference.first.default_group
-    recurring_fees.each do |f|
-      if interval == f.interval
-        self.people.each do |payer|
-          e=group.exchanges.build(amount: f.amount)
-          e.customer = payer
-          e.worker = f.recipient
-          e.notes = "#{interval.capitalize}ly recurring fee"
-          e.save!
-        end
-      end
-    end
   end
 
   def apply_transaction_fees(txn)

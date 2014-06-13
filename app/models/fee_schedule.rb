@@ -1,3 +1,4 @@
+
 class FeeSchedule
   def initialize(person)
     @person = person
@@ -5,10 +6,10 @@ class FeeSchedule
   end
 
   def charge
-
+    group = Preference.first.default_group
     @fee_plan.recurring_fees.each do |fee|
-      if charge_today?(fee, Date.today)
-        e=group.exchanges.build(amount: f.amount)
+      if charge_today?(fee.interval, Date.today)
+        e = group.exchanges.build(amount: f.amount)
         e.customer = person
         e.worker = fee.recipient
         e.notes = "#{interval.capitalize}ly recurring fee"
@@ -17,21 +18,20 @@ class FeeSchedule
     end
   end
 
-  private
-
-  def charge_today?(fee, date)
-    case fee.interval
-    when 'month':
+  def charge_today?(interval, date)
+    case interval
+    when 'month'
       if [29, 30, 31].include?(@person.plan_started_at.day)
         date.day == 28
       else
         date.day == @person.plan_started_at.day
       end
-    when 'year':
+    when 'year'
       if @person.plan_started_at.yday == 366
         date.yday == 365
       else
-      date.yday == @person.plan_started_at.yday
+        date.yday == @person.plan_started_at.yday
+      end
     end
   end
 end

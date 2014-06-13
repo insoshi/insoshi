@@ -19,6 +19,7 @@ class Person < ActiveRecord::Base
   #  attr_accessor :password, :verify_password, :new_password, :password_confirmation
   attr_accessor :sorted_photos, :accept_agreement
   attr_accessor :credit_card, :expire, :cvc #stripe data - virtual, won't be stored in db.
+  attr_accessor :plan_started_at
   attr_accessible :stripe_id
   attr_accessible *attribute_names, :as => :admin
   attr_accessible :address_ids, :as => :admin
