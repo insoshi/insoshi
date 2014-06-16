@@ -19,6 +19,7 @@ class Person < ActiveRecord::Base
   #  attr_accessor :password, :verify_password, :new_password, :password_confirmation
   attr_accessor :sorted_photos, :accept_agreement
   attr_accessor :credit_card, :expire, :cvc #stripe data - virtual, won't be stored in db.
+  attr_accessor :plan_started_at
   attr_accessible :stripe_id
   attr_accessible *attribute_names, :as => :admin
   attr_accessible :address_ids, :as => :admin
@@ -186,6 +187,7 @@ class Person < ActiveRecord::Base
   before_update :set_old_description
   after_update :log_activity_description_changed
   before_destroy :destroy_activities, :destroy_feeds
+  before_save :update_plan_start_date
 
   # If monetary fee plan was choosed return false, so message "Credit card required" will be added to errors
   # and stripe will proceed with checking card. If stripe will succeed, it will try to save record,
@@ -599,6 +601,10 @@ class Person < ActiveRecord::Base
     true
     #(crypted_password.blank? && identity_url.nil?) || !password.blank? ||
     #!verify_password.nil?
+  end
+
+  def update_plan_start_date
+    plan_started_at = Time.now if fee_plan_id_changed?
   end
 
 end
