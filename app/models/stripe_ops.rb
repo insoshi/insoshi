@@ -109,6 +109,17 @@ class StripeOps
     end
   end
 
+  def update_stripe_plan(amount, interval, name)
+    begin
+      plan = Stripe::Plan.retrieve(name)
+      plan.amount = amount
+      plan.interval = interval
+      stripe_response = plan.save
+    rescue => e
+      stripe_response = handle_error(e)
+    end
+  end
+
   def self.subscribe_to_plan(customer_id, plan_name)
     begin
       stripe_ret = Stripe::Customer.retrieve(customer_id).subscriptions.create(:plan => plan_name)
