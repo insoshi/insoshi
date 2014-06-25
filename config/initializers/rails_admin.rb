@@ -324,6 +324,8 @@ end
         properties[:collection] = FeePlan.all.map {|g| [g.name,g.id]}
         partial "select"
       end
+      field :show_description
+      field :show_neighborhood
     end
   end
 
