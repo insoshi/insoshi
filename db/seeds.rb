@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
@@ -107,18 +109,50 @@ US_BUSINESS_TYPES.each do |value|
   type = BusinessType.find_or_create_by_name(value, :description => "")
 end
 
+deactivated_fee_plan = FeePlan.create(:name => "Closed", :description => "Deactivated plan types")
+
 TimeZone.find_or_create_by_time_zone('Pacific Time (US & Canada)')
+plan = FeePlan.create!(:name => "default", :description => "Default plan for all people. Please don't delete it or your app may stop running properly.")
+
+FORM_TYPES = [
+  ['BID: {{estimated_hours}} hours - {{req_name}}','See your <a href=\"{{request_url}}\">request</a> to consider bid', 'offered','en'],
+  ['Bid accepted for {{req_name}}','See your <a href=\"{{request_url}}\">request</a> to consider bid','accepted','en'],
+  ['Bid committed for {{req_name}}','Commitment made for your <a href=\"{{request_url}}\">request</a>. This is an automated message','commited','en'],
+  ['Work completed for {{req_name}}','Work completed for your <a href=\"{{request_url}}\">request</a>. Please approve transaction! This is an automated message','completed','en'],
+
+  ['You have received a payment of {{amount}} {{group_unit}} for {{metadata_name}}','{{customer_name}} paid you {{amount}} {{group_unit}}.','send_payment_notyfication','en'],
+  ['Has recibido un pago de {{amount}} {{group_unit}} por {{metadata_name}}','{{customer_name}} te ha pagado {{amount}} {{group_unit}}.','send_payment_notyfication','es'],
+  ['Vous avez reçu un paiement {{amount}} {{group_unit}} pour {{metadata_name}}','{{customer_name}} vous avez payé {{amount}} {{group_unit}}.','send_payment_notyfication','fr'],
+  ['Έχετε λάβει μια πληρωμή από {{amount}} {{group_unit}} για {{metadata_name}}','{{customer_name}} σας πλήρωσε {{amount}} {{group_unit}}.','send_payment_notyfication','gr'],
+
+  ['Payment suspended: {{amount}} {{group_unit}} by {{metadata_name}}','{{customer_name}} suspended payment of {{amount}} {{group_unit}}.','send_suspend_payment_notyfication','en'],
+  ['Pago cancelado:  {{amount}} {{group_unit}} por {{metadata_name}}','{{customer_name}} pago cancelado de {{amount}} {{group_unit}}.','send_suspend_payment_notyfication','es'],
+  ['Paiement suspendu: {{amount}} {{group_unit}} par {{metadata_name}}','{{customer_name}} paiement suspendu du {{amount}} {{group_unit}}.','send_suspend_payment_notyfication','fr'],
+  ['Αναστολή πληρωμής: {{amount}} {{group_unit}} από {{metadata_name}}','{{customer_name}} αναστολή πληρωμής για {{amount}} {{group_unit}}.','send_suspend_payment_notyfication','gr']
+]
+
+FORM_TYPES.each do |value|
+  SystemMessageTemplate.create(:title => value[0], :text => value[1], :message_type => value[2], :lang => value[3])
+end
 
 # default profile picture
 preference = Preference.first
 if preference.nil?
   # first install
   using_email = !!((ENV['SMTP_DOMAIN'] && ENV['SMTP_SERVER']) || ENV['SENDGRID_USERNAME']) # explicit true
-  preference = Preference.create!(:app_name => (ENV['APP_NAME'] || "APP_NAME is Blank"), :server_name => ENV['SERVER_NAME'], :smtp_server => ENV['SMTP_SERVER'] || '', :email_notifications => using_email)
+
+  preference = Preference.create!(
+    :app_name => (ENV['APP_NAME'] || "APP_NAME is Blank"),
+    :server_name => ENV['SERVER_NAME'],
+    :smtp_server => ENV['SMTP_SERVER'] || '',
+    :email_notifications => using_email,
+    :default_deactivated_fee_plan_id => deactivated_fee_plan.id)
+
   p = Person.new(:name => "admin", :email => "admin@example.com", :password => "admin", :password_confirmation => "admin", :description => "")
   p.save!
   p.admin = true
   p.email_verified = true
+  p.fee_plan = plan
   p.save
   address = Address.new(person: p) # name is not used anywhere and cannot be mass assigned anyway
   address.save

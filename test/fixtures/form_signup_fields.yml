@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  key: MyString
+  title: MyString
+  mandatory: false
+  field_type: MyString
+  order: 1
+
+two:
+  key: MyString
+  title: MyString
+  mandatory: false
+  field_type: MyString
+  order: 1

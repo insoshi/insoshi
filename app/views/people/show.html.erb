@@ -1,4 +1,4 @@
-<div class="span10">
+<div class="span7">
 <div class="profile vcard">
     <%- if @person.openid_identifier.nil? -%>
       <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span></h2>
@@ -89,4 +89,10 @@
   </div>
 
   <%= render :partial => '/shared/recent_activity' %>
+</div>
+<div class="span4">
+	<div class='fee-plan'>
+  		<%= render :partial => 'fee_plan', :locals => {:fee_plan => @person.fee_plan} %>
+  	</div>
+  	<%= link_to "Transaction fees history", transaction_history_person_path %>
 </div>

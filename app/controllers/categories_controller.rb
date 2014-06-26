@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_filter :login_required, :except => :index
+  before_filter :credit_card_required
   cache_sweeper :category_sweeper, :only => [:create, :update, :destroy]
 
   # GET /categories

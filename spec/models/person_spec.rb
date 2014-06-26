@@ -2,6 +2,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Person do
 
+  fixtures :fee_plans
+
   before(:each) do
     @person = people(:quentin)
   end
@@ -129,6 +131,17 @@ describe Person do
       @person.should be_deactivated
     end
 
+    it "after deactivate should be in 'Closed' plan" do
+      @pref = preferences(:one)
+      @fee_plan = fee_plans(:closed)
+      @pref.default_deactivated_fee_plan_id = @fee_plan.id
+      @pref.save
+
+      @person.deactivated = true
+      @person.save
+      @person.fee_plan.name.should eq('Closed')
+    end
+
     it "should reactivate a person" do
       @person.toggle(:deactivated)
       @person.should be_deactivated
@@ -162,7 +175,7 @@ describe Person do
 
       Req.custom_search(nil, group, true, 1, 25, nil).should be_empty
       @person.deactivated = false
-      @person.save      
+      @person.save
       Req.custom_search(nil, group, true, 1, 25, nil).should_not be_empty
     end
 
@@ -178,7 +191,7 @@ describe Person do
 
       Offer.custom_search(nil, group, true, 1, 25, nil).should be_empty
       @person.deactivated = false
-      @person.save      
+      @person.save
       Offer.custom_search(nil, group, true, 1, 25, nil).should_not be_empty
     end
 
@@ -244,6 +257,30 @@ describe Person do
     end
   end
 
+  describe "stripe associated methods" do
+    before(:each) do
+      @fee_plan = FeePlan.new(name: 'with stripe plans')
+      @fee_plan.save!
+      stripe_fee = FixedTransactionStripeFee.new(fee_plan: @fee_plan, amount: 1)
+      stripe_fee.save!
+      @person.fee_plan = @fee_plan
+    end
+
+    it "should return true if person got fee plan with any stripe fees" do
+      @person.have_monetary_fee_plan?.should be_true
+    end
+
+    it "should return true if person needs to submit their credit card credentials" do
+      @person.stripe_id = nil
+      @person.credit_card_required?.should be_true
+    end
+
+    it "should be possible for admin to override forcing credit card credentials" do
+      @person.requires_credit_card = false
+      @person.credit_card_required?.should_not be_true
+    end
+  end
+
   describe "your requests" do
     it "should not include requests associated with direct payments" do
       group = created_group_id(@person)
@@ -286,7 +323,7 @@ describe Person do
         :expiration_date => DateTime.now + 1.day
         })
       offer.person_id = person.id
-      
+
       offer.valid?
       offer.save!
       offer

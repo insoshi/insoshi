@@ -525,3 +525,11 @@ input#person_openid_identifier, input#person_session_openid_identifier {
 .talkable-link-div {
     padding-bottom: 10px;
 }
+
+div.error-field {
+  color: #b94a48;
+}
+
+div.error-field input {
+  border-color: #b94a48;
+}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140112071748) do
+ActiveRecord::Schema.define(:version => 20140623131718) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
     t.decimal  "earned",          :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "reserve_percent", :precision => 8, :scale => 7, :default => 0.0
     t.boolean  "reserve",                                       :default => false
+    t.decimal  "rollover_charge",                               :default => 0.0
   end
 
   create_table "activities", :force => true do |t|
@@ -163,6 +164,16 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
   add_index "categories_reqs", ["category_id"], :name => "index_categories_reqs_on_category_id"
   add_index "categories_reqs", ["req_id", "category_id"], :name => "index_categories_reqs_on_req_id_and_category_id"
 
+  create_table "charges", :force => true do |t|
+    t.string   "stripe_id"
+    t.string   "description"
+    t.float    "amount"
+    t.string   "status"
+    t.integer  "person_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "client_applications", :force => true do |t|
     t.string   "name"
     t.string   "url"
@@ -253,6 +264,14 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
     t.string   "notes"
   end
 
+  create_table "fee_plans", :force => true do |t|
+    t.string   "name",        :limit => 100,                    :null => false
+    t.string   "description"
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.boolean  "available",                  :default => false
+  end
+
   create_table "feed_posts", :force => true do |t|
     t.string   "feedid"
     t.string   "title"
@@ -272,6 +291,30 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
   end
 
   add_index "feeds", ["person_id", "activity_id"], :name => "index_feeds_on_person_id_and_activity_id"
+
+  create_table "fees", :force => true do |t|
+    t.integer  "fee_plan_id"
+    t.string   "type"
+    t.integer  "recipient_id"
+    t.decimal  "percent",      :precision => 8, :scale => 7, :default => 0.0
+    t.decimal  "amount",       :precision => 8, :scale => 2, :default => 0.0
+    t.string   "interval"
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
+  end
+
+  add_index "fees", ["fee_plan_id"], :name => "index_fees_on_fee_plan_id"
+
+  create_table "form_signup_fields", :force => true do |t|
+    t.string   "key"
+    t.string   "title"
+    t.boolean  "mandatory",  :default => false
+    t.string   "field_type"
+    t.integer  "order"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "options"
+  end
 
   create_table "forums", :force => true do |t|
     t.string   "name"
@@ -465,12 +508,16 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
     t.integer  "business_type_id"
     t.string   "title"
     t.integer  "activity_status_id"
-    t.integer  "plan_type_id"
+    t.integer  "fee_plan_id"
     t.integer  "support_contact_id"
     t.boolean  "mailchimp_subscribed",     :default => false
     t.string   "time_zone"
     t.string   "date_style"
     t.integer  "posts_per_page",           :default => 25
+    t.string   "stripe_id"
+    t.boolean  "requires_credit_card",     :default => true
+    t.decimal  "rollover_balance",         :default => 0.0
+    t.datetime "plan_started_at"
   end
 
   add_index "people", ["admin"], :name => "index_people_on_admin"
@@ -479,6 +526,15 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
   add_index "people", ["email"], :name => "index_people_on_email", :unique => true
   add_index "people", ["name"], :name => "index_people_on_name"
   add_index "people", ["perishable_token"], :name => "index_people_on_perishable_token"
+
+  create_table "person_metadata", :force => true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.integer  "person_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.integer  "form_signup_field_id"
+  end
 
   create_table "photos", :force => true do |t|
     t.integer  "parent_id"
@@ -498,13 +554,6 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
 
   add_index "photos", ["parent_id"], :name => "index_photos_on_parent_id"
 
-  create_table "plan_types", :force => true do |t|
-    t.string   "name",        :limit => 100, :null => false
-    t.string   "description"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-  end
-
   create_table "posts", :force => true do |t|
     t.integer  "blog_id"
     t.integer  "topic_id"
@@ -521,16 +570,16 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
   add_index "posts", ["type"], :name => "index_posts_on_type"
 
   create_table "preferences", :force => true do |t|
-    t.boolean  "email_notifications",     :default => false, :null => false
-    t.boolean  "email_verifications",     :default => false, :null => false
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.boolean  "email_notifications",             :default => false, :null => false
+    t.boolean  "email_verifications",             :default => false, :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.text     "analytics"
     t.string   "server_name"
     t.string   "app_name"
     t.text     "about"
-    t.boolean  "demo",                    :default => false
-    t.boolean  "whitelist",               :default => false
+    t.boolean  "demo",                            :default => false
+    t.boolean  "whitelist",                       :default => false
     t.string   "gmail"
     t.text     "practice"
     t.text     "steps"
@@ -542,18 +591,21 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
     t.string   "new_member_notification"
     t.text     "registration_intro"
     t.integer  "default_group_id"
-    t.integer  "topic_refresh_seconds",   :default => 30,    :null => false
-    t.boolean  "groups",                  :default => true,  :null => false
+    t.integer  "topic_refresh_seconds",           :default => 30,    :null => false
+    t.boolean  "groups",                          :default => true,  :null => false
     t.string   "alt_signup_link"
-    t.boolean  "protected_categories",    :default => false
+    t.boolean  "protected_categories",            :default => false
     t.string   "mailchimp_list_id"
-    t.boolean  "mailchimp_send_welcome",  :default => true
+    t.boolean  "mailchimp_send_welcome",          :default => true
     t.string   "locale"
-    t.string   "logout_url",              :default => ""
-    t.boolean  "public_uploads",          :default => false
-    t.boolean  "display_orgicon",         :default => true
-    t.boolean  "public_private_bid",      :default => false
-    t.boolean  "openid",                  :default => true
+    t.string   "logout_url",                      :default => ""
+    t.boolean  "public_uploads",                  :default => false
+    t.boolean  "display_orgicon",                 :default => true
+    t.boolean  "public_private_bid",              :default => false
+    t.boolean  "openid",                          :default => true
+    t.integer  "default_deactivated_fee_plan_id"
+    t.boolean  "show_description",                :default => true
+    t.boolean  "show_neighborhood",               :default => true
   end
 
   create_table "privacy_settings", :force => true do |t|
@@ -572,7 +624,7 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 8
+    t.integer  "year",       :limit => 5
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
@@ -605,6 +657,28 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "stripe_fees", :force => true do |t|
+    t.integer  "fee_plan_id"
+    t.string   "type"
+    t.decimal  "percent",     :precision => 8, :scale => 7, :default => 0.0
+    t.decimal  "amount",      :precision => 8, :scale => 2, :default => 0.0
+    t.string   "interval"
+    t.string   "plan"
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
+  end
+
+  add_index "stripe_fees", ["fee_plan_id"], :name => "index_stripe_fees_on_fee_plan_id"
+
+  create_table "system_message_templates", :force => true do |t|
+    t.string   "title"
+    t.string   "text"
+    t.string   "message_type"
+    t.string   "lang"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "time_zones", :force => true do |t|

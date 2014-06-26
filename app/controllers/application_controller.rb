@@ -73,6 +73,28 @@ class ApplicationController < ActionController::Base
     def logged_in?
       !!current_person
     end
+    
+    # User is back after some absence and he CAN'T go anywhere until they update their credit card data
+    # only if they have monetary fee sign up and haven't already submitted credit card data.
+    def credit_card_required
+      if logged_in? && current_person.credit_card_required?
+        flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " + 
+                         "You won't be able to take any actions until then."
+        redirect_to credit_card_path
+      end
+    end
+ 
+    # Checks if user entered credit card data, or if admin allowed him not to.
+    # Even if admin allowed him not to put credit card data, he has to submit it
+    # to create offer.
+    def check_credit_card
+      if logged_in? && current_person.stripe_id.blank? && current_person.fee_plan.contains_stripe_fees?
+        store_location
+        flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " + 
+                         "You won't be able to take any actions until then."
+        redirect_to credit_card_path
+      end
+    end
 
     def login_required
       unless current_person

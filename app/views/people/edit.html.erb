@@ -49,6 +49,7 @@
           <%= f.check_box :phoneprivacy, label: t('people.edit.share_phone_number') %>
       <% end %>
 
+      <%= render :partial => "person_metadata", :locals => {:f => f, :person => @person, :extra_fields => @extra_fields} %>
       <%- if global_prefs.email_notifications? -%>
 
         <br />
@@ -161,6 +162,26 @@
         <input type="hidden" name="type" value="password_edit" />
         <%= f.actions do %>
           <%= f.primary t('people.edit.change_password') %>
+        <% end %>
+    <% end %>
+
+    <h2><%= t('people.edit.update_your_credit_card') %></h2>
+
+    <%= bootstrap_form_for @person, :html => { :id => "update_credit_card" } do |f| %>
+        <%= f.text_field :credit_card,
+                             :label => t('people.edit.card_number'),
+                             :size => 34,
+                             :placeholder => 'XXXX XXXX XXXX XXXX' %>
+
+        <%= f.text_field :expire,
+                             :label => t('people.edit.expiration'),
+                             :size => 34,
+                             :placeholder => 'MM/YYYY' %>
+        <%= f.text_field :cvc,
+                             :label => t('people.edit.cvc'),
+                             :size => 34 %>
+        <%= f.actions do %>
+          <%= f.primary t('people.edit.update_card') %>
         <% end %>
     <% end %>
 

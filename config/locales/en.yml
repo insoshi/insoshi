@@ -94,7 +94,7 @@ en:
 
   bids:
     bid:
-      expires: "expires"    
+      expires: "expires"
       accepted: "Accepted"
       submitted_by: "Submitted by"
 
@@ -318,6 +318,8 @@ en:
       address_select_note: "Choose primary address for use in distance calculations"
       time_zone: "Time Zone"
       date_style: "Date Style"
+      update_card: "Update Card"
+      cvc: "CVC"
     groups:
       no_groups: "No groups (yet)"
       new_group: "New group"
@@ -349,7 +351,9 @@ en:
       or_signup_with_openid: "or Signup with OpenID"
       back_to_regular_signup: "back to regular signup"
       openid_url: "OpenID URL"
+      select_plan: "Please select fee plan."
       signup_button: "Sign up"
+      field_is_required: "is required"
     request_memberships:
       header: "Membership request for your groups"
       respond: "Respond"
@@ -374,7 +378,7 @@ en:
       french: "French"
       greek: "Greek"
     _recent_activity:
-      header: "Recent Activity" 
+      header: "Recent Activity"
     _recent_exchanges:
       header: "Credits"
 
@@ -407,7 +411,7 @@ en:
     debit: "Debit"
     send_a_message: "Send a message"
     new:
-      enter_credit_for: "Transfer %{currency} to" 
+      enter_credit_for: "Transfer %{currency} to"
       amount: "amount"
       for: "For:"
       or_ask: "or ask"
@@ -417,6 +421,7 @@ en:
       quantity: "Quantity"
     notify:
       you_have_received_a_payment_of: "You have received a payment of"
+      you_have_been_billed_a_fee: "You have been charged a fee"
       paid_you: "paid you"
       payment_suspended: "Payment suspended: "
       suspended_payment_of: "suspended payment of"

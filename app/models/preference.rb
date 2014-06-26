@@ -42,7 +42,8 @@ class Preference < ActiveRecord::Base
                   :protected_categories,
                   :blog_feed_url,
                   :googlemap_api_key,
-                  :default_group_id, :display_orgicon
+                  :default_group_id, :display_orgicon,
+                  :default_deactivated_fee_plan_id
   attr_accessible *attribute_names, :as => :admin
 
   validate :enforce_singleton, :on => :create
@@ -80,18 +81,22 @@ class Preference < ActiveRecord::Base
   class << self
 
     def profile_image version = nil
-      if version
-        Preference.first.default_profile_picture.picture_url(version)
-      else
-        Preference.first.default_profile_picture.picture_url
+      unless Preference.first.default_profile_picture.blank?
+        if version
+          Preference.first.default_profile_picture.picture_url(version)
+        else
+          Preference.first.default_profile_picture.picture_url
+        end
       end
     end
 
     def group_image version = nil
-      if version
-        Preference.first.default_group_picture.picture_url(version)
-      else
-        Preference.first.default_group_picture.picture_url
+      unless Preference.first.default_group_picture.blank?
+        if version
+          Preference.first.default_group_picture.picture_url(version)
+        else
+          Preference.first.default_group_picture.picture_url
+        end
       end
     end
 

@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 
 source 'https://rubygems.org'
+source 'https://code.stripe.com'
 ruby "1.9.3"
 gem 'rails', '3.2.16'
 
@@ -16,10 +17,6 @@ group :assets do
   gem "sass-rails"
   gem "uglifier"
   # gem 'jquery-ui-rails'
-end
-
-group :debug do
-  gem 'debugger'
 end
 
 gem "coffee-rails"
@@ -40,8 +37,8 @@ gem "texticle"
 gem "aws-s3"
 gem "fog"
 gem "carrierwave"
+gem "json", '~> 1.8.1'
 gem "rmagick"
-gem "json", '1.7.7'
 gem "geokit-rails3"
 
 gem "will_paginate"
@@ -60,6 +57,9 @@ gem 'valid_email', :require => 'valid_email/email_validator'
 gem "calendar_helper"
 gem "gibbon", :git => "git://github.com/amro/gibbon.git"
 gem "bootstrap_form", "~> 0.3.2"
+gem "stripe", '~> 1.10.1'
+gem "mustache"
+gem "mini_magick"
 
 group :development, :test do
   gem "heroku-api"
@@ -74,6 +74,7 @@ group :development, :test do
 end
 
 group :debug do
+  gem 'pry'
   gem 'debugger'
 end
 
@@ -90,13 +91,14 @@ group :production do
 end
 
 group :test do
+  gem "rspec-rails", "~> 2.14"
   gem "capybara"
   gem "cucumber"
   gem "cucumber-rails"
   gem "database_cleaner"
   gem "guard-spork"
-  gem "rspec-rails" # :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
   gem "spork"
+  gem 'stripe-ruby-mock','~> 1.10.1.6'
 end
 gem 'remotipart'
 

@@ -10,19 +10,35 @@ class Ability
 
     if person.admin?
       can :dashboard
+      can [:read,:create,:destroy], Fee
+      can [:read,:create,:destroy], StripeFee
+      can [:read,:create,:update,:destroy], FixedTransactionFee
+      can [:read,:create,:update,:destroy], PercentTransactionFee
+      can [:read,:create,:update,:destroy], RecurringFee
+      can [:read,:create,:update,:destroy], FixedTransactionStripeFee
+      can [:read,:create,:update,:destroy], PercentTransactionStripeFee
+      can [:read,:create,:destroy], RecurringStripeFee
+      can [:read, :refund_money, :dispute_link], Charge
     end
 
     # need these for rails_admin
-    can [:read,:create,:update,:destroy], Address
-    can [:read,:create,:update,:destroy], State
+    can [:manage], Address
+    can [:manage], State
     can [:read,:update], TimeZone
+
+    can [:read,:create,:update], SystemMessageTemplate
+    can [:manage], Message
 
     can [:read,:create], Person
     can :update, Person do |target_person|
       target_person == person || person.admin?
     end
+
     can :add_to_mailchimp_list, Person
     can :export, Person
+    can :view_transactions, Person do |transact_owner|
+      person.id == transact_owner.id
+    end
 
     can :read, PrivacySetting
     can :update, PrivacySetting do |ps|
@@ -40,8 +56,8 @@ class Ability
       person.admin?
     end
 
-    can :read, PlanType
-    can [:create,:update,:destroy], PlanType do |pt|
+    can :read, FeePlan
+    can [:create,:update,:destroy], FeePlan do |fp|
       person.admin?
     end
 
@@ -164,11 +180,14 @@ class Ability
       Membership.mem(person,bid.req.group)
     end
     can :update, Bid do |bid|
-      bid.person == person || bid.req.person == person
+      person.admin? || bid.person == person || bid.req.person == person
     end
     can :destroy, Bid do |bid|
-      person.admin? || bid.person == person
+      bid.person == person
     end
+
+    can [:read, :create,:update,:destroy], FormSignupField
+    can [:read, :create,:update,:destroy], PersonMetadatum
 
     can :read, Exchange
     can :destroy, Exchange do |exchange|

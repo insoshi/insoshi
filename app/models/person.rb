@@ -18,12 +18,16 @@ class Person < ActiveRecord::Base
 
   #  attr_accessor :password, :verify_password, :new_password, :password_confirmation
   attr_accessor :sorted_photos, :accept_agreement
+  attr_accessor :credit_card, :expire, :cvc #stripe data - virtual, won't be stored in db.
+  attr_accessor :plan_started_at
+  attr_accessible :stripe_id
   attr_accessible *attribute_names, :as => :admin
   attr_accessible :address_ids, :as => :admin
   attr_accessible :password, :password_confirmation, :as => :admin
   attr_accessible :email, :password, :password_confirmation, :name
   attr_accessible :business_name, :legal_business_name, :business_type_id
-  attr_accessible :title, :activity_status_id, :plan_type_id, :support_contact_id
+  attr_accessible :title, :activity_status_id, :support_contact_id
+  attr_accessible :fee_plan_id
   attr_accessible :description, :connection_notifications
   attr_accessible :message_notifications
   attr_accessible :category_ids, :address_ids, :neighborhood_ids
@@ -37,6 +41,8 @@ class Person < ActiveRecord::Base
   attr_accessible :web_site_url
   attr_accessible :org
   attr_accessible :posts_per_page
+  attr_accessible :person_metadata_attributes
+  attr_accessible :id
 
   extend Searchable(:name, :business_name, :description)
 
@@ -51,8 +57,6 @@ class Person < ActiveRecord::Base
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 12.months
   DEFAULT_ZIPCODE_STRING = '89001'
-  # These constants should be methods, but I couldn't figure out how to use
-  # methods in the has_many associations.  I hope you can do better.
 
   module Scopes
 
@@ -92,6 +96,14 @@ class Person < ActiveRecord::Base
       order("created_at DESC")
     end
 
+    def with_stripe_plans
+      where('people.stripe_id IS NOT NULL AND people.fee_plan_id IS NOT NULL')
+    end
+
+    def subscribed_to_stripe
+      where('people.stripe_id IS NOT NULL')
+    end
+
   end
 
   extend Scopes
@@ -117,8 +129,6 @@ class Person < ActiveRecord::Base
   :conditions => ["people.deactivated = ?", false],
   :include => :person
 
-  #  has_many :page_views, :order => 'created_at DESC'
-
   has_many :own_groups, :class_name => "Group", :foreign_key => "person_id", :order => "name ASC"
   has_many :memberships
   has_many :groups, :through => :memberships, :source => :group, :conditions => "status = 0", :order => "name ASC"
@@ -134,13 +144,17 @@ class Person < ActiveRecord::Base
   has_many :offers
   has_many :reqs
   has_many :bids
+  has_many :charges
   has_many :invitations, :order => 'created_at DESC'
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
   belongs_to :sponsor, :class_name => "Person", :foreign_key => "sponsor_id"
   belongs_to :support_contact, :class_name => "Person", :foreign_key => "support_contact_id"
   belongs_to :business_type
   belongs_to :activity_status
-  belongs_to :plan_type
+  belongs_to :fee_plan
+
+  has_many :person_metadata#, :inverse_of => :person
+  accepts_nested_attributes_for :person_metadata, :allow_destroy => true
 
   validates :name, :presence => true, :length => { :maximum => MAX_NAME }
   validates :description, :length => { :maximum => MAX_DESCRIPTION }
@@ -148,6 +162,8 @@ class Person < ActiveRecord::Base
   validates :business_name, :length => { :maximum => 100 }, :presence => true, :if => lambda { |p| p.org }
   validates :legal_business_name, :length => { :maximum => 100 }
   validates :business_type, :presence => true, :if => lambda { |p| p.org }
+
+  # validates :fee_plan_id, :presence => true
   #  validates_presence_of     :password,              :if => :password_required?
   #  validates_presence_of     :password_confirmation, :if => :password_required?
   #  validates_length_of       :password, :within => 4..MAX_PASSWORD,
@@ -158,18 +174,46 @@ class Person < ActiveRecord::Base
 
   # XXX just doing jquery validation
   #validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
-
+  validate :credit_card_is_required_if_monetary_fee_plan_was_choosed
   before_create :check_config_for_deactivation
   before_create :set_language_and_default_group
   after_create :create_address
   after_create :join_mandatory_groups
+  after_create :subscribe_to_default_plan
   before_save :update_group_letter
+  before_save :update_fee_plan_if_deactivated
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
   before_update :set_old_description
   after_update :log_activity_description_changed
   before_destroy :destroy_activities, :destroy_feeds
+  before_save :update_plan_start_date
 
+  # If monetary fee plan was choosed return false, so message "Credit card required" will be added to errors
+  # and stripe will proceed with checking card. If stripe will succeed, it will try to save record,
+  # so validation will be checked once again and then should pass.
+  # If trade credits or free fee plan was choosed return true, so no credit card is needed.
+  def credit_card_is_required_if_monetary_fee_plan_was_choosed
+    if self.have_monetary_fee_plan?
+      if self.stripe_id.nil?
+        errors.add(:credit_card, "Credit card required!")
+        return false
+      else
+        return true
+      end
+    else
+      return true
+    end
+  end
+
+  after_validation do
+    return if(self.person_metadata.empty?)
+    destroy_array = []
+    self.person_metadata.each do |metadata|
+      destroy_array << metadata if metadata.value.nil?
+    end
+    self.person_metadata.destroy(destroy_array)
+  end
 
   # Return the first admin created.
   # We suggest using this admin as the primary administrative contact.
@@ -466,7 +510,22 @@ class Person < ActiveRecord::Base
     after_transaction { PersonMailerQueue.email_verification(self) }
   end
 
+  def have_monetary_fee_plan?
+    self.fee_plan.contains_stripe_fees? unless self.fee_plan.nil?
+  end
+
+  def credit_card_required?
+    self.have_monetary_fee_plan? && # only for persons with monetary fee plans
+    self.stripe_id.nil? && # Customer not created yet
+    self.requires_credit_card # Admin can override it to false so person won't need to enter credit card data
+  end
+
+
   protected
+
+  def subscribe_to_default_plan
+    self.update_attribute(:fee_plan, FeePlan.find_by_name("default")) if self.fee_plan.nil?
+  end
 
   def map_openid_registration(sreg_registration, ax_registration)
     unless sreg_registration.nil?
@@ -503,6 +562,13 @@ class Person < ActiveRecord::Base
     self.first_letter = display_name.mb_chars.first.upcase.to_s
   end
 
+  def update_fee_plan_if_deactivated
+    if self.deactivated?
+      self.fee_plan_id =
+          Person.global_prefs.default_deactivated_fee_plan_id
+    end
+  end
+
   def check_config_for_deactivation
     if Person.global_prefs.whitelist?
       self.deactivated = true
@@ -535,6 +601,10 @@ class Person < ActiveRecord::Base
     true
     #(crypted_password.blank? && identity_url.nil?) || !password.blank? ||
     #!verify_password.nil?
+  end
+
+  def update_plan_start_date
+    plan_started_at = Time.now if fee_plan_id_changed?
   end
 
 end

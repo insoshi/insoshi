@@ -1,0 +1,7 @@
+with_stripe:
+  id: 1
+  name: 'with stripe'
+
+closed:
+  name: 'Closed'
+  description: 'Simple plan'

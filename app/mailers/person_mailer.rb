@@ -136,6 +136,16 @@ class PersonMailer < ActionMailer::Base
         )
   end
   
+  def stripe_notification(recipient, subject, content)
+    recipient = coerce(recipient, Person)
+    @subject = subject
+    @content = content
+    mail(:to => recipient.email,
+         :from => "Oscurrency stripe notifictaion <noreply@#{domain}.com>",
+         :subject => subject)
+  end
+  
+  
   private
   
   def recipients_of_registration_notifications
