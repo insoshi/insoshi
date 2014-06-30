@@ -283,6 +283,7 @@ end
       field :app_name
       field :server_name
       field :groups
+      field :alt_signup_link
       field :default_group_id do
         properties[:collection] = Group.all.map {|g| [g.name,g.id]}
         partial "select"
