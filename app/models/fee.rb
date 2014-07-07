@@ -4,8 +4,8 @@ class Fee < ActiveRecord::Base
   attr_readonly :fee_plan
   validates :fee_plan, presence: true
   validates :recipient, presence: true
-  before_create :convert_percents
-  
+
+
   def self.transaction_tc_fees_sum_for(person, interval)
     today = Date.today
     fees_sum = person.fee_plan.fixed_transaction_fees.sum(:amount)
@@ -19,13 +19,12 @@ class Fee < ActiveRecord::Base
     end
     tc_fees_sum
   end
-  
-  protected
-  # Method to be inherited into all other percent fees.
-  # DB only supports numbers like 1.34343 and possibly user will
-  # put something like 10 and expect that it will be 10%.
-  def convert_percents
-    self.percent = self.percent.to_percents unless self.percent.zero?
+
+  def display_percent
+    percent * 100
   end
-  
+
+  def display_percent=(value)
+    update_attribute(:percent, value.to_f/100.0)
+  end
 end
