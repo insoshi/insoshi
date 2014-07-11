@@ -33,8 +33,8 @@ describe Fee do
 
   it "should convert percent number to percents before saving" do
     @fee_plan = FeePlan.new(name: 'test')
-    fee = Fee.new(fee_plan: @fee_plan, percent: 10, recipient: @p3)
-    fee.percent.to_f.should == 10.0
+    fee = Fee.new(fee_plan: @fee_plan, display_percent: 10, recipient: @p3)
+    fee.display_percent.to_f.should == 10.0
     fee.save!
     fee.percent.to_f.should == 0.1
   end
@@ -59,7 +59,7 @@ describe Fee do
     end
 
     it "should charge the recipient a percentage transaction fee" do
-      PercentTransactionFee.new(fee_plan: @fee_plan, percent: 10, recipient: @p3).save!
+      PercentTransactionFee.new(fee_plan: @fee_plan, percent: 0.1, recipient: @p3).save!
       @e.save!
       # Without fee it's 2.0. Fee is 10%, so 2.0 - 10% * 2.0 = 1.8
       account_after_payment = @p.account(@g)

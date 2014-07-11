@@ -548,10 +548,8 @@ end
   end
 
   config.model PercentTransactionFee do
-    field :percent do
-      pretty_value do
-        (bindings[:object].percent * 100).to_s
-      end
+    field :display_percent do
+      label "Percent"
     end
     field :recipient
     field :fee_plan
