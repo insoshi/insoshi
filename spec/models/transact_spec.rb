@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Transact do
   include TransactsHelper # to not repeat before's in helper just to test one statement
   fixtures :people
-  
+
   before(:each) do
     @p = people(:quentin)
     @p2 = people(:aaron)
@@ -34,12 +34,12 @@ describe Transact do
     @e.customer = @p2
     @e.notes = 'Generic'
   end
-  
+
   it "should generate fees invoice for itself and has helper to convert it to nice statement" do
     tc_fixed_fee = FixedTransactionFee.new(fee_plan: @fee_plan, amount: 1, recipient: @p3)
-    tc_perc_fee = PercentTransactionFee.new(fee_plan: @fee_plan, percent: 10, recipient: @p3)
+    tc_perc_fee = PercentTransactionFee.new(fee_plan: @fee_plan, percent: 0.1, recipient: @p3)
     cash_fixed_fee = FixedTransactionStripeFee.new(fee_plan: @fee_plan, amount: 1)
-    cash_perc_fee = PercentTransactionStripeFee.new(fee_plan: @fee_plan, percent: 10)
+    cash_perc_fee = PercentTransactionStripeFee.new(fee_plan: @fee_plan, percent: 0.1)
     tc_fixed_fee.save!
     tc_perc_fee.save!
     cash_fixed_fee.save!
@@ -49,5 +49,5 @@ describe Transact do
     t.paid_fees.should == {:trade_credits => 2, :cash => 2, :txn_id => t.id}
     paid_fees(t).should == "Charged fees: Trade Credits: 2.0 Cash: 2.0$"
   end
-  
+
 end

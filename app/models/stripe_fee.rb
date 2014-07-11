@@ -2,7 +2,6 @@ class StripeFee < ActiveRecord::Base
   belongs_to :fee_plan
   attr_readonly :fee_plan
   validates :fee_plan, presence: true
-  before_create :convert_percents
 
   def self.transaction_stripe_fees_sum_for(person, interval)
     today = Date.today
@@ -34,12 +33,12 @@ class StripeFee < ActiveRecord::Base
     end
   end
 
-  protected
-  # Method to be inherited into all other percent fees.
-  # DB only supports numbers like 1.34343 and possibly user will
-  # put something like 10 and expect, it will be 10%.
-  def convert_percents
-    self.percent = self.percent.to_percents unless self.percent.zero?
+  def display_percent
+    percent * 100
+  end
+
+  def display_percent=(value)
+    update_attribute(:percent, value.to_f/100.0)
   end
 
 end
