@@ -7,13 +7,15 @@ class FeeSchedule
 
   def charge
     group = Preference.first.default_group
-    @fee_plan.recurring_fees.each do |fee|
-      if charge_today?(fee.interval, Date.today)
-        e = group.exchanges.build(amount: f.amount)
-        e.customer = person
-        e.worker = fee.recipient
-        e.notes = "#{interval.capitalize}ly recurring fee"
-        e.save!
+    if @fee_plan.recurring_fees
+      @fee_plan.recurring_fees.each do |fee|
+        if charge_today?(fee.interval, Date.today)
+          e = group.exchanges.build(amount: f.amount)
+          e.customer = person
+          e.worker = fee.recipient
+          e.notes = "#{interval.capitalize}ly recurring fee"
+          e.save!
+        end
       end
     end
   end
