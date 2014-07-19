@@ -63,9 +63,7 @@ class PeopleController < ApplicationController
   def create
     person = params[:person]
     @person = Person.new(person)
-    params[:person][:person_metadata_attributes].each do |key, value|
-      @person.person_metadata.build(value)
-    end
+    set_metadata(@person, person) # set metadata
     @person.email_verified = false if global_prefs.email_verifications?
     update_credit_card(@person)
     @person.save do |result|
@@ -316,5 +314,12 @@ class PeopleController < ApplicationController
         person.errors.add(:stripe, stripe_ret)
       end
     end
+  end
+
+  def set_metadata person, person_params
+    metadata_attrs = person_params[:person_metadata_attributes]
+    metadata_attrs.each do |key, value|
+      person.person_metadata.build(value)
+    end if metadata_attrs
   end
 end
