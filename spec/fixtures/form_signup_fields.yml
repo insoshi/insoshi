@@ -1,7 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  field_type: 'text_field'
-  key: 'sample_key'
-  order: 'id'
-  title: 'sample_title'
