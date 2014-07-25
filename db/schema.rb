@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20140623131718) do
     t.decimal  "earned",          :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "reserve_percent", :precision => 8, :scale => 7, :default => 0.0
     t.boolean  "reserve",                                       :default => false
+    t.decimal  "rollover_charge",                               :default => 0.0
   end
 
   create_table "activities", :force => true do |t|
@@ -623,7 +624,7 @@ ActiveRecord::Schema.define(:version => 20140623131718) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 8
+    t.integer  "year",       :limit => 5
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
