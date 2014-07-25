@@ -3,6 +3,8 @@ class Ability
   include CanCan::Ability
   def initialize(person, access_token = nil)
 
+    alias_action :create, :read, :update, :destroy, :to => :crud
+
     can :su, Person do |target_person|
       person.admin? && !target_person.admin?
     end
@@ -19,6 +21,7 @@ class Ability
       can [:read,:create,:update,:destroy], PercentTransactionStripeFee
       can [:read,:create,:destroy], RecurringStripeFee
       can [:read, :refund_money, :dispute_link], Charge
+      can [:crud], Message
     end
 
     # need these for rails_admin
@@ -27,7 +30,6 @@ class Ability
     can [:read,:update], TimeZone
 
     can [:read,:create,:update], SystemMessageTemplate
-    can [:manage], Message
 
     can [:read,:create], Person
     can :update, Person do |target_person|
