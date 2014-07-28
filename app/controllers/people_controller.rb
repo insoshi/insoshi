@@ -63,6 +63,7 @@ class PeopleController < ApplicationController
   def create
     person = params[:person]
     @person = Person.new(person)
+    set_credit_card(@person, person)
     set_metadata(@person, person) # set metadata
     @person.email_verified = false if global_prefs.email_verifications?
     update_credit_card(@person)
@@ -321,5 +322,11 @@ class PeopleController < ApplicationController
     metadata_attrs.each do |key, value|
       person.person_metadata.build(value)
     end if metadata_attrs
+  end
+
+  def set_credit_card person, person_params
+    person.credit_card = person_params[:credit_card]
+    person.expire = person_params[:expire]
+    person.cvc = person_params[:cvc]
   end
 end
