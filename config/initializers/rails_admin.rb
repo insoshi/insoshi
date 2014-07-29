@@ -677,6 +677,11 @@ end
       field :addresses
       # generally not appropriate for admin to edit openid since it is an assertion
 
+      field :current_user_id, :hidden do
+        default_value do
+          bindings[:view]._current_user.id
+        end
+      end
     end
   end
 

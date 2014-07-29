@@ -67,6 +67,7 @@ class PeopleController < ApplicationController
     set_metadata(@person, person) # set metadata
     @person.email_verified = false if global_prefs.email_verifications?
     update_credit_card(@person)
+    @person.current_user_id = nil # for security reason
     @person.save do |result|
       respond_to do |format|
         if result
