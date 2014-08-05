@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+general:
+  customer_id: 1
+  worker_id: 1
+  amount: 100
+  group: one # use group one
+  metadata_type: Offer
+  metadata_id: 1
+
+fee_for_general:
+  customer_id: 1
+  worker_id: 1
+  amount: 100
+  group: one # use group one
+  metadata_type: Exchange # weird, I must specify metadata_type
+  metadata: general # reference general
