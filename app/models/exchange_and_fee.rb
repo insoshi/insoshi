@@ -1,6 +1,7 @@
 class ExchangeAndFee < Exchange
   extend PreferencesHelper
   after_create :withdraw_fee
+  after_destroy :destroy_relevant_fees
 
   def withdraw_fee
     # group level transaction fees that apply to all group members
@@ -22,4 +23,13 @@ class ExchangeAndFee < Exchange
       end
     end
   end
+
+  private
+
+    def destroy_relevant_fees
+      ExchangeAndFee.where(metadata_type: 'Exchange', metadata_id: id).each do |fee|
+        fee.deleted_at = deleted_at
+        fee.save!
+      end
+    end
 end
