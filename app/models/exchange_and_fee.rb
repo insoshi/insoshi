@@ -16,10 +16,19 @@ class ExchangeAndFee < Exchange
 
     # configured through rails_admin
     fee_plan = worker.fee_plan
-    unless fee_plan.nil?
+    if fee_plan
       # assuming systemwide per-transaction fees only apply to default group
       if group_id == ExchangeAndFee.global_prefs.default_group_id
-        fee_plan.apply_transaction_fees(self)
+        fee_plan.apply_transaction_fees(self, worker) # note worker
+      end
+    end
+
+    # customer transaction fees
+    customer_fee_pan = customer.fee_plan
+    if customer_fee_pan
+      # assuming systemwide per-transaction fees only apply to default group
+      if group_id == ExchangeAndFee.global_prefs.default_group_id
+        customer_fee_pan.apply_transaction_fees(self, customer) # note customer
       end
     end
   end
