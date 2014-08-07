@@ -49,13 +49,13 @@ class FeePlan < ActiveRecord::Base
     @recurring_fees ||= self.fees.where(:type => "RecurringFee")
   end
 
-  def apply_transaction_fees(txn)
+  def apply_transaction_fees(txn, customer)
     percent_transaction_fees = self.fees.where(:type => "PercentTransactionFee")
     fixed_transaction_fees = self.fees.where(:type => "FixedTransactionFee")
     percent_transaction_fees.each do |fee|
         e=txn.group.exchanges.build(amount: txn.amount*fee.percent)
         e.metadata = txn
-        e.customer = txn.worker
+        e.customer = customer
         e.worker = fee.recipient
         e.notes = 'Percent transaction fee'
         e.save!
@@ -64,7 +64,7 @@ class FeePlan < ActiveRecord::Base
     fixed_transaction_fees.each do |fee|
         e=txn.group.exchanges.build(amount: fee.amount)
         e.metadata = txn
-        e.customer = txn.worker
+        e.customer = customer
         e.worker = fee.recipient
         e.notes = 'Fixed transaction fee'
         e.save!
