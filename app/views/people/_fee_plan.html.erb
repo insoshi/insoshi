@@ -15,7 +15,7 @@
 				<% fee_plan.all_fees.each do |fee| %>
 					<tr>
 						<td> <%= fee.type.underscore.humanize %> </td>
-						<td> <%= fee.percent %> </td>
+						<td> <%= fee.display_percent %>% </td>
 						<td> <%= fee.amount %> </td>
 						<td> <%= fee.interval %> </td>
 					</tr>
