@@ -12,7 +12,8 @@ class ApplicationController < ActionController::Base
 
   before_filter :require_activation, :admin_warning,
                 :set_person_locale,
-                :set_theme
+                :set_theme,
+                :set_current_user
 
   around_filter :set_time_zone
 
@@ -230,5 +231,10 @@ class ApplicationController < ActionController::Base
       else
         Time.use_zone(TimeZone.first.time_zone, &block)
       end
+    end
+
+    # current user is needed when initialize a person
+    def set_current_user
+      Thread.current[:current_person] = current_person
     end
 end

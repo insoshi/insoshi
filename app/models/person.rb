@@ -44,11 +44,6 @@ class Person < ActiveRecord::Base
   attr_accessible :person_metadata_attributes
   attr_accessible :id
 
-  # we do not care if current_user_id will be saved to db
-  # we just need it to check if the current user is admin
-  # if admin, we will skip the validation credit_card_is_required_if_monetary_fee_plan_was_choosed
-  attr_accessible :current_user_id
-
   extend Searchable(:name, :business_name, :description)
 
   MAX_PASSWORD = 40
@@ -200,7 +195,7 @@ class Person < ActiveRecord::Base
   # If trade credits or free fee plan was choosed return true, so no credit card is needed.
   # Note this validation will not affect admin users when creating person
   def credit_card_is_required_if_monetary_fee_plan_was_choosed
-    return true if current_user_id and Person.find(current_user_id).admin
+    return true if Thread.current[:current_person].try(:admin) # skip this validation if current person is admin
     if self.have_monetary_fee_plan?
       if self.stripe_id.nil?
         errors.add(:credit_card, "Credit card required!")
