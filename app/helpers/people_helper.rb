@@ -52,8 +52,8 @@ module PeopleHelper
   end
 
   
-  def get_admin 
-    Person.find_first_admin
+  def get_admin_contact
+    global_prefs.admin_contact_id.nil? ? Person.find_first_admin : Person.find(global_prefs.admin_contact_id)
   end
     
   private

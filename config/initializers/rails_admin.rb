@@ -266,6 +266,10 @@ end
       end
       field :app_name
       field :server_name
+      field :admin_contact_id do
+        properties[:collection] = Person.where(admin: true).order(:created_at).map {|p| [p.name,p.id]}
+        partial "select"
+      end
       field :groups
       field :default_group_id do
         properties[:collection] = Group.all.map {|g| [g.name,g.id]}

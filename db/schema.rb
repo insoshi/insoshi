@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140112071748) do
+ActiveRecord::Schema.define(:version => 20141201023842) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -554,6 +554,7 @@ ActiveRecord::Schema.define(:version => 20140112071748) do
     t.boolean  "display_orgicon",         :default => true
     t.boolean  "public_private_bid",      :default => false
     t.boolean  "openid",                  :default => true
+    t.integer  "admin_contact_id"
   end
 
   create_table "privacy_settings", :force => true do |t|
