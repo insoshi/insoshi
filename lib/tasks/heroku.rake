@@ -59,12 +59,22 @@ namespace :heroku do
       heroku.put_config_vars(app_name, smtp_vars)
     else
       print "using SendGrid addon... "
-      heroku.post_addon(app_name, 'sendgrid:starter')
+      begin
+        heroku.post_addon(app_name, 'sendgrid:starter')
+      rescue Heroku::API::Errors::RequestFailed => e
+        display_heroku_error(e)
+        exit
+      end
     end
     puts "done."
 
     print "Setting up memcache... "
+    begin
     heroku.post_addon(app_name, 'memcachier')
+    rescue Heroku::API::Errors::RequestFailed => e
+      display_heroku_error(e)
+      exit
+    end
     puts "done."
 
     git = Git.open(Dir.pwd, :log => Logger.new(STDOUT))
@@ -123,7 +133,11 @@ namespace :heroku do
     puts "Thanks!"
   end
 
-
+  def display_heroku_error(e)
+    puts "\n\n*** Installation error ***"
+    puts JSON.parse(e.response.body)['error']
+    puts "*** Installation error ***"
+  end
 
   def auth_to_heroku(ui, config)
     heroku_api_key = config['HEROKU_API_KEY'] || ui.ask("Enter your Heroku API key: ")

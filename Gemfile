@@ -58,7 +58,6 @@ gem "gibbon", :git => "git://github.com/amro/gibbon.git"
 gem "bootstrap_form", "~> 0.3.2"
 
 group :development, :test do
-  gem 'debugger'
   gem "heroku-api"
   gem 'sqlite3'
   gem "rack"
