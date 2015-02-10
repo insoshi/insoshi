@@ -353,13 +353,16 @@ end
     edit do
       field :worker do
         label "Credits in"
+        required :true
       end
       field :customer do
         label "Credits out"
+        required :true
       end
       field :amount
       field :group_id, :enum do
         label "Unit"
+        required :true
         enum_method do
           :group_id_enum
         end
