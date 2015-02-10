@@ -139,20 +139,22 @@ class Exchange < ActiveRecord::Base
   end
 
   def worker_is_not_customer
-    if customer == worker
+    if customer && worker && customer == worker
       errors.add(:worker, "cannot be not be the payer")
     end
   end
 
   def group_has_a_currency_and_includes_both_counterparties_as_members
-    unless worker.groups.include?(self.group)
-      errors.add(:group_id, "does not include recipient as a member")
-    end
-    unless customer.groups.include?(self.group)
-      errors.add(:group_id, "does not include payer as a member")
-    end
-    unless self.group.adhoc_currency?
-      errors.add(:group_id, "does not have its own currency")
+    if customer && worker && group
+      unless worker.groups.include?(self.group)
+        errors.add(:group_id, "does not include recipient as a member")
+      end
+      unless customer.groups.include?(self.group)
+        errors.add(:group_id, "does not include payer as a member")
+      end
+      unless self.group.adhoc_currency?
+        errors.add(:group_id, "does not have its own currency")
+      end
     end
   end
 
@@ -167,10 +169,12 @@ class Exchange < ActiveRecord::Base
   end
 
   def customer_has_sufficient_balance
-    account = customer.account(group)
-    if account && account.credit_limit
-      if account.available_balance < amount
-        errors.add(:customer, 'Customer has insufficient balance')
+    if customer && group
+      account = customer.account(group)
+      if account && account.credit_limit
+        if account.available_balance < amount
+          errors.add(:customer, 'Customer has insufficient balance')
+        end
       end
     end
   end

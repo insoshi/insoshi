@@ -33,5 +33,7 @@ config/ultrasphinx/*.conf
 .sass-cache/
 .rvmrc
 .env
+.ruby-gemset
+.ruby-version
 /public/uploads
 .ruby-version
