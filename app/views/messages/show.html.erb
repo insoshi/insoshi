@@ -1,8 +1,8 @@
 <%= column_div :type => :primary do -%>
-  <% if current_person?(@message.sender) %>
+  <% if current_person?(@message.sent_by) %>
     <% heading = t('messages.show.message_sent_to') + " #{h @message.recipient.name}" %>
   <% else %>
-    <% heading = t('messages.show.message_from') + " #{h @message.sender.name}" %>
+    <% heading = t('messages.show.message_from') + " #{h @message.sent_by.name}" %>
   <% end %>
   
   <h2><%= heading %></h2>

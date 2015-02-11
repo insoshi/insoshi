@@ -4,19 +4,19 @@
                    :image => :thumbnail,
                    :image_options => { :class => "photo" } %>
 
-    <%- if not message.read? and not current_person?(message.sender) -%>
+    <%- if not message.read? and not current_person?(message.sent_by) -%>
       <%= image_tag("icons/email.gif", :class => "icon") %>
     <%- elsif message.replied_to? -%>
       <%= image_tag("icons/reply.gif", :class => "icon" )  %>
     <%- end -%>    
   </div>
   <p>
-    <%- if current_person?(message.sender) -%>
+    <%- if current_person?(message.sent_by) -%>
       <span class="label"><%= t('to').mb_chars.capitalize %>:</span>
       <%= person_link message.recipient, :class => "url fn" %>
     <%- else -%>
       <span class="label"><%= t('from').mb_chars.capitalize %>:</span>
-      <%= person_link message.sender, :class => "url fn" %>
+      <%= person_link message.sent_by, :class => "url fn" %>
     <%- end -%>
     <span class="meta"><%= t( 'ago_time', :date => time_ago_in_words( message.created_at )) %> </span>
   </p>

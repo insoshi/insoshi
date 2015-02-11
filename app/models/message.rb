@@ -28,6 +28,15 @@ class Message < Communication
     end
   end
 
+  # System-generated messages do not always have a sender, so cause
+  # errors in the message views. In most cases, the sender would be
+  # considered the system or admin, so this method will return the
+  # administrator for this installation if the sender is nil. A better 
+  # solution would be to always assign a sender to the messages.
+  def sent_by
+    sender || Person.find_first_admin
+  end
+
   def parent
     return @parent unless @parent.nil?
     return Message.find(parent_id) unless parent_id.nil?
@@ -40,7 +49,7 @@ class Message < Communication
   
   # Return the sender/recipient that *isn't* the given person.
   def other_person(person)
-    person == sender ? recipient : sender
+    person == sender ? recipient : (sender || sent_by)
   end
 
   # Put the message in the trash for the given person.

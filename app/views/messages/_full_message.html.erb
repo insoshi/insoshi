@@ -3,7 +3,7 @@
     <a name="<%= message_anchor(full_message) %>"></a>
   <%- end -%>
   <div class="profile-image">
-  <%= image_link full_message.sender, :class => "photo",
+  <%= image_link full_message.sent_by, :class => "photo",
                                       :image => :thumbnail %>
   </div>
   <%= markdown(full_message.content) %>
