@@ -794,6 +794,19 @@ end
   config.model Message do
     label "Message"
     label_plural "Messages"
+
+    list do
+      field :id
+      field :subject
+      field :content
+      field :sender do
+        pretty_value do
+          bindings[:object].sender_id.blank? ? "[system]" : bindings[:object].sender.display_name
+        end
+      end
+      field :recipient
+      field :sender_deleted_at
+    end
   end
 
 end
