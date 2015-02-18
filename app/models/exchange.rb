@@ -73,6 +73,16 @@ class Exchange < ActiveRecord::Base
     metadata.name == 'admin transfer' ? self.notes : metadata.name
   end
 
+  # For the cases when the metadata for an Exchange is itself an Exchange,
+  # it is necessar for an Exchange to respond to the 'name' method as an
+  # Offer or Req does. Amy suggested that the name of the recipient in the
+  # exchange would be the best value to use, so this method supports that.
+  # NOTE that this should be optimized so that the worker (Person) data is
+  # not lazily-loaded.
+  def name
+    worker.display_name if worker
+  end
+
   def self.total_on(date)
     Exchange.sum(:amount, :conditions => ["date(created_at) = ?", date])
   end
