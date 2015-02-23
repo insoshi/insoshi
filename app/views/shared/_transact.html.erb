@@ -9,7 +9,7 @@
   <%= image_tag "icons/switch.gif", :class => "icon", :alt => "Transaction" %>
 </div>
   <p>
-  	<%= counterparty_action(transact) %><%= counterparty_link(cp, @group, defined? ajaxified) %>) <%= t('shared.transact.for')%> <%= link_to h(transact.metadata.name), transact.metadata %>
+  	<%= counterparty_action(transact) %><%= counterparty_link(cp, @group, defined? ajaxified) %>) <%= t('shared.transact.for')%> <%= txn_link transact.metadata %>
   </p>
   <p>
   	<%= paid_fees(transact) %>

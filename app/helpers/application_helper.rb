@@ -235,6 +235,21 @@ module ApplicationHelper
     # str.html_safe
   end
 
+  # NOTE: We do not create a link if the transaction
+  # metadata type is itself an Exchange because there
+  # is currently no screen to display details for
+  # an Exchange (only Reqs and Offers)
+  # See: app/views/groups/_exchange.html.erb and
+  # app/views/shared/_transact.html.erb for usage
+  def txn_link(metadata, options = {})
+    if metadata.is_a? Exchange
+      h(metadata.name)
+    else
+      str = link_to(h(metadata.name),metadata,options)
+      str << " "
+    end
+  end
+
   def support_link(person, group = nil, options = {})
     img = image_tag("icons/question.gif")
     path = person_path(person)
