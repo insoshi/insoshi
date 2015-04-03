@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
 source 'https://rubygems.org'
-ruby "1.9.3"
+ruby "2.1.5"
 gem 'rails', '3.2.16'
 
 # Bundle edge Rails instead:
@@ -34,7 +34,7 @@ gem "feed-normalizer"
 gem "texticle"
 
 gem "aws-s3"
-gem "fog"
+gem "fog", '1.19.0'
 gem "carrierwave"
 gem "rmagick", :require => 'RMagick'
 gem "json", '1.7.7'

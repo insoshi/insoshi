@@ -131,7 +131,7 @@ GEM
     dynamic_form (1.1.4)
     erubis (2.7.0)
     eventmachine (1.0.0)
-    excon (0.16.10)
+    excon (0.31.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
     faraday (0.8.4)
@@ -142,20 +142,20 @@ GEM
       hpricot (>= 0.6)
       simple-rss (>= 1.1)
     ffi (1.3.1)
-    fog (1.8.0)
+    fog (1.19.0)
       builder
-      excon (~> 0.14)
+      excon (~> 0.31.0)
       formatador (~> 0.2.0)
       mime-types
       multi_json (~> 1.0)
-      net-scp (~> 1.0.4)
+      net-scp (~> 1.1)
       net-ssh (>= 2.1.3)
-      nokogiri (~> 1.5.0)
+      nokogiri (~> 1.5)
       ruby-hmac
     font-awesome-sass-rails (3.0.0.1)
       railties (>= 3.1.1)
       sass-rails (>= 3.1.1)
-    formatador (0.2.4)
+    formatador (0.2.5)
     geokit (1.6.5)
       multi_json
     geokit-rails3 (0.1.5)
@@ -178,8 +178,9 @@ GEM
       spork (>= 0.8.4)
     haml (3.1.7)
     hashie (1.2.0)
-    heroku-api (0.3.7)
-      excon (~> 0.16.10)
+    heroku-api (0.3.18)
+      excon (~> 0.27)
+      multi_json (~> 1.8)
     highline (1.6.20)
     hike (1.2.3)
     hpricot (0.8.6)
@@ -224,9 +225,9 @@ GEM
     multi_xml (0.5.1)
     multipart-post (1.1.5)
     nested_form (0.3.1)
-    net-scp (1.0.4)
-      net-ssh (>= 1.99.1)
-    net-ssh (2.6.3)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.9.2)
     nokogiri (1.5.6)
     oauth (0.4.7)
     oauth2 (0.8.0)
@@ -408,7 +409,7 @@ DEPENDENCIES
   dynamic_form
   exception_notification!
   feed-normalizer
-  fog
+  fog (= 1.19.0)
   geokit-rails3
   gibbon!
   girl_friday
