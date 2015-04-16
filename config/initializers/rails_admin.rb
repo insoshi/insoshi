@@ -158,18 +158,20 @@ end
         searchable [{Person => :name}]
         queryable true
       end
-      field :file
+      field :successful
       field :created_at do
         label "Uploaded at"
       end
+      field :file
     end
 
     show do
       field :name
-      field :file
+      field :successful
       field :created_at do
         label "Uploaded at"
       end
+      field :file
     end
 
     edit do
