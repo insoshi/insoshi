@@ -79,6 +79,7 @@ class AccountImport < ActiveRecord::Base
 
 	    			p.deliver_password_reset_instructions!
 	    	end
+	    	self.successful = true
 	    end
     	# Optionally delete the carrierwave file after successful import?
   	end
