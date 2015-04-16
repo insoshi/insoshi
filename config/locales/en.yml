@@ -215,6 +215,9 @@ en:
       profile: "Profile"
       inbox: "Inbox"
       sign_out: "Sign out"
+      administration: "Administration"
+      manage: "Manage"
+      import: "Import"
     index:
       header: "Home"
       tab_exchanges: "Exchanges"

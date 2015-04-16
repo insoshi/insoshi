@@ -55,7 +55,7 @@ end
     Preference,ExchangeAndFee,ForumPost,FeedPost,BroadcastEmail,Person,
     PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,
     ActivityStatus,FeePlan, ExchangeDeleted, TimeZone, FormSignupField,
-    PersonMetadatum, SystemMessageTemplate, Message]
+    PersonMetadatum, SystemMessageTemplate, Message, AccountImport]
 
   config.default_items_per_page = 100
 
@@ -146,6 +146,43 @@ end
       field :credit_limit
       field :updated_at do
         label "Last Transaction"
+      end
+    end
+  end
+
+  config.model AccountImport do
+    parent Account 
+    list do
+      field :person do
+        label "Uploaded by"
+        searchable [{Person => :name}]
+        queryable true
+      end
+      field :file
+      field :created_at do
+        label "Uploaded at"
+      end
+    end
+
+    show do
+      field :name
+      field :file
+      field :created_at do
+        label "Uploaded at"
+      end
+    end
+
+    edit do
+      field :person, :hidden do
+        visible false
+        # default_value do
+        #   bindings[:view].current_person.id
+        # end
+      end
+      field :file, :file_upload do
+        label 'CSV File'
+        help ''
+        partial "import_file"
       end
     end
   end

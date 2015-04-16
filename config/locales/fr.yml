@@ -270,6 +270,9 @@ fr:
       profile: "Profile"
       inbox: "Inbox"
       sign_out: "Déconnecter"
+      administration: "[Administration]"
+      manage: "[Manage]"
+      import: "[Import]"
     index:
       header: "Accueil"
       tab_exchanges: "Exchanges"

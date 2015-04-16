@@ -22,6 +22,7 @@ class Ability
       can [:read,:create,:destroy], RecurringStripeFee
       can [:read, :refund_money, :dispute_link], Charge
       can [:crud], Message
+      can [:read,:create,:destroy], AccountImport, person_id: person.id if person
     end
 
     # need these for rails_admin

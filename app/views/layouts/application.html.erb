@@ -45,7 +45,17 @@
           <ul class="nav pull-right">
             <%- if logged_in? -%>
               <%- if current_person.admin? -%>
-                <li><%= link_to("Admin view", "/admin") %></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <%= t('home.menu.administration') %>
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><%= link_to t('home.menu.manage'), '/admin' %></li>
+                    <li><%= link_to t('home.menu.import'), '/admin/account_import/new' %></li>
+                  </ul>
+                </li>
+
               <%- elsif session[:su_person] %>
                 <li><%= link_to("Back to admin", unsu_person_path(current_person) ) %></li>
               <%- end -%>

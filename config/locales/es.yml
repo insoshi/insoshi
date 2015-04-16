@@ -214,6 +214,9 @@ es:
       profile: "Perfil"
       inbox: "Bandeja de Entrada"
       sign_out: "Salir"
+      administration: "[Administration]"
+      manage: "[Manage]"
+      import: "[Import]"
     index:
       header: "Comunidad"
       tab_exchanges: "Intercambios"

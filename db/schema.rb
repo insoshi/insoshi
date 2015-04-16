@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140811141606) do
+ActiveRecord::Schema.define(:version => 20150414191501) do
+
+  create_table "account_imports", :force => true do |t|
+    t.integer  "person_id",                     :null => false
+    t.string   "file"
+    t.boolean  "successful", :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -624,7 +632,7 @@ ActiveRecord::Schema.define(:version => 20140811141606) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 5
+    t.integer  "year",       :limit => 8
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end

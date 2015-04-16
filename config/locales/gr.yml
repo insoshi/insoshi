@@ -328,6 +328,9 @@ gr:
       profile: "Προφίλ"
       inbox: "Εισερχόμενα"
       sign_out: "Έξοδος"
+      administration: "[Administration]"
+      manage: "[Manage]"
+      import: "[Import]"
     index:
       header: "Αρχική"
       tab_exchanges: "Ανταλλαγές"
