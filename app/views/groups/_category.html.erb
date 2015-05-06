@@ -1,0 +1,6 @@
+<tr class="categories">
+  <td><%= h(category.name) %></td>
+  <td><%= link_to category.reqs.active.where(group_id: @group.id).length, group_reqs_path(@group, :category_id => category.id), :class => "show-category" %></td>
+  <td><%= link_to category.offers.active.where(group_id: @group.id).length, group_offers_path(@group, :category_id => category.id), :class => "show-category" %></td>
+  <td><%= link_to category.people.length, group_memberships_path(@group, :category_id => category.id), :class => "show-category" %></td>
+</tr>

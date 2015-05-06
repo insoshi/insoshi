@@ -11,7 +11,6 @@ var OSCURRENCY = {};
 });
 
 $(function() {
-
   OSCURRENCY.group_id = find_group();
   OSCURRENCY.routes = [];
   OSCURRENCY.tab_prefix = '#tab_';
@@ -313,6 +312,10 @@ $(function() {
       window.location.hash = '#home';
     });
 
+  $('a[href=' + OSCURRENCY.tab_prefix + 'directory]').bind('click', function() {
+      window.location.hash = '#directory';
+    });
+
   $('a[href=' + OSCURRENCY.tab_prefix + 'forum]').bind('click',function() {
     $('#forum_form').html('');
     window.location.hash = '#forum';
@@ -377,6 +380,21 @@ $(function() {
 
   $('a.show-follow').live('click',function() {
     window.location.hash = url2hash(this.href);
+    return false;
+    });
+
+  $('a.show-category').live('click',function() {
+    names = ['url', 'scheme', 'slash', 'host', 'port','path', 'query', 'hash'];
+    result = parse_url(this.href);
+    query = result[names.indexOf('query')]
+    path_suffix = result[names.indexOf('path')].split('/')[2];
+    if('reqs'==path_suffix) {
+      window.location.hash = '#requests/' + query;
+    } else if('offers'==path_suffix) {
+      window.location.hash = '#offers/' + query;
+    } else if('memberships'==path_suffix) {
+      window.location.hash = '#people/' + query;
+    }
     return false;
     });
 
