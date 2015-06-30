@@ -297,7 +297,7 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
-    redcarpet (2.2.2)
+    redcarpet (3.3.2)
     ref (1.0.4)
     remotipart (1.0.2)
     rmagick (2.13.2)
