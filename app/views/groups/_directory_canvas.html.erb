@@ -1,0 +1,18 @@
+<%  top_level_categories = Category.root_nodes %>
+<div class="categorycol">
+  <%- if top_level_categories.empty? -%>
+    <h3 class="blankslate"><%= t('categories.index.no_categories') %></h3>
+  <%- else -%>
+    <% total = top_level_categories.length %>
+    <% halfish = (total/2.0).ceil %>
+    <table id="categoryMenu" class="categories">
+      <tr><td></td><td>Requests</td><td>Offers</td><td>Providers</td></tr>
+      <%= render :partial => 'category', :collection => top_level_categories[0,halfish] %>
+    </table>
+    <table id="categoryMenu2" class="categories">
+      <tr><td></td><td>Requests</td><td>Offers</td><td>Providers</td></tr>
+      <%= render :partial => 'category', :collection => top_level_categories[-(total-halfish),(total-halfish)] %>
+    </table>
+  <%- end -%>
+</div>
+<div style="clear: both;"></div>
