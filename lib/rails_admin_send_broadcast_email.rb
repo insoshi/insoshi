@@ -20,6 +20,10 @@ module RailsAdmin
           'icon-check'
         end
 
+        register_instance_option :pjax? do
+          false
+        end
+
         register_instance_option :controller do
           Proc.new do
             @object.update_attribute(:sent, true)
