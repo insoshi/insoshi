@@ -106,7 +106,8 @@ class Membership < ActiveRecord::Base
 
     # Make a pending membership request.
     def request(person, group, send_mail = nil)
-      send_mail ||= global_prefs.email_notifications?
+      # do not ignore false value for send_mail
+      send_mail = global_prefs.email_notifications? if send_mail.nil?
       unless person.groups.include?(group) or Membership.exist?(person, group)
         if group.public? or group.private?
           membership = nil
