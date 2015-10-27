@@ -280,7 +280,7 @@ describe Person do
     def create_offer_like(person, group)
       offer = Offer.new({
         :description => 'test offer description',
-        :total_available => 1,
+        :available_count => 1,
         :group_id => group.id,
         :name => 'test offer',
         :expiration_date => DateTime.now + 1.day

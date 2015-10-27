@@ -234,7 +234,7 @@ end
         label "Offered by"
       end
       field :name
-      field :total_available
+      field :available_count
       field :price
       field :expiration_date, :date
       field :description

@@ -9,7 +9,7 @@ describe Offer do
       :description => "value for description",
       :price => 9.99,
       :expiration_date => Date.today,
-      :total_available => 1,
+      :available_count => 1,
       :group_id => 1,
       :person => p 
     }
