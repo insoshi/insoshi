@@ -16,7 +16,7 @@
     <%= render :partial => "shared/bid_message", :collection => completed_messages(req) %>
     <%= render :partial => "shared/bid_message", :collection => commitment_messages(req) %>
     <%= render :partial => "shared/bid_message", :collection => accepted_messages(req) %>
-    <%= t('reqs.partial.createdby') %> <%= person_link req.person %>
+    <%= t('reqs.partial.createdby') %> <%= link_to req.person.name, Membership.mem(req.person,req.group), :class => "show-follow" %>
     <%= t 'ago_time', :date => time_ago_in_words(req.created_at) %>
     <% if can?(:update, req) -%>
       | <%= link_to t('button_edit'), edit_req_path(req), :class => 'show-follow' %>

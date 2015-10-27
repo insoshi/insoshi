@@ -27,7 +27,7 @@
     
     <br>
     
-    <%= t('offers.partial.created_by') %> <%= person_link offer.person %>
+    <%= t('offers.partial.created_by') %> <%= link_to offer.person.name, Membership.mem(offer.person,offer.group), :class => "show-follow" %>
     <%= t('ago_time', :date => time_ago_in_words(offer.created_at)) %>
     
     <%= render partial: '/offers/offer_edit_buttons', locals: {offer: offer} %>
