@@ -20,7 +20,7 @@ $(function() {
   OSCURRENCY.delete_fadeout_time = 4000;
   OSCURRENCY.offers_mode = '';
   OSCURRENCY.reqs_mode = '';
-  OSCURRENCY.searchable_tabs = ['#people','#memberships','#reqs','#requests','#offers'];
+  OSCURRENCY.searchable_tabs = ['','#home','#people','#memberships','#reqs','#requests','#offers'];
   OSCURRENCY.no_filter_option = 1;
   OSCURRENCY.categories_filter_option = 2;
   OSCURRENCY.neighborhoods_filter_option = 3;
@@ -41,6 +41,8 @@ $(function() {
   route('people',   /^#people\/search=(.+)/,                       '/groups/[:group_id]/memberships?search=[:1]');
   route('people',   /^#memberships\/search=(.+)/,                  '/groups/[:group_id]/memberships?search=[:1]');
   route('forum',    /^#forum\/page=(\d+)/,                         '/groups/[:group_id]/forum?page=[:1]');
+  route('people',   /^#home\/search=(.+)/,                         '/groups/[:group_id]/memberships?search=[:1]');
+  route('people',   /^#\/search=(.+)/,                             '/groups/[:group_id]/memberships?search=[:1]');
 
   route('requests', /^#reqs\/(\d+)$/,                              '/reqs/[:1]');
   route('requests', /^#reqs\/(\d+)\/edit$/,                        '/reqs/[:1]/edit');
