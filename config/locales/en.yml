@@ -405,7 +405,7 @@ en:
       private_message_to_requestor: "Private message to requestor"
 
   exchanges:
-    credit: "Credit"
+    credit: "Give Credit"
     debit: "Debit"
     send_a_message: "Send a message"
     new:

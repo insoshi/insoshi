@@ -98,12 +98,12 @@
                   <%- if @membership.group.adhoc_currency? -%>
                       
                     <li>
-                      <%= exchange_link @person, @membership.group, :transact => 'credit', :class => 'show-follow' %>
+                      <%= exchange_link @person, @membership.group, :transact => 'credit', :class => 'btn btn-primary show-follow' %>
                     </li>
                       
                     <%- if @current_membership.is?(:point_of_sale_operator) || @current_membership.is?(:admin) %>
                       <li>
-                        <%= exchange_link @person, @membership.group, :transact => 'debit', :class => 'show-follow' %>
+                        <%= exchange_link @person, @membership.group, :transact => 'debit', :class => 'btn btn-primary show-follow' %>
                       </li>
                     <%- end -%>
                     
