@@ -6,7 +6,7 @@
   <p>
     <span class="btn btn-info btn-mini">#<%= req.id %></span>
   <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h  nice_decimal(req.estimated_hours)  %> <%= h req.unit %>)
-  <%= t('reqs.partial.due') %>: <%= relative_time_ago_in_words(req.due_date) %>
+
   </p>
   <p>
     <%= markdown((full rescue false) ? req.description.to_s : first_n_words(req.description)) %>
