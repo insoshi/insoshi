@@ -5,8 +5,5 @@
     <%= image_link minifeed_item.person, :link => member, :link_options => {:class => "show-follow"} %>
   </div>
   <p><%= minifeed_message minifeed_item %></p>
-  <p class="meta published">
-    <%= t 'ago_time', :date => time_ago_in_words( minifeed_item.created_at ) %>
-  </p>
   </li>
 <%- end -%>

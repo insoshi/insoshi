@@ -30,7 +30,7 @@
       <div class="navbar-inner">
         <div class="container">
           <%- if params[:controller] == 'groups' and params[:action] == 'show' %>
-          <%= group_image_link current_person.default_group, :image_options => {:class => 'default-group-link'} %>
+          <% #= group_image_link current_person.default_group, :image_options => {:class => 'default-group-link'} %>
             <a class="brand"><%= h @group.name %></a>
           <%- elsif current_person -%>
             <%= link_to global_prefs.app_name, group_path(current_person.default_group), :class => "brand" %>
@@ -59,7 +59,7 @@
               <%- elsif session[:su_person] %>
                 <li><%= link_to("Back to admin", unsu_person_path(current_person) ) %></li>
               <%- end -%>
-              <% if global_prefs.groups %>
+              <% if global_prefs.groups && display_group_nav? %>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <%= t('home.menu.your_groups') %>
@@ -164,7 +164,7 @@
             
             <div>  
               <!-- The admin contact information -->
-              If you are experiencing any technical difficulties, please contact <%= admin.name %> for assistance.
+              Please contact <%= admin.name %> for assistance.
               <br/>
               
               <i class="icon-envelope-alt"></i> 

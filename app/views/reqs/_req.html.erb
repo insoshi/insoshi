@@ -6,7 +6,6 @@
   <p>
     <span class="btn btn-info btn-mini">#<%= req.id %></span>
   <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h  nice_decimal(req.estimated_hours)  %> <%= h req.unit %>)
-
   </p>
   <p>
     <%= markdown((full rescue false) ? req.description.to_s : first_n_words(req.description)) %>
@@ -17,9 +16,8 @@
     <%= render :partial => "shared/bid_message", :collection => commitment_messages(req) %>
     <%= render :partial => "shared/bid_message", :collection => accepted_messages(req) %>
     <%= t('reqs.partial.createdby') %> <%= person_link req.person %>
-    <%= t 'ago_time', :date => time_ago_in_words(req.created_at) %>
     <% if can?(:update, req) -%>
-      | <%= link_to t('button_edit'), edit_req_path(req), :class => 'show-follow' %>
+      <%= link_to t('button_edit'), edit_req_path(req), :class => 'show-follow' %>
     <% end -%>
     <% if req.biddable? %>
       <% if can?(:destroy, req) -%>

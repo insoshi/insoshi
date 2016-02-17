@@ -194,7 +194,7 @@ en:
       requests: "Requests"
       offers: "Offers"
       exchanges: "Exchanges"
-      people: "People"
+      people: "Directory"
     _people:
       header: "Group's"
       all_members: "All members"

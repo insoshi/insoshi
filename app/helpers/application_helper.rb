@@ -60,6 +60,11 @@ module ApplicationHelper
       global_prefs.questions.blank?
     )
   end
+
+  def display_group_nav?
+    # TODO: Should this be a preference for VBSR?
+    admin? ? true : false
+  end
   
   def menu
     home     = menu_element("Home",   home_path)
@@ -212,10 +217,10 @@ module ApplicationHelper
     else
       credit_limit = account.credit_limit.nil? ? "" : "(limit: #{nice_decimal(account.credit_limit)})"
       action = "#{metric} #{account.group.unit} #{credit_limit}"
-      str = link_to(img,path, options)
-      str << " #{label}: "
+      #str = link_to(img,path, options)
+      str = " #{label}: "
       str << link_to_unless_current(action, path, options)
-      # str.html_safe
+      str.html_safe
     end
   end
 
