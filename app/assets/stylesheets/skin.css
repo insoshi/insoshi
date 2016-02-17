@@ -242,7 +242,8 @@ ul li.profile_icon_item {
   margin-left: 252px;
 }
 .profile .toolbox ul {
-  background: url(/assets/blue-grad.jpg) bottom repeat-x;
+  /*background: url(/assets/blue-grad.jpg) bottom repeat-x;*/
+  background: none;
   border: 1px solid #ccc;
   width: 238px;
 }
