@@ -264,6 +264,7 @@ en:
     index:
       header: "Offers"
       nooffers: "No offers (yet!)"
+      nooffers_html: "No offers(<u>yet!</u>)"
     edit:
       header: "Edit offer"
     new:
@@ -395,6 +396,7 @@ en:
       current: "Current"
       all: "All"
       noreqs: "No requests (yet!)"
+      noreqs_html: "No requests (<u>yet!</u>)"
     edit:
       header: "Edit request"
     new:
