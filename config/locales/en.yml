@@ -396,6 +396,7 @@ en:
       current: "Current"
       all: "All"
       noreqs: "No requests (yet!)"
+      noreqs_html: "No requests (<u>yet!</u>)"
     edit:
       header: "Edit request"
     new:

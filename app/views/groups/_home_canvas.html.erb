@@ -11,7 +11,7 @@
         <%- if @transactions.length > 0 %>
           <h2><%= t('transacts.index.header') %></h2>
           <ul class="list activity full">
-            <%= render :partial => 'shared/transact', :collection => @transactions, :locals => {:ajaxified => true} %> 
+            <%= render :partial => 'shared/transact', :collection => @transactions, :locals => {:ajaxified => true} %>
           </ul>
           <% if @group.asset %>
             <%= link_to t('see_all'), transacts_path(@group.asset), :target => '_blank' %>
@@ -24,7 +24,7 @@
           <%= render :partial => '/offers/offer', :collection => @your_offers %>
         </ul>
       <%- else -%>
-        <h3><%= link_to t('offers.index.nooffers_html'), new_group_offer_path(@group) %></h3> 
+        <h3><%= link_to t('offers.index.nooffers_html'), new_group_offer_path(@group) %></h3>
       <%- end %>
       <h2><%= t('home._dashboard.requests') %></h2>
       <%- if @your_reqs.length > 0 %>
@@ -32,7 +32,7 @@
           <%= render :partial => '/reqs/req', :collection => @your_reqs %>
         </ul>
       <%- else -%>
-        <h3><%= link_to t('reqs.index.noreqs'), new_group_req_path(@group) %></h3>
+        <h3><%= link_to t('reqs.index.noreqs_html'), new_group_req_path(@group) %></h3>
       <%- end %>
       <br />
 <%- end -%>
