@@ -1,7 +1,7 @@
   <strong style="display:inline">Associated with&nbsp;:&nbsp;</strong><%= display @person.listed_categories, :class => "meta", :style => 'display:inline;' %>
-  
+
   <div class="profile vcard">
-    
+
     <!-- Profile title -->
     <%- if @person.openid_identifier.nil? -%>
       <h2>
@@ -25,7 +25,7 @@
           <%= link_to t('people.show.add_description'),
                       edit_person_path(@person) %>
         </div>
-      
+
       <%- else -%>
         <div class="alert">
           <%= t('people.show.own_profile') %>
@@ -36,11 +36,11 @@
       <%- if current_person.address && Person::DEFAULT_ZIPCODE_STRING == current_person.address.zipcode_plus_4 %>
         <div class="alert alert-error">
           <%= link_to t('people.show.update_location'),
-                      edit_person_path(@person) %>. 
+                      edit_person_path(@person) %>.
           <%= t('people.show.address_remain_private') %>
         </div>
       <%- end -%>
-    
+
     <%- end -%><!-- display warning messages -->
 
 
@@ -55,8 +55,8 @@
           <ul>
             <%= render :partial => 'shared/neighborhood', :collection => @person.neighborhoods %>
           </ul>
-          
-          
+
+
           <% if @person.phoneprivacy? %>
             <% unless @person.phone.nil? %>
               <div>
@@ -80,13 +80,13 @@
           <%- end -%>
 
           <%= markdown(@person.description) %>
-        
+
         </div>
 
         <div class="span4">
           <div class="toolbox">
             <ul class="tools">
-            
+
               <%- if @person.org %>
                 <li>
                   <span class="label"><%= t('groups.show.contact') %></span>: <%= @person.name %>
@@ -96,43 +96,43 @@
               <%- unless current_person?(@person) -%>
                 <%- if logged_in? -%>
                   <%- if @membership.group.adhoc_currency? -%>
-                      
+
                     <li>
                       <%= exchange_link @person, @membership.group, :transact => 'credit', :class => 'show-follow' %>
                     </li>
-                      
+
                     <%- if @current_membership.is?(:point_of_sale_operator) || @current_membership.is?(:admin) %>
                       <li>
                         <%= exchange_link @person, @membership.group, :transact => 'debit', :class => 'show-follow' %>
                       </li>
                     <%- end -%>
-                    
+
                   <%- end -%>
-                    
+
                   <li>
                     <%= email_link @person %>
                   </li>
                   <%- if current_person.own_groups.length > 0 %>
                     <li><%= link_to "Invite to group", invite_person_path(@person) %>
                   <%- end -%>
-                    
+
                   <%- if @membership.group.adhoc_currency? -%>
                     <%= render :partial => 'shared/account', :locals => {:account => @account, :html_classes => 'show-follow'} %>
                   <%- end -%>
                 <%- end -%>
-                
+
                 <%- if current_person.admin? -%>
                   <li>
                     <%= link_to t('people.show.switch_user'), su_person_path(@person) %>
                   </li>
                   <li>
                     <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
-                    <%= link_to activity, 
+                    <%= link_to activity,
                                 person_path(@person, :task => "deactivated"),
                                 :method => :put %>
                   </li>
                 <%- end -%>
-                
+
               <% else -%>
                 <%- if logged_in? -%>
                   <%- if @membership.group.adhoc_currency? -%>
@@ -147,7 +147,7 @@
 
 
       </div> <!-- row fluid -->
-  
+
   </div> <!-- profile v-card -->
 
   <hr/>
@@ -156,12 +156,12 @@
 
     <div class="activity-container">
       <h3>Offers</h3>
-      
+
       <% if @offers.empty? %>
         <%= t('offers.index.nooffers') %>
       <% else %>
         <% @offers.each do |offer| %>
-          <div class="activity-inner">  
+          <div class="activity-inner">
             <h4><%= h offer.name %><%= waiting_image %></h4>
             <ul class="list activity full">
               <%= render :partial => offer, :locals => {:full => false} %>
@@ -197,16 +197,16 @@
   <br/>
 <%- unless @membership.group.private_txns? %>
   <%- unless @person.recent_activity.empty? -%>
-  
+
     <div class="activity-container">
       <h3><%= t('people._recent_exchanges.header') %></h3>
-      
+
       <%- unless @person.last_logged_in_at.nil? or current_person?(@person) -%>
 
         <p class="meta">
           <%= @person.display_name %> <%= t('last_logged_in') %>
-          <%= t 'ago_time', :date => time_ago_in_words(@person.last_logged_in_at) %> 
-        </p>    
+          <%= t 'ago_time', :date => time_ago_in_words(@person.last_logged_in_at) %>
+        </p>
 
       <%- end -%>
 
@@ -216,8 +216,8 @@
       </ul>
 
     </div>
-    
 
-  <%- end -%> 
+
+  <%- end -%>
 <%- end -%>
 
