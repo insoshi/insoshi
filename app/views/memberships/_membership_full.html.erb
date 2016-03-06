@@ -50,11 +50,6 @@
         </div>
 
         <div class="span5">
-          <ul>
-            <%= render :partial => 'shared/neighborhood', :collection => @person.neighborhoods %>
-          </ul>
-
-
           <% if @person.phoneprivacy? %>
             <% unless @person.phone.nil? %>
               <div>
@@ -86,9 +81,7 @@
             <ul class="tools">
 
               <%- if @person.org %>
-                <li>
-                  <span class="label"><%= t('groups.show.contact') %></span>: <%= @person.name %>
-                </li>
+                <li><%= @person.name %></li>
               <%- end %>
 
               <%- unless current_person?(@person) -%>
