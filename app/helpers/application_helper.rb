@@ -1,7 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 
 module ApplicationHelper
-  
+
   def stripe_include_tag
     content_for(:head) do
       javascript_include_tag "https://js.stripe.com/v2/"
@@ -47,7 +47,7 @@ module ApplicationHelper
   def theme_url(theme_name)
       theme_matrix[theme_name] || "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css"
   end
-  
+
   ## Menu helpers
 
   def display_help?
@@ -65,7 +65,7 @@ module ApplicationHelper
     # TODO: Should this be a preference for VBSR?
     admin? ? true : false
   end
-  
+
   def menu
     home     = menu_element("Home",   home_path)
     categories = menu_element("SkillBank", categories_path)
@@ -138,21 +138,21 @@ module ApplicationHelper
   def menu_element(content, address)
     { :content => content, :href => address }
   end
-  
+
   def menu_link_to(link, options = {})
     link_to(link[:content], link[:href], options)
   end
-  
+
   def menu_li(link, options = {})
     klass = "n-#{link[:content].downcase}"
     klass += " active" if current_page?(link[:href])
     content_tag(:li, menu_link_to(link, options), :class => klass)
   end
-  
+
   def admin?
     logged_in? and current_person.admin?
   end
-  
+
   # Set the input focus for a specific id
   # Usage: <%= set_focus_to 'form_field_label' %>
   def set_focus_to(id)
@@ -186,12 +186,12 @@ module ApplicationHelper
     end
     add_tag_options(processed_text, tag_opts).html_safe
   end
-  
+
   # Output a column div.
   # The current two-column layout has primary & secondary columns.
-  # The options hash is handled so that the caller can pass options to 
+  # The options hash is handled so that the caller can pass options to
   # content_tag.
-  # The LEFT, RIGHT, and FULL constants are defined in 
+  # The LEFT, RIGHT, and FULL constants are defined in
   # config/initializers/global_constants.rb
   def column_div(options = {}, &block)
     klass = options.delete(:type) == :primary ? "col1" : "col2"
@@ -204,9 +204,9 @@ module ApplicationHelper
   def account_link(account, options = {})
     label = options[:label] || ""
     metric = case label
-      when t('balance') then   nice_decimal(account.balance_with_initial_offset)  
-      when t('paid') then   nice_decimal(account.paid) 
-      when t('earned') then  nice_decimal(account.earned) 
+      when t('balance') then   nice_decimal(account.balance_with_initial_offset)
+      when t('paid') then   nice_decimal(account.paid)
+      when t('earned') then  nice_decimal(account.earned)
       else 0
     end
 
@@ -295,7 +295,7 @@ module ApplicationHelper
                   "http://daringfireball.net/projects/markdown/basics",
                   :popup => true)}
        formatting supported)
-    else 
+    else
       "HTML formatting supported"
     end
   end
@@ -322,15 +322,15 @@ end
 
 
   private
-  
+
     def inflect(word, number)
       number > 1 ? word.pluralize : word
     end
-    
+
     def add_tag_options(text, options)
       text.gsub("<p>", "<p#{options}>")
     end
-    
+
     # Format text using BlueCloth (or RDiscount) if available.
     def format(text)
       if text.nil?
@@ -345,12 +345,12 @@ end
         text
       end
     end
-    
+
     # Is a Markdown library present?
     def markdown?
       defined?(RDiscount) or defined?(BlueCloth)
     end
-    
+
     # Return true if the text *doesn't* start with a paragraph tag.
     def no_paragraph_tag?(text)
       text !~ /^\<p/
