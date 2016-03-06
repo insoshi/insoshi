@@ -148,7 +148,7 @@
       <% if @offers.empty? %>
         <%= t('offers.index.nooffers') %>
       <% else %>
-        <% @offers.each do |offer| %>
+        <% @offers.active.each do |offer| %>
           <div class="activity-inner">
             <h4><%= h offer.name %><%= waiting_image %></h4>
             <ul class="list activity full">
@@ -170,7 +170,7 @@
     <% if @reqs.empty? %>
       <%= t('reqs.home.menu._dashboard.no_active_requests') %>
     <% else %>
-      <% @reqs.each do |req| %>
+      <% @reqs.active.each do |req| %>
         <div class="activity-inner">
           <h4><%= h req.name %><%= waiting_image %></h4>
           <ul class="list activity full">
