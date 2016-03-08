@@ -154,6 +154,18 @@ class ApplicationController < ActionController::Base
       @current_ability ||= Ability.new(current_person, current_token)
     end
 
+    # Provides the current group
+    #
+    # @return [Group] The current group based on URL params
+    def current_group
+      if controller_path == 'groups'
+        @_currnet_group ||= Group.find(params[:id])
+      else
+        @_current_group ||= Group.find(params[:group_id])
+      end
+    end
+    helper_method :current_group
+
     def set_theme
       if params[:theme]
         session[:theme] = params[:theme]

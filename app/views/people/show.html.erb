@@ -83,6 +83,7 @@
               </li>
             <%- end -%>
           <%- end -%>
+
           <%- if current_person.admin? || current_person.activator? -%>
             <li>
             <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
