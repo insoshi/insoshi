@@ -1,10 +1,41 @@
 <div class="span7">
 <div class="profile vcard">
     <%- if @person.openid_identifier.nil? -%>
-      <h2><%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span></h2>
+      <h2>
+        <%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>
+        <%= link_to edit_person_path(@person),
+          class: 'btn btn-default btn-mini',
+          title: 'Edit Profile', data: {
+            toggle: 'tooltip'
+          } do %>
+          <%= icon('pencil') %>
+          &nbsp;Edit Your Profile
+        <% end %>
+      </h2>
     <%- else -%>
-    <h2><%= t('people.show.header') %> <span class="fn n"><%= link_to h(@person.display_name), @person.openid_identifier, :title => @person.openid_identifier %></span>&nbsp;<%= image_tag("login-bg.gif") %></h2>
+      <h2>
+        <%= t('people.show.header') %>
+        <span class="fn n">
+          <%= link_to h(@person.display_name),
+            @person.openid_identifier,
+            :title => @person.openid_identifier
+            %>
+        </span>
+        &nbsp;
+        <%= link_to edit_person_path(@person),
+          class: 'btn btn-default btn-mini',
+          title: 'Edit Profile', data: {
+            toggle: 'tooltip'
+          } do %>
+          <%= icon('pencil') %>
+          &nbsp;Edit Your Profile
+        <% end %>
+        &nbsp;
+        <%= image_tag("login-bg.gif") %>
+
+      </h2>
     <%- end -%>
+
     <%- if admin? and not @person.active? -%>
       <p class="alert alert-error"><%= t('people.show.not_active') %></p>
     <%- end -%>
@@ -15,16 +46,12 @@
           <%= link_to t('people.show.add_description'),
                       edit_person_path(@person) %>
         </div>
-      <%- else -%>
-        <div class="alert">
-          <%= t('people.show.own_profile') %>
-          <%= link_to t('people.show.edit_it'), edit_person_path(@person) %>
-        </div>
       <%- end -%>
+
       <%- if current_person.address && Person::DEFAULT_ZIPCODE_STRING == current_person.address.zipcode_plus_4 %>
         <div class="alert alert-error">
           <%= link_to t('people.show.update_location'),
-                      edit_person_path(@person) %>. 
+                      edit_person_path(@person) %>.
           <%= t('people.show.address_remain_private') %>
         </div>
       <%- end -%>
@@ -50,7 +77,7 @@
             <%- if global_prefs.whitelist? -%>
               <li>
               <%- activator = @person.activator? ? "demote" : "promote to activator" -%>
-              <%= link_to activator, 
+              <%= link_to activator,
                           person_path(@person, :task => "activator"),
                           :method => :put %>
               </li>
@@ -59,7 +86,7 @@
           <%- if current_person.admin? || current_person.activator? -%>
             <li>
             <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
-            <%= link_to activity, 
+            <%= link_to activity,
                         person_path(@person, :task => "deactivated"),
                         :method => :put %>
             </li>
