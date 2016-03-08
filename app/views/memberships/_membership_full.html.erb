@@ -3,7 +3,7 @@
     <!-- Profile title -->
     <%- if @person.openid_identifier.nil? -%>
       <h2>
-        <%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>&nbsp;<%= waiting_image %>
+        <%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>&nbsp;<%= link_to icon('pencil'), edit_person_path(@person), class: 'btn btn-default btn-mini', title: 'Edit Profile', :data => { :toggle => 'tooltip' } %>&nbsp;<%= waiting_image %>
       </h2>
     <%- else -%>
       <h2>
@@ -22,12 +22,6 @@
           <%= t('people.show.description_blank') %>
           <%= link_to t('people.show.add_description'),
                       edit_person_path(@person) %>
-        </div>
-
-      <%- else -%>
-        <div class="alert">
-          <%= t('people.show.own_profile') %>
-          <%= link_to t('people.show.edit_it'), edit_person_path(@person) %>
         </div>
       <%- end -%>
 
