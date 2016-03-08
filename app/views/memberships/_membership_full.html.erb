@@ -3,7 +3,16 @@
     <!-- Profile title -->
     <%- if @person.openid_identifier.nil? -%>
       <h2>
-        <%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>&nbsp;<%= link_to icon('pencil'), edit_person_path(@person), class: 'btn btn-default btn-mini', title: 'Edit Profile', :data => { :toggle => 'tooltip' } %>&nbsp;<%= waiting_image %>
+        <%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>&nbsp;
+        <%= link_to edit_person_path(@person),
+          class: 'btn btn-default btn-mini',
+          title: 'Edit Profile', data: {
+            toggle: 'tooltip'
+          } do %>
+          <%= icon('pencil') %>
+          &nbsp;Edit Your Profile
+        <% end %>
+        &nbsp;<%= waiting_image %>
       </h2>
     <%- else -%>
       <h2>
