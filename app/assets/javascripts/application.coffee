@@ -21,7 +21,3 @@
 #= require site.js
 #= require links_on_new_window
 #= require_self
-
-$(document).ready ->
-  # Setting up tooltips
-  $('[data-toggle="tooltip"]').tooltip()
