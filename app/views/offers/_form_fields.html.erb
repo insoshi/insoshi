@@ -7,8 +7,6 @@
       <%= render :partial => "shared/select_categories", :locals => { :model_name => 'offer' } %>
     </div>
   </div>
-</div>
-<div class="span5">
   <%= f.text_field :price,  :value=> nice_decimal(f.object.price),  :label => t('price'), :help => @group.unit || Group.find(global_prefs.default_group_id).unit, :size => 5 %>
   <%= f.text_field :expiration_date, :label => t('expiration_date'), :size => 7 %>
   <%= f.text_field :total_available, :label => t('offers.new.total_available'), :size => 2, :value => 1 %>
