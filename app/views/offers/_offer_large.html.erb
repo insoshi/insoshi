@@ -12,7 +12,7 @@
     </div>
 
     <div class="span8">
-      <h2><span class='btn'>#<%= offer.id %></span><%= " #{offer.name}" %><%= waiting_image %></h2>
+      <h2><%= " #{offer.name}" %><%= waiting_image %></h2>
       <p>
         <%= t('exchanges.new.amount') %>: <%= h nice_decimal(offer.price) %> <%= offer.unit %>
         <% if offer.available_count > 0 && offer.expiration_date > Time.now && !current_person?(offer.person) %>
