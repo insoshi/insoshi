@@ -7,9 +7,11 @@
 *= require jquery.ui.datepicker
 *= require bootstrap-override
 *= require select2
+*= require_self
 */
 
 @import "font-awesome-sprockets";
 @import "font-awesome";
+
 
 
