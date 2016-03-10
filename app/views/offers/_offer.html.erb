@@ -1,11 +1,11 @@
 <div class="offer offer_id_<%= offer.id %>">
 
   <a name="offer_<%= offer.id %>"></a>
-  
+
   <div class="profile-image">
     <%= offer_image_link offer, :image => :thumbnail %>
   </div>
-  
+
   <p>
     <span class="btn btn-info btn-mini">#<%= offer.id %></span>
     <%= link_to h(offer.name), offer, :class => "show-follow" %> (<%= h   nice_decimal(offer.price)  %> <%= offer.unit %>)
@@ -16,22 +16,22 @@
   <p>
     <%= markdown(first_n_words(offer.description)) %>
   </p>
-  
+
   <p class="meta">
-  
+
     <%= t('offers.partial.available_count') %>: <%= offer.available_count %>
-    
+
     <br>
-    
+
     <%= t('offers.partial.created_by') %> <%= person_link offer.person %>
-    
+
     <%= render partial: '/offers/offer_edit_buttons', locals: {offer: offer} %>
-    
+
     <br>
     <% if !current_person.address.nil? && !offer.person.address.nil? && !current_person?(offer.person) -%>
       <%= number_with_precision(offer.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
     <% end -%>
-  
+
   </p>
   <div class="bottom-offer-category-list">
     <%== horizontal_formatted_offer_categories(offer.long_categories) %>
