@@ -26,11 +26,6 @@
         <br/>
         <br/>
 
-        <%= t('offers.partial.created_by') %> <%= person_link offer.person %>
-        <%= t('ago_time', :date => time_ago_in_words(offer.created_at)) %>
-
-        <br/>
-
         <%= render partial: 'offer_edit_buttons', locals: {offer: offer} %>
 
         <br>
