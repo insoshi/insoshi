@@ -20,6 +20,10 @@
     </div>
   </div>
   <%= f.actions do %>
-    <%= f.primary submit_text %><%= waiting_image %>
+    <%= f.primary 'Post your offer' %><%= waiting_image %>
   <% end %>
 </div>
+
+<script>
+  $('.select2').select2()
+</script>
