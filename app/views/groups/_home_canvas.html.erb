@@ -2,6 +2,11 @@
   <%- if @membership && @membership.is?(:admin) -%>
     <%= render 'shared/group_admin_alert' %>
   <%- end -%>
+
+  <!-- Profile display -->
+  <%= render partial: 'groups/profile' %>
+  <!-- End of profile display -->
+
   <div class="row">
     <div class="span9">
 <%- if @membership %>

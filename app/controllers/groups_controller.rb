@@ -14,6 +14,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @person = current_person
     membership_display
 
     if membership
