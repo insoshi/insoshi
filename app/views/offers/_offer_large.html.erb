@@ -1,60 +1,45 @@
 <div class="offer offer_id_<%= offer.id %> ">
-  
+
   <a name="offer_<%= offer.id %>"></a>
-  
-  <%== horizontal_formatted_offer_categories offer.long_categories %>
-  
+
   <!-- Content to be displayed in two rows -->
   <div class="row-fluid">
-    
-    <div class="span4">
+
+    <div class="span12">
       <div class="border-right">
         <%= offer_image_link offer, :image => :main_photo %>
       </div>
     </div>
-
-    <div class="span8">
-      <h2><span class='btn'>#<%= offer.id %></span><%= " #{offer.name}" %><%= waiting_image %></h2>
+  </div>
+  <div class="row-fluid">
+    <div class="span12">
+      <h2><%= " #{offer.name}" %><%= waiting_image %></h2>
       <p>
         <%= t('exchanges.new.amount') %>: <%= h nice_decimal(offer.price) %> <%= offer.unit %>
-        <% if offer.available_count > 0 && offer.expiration_date > Time.now && !current_person?(offer.person) %>
-          <br/>
-
-          <!-- Displaying the `Pay Now` button -->
-          <% if offer.price > 0 %>
-            <%= link_to t('offers.partial.accept_offer'), new_person_exchange_path(offer.person, :offer => offer.id), {:class => 'btn btn-success pay_now'} %>
-          <% end %>
-
-        <% end %>
         <br/>
         <%= t('offers.partial.expires') %> <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
       </p>
-        
+
       <p class="meta">
         <br/>
         <%= t('offers.partial.available_count') %>: <%= offer.available_count %>
-        
-        <br/>
-        <br/>
 
-        <%= t('offers.partial.created_by') %> <%= person_link offer.person %>
-        <%= t('ago_time', :date => time_ago_in_words(offer.created_at)) %>
-        
+        <br/>
         <br/>
 
         <%= render partial: 'offer_edit_buttons', locals: {offer: offer} %>
 
         <br>
-        
+
         <% if !current_person.address.nil? && !offer.person.address.nil? && !current_person?(offer.person) -%>
           <%= number_with_precision(offer.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
         <% end -%>
-      
+
       </p>
     </div>
   </div>
   <!-- end of content to be displayed in two rows -->
-  
+
   <div class="padded-top" data-links-new-window="true">
     <%= markdown offer.description.to_s %>
   <div>
@@ -62,15 +47,14 @@
   <div class="profile-image" style="display:none;">
     <%= offer_image_link offer, :image => :main_photo %>
   </div>
-  
+
   <% if offer.available_count > 0 && offer.expiration_date > Time.now && !current_person?(offer.person) %>
   <hr/>
 
-    <p class="text-center primary-paynow-button">
-      <% if offer.price > 0 %>
-        <%= link_to t('offers.partial.accept_offer'), new_person_exchange_path(offer.person, :offer => offer.id), {:class => 'btn btn-large btn-success pay_now'} %>
-      <% end %>
-    </p>
+  <% if offer.price > 0 %>
+    <%= link_to t('offers.partial.accept_offer'), new_person_exchange_path(offer.person, :offer => offer.id), {:class => 'btn btn-large btn-success pay_now'} %>
+  <% end %>
+
   <hr/>
   <% end %>
 </div>
