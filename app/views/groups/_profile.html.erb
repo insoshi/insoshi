@@ -116,10 +116,5 @@
     <%= markdown(@person.description) %>
   </div>
 </div>
-<div class="span4">
-	<div class='fee-plan'>
-  		<%= render :partial => 'people/fee_plan', :locals => {:fee_plan => @person.fee_plan} %>
-  	</div>
-  	<%= link_to "Transaction fees history", transaction_history_person_path %>
-</div>
+<%= render 'shared/minifeed' %>
 </div>
