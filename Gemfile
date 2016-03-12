@@ -64,6 +64,9 @@ gem "stripe", '~> 1.10.1'
 gem "mustache"
 gem "mini_magick"
 
+# Client side assets
+gem 'select2-rails'
+
 group :development, :test do
   gem "heroku-api"
   gem 'sqlite3'
