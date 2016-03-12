@@ -15,7 +15,7 @@
 <%- if @membership %>
       <%= render :partial => 'invitations' %>
       <%- if @group.adhoc_currency? %>
-        <%= render :partial => 'shared/account', :locals => {:account => @membership.account, :html_classes => 'show-follow'} %>
+        <%# render :partial => 'shared/account', :locals => {:account => @membership.account, :html_classes => 'show-follow'} %>
         <%- if @transactions.length > 0 %>
           <h2><%= t('transacts.index.header') %></h2>
           <ul class="list activity full">
