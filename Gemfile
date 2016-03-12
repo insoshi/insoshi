@@ -25,6 +25,9 @@ gem "rails3_acts_as_paranoid"
 gem "acts_as_tree_rails3"
 gem "uuid"
 
+# Client side libs
+gem 'font-awesome-sass', '~> 4.5.0'
+
 # gem 'jquery-rails'
 
 #gem "rack", '= 1.2.2'   #Heroku seems to force this

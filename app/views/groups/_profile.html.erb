@@ -1,5 +1,6 @@
-<div class="span7">
-<div class="profile vcard">
+<div class="row">
+  <div class="span7">
+    <div class="profile vcard">
     <%- if @person.openid_identifier.nil? -%>
       <h2>
         <%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>
@@ -8,8 +9,7 @@
           title: 'Edit Profile', data: {
             toggle: 'tooltip'
           } do %>
-          <%= icon('pencil') %>
-          &nbsp;Edit Your Profile
+          &nbsp;Edit Account Details
         <% end %>
       </h2>
     <%- else -%>
@@ -68,7 +68,7 @@
           <%- if logged_in? -%>
             <li><%= exchange_link @person %></li>
             <li><%= email_link @person, :class => 'noajax' %></li>
-            <%= render :partial => 'account', :collection => @person.accounts %>
+            <%= render :partial => 'people/account', :collection => @person.accounts %>
           <%- end -%>
           <%- if current_person.admin? -%>
             <li>
@@ -94,7 +94,7 @@
           <%- end -%>
         <% else -%>
           <%- if logged_in? -%>
-            <%= render :partial => 'account', :collection => @person.accounts %>
+            <%= render :partial => 'people/account', :collection => @person.accounts %>
             <%- if current_person?(@person) && @person.support_contact -%>
               <li><%= support_link @person.support_contact %></li>
             <%- end -%>
@@ -115,12 +115,6 @@
     <%- end -%>
     <%= markdown(@person.description) %>
   </div>
-
-  <%= render :partial => '/shared/recent_activity' %>
 </div>
-<div class="span4">
-	<div class='fee-plan'>
-  		<%= render :partial => 'fee_plan', :locals => {:fee_plan => @person.fee_plan} %>
-  	</div>
-  	<%= link_to "Transaction fees history", transaction_history_person_path %>
+<%= render 'shared/minifeed' %>
 </div>
