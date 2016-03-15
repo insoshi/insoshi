@@ -4,7 +4,16 @@
   <%- end -%>
 
   <!-- Profile display -->
-  <%= render partial: 'groups/profile' %>
+  <div class="row">
+    <div class="span7">
+      <%= render partial: 'groups/profile' %>
+    </div>
+
+    <div class="span4">
+      <%= render partial: 'people/fee_plan', locals: { fee_plan: @person.fee_plan } %>
+      <%= render partial: 'shared/minifeed', locals: { container: false } %>
+    </div>
+  </div>
   <br/>
   <hr/>
   <br/>
