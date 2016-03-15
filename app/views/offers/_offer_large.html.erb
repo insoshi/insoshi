@@ -22,8 +22,6 @@
 
       <p>
         <%= t('exchanges.new.amount') %>: <%= h nice_decimal(offer.price) %> <%= offer.unit %>
-        <br/>
-        <%= t('offers.partial.expires') %> <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
       </p>
 
       <p class="meta">
