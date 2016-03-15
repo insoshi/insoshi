@@ -14,6 +14,12 @@
   <div class="row-fluid">
     <div class="span12">
       <h2><%= " #{offer.name}" %><%= waiting_image %></h2>
+
+      <div class="padded-top" data-links-new-window="true">
+        <%= markdown offer.description.to_s %>
+      <div>
+      <br/>
+
       <p>
         <%= t('exchanges.new.amount') %>: <%= h nice_decimal(offer.price) %> <%= offer.unit %>
         <br/>
@@ -39,10 +45,6 @@
     </div>
   </div>
   <!-- end of content to be displayed in two rows -->
-
-  <div class="padded-top" data-links-new-window="true">
-    <%= markdown offer.description.to_s %>
-  <div>
 
   <div class="profile-image" style="display:none;">
     <%= offer_image_link offer, :image => :main_photo %>
