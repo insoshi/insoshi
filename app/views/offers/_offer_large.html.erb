@@ -14,10 +14,14 @@
   <div class="row-fluid">
     <div class="span12">
       <h2><%= " #{offer.name}" %><%= waiting_image %></h2>
+
+      <div class="padded-top" data-links-new-window="true">
+        <%= markdown offer.description.to_s %>
+      <div>
+      <br/>
+
       <p>
         <%= t('exchanges.new.amount') %>: <%= h nice_decimal(offer.price) %> <%= offer.unit %>
-        <br/>
-        <%= t('offers.partial.expires') %> <%= offer.expiration_date.nil? ? '' : relative_time_ago_in_words(offer.expiration_date) %>
       </p>
 
       <p class="meta">
@@ -28,21 +32,10 @@
         <br/>
 
         <%= render partial: 'offer_edit_buttons', locals: {offer: offer} %>
-
-        <br>
-
-        <% if !current_person.address.nil? && !offer.person.address.nil? && !current_person?(offer.person) -%>
-          <%= number_with_precision(offer.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
-        <% end -%>
-
       </p>
     </div>
   </div>
   <!-- end of content to be displayed in two rows -->
-
-  <div class="padded-top" data-links-new-window="true">
-    <%= markdown offer.description.to_s %>
-  <div>
 
   <div class="profile-image" style="display:none;">
     <%= offer_image_link offer, :image => :main_photo %>

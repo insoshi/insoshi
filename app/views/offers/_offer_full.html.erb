@@ -1,27 +1,25 @@
-  
-  <!-- offer partial -->
-  <%= render :partial => 'offers/offer_large', :locals => { :offer => @offer } %>
-  <!-- end of offer partial -->
+<!-- offer partial -->
+<%= render :partial => 'offers/offer_large', :locals => { :offer => @offer } %>
+<!-- end of offer partial -->
 
-  <% if logged_in? %>
-    <% unless (!@offer.considered_active? || current_person?(@offer.person)) %>
-      <%= form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
-        <%= f.text_field :talkable_id, :type => 'hidden', :value => @offer.id %>
-        <%= f.text_field :talkable_type, :type => 'hidden', :value => @offer.class.to_s %>
+<% if logged_in? %>
+  <% unless (!@offer.considered_active? || current_person?(@offer.person)) %>
+    <%= form_for(:message, :url => person_messages_path(@offer.person)) do |f| %>
+      <%= f.text_field :talkable_id, :type => 'hidden', :value => @offer.id %>
+      <%= f.text_field :talkable_type, :type => 'hidden', :value => @offer.class.to_s %>
 
-        <%= fields_for :offer do |o| %>
-          <%= o.hidden_field :id %>
-        <% end %>
-        <%= f.hidden_field :subject, :id => "message_subject", :value => @offer.name %>
-        <div class="form_row">
-          <label for="message_body">Send <%= h @offer.person.display_name %> a question</label>
-          <%= f.text_area :content, :id => "message_body", :rows => 5 %>
-          <%= set_focus_to "message_body" %>
-        </div>
-        <div class="form_row">
-          <%= f.submit "Send!", :class => "button", :id => "message_submit" %>
-          <%= f.submit "Cancel", :class => "button", :id => "cancel" %>
-        </div>
+      <%= fields_for :offer do |o| %>
+        <%= o.hidden_field :id %>
       <% end %>
+      <%= f.hidden_field :subject, :id => "message_subject", :value => @offer.name %>
+      <div class="form_row">
+        <label for="message_body">Send <%= h @offer.person.display_name %> a question</label>
+        <%= f.text_area :content, :id => "message_body", :rows => 5 %>
+        <%= set_focus_to "message_body" %>
+      </div>
+      <div class="form_row">
+        <%= f.submit "Send!", :class => "button", :id => "message_submit" %>
+      </div>
     <% end %>
-  <%- end -%>
+  <% end %>
+<%- end -%>
