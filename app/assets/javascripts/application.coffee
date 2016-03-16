@@ -1,8 +1,13 @@
 # Place your application-specific JavaScript functions and classes here
 # This file is automatically included by javascript_include_tag :defaults
 #
-#  require jquery
+#= require jquery/jquery
 #= require jquery_ujs
+#
+#= require bootstrap/docs/assets/js/bootstrap
+#
+#= require jquery-ui/ui/jquery-ui
+#
 #= require jquery.remotipart
 #  require jquery.ui.tabs
 #  require jquery.ui.datepicker
