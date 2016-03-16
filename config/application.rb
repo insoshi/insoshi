@@ -3,6 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 require 'rack/openid'
 
+
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   # Bundler.require(*Rails.groups(:assets => %w(development test)))
@@ -12,7 +13,8 @@ end
 
 module Oscurrency
   class Application < Rails::Application
-    require "/home/ziyan/Development/odesk/amy/oscurrency/config/initializers/bower_rails.rb"
+    require Rails.root.join('config', 'initializers', 'bower_rails.rb')
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
