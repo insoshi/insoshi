@@ -72,12 +72,6 @@
         <%= render :partial => "shared/bid_message", :collection => accepted_messages(@req)   %>
       </div>
 
-      <!-- list of current bids -->
-
-      <% if @req.active? %>
-        <hr/>
-        <%= render :partial => '/reqs/bids' %>
-      <% end %>
     </div>
 
     <div class="span6">
