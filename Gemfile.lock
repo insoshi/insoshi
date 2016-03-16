@@ -84,6 +84,7 @@ GEM
     bootstrap-sass (2.2.2.0)
       sass (~> 3.2)
     bootstrap_form (0.3.2)
+    bower-rails (0.10.0)
     builder (3.0.4)
     calendar_helper (0.2.4)
       open4
@@ -409,6 +410,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap_form (~> 0.3.2)
+  bower-rails
   calendar_helper
   cancan
   capybara

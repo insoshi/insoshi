@@ -3,28 +3,21 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <%- if global_prefs.app_name.blank? -%>
-      <title>Insoshi Open Source Social Networking Platform</title>
+      <title>VBSR Marketplace</title>
     <%- else -%>
       <title><%= global_prefs.app_name %></title>
     <%- end -%>
-    <%= stylesheet_link_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/base/jquery-ui.css" %>
-    <%- if session[:theme] %>
-      <%= stylesheet_link_tag theme_url(session[:theme]) %>
-    <%- else -%>
-      <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css" %>
-    <%- end -%>
-    <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css" %>
-    <%= stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css" %>
+
     <%= stylesheet_link_tag "application" %>
-    <%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" %>
-    <%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" %>
-    <%= javascript_include_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tag %>
+
     <%= yield :jquery_support %>
-    <%= yield :head %>    
+    <%= yield :head %>
   </head>
+
   <body class="<%= @body || controller_name %>">
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -144,7 +137,7 @@
       <!-- Styling for the footer -->
         <%- if logged_in? -%>
           <div style='margin-top: 20px;'>
-          <%= t('per_page') %>: 
+          <%= t('per_page') %>:
           <% [5,10,25,50,100].each do |ppp| %>
             <% selected_classes =  current_person.posts_per_page == ppp ? 'btn btn-small btn-primary' : '' %>
             <%= link_to ppp.to_s, person_path(current_person), {:class => "per_page #{selected_classes}", 'data-ppp' => ppp} %>
@@ -161,13 +154,13 @@
           <div class="span6">
 
             <% admin = get_admin() %>
-            
-            <div>  
+
+            <div>
               <!-- The admin contact information -->
               Please contact <%= admin.name %> for assistance.
               <br/>
-              
-              <i class="icon-envelope-alt"></i> 
+
+              <i class="icon-envelope-alt"></i>
               <a href="mailto:<%= admin.email %>">
                 <%= admin.email %>
               </a>
@@ -195,9 +188,9 @@
         </div>
 
       </footer>
-    </div> 
     </div>
-    
+    </div>
+
     <%- if Rails.env.development? -%>
       <hr/>
       <div class="container"><%= render :partial => 'shared/debug' %></div>

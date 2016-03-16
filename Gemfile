@@ -25,6 +25,9 @@ gem "rails3_acts_as_paranoid"
 gem "acts_as_tree_rails3"
 gem "uuid"
 
+# Client side - asset management
+gem 'bower-rails'
+
 # Client side libs
 gem 'font-awesome-sass', '~> 4.5.0'
 
