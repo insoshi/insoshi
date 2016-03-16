@@ -9,10 +9,6 @@
 
   <h2><%= " #{@req.name}" %><%= waiting_image %></h2>
 
-  <p>
-    <strong><%= t('reqs.partial.due') %></strong>: <%= relative_time_ago_in_words(@req.due_date) %>
-  </p>
-
   <!-- Fluid container - for two rows -->
   <div class="row-fluid">
 
