@@ -8,11 +8,6 @@
       url: req_bids_path(@req),
       html: {:id => 'new_bid'} do |f| %>
 
-      <%= f.text_field :estimated_hours,
-        value: nice_decimal(f.object.estimated_hours),
-        label: t('estimate'),
-        help: @req.unit, size: 2 %>
-
       <%= f.text_field :expiration_date,
         label: t('expiration_date'),
         size: 8 %>
