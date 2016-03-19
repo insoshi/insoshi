@@ -5,17 +5,11 @@
   <a name="req_<%= @req.id %>"></a>
 
   <h2><%= " #{@req.name}" %><%= waiting_image %></h2>
-
+  <br />
   <!-- Fluid container - for two rows -->
   <div class="row-fluid">
 
     <div class="span12">
-
-      <div data-links-new-window="true">
-        <%= markdown( @req.description.to_s ) %>
-      </div>
-
-      <hr/>
 
       <div class="row-fluid">
         <div class="span2">
@@ -64,6 +58,13 @@
           </p>
         </div>
       </div>
+
+      <hr />
+      <div data-links-new-window="true">
+        <%= markdown( @req.description.to_s ) %>
+      </div>
+
+      <hr />
 
       <div>
         <%= render :partial => "shared/bid_message", :collection => approved_messages(@req)   %>
