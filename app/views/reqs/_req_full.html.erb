@@ -1,29 +1,15 @@
 <!-- Request Tags -->
 
 <div class="req req_id_<%= @req.id %>">
-  
+
   <a name="req_<%= @req.id %>"></a>
 
-  <!-- Categories on top of the title -->
-  <%== horizontal_formatted_offer_categories @req.long_categories %>
-  
-  <h2>
-    <span class='btn'>#<%= @req.id %></span><%= " #{@req.name}" %><%= waiting_image %>
-  </h2>
-  <p>
-    <strong><%= t('reqs.partial.due') %></strong>: <%= relative_time_ago_in_words(@req.due_date) %>
-  </p>
-
+  <h2><%= " #{@req.name}" %><%= waiting_image %></h2>
+  <br />
   <!-- Fluid container - for two rows -->
   <div class="row-fluid">
 
-    <div class="span6">
-      
-      <div data-links-new-window="true">
-        <%= markdown( @req.description.to_s ) %>
-      </div>
-
-      <hr/>
+    <div class="span12">
 
       <div class="row-fluid">
         <div class="span2">
@@ -37,21 +23,18 @@
         <div class="span10">
           <!-- Container for post meta -->
           <p class="meta">
-            
-            <%= t('reqs.partial.createdby') %> <%= person_link @req.person %>
-            <%= t 'ago_time', :date => time_ago_in_words(@req.created_at) %>
-            
+
             <!-- list of controls -->
             <ul class="inline">
-              
+
               <% if can?(:update, @req) %>
                 <li>
                   <%= link_to t('button_edit'), edit_req_path(@req), :class => 'show-follow' %>
                 </li>
               <% end %>
-              
+
               <% if @req.biddable? %>
-                
+
                 <% if can?(:destroy, @req) %>
                   <li>
                     <%= link_to t('button_delete'), @req, :class => 'delete_req' %>
@@ -63,17 +46,10 @@
                     <%= link_to t('button_deactivate'), deactivate_req_path(@req), :class => 'deactivate_req' %>
                   </li>
                 <% end %>
-              
+
               <% end %>
 
             </ul>
-            
-            <% if !current_person.address.nil? && !@req.person.address.nil? && !current_person?(@req.person) -%>
-              <% distance = number_with_precision(@req.person.address.distance_to(current_person.address), :precision => 1) %>
-              <% if distance.to_i < 300 %>
-                <%= distance.to_s %> <%= t('miles_away') %>
-              <% end %>
-            <% end -%>
 
           </p>
 
@@ -83,6 +59,13 @@
         </div>
       </div>
 
+      <hr />
+      <div data-links-new-window="true">
+        <%= markdown( @req.description.to_s ) %>
+      </div>
+
+      <hr />
+
       <div>
         <%= render :partial => "shared/bid_message", :collection => approved_messages(@req)   %>
         <%= render :partial => "shared/bid_message", :collection => completed_messages(@req)  %>
@@ -90,25 +73,16 @@
         <%= render :partial => "shared/bid_message", :collection => accepted_messages(@req)   %>
       </div>
 
-      <!-- list of current bids -->
-
-      <% if @req.active? %>
-        <hr/>
-        <%= render :partial => '/reqs/bids' %>
-      <% end %>
-    </div>
-
-    <div class="span6">
 
       <!-- Request - bids -->
       <% if @req.active? %>
-        <%= render :partial => '/reqs/bids_form' %>
+        <%= render partial: '/reqs/bids_form' %>
       <%- end -%>
-    
+
     </div>
 
   </div>
-    
+
   <ul class="list full">
     <%# render :partial => 'req/req_large', :locals => {:full => true, :req => @req } %>
     <% render :partial => @req, :locals => {:full => true} %>
@@ -116,8 +90,8 @@
 
   <div class="list full">
 
-  </div>  
+  </div>
 
-  
+
 
 </div>
