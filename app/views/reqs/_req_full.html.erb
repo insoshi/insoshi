@@ -9,7 +9,7 @@
   <!-- Fluid container - for two rows -->
   <div class="row-fluid">
 
-    <div class="span6">
+    <div class="span12">
 
       <div data-links-new-window="true">
         <%= markdown( @req.description.to_s ) %>
@@ -72,9 +72,6 @@
         <%= render :partial => "shared/bid_message", :collection => accepted_messages(@req)   %>
       </div>
 
-    </div>
-
-    <div class="span6">
 
       <!-- Request - bids -->
       <% if @req.active? %>
