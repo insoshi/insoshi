@@ -8,12 +8,8 @@
       url: req_bids_path(@req),
       html: {:id => 'new_bid'} do |f| %>
 
-      <%= f.text_field :expiration_date,
-        label: t('expiration_date'),
-        size: 8 %>
-
       <%= f.text_area :private_message_to_requestor,
-        label: t('reqs.show.private_message_to_requestor'),
+        label: "#{ t('reqs.show.private_message_to') } #{ @req.person.name  }" ,
         rows: 5 %>
 
       <%= f.actions do %>

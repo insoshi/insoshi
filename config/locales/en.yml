@@ -410,6 +410,7 @@ en:
       nobids: "No bids (yet!)"
       newbid: "New bid"
       private_message_to_requestor: "Private message to requestor"
+      private_message_to: "Private message to"
 
   exchanges:
     credit: "Credit"
