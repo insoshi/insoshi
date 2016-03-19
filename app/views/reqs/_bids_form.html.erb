@@ -1,8 +1,8 @@
 <% unless current_person?(@req.person) -%>
-  <h2>
+  <h2 class="hidden">
     <%= t('reqs.show.newbid') %>
   </h2>
-  
+
   <div id="bid_canvas">
     <%= render 'shared/bid_form' %>
   </div>
