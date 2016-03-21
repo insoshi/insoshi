@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: charges
+#
+#  id          :integer          not null, primary key
+#  stripe_id   :string(255)
+#  description :string(255)
+#  amount      :float
+#  status      :string(255)
+#  person_id   :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class Charge < ActiveRecord::Base
   attr_accessible :stripe_id, :description, :amount, :status, :person_id
   

@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: feeds
+#
+#  id          :integer          not null, primary key
+#  person_id   :integer
+#  activity_id :integer
+#
+
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Feed do

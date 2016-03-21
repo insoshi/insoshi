@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: conversations
+#
+#  id            :integer          not null, primary key
+#  talkable_id   :integer
+#  talkable_type :string(255)
+#  exchange_id   :integer
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:

@@ -1,15 +1,14 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: topics
 #
-#  id                :integer(4)      not null, primary key
-#  forum_id          :integer(4)      
-#  person_id         :integer(4)      
-#  name              :string(255)     
-#  forum_posts_count :integer(4)      default(0), not null
-#  created_at        :datetime        
-#  updated_at        :datetime        
+#  id                :integer          not null, primary key
+#  forum_id          :integer
+#  person_id         :integer
+#  name              :string(255)
+#  forum_posts_count :integer          default(0), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
 #
 
 class Topic < ActiveRecord::Base

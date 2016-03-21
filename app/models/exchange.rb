@@ -1,16 +1,18 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: exchanges
 #
-#  id          :integer(4)      not null, primary key
-#  customer_id :integer(4)
-#  worker_id   :integer(4)
-#  req_id      :integer(4)
-#  amount      :decimal(8, 2)   default(0.0)
-#  created_at  :datetime
-#  updated_at  :datetime
-#  deleted_at  :time
+#  id            :integer          not null, primary key
+#  customer_id   :integer
+#  worker_id     :integer
+#  amount        :decimal(8, 2)    default(0.0)
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  group_id      :integer
+#  metadata_id   :integer
+#  metadata_type :string(255)
+#  deleted_at    :time
+#  notes         :string(255)
 #
 
 class Exchange < ActiveRecord::Base

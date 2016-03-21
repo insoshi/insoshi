@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: conversations
+#
+#  id            :integer          not null, primary key
+#  talkable_id   :integer
+#  talkable_type :string(255)
+#  exchange_id   :integer
+#
+
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Conversation do
