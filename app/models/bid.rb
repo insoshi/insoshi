@@ -34,7 +34,7 @@ class Bid < ActiveRecord::Base
   accepts_nested_attributes_for :req
 
   validates :person_id, :presence => true
-  validates :estimated_hours, :presence => true, :numericality => { :greater_than => 0 }
+  validates :estimated_hours, :numericality => { :greater_than => 0 }
   validate :group_includes_bidder_as_a_member
 
   attr_protected :person_id, :created_at, :updated_at
