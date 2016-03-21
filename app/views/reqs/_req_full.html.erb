@@ -66,14 +66,6 @@
 
       <hr />
 
-      <div>
-        <%= render :partial => "shared/bid_message", :collection => approved_messages(@req)   %>
-        <%= render :partial => "shared/bid_message", :collection => completed_messages(@req)  %>
-        <%= render :partial => "shared/bid_message", :collection => commitment_messages(@req) %>
-        <%= render :partial => "shared/bid_message", :collection => accepted_messages(@req)   %>
-      </div>
-
-
       <!-- Request - bids -->
       <% if @req.active? %>
         <%= render partial: '/reqs/bids_form' %>
