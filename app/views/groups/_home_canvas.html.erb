@@ -10,7 +10,6 @@
     </div>
 
     <div class="span4">
-      <%= render partial: 'people/fee_plan', locals: { fee_plan: @person.fee_plan } %>
       <%= render partial: 'shared/minifeed', locals: { container: false } %>
     </div>
   </div>
@@ -52,6 +51,8 @@
         <h3><%= link_to t('reqs.index.noreqs_html'), new_group_req_path(@group) %></h3>
       <%- end %>
       <br />
+      <br />
+      <%= render partial: 'people/fee_plan', locals: { fee_plan: @person.fee_plan } %>
 <%- end -%>
       <%# render 'toolbox' %>
     </div>
