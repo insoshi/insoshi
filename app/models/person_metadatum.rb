@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: person_metadata
+#
+#  id                   :integer          not null, primary key
+#  key                  :string(255)
+#  value                :string(255)
+#  person_id            :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  form_signup_field_id :integer
+#
+
 class PersonMetadatum < ActiveRecord::Base
   attr_accessible :id, :key, :person_id, :value, :person_metadatum
   attr_accessible :person_attributes, :allow_destroy => true

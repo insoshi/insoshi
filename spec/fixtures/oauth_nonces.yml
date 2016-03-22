@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: oauth_nonces
+#
+#  id         :integer          not null, primary key
+#  nonce      :string(255)
+#  timestamp  :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
   id: 1

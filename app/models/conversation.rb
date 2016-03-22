@@ -1,9 +1,11 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: conversations
 #
-#  id :integer(4)      not null, primary key
+#  id            :integer          not null, primary key
+#  talkable_id   :integer
+#  talkable_type :string(255)
+#  exchange_id   :integer
 #
 
 class Conversation < ActiveRecord::Base

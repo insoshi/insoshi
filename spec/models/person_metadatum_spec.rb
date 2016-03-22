@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: person_metadata
+#
+#  id                   :integer          not null, primary key
+#  key                  :string(255)
+#  value                :string(255)
+#  person_id            :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  form_signup_field_id :integer
+#
+
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PersonMetadatum do

@@ -1,3 +1,27 @@
+# == Schema Information
+#
+# Table name: groups
+#
+#  id                   :integer          not null, primary key
+#  name                 :string(255)
+#  description          :text
+#  mode                 :integer          default(0), not null
+#  person_id            :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  unit                 :string(255)
+#  adhoc_currency       :boolean          default(FALSE)
+#  mandatory            :boolean          default(FALSE)
+#  default_credit_limit :decimal(8, 2)
+#  asset                :string(255)
+#  private_txns         :boolean          default(FALSE)
+#  enable_forum         :boolean          default(TRUE)
+#  display_balance      :boolean          default(TRUE)
+#  display_earned       :boolean          default(FALSE)
+#  display_paid         :boolean          default(FALSE)
+#  roles_mask           :integer
+#
+
 require 'texticle/searchable'
 
 class Group < ActiveRecord::Base
