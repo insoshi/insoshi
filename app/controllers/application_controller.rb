@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   # @param [String] name The name of the icon (ex: pencil for fa-pencil)
   def icon(name)
     return unless name
-    tag 'i', class: "fa fa-#{name}"
+    content_tag 'i', nil, class: "fa fa-#{name}"
   end
   helper_method :icon
 
