@@ -29,7 +29,7 @@ gem "uuid"
 gem 'bower-rails'
 
 # Client side libs
-gem 'font-awesome-sass', '~> 4.5.0'
+# gem 'font-awesome-sass', '~> 4.5.0'
 
 # gem 'jquery-rails'
 

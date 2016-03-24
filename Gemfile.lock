@@ -156,8 +156,6 @@ GEM
       net-ssh (>= 2.1.3)
       nokogiri (~> 1.5.0)
       ruby-hmac
-    font-awesome-sass (4.5.0)
-      sass (>= 3.2)
     font-awesome-sass-rails (3.0.0.1)
       railties (>= 3.1.1)
       sass-rails (>= 3.1.1)
@@ -425,7 +423,6 @@ DEPENDENCIES
   exception_notification
   feed-normalizer
   fog
-  font-awesome-sass (~> 4.5.0)
   geokit-rails3
   gibbon!
   girl_friday

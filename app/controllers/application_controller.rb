@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
         end
       end
       format.js do
-        canvas = case params[:controller] 
+        canvas = case params[:controller]
           when 'reqs','bids'
             'reqs_canvas'
           when 'offers'
@@ -59,9 +59,20 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => '71a8c82e6d248750397d166001c5e308'
 
+  # We are not able to use FontAwesome gem 4.x +. This is becuase the Admin end is expecting
+  # FA 3.x. As a result FontAwesome is supplied through bower and this helper method is used
+  # to support code that used to use the FontAwesome Sass Helper
+  #
+  # @param [String] name The name of the icon (ex: pencil for fa-pencil)
+  def icon(name)
+    return unless name
+    content_tag 'i', nil, class: "fa fa-#{name}"
+  end
+  helper_method :icon
+
   protected
     def ajax_posts_per_page
-      current_person.posts_per_page 
+      current_person.posts_per_page
     end
 
     def bootstrap_class(flash_key)
@@ -74,24 +85,24 @@ class ApplicationController < ActionController::Base
     def logged_in?
       !!current_person
     end
-    
+
     # User is back after some absence and he CAN'T go anywhere until they update their credit card data
     # only if they have monetary fee sign up and haven't already submitted credit card data.
     def credit_card_required
       if logged_in? && current_person.credit_card_required?
-        flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " + 
+        flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " +
                          "You won't be able to take any actions until then."
         redirect_to credit_card_path
       end
     end
- 
+
     # Checks if user entered credit card data, or if admin allowed him not to.
     # Even if admin allowed him not to put credit card data, he has to submit it
     # to create offer.
     def check_credit_card
       if logged_in? && current_person.stripe_id.blank? && current_person.fee_plan.contains_stripe_fees?
         store_location
-        flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " + 
+        flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " +
                          "You won't be able to take any actions until then."
         redirect_to credit_card_path
       end
@@ -147,7 +158,7 @@ class ApplicationController < ActionController::Base
     end
 
     def current_user
-      current_person 
+      current_person
     end
 
     def current_ability
@@ -197,7 +208,7 @@ class ApplicationController < ActionController::Base
         redirect_to home_url
       end
     end
- 
+
     # no longer used
     # Create a Scribd-style PageView.
     # See http://www.scribd.com/doc/49575/Scaling-Rails-Presentation
@@ -210,7 +221,7 @@ class ApplicationController < ActionController::Base
         #                :user_agent => request.env["HTTP_USER_AGENT"])
       end
     end
- 
+
     def require_activation
       if logged_in?
         unless current_person.active? or current_person.admin?
@@ -220,7 +231,7 @@ class ApplicationController < ActionController::Base
         current_person.touch :last_logged_in_at
       end
     end
-    
+
     # Warn the admin if his email address or password is still the default.
     def admin_warning
       if request.format.html?
@@ -228,7 +239,7 @@ class ApplicationController < ActionController::Base
         default_password = "admin"
         if logged_in? and current_person.admin? and !(request.fullpath =~ /^\/admin/)
           if current_person.email =~ /@#{default_domain}$/
-            flash[:notice] = %(#{t('notice_warning_your_email_address')} 
+            flash[:notice] = %(#{t('notice_warning_your_email_address')}
               #{default_domain}.
               <a href="#{edit_person_path(current_person)}">#{t('notice_change_it_here')}</a>.)
           end

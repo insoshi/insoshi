@@ -6,6 +6,7 @@
 *
 *  require vendor
 *= require vrl-theme
+*= require font-awesome/css/font-awesome
 *= require skin
 *= require bootstrap_form
 *= require style
@@ -14,9 +15,6 @@
 *= require select2
 *= require_self
 */
-
-@import "font-awesome-sprockets";
-@import "font-awesome";
 
 
 
