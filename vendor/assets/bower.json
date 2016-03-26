@@ -1,0 +1,9 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "jquery": "1.8.3",
+    "bootstrap": "2.2.2",
+    "jquery-ui": "1.9.2",
+    "font-awesome": "4.5.0"
+  }
+}

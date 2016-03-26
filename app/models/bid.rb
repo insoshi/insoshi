@@ -1,22 +1,24 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: bids
 #
-#  id              :integer(4)      not null, primary key
-#  req_id          :integer(4)
-#  person_id       :integer(4)
-#  status_id       :integer(4)
-#  estimated_hours :decimal(8, 2)   default(0.0)
-#  actual_hours    :decimal(8, 2)   default(0.0)
-#  expiration_date :datetime
-#  created_at      :datetime
-#  updated_at      :datetime
-#  accepted_at     :datetime
-#  committed_at    :datetime
-#  completed_at    :datetime
-#  approved_at     :datetime
-#  rejected_at     :datetime
+#  id                           :integer          not null, primary key
+#  req_id                       :integer
+#  person_id                    :integer
+#  status_id                    :integer
+#  estimated_hours              :decimal(8, 2)    default(0.0)
+#  actual_hours                 :decimal(8, 2)    default(0.0)
+#  expiration_date              :datetime
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  accepted_at                  :datetime
+#  committed_at                 :datetime
+#  completed_at                 :datetime
+#  approved_at                  :datetime
+#  rejected_at                  :datetime
+#  state                        :string(255)
+#  private_message_to_requestor :text
+#  group_id                     :integer
 #
 
 class Bid < ActiveRecord::Base
@@ -34,7 +36,7 @@ class Bid < ActiveRecord::Base
   accepts_nested_attributes_for :req
 
   validates :person_id, :presence => true
-  validates :estimated_hours, :presence => true, :numericality => { :greater_than => 0 }
+  validates :estimated_hours, :numericality => { :greater_than => 0 }, if: :estimted_hours_is_validatable?
   validate :group_includes_bidder_as_a_member
 
   attr_protected :person_id, :created_at, :updated_at
@@ -159,5 +161,11 @@ class Bid < ActiveRecord::Base
   def trigger_approved
     touch :approved_at
     Account.transfer(self.req.person, self.person, self.estimated_hours, self.req)
+  end
+
+  private
+
+  def estimted_hours_is_validatable?
+    !(estimated_hours.nil? || estimated_hours.zero?)
   end
 end

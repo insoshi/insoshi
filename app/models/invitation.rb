@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: invitations
+#
+#  id          :integer          not null, primary key
+#  group_id    :integer
+#  person_id   :integer
+#  accepted_at :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class Invitation < ActiveRecord::Base
   extend PreferencesHelper
 

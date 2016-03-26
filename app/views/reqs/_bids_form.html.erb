@@ -1,10 +1,20 @@
 <% unless current_person?(@req.person) -%>
-  <h2>
+  <h2 class="hidden">
     <%= t('reqs.show.newbid') %>
   </h2>
-  
-  <div id="bid_canvas">
-    <%= render 'shared/bid_form' %>
-  </div>
 
+  <div id="bid_canvas">
+    <%= bootstrap_form_for @bid,
+      url: req_bids_path(@req),
+      html: {:id => 'new_bid'} do |f| %>
+
+      <%= f.text_area :private_message_to_requestor,
+        label: "#{ t('reqs.show.private_message_to') } #{ @req.person.name  }" ,
+        rows: 5 %>
+
+      <%= f.actions do %>
+        <%= f.primary t('button_submit') %><%= waiting_image %>
+      <% end %>
+    <% end %>
+  </div>
 <%- end -%>

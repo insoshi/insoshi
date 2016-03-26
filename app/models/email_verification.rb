@@ -1,13 +1,12 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: email_verifications
 #
-#  id         :integer(4)      not null, primary key
-#  person_id  :integer(4)      
-#  code       :string(255)     
-#  created_at :datetime        
-#  updated_at :datetime        
+#  id         :integer          not null, primary key
+#  person_id  :integer
+#  code       :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 class EmailVerification < ActiveRecord::Base

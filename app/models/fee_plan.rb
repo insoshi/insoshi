@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: fee_plans
+#
+#  id          :integer          not null, primary key
+#  name        :string(100)      not null
+#  description :string(255)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  available   :boolean          default(FALSE)
+#
+
 class FeePlan < ActiveRecord::Base
   validates_presence_of	:name
   validates_length_of :name,  :maximum => 100

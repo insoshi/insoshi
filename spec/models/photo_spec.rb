@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: photos
+#
+#  id             :integer          not null, primary key
+#  parent_id      :integer
+#  content_type   :string(255)
+#  thumbnail      :string(255)
+#  size           :integer
+#  width          :integer
+#  height         :integer
+#  primary        :boolean
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  picture        :string(255)
+#  photoable_id   :integer
+#  photoable_type :string(255)
+#  picture_for    :string(255)
+#
+
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Photo do

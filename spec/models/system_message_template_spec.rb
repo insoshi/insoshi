@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: system_message_templates
+#
+#  id           :integer          not null, primary key
+#  title        :string(255)
+#  text         :string(255)
+#  message_type :string(255)
+#  lang         :string(255)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe SystemMessageTemplate do

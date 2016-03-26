@@ -1,4 +1,4 @@
-<div class="span3">
+<div class="<%= 'span3' if defined?(container) && !container %>">
   <h2><%= t('shared.minifeed.activity') %></h2>
   <ul class="list activity small">
       <%= render :partial => 'shared/minifeed_item',

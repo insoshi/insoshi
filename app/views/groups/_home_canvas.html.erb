@@ -2,12 +2,28 @@
   <%- if @membership && @membership.is?(:admin) -%>
     <%= render 'shared/group_admin_alert' %>
   <%- end -%>
+
+  <!-- Profile display -->
+  <div class="row">
+    <div class="span7">
+      <%= render partial: 'groups/profile' %>
+    </div>
+
+    <div class="span4">
+      <%= render partial: 'shared/minifeed', locals: { container: false } %>
+    </div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <!-- End of profile display -->
+
   <div class="row">
     <div class="span9">
 <%- if @membership %>
       <%= render :partial => 'invitations' %>
       <%- if @group.adhoc_currency? %>
-        <%= render :partial => 'shared/account', :locals => {:account => @membership.account, :html_classes => 'show-follow'} %>
+        <%# render :partial => 'shared/account', :locals => {:account => @membership.account, :html_classes => 'show-follow'} %>
         <%- if @transactions.length > 0 %>
           <h2><%= t('transacts.index.header') %></h2>
           <ul class="list activity full">
@@ -35,9 +51,11 @@
         <h3><%= link_to t('reqs.index.noreqs_html'), new_group_req_path(@group) %></h3>
       <%- end %>
       <br />
+      <br />
+      <%= render partial: 'people/fee_plan', locals: { fee_plan: @person.fee_plan } %>
 <%- end -%>
-      <%= render 'toolbox' %>
+      <%# render 'toolbox' %>
     </div>
-    <%= render 'shared/minifeed' %>
+    <% render 'shared/minifeed' %>
   </div>
 </div>

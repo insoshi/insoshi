@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: categories
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  description :text
+#  parent_id   :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 require 'texticle/searchable'
 
 class Category < ActiveRecord::Base
