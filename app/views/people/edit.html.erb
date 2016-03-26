@@ -81,13 +81,6 @@
 
       <%= f.text_area :description, label: t('people.edit.description'), rows: 10 %>
 
-      <div class="control-group">
-        <label class="control-label" for="time_zone"><%= t('people.edit.time_zone') %></label>
-        <div class="controls">
-          <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {:default => f.object.time_zone || TimeZone.first.time_zone}, {:id => 'time_zone'} %>
-        </div>
-      </div>
-
       <%= f.select :date_style, TimeZone::Date_Style.keys, :selected => f.object.date_style || TimeZone.first.date_style, :label => t('people.edit.date_style') %>
 
       <%= f.email_field :email, label: t('people.edit.email') %>
