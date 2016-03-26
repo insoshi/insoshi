@@ -1,4 +1,57 @@
-<div class='span6'>
+<div id="password-and-credit-card">
+  <h2><%= t('people.edit.change_your_password') %></h2>
+
+    <%= bootstrap_form_for @person, :html => { :id => "change_password" } do |f| %>
+        <%= f.password_field :password,
+                             :label => t('people.edit.new_password'),
+                             :size => 34,
+                             :maxlength => Person::MAX_PASSWORD %>
+
+        <%= f.password_field :password_confirmation,
+                             :label => t('people.edit.confirm_password'),
+                             :size => 34,
+                             :maxlength => Person::MAX_PASSWORD,
+                             :value => "" %>
+        <input type="hidden" name="type" value="password_edit" />
+        <%= f.actions do %>
+          <%= f.primary t('people.edit.change_password') %>
+        <% end %>
+    <% end %>
+
+    <h2><%= t('people.edit.update_your_credit_card') %></h2>
+
+    <%= bootstrap_form_for @person, :html => { :id => "update_credit_card" } do |f| %>
+        <%= f.text_field :credit_card,
+                             :label => t('people.edit.card_number'),
+                             :size => 34,
+                             :placeholder => 'XXXX XXXX XXXX XXXX' %>
+
+        <%= f.text_field :expire,
+                             :label => t('people.edit.expiration'),
+                             :size => 34,
+                             :placeholder => 'MM/YYYY' %>
+        <%= f.text_field :cvc,
+                             :label => t('people.edit.cvc'),
+                             :size => 34 %>
+        <%= f.actions do %>
+          <%= f.primary t('people.edit.update_card') %>
+        <% end %>
+    <% end %>
+
+  <% if global_prefs.openid? %>
+    <h2>OpenID</h2>
+
+    <%= bootstrap_form_for @person, :html => { :id => "openid_form" } do |f| %>
+      <%= f.text_field :openid_identifier, label: t('people.edit.openid_identifier') %>
+      <%= f.actions do %>
+        <%= f.primary t('people.edit.change_openid') %>
+      <% end %>
+      <input type="hidden" name="type" value="openid_edit" />
+    <% end %>
+  <% end %>
+
+</div>
+<div id="profile">
   <h2><%= t('people.edit.header') %></h2>
 
   <div id="profile_edit">
@@ -145,56 +198,3 @@
   <br />
 </div>
 
-<div class='span5'>
-  <h2><%= t('people.edit.change_your_password') %></h2>
-
-    <%= bootstrap_form_for @person, :html => { :id => "change_password" } do |f| %>
-        <%= f.password_field :password,
-                             :label => t('people.edit.new_password'),
-                             :size => 34,
-                             :maxlength => Person::MAX_PASSWORD %>
-
-        <%= f.password_field :password_confirmation,
-                             :label => t('people.edit.confirm_password'),
-                             :size => 34,
-                             :maxlength => Person::MAX_PASSWORD,
-                             :value => "" %>
-        <input type="hidden" name="type" value="password_edit" />
-        <%= f.actions do %>
-          <%= f.primary t('people.edit.change_password') %>
-        <% end %>
-    <% end %>
-
-    <h2><%= t('people.edit.update_your_credit_card') %></h2>
-
-    <%= bootstrap_form_for @person, :html => { :id => "update_credit_card" } do |f| %>
-        <%= f.text_field :credit_card,
-                             :label => t('people.edit.card_number'),
-                             :size => 34,
-                             :placeholder => 'XXXX XXXX XXXX XXXX' %>
-
-        <%= f.text_field :expire,
-                             :label => t('people.edit.expiration'),
-                             :size => 34,
-                             :placeholder => 'MM/YYYY' %>
-        <%= f.text_field :cvc,
-                             :label => t('people.edit.cvc'),
-                             :size => 34 %>
-        <%= f.actions do %>
-          <%= f.primary t('people.edit.update_card') %>
-        <% end %>
-    <% end %>
-
-  <% if global_prefs.openid? %>
-    <h2>OpenID</h2>
-
-    <%= bootstrap_form_for @person, :html => { :id => "openid_form" } do |f| %>
-      <%= f.text_field :openid_identifier, label: t('people.edit.openid_identifier') %>
-      <%= f.actions do %>
-        <%= f.primary t('people.edit.change_openid') %>
-      <% end %>
-      <input type="hidden" name="type" value="openid_edit" />
-    <% end %>
-  <% end %>
-
-</div>
