@@ -81,8 +81,6 @@
 
       <%= f.text_area :description, label: t('people.edit.description'), rows: 10 %>
 
-      <%= f.select :date_style, TimeZone::Date_Style.keys, :selected => f.object.date_style || TimeZone.first.date_style, :label => t('people.edit.date_style') %>
-
       <%= f.email_field :email, label: t('people.edit.email') %>
 
       <%= f.text_field :web_site_url, label: t('people.edit.web_site_url') %>
