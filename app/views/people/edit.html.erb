@@ -88,23 +88,6 @@
       <%= f.text_field :phone, label: t('people.edit.phone') %>
 
       <%= render :partial => "person_metadata", :locals => {:f => f, :person => @person, :extra_fields => @extra_fields} %>
-      <%- if global_prefs.email_notifications? -%>
-
-        <br />
-
-        <h3><%= t('people.edit.email_notification_preferences') %></h3>
-
-        <p>
-          <%= t('people.edit.email_notification_note') %>
-        </p>
-
-        <%= f.control_group :message_notifications do %>
-          <%= f.check_box :message_notifications, label: t('people.edit.messages')%>
-        <% end %>
-        <%= f.control_group :broadcast_emails do %>
-          <%= f.check_box :broadcast_emails, label: t('people.edit.broadcast_emails')%>
-        <% end %>
-      <%- end -%>
 
 
       <div id="business_details">
