@@ -108,7 +108,7 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 12.months
-  DEFAULT_ZIPCODE_STRING = '89001'
+  DEFAULT_ZIPCODE_STRING = ENV['DEFAULT_ZIP'] || '89001'
 
   module Scopes
 
