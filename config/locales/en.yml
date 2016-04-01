@@ -293,7 +293,7 @@ en:
       neighborhood: "Neighborhood"
       description: "Description"
       openid_identifier: "OpenID"
-      email: "Email"
+      email: "Email/Log In"
       email_notification_preferences: "Email notification preferences"
       email_notification_note: "You will receive email notifications for each event type whose box is checked."
       requests_in_my_service_categories: "Requests in my service categories"

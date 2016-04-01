@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150414191501) do
+ActiveRecord::Schema.define(:version => 20160328175756) do
 
   create_table "account_imports", :force => true do |t|
     t.integer  "person_id",                     :null => false
@@ -501,7 +501,7 @@ ActiveRecord::Schema.define(:version => 20150414191501) do
     t.string   "phone"
     t.string   "first_letter"
     t.string   "zipcode"
-    t.boolean  "phoneprivacy",             :default => false
+    t.boolean  "phoneprivacy",             :default => true
     t.string   "language"
     t.string   "openid_identifier"
     t.string   "perishable_token",         :default => "",    :null => false

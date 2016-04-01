@@ -23,7 +23,7 @@
 #  phone                    :string(255)
 #  first_letter             :string(255)
 #  zipcode                  :string(255)
-#  phoneprivacy             :boolean          default(FALSE)
+#  phoneprivacy             :boolean          default(TRUE)
 #  language                 :string(255)
 #  openid_identifier        :string(255)
 #  perishable_token         :string(255)      default(""), not null

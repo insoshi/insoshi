@@ -28,3 +28,7 @@
 #= require links_on_new_window
 #= require select2
 #= require_self
+
+$(document).ready ->
+  $('[data-toggle=tooltip]').tooltip()
+  $('.select2-auto').select2()

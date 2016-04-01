@@ -23,7 +23,7 @@
 #  phone                    :string(255)
 #  first_letter             :string(255)
 #  zipcode                  :string(255)
-#  phoneprivacy             :boolean          default(FALSE)
+#  phoneprivacy             :boolean          default(TRUE)
 #  language                 :string(255)
 #  openid_identifier        :string(255)
 #  perishable_token         :string(255)      default(""), not null
@@ -108,7 +108,7 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 12.months
-  DEFAULT_ZIPCODE_STRING = '89001'
+  DEFAULT_ZIPCODE_STRING = ENV['DEFAULT_ZIP'] || '89001'
 
   module Scopes
 
