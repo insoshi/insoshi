@@ -54,6 +54,13 @@ module OffersHelper
     link_to(content, link, link_options)
   end
 
+  # Offer Value provides a verbal description about the offers value. This is useful to show how much
+  # the value is in the list view (index). If the price is not set then a message is to be rendered
+  # instead.
+  #
+  # @param [Offer] offer The offer
+  #
+  # @return [String] Offer price in words
   def offer_value(offer = nil)
     fail ArgumentError, 'Offer required and must be an instance of Offer' unless offer.instance_of? Offer
     if offer.price.zero?
