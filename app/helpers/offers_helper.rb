@@ -11,7 +11,7 @@ module OffersHelper
     if params[:scope]
       "toggle-all-offers filter_selected"
     else
-      "toggle-all-offers"
+     "toggle-all-offers"
     end
   end
 
@@ -52,5 +52,14 @@ module OffersHelper
                                                  :class => "fn" )})
     end
     link_to(content, link, link_options)
+  end
+
+  def offer_value(offer = nil)
+    fail ArgumentError, 'Offer required and must be an instance of Offer' unless offer.instance_of? Offer
+    if offer.price.zero?
+      t('offers.no_price')
+    else
+      "#{ h nice_decimal(offer.price) } #{ offer.unit }"
+    end
   end
 end
