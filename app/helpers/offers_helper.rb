@@ -15,14 +15,14 @@ module OffersHelper
     end
   end
 
-  # 
+  #
   # function `horizontal_formatted_offer_categories` outputs an html string
   # that includes a prefix ( ie: Listed in: ) enclosed in <span> tags and the
   # following to be a comma seperated list of names.
-  # 
+  #
   def horizontal_formatted_offer_categories( categories, prefix_text = t('offers.partial.listed_in'))
     html = "<div class='horizontal-categories'><span>#{prefix_text}</span>&nbsp;"
-    
+
     # Adding categories with commas - note extra comma to end
     categories.each { | c | html << h(c) + ', ' }
 
