@@ -44,8 +44,6 @@
 
   <div id="profile_edit">
 
-  <h3><%= t('people.edit.personal_details') %></h3>
-
     <%= bootstrap_form_for @person do |f| %>
       <%= f.text_field :name, :label => t('people.edit.name'), :maxlength => Person::MAX_NAME %>
 
