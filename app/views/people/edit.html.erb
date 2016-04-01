@@ -49,17 +49,6 @@
     <%= bootstrap_form_for @person do |f| %>
       <%= f.text_field :name, :label => t('people.edit.name'), :maxlength => Person::MAX_NAME %>
 
-      <% if can?(:create, @category) %>
-        <span class="categoryAdd"><%= link_to t('people.edit.add_new_category'), new_category_path %></span>
-      <% end %>
-
-      <div class="control-group">
-        <%= f.label t('people.edit.services_offered'), :class => 'control-label' %>
-        <div class="classes">
-          <%= render :partial => "shared/select2_categories", :locals => { :model_name => 'person' } %>
-        </div>
-      </div>
-
       <div class="control-group">
         <%= f.label t('people.edit.neighborhood'), :class => 'control-label' %>
           <div class="classes">
