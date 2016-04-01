@@ -49,13 +49,6 @@
     <%= bootstrap_form_for @person do |f| %>
       <%= f.text_field :name, :label => t('people.edit.name'), :maxlength => Person::MAX_NAME %>
 
-      <div class="control-group">
-        <%= f.label t('people.edit.neighborhood'), :class => 'control-label' %>
-          <div class="classes">
-            <%= render :partial => "shared/select2_neighborhoods", :locals => { :model_name => 'person' } %>
-          </div>
-      </div>
-
       <%= f.text_area :description, label: t('people.edit.description'), rows: 10 %>
 
       <%= f.email_field :email, label: t('people.edit.email') %>
