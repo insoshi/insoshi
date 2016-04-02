@@ -25,11 +25,5 @@
     <%= t('offers.partial.created_by') %> <%= person_link offer.person %>
 
     <%= render partial: '/offers/offer_edit_buttons', locals: {offer: offer} %>
-
-    <br>
-    <% if !current_person.address.nil? && !offer.person.address.nil? && !current_person?(offer.person) -%>
-      <%= number_with_precision(offer.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
-    <% end -%>
-
   </p>
 </div>
