@@ -5,3 +5,19 @@
 </ul>
 
 <%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
+
+
+<script>
+  $(document).ready(function(){
+    link = $('#offers_filter .offer a').first();
+    paginate = $('#offers_canvas .pagination').first();
+
+    if(link.length > 0 && paginate.length > 0){
+      console.log(link);
+      console.log(paginate);
+      link.css('margin-top', '-20px');
+      link.css('margin-left', '20px');
+      link.appendTo(paginate);
+    }
+  });
+</script>

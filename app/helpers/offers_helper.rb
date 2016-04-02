@@ -11,18 +11,18 @@ module OffersHelper
     if params[:scope]
       "toggle-all-offers filter_selected"
     else
-      "toggle-all-offers"
+     "toggle-all-offers"
     end
   end
 
-  # 
+  #
   # function `horizontal_formatted_offer_categories` outputs an html string
   # that includes a prefix ( ie: Listed in: ) enclosed in <span> tags and the
   # following to be a comma seperated list of names.
-  # 
+  #
   def horizontal_formatted_offer_categories( categories, prefix_text = t('offers.partial.listed_in'))
     html = "<div class='horizontal-categories'><span>#{prefix_text}</span>&nbsp;"
-    
+
     # Adding categories with commas - note extra comma to end
     categories.each { | c | html << h(c) + ', ' }
 
@@ -52,5 +52,21 @@ module OffersHelper
                                                  :class => "fn" )})
     end
     link_to(content, link, link_options)
+  end
+
+  # Offer Value provides a verbal description about the offers value. This is useful to show how much
+  # the value is in the list view (index). If the price is not set then a message is to be rendered
+  # instead.
+  #
+  # @param [Offer] offer The offer
+  #
+  # @return [String] Offer price in words
+  def offer_value(offer = nil)
+    fail ArgumentError, 'Offer required and must be an instance of Offer' unless offer.instance_of? Offer
+    if offer.price.zero?
+      t('offers.no_price')
+    else
+      "#{ h nice_decimal(offer.price) } #{ offer.unit }"
+    end
   end
 end

@@ -278,6 +278,7 @@ en:
       header: "Offer"
       send: "Send"
       add_offer: "Add offer!"
+    no_price: 'Will Provide Quote'
 
   people:
     edit:
