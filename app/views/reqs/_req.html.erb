@@ -4,8 +4,7 @@
     <%= offer_image_link req, :image => :thumbnail %>
   </div>
   <p>
-    <span class="btn btn-info btn-mini">#<%= req.id %></span>
-  <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h  nice_decimal(req.estimated_hours)  %> <%= h req.unit %>)
+    <h4 style="display: inline-block;"><%= link_to h(req.name), req, :class => "show-follow" %></h4> ( <%= req_estimate_value(req) %> )
   </p>
   <p>
     <%= markdown((full rescue false) ? req.description.to_s : first_n_words(req.description)) %>
@@ -27,12 +26,5 @@
         | <%= link_to t('button_deactivate'), deactivate_req_path(req), :class => 'deactivate_req' %>
       <% end -%>
     <% end -%>
-    <br>
-    <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>
-      <%= number_with_precision(req.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
-    <% end -%>
   </p>
-  <div class="bottom-req-category-list">
-    <%== horizontal_formatted_req_categories(req.long_categories) %>
-  </div>
 </div>

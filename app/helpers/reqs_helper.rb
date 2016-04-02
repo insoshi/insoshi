@@ -44,4 +44,20 @@ module ReqsHelper
     # remove the accessive ', ' from the last position
     html = html[0..-3] << '</div>'
   end
+
+  # Req Value provides a verbal description about the offers value. This is useful to show how much
+  # the estimate value is in the list view (index). If the price is not set then a message is to be
+  # rendered instead.
+  #
+  # @param [Req] offer The req
+  #
+  # @return [String] Req price in words
+  def req_estimate_value(req = nil)
+    fail ArgumentError, 'Req required and must be an instance of Offer' unless req.instance_of? Req
+    if req.estimated_hours.zero?
+      t('no_price')
+    else
+      "#{ h nice_decimal(req.estimated_hours) } #{ req.unit }"
+    end
+  end
 end
