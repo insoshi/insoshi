@@ -19,6 +19,7 @@ en:
   filter_neighborhoods: "Neighborhoods"
 
   price: "Price"
+  no_price: 'Will Provide Quote'
   estimate: "Estimate"
   title: "Title"
   bid: "bid"
@@ -278,7 +279,6 @@ en:
       header: "Offer"
       send: "Send"
       add_offer: "Add offer!"
-    no_price: 'Will Provide Quote'
 
   people:
     edit:

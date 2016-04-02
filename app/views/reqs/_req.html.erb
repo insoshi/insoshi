@@ -4,8 +4,7 @@
     <%= offer_image_link req, :image => :thumbnail %>
   </div>
   <p>
-    <span class="btn btn-info btn-mini">#<%= req.id %></span>
-  <%= link_to h(req.name), req, :class => "show-follow" %> (<%= h  nice_decimal(req.estimated_hours)  %> <%= h req.unit %>)
+    <h4 style="display: inline-block;"><%= link_to h(req.name), req, :class => "show-follow" %></h4> ( <%= req_estimate_value(req) %> )
   </p>
   <p>
     <%= markdown((full rescue false) ? req.description.to_s : first_n_words(req.description)) %>
