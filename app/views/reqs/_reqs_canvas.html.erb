@@ -1,5 +1,23 @@
+
       <%= will_paginate(@reqs, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
       <ul class="list activity full">
         <%= render :partial => '/reqs/req', :collection => @reqs %>
       </ul>
       <%= will_paginate(@reqs, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
+
+
+
+<script>
+  $(document).ready(function(){
+    link = $('#requests_filter .req a').first();
+    paginate = $('#reqs_canvas .pagination').first();
+
+    if(link.length > 0 && paginate.length > 0){
+      console.log(link);
+      console.log(paginate);
+      link.css('margin-top', '-20px');
+      link.css('margin-left', '20px');
+      link.appendTo(paginate);
+    }
+  });
+</script>
