@@ -26,9 +26,5 @@
         | <%= link_to t('button_deactivate'), deactivate_req_path(req), :class => 'deactivate_req' %>
       <% end -%>
     <% end -%>
-    <br>
-    <% if !current_person.address.nil? && !req.person.address.nil? && !current_person?(req.person) -%>
-      <%= number_with_precision(req.person.address.distance_to(current_person.address), :precision => 1).to_s %> <%= t('miles_away') %>
-    <% end -%>
   </p>
 </div>
