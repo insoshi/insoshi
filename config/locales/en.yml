@@ -260,7 +260,7 @@ en:
       accept_offer: "Pay now!"
       expires: "Expires"
       available_count: "Available count"
-      created_by: "Requested by"
+      created_by: "Offered by"
       listed_in: "Listed in:"
     index:
       header: "Offers"
@@ -390,7 +390,7 @@ en:
   reqs:
     partial:
       due: "Due"
-      createdby: "Created By"
+      createdby: "Requested by"
     index:
       header: "Requests"
       active_requests: "Active Requests"
