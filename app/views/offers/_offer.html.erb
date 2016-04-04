@@ -17,11 +17,6 @@
   </p>
 
   <p class="meta">
-
-    <%= t('offers.partial.available_count') %>: <%= offer.available_count %>
-
-    <br>
-
     <%= t('offers.partial.created_by') %> <%= person_link offer.person %>
 
     <%= render partial: '/offers/offer_edit_buttons', locals: {offer: offer} %>
