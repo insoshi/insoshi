@@ -260,7 +260,7 @@ en:
       accept_offer: "Pay now!"
       expires: "Expires"
       available_count: "Available count"
-      created_by: "Created by"
+      created_by: "Requested by"
       listed_in: "Listed in:"
     index:
       header: "Offers"
