@@ -99,6 +99,9 @@ group :development do
   gem 'highline'
   gem 'git'
   gem 'pry-rails'
+
+  # Developer tools
+  gem 'ghi'
 end
 
 group :production do
