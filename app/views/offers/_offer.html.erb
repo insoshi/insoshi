@@ -17,7 +17,7 @@
   </p>
 
   <p class="meta">
-    <%= t('offers.partial.created_by') %> <%= person_link offer.person %>
+    <%= t('offers.partial.created_by') %> <%= membership_link current_membership(offer.group, offer.person), class: 'url fn show-follow' %>
 
     <%= render partial: '/offers/offer_edit_buttons', locals: {offer: offer} %>
   </p>

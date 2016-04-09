@@ -316,9 +316,17 @@ module ApplicationHelper
     end
   end
 
-def nice_decimal(decimal)
-  number_with_precision(decimal, precision: 2)
-end
+  def nice_decimal(decimal)
+    number_with_precision(decimal, precision: 2)
+  end
+
+  # Provides the membership for the current group for the current logged in user
+  # or the specified user.
+  #
+  # @param [Person] person  The person whomes membershop is required
+  def current_membership(group = current_gorup, person = current_person)
+    group.memberships.where(person_id: person.id).first
+  end
 
 
   private
