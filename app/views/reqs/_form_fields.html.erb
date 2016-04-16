@@ -1,12 +1,6 @@
 <div class="span5">
   <%= f.text_field :name, :label => t('title'), :size => 40, :maxlength => 255 %>
   <%= f.text_area :description, :label => t('description'), :rows => 5 %>
-  <div class="control-group">
-    <%= f.label t('filter_categories'), :class => 'control-label' %>
-    <div class="controls">
-      <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
-    </div>
-  </div>
 </div>
 
 <div class="span5">
