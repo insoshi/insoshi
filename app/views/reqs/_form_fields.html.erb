@@ -1,9 +1,7 @@
 <div class="span5">
   <%= f.text_field :name, :label => t('title'), :size => 40, :maxlength => 255 %>
   <%= f.text_area :description, :label => t('description'), :rows => 5 %>
-</div>
 
-<div class="span5">
   <%= f.text_field :estimated_hours, :value=> nice_decimal(f.object.estimated_hours), :label => t('estimated') + ' ' + t('payment'), :help => @group.unit || Group.find(global_prefs.default_group_id).unit, :size => 5, :disabled => estimate_disabled %>
   <%= f.text_field :due_date, :label => t('due_date'), :size => 7 %>
   <%= f.fields_for :photos do |i| %>
