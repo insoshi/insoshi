@@ -44,7 +44,7 @@ gem "aws-s3"
 gem "fog"
 gem "carrierwave"
 gem "json", '~> 1.8.1'
-gem "rmagick"
+gem "rmagick", "~> 2.15.4"
 gem "geokit-rails3"
 
 gem "will_paginate"
