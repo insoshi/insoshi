@@ -5,6 +5,7 @@
 #= require jquery_ujs
 #
 #= require bootstrap/docs/assets/js/bootstrap
+# require jasny-bootstrap/docs/assets/js/bootstrap
 #
 #= require jquery-ui/ui/jquery-ui
 #
