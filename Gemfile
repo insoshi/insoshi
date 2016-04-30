@@ -46,7 +46,7 @@ gem "carrierwave"
 gem "json", '~> 1.8.1'
 
 # Image manipulation
-gem "rmagick"
+gem "rmagick", '~> 2.15.4'
 gem "mini_magick"
 
 gem "geokit-rails3"
