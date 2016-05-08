@@ -22,7 +22,7 @@ module RailsAdmin
         RailsAdmin::Config::Actions.register(self)
       end
     end
-   end
+  end
 end
 
   config.current_user_method { current_person } #auto-generated
@@ -98,7 +98,7 @@ end
 
       field :person do
         label "Name"
-        searchable [{Person => :name}]
+        searchable ['people.name', 'people.business_name', 'people.legal_business_name']
         queryable true
       end
       field :offset do
