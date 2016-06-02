@@ -31,6 +31,7 @@ class OffersController < ApplicationController
   end
 
   def show
+    return redirect_to group_path(@offer.group, anchor: "offers/#{ @offer.id }") unless request.xhr?
     @group = @offer.group
     @transact_paid = Transact.where(:metadata_id => @offer.id, :worker_id => @offer.person_id).first
     @transact_received = Transact.where(:metadata_id => @offer.id, :customer_id => @offer.person_id).first

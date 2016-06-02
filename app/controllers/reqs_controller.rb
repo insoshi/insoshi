@@ -37,6 +37,7 @@ class ReqsController < ApplicationController
   # GET /reqs/1
   # GET /reqs/1.xml
   def show
+    return redirect_to group_path(@req.group, anchor: "reqs/#{ @req.id }") unless request.xhr?
     @req = Req.find(params[:id])
     @bid = Bid.new
     @bid.estimated_hours = @req.estimated_hours
