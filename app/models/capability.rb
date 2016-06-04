@@ -6,8 +6,8 @@
 #  group_id       :integer
 #  oauth_token_id :integer
 #  scope          :string(255)
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  created_at     :datetime
+#  updated_at     :datetime
 #  invalidated_at :datetime
 #
 

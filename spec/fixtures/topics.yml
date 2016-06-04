@@ -7,8 +7,8 @@
 #  person_id         :integer
 #  name              :string(255)
 #  forum_posts_count :integer          default(0), not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  created_at        :datetime
+#  updated_at        :datetime
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

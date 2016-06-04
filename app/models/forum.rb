@@ -6,8 +6,8 @@
 #  name          :string(255)
 #  description   :text
 #  topics_count  :integer          default(0), not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  created_at    :datetime
+#  updated_at    :datetime
 #  group_id      :integer
 #  worldwritable :boolean          default(FALSE)
 #

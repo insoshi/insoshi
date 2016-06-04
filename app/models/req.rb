@@ -8,8 +8,8 @@
 #  estimated_hours :decimal(8, 2)    default(0.0)
 #  due_date        :datetime
 #  person_id       :integer
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  created_at      :datetime
+#  updated_at      :datetime
 #  biddable        :boolean          default(TRUE)
 #  notifications   :boolean          default(FALSE)
 #  group_id        :integer

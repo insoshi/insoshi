@@ -11,8 +11,8 @@
 #  authors        :string(255)
 #  date_published :datetime
 #  last_updated   :datetime
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  created_at     :datetime
+#  updated_at     :datetime
 #
 
 require 'feed-normalizer'

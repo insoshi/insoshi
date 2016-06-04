@@ -8,8 +8,8 @@
 #  price           :decimal(8, 2)    default(0.0)
 #  expiration_date :datetime
 #  person_id       :integer
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  created_at      :datetime
+#  updated_at      :datetime
 #  total_available :integer
 #  available_count :integer
 #  group_id        :integer

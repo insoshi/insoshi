@@ -9,8 +9,8 @@
 #  estimated_hours              :decimal(8, 2)    default(0.0)
 #  actual_hours                 :decimal(8, 2)    default(0.0)
 #  expiration_date              :datetime
-#  created_at                   :datetime         not null
-#  updated_at                   :datetime         not null
+#  created_at                   :datetime
+#  updated_at                   :datetime
 #  accepted_at                  :datetime
 #  committed_at                 :datetime
 #  completed_at                 :datetime
