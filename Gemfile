@@ -2,22 +2,17 @@
 
 source 'https://rubygems.org'
 source 'https://code.stripe.com'
+
 ruby "1.9.3"
+
 gem 'rails', '3.2.16'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+# Database
 gem 'pg'
 gem "unicorn"
 gem "girl_friday"
 gem "exception_notification"
-
-group :assets do
-  gem "sass-rails"
-  gem "uglifier"
-  # gem 'jquery-ui-rails'
-end
+gem "will_paginate"
 
 gem "coffee-rails"
 gem "audited-activerecord"
@@ -28,33 +23,34 @@ gem "uuid"
 # Client side - asset management
 gem 'bower-rails'
 
-# Client side libs
-# gem 'font-awesome-sass', '~> 4.5.0'
-
-# gem 'jquery-rails'
-
-#gem "rack", '= 1.2.2'   #Heroku seems to force this
+# Forms
+gem 'remotipart'
 gem 'dynamic_form'
+gem "bootstrap_form", "~> 0.3.2"
+
+# Authentication / Authorization
+gem "cancan"
 gem "oauth"
+gem "authlogic"
+gem "ruby-openid", :require => "openid"
+gem "oauth-plugin", :path => "#{File.expand_path(__FILE__)}/../vendor/gems/oauth-plugin-0.4.0.pre7"
+gem "open_id_authentication", :git => "git://github.com/rewritten/open_id_authentication.git"
 
-gem "feed-normalizer"
-gem "texticle"
+# Sates
+gem "aasm"
 
+# File management and Cloud storage
 gem "aws-s3"
 gem "fog"
 gem "carrierwave"
 gem "json", '~> 1.8.1'
-gem "rmagick", "~> 2.15.4"
+
+# Image manipulation
+gem "rmagick", '~> 2.15.4'
+gem "mini_magick"
+
 gem "geokit-rails3"
 
-gem "will_paginate"
-gem "aasm"
-gem "authlogic"
-#gem "authlogic-oid", :require => "authlogic_openid"
-gem "ruby-openid", :require => "openid"
-gem "oauth-plugin", :path => "#{File.expand_path(__FILE__)}/../vendor/gems/oauth-plugin-0.4.0.pre7"
-gem "open_id_authentication", :git => "git://github.com/rewritten/open_id_authentication.git"
-gem "cancan"
 gem "dalli"
 gem "redcarpet"
 gem 'rails_admin'
@@ -62,13 +58,22 @@ gem "ar_after_transaction"
 gem 'valid_email', :require => 'valid_email/email_validator'
 gem "calendar_helper"
 gem "gibbon", :git => "git://github.com/amro/gibbon.git"
-gem "bootstrap_form", "~> 0.3.2"
-gem "stripe", '~> 1.10.1'
 gem "mustache"
-gem "mini_magick"
+
+# Payment
+gem "stripe", '~> 1.10.1'
 
 # Client side assets
 gem 'select2-rails'
+
+gem "feed-normalizer"
+gem "texticle"
+
+
+group :assets do
+  gem "sass-rails"
+  gem "uglifier"
+end
 
 group :development, :test do
   gem "heroku-api"
@@ -88,12 +93,16 @@ group :debug do
 end
 
 group :development do
+  gem 'xray-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'highline'
   gem 'git'
   gem 'pry-rails'
+
+  # Developer tools
+  gem 'ghi'
 end
 
 group :production do
@@ -110,5 +119,5 @@ group :test do
   gem "spork"
   gem 'stripe-ruby-mock','~> 1.10.1.6'
 end
-gem 'remotipart'
+
 

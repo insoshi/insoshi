@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150414191501) do
+ActiveRecord::Schema.define(:version => 20160328175756) do
 
   create_table "account_imports", :force => true do |t|
     t.integer  "person_id",                     :null => false
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(:version => 20150414191501) do
     t.decimal  "earned",          :precision => 8, :scale => 2, :default => 0.0
     t.decimal  "reserve_percent", :precision => 8, :scale => 7, :default => 0.0
     t.boolean  "reserve",                                       :default => false
-    t.decimal  "rollover_charge",                               :default => 0.0
   end
 
   create_table "activities", :force => true do |t|
@@ -501,7 +500,7 @@ ActiveRecord::Schema.define(:version => 20150414191501) do
     t.string   "phone"
     t.string   "first_letter"
     t.string   "zipcode"
-    t.boolean  "phoneprivacy",             :default => false
+    t.boolean  "phoneprivacy",             :default => true
     t.string   "language"
     t.string   "openid_identifier"
     t.string   "perishable_token",         :default => "",    :null => false
@@ -632,7 +631,7 @@ ActiveRecord::Schema.define(:version => 20150414191501) do
     t.integer  "item"
     t.string   "table"
     t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 8
+    t.integer  "year",       :limit => 5
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end

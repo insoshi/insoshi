@@ -1,0 +1,17 @@
+<%=
+    collection_select( model_name,
+                      'neighborhood_ids',
+                      @all_neighborhoods,
+                      :id,
+                      :long_name,
+                      {
+                        selected: logged_in? ? current_person.neighborhoods.map(&:id) : []
+                      },
+                      {
+                        multiple: true,
+                        size: '8',
+                        class: 'select2 select2-auto',
+                        title: t('shared.multiple_select_label')
+                      }
+                     )
+%>

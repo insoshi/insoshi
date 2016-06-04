@@ -1,6 +1,6 @@
       <%= will_paginate(@memberships, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
       <ul class="list activity full">
-        <%= render :partial => '/memberships/member', :collection => @memberships, :locals => {:short => true} %>
+        <%= render :partial => '/memberships/member', :collection => @memberships, :locals => {:short => false} %>
       </ul>
       <div style='clear:both;'></div>
       <%= will_paginate(@memberships, :renderer => BootstrapPaginationHelper::LinkRenderer) %>

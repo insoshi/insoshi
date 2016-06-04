@@ -1,4 +1,16 @@
+<br/>
+
+<div style="display: inline-block;">
 <%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
+</div>
+
+<%= link_to t('button_new_offer'),
+  new_group_offer_path(@group),
+  {
+    class: 'show-follow btn btn-primary',
+    style: 'margin-top: -22px; margin-left: 10px;'
+  }
+%>
 
 <ul class="list activity full">
   <%= render :partial => '/offers/offer', :collection => @offers %>

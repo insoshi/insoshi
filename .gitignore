@@ -37,3 +37,5 @@ config/ultrasphinx/*.conf
 .ruby-version
 /public/uploads
 .ruby-version
+
+archives/backups/*

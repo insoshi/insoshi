@@ -19,7 +19,7 @@ class ReqsController < ApplicationController
     if @authorized
       @reqs = Req.custom_search(@selected_neighborhood || @selected_category,
                               @group,
-                              active=params[:scope].nil?, # if a scope is not passed, just return actives
+                              params[:scope].nil?, # if a scope is not passed, just return actives
                               params[:page],
                               ajax_posts_per_page,
                               params[:search]
@@ -37,6 +37,7 @@ class ReqsController < ApplicationController
   # GET /reqs/1
   # GET /reqs/1.xml
   def show
+    return redirect_to group_path(@req.group, anchor: "reqs/#{ @req.id }") unless request.xhr?
     @req = Req.find(params[:id])
     @bid = Bid.new
     @bid.estimated_hours = @req.estimated_hours
@@ -92,7 +93,7 @@ class ReqsController < ApplicationController
 
     respond_to do |format|
       if @req.save
-        @reqs = Req.custom_search(nil,@group,active=true,page=1,ajax_posts_per_page,nil).order("updated_at desc")
+        @reqs = Req.custom_search(nil,@group,true,1,ajax_posts_per_page,nil).order("updated_at desc")
         flash[:notice] = t('success_request_created')
         #respond_with @req
         #format.html { redirect_to(@req) }
@@ -118,7 +119,7 @@ class ReqsController < ApplicationController
     respond_to do |format|
       if @req.update_attributes(params[:req])
         flash[:notice] = t('notice_request_updated')
-        @reqs = Req.custom_search(nil,@group,active=true,page=1,ajax_posts_per_page,nil).order("updated_at desc")
+        @reqs = Req.custom_search(nil, @group, true, 1, ajax_posts_per_page, nil).order("updated_at desc")
         format.html { redirect_to(@req) }
         format.js
         format.xml  { head :ok }
