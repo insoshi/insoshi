@@ -891,6 +891,21 @@ end
     end
   end
 
+  config.model 'OfferReport' do
+    parent Report
+    
+    label 'Report'
+    label_plural 'Reports'
+
+    list do
+      scope do
+        joins(:person).where( people: { deactivated:false } )
+      end
+      field :id
+      field :record
+    end
+  end
+
 end
 
 end
