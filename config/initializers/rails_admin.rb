@@ -49,13 +49,43 @@ end
     export
   end
 
-  config.included_models = [Charge,RecurringFee,RecurringStripeFee,
-    FixedTransactionFee,PercentTransactionFee,FixedTransactionStripeFee,
-    PercentTransactionStripeFee, Account,Address,State,AccountDeactivated,
-    Preference,ExchangeAndFee,ForumPost,FeedPost,BroadcastEmail,Person,
-    PersonDeactivated,Category,Neighborhood,Req,Offer,BusinessType,
-    ActivityStatus,FeePlan, ExchangeDeleted, TimeZone, FormSignupField,
-    PersonMetadatum, SystemMessageTemplate, Message, AccountImport]
+  config.included_models = [
+    Account,
+    AccountDeactivated,
+    AccountImport,
+    ActivityStatus,
+    Address,
+    BroadcastEmail,
+    BusinessType,
+    Category,
+    Charge,
+    ExchangeAndFee,
+    ExchangeDeleted,
+    FeePlan,
+    FeedPost,
+    FixedTransactionFee,
+    FixedTransactionStripeFee,
+    FormSignupField,
+    ForumPost,
+    Message,
+    Neighborhood,
+    Offer,
+    PercentTransactionFee,
+    PercentTransactionStripeFee,
+    Person,
+    PersonDeactivated,
+    PersonMetadatum,
+    Preference,
+    RecurringFee,
+    RecurringStripeFee,
+    Report,
+    OfferReport,
+    ReqReport,
+    Req,
+    State,
+    SystemMessageTemplate,
+    TimeZone,
+  ]
 
   config.default_items_per_page = 100
 
@@ -845,6 +875,19 @@ end
       end
       field :recipient
       field :sender_deleted_at
+    end
+  end
+
+  config.model 'Report' do
+    label 'Report'
+    label_plural 'Reports'
+
+    list do
+      scope do
+        joins(:person).where( people: { deactivated:false } )
+      end
+      field :id
+      field :record
     end
   end
 

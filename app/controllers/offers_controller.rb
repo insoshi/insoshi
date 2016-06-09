@@ -23,7 +23,7 @@ class OffersController < ApplicationController
         params[:search]
       ).order("offers.id desc")
 
-      Report::Offer.create(record: params[:search], person: current_person, group: @group)
+      OfferReport.create(record: params[:search], person: current_person, group: @group)
     else
       flash[:notice] = t('notice_member_to_view_offers')
       @offers = Offer.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)

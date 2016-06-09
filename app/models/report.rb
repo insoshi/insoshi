@@ -14,7 +14,4 @@
 class Report < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
-
-  class Req < Report; end;
-  class Offer < Report; end;
 end

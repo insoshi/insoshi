@@ -1,0 +1,2 @@
+class OfferReport < Report
+end
