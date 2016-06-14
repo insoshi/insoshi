@@ -1,5 +1,10 @@
 begin
-  unless Rails.env.test?
+
+  if Rails.env.development?
+    ActionMailer::Base.delivery_method = :letter_opener
+  elsif Rails.env.test?
+    ActionMailer::Base.delivery_method = :test
+  else
     global_prefs = Preference.first
     if global_prefs.using_email?
       ActionMailer::Base.delivery_method = :smtp
