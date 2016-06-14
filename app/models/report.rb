@@ -14,4 +14,7 @@
 class Report < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
+
+  scope :offers, -> { where(type: 'OfferReport') }
+  scope :reqs, -> { where(type: 'ReqReport') }
 end
