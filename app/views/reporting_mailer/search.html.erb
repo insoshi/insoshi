@@ -1,7 +1,7 @@
 <h3>Reqs</h3>
 
 <ul>
-  <% @report.reqs.each do |req| %>
+  <% @reports.reqs.each do |req| %>
     <li><%= req.record %> : <%= req.person.try(:name) %></li>
   <% end %>
 </ul>
@@ -9,7 +9,7 @@
 <h3>Offers</h3>
 
 <ul>
-  <% @report.offers.each do |offer| %>
+  <% @reports.offers.each do |offer| %>
     <li><%= offer.record %> : <%= offer.person.try(:name) %></li>
   <% end %>
 </ul>

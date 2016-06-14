@@ -4,6 +4,7 @@ class ReportingMailer < ActionMailer::Base
 
   # Dispatches the search report to the reproting email
   def search(title, reports)
+    binding.pry
     @reports = reports
 
     mail(
