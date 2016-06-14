@@ -7,6 +7,6 @@ namespace :search do
     ReportingMailer.search(
       "Search Report - #{ 7.days.ago.to_date } - #{ Date.today }",
       reports
-    )
+    ).deliver
   end
 end
