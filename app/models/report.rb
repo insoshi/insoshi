@@ -17,4 +17,5 @@ class Report < ActiveRecord::Base
 
   scope :offers, -> { where(type: 'OfferReport') }
   scope :reqs, -> { where(type: 'ReqReport') }
+  scope :memberships, -> { where(type: 'MembershipReport') }
 end
