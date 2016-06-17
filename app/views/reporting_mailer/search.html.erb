@@ -13,3 +13,11 @@
     <li><%= offer.record %> : <%= offer.person.try(:name) %></li>
   <% end %>
 </ul>
+
+<h3>Memberships</h3>
+
+<ul>
+  <% @reports.memberships.each do |membership| %>
+    <li><%= membership.record %> : <%= membership.person.try(:name) %>
+  <% end %>
+</ul>
