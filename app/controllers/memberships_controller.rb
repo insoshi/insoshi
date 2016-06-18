@@ -15,16 +15,23 @@ class MembershipsController < ApplicationController
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
     @authorized = @group.authorized_to_view_members?(current_person)
+
     if @authorized
-      @memberships = Membership.custom_search(@selected_neighborhood || @selected_category,
-                                            @group,
-                                            params[:page],
-                                            ajax_posts_per_page,
-                                            params[:search]
-                                            )
+      @memberships = Membership.custom_search(
+        @selected_neighborhood || @selected_category,
+        @group,
+        params[:page],
+        ajax_posts_per_page,
+        params[:search]
+      )
+
+      MembershipReport.create(record: params[:search], person: current_person, group: @group) if params[:search]
     else
       flash[:notice] = t('notice_member_to_view_people')
-      @memberships = Membership.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
+      @memberships = Membership.where('1=0').paginate(
+        page: 1,
+        per_page: ajax_posts_per_page
+      )
     end
 
     respond_to do |format|

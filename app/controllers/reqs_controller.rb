@@ -16,14 +16,18 @@ class ReqsController < ApplicationController
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
     @authorized = @group.authorized_to_view_reqs?(current_person)
+
     if @authorized
-      @reqs = Req.custom_search(@selected_neighborhood || @selected_category,
-                              @group,
-                              params[:scope].nil?, # if a scope is not passed, just return actives
-                              params[:page],
-                              ajax_posts_per_page,
-                              params[:search]
-                              ).order("reqs.updated_at desc")
+      @reqs = Req.custom_search(
+        @selected_neighborhood || @selected_category,
+        @group,
+        params[:scope].nil?, # if a scope is not passed, just return actives
+        params[:page],
+        ajax_posts_per_page,
+        params[:search]
+      ).order("reqs.updated_at desc")
+
+      ReqReport.create(record: params[:search], person: current_person, group: @group) if params[:search]
     else
       flash[:notice] = t('notice_member_to_view_requests')
       @reqs = Req.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)

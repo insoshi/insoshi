@@ -5,8 +5,8 @@
 #  id         :integer          not null, primary key
 #  nonce      :string(255)
 #  timestamp  :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  created_at :datetime
+#  updated_at :datetime
 #
 
 # Simple store of nonces. The OAuth Spec requires that any given pair of nonce and timestamps are unique.

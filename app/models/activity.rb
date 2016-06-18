@@ -7,8 +7,8 @@
 #  item_id    :integer
 #  person_id  :integer
 #  item_type  :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  created_at :datetime
+#  updated_at :datetime
 #  group_id   :integer
 #
 

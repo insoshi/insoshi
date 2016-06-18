@@ -10,8 +10,8 @@
 #  secret                :string(50)
 #  authorized_at         :datetime
 #  invalidated_at        :datetime
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
+#  created_at            :datetime
+#  updated_at            :datetime
 #  callback_url          :string(255)
 #  verifier              :string(20)
 #  scope                 :string(255)

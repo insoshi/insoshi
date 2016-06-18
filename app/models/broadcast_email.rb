@@ -5,8 +5,8 @@
 #  id         :integer          not null, primary key
 #  subject    :string(255)
 #  message    :text
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  created_at :datetime
+#  updated_at :datetime
 #  sent       :boolean          default(FALSE), not null
 #
 

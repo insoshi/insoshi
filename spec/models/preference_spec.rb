@@ -5,8 +5,8 @@
 #  id                              :integer          not null, primary key
 #  email_notifications             :boolean          default(FALSE), not null
 #  email_verifications             :boolean          default(FALSE), not null
-#  created_at                      :datetime         not null
-#  updated_at                      :datetime         not null
+#  created_at                      :datetime
+#  updated_at                      :datetime
 #  analytics                       :text
 #  server_name                     :string(255)
 #  app_name                        :string(255)

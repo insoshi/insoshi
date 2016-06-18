@@ -14,8 +14,8 @@
 #  zipcode_plus_4  :string(10)
 #  latitude        :decimal(12, 8)
 #  longitude       :decimal(12, 8)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  created_at      :datetime
+#  updated_at      :datetime
 #  address_privacy :boolean          default(FALSE)
 #  primary         :boolean          default(FALSE)
 #

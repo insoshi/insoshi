@@ -10,8 +10,8 @@
 #  width          :integer
 #  height         :integer
 #  primary        :boolean
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
+#  created_at     :datetime
+#  updated_at     :datetime
 #  picture        :string(255)
 #  photoable_id   :integer
 #  photoable_type :string(255)

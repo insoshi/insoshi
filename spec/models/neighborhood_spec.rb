@@ -6,8 +6,8 @@
 #  name        :string(255)
 #  description :text
 #  parent_id   :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
