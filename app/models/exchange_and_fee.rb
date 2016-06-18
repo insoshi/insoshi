@@ -18,8 +18,8 @@
 
 class ExchangeAndFee < Exchange
   extend PreferencesHelper
-  after_create :withdraw_fee
-  after_destroy :destroy_relevant_fees
+  after_create :withdraw_fee, unless: :wave_all_fees
+  after_destroy :destroy_relevant_fees, unless: :wave_all_fees
 
   def withdraw_fee
     # group level transaction fees that apply to all group members
