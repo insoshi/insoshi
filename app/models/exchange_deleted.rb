@@ -13,6 +13,7 @@
 #  metadata_type :string(255)
 #  deleted_at    :time
 #  notes         :string(255)
+#  wave_all_fees :boolean          default(FALSE)
 #
 
 class ExchangeDeleted < Exchange

@@ -437,6 +437,7 @@ end
         end
       end
       field :notes, :text
+      field :wave_all_fees
       #field :metadata
     end
   end

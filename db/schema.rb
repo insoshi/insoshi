@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160604172646) do
+ActiveRecord::Schema.define(:version => 20160617190838) do
 
   create_table "account_imports", :force => true do |t|
     t.integer  "person_id",                     :null => false
@@ -269,6 +269,7 @@ ActiveRecord::Schema.define(:version => 20160604172646) do
     t.string   "metadata_type"
     t.time     "deleted_at"
     t.string   "notes"
+    t.boolean  "wave_all_fees",                               :default => false
   end
 
   create_table "fee_plans", :force => true do |t|
