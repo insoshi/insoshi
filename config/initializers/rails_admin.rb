@@ -403,7 +403,7 @@ end
     list do
       field :created_at
       field :customer do
-        searchable [{Person => :name}]
+        searchable ['people.name', 'people.business_name', 'people.legal_business_name']
         queryable true
       end
       field :worker do
