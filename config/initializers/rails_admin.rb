@@ -403,11 +403,13 @@ end
     list do
       field :created_at
       field :customer do
-        searchable ['people.name', 'people.business_name', 'people.legal_business_name']
         queryable true
+        searchable :name, :business_name, :legal_business_name 
+        sortable :business_name
       end
       field :worker do
-        searchable :workers_exchanges => :name
+        sortable :business_name
+        # searchable [:name, :business_name]
         queryable true
       end
       field :amount
@@ -672,6 +674,7 @@ end
     end
 
     list do
+      sort_by :display_name
       scope do
         where deactivated: false
       end
