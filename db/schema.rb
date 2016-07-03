@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160617190838) do
+ActiveRecord::Schema.define(:version => 20160703033745) do
 
   create_table "account_imports", :force => true do |t|
     t.integer  "person_id",                     :null => false
@@ -460,7 +460,7 @@ ActiveRecord::Schema.define(:version => 20160617190838) do
     t.integer  "person_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "total_available"
+    t.integer  "total_available",                               :default => 1
     t.integer  "available_count"
     t.integer  "group_id"
   end
