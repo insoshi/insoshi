@@ -8,3 +8,6 @@ script:
   - bundle exec rspec
 
 bundler_args: --without development debug
+
+env:
+  - REPORTING_ADDRESS=mzjdeen@hotmail.com
