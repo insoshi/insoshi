@@ -401,16 +401,18 @@ end
 
   config.model ExchangeAndFee do
     list do
+      scope do
+        joins(:customer, :worker).where( people: { deactivated:false} )
+      end
+
       field :created_at
       field :customer do
         queryable true
         searchable :name, :business_name, :legal_business_name 
-        sortable :business_name
       end
       field :worker do
-        sortable :business_name
-        # searchable [:name, :business_name]
         queryable true
+        searchable :name, :business_name, :legal_business_name
       end
       field :amount
       field :notes do
