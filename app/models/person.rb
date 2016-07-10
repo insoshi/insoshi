@@ -281,7 +281,7 @@ class Person < ActiveRecord::Base
   end
 
   # Display name based upon entity type
-  def display_name
+  def legacy_display_name
     org ? business_name : name
   end
 
