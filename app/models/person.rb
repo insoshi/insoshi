@@ -240,6 +240,7 @@ class Person < ActiveRecord::Base
   after_update :log_activity_description_changed
   before_destroy :destroy_activities, :destroy_feeds
   before_save :update_plan_start_date
+  before_save :update_display_name
 
   # If monetary fee plan was choosed return false, so message "Credit card required" will be added to errors
   # and stripe will proceed with checking card. If stripe will succeed, it will try to save record,
@@ -659,6 +660,10 @@ class Person < ActiveRecord::Base
 
   def update_plan_start_date
     plan_started_at = Time.now if fee_plan_id_changed?
+  end
+
+  def update_display_name
+    display_name = legacy_display_name
   end
 
 end
