@@ -95,6 +95,7 @@ class Person < ActiveRecord::Base
   attr_accessible :posts_per_page
   attr_accessible :person_metadata_attributes
   attr_accessible :id
+  attr_accessible :display_name
 
   extend Searchable(:name, :business_name, :description)
 
@@ -614,7 +615,7 @@ class Person < ActiveRecord::Base
   end
 
   def update_group_letter
-    self.first_letter = display_name.mb_chars.first.upcase.to_s
+    self.first_letter = self.legacy_display_name.mb_chars.first.upcase.to_s
   end
 
   def update_fee_plan_if_deactivated
