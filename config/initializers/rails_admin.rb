@@ -408,11 +408,11 @@ end
       field :created_at
       field :customer do
         queryable true
-        searchable :name, :business_name, :legal_business_name 
+        searchable :display_name
       end
       field :worker do
         queryable true
-        searchable :name, :business_name, :legal_business_name
+        searchable :display_name
       end
       field :amount
       field :notes do
