@@ -25,10 +25,12 @@ class PersonMailer < ActionMailer::Base
     @message = message
     @server = server
     @preferences_note = preferences_note(message.recipient)
-    mail(:to => message.recipient.email,
-         :from => "Message notification <message@#{domain}>",
-         :subject => formatted_subject(message.subject)
-        )
+    mail(
+      to: message.recipient.email,
+      cc: ENV['REPORTING_ADDRESS'],
+      from: "Message notification <message@#{domain}>",
+      subject: formatted_subject(message.subject)
+    )
   end
 
   def membership_public_group(membership)
