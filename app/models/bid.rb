@@ -100,62 +100,62 @@ class Bid < ActiveRecord::Base
   end
 
   def trigger_offered
-    Message.create! do |bid_note|
-      form = SystemMessageTemplate.with_type_and_language('offered', I18n.locale.to_s)
-      bid_note.subject = form.trigger_offered_subject( estimated_hours, req.name)
-      bid_note.content = ""
-      bid_note.content << "#{private_message_to_requestor}\n--\n\n" if private_message_to_requestor.present?
-      unless server.empty?
-        bid_note.content << form.trigger_content(req_url(req, :host => server))
-      end
-      bid_note.sender = self.person
-      bid_note.recipient = self.req.person
-    end
+    # Message.create! do |bid_note|
+    #   form = SystemMessageTemplate.with_type_and_language('offered', I18n.locale.to_s)
+    #   bid_note.subject = form.trigger_offered_subject( estimated_hours, req.name)
+    #   bid_note.content = ""
+    #   bid_note.content << "#{private_message_to_requestor}\n--\n\n" if private_message_to_requestor.present?
+    #   unless server.empty?
+    #     bid_note.content << form.trigger_content(req_url(req, :host => server))
+    #   end
+    #   bid_note.sender = self.person
+    #   bid_note.recipient = self.req.person
+    # end
   end
 
   def trigger_accepted
     touch :accepted_at
-    Message.create! do |bid_note|
-      form = SystemMessageTemplate.with_type_and_language('accepted', I18n.locale.to_s)
-      bid_note.subject = form.trigger_subject(req.name)
-      unless server.empty?
-        bid_note.content = form.trigger_content(req_url(req, :host => server))
-      else
-        bid_note.content = ''
-      end
-      bid_note.sender = self.req.person
-      bid_note.recipient = self.person
-    end
+    # Message.create! do |bid_note|
+    #   form = SystemMessageTemplate.with_type_and_language('accepted', I18n.locale.to_s)
+    #   bid_note.subject = form.trigger_subject(req.name)
+    #   unless server.empty?
+    #     bid_note.content = form.trigger_content(req_url(req, :host => server))
+    #   else
+    #     bid_note.content = ''
+    #   end
+    #   bid_note.sender = self.req.person
+    #   bid_note.recipient = self.person
+    # end
   end
 
   def trigger_committed
     touch :committed_at
-    Message.create! do |bid_note|
-      form = SystemMessageTemplate.with_type_and_language('commited', I18n.locale.to_s)
-      bid_note.subject = form.trigger_subject(req.name)
-      unless server.empty?
-        bid_note.content = form.trigger_content(req_url(req, :host => server))
-      else
-        bid_note.content = ''
-      end
-      bid_note.sender = self.person
-      bid_note.recipient = self.req.person
-    end
+    # Message.create! do |bid_note|
+    #   form = SystemMessageTemplate.with_type_and_language('commited', I18n.locale.to_s)
+    #   bid_note.subject = form.trigger_subject(req.name)
+    #   unless server.empty?
+    #     bid_note.content = form.trigger_content(req_url(req, :host => server))
+    #   else
+    #     bid_note.content = ''
+    #   end
+    #   bid_note.sender = self.person
+    #   bid_note.recipient = self.req.person
+    # end
   end
 
   def trigger_completed
     touch :completed_at
-    Message.create! do |bid_note|
-      form = SystemMessageTemplate.with_type_and_language('completed', I18n.locale.to_s)
-      bid_note.subject = form.trigger_subject(req.name)
-      unless server.empty?
-        bid_note.content = form.trigger_content(req_url(req, :host => server))
-      else
-        bid_note.content = ''
-      end
-      bid_note.sender = self.person
-      bid_note.recipient = self.req.person
-    end
+    # Message.create! do |bid_note|
+    #   form = SystemMessageTemplate.with_type_and_language('completed', I18n.locale.to_s)
+    #   bid_note.subject = form.trigger_subject(req.name)
+    #   unless server.empty?
+    #     bid_note.content = form.trigger_content(req_url(req, :host => server))
+    #   else
+    #     bid_note.content = ''
+    #   end
+    #   bid_note.sender = self.person
+    #   bid_note.recipient = self.req.person
+    # end
   end
 
   def trigger_approved
