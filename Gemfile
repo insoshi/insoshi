@@ -103,6 +103,7 @@ group :development do
 
   # Developer tools
   gem 'ghi'
+  gem 'letter_opener'
 end
 
 group :production do

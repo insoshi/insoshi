@@ -6,13 +6,14 @@
 #  customer_id   :integer
 #  worker_id     :integer
 #  amount        :decimal(8, 2)    default(0.0)
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  created_at    :datetime
+#  updated_at    :datetime
 #  group_id      :integer
 #  metadata_id   :integer
 #  metadata_type :string(255)
 #  deleted_at    :time
 #  notes         :string(255)
+#  wave_all_fees :boolean          default(FALSE)
 #
 
 class Exchange < ActiveRecord::Base
@@ -251,16 +252,16 @@ class Exchange < ActiveRecord::Base
   end
 
   def send_suspend_payment_notification_to_worker
-    form = SystemMessageTemplate.with_type_and_language('send_suspend_payment_notyfication', I18n.locale.to_s)
-    exchange_note = Message.new()
-    name = self.metadata.name if self.metadata.class.method_defined?(:name) # if metadata is exchange, then there is no name
-    subject = form.payment_notification_subject(nice_decimal(self.amount), self.group.unit, name)
-    exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
-    exchange_note.content = form.payment_notification_text(self.customer.name, nice_decimal(self.amount), self.group.unit)
+    # form = SystemMessageTemplate.with_type_and_language('send_suspend_payment_notyfication', I18n.locale.to_s)
+    # exchange_note = Message.new()
+    # name = self.metadata.name if self.metadata.class.method_defined?(:name) # if metadata is exchange, then there is no name
+    # subject = form.payment_notification_subject(nice_decimal(self.amount), self.group.unit, name)
+    # exchange_note.subject =  subject.mb_chars.length > 75 ? subject.mb_chars.slice(0,75).concat("...") : subject
+    # exchange_note.content = form.payment_notification_text(self.customer.name, nice_decimal(self.amount), self.group.unit)
 
-    exchange_note.sender = self.customer
-    exchange_note.recipient = self.worker
-    exchange_note.save!
+    # exchange_note.sender = self.customer
+    # exchange_note.recipient = self.worker
+    # exchange_note.save!
   end
 
   def nice_decimal(decimal)

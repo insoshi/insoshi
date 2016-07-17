@@ -6,8 +6,8 @@
 #  req_notifications   :boolean          default(TRUE)
 #  forum_notifications :boolean          default(TRUE)
 #  membership_id       :integer
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
+#  created_at          :datetime
+#  updated_at          :datetime
 #
 
 class MemberPreference < ActiveRecord::Base

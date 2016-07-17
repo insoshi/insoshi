@@ -5,8 +5,8 @@
 #  id         :integer          not null, primary key
 #  person_id  :integer
 #  code       :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  created_at :datetime
+#  updated_at :datetime
 #
 
 class EmailVerification < ActiveRecord::Base

@@ -7,8 +7,8 @@
 #  contact_id  :integer
 #  status      :integer
 #  accepted_at :datetime
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  created_at  :datetime
+#  updated_at  :datetime
 #
 
 class Connection < ActiveRecord::Base

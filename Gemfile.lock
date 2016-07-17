@@ -212,6 +212,10 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.7.4)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
     libv8 (3.11.8.17)
     libwebsocket (0.1.7.1)
       addressable
@@ -442,6 +446,7 @@ DEPENDENCIES
   heroku-api
   highline
   json (~> 1.8.1)
+  letter_opener
   memcachier
   meta_request
   mini_magick

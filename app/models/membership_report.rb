@@ -1,0 +1,1 @@
+class MembershipReport < Report; end

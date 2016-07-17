@@ -12,8 +12,8 @@
 #  last_contacted_at        :datetime
 #  last_logged_in_at        :datetime
 #  forum_posts_count        :integer          default(0), not null
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
+#  created_at               :datetime
+#  updated_at               :datetime
 #  admin                    :boolean          default(FALSE), not null
 #  deactivated              :boolean          default(FALSE), not null
 #  connection_notifications :boolean          default(TRUE)

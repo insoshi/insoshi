@@ -7,8 +7,8 @@
 #  description          :text
 #  mode                 :integer          default(0), not null
 #  person_id            :integer
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
+#  created_at           :datetime
+#  updated_at           :datetime
 #  unit                 :string(255)
 #  adhoc_currency       :boolean          default(FALSE)
 #  mandatory            :boolean          default(FALSE)

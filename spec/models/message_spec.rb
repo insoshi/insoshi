@@ -13,8 +13,8 @@
 #  recipient_read_at    :datetime
 #  replied_at           :datetime
 #  type                 :string(255)
-#  created_at           :datetime         not null
-#  updated_at           :datetime         not null
+#  created_at           :datetime
+#  updated_at           :datetime
 #  parent_id            :integer
 #  conversation_id      :integer
 #

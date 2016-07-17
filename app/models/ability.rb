@@ -221,6 +221,8 @@ class Ability
       end
     end
 
+    can :manage, Report
+
     can :access, :rails_admin do |rails_admin|
       person.admin?
     end

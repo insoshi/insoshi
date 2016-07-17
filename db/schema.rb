@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160328175756) do
+ActiveRecord::Schema.define(:version => 20160710171811) do
 
   create_table "account_imports", :force => true do |t|
     t.integer  "person_id",                     :null => false
@@ -262,13 +262,14 @@ ActiveRecord::Schema.define(:version => 20160328175756) do
     t.integer  "customer_id"
     t.integer  "worker_id"
     t.decimal  "amount",        :precision => 8, :scale => 2, :default => 0.0
-    t.datetime "created_at",                                                   :null => false
-    t.datetime "updated_at",                                                   :null => false
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
     t.integer  "group_id"
     t.integer  "metadata_id"
     t.string   "metadata_type"
     t.time     "deleted_at"
     t.string   "notes"
+    t.boolean  "wave_all_fees",                               :default => false
   end
 
   create_table "fee_plans", :force => true do |t|
@@ -459,7 +460,7 @@ ActiveRecord::Schema.define(:version => 20160328175756) do
     t.integer  "person_id"
     t.datetime "created_at",                                                     :null => false
     t.datetime "updated_at",                                                     :null => false
-    t.integer  "total_available"
+    t.integer  "total_available",                               :default => 1
     t.integer  "available_count"
     t.integer  "group_id"
   end
@@ -525,6 +526,7 @@ ActiveRecord::Schema.define(:version => 20160328175756) do
     t.boolean  "requires_credit_card",     :default => true
     t.decimal  "rollover_balance",         :default => 0.0
     t.datetime "plan_started_at"
+    t.string   "display_name"
   end
 
   add_index "people", ["admin"], :name => "index_people_on_admin"
@@ -637,6 +639,15 @@ ActiveRecord::Schema.define(:version => 20160328175756) do
   end
 
   add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_histories_on_item_and_table_and_month_and_year"
+
+  create_table "reports", :force => true do |t|
+    t.string   "type"
+    t.string   "record"
+    t.integer  "person_id"
+    t.integer  "group_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "reqs", :force => true do |t|
     t.string   "name"

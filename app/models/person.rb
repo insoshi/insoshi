@@ -12,8 +12,8 @@
 #  last_contacted_at        :datetime
 #  last_logged_in_at        :datetime
 #  forum_posts_count        :integer          default(0), not null
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
+#  created_at               :datetime
+#  updated_at               :datetime
 #  admin                    :boolean          default(FALSE), not null
 #  deactivated              :boolean          default(FALSE), not null
 #  connection_notifications :boolean          default(TRUE)
@@ -95,6 +95,7 @@ class Person < ActiveRecord::Base
   attr_accessible :posts_per_page
   attr_accessible :person_metadata_attributes
   attr_accessible :id
+  attr_accessible :display_name
 
   extend Searchable(:name, :business_name, :description)
 
@@ -240,6 +241,7 @@ class Person < ActiveRecord::Base
   after_update :log_activity_description_changed
   before_destroy :destroy_activities, :destroy_feeds
   before_save :update_plan_start_date
+  before_save { |user| user.display_name = user.legacy_display_name }
 
   # If monetary fee plan was choosed return false, so message "Credit card required" will be added to errors
   # and stripe will proceed with checking card. If stripe will succeed, it will try to save record,
@@ -281,7 +283,7 @@ class Person < ActiveRecord::Base
   end
 
   # Display name based upon entity type
-  def display_name
+  def legacy_display_name
     org ? business_name : name
   end
 
@@ -613,7 +615,7 @@ class Person < ActiveRecord::Base
   end
 
   def update_group_letter
-    self.first_letter = display_name.mb_chars.first.upcase.to_s
+    self.first_letter = self.legacy_display_name.mb_chars.first.upcase.to_s
   end
 
   def update_fee_plan_if_deactivated
