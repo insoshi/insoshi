@@ -63,10 +63,6 @@
     %>
 
     <ul class="tools">
-      <%- if @person.org %>
-        <li><span class="label"><%= t('groups.show.contact') %></span>: <%= @person.name %></li>
-      <%- end %>
-
       <%- if logged_in? -%>
         <%= render :partial => 'people/account', :collection => @person.accounts %>
         <%- if current_person?(@person) && @person.support_contact -%>
