@@ -63,11 +63,9 @@
     %>
 
     <ul class="tools">
-      <%- if logged_in? -%>
-        <%= render :partial => 'people/account', :collection => @person.accounts %>
-        <%- if current_person?(@person) && @person.support_contact -%>
-          <li><%= support_link @person.support_contact %></li>
-        <%- end -%>
+      <%= render :partial => 'people/account', :collection => @person.accounts %>
+      <%- if current_person?(@person) && @person.support_contact -%>
+        <li><%= support_link @person.support_contact %></li>
       <%- end -%>
     </ul>
   </div>
