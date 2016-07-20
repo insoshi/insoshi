@@ -1,7 +1,7 @@
 <div class="profile vcard">
   <%- if @person.openid_identifier.nil? -%>
     <h2>
-      <%= t('people.show.header') %> <span class="fn n"><%= h @person.display_name %></span>
+      <span class="fn n"><%= h @person.display_name %></span>
       <%= link_to edit_person_path(@person),
         class: 'btn btn-default btn-mini',
         title: 'Edit Profile', data: {
