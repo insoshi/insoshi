@@ -1,8 +1,4 @@
 <div class="profile vcard">
-  <%- if @membership && @membership.is?(:admin) -%>
-    <%= render 'shared/group_admin_alert' %>
-  <%- end -%>
-
   <!-- Profile display -->
   <div class="row">
     <div class="span12">
@@ -60,4 +56,8 @@
     </div>
     <% render 'shared/minifeed' %>
   </div>
+
+  <%- if @membership && @membership.is?(:admin) -%>
+    <%= render 'shared/group_admin_alert' %>
+  <%- end -%>
 </div>
