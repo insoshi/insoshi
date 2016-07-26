@@ -91,16 +91,6 @@
                   </ul>
                 </li>
               <%- end -%>
-              <li>
-                <a href="<%= messages_path %>">
-                  <%= t('home.menu.inbox') %>
-                  <%- if current_person.has_inbox_messages? -%>
-                    <span class="badge badge-error "><%= current_person.inbox_messages_count %></span>
-                  <%- else -%>
-                    <span class="badge ">0</span>
-                  <%- end -%>
-                </a>
-              </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <%= h current_person.display_name %>

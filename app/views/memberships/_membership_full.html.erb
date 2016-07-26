@@ -80,17 +80,10 @@
               <%- unless current_person?(@person) -%>
                 <%- if logged_in? -%>
                   <%- if @membership.group.adhoc_currency? -%>
-
                     <li>
                       <%= exchange_link @person, @membership.group, :transact => 'credit', :class => 'show-follow' %>
                     </li>
-
-
                   <%- end -%>
-
-                  <li>
-                    <%= email_link @person %>
-                  </li>
 
                   <%- if @membership.group.adhoc_currency? -%>
                     <%= render :partial => 'shared/account', :locals => {:account => @account, :html_classes => 'show-follow'} %>
