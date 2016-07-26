@@ -63,51 +63,56 @@
       alt: h(@person.display_name)
     %>
 
-  <ul class="tools">
-    <%- if @person.org %>
-      <li><span class="label"><%= t('groups.show.contact') %></span>: <%= @person.name %></li>
-    <%- end %>
-    <%- unless current_person?(@person) -%>
-      <%- if logged_in? -%>
-        <li><%= exchange_link @person %></li>
-        <li><%= email_link @person, :class => 'noajax' %></li>
-        <%= render :partial => 'account', :collection => @person.accounts %>
-      <%- end -%>
-      <%- if current_person.admin? -%>
-        <li>
-          <%= link_to t('people.show.switch_user'), su_person_path(@person) %>
-        </li>
-        <%- if global_prefs.whitelist? -%>
+    <ul class="tools">
+      <%- if @person.org %>
+        <li><span class="label"><%= t('groups.show.contact') %></span>: <%= @person.name %></li>
+      <%- end %>
+      
+      <%- unless current_person?(@person) -%>
+        <%- if logged_in? -%>
+          <li><%= exchange_link @person %></li>
+          <li><%= email_link @person, :class => 'noajax' %></li>
+          <%= render :partial => 'account', :collection => @person.accounts %>
+        <%- end -%>
+        
+        <%- if current_person.admin? -%>
           <li>
-            <%- activator = @person.activator? ? "demote" : "promote to activator" -%>
-            <%= link_to activator,
-              person_path(@person, :task => "activator"),
-              :method => :put %>
-        </li>
-      <%- end -%>
-    <%- end -%>
+            <%= link_to t('people.show.switch_user'), su_person_path(@person) %>
+          </li>
+          <%- if global_prefs.whitelist? -%>
+            <li>
+              <%- activator = @person.activator? ? "demote" : "promote to activator" -%>
+              <%= link_to activator,
+                person_path(@person, :task => "activator"),
+                :method => :put %>
+            </li>
+          <%- end -%>
+        <%- end -%>
 
-    <%- if current_person.admin? || current_person.activator? -%>
-      <li>
-        <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
-        <%= link_to activity,
-          person_path(@person, :task => "deactivated"),
-          :method => :put %>
-    </li>
-  <%- end -%>
-<% else -%>
-  <%- if logged_in? -%>
-    <%= render :partial => 'account', :collection => @person.accounts %>
-    <%- if current_person?(@person) && @person.support_contact -%>
-      <li><%= support_link @person.support_contact %></li>
-    <%- end -%>
-  <%- end -%>
-<%- end -%>
-  </ul>
+        <%- if current_person.admin? || current_person.activator? -%>
+          <li>
+            <%- activity = @person.deactivated? ? "activate" : "deactivate" -%>
+            <%= link_to activity,
+              person_path(@person, :task => "deactivated"),
+              :method => :put %>
+          </li>
+        <%- end -%>
+
+      <% else -%>
+        <%- if logged_in? -%>
+          <%= render :partial => 'account', :collection => @person.accounts %>
+          <%- if current_person?(@person) && @person.support_contact -%>
+            <li><%= support_link @person.support_contact %></li>
+          <%- end -%>
+        <%- end -%>
+      <%- end -%>
+    </ul>
   </div>
+
   <ul>
     <%= render :partial => 'shared/neighborhood', :collection => @person.neighborhoods %>
   </ul>
+
   <%= display @person.formatted_categories, :class => "meta" %>
   <% if @person.phoneprivacy? %>
     <% unless @person.phone.nil? %>
