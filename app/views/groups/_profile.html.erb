@@ -2,13 +2,6 @@
   <%- if @person.openid_identifier.nil? -%>
     <h2>
       <span class="fn n"><%= h @person.display_name %></span>
-      <%= link_to edit_person_path(@person),
-        class: 'btn btn-default btn-mini',
-        title: 'Edit Profile', data: {
-          toggle: 'tooltip'
-        } do %>
-        &nbsp;Edit Account Details
-      <% end %>
     </h2>
   <%- else -%>
     <h2>
@@ -68,6 +61,15 @@
         <li><%= support_link @person.support_contact %></li>
       <%- end -%>
     </ul>
+    <p class="text-center">
+      <%= link_to edit_person_path(@person),
+        class: 'btn btn-default btn-mini',
+        title: 'Edit Profile', data: {
+          toggle: 'tooltip'
+        } do %>
+        &nbsp;Edit Account Details
+      <% end %>
+    </p>
   </div>
 
   <%= display @person.formatted_categories, :class => "meta" %>
