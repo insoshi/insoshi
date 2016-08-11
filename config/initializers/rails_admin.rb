@@ -733,6 +733,9 @@ end
       field :password
       field :password_confirmation
       field :deactivated
+      field :visible do
+        label "Listed in Directory"
+      end
       field :email_verified
       field :requires_credit_card
       field :phone
