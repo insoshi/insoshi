@@ -163,6 +163,8 @@ class Person < ActiveRecord::Base
 
   extend Scopes
 
+  scope :visible, -> { where(visible: true) }
+
   has_many :connections
   has_many :contacts, :through => :connections, :conditions => {"connections.status" => Connection::ACCEPTED}
   has_many :photos, :as => :photoable, :dependent => :destroy, :order => 'created_at'
