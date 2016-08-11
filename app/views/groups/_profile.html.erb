@@ -73,16 +73,6 @@
   </div>
 
   <%= display @person.formatted_categories, :class => "meta" %>
-  <% if @person.phoneprivacy? %>
-  <% unless @person.phone.nil? %>
-    <div>
-      <%= image_tag "icons/phone.gif",
-        class: "icon",
-        alt: "Phone"
-      %>
-      <span class="small"><%= t('people.show.phone') %></span> <span class="added small"><%= h @person.phone %></span>
-    </div>
-    <%- end -%>
-  <%- end -%>
+
   <%= markdown(@person.description) %>
 </div>
