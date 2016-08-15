@@ -29,3 +29,9 @@
 body {
   background: white;
 }
+
+$navbar-color: #d08429;
+.navbar-inner {
+  background: $navbar-color;
+  border: darken($navbar-color, 10%);
+}
