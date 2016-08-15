@@ -48,6 +48,8 @@
 #  requires_credit_card     :boolean          default(TRUE)
 #  rollover_balance         :decimal(, )      default(0.0)
 #  plan_started_at          :datetime
+#  display_name             :string(255)
+#  visible                  :boolean          default(TRUE)
 #
 
 require 'texticle/searchable'
@@ -160,6 +162,8 @@ class Person < ActiveRecord::Base
   end
 
   extend Scopes
+
+  scope :visible, -> { where(visible: true) }
 
   has_many :connections
   has_many :contacts, :through => :connections, :conditions => {"connections.status" => Connection::ACCEPTED}

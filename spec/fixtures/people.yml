@@ -48,6 +48,8 @@
 #  requires_credit_card     :boolean          default(TRUE)
 #  rollover_balance         :decimal(, )      default(0.0)
 #  plan_started_at          :datetime
+#  display_name             :string(255)
+#  visible                  :boolean          default(TRUE)
 #
 
 quentin:
