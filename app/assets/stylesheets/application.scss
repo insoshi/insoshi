@@ -48,3 +48,8 @@ h1, h2, h3, h4, h5, h6 {
   background: #0183a9;
   color: white;
 }
+
+.btn-default:hover, .btn-primary:hover {
+  background: lighten(#0183a9, 10%);
+  color: white;
+}
