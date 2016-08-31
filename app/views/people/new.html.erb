@@ -37,13 +37,6 @@
 	  <% end %>
     
     <div class="control-group">
-	    <%= f.label t('people.new.which_services'), :class => 'control-label' %>
-	    <div class="controls">
-	      <%= render :partial => "shared/select_categories", :locals => { :model_name => 'person' } %>
-	    </div>
-	  </div>
-    
-    <div class="control-group">
       <%= f.label "Fee Plan", :class => 'control-label' %>
       <div class="controls">
         <% FeePlan.where(available: true).order(&:name).each do |plan| %>
