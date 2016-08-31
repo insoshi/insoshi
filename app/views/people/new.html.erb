@@ -8,7 +8,7 @@
 <%= bootstrap_form_for @person, :help => :block, :html => {:class => 'form-horizontal'} do |f| -%>
   <div class="span5">
     <span id="standard">
-      <%= f.email_field :email, label: t('people.new.email_address'), help: email_help  %>
+      <%= f.email_field :email, label: t('people.new.email_address')  %>
       <%= set_focus_to "person_email" %>
 
       <%= f.text_field :name, label: t('people.new.name'), help: t('people.new.will_be_displayed'), maxlength: Person::MAX_NAME %>
