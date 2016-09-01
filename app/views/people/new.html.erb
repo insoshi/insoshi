@@ -84,7 +84,7 @@
     </div>
     
     <%= f.control_group :accept_agreement do %>
-      <%= f.check_box :accept_agreement, label: member_agreement_label.html_safe  %>
+      <%= f.check_box :accept_agreement, label: "<u>#{ member_agreement_label }</u>".html_safe  %>
     <% end %>
 
     <div id="stripe_data">
