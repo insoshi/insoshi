@@ -55,15 +55,12 @@
   </div>
   <div class="span5">
   -->
-    <% if global_prefs.show_description %>
-      <%= f.text_area :description, label: t('people.new.something_about_yourself'), rows: 6 %>
-    <% end %>
 
     <% if global_prefs.show_neighborhood %>
       <div class="control-group">
         <%= f.label t('people.new.neighborhood'), :class => 'control-label' %>
         <div class="controls">
-          <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'person' } %>
+          <%= render :partial => "shared/select2_neighborhoods", :locals => { :model_name => 'person' } %>
         </div>
       </div>
     <% end %>
