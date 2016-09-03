@@ -5,6 +5,7 @@
 <%- end -%>
 
 <%= display global_prefs.registration_intro %>
+
 <%= bootstrap_form_for @person, :help => :block, :html => {:class => 'form-horizontal'} do |f| -%>
   <div class="span5">
     <span id="standard">
@@ -50,12 +51,29 @@
           <hr />
         <% end %>
       </div>
-	  </div>
-  <!--
-  </div>
-  <div class="span5">
-  -->
+    </div>
 
+    <!--
+    </div>
+    <div class="span5">
+    -->
+
+    <br />
+    <hr />
+    <br />
+
+    <%= f.fields_for :addresses do |address| %>
+      <%= address.text_field :address_line_1, label: t('addresses.form.address_line_1') %>
+      <%= address.text_field :address_line_2, label: t('addresses.form.address_line_2') %>
+      <%= address.text_field :address_line_3, label: t('addresses.form.address_line_3') %>
+      <%= address.text_field :city, label: t('addresses.form.city') %>
+      <%= address.text_field :zipcode_plus_4, label: t('addresses.form.zipcode') %>
+    <% end %>
+    
+    <br />
+    <hr />
+    <br />
+ 
     <% if global_prefs.show_neighborhood %>
       <div class="control-group">
         <%= f.label t('people.new.neighborhood'), :class => 'control-label' %>

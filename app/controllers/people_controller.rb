@@ -50,6 +50,8 @@ class PeopleController < ApplicationController
   def new
     @body = "register single-col"
     @person = Person.new
+    @person.addresses.build
+
     FormSignupField.count.times { @person.person_metadata.build }
 
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }

@@ -194,6 +194,7 @@ class Person < ActiveRecord::Base
 
   has_many :accounts
   has_many :addresses, :inverse_of => :person
+  accepts_nested_attributes_for :addresses
   has_many :client_applications
   has_many :tokens, :class_name => "OauthToken", :order => "authorized_at DESC", :include => [:client_application]
 
