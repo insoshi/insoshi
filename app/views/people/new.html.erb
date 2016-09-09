@@ -16,8 +16,6 @@
 
       <%= f.text_field :business_name, label: t('people.new.business_name') %>
 
-      <%= f.text_field :legal_business_name, label: t('people.new.legal_business_name') %>
-
       <% if @person.openid_identifier.blank? %>
         <%= f.password_field :password, label: t('people.new.password'), maxlength: Person::MAX_PASSWORD %>
         <%= f.password_field :password_confirmation, label: t('people.new.confirm_password'), maxlength: Person::MAX_PASSWORD, value: "" %>
