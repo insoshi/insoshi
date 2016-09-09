@@ -72,15 +72,6 @@
     <hr />
     <br />
  
-    <% if global_prefs.show_neighborhood %>
-      <div class="control-group">
-        <%= f.label t('people.new.neighborhood'), :class => 'control-label' %>
-        <div class="controls">
-          <%= render :partial => "shared/select2_neighborhoods", :locals => { :model_name => 'person' } %>
-        </div>
-      </div>
-    <% end %>
-
     <%= render :partial => "person_metadata", :locals => {:f => f, :person => @person, :extra_fields => @extra_fields} %>
 
     <%= f.text_field :zipcode, label: t('people.new.zipcode') %>
