@@ -73,18 +73,7 @@
     <br />
  
     <%= render :partial => "person_metadata", :locals => {:f => f, :person => @person, :extra_fields => @extra_fields} %>
-
-    
-    <div id="business_info">
-      <%= f.text_field :business_name, label: t('people.edit.business_name') %>
-      <div class="control-group">
-        <%= f.label t('people.edit.business_type'), :class => 'control-label' %>
-        <div class="controls">
-          <%= render :partial => "shared/select_business_type", :locals => { :model_name => 'person' } %>
-        </div>
-      </div>
-    </div>
-    
+  
     <%= f.control_group :accept_agreement do %>
       <%= f.check_box :accept_agreement, label: "<u>#{ member_agreement_label }</u>".html_safe  %>
     <% end %>
