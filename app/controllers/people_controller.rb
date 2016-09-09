@@ -65,6 +65,10 @@ class PeopleController < ApplicationController
   def create
     person = params[:person]
     @person = Person.new(person)
+    address = Address.new(params[:person][:addresses_attributes]['0'])
+    address.primary = true
+    @person.addresses = [address]
+
     set_credit_card(@person, person)
     set_metadata(@person, person) # set metadata
     @person.email_verified = false if global_prefs.email_verifications?
