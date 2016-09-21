@@ -172,6 +172,8 @@ GEM
       connection_pool (~> 1.0)
       rubinius-actor
     git (1.2.6)
+    groupdate (3.0.2)
+      activesupport (>= 3)
     guard (1.6.1)
       listen (>= 0.6.0)
       lumberjack (>= 1.0.2)
@@ -441,6 +443,7 @@ DEPENDENCIES
   gibbon!
   girl_friday
   git
+  groupdate
   guard-spork
   heroku-api
   highline

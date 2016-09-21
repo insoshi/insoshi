@@ -1,13 +1,5 @@
 <li>
-<div class="profile-image">
   <% cp = counterparty(transact) %>
-  <% if defined? ajaxified %>
-    <%= image_link cp, :image => :thumbnail, :link => Membership.mem(cp,@group), :link_options => {:class => "show-follow"} %>
-  <% else %>
-    <%= image_link cp, :image => :thumbnail %>
-  <% end %>
-  <%= image_tag "icons/switch.gif", :class => "icon", :alt => "Transaction" %>
-</div>
   <p>
   	<%= counterparty_action(transact) %><%= counterparty_link(cp, @group, defined? ajaxified) %>) <%= t('shared.transact.for')%> <%= txn_link transact.metadata %>
   </p>
