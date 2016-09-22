@@ -22,8 +22,10 @@ module TransactsHelper
   
   def paid_fees(transact)
     fees = transact.paid_fees
+    units = transact.group.nil? ? t('currency_unit_plural') : transact.group.unit
+
     unless fees.blank?
-      "Charged fees: Trade Credits: #{fees[:trade_credits]} Cash: #{fees[:cash]}$"
+      "Charged fees: #{ units }: #{nice_decimal(fees[:trade_credits])} Cash: #{nice_decimal(fees[:cash])}$"
     end
   end
 end
