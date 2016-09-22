@@ -18,6 +18,14 @@
 *= require_self
 */
 
+.no-space-list {
+  margin-left: 0;
+
+  p {
+    margin-left: 0;
+  }
+}
+
 .underline{
   text-decoration: underline;
 }

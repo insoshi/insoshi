@@ -5,7 +5,7 @@
 
   <% @transactions.group_by { |t| t.created_at.year }.each do |year, transactions| %>
     <h3><%= year %> Transactions</h3>
-    <ul class="list activity full">
+    <ul class="list no-space-list activity full">
       <%= render :partial => 'shared/transact', collection: transactions %>
     </ul>
   <% end %>
