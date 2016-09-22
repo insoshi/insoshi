@@ -1,6 +1,6 @@
 module TransactsHelper
   def counterparty(t)
-    counterparty = current_person?(t.worker) ? t.customer : t.worker
+    current_person?(t.worker) ? t.customer : t.worker
   end
 
   def counterparty_action(t)
@@ -14,10 +14,14 @@ module TransactsHelper
 
   def counterparty_link(counterparty, group, ajaxified)
     if ajaxified
-      link_to counterparty.name, Membership.mem(counterparty, group), :class => 'show-follow'
+      link_to counterparty_name(counterparty), Membership.mem(counterparty, group), :class => 'show-follow'
     else
-      link_to counterparty.name, counterparty
+      link_to counterparty_name(counterparty), counterparty
     end
+  end
+
+  def counterparty_name(counterparty)
+    counterparty.org ? counterparty.business_name : counterparty.name
   end
   
   def paid_fees(transact)
