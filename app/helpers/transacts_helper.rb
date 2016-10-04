@@ -32,4 +32,16 @@ module TransactsHelper
       "Charged fees: #{ units }: #{nice_decimal(fees[:trade_credits])} Cash: #{nice_decimal(fees[:cash])}$"
     end
   end
+
+  def transaction_deposit(transaction)
+    "#{ nice_decimal(transaction.amount) } #{ transaction_unit(transaction) }" if current_person? transaction.worker
+  end
+
+  def transaction_withdrawal(transaction)
+    "#{ nice_decimal(transaction.amount) } #{ transaction_unit(transaction) }" unless current_person? transaction.worker
+  end
+
+  def transaction_unit(transaction)
+    transaction.group.nil? ? transaction('currency_unit_plural') : transaction.group.unit
+  end
 end
