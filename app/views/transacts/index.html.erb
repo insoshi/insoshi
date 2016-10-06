@@ -23,8 +23,8 @@
               <td><%= link_to counterparty_name(counterparty(transaction)), counterparty(transaction) %></td>
               <td class="text-right"><%= transaction_deposit(transaction) %></td>
               <td class="text-right"><%= transaction_withdrawal(transaction) %></td>
-              <td>1</td>
-              <td>2</td>
+              <td class="text-right"><%= nice_decimal(1) %></td>
+              <td class="text-right"><%= nice_decimal(2) %></td>
             </tr>
           <% end %>
         </tbody>
