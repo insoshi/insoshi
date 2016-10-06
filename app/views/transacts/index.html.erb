@@ -32,20 +32,5 @@
 
     </div>
   </div>
-
-  <div class="row">
-    <div class="span9">
-      <h2><%= t('transacts.index.header') %></h2>
-      <% year = nil %>
-      <% printed = false %>
-
-      <% @transactions.group_by { |t| t.created_at.year }.each do |year, transactions| %>
-        <h3><%= year %> Transactions</h3>
-        <ul class="list no-space-list activity full">
-          <%= render :partial => 'shared/transact', collection: transactions %>
-        </ul>
-      <% end %>
- </div>
-  </div>
-  <%- end -%>
+<%- end -%>
 
