@@ -24,12 +24,16 @@ module TransactsHelper
     counterparty.org ? counterparty.business_name : counterparty.name
   end
   
-  def paid_fees(transact)
+  def paid_fees(transact, formatted = true)
     fees = transact.paid_fees
     units = transact.group.nil? ? t('currency_unit_plural') : transact.group.unit
 
-    unless fees.blank?
-      "Charged fees: #{ units }: #{nice_decimal(fees[:trade_credits])} Cash: #{nice_decimal(fees[:cash])}$"
+    if formatted
+      unless fees.blank?
+        "Charged fees: #{ units }: #{nice_decimal(fees[:trade_credits])} Cash: #{nice_decimal(fees[:cash])}$"
+      end
+    else
+      fees
     end
   end
 

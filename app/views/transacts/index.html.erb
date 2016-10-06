@@ -12,8 +12,8 @@
             <th colspan="2" class="text-top text-center">Fees</th>
           </tr>
           <tr>
-            <th>TD</th>
-            <th>Cash</th>
+            <th class="text-center">Trade Dollars</th>
+            <th class="text-center">Cash ($)</th>
           </tr>  
         </thead>
         <tbody>
@@ -23,8 +23,8 @@
               <td><%= link_to counterparty_name(counterparty(transaction)), counterparty(transaction) %></td>
               <td class="text-right"><%= transaction_deposit(transaction) %></td>
               <td class="text-right"><%= transaction_withdrawal(transaction) %></td>
-              <td class="text-right"><%= nice_decimal(1) %></td>
-              <td class="text-right"><%= nice_decimal(2) %></td>
+              <td class="text-right"><%= nice_decimal(paid_fees(transaction, false)[:trade_credits]) %></td>
+              <td class="text-right"><%= nice_decimal(paid_fees(transaction, false)[:cash]) %></td>
             </tr>
           <% end %>
         </tbody>
