@@ -10,7 +10,7 @@
 #  person_id       :integer
 #  created_at      :datetime
 #  updated_at      :datetime
-#  total_available :integer
+#  total_available :integer          default(1)
 #  available_count :integer
 #  group_id        :integer
 #

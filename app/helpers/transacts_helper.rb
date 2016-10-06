@@ -1,6 +1,6 @@
 module TransactsHelper
   def counterparty(t)
-    counterparty = current_person?(t.worker) ? t.customer : t.worker
+    current_person?(t.worker) ? t.customer : t.worker
   end
 
   def counterparty_action(t)
@@ -14,16 +14,39 @@ module TransactsHelper
 
   def counterparty_link(counterparty, group, ajaxified)
     if ajaxified
-      link_to counterparty.name, Membership.mem(counterparty, group), :class => 'show-follow'
+      link_to counterparty_name(counterparty), Membership.mem(counterparty, group), :class => 'show-follow'
     else
-      link_to counterparty.name, counterparty
+      link_to counterparty_name(counterparty), counterparty
     end
   end
+
+  def counterparty_name(counterparty)
+    counterparty.org ? counterparty.business_name : counterparty.name
+  end
   
-  def paid_fees(transact)
+  def paid_fees(transact, formatted = true)
     fees = transact.paid_fees
-    unless fees.blank?
-      "Charged fees: Trade Credits: #{fees[:trade_credits]} Cash: #{fees[:cash]}$"
+    units = transact.group.nil? ? t('currency_unit_plural') : transact.group.unit
+
+    if formatted
+      unless fees.blank?
+        "Charged fees: #{ units }: #{nice_decimal(fees[:trade_credits])} Cash: #{nice_decimal(fees[:cash])}$"
+      end
+    else
+      fees
     end
+  end
+
+
+  def transaction_deposit(transaction)
+    nice_decimal(transaction.amount) if current_person? transaction.worker
+  end
+
+  def transaction_withdrawal(transaction)
+    nice_decimal(transaction.amount) unless current_person? transaction.worker
+  end
+
+  def transaction_unit(transaction)
+    transaction.group.nil? ? t('currency_unit_plural') : transaction.group.unit
   end
 end

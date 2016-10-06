@@ -13,6 +13,7 @@ gem "unicorn"
 gem "girl_friday"
 gem "exception_notification"
 gem "will_paginate"
+gem "draper"
 
 gem "coffee-rails"
 gem "audited-activerecord"

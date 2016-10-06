@@ -1,13 +1,36 @@
 <%= column_div :type => :primary do -%>
-  <h2><%= t('transacts.index.header') %></h2>
-  <ul class="list activity full">
-    <%= render :partial => 'shared/transact', :collection => @transactions %> 
-  </ul>
-<%- end -%>
-<%= column_div :type => :secondary do -%>
-  <h2><%= t('transacts.index.opentransact') %></h2>
-  <p>
-    <%= t('transacts.index.this_is_a') %> <a href="http://www.opentransact.org/core.html#example-of-asset-services"><%= t('transacts.index.opentransact') %></a> <%= t('transacts.index.url') %>
-  </p>
+  <div class="row">
+    <div class="span12">
+      
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th rowspan="2" class="text-top text-center">Date</th>
+            <th rowspan="2" class="text-top">Transaction With:</th>
+            <th rowspan="2" class="text-top text-center">Earned<br/>(Trade Dollars)</th>
+            <th rowspan="2" class="text-top text-center">Spent<br/>(Trade Dollars)</th>
+            <th colspan="2" class="text-top text-center">Fees</th>
+          </tr>
+          <tr>
+            <th class="text-center">Trade Dollars</th>
+            <th class="text-center">Cash ($)</th>
+          </tr>  
+        </thead>
+        <tbody>
+          <% @transactions.each do |transaction| %>
+            <tr>
+              <td class="pull-right"><%= transaction.created_at.strftime('%m/%d/%Y') %></td>
+              <td><%= link_to counterparty_name(counterparty(transaction)), counterparty(transaction) %></td>
+              <td class="text-right"><%= transaction_deposit(transaction) %></td>
+              <td class="text-right"><%= transaction_withdrawal(transaction) %></td>
+              <td class="text-right"><%= nice_decimal(paid_fees(transaction, false)[:trade_credits]) %></td>
+              <td class="text-right"><%= nice_decimal(paid_fees(transaction, false)[:cash]) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
 <%- end -%>
 

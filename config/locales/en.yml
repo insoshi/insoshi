@@ -510,7 +510,7 @@ en:
 
   transacts:
     index:
-      header: "Your Transactions"
+      header: "Your Account History"
       this_is_a: "This is a"
       opentransact: "OpenTransact"
       url: "URL"
