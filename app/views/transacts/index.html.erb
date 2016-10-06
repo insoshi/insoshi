@@ -5,7 +5,7 @@
       <table class="table table-striped table-hover">
         <thead>
           <tr>
-            <th rowspan="2" class="text-top">Date</th>
+            <th rowspan="2" class="text-top text-center">Date</th>
             <th rowspan="2" class="text-top">User</th>
             <th rowspan="2" class="text-top text-center">Deposit<br/>(Trade Dollars)</th>
             <th rowspan="2" class="text-top text-center">Withdrawal<br/>(Trade Dollars)</th>
@@ -19,7 +19,7 @@
         <tbody>
           <% @transactions.each do |transaction| %>
             <tr>
-              <td><%= transaction.created_at.strftime('%Y-%m-%d') %></td>
+              <td class="pull-right"><%= transaction.created_at.strftime('%m/%d/%Y') %></td>
               <td><%= link_to counterparty_name(counterparty(transaction)), counterparty(transaction) %></td>
               <td class="text-right"><%= transaction_deposit(transaction) %></td>
               <td class="text-right"><%= transaction_withdrawal(transaction) %></td>
