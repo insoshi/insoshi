@@ -33,15 +33,16 @@ module TransactsHelper
     end
   end
 
+
   def transaction_deposit(transaction)
-    "#{ nice_decimal(transaction.amount) } #{ transaction_unit(transaction) }" if current_person? transaction.worker
+    nice_decimal(transaction.amount) if current_person? transaction.worker
   end
 
   def transaction_withdrawal(transaction)
-    "#{ nice_decimal(transaction.amount) } #{ transaction_unit(transaction) }" unless current_person? transaction.worker
+    nice_decimal(transaction.amount) unless current_person? transaction.worker
   end
 
   def transaction_unit(transaction)
-    transaction.group.nil? ? transaction('currency_unit_plural') : transaction.group.unit
+    transaction.group.nil? ? t('currency_unit_plural') : transaction.group.unit
   end
 end
