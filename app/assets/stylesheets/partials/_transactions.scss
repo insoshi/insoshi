@@ -1,0 +1,12 @@
+.transaction-table {
+  .col-with {
+    width: 200px;
+  }
+
+  .col-notes {
+    max-width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
