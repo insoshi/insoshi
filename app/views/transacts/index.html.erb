@@ -10,6 +10,7 @@
             <th rowspan="2" class="text-top text-center">Earned<br/>(Trade Dollars)</th>
             <th rowspan="2" class="text-top text-center">Spent<br/>(Trade Dollars)</th>
             <th colspan="2" class="text-top text-center">Fees</th>
+            <th rowspan="2" class="text-top">Payment Notes</th>
           </tr>
           <tr>
             <th class="text-center">Trade Dollars</th>
@@ -25,6 +26,7 @@
               <td class="text-right"><%= transaction_withdrawal(transaction) %></td>
               <td class="text-right"><%= nice_decimal(paid_fees(transaction, false)[:trade_credits]) %></td>
               <td class="text-right"><%= nice_decimal(paid_fees(transaction, false)[:cash]) %></td>
+              <td><%= transaction.notes %></td>
             </tr>
           <% end %>
         </tbody>
