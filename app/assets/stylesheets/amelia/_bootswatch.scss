@@ -462,29 +462,29 @@ div.subnav {
 // TABLES
 // -----------------------------------------------------
 
-.table th, .table td,
-.table tbody + tbody {
-	border-top: 0px solid transparent;
-}
-
-.table-bordered {
-	@include border-radius(0);
-}
-
-.table tbody {
-
-	tr.success td {
-		background-color: $green;
-	}
-
-	tr.error td {
-		background-color: $red;
-	}
-
-	tr.info td {
-		background-color: $blue;
-	}
-}
+//.table th, .table td,
+//.table tbody + tbody {
+//	border-top: 0px solid transparent;
+//}
+//
+//.table-bordered {
+//	@include border-radius(0);
+//}
+//
+//.table tbody {
+//
+//	tr.success td {
+//		background-color: $green;
+//	}
+//
+//	tr.error td {
+//		background-color: $red;
+//	}
+//
+//	tr.info td {
+//		background-color: $blue;
+//	}
+//}
 
 // FORMS
 // -----------------------------------------------------

@@ -18,6 +18,32 @@
 *= require_self
 */
 
+.text-right{
+  text-align: right !important;
+}
+
+.text-center{
+  text-align: center !important;
+}
+
+.text-middle{
+  display: table-cell !important;
+  vertical-align: middle !important;
+}
+
+.text-top{
+  display: table-cell !important;
+  vertical-align: top !important;
+}
+
+.no-space-list {
+  margin-left: 0;
+
+  p {
+    margin-left: 0;
+  }
+}
+
 .underline{
   text-decoration: underline;
 }

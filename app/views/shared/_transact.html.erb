@@ -7,6 +7,6 @@
   	<%= paid_fees(transact) %>
   </p>
   <p class="meta published">
-    <%= transact.created_at.strftime(current_datetime_format) %>
+  <%= transact.created_at.strftime(current_datetime_format).gsub(/\s/, '<br/>').html_safe %>
   </p>
 </li>
