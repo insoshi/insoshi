@@ -2,17 +2,18 @@
   <div class="row">
     <div class="span12">
       
-      <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover transaction-table">
         <thead>
           <tr>
             <th rowspan="2" class="text-top text-center">Date</th>
-            <th rowspan="2" class="text-top">Transaction With:</th>
-            <th rowspan="2" class="text-top text-center">Earned<br/>(Trade Dollars)</th>
-            <th rowspan="2" class="text-top text-center">Spent<br/>(Trade Dollars)</th>
+            <th rowspan="2" class="text-top col-with">Transaction With:</th>
+            <th rowspan="2" class="text-top text-center">Earned<br/>(Trade$)</th>
+            <th rowspan="2" class="text-top text-center">Spent<br/>(Trade$)</th>
             <th colspan="2" class="text-top text-center">Fees</th>
+            <th rowspan="2" class="text-top">Payment Notes</th>
           </tr>
           <tr>
-            <th class="text-center">Trade Dollars</th>
+            <th class="text-center">Trade$</th>
             <th class="text-center">Cash ($)</th>
           </tr>  
         </thead>
@@ -25,6 +26,7 @@
               <td class="text-right"><%= transaction_withdrawal(transaction) %></td>
               <td class="text-right"><%= nice_decimal(paid_fees(transaction, false)[:trade_credits]) %></td>
               <td class="text-right"><%= nice_decimal(paid_fees(transaction, false)[:cash]) %></td>
+              <td class="col-notes" title="<%= transaction.notes %>"><%= transaction.notes %></td>
             </tr>
           <% end %>
         </tbody>
