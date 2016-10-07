@@ -405,7 +405,19 @@ end
         joins(:customer, :worker).where( people: { deactivated:false} )
       end
 
-      field :created_at
+      field :created_at do
+        label "Date"
+        formatted_value do
+          value.strftime('%m/%d/%Y')
+        end
+      end
+
+      field :time do
+        label "Time"
+        formatted_value do
+          bindings[:object].created_at.strftime('%H:%M')
+        end
+      end
       field :customer do
         queryable true
         searchable :display_name
