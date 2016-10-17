@@ -16,18 +16,8 @@
         <%= render :partial => 'invitations' %>
         <%- if @group.adhoc_currency? %>
           <%- if @transactions.length > 0 %>
-            <h2><%= t('transacts.index.header') %></h2>
-            <ul class="list activity full">
-              <%= render :partial => 'shared/transact', :collection => @transactions, :locals => {:ajaxified => true} %>
-            </ul>
-            <% if @group.asset %>
-              <strong>
-                <%= link_to t('see_all'),
-                  transacts_path(@group.asset),
-                  target: '_blank',
-                  class: 'underline'
-                %>
-              </strong>
+            <%= link_to transacts_path(@group.asset) do %>
+              <h2 class="txt-underline"><%= t('transacts.index.header') %></h2>
             <% end %>
           <%- end -%>
         <%- end -%>
