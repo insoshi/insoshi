@@ -437,7 +437,7 @@ end
 
     edit do
       field :created_at do
-        label 'Date time'
+        label 'Date'
         required :true
       end
       field :worker do
