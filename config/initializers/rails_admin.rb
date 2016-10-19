@@ -436,6 +436,10 @@ end
     end
 
     edit do
+      field :created_at do
+        label 'Date'
+        required :true
+      end
       field :worker do
         label "Credits in"
         required :true
