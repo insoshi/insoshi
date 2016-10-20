@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160805180826) do
+ActiveRecord::Schema.define(:version => 20161020172513) do
 
   create_table "account_imports", :force => true do |t|
     t.integer  "person_id",                     :null => false
@@ -528,6 +528,7 @@ ActiveRecord::Schema.define(:version => 20160805180826) do
     t.datetime "plan_started_at"
     t.string   "display_name"
     t.boolean  "visible",                  :default => true
+    t.boolean  "update_card",              :default => false
   end
 
   add_index "people", ["admin"], :name => "index_people_on_admin"
