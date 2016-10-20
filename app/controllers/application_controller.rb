@@ -10,9 +10,9 @@ class ApplicationController < ActionController::Base
   helper_method :logged_in?
   helper_method :bootstrap_class
 
-  before_filter :require_activation, :admin_warning,
+  before_filter :require_activation,
+                :admin_warning,
                 :set_person_locale,
-                :set_theme,
                 :set_current_user
 
   around_filter :set_time_zone
