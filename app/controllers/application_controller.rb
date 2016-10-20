@@ -177,17 +177,6 @@ class ApplicationController < ActionController::Base
     end
     helper_method :current_group
 
-    def set_theme
-      if params[:theme]
-        session[:theme] = params[:theme]
-        uri = URI(request.url)
-        new_params = CGI.parse(uri.query)
-        new_params.delete('theme')
-        uri.query = URI.encode_www_form(new_params)
-        redirect_to uri.to_s.chomp('?')
-      end
-    end
-
     def set_person_locale
       if logged_in?
         I18n.locale = current_person.language
