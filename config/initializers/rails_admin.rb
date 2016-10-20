@@ -772,6 +772,7 @@ end
         #ckeditor true
       end
       field :addresses
+      field :update_card
       # generally not appropriate for admin to edit openid since it is an assertion
     end
   end
