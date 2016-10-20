@@ -13,7 +13,8 @@ class ApplicationController < ActionController::Base
   before_filter :require_activation,
                 :admin_warning,
                 :set_person_locale,
-                :set_current_user
+                :set_current_user,
+                :check_card
 
   around_filter :set_time_zone
 
@@ -70,183 +71,193 @@ class ApplicationController < ActionController::Base
   end
   helper_method :icon
 
+
+
   protected
-    def ajax_posts_per_page
-      current_person.posts_per_page
-    end
 
-    def bootstrap_class(flash_key)
-      {notice: 'alert-success',
-       success: 'alert-success',
-       error: 'alert-error',
-       alert: 'alert-info'}[flash_key] || ''
-    end
 
-    def logged_in?
-      !!current_person
-    end
 
-    # User is back after some absence and he CAN'T go anywhere until they update their credit card data
-    # only if they have monetary fee sign up and haven't already submitted credit card data.
-    def credit_card_required
-      if logged_in? && current_person.credit_card_required?
-        flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " +
-                         "You won't be able to take any actions until then."
-        redirect_to credit_card_path
-      end
-    end
+  def ajax_posts_per_page
+    current_person.posts_per_page
+  end
 
-    # Checks if user entered credit card data, or if admin allowed him not to.
-    # Even if admin allowed him not to put credit card data, he has to submit it
-    # to create offer.
-    def check_credit_card
-      if logged_in? && current_person.stripe_id.blank? && current_person.fee_plan.contains_stripe_fees?
-        store_location
-        flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " +
-                         "You won't be able to take any actions until then."
-        redirect_to credit_card_path
-      end
-    end
+  def bootstrap_class(flash_key)
+    {notice: 'alert-success',
+     success: 'alert-success',
+     error: 'alert-error',
+     alert: 'alert-info'}[flash_key] || ''
+  end
 
-    def login_required
-      unless current_person
-        store_location
-        flash[:notice] = t('notice_login_required')
-        redirect_to login_url
-        return false
-      end
-    end
+  def logged_in?
+    !!current_person
+  end
 
-    def access_denied
+  # User is back after some absence and he CAN'T go anywhere until they update their credit card data
+  # only if they have monetary fee sign up and haven't already submitted credit card data.
+  def credit_card_required
+    if logged_in? && current_person.credit_card_required?
+      flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " +
+                       "You won't be able to take any actions until then."
+      redirect_to credit_card_path
+    end
+  end
+
+  # Checks if user entered credit card data, or if admin allowed him not to.
+  # Even if admin allowed him not to put credit card data, he has to submit it
+  # to create offer.
+  def check_credit_card
+    if logged_in? && current_person.stripe_id.blank? && current_person.fee_plan.contains_stripe_fees?
+      store_location
+      flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " +
+                       "You won't be able to take any actions until then."
+      redirect_to credit_card_path
+    end
+  end
+
+  def login_required
+    unless current_person
       store_location
       flash[:notice] = t('notice_login_required')
       redirect_to login_url
       return false
     end
+  end
 
-    def require_no_person
-      if current_person
-        store_location
-        flash[:notice] = "You must be logged out to view this page"
-        redirect_to root_url
-        return false
-      end
-    end
+  def access_denied
+    store_location
+    flash[:notice] = t('notice_login_required')
+    redirect_to login_url
+    return false
+  end
 
-    def store_location
-      session[:return_to] = request.fullpath
+  def require_no_person
+    if current_person
+      store_location
+      flash[:notice] = "You must be logged out to view this page"
+      redirect_to root_url
+      return false
     end
+  end
 
-    def redirect_back_or_default(default)
-      redirect_to(session[:return_to] || default)
-      session[:return_to] = nil
-    end
+  def store_location
+    session[:return_to] = request.fullpath
+  end
 
-    def current_person_session
-      return @current_person_session if defined?(@current_person_session)
-      @current_person_session = PersonSession.find
-    end
+  def redirect_back_or_default(default)
+    redirect_to(session[:return_to] || default)
+    session[:return_to] = nil
+  end
 
-    def current_person
-      # login_or_oauth_required sets @current_person to nil
-      return @current_person if defined?(@current_person) && @current_person
-      @current_person = current_person_session && current_person_session.record
-    end
+  def current_person_session
+    return @current_person_session if defined?(@current_person_session)
+    @current_person_session = PersonSession.find
+  end
 
-    def current_person=(person)
-      @current_person=person
-    end
+  def current_person
+    # login_or_oauth_required sets @current_person to nil
+    return @current_person if defined?(@current_person) && @current_person
+    @current_person = current_person_session && current_person_session.record
+  end
 
-    def current_user
-      current_person
-    end
+  def current_person=(person)
+    @current_person=person
+  end
 
-    def current_ability
-      @current_ability ||= Ability.new(current_person, current_token)
-    end
+  def current_user
+    current_person
+  end
 
-    # Provides the current group
-    #
-    # @return [Group] The current group based on URL params
-    def current_group
-      if controller_path == 'groups'
-        @_currnet_group ||= Group.find(params[:id])
-      else
-        @_current_group ||= Group.find(params[:group_id])
-      end
-    end
-    helper_method :current_group
+  def current_ability
+    @current_ability ||= Ability.new(current_person, current_token)
+  end
 
-    def set_person_locale
-      if logged_in?
-        I18n.locale = current_person.language
-      else
-        session[:locale] = params[:locale] if params[:locale]
-        I18n.locale = session[:locale] || global_prefs.locale || I18n.default_locale
-      end
+  # Provides the current group
+  #
+  # @return [Group] The current group based on URL params
+  def current_group
+    if controller_path == 'groups'
+      @_currnet_group ||= Group.find(params[:id])
+    else
+      @_current_group ||= Group.find(params[:group_id])
     end
+  end
+  helper_method :current_group
 
-    def authorized?
-      logged_in? and ( current_person.active? or current_person.admin? )
+  def set_person_locale
+    if logged_in?
+      I18n.locale = current_person.language
+    else
+      session[:locale] = params[:locale] if params[:locale]
+      I18n.locale = session[:locale] || global_prefs.locale || I18n.default_locale
     end
+  end
+
+  def authorized?
+    logged_in? and ( current_person.active? or current_person.admin? )
+  end
+
+
+
   private
 
-    def admin_required
-      unless current_person.admin?
-        flash[:error] = t("error_admin_access_required")
-        redirect_to home_url
-      end
-    end
 
-    # no longer used
-    # Create a Scribd-style PageView.
-    # See http://www.scribd.com/doc/49575/Scaling-Rails-Presentation
-    def create_page_view
-      if request.format.html?
-        #PageView.create(:person_id => session[:person_id],
-        #                :request_url => request.request_uri,
-        #                :ip_address => request.remote_ip,
-        #                :referer => request.env["HTTP_REFERER"],
-        #                :user_agent => request.env["HTTP_USER_AGENT"])
-      end
-    end
 
-    def require_activation
-      if logged_in?
-        unless current_person.active? or current_person.admin?
-          redirect_to logout_url
+  def admin_required
+    unless current_person.admin?
+      flash[:error] = t("error_admin_access_required")
+      redirect_to home_url
+    end
+  end
+
+  # no longer used
+  # Create a Scribd-style PageView.
+  # See http://www.scribd.com/doc/49575/Scaling-Rails-Presentation
+  def create_page_view
+    if request.format.html?
+      #PageView.create(:person_id => session[:person_id],
+      #                :request_url => request.request_uri,
+      #                :ip_address => request.remote_ip,
+      #                :referer => request.env["HTTP_REFERER"],
+      #                :user_agent => request.env["HTTP_USER_AGENT"])
+    end
+  end
+
+  def require_activation
+    if logged_in?
+      unless current_person.active? or current_person.admin?
+        redirect_to logout_url
+      end
+      # last_logged_in_at actually captures site activity, so update it now.
+      current_person.touch :last_logged_in_at
+    end
+  end
+
+  # Warn the admin if his email address or password is still the default.
+  def admin_warning
+    if request.format.html?
+      default_domain = "example.com"
+      default_password = "admin"
+      if logged_in? and current_person.admin? and !(request.fullpath =~ /^\/admin/)
+        if current_person.email =~ /@#{default_domain}$/
+          flash[:notice] = %(#{t('notice_warning_your_email_address')}
+            #{default_domain}.
+            <a href="#{edit_person_path(current_person)}">#{t('notice_change_it_here')}</a>.)
         end
-        # last_logged_in_at actually captures site activity, so update it now.
-        current_person.touch :last_logged_in_at
       end
     end
+  end
 
-    # Warn the admin if his email address or password is still the default.
-    def admin_warning
-      if request.format.html?
-        default_domain = "example.com"
-        default_password = "admin"
-        if logged_in? and current_person.admin? and !(request.fullpath =~ /^\/admin/)
-          if current_person.email =~ /@#{default_domain}$/
-            flash[:notice] = %(#{t('notice_warning_your_email_address')}
-              #{default_domain}.
-              <a href="#{edit_person_path(current_person)}">#{t('notice_change_it_here')}</a>.)
-          end
-        end
-      end
+  # set timezone, only absolute format time will be affected
+  def set_time_zone(&block)
+    if current_user && current_user.time_zone
+      Time.use_zone(current_user.time_zone, &block)
+    else
+      Time.use_zone(TimeZone.first.time_zone, &block)
     end
+  end
 
-    # set timezone, only absolute format time will be affected
-    def set_time_zone(&block)
-      if current_user && current_user.time_zone
-        Time.use_zone(current_user.time_zone, &block)
-      else
-        Time.use_zone(TimeZone.first.time_zone, &block)
-      end
-    end
-
-    # current user is needed when initialize a person
-    def set_current_user
-      Thread.current[:current_person] = current_person
-    end
+  # current user is needed when initialize a person
+  def set_current_user
+    Thread.current[:current_person] = current_person
+  end
 end
