@@ -50,6 +50,7 @@
 #  plan_started_at          :datetime
 #  display_name             :string(255)
 #  visible                  :boolean          default(TRUE)
+#  update_card              :boolean          default(FALSE)
 #
 
 class PersonDeactivated < Person

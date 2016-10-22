@@ -754,6 +754,7 @@ end
       end
       field :email_verified
       field :requires_credit_card
+      field :update_card
       field :phone
       field :phoneprivacy do
         label "Share Phone?"
