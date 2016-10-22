@@ -203,7 +203,7 @@ class ApplicationController < ActionController::Base
     return unless current_user
 
     if current_person.update_card && !current_person.admin?
-      return if params[:controller] == 'people' && params[:action] == 'edit'
+      return if params[:controller] == 'people'
       flash[:warning] = 'Please update your card details to continue using the site.'
       redirect_to edit_person_path(current_person)
     end
