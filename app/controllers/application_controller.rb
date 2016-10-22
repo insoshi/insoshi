@@ -200,6 +200,8 @@ class ApplicationController < ActionController::Base
   # admin will mark so in the users profile. As this happens we will need to force the
   # user to update their credit card information.
   def check_card
+    return unless current_user
+
     if current_person.update_card && !current_person.admin?
       return if params[:controller] == 'people' && params[:action] == 'edit'
       flash[:warning] = 'Please update your card details to continue using the site.'
