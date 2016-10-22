@@ -185,6 +185,7 @@ class PeopleController < ApplicationController
       #when 'openid_edit'
     else
       @person.attributes = params[:person]
+      @person.update_card = false
       update_credit_card(@person)
       @person.save do |result|
         respond_to do |format|
