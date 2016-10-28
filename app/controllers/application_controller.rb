@@ -204,7 +204,7 @@ class ApplicationController < ActionController::Base
 
     if current_person.update_card && !current_person.admin?
       return if params[:controller] == 'people'
-      flash[:warning] = 'Please update your card details to continue using the site.'
+      flash[:warning] = 'Your Credit Card has expired. Please update your Credit Card Number in the box below to continue using the Marketplace.'
       redirect_to edit_person_path(current_person)
     end
   end
