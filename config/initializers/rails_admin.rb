@@ -402,7 +402,7 @@ end
   config.model ExchangeAndFee do
     list do
       scope do
-        joins(:customer, :worker).where( people: { deactivated:false} )
+        joins(:customer, :worker)
       end
 
       field :created_at do
