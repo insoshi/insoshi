@@ -11,14 +11,14 @@ describe PeopleController do
       business_type: 'business type',
       password: 'password',
       password_confirmation: 'password',
-      addresses_attributes: [
+      addresses_attributes: {
         '0' => {
           address_line_1: 'Line 1',
           address_line_2: 'Line 2',
           city: 'The City',
           zipcode_plus_4: '1234',
         }
-      ]
+      }
     }
   }
 
