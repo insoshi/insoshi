@@ -3,8 +3,16 @@ require 'spec_helper'
 describe PeopleController do
   fixtures :time_zones
 
-  let(:validated_params) { {name: 'sample name', email: 'email@email.com', business_name: 'business name', business_type: 'business type',
-                            password: 'password', password_confirmation: 'password'} }
+  let(:validated_params) {
+    {
+      name: 'sample name',
+      email: 'email@email.com',
+      business_name: 'business name',
+      business_type: 'business type',
+      password: 'password',
+      password_confirmation: 'password'
+    }
+  }
 
   describe "#create" do
     context "without metadata" do
