@@ -344,6 +344,8 @@ en:
       comma_will_be_verified: ", will be verified"
       never_made_public: "never made public"
       name: "Name"
+      business_name: "Business name"
+      legal_business_name: "Legal business name"
       will_be_displayed: "will be displayed"
       zipcode: "Zipcode"
       which_services: "Which services would you be willing to offer? (and optionally receive email notifications for new requests)"

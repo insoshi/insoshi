@@ -50,6 +50,8 @@ class PeopleController < ApplicationController
   def new
     @body = "register single-col"
     @person = Person.new
+    @person.addresses.build
+
     FormSignupField.count.times { @person.person_metadata.build }
 
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
@@ -63,6 +65,10 @@ class PeopleController < ApplicationController
   def create
     person = params[:person]
     @person = Person.new(person)
+    address = Address.new(params[:person][:addresses_attributes]['0'])
+    address.primary = true
+    @person.addresses = [address]
+
     set_credit_card(@person, person)
     set_metadata(@person, person) # set metadata
     @person.email_verified = false if global_prefs.email_verifications?
