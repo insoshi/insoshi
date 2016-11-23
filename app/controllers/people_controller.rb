@@ -190,8 +190,12 @@ class PeopleController < ApplicationController
       end
       #when 'openid_edit'
     else
-      @person.attributes = params[:person]
+      @person.credit_card = params[:person][:credit_card]
+      @person.expire = params[:person][:expire]
+      @person.cvc = params[:person][:cvc]
+
       @person.update_card = false
+
       update_credit_card(@person)
       @person.save do |result|
         respond_to do |format|
@@ -315,6 +319,8 @@ class PeopleController < ApplicationController
       else
         stripe_ret = StripeOps.create_customer(person.credit_card, person.expire, person.cvc, person.name, person.email)
       end
+
+      binding.pry
 
       if stripe_ret.kind_of?(Stripe::Customer)
         person.stripe_id = stripe_ret[:id]
