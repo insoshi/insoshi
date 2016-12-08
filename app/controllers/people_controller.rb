@@ -320,8 +320,6 @@ class PeopleController < ApplicationController
         stripe_ret = StripeOps.create_customer(person.credit_card, person.expire, person.cvc, person.name, person.email)
       end
 
-      binding.pry
-
       if stripe_ret.kind_of?(Stripe::Customer)
         person.stripe_id = stripe_ret[:id]
       else
