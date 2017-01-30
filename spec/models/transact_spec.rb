@@ -19,6 +19,8 @@
 require 'spec_helper'
 
 describe Transact do
+  include ApplicationHelper
+  include ActionView::Helpers::NumberHelper
   include TransactsHelper # to not repeat before's in helper just to test one statement
   fixtures :people
 

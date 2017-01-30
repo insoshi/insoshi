@@ -249,7 +249,6 @@ class ApplicationController < ActionController::Base
   def admin_warning
     if request.format.html?
       default_domain = "example.com"
-      default_password = "admin"
       if logged_in? and current_person.admin? and !(request.fullpath =~ /^\/admin/)
         if current_person.email =~ /@#{default_domain}$/
           flash[:notice] = %(#{t('notice_warning_your_email_address')}
