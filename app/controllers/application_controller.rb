@@ -146,6 +146,7 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_back_or_default(default)
+    return if card_to_be_updated?
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
@@ -216,6 +217,7 @@ class ApplicationController < ActionController::Base
   # basis.
   # @return [Boolean] true if the card needs to be updated.
   def card_to_be_updated?
+    return false unless current_person
     !!( current_person.update_card && !current_person.admin? )
   end
 
