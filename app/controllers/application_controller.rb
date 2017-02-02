@@ -92,12 +92,13 @@ class ApplicationController < ActionController::Base
     !!current_person
   end
 
-  # User is back after some absence and he CAN'T go anywhere until they update their credit card data
-  # only if they have monetary fee sign up and haven't already submitted credit card data.
+  # User is back after some absence and he CAN'T go anywhere until they update their credit card
+  # data only if they have monetary fee sign up and haven't already submitted credit card data.
   def credit_card_required
     if logged_in? && current_person.credit_card_required?
-      flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " +
-                       "You won't be able to take any actions until then."
+      flash[:notice] = "You were redirected here because you need to enter credit card details "\
+        "to pay fees described in your fees plan. You won't be able to take any actions until "\
+        "then."
       redirect_to credit_card_path
     end
   end
@@ -108,8 +109,9 @@ class ApplicationController < ActionController::Base
   def check_credit_card
     if logged_in? && current_person.stripe_id.blank? && current_person.fee_plan.contains_stripe_fees?
       store_location
-      flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " +
-                       "You won't be able to take any actions until then."
+      flash[:notice] = "You were redirected here because you need to enter credit card details "\
+        "to pay fees described in your fees plan. You won't be able to take any actions until "\
+        "then."
       redirect_to credit_card_path
     end
   end
@@ -144,6 +146,7 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_back_or_default(default)
+    return if card_to_be_updated?
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
@@ -201,15 +204,22 @@ class ApplicationController < ActionController::Base
   # user to update their credit card information.
   def check_card
     return unless current_user
+    return unless card_to_be_updated?
+    return if params[:controller] == 'people'
+    return if params[:controller] == 'person_sessions'
 
-    if current_person.update_card && !current_person.admin?
-      return if params[:controller] == 'people'
-      flash[:warning] = 'Your Credit Card has expired. Please update your Credit Card Number in the box below to continue using the Marketplace.'
-      redirect_to edit_person_path(current_person)
-    end
+    flash[:warning] = "Your Credit Card has expired. Please update your Credit Card Number in "\
+      "the box below to continue using the Marketplace."
+    redirect_to edit_person_path(current_person)
   end
 
-
+  # Checks if the users card needs to be updated. This will be set by the admin on a per customer
+  # basis.
+  # @return [Boolean] true if the card needs to be updated.
+  def card_to_be_updated?
+    return false unless current_person
+    !!( current_person.update_card && !current_person.admin? )
+  end
 
   private
 
