@@ -92,12 +92,13 @@ class ApplicationController < ActionController::Base
     !!current_person
   end
 
-  # User is back after some absence and he CAN'T go anywhere until they update their credit card data
-  # only if they have monetary fee sign up and haven't already submitted credit card data.
+  # User is back after some absence and he CAN'T go anywhere until they update their credit card
+  # data only if they have monetary fee sign up and haven't already submitted credit card data.
   def credit_card_required
     if logged_in? && current_person.credit_card_required?
-      flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " +
-                       "You won't be able to take any actions until then."
+      flash[:notice] = "You were redirected here because you need to enter credit card details "\
+        "to pay fees described in your fees plan. You won't be able to take any actions until "\
+        "then."
       redirect_to credit_card_path
     end
   end
@@ -108,8 +109,9 @@ class ApplicationController < ActionController::Base
   def check_credit_card
     if logged_in? && current_person.stripe_id.blank? && current_person.fee_plan.contains_stripe_fees?
       store_location
-      flash[:notice] = "You were redirected here because you need to enter credit card details to pay fees described in your fees plan. " +
-                       "You won't be able to take any actions until then."
+      flash[:notice] = "You were redirected here because you need to enter credit card details "\
+        "to pay fees described in your fees plan. You won't be able to take any actions until "\
+        "then."
       redirect_to credit_card_path
     end
   end
