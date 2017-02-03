@@ -32,7 +32,7 @@ describe Transact do
       :name => "value for name",
       :description => "value for description",
       :mode => Group::PUBLIC,
-      :unit => "value for unit",
+      :unit => "Trade Credits",
       :asset => "coins",
       :adhoc_currency => true
     }
@@ -67,7 +67,7 @@ describe Transact do
     @e.save!
     t = Transact.first
     t.paid_fees.should == {:trade_credits => 2, :cash => 2, :txn_id => t.id}
-    paid_fees(t).should == "Charged fees: Trade Credits: 2.0 Cash: 2.0$"
+    paid_fees(t).should == "Charged fees: Trade Credits: 2.00 Cash: 2.00$"
   end
 
 end
