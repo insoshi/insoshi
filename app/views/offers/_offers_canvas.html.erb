@@ -12,8 +12,8 @@
   }
 %>
 
-<ul class="list activity full">
-  <%= render :partial => '/offers/offer', :collection => @offers %>
+<ul class="activity full row">
+  <%= render :partial => '/offers/offer_box', :collection => @offers %>
 </ul>
 
 <%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
