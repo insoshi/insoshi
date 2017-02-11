@@ -1,3 +1,7 @@
+<% offer = offer_box %>
+
 <div class="span4">
-  <h1>Offer <%= offer_box.name  %> </h1>
+  <%= offer_image_link offer %>
+  <strong><%= offer.name %></strong>
+  <small><%= offer.person.business_name %></small>
 </div>
