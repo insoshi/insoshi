@@ -12,8 +12,10 @@
   }
 %>
 
-<ul class="activity full row">
-  <%= render :partial => '/offers/offer_box', :collection => @offers %>
-</ul>
+<% @offers.each_slice 3 do |offers| %>
+  <div class="row">
+    <%= render :partial => '/offers/offer_box', :collection => offers %> 
+  </div>
+<% end %>
 
 <%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
