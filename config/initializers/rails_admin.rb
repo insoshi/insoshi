@@ -761,6 +761,7 @@ end
         label "Share Phone?"
       end
       field :admin
+      field :junior_admin
       field :web_site_url
       field :org
       field :title
