@@ -141,6 +141,7 @@ class Ability
     end
 
     can :read, Account
+    cannot :read, Account if person.junior_admin?
     can :update, Account do |account|
       # XXX excluding the specified account from the sum would be correct math but probably not worth it
       person.is?(:admin,account.group) and ((account.reserve_percent || 0) + account.group.sum_reserves) < 1.0
