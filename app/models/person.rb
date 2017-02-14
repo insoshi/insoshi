@@ -254,9 +254,12 @@ class Person < ActiveRecord::Base
     JSON.parse super rescue {}
   end
 
-  def add_meta(key, value)
-    fail ArgumentError, "Key must be an symbol" unless key.is_a? Symbol
-    data = meta[key] = value
+  # Add a sigle meata value
+  # @param key [String] the key of the metum
+  # @param value [String] the value of the metum
+  def add_metum(key, value)
+    data = meta
+    data[key] = value
     self[:meta] = data.to_json
   end
 
