@@ -249,6 +249,17 @@ class Person < ActiveRecord::Base
   before_save :update_plan_start_date
   before_save { |user| user.display_name = user.legacy_display_name }
 
+  # Overriding super to provide a parsed Ruby Hash instead of a JSON string
+  def meta
+    JSON.parse super rescue {}
+  end
+
+  def add_meta(key, value)
+    fail ArgumentError, "Key must be an symbol" unless key.is_a? Symbol
+    data = meta[key] = value
+    self[:meta] = data.to_json
+  end
+
   # If monetary fee plan was choosed return false, so message "Credit card required" will be added to errors
   # and stripe will proceed with checking card. If stripe will succeed, it will try to save record,
   # so validation will be checked once again and then should pass.
