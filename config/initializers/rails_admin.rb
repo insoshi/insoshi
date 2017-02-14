@@ -709,6 +709,7 @@ end
       field :requires_credit_card
       field :phone
       field :admin
+      field :junior_admin
       field :org
       field :fee_plan
       field :stripe_id
