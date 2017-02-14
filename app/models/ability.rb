@@ -70,6 +70,7 @@ class Ability
     end
 
     can :read, Preference
+    cannot :read, Preference if person.junior_admin?
     can :update, Preference do |pref|
       person.admin?
     end
