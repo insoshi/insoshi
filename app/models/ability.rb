@@ -227,5 +227,7 @@ class Ability
       person.admin? || person.junior_admin?
     end
 
+    can :dashboard if person.junior_admin?
+
   end
 end
