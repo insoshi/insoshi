@@ -12,7 +12,7 @@
   }
 %>
 
-<% @offers.each_slice 3 do |offers| %>
+<% @offers.each_slice 4 do |offers| %>
   <div class="row">
     <%= render :partial => '/offers/offer_box', :collection => offers %> 
   </div>
