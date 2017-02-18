@@ -22,6 +22,10 @@ module HasPhotos
     photo.nil? ? (person.photo.nil? ? Preference.group_image : person.photo.picture_url) : photo.picture_url
   end
 
+  def polaroid
+    photo.nil? ? (person.photo.nil? ? Preference.group_image(:polaroid) : person.photo.picture_url(:polaroid)) : photo.picture_url(:polaroid)
+  end
+
   def thumbnail
     photo.nil? ? (person.photo.nil? ? Preference.group_image(:thumbnail) : person.photo.picture_url(:thumbnail)) : photo.picture_url(:thumbnail)
   end
