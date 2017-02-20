@@ -34,25 +34,4 @@ module HasPhotos
     photo.nil? ? (person.photo.nil? ? Preference.group_image(:icon) : person.photo.picture_url(:icon)) : photo.picture_url(:icon)
   end
 
-  def best_version
-    return alternative_best_version if photo.nil?
-
-    [:polaroid, :thumbnail, :icon].each do |version|
-      uri = photo.picture_url(version)
-      binding.pry
-      return uri if uri
-    end
-  end
-
-  def alternative_best_version
-    [:polaroid, :thumbnail, :icon].each do |version|
-      uri = if person.photo.nil?
-              Preference.group_image(version)
-            else
-              person.photo.picture_url(version)
-            end
-      return uri if uri
-    end
-  end
-
 end
