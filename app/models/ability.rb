@@ -159,7 +159,7 @@ class Ability
     can :destroy, Offer do |offer|
       # if an exchange already references an offer, don't allow the offer to be deleted
       referenced = offer.exchanges.length > 0
-      !referenced && (person.is?(:admin,offer.group) || offer.person == person || person.admin?)
+      !referenced && (person.is?(:admin,offer.group) || offer.person == person || person.admin? || person.junior_admin?)
     end
 
     can :read, Req
