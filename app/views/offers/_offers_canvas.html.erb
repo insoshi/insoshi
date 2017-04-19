@@ -12,6 +12,9 @@
   }
 %>
 
+<div style="height: 50px">
+</div>
+
 <% @offers.each_slice 4 do |offers| %>
   <div class="row">
     <%= render :partial => '/offers/offer_box', :collection => offers %> 
