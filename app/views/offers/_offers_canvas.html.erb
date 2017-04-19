@@ -1,18 +1,17 @@
 <br/>
 
-<div style="display: inline-block;">
-<%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
-</div>
+<div style="margin-bottom: 50px">
+  <div style="display: inline-block;">
+  <%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
+  </div>
 
-<%= link_to t('button_new_offer'),
-  new_group_offer_path(@group),
-  {
-    class: 'show-follow btn btn-primary',
-    style: 'margin-top: -22px; margin-left: 10px;'
-  }
-%>
-
-<div style="height: 50px">
+  <%= link_to t('button_new_offer'),
+    new_group_offer_path(@group),
+    {
+      class: 'show-follow btn btn-primary',
+      style: 'margin-top: -22px; margin-left: 10px;'
+    }
+  %>
 </div>
 
 <% @offers.each_slice 4 do |offers| %>
@@ -20,5 +19,6 @@
     <%= render :partial => '/offers/offer_box', :collection => offers %> 
   </div>
 <% end %>
+
 
 <%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
