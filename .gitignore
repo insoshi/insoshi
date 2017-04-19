@@ -39,3 +39,6 @@ config/ultrasphinx/*.conf
 .ruby-version
 
 archives/backups/*
+
+doc/
+.yardoc
