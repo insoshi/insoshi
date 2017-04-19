@@ -22,6 +22,21 @@ module HasPhotos
     photo.nil? ? (person.photo.nil? ? Preference.group_image : person.photo.picture_url) : photo.picture_url
   end
 
+  # The polaroid version was introduced recently (2017 Feb). Thus it may not exist in older photos.
+  # The method will check to make sure that it is the case or return an equivalent `thumbnail`
+  # version of the image.
+  def polaroid
+    if photo
+      photo.picture_url (photo.highres ? :polaroid : :thumbnail)
+    else
+      # TODO The preference provides group picture image, if this is insufficient, that might need
+      #   be patched to handle new highres photos.
+      fallback_photo = person.photo || Preference.first.default_group_picture
+      version = fallback_photo.highres ? :polaroid : :thumbnail rescue nil
+      version ? fallback_photo.picture_url(version) : '#'
+    end
+  end
+
   def thumbnail
     photo.nil? ? (person.photo.nil? ? Preference.group_image(:thumbnail) : person.photo.picture_url(:thumbnail)) : photo.picture_url(:thumbnail)
   end

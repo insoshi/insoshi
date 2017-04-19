@@ -1,7 +1,7 @@
 <% offer = offer_box %>
 
 <div class="span3 offer-item">
-  <%= offer_image_link offer, image_options: { style: "width: 100%" } %>
+  <%= offer_image_link offer, image_options: { style: "width: 100%" }, image: :polaroid %>
   <br />
   <p class="no-margin-bottom"><strong><%= truncate offer.name, length: 100, omission: "..." %></strong></p>
   <small><%= offer.person.business_name %></small>

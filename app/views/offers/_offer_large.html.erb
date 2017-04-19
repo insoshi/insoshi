@@ -5,7 +5,7 @@
   <!-- Content to be displayed in two rows -->
   <div class="row-fluid">
 
-    <div class="span12">
+    <div class="span6">
       <div class="border-right">
         <%= offer_image_link offer, :image => :main_photo %>
       </div>
@@ -13,7 +13,12 @@
   </div>
   <div class="row-fluid">
     <div class="span12">
-      <h2><%= " #{offer.name}" %><%= waiting_image %></h2>
+      <h2>
+        <%= " #{offer.name}" %><%= waiting_image %>
+        <small style="color: #565656">
+          <%= nice_decimal(offer.price) %> <%= offer.unit %>
+        </small>
+      </h2>
 
       <div class="padded-top" data-links-new-window="true">
         <%= markdown offer.description.to_s %>
