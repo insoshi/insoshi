@@ -70,6 +70,7 @@ class Ability
     end
 
     can :read, Preference
+    cannot :read, Preference if person.junior_admin?
     can :update, Preference do |pref|
       person.admin?
     end
@@ -141,6 +142,7 @@ class Ability
     end
 
     can :read, Account
+    cannot :read, Account if person.junior_admin?
     can :update, Account do |account|
       # XXX excluding the specified account from the sum would be correct math but probably not worth it
       person.is?(:admin,account.group) and ((account.reserve_percent || 0) + account.group.sum_reserves) < 1.0
@@ -149,15 +151,15 @@ class Ability
 
     can :read, Offer
     can :create, Offer do |offer|
-      Membership.mem(person,offer.group) # XXX check for approved membership for groups that require approval
+      Membership.mem(person,offer.group) || person.junior_admin?# XXX check for approved membership for groups that require approval
     end
     can [:update,:new_photo,:save_photo], Offer do |offer|
-      person.is?(:admin,offer.group) || offer.person == person || person.admin?
+      person.is?(:admin,offer.group) || offer.person == person || person.admin? || person.junior_admin?
     end
     can :destroy, Offer do |offer|
       # if an exchange already references an offer, don't allow the offer to be deleted
       referenced = offer.exchanges.length > 0
-      !referenced && (person.is?(:admin,offer.group) || offer.person == person || person.admin?)
+      !referenced && (person.is?(:admin,offer.group) || offer.person == person || person.admin? || person.junior_admin?)
     end
 
     can :read, Req
@@ -193,6 +195,7 @@ class Ability
     can [:read, :create,:update,:destroy], PersonMetadatum
 
     can :read, Exchange
+    cannot :read, Exchange if person.junior_admin?
     can :destroy, Exchange do |exchange|
       (exchange.class != ExchangeDeleted) && (exchange.customer == person || person.admin?)
     end
@@ -224,7 +227,10 @@ class Ability
     can :manage, Report
 
     can :access, :rails_admin do |rails_admin|
-      person.admin?
+      person.admin? || person.junior_admin?
     end
+
+    can :dashboard if person.junior_admin?
+
   end
 end

@@ -709,6 +709,7 @@ end
       field :requires_credit_card
       field :phone
       field :admin
+      field :junior_admin
       field :org
       field :fee_plan
       field :stripe_id
@@ -760,6 +761,7 @@ end
         label "Share Phone?"
       end
       field :admin
+      field :junior_admin
       field :web_site_url
       field :org
       field :title
