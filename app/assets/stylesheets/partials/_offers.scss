@@ -1,0 +1,13 @@
+@import 'variables';
+
+.offer {
+  #main-image {
+    width: 100%;
+  }
+
+  @media (min-width: $display-tablet) {
+    #main-image {
+      width: 50%;
+    }
+  }
+}
