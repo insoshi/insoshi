@@ -19,6 +19,8 @@ Oscurrency::Application.routes.draw do
   #put    "transacts/[:asset]/:id"      => "transacts#update",  :as => 'transact'
   delete "transacts(/:asset)/:id(.:format)"      => "transacts#destroy", :as => 'transact'
 
+  resource :public_offers, only: [:index, :show]
+
   resources :groups, :shallow => true do
     member do
       post :join
