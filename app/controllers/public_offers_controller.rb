@@ -1,0 +1,2 @@
+class PublicOffersController < ApplicationController
+end
