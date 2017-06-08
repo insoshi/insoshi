@@ -1,5 +1,3 @@
 <ul>
-  <% @offers.each do |offer| %>
-    <li><%= offer.name %>
-  <% end %>
+  <%= render partial: 'offers/offer_box', collection: @offers %>
 </ul>
