@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 # Public Offers
-class PublicOffersController < ApplicationController #ActionController::Base
-  helper :all
-  layout 'application'
+class PublicOffersController < ApplicationController
+  skip_before_filter :require_activation
 
   def index
     @offers = Offer.all
