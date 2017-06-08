@@ -61,8 +61,6 @@ gem "calendar_helper"
 gem "gibbon", :git => "git://github.com/amro/gibbon.git"
 gem "mustache"
 
-gem 'slim-rails'
-
 # Payment
 gem "stripe", '~> 1.10.1'
 
