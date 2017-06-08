@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 # Public Offers
-class PublicOffersController < ActionController::Base
+class PublicOffersController < ApplicationController #ActionController::Base
   helper :all
+  layout 'application'
 
   def index
     @offers = Offer.all
