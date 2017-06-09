@@ -1,0 +1,54 @@
+<div class="offer offer_id_<%= offer.id %> ">
+
+  <a name="offer_<%= offer.id %>"></a>
+
+  <!-- Content to be displayed in two rows -->
+  <div class="row-fluid">
+
+    <div class="span12">
+     <div id="main-image">
+        <%= offer_image_link offer, :image => :main_photo %>
+     </div>
+    </div> <!-- .span6 -->
+  </div> <!-- .row-fluid -->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <h2>
+        <%= " #{offer.name}" %><%= waiting_image %>
+        <small style="color: #565656">
+          <%= nice_decimal(offer.price) %> <%= offer.unit %>
+        </small>
+      </h2>
+
+      <div class="padded-top" data-links-new-window="true">
+        <%= markdown offer.description.to_s %>
+      <div>
+      <br/>
+
+      <p>
+        <%= t('exchanges.new.amount') %>: <%= h nice_decimal(offer.price) %> <%= offer.unit %>
+      </p>
+
+      <p class="meta">
+        <br/>
+        <%= t('offers.partial.available_count') %>: <%= offer.available_count %>
+      </p>
+    </div>
+  </div>
+  <!-- end of content to be displayed in two rows -->
+
+  <div class="profile-image" style="display:none;">
+    <%= offer_image_link offer, :image => :main_photo %>
+  </div>
+  
+  <% if offer.available_count > 0 && offer.expiration_date > Time.now %>
+  <hr/>
+
+  <% if offer.price > 0 %>
+    <%= link_to t('offers.partial.accept_offer'), login_path, {:class => 'btn btn-large btn-success'} %>
+  <% end %>
+
+  <hr/>
+  <% end %>
+</div>
