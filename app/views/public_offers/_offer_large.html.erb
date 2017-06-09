@@ -46,7 +46,7 @@
   <hr/>
 
   <% if offer.price > 0 %>
-    <%= link_to t('offers.partial.accept_offer'), login_path, {:class => 'btn btn-large btn-success'} %>
+    <%= link_to t('offers.partial.accept_offer'), (current_person ? new_person_exchange_path(offer.person, :offer => offer.id) : login_path), {:class => 'btn btn-large btn-success'} %>
   <% end %>
 
   <hr/>
