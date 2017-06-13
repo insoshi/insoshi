@@ -1,5 +1,3 @@
 require 'spec_helper'
 
-describe PublicOffersController do
-
-end
+RSpec.describe PublicOffersController do; end
