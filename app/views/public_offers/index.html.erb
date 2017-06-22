@@ -1,0 +1,10 @@
+<div class="row">
+  <%= render partial: 'offer_box', collection: @offers %>
+</div>
+
+<div class="row">
+  <div style="text-align: center;">
+    <%= will_paginate(@offers, :renderer => BootstrapPaginationHelper::LinkRenderer) %>
+  </div>
+
+</div>
