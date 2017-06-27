@@ -29,14 +29,13 @@
       <div>
       <br/>
 
-      <p>
-        <%= t('exchanges.new.amount') %>: <%= h nice_decimal(offer.price) %> <%= offer.unit %>
-      </p>
-
-      <p class="meta">
-        <br/>
-        <%= t('offers.partial.available_count') %>: <%= offer.available_count %>
-      </p>
+      <% if offer.price > 0 %>
+        <p>
+          <%= t('exchanges.new.amount') %>: <%= h nice_decimal(offer.price) %> <%= offer.unit %>
+          <br/>
+          <%= t('offers.partial.available_count') %>: <%= offer.available_count %>
+        </p>
+      <% end %>
     </div>
   </div>
   <!-- end of content to be displayed in two rows -->
