@@ -16,9 +16,12 @@
     <div class="span12">
       <h2>
         <%= " #{offer.name}" %><%= waiting_image %>
-        <small style="color: #565656">
-          <%= nice_decimal(offer.price) %> <%= offer.unit %>
-        </small>
+
+        <% if offer.price > 0 %>
+          <small style="color: #565656">
+            <%= nice_decimal(offer.price) %> <%= offer.unit %>
+          </small>
+        <% end %>
       </h2>
 
       <div class="padded-top" data-links-new-window="true">
