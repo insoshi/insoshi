@@ -70,7 +70,6 @@ gem 'select2-rails'
 gem "feed-normalizer"
 gem "texticle"
 
-
 group :assets do
   gem "sass-rails"
   gem "uglifier"
