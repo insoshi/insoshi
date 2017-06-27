@@ -6,7 +6,7 @@ class PublicOffersController < ApplicationController
 
   def index
     @offers = Offer.active.order('offers.id desc')
-    @offers = @offers.paginate(page: params[:page], per_page: 16)
+    @offers = @offers.paginate(page: params[:page], per_page: 100)
   end
 
   def show

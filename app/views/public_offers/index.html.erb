@@ -1,6 +1,8 @@
-<div class="row">
-  <%= render partial: 'offer_box', collection: @offers %>
-</div>
+<% @offers.each_slice(4) do |slice| %>
+  <div class="row">
+    <%= render partial: 'offer_box', collection: slice %>
+  </div>
+<% end %>
 
 <div class="row">
   <div style="text-align: center;">
