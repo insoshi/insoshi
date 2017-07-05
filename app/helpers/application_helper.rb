@@ -164,7 +164,9 @@ module ApplicationHelper
   end
 
   def markdown_parser
-    @markdown_parser ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(:hard_wrap => true, :filter_html => true, :safe_links_only => true))
+    renderer = Redcarpet::Render::HTML.new(:hard_wrap => true, :filter_html => true, :safe_links_only => true)
+    plugins = { underline: true }
+    @markdown_parser ||= Redcarpet::Markdown.new(renderer, plugins)
   end
 
   # Display text by sanitizing and formatting.
