@@ -65,6 +65,7 @@ gem "mustache"
 gem "stripe", '~> 1.10.1'
 
 # Client side assets
+gem 'bootstrap-wysihtml5-rails', '0.3.1.24'
 gem 'select2-rails'
 
 gem "feed-normalizer"

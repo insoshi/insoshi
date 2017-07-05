@@ -83,6 +83,8 @@ GEM
     blankslate (3.1.2)
     bootstrap-sass (2.2.2.0)
       sass (~> 3.2)
+    bootstrap-wysihtml5-rails (0.3.1.24)
+      railties (>= 3.0)
     bootstrap_form (0.3.2)
     bower-rails (0.10.0)
     builder (3.0.4)
@@ -427,6 +429,7 @@ DEPENDENCIES
   aws-s3
   better_errors
   binding_of_caller
+  bootstrap-wysihtml5-rails (= 0.3.1.24)
   bootstrap_form (~> 0.3.2)
   bower-rails
   calendar_helper
