@@ -28,6 +28,7 @@
 #= require site.js
 #= require links_on_new_window
 #= require select2
+#= require simplemde/dist/simplemde.min
 #= require_self
 
 $(document).ready ->
