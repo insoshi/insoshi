@@ -257,7 +257,7 @@ class ApplicationController < ActionController::Base
 
   # Warn the admin if his email address or password is still the default.
   def admin_warning
-    if request.format.html?
+    if request.format.try(:html?)
       default_domain = "example.com"
       if logged_in? and current_person.admin? and !(request.fullpath =~ /^\/admin/)
         if current_person.email =~ /@#{default_domain}$/
