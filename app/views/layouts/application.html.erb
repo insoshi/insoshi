@@ -106,12 +106,6 @@
                 </ul>
               </li>
               <li><%= image_link current_person, {:link => person_path(current_person), :link_options => {:style => "padding-top: 2px; padding-bottom: 2px;"}} %></li>
-            <%- else -%>
-              <li><%= link_to t('sessions.new.header'), login_path %></li>
-              <%- if global_prefs.can_send_email? -%>
-                <li><%= link_to t('sessions.new.i_forgot_my_password'),
-                             new_password_reset_path %></li>
-              <%- end -%>
             <%- end -%>
           </ul>
         </div>
