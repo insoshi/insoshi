@@ -16,7 +16,6 @@
 #  photoable_id   :integer
 #  photoable_type :string(255)
 #  picture_for    :string(255)
-#  highres        :boolean          default(TRUE)
 #
 
 class Photo < ActiveRecord::Base
