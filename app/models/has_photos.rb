@@ -27,12 +27,12 @@ module HasPhotos
   # version of the image.
   def polaroid
     if photo
-      photo.picture_url (photo.highres ? :polaroid : :thumbnail)
+      photo.picture_url :polaroid
     else
       # TODO The preference provides group picture image, if this is insufficient, that might need
       #   be patched to handle new highres photos.
       fallback_photo = person.photo || Preference.first.default_group_picture
-      version = fallback_photo.highres ? :polaroid : :thumbnail rescue nil
+      version = :polaroid
       version ? fallback_photo.picture_url(version) : '#'
     end
   end

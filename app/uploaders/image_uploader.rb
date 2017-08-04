@@ -12,18 +12,18 @@ class ImageUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  process resize_to_fit: [1000, 1000]
+  process resize_and_pad: [1000, 1000]
 
   version :polaroid do
-    process resize_to_fill: [500, 500]
+    process resize_and_pad: [500, 500]
   end
 
   version :thumbnail do
-    process resize_to_fill: [72, 72]
+    process resize_and_pad: [72, 72]
   end
 
   version :icon, from_version: :thumbnail do
-    process resize_to_fill: [36, 36]
+    process resize_and_pad: [36, 36]
   end
 
   def extension_white_list
