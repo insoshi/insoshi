@@ -20,7 +20,9 @@
           <%= nice_decimal(offer.price) %> <%= offer.unit %>
         </small>
       </h2>
-      <div class="fb-share-button" data-href="<%= public_offer_url(@offer) %>" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<%= CGI.escape public_offer_url(@offer) %>&amp;src=sdkpreparse">Share</a></div>
+      <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<%= CGI.escape public_offer_url(@offer) %>&amp;src=sdkpreparse">
+        <%= image_tag 'button_fbshare.svg', style: 'width: 90px' %>
+      </a>
 
       <div class="padded-top" data-links-new-window="true">
         <%= markdown offer.description.to_s %>
