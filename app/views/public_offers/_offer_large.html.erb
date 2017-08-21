@@ -62,17 +62,4 @@
   <meta property="og:description" content="<%= @offer.description %>">
 <% end %>
 
-<!-- Load Facebook SDK for JavaScript -->
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-<!-- Your share button code -->
-<div class="fb-share-button" 
-  data-href="<%= @url %>" 
-  data-layout="button_count">
-</div>
+<div class="fb-share-button" data-href="<%= @url %>" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fstormy-cove-staging.herokuapp.com%2Fopenoffers%2F21&amp;src=sdkpreparse">Share</a></div>
