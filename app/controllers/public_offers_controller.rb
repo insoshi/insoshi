@@ -11,5 +11,6 @@ class PublicOffersController < ApplicationController
 
   def show
     @offer = Offer.find(params[:id])
+    @url = "#{request.protocol}#{request.host_with_port}#{request.fullpath}"
   end
 end
