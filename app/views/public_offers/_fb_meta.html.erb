@@ -1,5 +1,5 @@
 <%- content_for :head do %>
-  <meta property="og:image" content="<%= @offer.photos.first.picture.url %>">
+  <meta property="og:image" content="<%= @offer.photos.first.try(:picture).try(:url) %>">
   <meta property="og:url" content="<%= @url %>">
   <meta property="og:type" content="product">
   <meta property="og:title" content="<%= @offer.name %>">
