@@ -56,9 +56,4 @@
   <% end %>
 </div>
 
-<%- content_for :head do %>
-  <meta property="og:url" content="<%= @url %>">
-  <meta property="og:type" content="product">
-  <meta property="og:title" content="<%= @offer.name %>">
-  <meta property="og:description" content="<%= @offer.description %>">
-<% end %>
+<%= render 'fb_meta' %>
