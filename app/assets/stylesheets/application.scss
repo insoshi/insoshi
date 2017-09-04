@@ -57,13 +57,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Cinzel', serif;
 }
 
+$button-color: #712D6E;
 .btn-default, .btn-primary {
-  background: #712D6E;
+  background: $button-color;
   color: white;
 }
 
 .btn-default:hover, .btn-primary:hover {
-  background: lighten(#0183a9, 10%);
+  background: lighten($button-color, 10%);
   color: white;
 }
 
