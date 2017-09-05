@@ -23,6 +23,8 @@
 @import 'partials/transactions';
 @import 'partials/offers';
 
+$purple-color: #712D6E;
+
 .no-space-list {
   margin-left: 0;
 
@@ -49,6 +51,14 @@ $navbar-color: #71AB43;
   border: darken($navbar-color, 10%);
 }
 
+.navbar .nav li a:hover {
+  background: $purple-color;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  background: $purple-color;
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
 }
@@ -57,7 +67,8 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Cinzel', serif;
 }
 
-$button-color: #712D6E;
+$button-color: $purple-color;
+
 .btn-default, .btn-primary {
   background: $button-color;
   color: white;
