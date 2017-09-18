@@ -5,7 +5,11 @@ class PublicOffersController < ApplicationController
   skip_before_filter :require_activation
 
   def index
-    @offers = Offer.active.order('offers.id desc')
+    @offers = Offer
+                .active
+                .includes(:person)
+                .where(people: { deactivated: false })
+                .order('offers.id desc')
     @offers = @offers.paginate(page: params[:page], per_page: 100)
   end
 
