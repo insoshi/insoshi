@@ -319,7 +319,7 @@ end
         label "Offered by"
       end
       field :name
-      field :total_available
+      field :available_count
       field :price
       field :expiration_date, :date
       field :description
@@ -351,6 +351,10 @@ end
       end
       field :app_name
       field :server_name
+      field :admin_contact_id do
+        properties[:collection] = Person.where(admin: true).order(:created_at).map {|p| [p.name,p.id]}
+        partial "select"
+      end
       field :groups
       field :alt_signup_link
       field :default_group_id do

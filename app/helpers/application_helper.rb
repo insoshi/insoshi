@@ -230,16 +230,11 @@ module ApplicationHelper
     if 'debit' == options[:transact]
       path = new_person_exchange_path(current_person, ({:group => group.id, :customer => counterparty.id}))
       action = t('exchanges.debit')
-      img = image_tag("icons/remove.gif")
     else
       path = new_person_exchange_path(counterparty, ({:group => group.id} unless group.nil?))
       action = t('exchanges.credit')
-      img = image_tag("icons/add.gif")
     end
-    str = link_to(img,path,options)
-    str << " "
-    str << link_to_unless_current(action, path, options)
-    # str.html_safe
+    str = link_to(action,path,options)
   end
 
   # NOTE: We do not create a link if the transaction

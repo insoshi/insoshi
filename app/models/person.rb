@@ -100,6 +100,7 @@ class Person < ActiveRecord::Base
   attr_accessible :person_metadata_attributes
   attr_accessible :id
   attr_accessible :display_name
+  attr_accessible :deactivated
 
   extend Searchable(:name, :business_name, :description)
 
@@ -244,6 +245,7 @@ class Person < ActiveRecord::Base
   before_save :update_fee_plan_if_deactivated
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
+  before_update :deactivation_notification
   before_update :set_old_description
   after_update :log_activity_description_changed
   before_destroy :destroy_activities, :destroy_feeds
@@ -635,6 +637,14 @@ class Person < ActiveRecord::Base
   def check_config_for_deactivation
     if Person.global_prefs.whitelist?
       self.deactivated = true
+    end
+  end
+
+  def deactivation_notification
+    if self.deactivated?
+      if Person.global_prefs.can_send_email? && !Person.global_prefs.new_member_notification.blank?
+        after_transaction { PersonMailerQueue.deactivation_notification(self) }
+      end
     end
   end
 

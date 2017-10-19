@@ -52,8 +52,10 @@ class Preference < ActiveRecord::Base
                   :protected_categories,
                   :blog_feed_url,
                   :googlemap_api_key,
+                  :admin_contact_id,
                   :default_group_id, :display_orgicon,
                   :default_deactivated_fee_plan_id
+
   attr_accessible *attribute_names, :as => :admin
 
   validate :enforce_singleton, :on => :create
@@ -98,6 +100,12 @@ class Preference < ActiveRecord::Base
           Preference.first.default_profile_picture.picture_url
         end
       end
+    rescue NoMethodError => e
+      # default_profile_picture will be nil the first time profile_image() is called. create it here.
+      photo = Preference.first.photos.new(:picture_for => 'profile')
+      photo.picture = File.open(File.join(Rails.root, 'public/images/default.png'))
+      photo.save!
+      version.nil? ? photo.picture_url : photo.picture_url(version)
     end
 
     def group_image version = nil
@@ -108,6 +116,12 @@ class Preference < ActiveRecord::Base
           Preference.first.default_group_picture.picture_url
         end
       end
+    rescue NoMethodError => e
+      # default_group_picture will be nil the first time group_image() is called. create it here.
+      photo = Preference.first.photos.new(:picture_for => 'group')
+      photo.picture = File.open(File.join(Rails.root, 'public/images/g_default.png'))
+      photo.save!
+      version.nil? ? photo.picture_url : photo.picture_url(version)
     end
 
   end

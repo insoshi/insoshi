@@ -3,6 +3,7 @@
 <div>
   <ul id="nav-js" class="nav nav-tabs">
     <li class="active"><a href="#tab_home" data-toggle="tab"><%= t("groups.show.home") %></a></li>
+    <li><a href="#tab_directory" data-toggle="tab"><%= t("groups.show.directory") %></a></li>
 <%- if @group.adhoc_currency? and not @group.private_txns? -%>
     <li><a href="#tab_exchanges" data-toggle="tab"><%= t("groups.show.exchanges") %></a></li>
 <%- end -%>
@@ -19,6 +20,11 @@
     <div class="tab-pane active" id="tab_home">
       <div id="home_canvas">
       <%= render 'home_canvas' %>
+      </div>
+    </div>
+    <div class="tab-pane" id="tab_directory">
+      <div id="directory_canvas">
+        <%= render 'directory_canvas' %>
       </div>
     </div>
 <%- if @group.adhoc_currency? and not @group.private_txns? -%>

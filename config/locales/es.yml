@@ -283,6 +283,7 @@ es:
       personal_details: "Detalles personales"
       name: "Nombre"
       share_phone_number: "Compartir número teléfono"
+      deactivate_your_account: "Deactivate your account"
       phone: "Teléfono"
       services_offered: "Servicios que ofreces"
       add_new_category: "añadir una nueva categoría"
@@ -559,6 +560,8 @@ es:
       reset_password: "Restaurar Contraseña!"
     registration_notification:
       new: "Una nueva persona se ha registrado"
+    deactivation_notification:
+      new: "A person has been deactivated"
     req_notification:
       matches_a_skill_category_you_have: "Coincide con una Categoría que tu tienes"
       description: "Descripción"

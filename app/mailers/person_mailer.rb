@@ -11,6 +11,18 @@ class PersonMailer < ActionMailer::Base
     @server ||= PersonMailer.global_prefs.server_name
   end
   
+  def deactivation_notification(person)
+    person = coerce(person, Person)
+    @server_name = server
+    @person = person
+
+    @url = person_path(person)
+    mail(:to => recipients_of_registration_notifications,
+         :from => "Deactivation notification <deactivation@#{domain}>",
+         :subject => formatted_subject("Account Deactivation")
+        )
+  end
+
   def password_reset_instructions(person)
     person = coerce(person, Person)
     @edit_password_reset_url = edit_password_reset_url(person.perishable_token)

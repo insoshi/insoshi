@@ -32,9 +32,7 @@ class Offer < ActiveRecord::Base
 
   extend Scopes
 
-  before_create :set_available_count
-
-  validates :expiration_date, :total_available, :presence => true
+  validates :expiration_date, :available_count, :presence => true
 
   def considered_active?
     available_count > 0 && expiration_date >= DateTime.now
@@ -48,10 +46,4 @@ class Offer < ActiveRecord::Base
       price * count if (count > 0 && count <= available_count)
     end
   end
-
-  private
-    def set_available_count
-      self.available_count = self.total_available
-    end
-
 end

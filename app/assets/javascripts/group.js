@@ -11,7 +11,6 @@ var OSCURRENCY = {};
 });
 
 $(function() {
-
   OSCURRENCY.group_id = find_group();
   OSCURRENCY.routes = [];
   OSCURRENCY.tab_prefix = '#tab_';
@@ -21,7 +20,7 @@ $(function() {
   OSCURRENCY.delete_fadeout_time = 4000;
   OSCURRENCY.offers_mode = '';
   OSCURRENCY.reqs_mode = '';
-  OSCURRENCY.searchable_tabs = ['#people','#memberships','#reqs','#requests','#offers'];
+  OSCURRENCY.searchable_tabs = ['','#home','#people','#memberships','#reqs','#requests','#offers'];
   OSCURRENCY.no_filter_option = 1;
   OSCURRENCY.categories_filter_option = 2;
   OSCURRENCY.neighborhoods_filter_option = 3;
@@ -42,6 +41,8 @@ $(function() {
   route('people',   /^#people\/search=(.+)/,                       '/groups/[:group_id]/memberships?search=[:1]');
   route('people',   /^#memberships\/search=(.+)/,                  '/groups/[:group_id]/memberships?search=[:1]');
   route('forum',    /^#forum\/page=(\d+)/,                         '/groups/[:group_id]/forum?page=[:1]');
+  route('people',   /^#home\/search=(.+)/,                         '/groups/[:group_id]/memberships?search=[:1]');
+  route('people',   /^#\/search=(.+)/,                             '/groups/[:group_id]/memberships?search=[:1]');
 
   route('requests', /^#reqs\/(\d+)$/,                              '/reqs/[:1]');
   route('requests', /^#reqs\/(\d+)\/edit$/,                        '/reqs/[:1]/edit');
@@ -313,6 +314,10 @@ $(function() {
       window.location.hash = '#home';
     });
 
+  $('a[href=' + OSCURRENCY.tab_prefix + 'directory]').bind('click', function() {
+      window.location.hash = '#directory';
+    });
+
   $('a[href=' + OSCURRENCY.tab_prefix + 'forum]').bind('click',function() {
     $('#forum_form').html('');
     window.location.hash = '#forum';
@@ -377,6 +382,21 @@ $(function() {
 
   $('a.show-follow').live('click',function() {
     window.location.hash = url2hash(this.href);
+    return false;
+    });
+
+  $('a.show-category').live('click',function() {
+    names = ['url', 'scheme', 'slash', 'host', 'port','path', 'query', 'hash'];
+    result = parse_url(this.href);
+    query = result[names.indexOf('query')]
+    path_suffix = result[names.indexOf('path')].split('/')[2];
+    if('reqs'==path_suffix) {
+      window.location.hash = '#requests/' + query;
+    } else if('offers'==path_suffix) {
+      window.location.hash = '#offers/' + query;
+    } else if('memberships'==path_suffix) {
+      window.location.hash = '#people/' + query;
+    }
     return false;
     });
 

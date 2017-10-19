@@ -74,6 +74,12 @@
 
       </div>
 
+      <div class="scope-action">
+      <%= f.control_group :deactivated do %>
+          <%= f.check_box :deactivated, label: t('people.edit.deactivate_your_account') %>
+      <% end %>
+      </div>
+
       <br />
 
       <div class="form-actions">

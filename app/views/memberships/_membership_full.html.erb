@@ -81,7 +81,7 @@
                 <%- if logged_in? -%>
                   <%- if @membership.group.adhoc_currency? -%>
                     <li>
-                      <%= exchange_link @person, @membership.group, :transact => 'credit', :class => 'show-follow' %>
+                      <%= exchange_link @person, @membership.group, :transact => 'credit', :class => 'btn btn-primary show-follow' %>
                     </li>
                   <%- end -%>
 

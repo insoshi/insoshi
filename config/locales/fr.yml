@@ -341,6 +341,7 @@ fr:
       personal_details: "Détails personnels"
       name: "Nom"
       share_phone_number: "Partager le numéro de téléphone"
+      deactivate_your_account: "Deactivate your account"
       phone: "Téléphone"
       services_offered: "Les services offerts"
       add_new_category: "Ajouter une nouvelle catégorie"
@@ -626,6 +627,8 @@ fr:
       reset_password: "Reset Password!"
     registration_notification:
       new: "A new person has registered"
+    deactivation_notification:
+      new: "A person has been deactivated"
     req_notification:
       matches_a_skill_category_you_have: "matches a skill category you have"
       description: "Description"

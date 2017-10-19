@@ -51,9 +51,12 @@ module PeopleHelper
     link_to(h(text), person, html_options)
   end
 
-
   def get_admin
     Person.find_first_admin
+  end
+
+  def get_admin_contact
+    global_prefs.admin_contact_id.nil? ? Person.find_first_admin : Person.find(global_prefs.admin_contact_id)
   end
 
   def print_fee(fee)

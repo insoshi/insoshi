@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 source 'https://code.stripe.com'
 
-ruby "1.9.3"
+ruby "2.1.5"
 
 gem 'rails', '3.2.16'
 
@@ -42,7 +42,7 @@ gem "aasm"
 
 # File management and Cloud storage
 gem "aws-s3"
-gem "fog"
+gem "fog", '1.19.0'
 gem "carrierwave"
 gem "json", '~> 1.8.1'
 
@@ -77,7 +77,7 @@ group :assets do
 end
 
 group :development, :test do
-  gem "heroku-api"
+  gem "heroku-api", "= 0.3.18"
   gem 'sqlite3'
   gem "rack"
   gem "rack-test"
@@ -90,7 +90,7 @@ end
 
 group :debug do
   gem 'pry'
-  gem 'debugger'
+  # gem 'debugger'
 end
 
 group :development do

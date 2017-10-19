@@ -400,6 +400,7 @@ gr:
       personal_details: "Προσωπικά στοιχεία"
       name: "Όνομα"
       share_phone_number: "Κοινός αριθμός τηλεφώνου"
+      deactivate_your_account: "Deactivate your account"
       phone: "Τηλέφωνο"
       services_offered: "Προσφερόμενες Υπηρεσίες"
       add_new_category: "Προσθήκη Νέας Κατηγορίας"
@@ -686,6 +687,8 @@ gr:
       reset_password: "Επαναφορά Κωδικού Πρόσβασης!"
     registration_notification:
       new: "Ένα νέο πρόσωπο έχει εγγραφεί"
+    deactivation_notification:
+      new: "A person has been deactivated"
     req_notification:
       matches_a_skill_category_you_have: "αναφέρεται σε μια κατηγορία που έχετε δηλώσει"
       description: "Περιγραφή"

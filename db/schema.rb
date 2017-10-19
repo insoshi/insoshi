@@ -618,6 +618,7 @@ ActiveRecord::Schema.define(:version => 20170804030019) do
     t.integer  "default_deactivated_fee_plan_id"
     t.boolean  "show_description",                :default => true
     t.boolean  "show_neighborhood",               :default => true
+    t.integer  "admin_contact_id"
   end
 
   create_table "privacy_settings", :force => true do |t|
