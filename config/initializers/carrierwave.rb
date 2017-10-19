@@ -6,6 +6,7 @@ CarrierWave.configure do |config|
     :aws_secret_access_key  => ENV['AMAZON_SECRET_ACCESS_KEY'],       # required
    }
    config.fog_directory  = ENV['S3_BUCKET_NAME']                    # required
+   config.path_style = true
    # config.fog_host       = "http://#{ENV['BUCKET']}.s3.amazonaws.com"            # optional, defaults to nil
    # config.fog_host       = "http://"           # optional, defaults to nil
    # config.fog_public     = false                                   # optional, defaults to true
