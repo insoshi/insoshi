@@ -1,14 +1,18 @@
+<div class="row">
+  <div class="span12">
+  <%= f.text_field :name, :label => t("title"), :size => 40, :maxlength => 255, :style => 'width: 100%' %>
+  <%= f.text_area :description, :label => t("description"), :help => t('offers.new.description_label'), :rows => 10, :style => 'width: 100%' %>
+  </div>
+</div>
+
+<div class="row">
 <div class="span5">
-  <%= f.text_field :name, :label => t("title"), :size => 40, :maxlength => 255 %>
-  <%= f.text_area :description, :label => t("description"), :help => t('offers.new.description_label'), :rows => 5 %>
   <div class="control-group">
     <%= f.label t('filter_categories'), :class => 'control-label' %>
     <div class="controls">
       <%= render :partial => "shared/select_categories", :locals => { :model_name => 'offer' } %>
     </div>
   </div>
-</div>
-<div class="span5">
   <%= f.text_field :price,  :value=> nice_decimal(f.object.price),  :label => t('price'), :help => @group.unit || Group.find(global_prefs.default_group_id).unit, :size => 5 %>
   <%= f.text_field :expiration_date, :label => t('expiration_date'), :size => 7 %>
   <%= f.text_field :available_count, :label => t('offers.new.available_count'), :size => 2 %>
@@ -22,6 +26,12 @@
     </div>
   </div>
   <%= f.actions do %>
-    <%= f.primary submit_text %><%= waiting_image %>
+    <%= f.primary 'Post your offer' %><%= waiting_image %>
   <% end %>
 </div>
+</div>
+
+<script>
+  $('.select2').select2()
+  new SimpleMDE({ element: document.getElementById("offer_description") });
+</script>

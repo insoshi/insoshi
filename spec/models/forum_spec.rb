@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: forums
+#
+#  id            :integer          not null, primary key
+#  name          :string(255)
+#  description   :text
+#  topics_count  :integer          default(0), not null
+#  created_at    :datetime
+#  updated_at    :datetime
+#  group_id      :integer
+#  worldwritable :boolean          default(FALSE)
+#
+
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Forum do

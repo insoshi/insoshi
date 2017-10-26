@@ -1,14 +1,15 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: forums
 #
-#  id           :integer(4)      not null, primary key
-#  name         :string(255)     
-#  description  :text            
-#  topics_count :integer(4)      default(0), not null
-#  created_at   :datetime        
-#  updated_at   :datetime        
+#  id            :integer          not null, primary key
+#  name          :string(255)
+#  description   :text
+#  topics_count  :integer          default(0), not null
+#  created_at    :datetime
+#  updated_at    :datetime
+#  group_id      :integer
+#  worldwritable :boolean          default(FALSE)
 #
 
 class Forum < ActiveRecord::Base

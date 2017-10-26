@@ -1,0 +1,22 @@
+<%
+  model_name = field.abstract_model.to_param.singularize
+  collection = field.properties[:collection]
+  tag_name = "#{model_name}[#{field.name}]"
+%>
+
+<p>To import users, the CSV file should contain the following (case-sensitive) column headings. All fields are required:</p>
+<ol>
+	<li>first_name</li>
+	<li>last_name</li>
+	<li>address</li>
+	<li>city</li>
+	<li>state</li>
+	<li>zip</li>
+	<li>phone</li>
+	<li>email</li>
+</ol>
+<p></p>
+
+<div class="field <%= field.to_param %>">
+  <%= file_field_tag field.to_param, :name => tag_name %>
+</div>

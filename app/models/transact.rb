@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: exchanges
+#
+#  id            :integer          not null, primary key
+#  customer_id   :integer
+#  worker_id     :integer
+#  amount        :decimal(8, 2)    default(0.0)
+#  created_at    :datetime
+#  updated_at    :datetime
+#  group_id      :integer
+#  metadata_id   :integer
+#  metadata_type :string(255)
+#  deleted_at    :time
+#  notes         :string(255)
+#  wave_all_fees :boolean          default(FALSE)
+#
+
 class Transact < ExchangeAndFee
   extend PreferencesHelper
   attr_accessor :to, :memo, :callback_url, :redirect_url
@@ -51,6 +69,22 @@ class Transact < ExchangeAndFee
   def as_json(options={})
     results.as_json
   end
+  
+  def paid_fees 
+    tc_transaction_fee = 0
+    cash_transaction_fee = 0
+    customers_plan = Person.find(worker_id).fee_plan
+    
+    if customers_plan
+      cash_fees_sum = customers_plan.fixed_transaction_stripe_fees.sum(:amount)
+      cash_fees_perc_sum = customers_plan.percent_transaction_stripe_fees.sum(:percent)
+      cash_transaction_fee = cash_fees_sum + (cash_fees_perc_sum * amount)
+      tc_fees_sum = customers_plan.fixed_transaction_fees.sum(:amount)
+      tc_fees_perc_sum = customers_plan.percent_transaction_fees.sum(:percent)
+      tc_transaction_fee = tc_fees_sum + (tc_fees_perc_sum * amount)
+    end
+    {:trade_credits => tc_transaction_fee, :cash => cash_transaction_fee, :txn_id => self.id }
+  end
 
   protected
 
@@ -73,4 +107,5 @@ class Transact < ExchangeAndFee
       response = http.request(request)
     end
   end
+  
 end

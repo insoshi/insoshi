@@ -1,12 +1,11 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: connections
 #
-#  id          :integer(4)      not null, primary key
-#  person_id   :integer(4)
-#  contact_id  :integer(4)
-#  status      :integer(4)
+#  id          :integer          not null, primary key
+#  person_id   :integer
+#  contact_id  :integer
+#  status      :integer
 #  accepted_at :datetime
 #  created_at  :datetime
 #  updated_at  :datetime

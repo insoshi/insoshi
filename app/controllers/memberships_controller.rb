@@ -1,5 +1,5 @@
 class MembershipsController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :credit_card_required
   load_resource :group
   load_and_authorize_resource :membership, :through => :group, :shallow => true
 
@@ -15,16 +15,23 @@ class MembershipsController < ApplicationController
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
     @authorized = @group.authorized_to_view_members?(current_person)
+
     if @authorized
-      @memberships = Membership.custom_search(@selected_neighborhood || @selected_category, 
-                                            @group, 
-                                            params[:page], 
-                                            ajax_posts_per_page, 
-                                            params[:search]
-                                            )
+      @memberships = Membership.custom_search(
+        @selected_neighborhood || @selected_category,
+        @group,
+        params[:page],
+        ajax_posts_per_page,
+        params[:search]
+      )
+
+      MembershipReport.create(record: params[:search], person: current_person, group: @group) if params[:search]
     else
       flash[:notice] = t('notice_member_to_view_people')
-      @memberships = Membership.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
+      @memberships = Membership.where('1=0').paginate(
+        page: 1,
+        per_page: ajax_posts_per_page
+      )
     end
 
     respond_to do |format|
@@ -41,8 +48,12 @@ class MembershipsController < ApplicationController
     @reqs = @person.reqs.all_active
     respond_to do |format|
       if @group.authorized_to_view_members?(current_person)
-        format.js {render :action => 'reject' if not request.xhr?}
-        format.html { redirect_to('/groups/' + @membership.group.id.to_s + '#memberships/' + @membership.id.to_s)}
+        format.js {
+          render :action => 'reject' if not request.xhr?
+        }
+        format.html {
+          redirect_to('/groups/' + @membership.group.id.to_s + '#memberships/' + @membership.id.to_s)
+        }
       else
         raise CanCan::AccessDenied.new("Not authorized!", :read, Membership)
       end
@@ -52,7 +63,7 @@ class MembershipsController < ApplicationController
   def edit
     @account = @membership.account
   end
-  
+
   def create
 
     respond_to do |format|
@@ -74,7 +85,7 @@ class MembershipsController < ApplicationController
       end
     end
   end
-  
+
   def update
     respond_to do |format|
       if @membership.update_attributes(params[:membership])
@@ -83,28 +94,28 @@ class MembershipsController < ApplicationController
       else
         format.html { render :action => "edit" }
       end
-    end  
+    end
   end
-  
+
   def destroy
     @membership.breakup
-    
+
     respond_to do |format|
       flash[:notice] = t('success_you_have_left_the_group') + " #{@membership.group.name}"
       format.html { redirect_to( person_url(current_person)) }
       format.js
     end
   end
-  
+
   def unsuscribe
     @membership.breakup
-    
+
     respond_to do |format|
       flash[:success] = t('success_you_have_unsubscribed') + " '#{@membership.person.display_name}' #{t('success_from_group')} '#{@membership.group.name}'"
       format.html { redirect_to(members_group_path(@membership.group)) }
     end
   end
-  
+
   def suscribe
     @membership.accept
     after_transaction { PersonMailerQueue.membership_accepted(@membership) }
@@ -114,5 +125,5 @@ class MembershipsController < ApplicationController
       format.html { redirect_to(members_group_path(@membership.group)) }
     end
   end
-  
+
 end

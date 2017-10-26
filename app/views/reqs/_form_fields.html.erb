@@ -1,18 +1,11 @@
 <div class="span5">
   <%= f.text_field :name, :label => t('title'), :size => 40, :maxlength => 255 %>
   <%= f.text_area :description, :label => t('description'), :rows => 5 %>
-  <div class="control-group">
-    <%= f.label t('filter_categories'), :class => 'control-label' %>
-    <div class="controls">
-      <%= render :partial => "shared/select_categories", :locals => { :model_name => 'req' } %>
-    </div>
-  </div>
-</div>
-<div class="span5">
+
   <%= f.text_field :estimated_hours, :value=> nice_decimal(f.object.estimated_hours), :label => t('estimated') + ' ' + t('payment'), :help => @group.unit || Group.find(global_prefs.default_group_id).unit, :size => 5, :disabled => estimate_disabled %>
   <%= f.text_field :due_date, :label => t('due_date'), :size => 7 %>
   <%= f.fields_for :photos do |i| %>
-      <%= i.file_field :picture, label: t('groups.new_photo.upload_a_photo') %>
+    <%= i.file_field :picture, label: t('groups.new_photo.upload_a_photo') %>
   <% end %>
   <div class="control-group">
     <%= f.label t('filter_neighborhoods'), :class => 'control-label' %>
@@ -20,11 +13,6 @@
       <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'req' } %>
     </div>
   </div>
-  <% if notify_members %>
-    <%= f.control_group :notifications, label: {text: t('reqs.new.notify_members_email')} do %>
-    <%= f.check_box :notifications, checked: true %>
-  <% end %>
-  <% end %>
   <% if PublicBid.open? %>
     <%= f.control_group :fadsfdasf, label: {text: t('reqs.new.public_bid')} do %>
       <%= f.check_box :public_bid, checked: f.object.public_bid || false %>
@@ -34,3 +22,5 @@
     <%= f.primary submit_text %><%= waiting_image %>
   <% end %>
 </div>
+
+

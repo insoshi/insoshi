@@ -1,0 +1,21 @@
+{
+  "name": "bootstrap",
+  "version": "2.3.1-p6",
+  "main": [
+    "./docs/assets/js/bootstrap.js",
+    "./docs/assets/css/bootstrap.css"
+  ],
+  "dependencies": {
+    "jquery": "~1.8.0"
+  },
+  "homepage": "https://github.com/jasny/bootstrap",
+  "_release": "2.3.1-p6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.3.1-p6",
+    "commit": "c681d5016e67e1aaa2b07a80da45e9ea67e6b924"
+  },
+  "_source": "git://github.com/jasny/bootstrap.git",
+  "_target": "2.3.1-p6",
+  "_originalSource": "git://github.com/jasny/bootstrap"
+}

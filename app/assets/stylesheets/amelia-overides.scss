@@ -1,0 +1,70 @@
+
+body {
+  @include gradient-radial(lighten($bodyBackground, 7%), $bodyBackground);
+}
+
+.container {
+  padding-top: 30px;
+}
+
+a {
+  color: black;
+
+  &:hover {
+    color: red;
+  }
+}
+
+// NAVBAR
+
+.navbar{
+  .container{
+    padding-top: 0px;
+  }
+}
+.navbar-text {
+  display: inline-block;
+}
+
+#skillbank li {
+  color: #999999;
+}
+
+
+// NAV
+//-------------------------------------------------------
+
+.nav-tabs,
+.nav-pills {
+  & > .active > a,
+  & > .active > a:hover {
+    background-color: $tabBackgroundColor;
+    color: $tabTextColor;
+  }
+
+  & > li > a:hover {
+    background-color: $tabBackgroundColor;
+    border-color: transparent;
+    text-shadow: none;
+  }
+
+  & > li {
+    margin-bottom: 0px;
+  }
+
+  & > li > a {
+    background-color: $tabBackgroundColorLite;
+  }
+}
+
+.nav-tabs {
+  border-bottom: 1px solid $tabBorderColor;
+}
+
+// Alerts 
+// ------------------------------------------------------
+
+.alert{
+  font-weight: bold;
+  color: black;
+}

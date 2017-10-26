@@ -2,7 +2,8 @@ class ExchangesController < ApplicationController
   load_resource :person
   load_and_authorize_resource :exchange, :through => :person
   skip_before_filter :require_activation
-  before_filter :login_or_oauth_required
+  before_filter :login_or_oauth_required, :credit_card_required
+  before_filter :check_credit_card, :only => [:new, :create]
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message

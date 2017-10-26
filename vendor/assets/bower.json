@@ -1,0 +1,11 @@
+{
+  "name": "dsl-generated dependencies",
+  "dependencies": {
+    "jquery": "1.8.3",
+    "bootstrap": "2.2.2",
+    "jquery-ui": "1.9.2",
+    "font-awesome": "4.5.0",
+    "jasny-bootstrap": "git://github.com/jasny/bootstrap#2.3.1-p6",
+    "simplemde": "1.11.2"
+  }
+}

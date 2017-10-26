@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe ApplicationHelper do
+describe ApplicationHelper, :type => :helper do
 
   describe "#first_n_words" do
 

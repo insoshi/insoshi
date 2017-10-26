@@ -1,0 +1,77 @@
+<div class="profile vcard">
+  <%- if @person.openid_identifier.nil? -%>
+    <h2>
+      <span class="fn n"><%= h @person.display_name %></span>
+    </h2>
+  <%- else -%>
+    <h2>
+      <%= t('people.show.header') %>
+      <span class="fn n">
+        <%= link_to h(@person.display_name),
+          @person.openid_identifier,
+          :title => @person.openid_identifier
+          %>
+      </span>
+      &nbsp;
+      <%= link_to edit_person_path(@person),
+        class: 'btn btn-default btn-mini',
+        title: 'Edit Profile', data: {
+          toggle: 'tooltip'
+        } do %>
+        <%= icon('pencil') %>
+        &nbsp;Edit Your Profile
+      <% end %>
+      &nbsp;
+      <%= image_tag("login-bg.gif") %>
+
+    </h2>
+  <%- end -%>
+
+  <%- if admin? and not @person.active? -%>
+    <p class="alert alert-error"><%= t('people.show.not_active') %></p>
+  <%- end -%>
+
+  <%- if current_person?(@person) -%>
+    <%- if current_person.description.blank? -%>
+      <div class="alert alert-error">
+        <%= t('people.show.description_blank') %>
+        <%= link_to t('people.show.add_description'),
+                    edit_person_path(@person) %>
+      </div>
+    <%- end -%>
+
+    <%- if current_person.address && Person::DEFAULT_ZIPCODE_STRING == current_person.address.zipcode_plus_4 %>
+      <div class="alert alert-error">
+        <%= link_to t('people.show.update_location'),
+                    edit_person_path(@person) %>.
+        <%= t('people.show.address_remain_private') %>
+      </div>
+    <%- end -%>
+  <%- end -%>
+
+  <div class="toolbox">
+    <%= image_tag @person.main_photo,
+      class: "profile-image photo",
+      alt: h(@person.display_name)
+    %>
+
+    <ul class="tools">
+      <%= render :partial => 'people/account', :collection => @person.accounts %>
+      <%- if current_person?(@person) && @person.support_contact -%>
+        <li><%= support_link @person.support_contact %></li>
+      <%- end -%>
+    </ul>
+    <p class="text-center">
+      <%= link_to edit_person_path(@person),
+        class: 'btn btn-default btn-mini',
+        title: 'Edit Profile', data: {
+          toggle: 'tooltip'
+        } do %>
+        &nbsp;Edit Account Details
+      <% end %>
+    </p>
+  </div>
+
+  <%= display @person.formatted_categories, :class => "meta" %>
+
+</div>

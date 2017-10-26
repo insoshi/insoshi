@@ -1,77 +1,90 @@
-  <%- if global_prefs.app_name.blank? -%>
+<%- if global_prefs.app_name.blank? -%>
   <h2><%= t('people.new.header') %></h2>
-  <%- else -%>
+<%- else -%>
   <h2><%= t('people.new.header') %> <%= t('for') %> <%= global_prefs.app_name %></h2>
-  <%- end -%>
+<%- end -%>
 
-  <%= display global_prefs.registration_intro %>
-  <%= bootstrap_form_for @person, :help => :block, :html => {:class => 'form-horizontal'} do |f| -%>
-<div class="span5">
-  <%= f.select :language, [[t('people._language.english'),'en'],[t('people._language.spanish'),'es'],[t('people._language.french'),'fr'],[t('people._language.greek'),'gr']], {:label => t('people._language.language'), :selected => params[:locale]}, {:onchange => "document.location='/signup?locale=' + this.value"} %>
-  <fieldset id="creds">
-<span id="standard">
-    <%= f.email_field :email, label: t('people.new.email_address'), help: email_help  %>
-    <%= set_focus_to "person_email" %>  
+<%= display global_prefs.registration_intro %>
 
-    <%= f.text_field :name, label: t('people.new.name'), help: t('people.new.will_be_displayed'), maxlength: Person::MAX_NAME %>
+<%= bootstrap_form_for @person, :help => :block, :html => {:class => 'form-horizontal'} do |f| -%>
+  <div class="span5">
+    <span id="standard">
+      <%= f.email_field :email, label: t('people.new.email_address')  %>
+      <%= set_focus_to "person_email" %>
 
-  <% if @person.openid_identifier.blank? %>
-    <%= f.password_field :password, label: t('people.new.password'), maxlength: Person::MAX_PASSWORD %>
-    <%= f.password_field :password_confirmation, label: t('people.new.confirm_password'), maxlength: Person::MAX_PASSWORD, value: "" %>
-  <%- end -%>
-</span>
+      <%= f.text_field :name, label: t('people.new.name'), help: t('people.new.will_be_displayed'), maxlength: Person::MAX_NAME %>
 
-<span id="openid">
-    <%= f.text_field :openid_identifier, label: t('people.new.openid_url') %>
-</span>
-</fieldset>
+      <%= f.text_field :business_name, label: t('people.new.business_name') %>
 
-  <% if global_prefs.openid? %>
-    <div style="text-align: center; font-size: 12px; padding: 10px;">
-      <span id="noscript" style="display:none;">
-        <span id="openid_link"><a href="#" onclick="show_openid(); return false;"><%= t('people.new.or_signup_with_openid') %></a></span>
-        <span id="standard_link"><a href="#" onclick="show_standard(); return false;"><%= t('people.new.back_to_regular_signup') %></a></span>
-      </span>
+      <% if @person.openid_identifier.blank? %>
+        <%= f.password_field :password, label: t('people.new.password'), maxlength: Person::MAX_PASSWORD %>
+        <%= f.password_field :password_confirmation, label: t('people.new.confirm_password'), maxlength: Person::MAX_PASSWORD, value: "" %>
+      <%- end -%>
+    </span>
+
+    <span id="openid">
+      <%= f.text_field :openid_identifier, label: t('people.new.openid_url') %>
+    </span>
+
+	  <% if global_prefs.openid? %>
+	    <div style="text-align: center; font-size: 12px; padding: 10px;">
+	      <span id="noscript" style="display:none;">
+	        <span id="openid_link"><a href="#" onclick="show_openid(); return false;"><%= t('people.new.or_signup_with_openid') %></a></span>
+	        <span id="standard_link"><a href="#" onclick="show_standard(); return false;"><%= t('people.new.back_to_regular_signup') %></a></span>
+	      </span>
+	    </div>
+	  <% end %>
+    
+    <div class="control-group">
+      <%= f.label "Fee Plan", :class => 'control-label' %>
+      <div class="controls">
+        <% FeePlan.where(available: true).order(&:name).each do |plan| %>
+          <%= f.radio_button(:fee_plan_id, plan.id, label: plan.name) %>
+          <p><%= plan.description %></p>
+          <ul>
+            <% plan.all_fees.each do |fee| %>
+              <li><%= print_fee(fee) %></li>
+            <% end %>
+          </ul>
+          <hr />
+        <% end %>
+      </div>
     </div>
-  <% end %>
-  <div class="control-group">
-    <%= f.label t('people.new.which_services'), :class => 'control-label' %>
-    <div class="controls">
-      <%= render :partial => "shared/select_categories", :locals => { :model_name => 'person' } %>
+
+    <!--
     </div>
-  </div>
-</div>
-<div class="span5">
+    <div class="span5">
+    -->
+
+    <br />
+    <hr />
+    <br />
+
+    <%= f.fields_for :addresses do |address| %>
+      <%= address.text_field :address_line_1, label: t('addresses.form.address_line_1') %>
+      <%= address.text_field :address_line_2, label: t('addresses.form.address_line_2') %>
+      <%= address.text_field :city, label: t('addresses.form.city') %>
+      <%= address.text_field :zipcode_plus_4, label: t('addresses.form.zipcode') %>
+    <% end %>
+    
+    <br />
+    <hr />
+    <br />
+ 
+    <%= render :partial => "person_metadata", :locals => {:f => f, :person => @person, :extra_fields => @extra_fields} %>
   
-  <%= f.text_area :description, label: t('people.new.something_about_yourself'), rows: 6 %>
-
-  <div class="control-group">
-    <%= f.label t('people.new.neighborhood'), :class => 'control-label' %>
-    <div class="controls">
-      <%= render :partial => "shared/select_neighborhoods", :locals => { :model_name => 'person' } %>
-    </div>
-  </div>
-
-  <%= f.text_field :zipcode, label: t('people.new.zipcode') %>
-
-    <%= f.control_group :org do %>
-      <%= f.check_box :org, label: t('people.new.business_account') %>
-    <% end %>
-    <div id="business_info">
-        <%= f.text_field :business_name, label: t('people.edit.business_name') %>
-        <div class="control-group">
-          <%= f.label t('people.edit.business_type'), :class => 'control-label' %>
-          <div class="controls">
-            <%= render :partial => "shared/select_business_type", :locals => { :model_name => 'person' } %>
-          </div>
-        </div>
-    </div>
     <%= f.control_group :accept_agreement do %>
-      <%= f.check_box :accept_agreement, label: member_agreement_label.html_safe  %> 
+      <%= f.check_box :accept_agreement, label: "<u>#{ member_agreement_label }</u>".html_safe  %>
     <% end %>
+
+    <div id="stripe_data">
+      <%= f.text_field :credit_card, label: t('people.stripe.credit_card'), placeholder: "XXXX XXXX XXXX XXXX" %>
+      <%= f.text_field :expire, label: t('people.stripe.expiration'), placeholder: "MM/YYYY", :maxlength => 7 %>
+      <%= f.text_field :cvc, label: t('people.stripe.cvc') %>
+    </div>
 
     <%= f.actions do %>
       <% f.primary t('people.new.signup_button') %>
     <% end %>
-</div>
-  <% end %>
+  </div>
+<% end %>

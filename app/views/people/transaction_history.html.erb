@@ -1,0 +1,14 @@
+<%= form_tag transaction_history_person_path  do |f| %>
+	Get fees invoice for <%= select_tag "interval", options_for_select(["week", "month", "year"], @interval || "week")  %>
+	<%= submit_tag "Submit" %>
+<% end %>
+<h4> Your fees invoice for current <%= @interval %> </h4>
+<ul>
+<% @all_fees.each do |fee| %>
+	<li>
+	Trade Credits: <%= fee[:trade_credits] %> 
+	Cash: <%= fee[:cash] %>
+	<%= link_to "Transaction page", transact_path(fee[:txn_id]) %>
+	</li>
+<% end %>
+</ul>

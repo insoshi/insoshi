@@ -242,7 +242,8 @@ ul li.profile_icon_item {
   margin-left: 252px;
 }
 .profile .toolbox ul {
-  background: url(/assets/blue-grad.jpg) bottom repeat-x;
+  /*background: url(/assets/blue-grad.jpg) bottom repeat-x;*/
+  background: none;
   border: 1px solid #ccc;
   width: 238px;
 }
@@ -365,7 +366,6 @@ ul.categories
 
 .categoryAdd
 {
-  float:right;
   font-size: .8em;
   margin-bottom: 1.875em;
   line-height: 1.875em;
@@ -524,4 +524,12 @@ input#person_openid_identifier, input#person_session_openid_identifier {
 
 .talkable-link-div {
     padding-bottom: 10px;
+}
+
+div.error-field {
+  color: #b94a48;
+}
+
+div.error-field input {
+  border-color: #b94a48;
 }

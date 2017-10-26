@@ -1,22 +1,24 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: bids
 #
-#  id              :integer(4)      not null, primary key
-#  req_id          :integer(4)
-#  person_id       :integer(4)
-#  status_id       :integer(4)
-#  estimated_hours :decimal(8, 2)   default(0.0)
-#  actual_hours    :decimal(8, 2)   default(0.0)
-#  expiration_date :datetime
-#  created_at      :datetime
-#  updated_at      :datetime
-#  accepted_at     :datetime
-#  committed_at    :datetime
-#  completed_at    :datetime
-#  approved_at     :datetime
-#  rejected_at     :datetime
+#  id                           :integer          not null, primary key
+#  req_id                       :integer
+#  person_id                    :integer
+#  status_id                    :integer
+#  estimated_hours              :decimal(8, 2)    default(0.0)
+#  actual_hours                 :decimal(8, 2)    default(0.0)
+#  expiration_date              :datetime
+#  created_at                   :datetime
+#  updated_at                   :datetime
+#  accepted_at                  :datetime
+#  committed_at                 :datetime
+#  completed_at                 :datetime
+#  approved_at                  :datetime
+#  rejected_at                  :datetime
+#  state                        :string(255)
+#  private_message_to_requestor :text
+#  group_id                     :integer
 #
 
 class Bid < ActiveRecord::Base
@@ -27,13 +29,14 @@ class Bid < ActiveRecord::Base
   before_validation :setup, :on => :create
   after_create :trigger_offered
 
-  belongs_to :req
+  belongs_to :req, inverse_of: :bids
   belongs_to :person
   belongs_to :group
   attr_readonly :estimated_hours
+  accepts_nested_attributes_for :req
 
   validates :person_id, :presence => true
-  validates :estimated_hours, :presence => true, :numericality => { :greater_than => 0 }
+  validates :estimated_hours, :numericality => { :greater_than => 0 }, if: :estimted_hours_is_validatable?
   validate :group_includes_bidder_as_a_member
 
   attr_protected :person_id, :created_at, :updated_at
@@ -97,62 +100,72 @@ class Bid < ActiveRecord::Base
   end
 
   def trigger_offered
-    Message.create! do |bid_note|
-      bid_note.subject = "BID: #{estimated_hours} hours - #{req.name}"
-      bid_note.content = ""
-      bid_note.content << "#{private_message_to_requestor}\n--\n\n" if private_message_to_requestor.present?
-      unless server.empty?
-        bid_note.content << "See your <a href=\"#{req_url(self.req, :host => server)}\">request</a> to consider bid"
-      end
-      bid_note.sender = self.person
-      bid_note.recipient = self.req.person
-    end
+    # Message.create! do |bid_note|
+    #   form = SystemMessageTemplate.with_type_and_language('offered', I18n.locale.to_s)
+    #   bid_note.subject = form.trigger_offered_subject( estimated_hours, req.name)
+    #   bid_note.content = ""
+    #   bid_note.content << "#{private_message_to_requestor}\n--\n\n" if private_message_to_requestor.present?
+    #   unless server.empty?
+    #     bid_note.content << form.trigger_content(req_url(req, :host => server))
+    #   end
+    #   bid_note.sender = self.person
+    #   bid_note.recipient = self.req.person
+    # end
   end
 
   def trigger_accepted
     touch :accepted_at
-    Message.create! do |bid_note|
-      bid_note.subject = "Bid accepted for #{req.name}"
-      unless server.empty?
-        bid_note.content = "See the <a href=\"#{req_url(self.req, :host => server)}\">request</a> to commit to bid"
-      else
-        bid_note.content = ''
-      end
-      bid_note.sender = self.req.person
-      bid_note.recipient = self.person
-    end
+    # Message.create! do |bid_note|
+    #   form = SystemMessageTemplate.with_type_and_language('accepted', I18n.locale.to_s)
+    #   bid_note.subject = form.trigger_subject(req.name)
+    #   unless server.empty?
+    #     bid_note.content = form.trigger_content(req_url(req, :host => server))
+    #   else
+    #     bid_note.content = ''
+    #   end
+    #   bid_note.sender = self.req.person
+    #   bid_note.recipient = self.person
+    # end
   end
 
   def trigger_committed
     touch :committed_at
-    Message.create! do |bid_note|
-      bid_note.subject = "Bid committed for #{req.name}"
-      unless server.empty?
-        bid_note.content = "Commitment made for your <a href=\"#{req_url(self.req, :host => server)}\">request</a>. This is an automated message"
-      else
-        bid_note.content = ''
-      end
-      bid_note.sender = self.person
-      bid_note.recipient = self.req.person
-    end
+    # Message.create! do |bid_note|
+    #   form = SystemMessageTemplate.with_type_and_language('commited', I18n.locale.to_s)
+    #   bid_note.subject = form.trigger_subject(req.name)
+    #   unless server.empty?
+    #     bid_note.content = form.trigger_content(req_url(req, :host => server))
+    #   else
+    #     bid_note.content = ''
+    #   end
+    #   bid_note.sender = self.person
+    #   bid_note.recipient = self.req.person
+    # end
   end
 
   def trigger_completed
     touch :completed_at
-    Message.create! do |bid_note|
-      bid_note.subject = "Work completed for #{req.name}"
-      unless server.empty?
-        bid_note.content = "Work completed for your <a href=\"#{req_url(self.req, :host => server)}\">request</a>. Please approve transaction! This is an automated message"
-      else
-        bid_note.content = ''
-      end
-      bid_note.sender = self.person
-      bid_note.recipient = self.req.person
-    end
+    # Message.create! do |bid_note|
+    #   form = SystemMessageTemplate.with_type_and_language('completed', I18n.locale.to_s)
+    #   bid_note.subject = form.trigger_subject(req.name)
+    #   unless server.empty?
+    #     bid_note.content = form.trigger_content(req_url(req, :host => server))
+    #   else
+    #     bid_note.content = ''
+    #   end
+    #   bid_note.sender = self.person
+    #   bid_note.recipient = self.req.person
+    # end
   end
 
   def trigger_approved
     touch :approved_at
     Account.transfer(self.req.person, self.person, self.estimated_hours, self.req)
+  end
+
+  private
+
+  def estimted_hours_is_validatable?
+    !(estimated_hours.nil? || estimated_hours.zero?)
   end
 end

@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: reqs
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  description     :text
+#  estimated_hours :decimal(8, 2)    default(0.0)
+#  due_date        :datetime
+#  person_id       :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#  biddable        :boolean          default(TRUE)
+#  notifications   :boolean          default(FALSE)
+#  group_id        :integer
+#  active          :boolean          default(FALSE)
+#  public_bid      :boolean          default(FALSE)
+#
+
 require 'texticle/searchable'
 
 class Req < ActiveRecord::Base

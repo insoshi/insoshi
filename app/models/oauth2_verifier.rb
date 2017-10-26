@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: oauth_tokens
+#
+#  id                    :integer          not null, primary key
+#  person_id             :integer
+#  type                  :string(20)
+#  client_application_id :integer
+#  token                 :string(50)
+#  secret                :string(50)
+#  authorized_at         :datetime
+#  invalidated_at        :datetime
+#  created_at            :datetime
+#  updated_at            :datetime
+#  callback_url          :string(255)
+#  verifier              :string(20)
+#  scope                 :string(255)
+#  expires_at            :datetime
+#  group_id              :integer
+#
+
 class Oauth2Verifier < OauthToken
   validates_presence_of :person
   attr_accessor :state

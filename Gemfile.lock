@@ -13,14 +13,6 @@ GIT
     open_id_authentication (1.1.0)
       rack-openid (~> 1.3)
 
-GIT
-  remote: https://github.com/smartinez87/exception_notification.git
-  revision: aa1052f03252b29e829eb7d0be9ea4e62602877d
-  specs:
-    exception_notification (3.0.0)
-      actionmailer (>= 3.0.4)
-      tinder (~> 1.8)
-
 PATH
   remote: vendor/gems/oauth-plugin-0.4.0.pre7
   specs:
@@ -32,6 +24,7 @@ PATH
 
 GEM
   remote: https://rubygems.org/
+  remote: https://code.stripe.com/
   specs:
     aasm (3.0.15)
     actionmailer (3.2.16)
@@ -87,9 +80,13 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.1)
       debug_inspector (>= 0.0.1)
+    blankslate (3.1.2)
     bootstrap-sass (2.2.2.0)
       sass (~> 3.2)
+    bootstrap-wysihtml5-rails (0.3.1.24)
+      railties (>= 3.0)
     bootstrap_form (0.3.2)
+    bower-rails (0.10.0)
     builder (3.0.4)
     calendar_helper (0.2.4)
       open4
@@ -125,19 +122,25 @@ GEM
       cucumber (>= 1.1.8)
       nokogiri (>= 1.5.0)
     dalli (2.6.0)
+    dante (0.2.0)
     database_cleaner (0.9.1)
     debug_inspector (0.0.2)
     diff-lcs (1.1.3)
+    draper (2.1.0)
+      actionpack (>= 3.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0)
     dynamic_form (1.1.4)
     erubis (2.7.0)
-    eventmachine (1.0.0)
+    exception_notification (4.0.1)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
     excon (0.31.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    faraday (0.8.4)
-      multipart-post (~> 1.1)
-    faraday_middleware (0.9.0)
-      faraday (>= 0.7.4, < 0.9)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     feed-normalizer (1.5.2)
       hpricot (>= 0.6)
       simple-rss (>= 1.1)
@@ -163,6 +166,8 @@ GEM
       rails (~> 3.0)
     gherkin (2.11.5)
       json (>= 1.4.6)
+    ghi (1.1.1)
+      pygments.rb
     girl_friday (0.11.2)
       connection_pool (~> 1.0)
       rubinius-actor
@@ -177,19 +182,22 @@ GEM
       guard (>= 1.1)
       spork (>= 0.8.4)
     haml (3.1.7)
-    hashie (1.2.0)
     heroku-api (0.3.18)
       excon (~> 0.27)
       multi_json (~> 1.8)
     highline (1.6.20)
     hike (1.2.3)
     hpricot (0.8.6)
-    http_parser.rb (0.5.3)
     httparty (0.10.0)
       multi_json (~> 1.0)
       multi_xml
     httpauth (0.2.0)
-    i18n (0.6.8)
+    i18n (0.6.9)
+    jimson-temp (0.9.5)
+      blankslate (>= 3.1.2)
+      multi_json (~> 1.0)
+      rack (~> 1.4)
+      rest-client (~> 1.0)
     journey (1.0.4)
     jquery-rails (2.1.4)
       railties (>= 3.0, < 5.0)
@@ -197,13 +205,17 @@ GEM
     jquery-ui-rails (2.0.2)
       jquery-rails
       railties (>= 3.1.0)
-    json (1.7.7)
+    json (1.8.1)
     jwt (0.1.5)
       multi_json (>= 1.0)
     kaminari (0.14.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.7.4)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
     libv8 (3.11.8.17)
     libwebsocket (0.1.7.1)
       addressable
@@ -221,13 +233,16 @@ GEM
       railties
     method_source (0.8.1)
     mime-types (1.25.1)
-    multi_json (1.8.2)
+    mini_magick (3.7.0)
+      subexec (~> 0.2.1)
+    multi_json (1.9.2)
     multi_xml (0.5.1)
-    multipart-post (1.1.5)
+    multipart-post (2.0.0)
+    mustache (0.99.5)
     nested_form (0.3.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-ssh (2.9.2)
+    net-ssh (4.2.0)
     nokogiri (1.5.6)
     oauth (0.4.7)
     oauth2 (0.8.0)
@@ -242,11 +257,17 @@ GEM
       multi_xml
       oauth (~> 0.4.4)
     pg (0.14.1)
-    polyglot (0.3.3)
+    polyglot (0.3.4)
+    posix-spawn (0.3.11)
     pry (0.9.10)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.3.1)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
+    pygments.rb (0.6.3)
+      posix-spawn (~> 0.3.6)
+      yajl-ruby (~> 1.2.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -297,21 +318,25 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
-    redcarpet (3.3.2)
+    redcarpet (3.4.0)
     ref (1.0.4)
     remotipart (1.0.2)
-    rmagick (2.13.2)
-    rspec-core (2.12.2)
-    rspec-expectations (2.12.1)
-      diff-lcs (~> 1.1.3)
-    rspec-mocks (2.12.1)
-    rspec-rails (2.12.1)
+    request_store (1.3.1)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    rmagick (2.15.4)
+    rspec-core (2.14.8)
+    rspec-expectations (2.14.5)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.14.6)
+    rspec-rails (2.14.2)
       actionpack (>= 3.0)
+      activemodel (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec-core (~> 2.12.0)
-      rspec-expectations (~> 2.12.0)
-      rspec-mocks (~> 2.12.0)
+      rspec-core (~> 2.14.0)
+      rspec-expectations (~> 2.14.0)
+      rspec-mocks (~> 2.14.0)
     rubinius-actor (0.0.2)
       rubinius-core-api
     rubinius-core-api (0.0.1)
@@ -323,13 +348,14 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    select2-rails (4.0.1.1)
+      thor (~> 0.14)
     selenium-webdriver (2.27.2)
       childprocess (>= 0.2.5)
       libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
     simple-rss (1.2.3)
-    simple_oauth (0.1.9)
     slop (3.3.3)
     spork (0.9.2)
     sprockets (2.2.2)
@@ -338,6 +364,15 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.6)
+    stripe (1.10.1)
+      json (~> 1.8.1)
+      mime-types (~> 1.25)
+      rest-client (~> 1.4)
+    stripe-ruby-mock (1.10.1.6)
+      dante (>= 0.2.0)
+      jimson-temp
+      stripe (>= 1.10.1)
+    subexec (0.2.3)
     systemu (2.5.2)
     texticle (2.0.3)
       activerecord (~> 3.0)
@@ -346,22 +381,9 @@ GEM
       ref
     thor (0.18.1)
     tilt (1.4.1)
-    tinder (1.9.2)
-      eventmachine (~> 1.0)
-      faraday (~> 0.8)
-      faraday_middleware (~> 0.9)
-      hashie (~> 1.0)
-      json (~> 1.7.5)
-      mime-types (~> 1.19)
-      multi_json (~> 1.5)
-      twitter-stream (~> 0.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    twitter-stream (0.1.16)
-      eventmachine (>= 0.12.8)
-      http_parser.rb (~> 0.5.1)
-      simple_oauth (~> 0.1.4)
     tzinfo (0.3.38)
     uglifier (1.3.0)
       execjs (>= 0.3.0)
@@ -380,6 +402,10 @@ GEM
     xml-simple (1.1.2)
     xpath (1.0.0)
       nokogiri (~> 1.3)
+    xray-rails (0.1.21)
+      coffee-rails
+      rails (>= 3.1.0)
+    yajl-ruby (1.2.1)
 
 PLATFORMS
   ruby
@@ -396,7 +422,9 @@ DEPENDENCIES
   aws-s3
   better_errors
   binding_of_caller
+  bootstrap-wysihtml5-rails (= 0.3.1.24)
   bootstrap_form (~> 0.3.2)
+  bower-rails
   calendar_helper
   cancan
   capybara
@@ -406,25 +434,32 @@ DEPENDENCIES
   cucumber-rails
   dalli
   database_cleaner
+  draper
   dynamic_form
-  exception_notification!
+  exception_notification
   feed-normalizer
   fog (= 1.19.0)
   geokit-rails3
+  ghi
   gibbon!
   girl_friday
   git
   guard-spork
-  heroku-api
+  heroku-api (= 0.3.18)
   highline
-  json (= 1.7.7)
+  json (~> 1.8.1)
+  letter_opener
   memcachier
   meta_request
+  mini_magick
+  mustache
   oauth
   oauth-plugin!
   open_id_authentication!
   opentransact
   pg
+  pry
+  pry-rails
   rack
   rack-test
   rails (= 3.2.16)
@@ -432,12 +467,15 @@ DEPENDENCIES
   rails_admin
   redcarpet
   remotipart
-  rmagick
-  rspec-rails
+  rmagick (~> 2.15.4)
+  rspec-rails (~> 2.14)
   ruby-openid
   sass-rails
+  select2-rails
   spork
   sqlite3
+  stripe (~> 1.10.1)
+  stripe-ruby-mock (~> 1.10.1.6)
   texticle
   therubyracer
   uglifier
@@ -445,3 +483,10 @@ DEPENDENCIES
   uuid
   valid_email
   will_paginate
+  xray-rails
+
+RUBY VERSION
+   ruby 2.1.5p273
+
+BUNDLED WITH
+   1.15.4

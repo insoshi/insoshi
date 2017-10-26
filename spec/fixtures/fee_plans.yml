@@ -1,0 +1,19 @@
+# == Schema Information
+#
+# Table name: fee_plans
+#
+#  id          :integer          not null, primary key
+#  name        :string(100)      not null
+#  description :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  available   :boolean          default(FALSE)
+#
+
+with_stripe:
+  id: 1
+  name: 'with stripe'
+
+closed:
+  name: 'Closed'
+  description: 'Simple plan'

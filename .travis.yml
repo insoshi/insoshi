@@ -1,0 +1,16 @@
+sudo: false
+language: ruby
+rvm:
+  - 1.9.3
+
+script:
+  - bundle exec rake db:setup
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec
+
+bundler_args: --without development debug
+
+env:
+  - REPORTING_ADDRESS=mzjdeen@hotmail.com
+
+

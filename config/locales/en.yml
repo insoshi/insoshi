@@ -19,6 +19,7 @@ en:
   filter_neighborhoods: "Neighborhoods"
 
   price: "Price"
+  no_price: 'Will Provide Quote'
   estimate: "Estimate"
   title: "Title"
   bid: "bid"
@@ -94,7 +95,7 @@ en:
 
   bids:
     bid:
-      expires: "expires"    
+      expires: "expires"
       accepted: "Accepted"
       submitted_by: "Submitted by"
 
@@ -194,8 +195,7 @@ en:
       requests: "Requests"
       offers: "Offers"
       exchanges: "Exchanges"
-      people: "People"
-      directory: "Directory"
+      people: "Directory"
     _people:
       header: "Group's"
       all_members: "All members"
@@ -216,6 +216,9 @@ en:
       profile: "Profile"
       inbox: "Inbox"
       sign_out: "Sign out"
+      administration: "Administration"
+      manage: "Manage"
+      import: "Import"
     index:
       header: "Home"
       tab_exchanges: "Exchanges"
@@ -257,11 +260,12 @@ en:
       accept_offer: "Pay now!"
       expires: "Expires"
       available_count: "Available count"
-      created_by: "Created by"
+      created_by: "Offered by"
       listed_in: "Listed in:"
     index:
       header: "Offers"
       nooffers: "No offers (yet!)"
+      nooffers_html: "No offers(<u>yet!</u>)"
     edit:
       header: "Edit offer"
     new:
@@ -291,7 +295,7 @@ en:
       neighborhood: "Neighborhood"
       description: "Description"
       openid_identifier: "OpenID"
-      email: "Email"
+      email: "Email/Log In"
       email_notification_preferences: "Email notification preferences"
       email_notification_note: "You will receive email notifications for each event type whose box is checked."
       requests_in_my_service_categories: "Requests in my service categories"
@@ -320,6 +324,8 @@ en:
       address_select_note: "Choose primary address for use in distance calculations"
       time_zone: "Time Zone"
       date_style: "Date Style"
+      update_card: "Update Card"
+      cvc: "CVC"
     groups:
       no_groups: "No groups (yet)"
       new_group: "New group"
@@ -339,6 +345,8 @@ en:
       comma_will_be_verified: ", will be verified"
       never_made_public: "never made public"
       name: "Name"
+      business_name: "Business name"
+      legal_business_name: "Legal business name"
       will_be_displayed: "will be displayed"
       zipcode: "Zipcode"
       which_services: "Which services would you be willing to offer? (and optionally receive email notifications for new requests)"
@@ -351,7 +359,9 @@ en:
       or_signup_with_openid: "or Signup with OpenID"
       back_to_regular_signup: "back to regular signup"
       openid_url: "OpenID URL"
+      select_plan: "Please select fee plan."
       signup_button: "Sign up"
+      field_is_required: "is required"
     request_memberships:
       header: "Membership request for your groups"
       respond: "Respond"
@@ -376,40 +386,44 @@ en:
       french: "French"
       greek: "Greek"
     _recent_activity:
-      header: "Recent Activity" 
+      header: "Recent Activity"
     _recent_exchanges:
       header: "Credits"
 
   reqs:
     partial:
       due: "Due"
-      createdby: "Created By"
+      createdby: "Requested by"
     index:
       header: "Requests"
       active_requests: "Active Requests"
       current: "Current"
       all: "All"
       noreqs: "No requests (yet!)"
+      noreqs_html: "No requests (<u>yet!</u>)"
     edit:
       header: "Edit request"
+      submit: "Update Your Request"
     new:
       header: "New request"
       people_to_be_notified: "People to be notified"
       notify_members_email: "Notify members?"
       public_bid: "Public bids?"
+      submit: "Post Your Request"
     show:
       header: "Request"
       bids: "Bids"
       nobids: "No bids (yet!)"
       newbid: "New bid"
       private_message_to_requestor: "Private message to requestor"
+      private_message_to: "Private message to"
 
   exchanges:
     credit: "Give Credit"
     debit: "Debit"
     send_a_message: "Send a message"
     new:
-      enter_credit_for: "Transfer %{currency} to" 
+      enter_credit_for: "Transfer %{currency} to"
       amount: "amount"
       for: "For:"
       or_ask: "or ask"
@@ -419,6 +433,7 @@ en:
       quantity: "Quantity"
     notify:
       you_have_received_a_payment_of: "You have received a payment of"
+      you_have_been_billed_a_fee: "You have been charged a fee"
       paid_you: "paid you"
       payment_suspended: "Payment suspended: "
       suspended_payment_of: "suspended payment of"
@@ -498,7 +513,7 @@ en:
 
   transacts:
     index:
-      header: "Your Transactions"
+      header: "Your Account History"
       this_is_a: "This is a"
       opentransact: "OpenTransact"
       url: "URL"

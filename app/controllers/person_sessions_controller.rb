@@ -39,4 +39,26 @@ class PersonSessionsController < ApplicationController
     custom_logout_url = global_prefs.logout_url.empty? ? root_url : global_prefs.logout_url
     redirect_back_or_default custom_logout_url
   end
+  
+  def credit_card
+    errors = Array.new
+    [ :credit_card, :expire, :cvc ].each do |param|
+      if params[param].blank?
+        errors << "#{param.to_s.humanize} can't be blank"
+      end
+    end
+    if errors.empty?
+      stripe_ret = StripeOps.create_customer(params[:credit_card], params[:expire], params[:cvc], current_person.name, current_person.email)
+
+      if stripe_ret.kind_of?(Stripe::Customer)
+        current_person.stripe_id = stripe_ret[:id]
+        current_person.save!
+        redirect_back_or_default home_url
+      else
+        flash[:error] = stripe_ret
+      end
+    else
+      flash[:error] = errors.join(', ')
+    end
+  end
 end

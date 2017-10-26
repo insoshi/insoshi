@@ -1,0 +1,97 @@
+/*
+*= require jquery-ui/themes/base/jquery-ui
+*
+*= require bootstrap/docs/assets/css/bootstrap
+*= require bootstrap/docs/assets/css/bootstrap-responsive
+* require jasny-bootstrap/docs/assets/css/bootstrap
+* require jasny-bootstrap/docs/assets/css/bootstrap-responsive
+*
+*  require vendor
+*= require vrl-theme
+*= require font-awesome/css/font-awesome
+*= require skin
+*= require bootstrap_form
+*= require style
+*= require jquery.ui.datepicker
+*= require bootstrap-override
+*= require select2
+*= require simplemde/dist/simplemde.min
+*= require_self
+*/
+
+@import 'partials/typography';
+@import 'partials/transactions';
+@import 'partials/offers';
+
+$purple-color: #712D6E;
+
+.no-space-list {
+  margin-left: 0;
+
+  p {
+    margin-left: 0;
+  }
+}
+
+.underline{
+  text-decoration: underline;
+}
+
+.text-center{
+  text-align: center;
+}
+
+body {
+  background: white;
+}
+
+$navbar-color: #71AB43;
+.navbar-inner {
+  background: $navbar-color;
+  border: darken($navbar-color, 10%);
+}
+
+.navbar .nav li a:hover {
+  background: $purple-color;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+  background: $purple-color;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cinzel', serif;
+}
+
+$button-color: $purple-color;
+
+.btn-default, .btn-primary {
+  background: $button-color;
+  color: white;
+}
+
+.btn-default:hover, .btn-primary:hover {
+  background: lighten($button-color, 10%);
+  color: white;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.offer-item {
+  small {
+    color: gray;
+  }
+}
+.editor-toolbar.fullscreen {
+  z-index: 1050;
+}

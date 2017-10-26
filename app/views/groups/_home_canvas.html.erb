@@ -1,43 +1,53 @@
 <div class="profile vcard">
+  <!-- Profile display -->
+  <div class="row">
+    <div class="span12">
+      <%= render partial: 'groups/profile' %>
+    </div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <!-- End of profile display -->
+
+  <div class="row">
+    <div class="span9">
+      <%- if @membership %>
+        <%= render :partial => 'invitations' %>
+        <%- if @group.adhoc_currency? %>
+          <%- if @transactions.length > 0 %>
+            <%= link_to transacts_path(@group.asset) do %>
+              <h2 class="txt-underline"><%= t('transacts.index.header') %></h2>
+            <% end %>
+          <%- end -%>
+        <%- end -%>
+
+        <h2><%= t('home._dashboard.offers') %></h2>
+        <%- if @your_offers.length > 0 %>
+          <ul class="list activity full">
+            <%= render :partial => '/offers/offer', :collection => @your_offers %>
+          </ul>
+        <%- else -%>
+          <h3><%= link_to t('offers.index.nooffers_html'), new_group_offer_path(@group) %></h3>
+        <%- end %>
+        <h2><%= t('home._dashboard.requests') %></h2>
+        <%- if @your_reqs.length > 0 %>
+          <ul class="list activity full">
+            <%= render :partial => '/reqs/req', :collection => @your_reqs %>
+          </ul>
+        <%- else -%>
+          <h3><%= link_to t('reqs.index.noreqs_html'), new_group_req_path(@group) %></h3>
+        <%- end %>
+        <br />
+        <br />
+        <%= render partial: 'fee_plan', locals: { fee_plan: @person.fee_plan } %>
+      <%- end -%>
+      <%# render 'toolbox' %>
+    </div>
+    <% render 'shared/minifeed' %>
+  </div>
+
   <%- if @membership && @membership.is?(:admin) -%>
     <%= render 'shared/group_admin_alert' %>
   <%- end -%>
-  <div class="row">
-    <div class="span9">
-<%- if @membership %>
-      <%= render :partial => 'invitations' %>
-      <%- if @group.adhoc_currency? %>
-        <%= render :partial => 'shared/account', :locals => {:account => @membership.account, :html_classes => 'show-follow'} %>
-        <%- if @transactions.length > 0 %>
-          <h2><%= t('transacts.index.header') %></h2>
-          <ul class="list activity full">
-            <%= render :partial => 'shared/transact', :collection => @transactions, :locals => {:ajaxified => true} %> 
-          </ul>
-          <% if @group.asset %>
-            <%= link_to t('see_all'), transacts_path(@group.asset), :target => '_blank' %>
-          <% end %>
-        <%- end -%>
-      <%- end -%>
-      <h2><%= t('home._dashboard.offers') %></h2>
-      <%- if @your_offers.length > 0 %>
-        <ul class="list activity full">
-          <%= render :partial => '/offers/offer', :collection => @your_offers %>
-        </ul>
-      <%- else -%>
-        <h3><%= t('offers.index.nooffers') %></h3>
-      <%- end %>
-      <h2><%= t('home._dashboard.requests') %></h2>
-      <%- if @your_reqs.length > 0 %>
-        <ul class="list activity full">
-          <%= render :partial => '/reqs/req', :collection => @your_reqs %>
-        </ul>
-      <%- else -%>
-        <h3><%= t('reqs.index.noreqs') %></h3>
-      <%- end %>
-      <br />
-<%- end -%>
-      <%= render 'toolbox' %>
-    </div>
-    <%= render 'shared/minifeed' %>
-  </div>
 </div>

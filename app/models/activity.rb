@@ -1,15 +1,15 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: activities
 #
-#  id         :integer(4)      not null, primary key
-#  public     :boolean(1)      
-#  item_id    :integer(4)      
-#  person_id  :integer(4)      
-#  item_type  :string(255)     
-#  created_at :datetime        
-#  updated_at :datetime        
+#  id         :integer          not null, primary key
+#  public     :boolean
+#  item_id    :integer
+#  person_id  :integer
+#  item_type  :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#  group_id   :integer
 #
 
 class Activity < ActiveRecord::Base

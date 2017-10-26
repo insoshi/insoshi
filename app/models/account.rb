@@ -1,14 +1,20 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: accounts
 #
-#  id         :integer(4)      not null, primary key
-#  name       :string(255)     
-#  balance    :decimal(8, 2)   default(0.0)
-#  person_id  :integer(4)      
-#  created_at :datetime        
-#  updated_at :datetime        
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  balance         :decimal(8, 2)    default(0.0)
+#  person_id       :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#  group_id        :integer
+#  credit_limit    :decimal(8, 2)
+#  offset          :decimal(8, 2)    default(0.0)
+#  paid            :decimal(8, 2)    default(0.0)
+#  earned          :decimal(8, 2)    default(0.0)
+#  reserve_percent :decimal(8, 7)    default(0.0)
+#  reserve         :boolean          default(FALSE)
 #
 
 class Account < ActiveRecord::Base
@@ -85,14 +91,42 @@ class Account < ActiveRecord::Base
       end
     end
   end
+  
+  def fees_invoice_for(interval)
+    all_fees = Array.new
+    today = Date.today
+    person.transactions.where(:worker_id => person.id)
+          .by_time(today.method("beginning_of_#{interval}").call, today.method("end_of_#{interval}").call)
+          .each { |txn| all_fees << txn.paid_fees }
+    all_fees
+ end
+  
+  def fees_sum_invoice_for(interval)
+    # All transaction fees aggregated for whole month for the customer.
+    cash_transaction_fees = Charge.charges_sum_for(person_id, interval)
+    tc_transaction_fees = Fee.transaction_tc_fees_sum_for(person, interval)
+    # Take month fees too.
+    recurring_tc_fees = person.fee_plan.recurring_fees.where(:interval => interval).sum(:amount)
+    recurring_cash_fees = person.fee_plan.recurring_stripe_fees.where(:interval => interval).sum(:amount)
+    # Nice hash for user.
+    { :transactions => { :trade_credits => tc_transaction_fees, 
+                        :cash => cash_transaction_fees },
+      :"#{interval}" => { :trade_credits => recurring_tc_fees,
+                         :cash => recurring_cash_fees } }  
+  end
+
+  def available_balance
+    balance + offset + credit_limit
+  end
 
   private
 
-  def check_credit_limit 
+  def check_credit_limit
     if credit_limit_changed?
       if (not credit_limit.nil?) and (credit_limit + balance_with_initial_offset < 0)
         raise CanCan::AccessDenied.new("Denied: Updating credit limit for #{person.display_name} would put account in prohibited state.", :update, Account)
       end
     end
   end
+  
 end

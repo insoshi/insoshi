@@ -1,0 +1,93 @@
+# == Schema Information
+#
+# Table name: accounts
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  balance         :decimal(8, 2)    default(0.0)
+#  person_id       :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#  group_id        :integer
+#  credit_limit    :decimal(8, 2)
+#  offset          :decimal(8, 2)    default(0.0)
+#  paid            :decimal(8, 2)    default(0.0)
+#  earned          :decimal(8, 2)    default(0.0)
+#  reserve_percent :decimal(8, 7)    default(0.0)
+#  reserve         :boolean          default(FALSE)
+#
+
+quentins:
+  id: 1
+  name: quentin
+  balance: 100
+  person_id: 1
+  group_id: 1
+  paid: 0
+  earned: 0
+
+aarons:
+  id: 2
+  name: aaron
+  balance: 100
+  person_id: 2
+  group_id: 1
+  paid: 0
+  earned: 0
+
+buzzards:
+  id: 3
+  name: buzzard
+  balance: 100
+  person_id: 3
+  group_id: 1
+  paid: 0
+  earned: 0
+
+kellys:
+  id: 4
+  name: kelly
+  balance: 100
+  person_id: 4
+  group_id: 1
+  paid: 0
+  earned: 0
+
+admins:
+  id: 5
+  name: admin
+  balance: 0
+  person_id: 5
+  group_id: 1
+  paid: 0
+  earned: 0
+
+reserves:
+  id: 6
+  name: reserve
+  balance: 0
+  person_id: 6
+  group_id: 1
+  paid: 0
+  earned: 0
+
+mixed:
+  id: 7
+  name: mixed
+  balance: 100
+  person_id: 7
+  group_id: 1
+  paid: 0
+  earned: 0
+
+account_one:
+  balance: 0
+  credit_limit: 0
+  person: frank
+  group: one
+
+account_two:
+  balance: 0
+  credit_limit: 0
+  person: doug
+  group: one

@@ -1,0 +1,9 @@
+<% unless p.errors[:"person_metadata.#{extra_field.key}"].empty? %>
+  <div class="control-group error">
+    <div class="controls">
+      <p class="help-block">
+        <%= t('people.new.field_is_required') unless p.nil? %>
+      </p>
+    </div>
+  </div>
+<% end %>

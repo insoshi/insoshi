@@ -1,0 +1,59 @@
+<div class="offer offer_id_<%= offer.id %> ">
+
+  <a name="offer_<%= offer.id %>"></a>
+
+  <!-- Content to be displayed in two rows -->
+  <div class="row-fluid">
+
+    <div class="span12">
+     <div id="main-image">
+        <%= offer_image_link offer, :image => :main_photo %>
+     </div>
+    </div> <!-- .span6 -->
+  </div> <!-- .row-fluid -->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <h2>
+        <%= " #{offer.name}" %><%= waiting_image %>
+
+        <% if offer.price > 0 %>
+          <small style="color: #565656">
+            <%= nice_decimal(offer.price) %> <%= offer.unit %>
+          </small>
+        <% end %>
+      </h2>
+      <div class="fb-share-button" data-href="<%= public_offer_url(@offer) %>" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<%= CGI.escape public_offer_url(@offer) %>&amp;src=sdkpreparse">Share</a></div>
+
+      <div class="padded-top" data-links-new-window="true">
+        <%= markdown offer.description.to_s %>
+      <div>
+      <br/>
+
+      <% if offer.price > 0 %>
+        <p>
+          <%= t('exchanges.new.amount') %>: <%= h nice_decimal(offer.price) %> <%= offer.unit %>
+          <br/>
+          <%= t('offers.partial.available_count') %>: <%= offer.available_count %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+  <!-- end of content to be displayed in two rows -->
+
+  <div class="profile-image" style="display:none;">
+    <%= offer_image_link offer, :image => :main_photo %>
+  </div>
+  
+  <% if offer.available_count > 0 && offer.expiration_date > Time.now %>
+  <hr/>
+
+  <% if offer.price > 0 %>
+    <%= link_to t('offers.partial.accept_offer'), login_path, {:class => 'btn btn-large btn-success'} %>
+  <% end %>
+
+  <hr/>
+  <% end %>
+</div>
+
+<%= render 'fb_meta' %>

@@ -1,3 +1,59 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id                       :integer          not null, primary key
+#  email                    :string(255)
+#  name                     :string(255)
+#  crypted_password         :string(255)
+#  password_salt            :string(255)
+#  persistence_token        :string(255)
+#  description              :text
+#  last_contacted_at        :datetime
+#  last_logged_in_at        :datetime
+#  forum_posts_count        :integer          default(0), not null
+#  created_at               :datetime
+#  updated_at               :datetime
+#  admin                    :boolean          default(FALSE), not null
+#  deactivated              :boolean          default(FALSE), not null
+#  connection_notifications :boolean          default(TRUE)
+#  message_notifications    :boolean          default(TRUE)
+#  email_verified           :boolean
+#  identity_url             :string(255)
+#  phone                    :string(255)
+#  first_letter             :string(255)
+#  zipcode                  :string(255)
+#  phoneprivacy             :boolean          default(TRUE)
+#  language                 :string(255)
+#  openid_identifier        :string(255)
+#  perishable_token         :string(255)      default(""), not null
+#  default_group_id         :integer
+#  org                      :boolean          default(FALSE)
+#  activator                :boolean          default(FALSE)
+#  sponsor_id               :integer
+#  broadcast_emails         :boolean          default(TRUE), not null
+#  web_site_url             :string(255)
+#  business_name            :string(255)
+#  legal_business_name      :string(255)
+#  business_type_id         :integer
+#  title                    :string(255)
+#  activity_status_id       :integer
+#  fee_plan_id              :integer
+#  support_contact_id       :integer
+#  mailchimp_subscribed     :boolean          default(FALSE)
+#  time_zone                :string(255)
+#  date_style               :string(255)
+#  posts_per_page           :integer          default(25)
+#  stripe_id                :string(255)
+#  requires_credit_card     :boolean          default(TRUE)
+#  rollover_balance         :decimal(, )      default(0.0)
+#  plan_started_at          :datetime
+#  display_name             :string(255)
+#  visible                  :boolean          default(TRUE)
+#  update_card              :boolean          default(FALSE)
+#  junior_admin             :boolean          default(FALSE)
+#
+
 require 'texticle/searchable'
 
 class Person < ActiveRecord::Base
@@ -18,12 +74,16 @@ class Person < ActiveRecord::Base
 
   #  attr_accessor :password, :verify_password, :new_password, :password_confirmation
   attr_accessor :sorted_photos, :accept_agreement
+  attr_accessor :credit_card, :expire, :cvc #stripe data - virtual, won't be stored in db.
+  attr_accessor :plan_started_at
+  attr_accessible :stripe_id
   attr_accessible *attribute_names, :as => :admin
   attr_accessible :address_ids, :as => :admin
   attr_accessible :password, :password_confirmation, :as => :admin
   attr_accessible :email, :password, :password_confirmation, :name
   attr_accessible :business_name, :legal_business_name, :business_type_id
-  attr_accessible :title, :activity_status_id, :plan_type_id, :support_contact_id
+  attr_accessible :title, :activity_status_id, :support_contact_id
+  attr_accessible :fee_plan_id
   attr_accessible :description, :connection_notifications
   attr_accessible :message_notifications
   attr_accessible :category_ids, :address_ids, :neighborhood_ids
@@ -37,6 +97,9 @@ class Person < ActiveRecord::Base
   attr_accessible :web_site_url
   attr_accessible :org
   attr_accessible :posts_per_page
+  attr_accessible :person_metadata_attributes
+  attr_accessible :id
+  attr_accessible :display_name
   attr_accessible :deactivated
 
   extend Searchable(:name, :business_name, :description)
@@ -51,9 +114,7 @@ class Person < ActiveRecord::Base
   NUM_RECENT = 8
   FEED_SIZE = 10
   TIME_AGO_FOR_MOSTLY_ACTIVE = 12.months
-  DEFAULT_ZIPCODE_STRING = '89001'
-  # These constants should be methods, but I couldn't figure out how to use
-  # methods in the has_many associations.  I hope you can do better.
+  DEFAULT_ZIPCODE_STRING = ENV['DEFAULT_ZIP'] || '89001'
 
   module Scopes
 
@@ -93,9 +154,19 @@ class Person < ActiveRecord::Base
       order("created_at DESC")
     end
 
+    def with_stripe_plans
+      where('people.stripe_id IS NOT NULL AND people.fee_plan_id IS NOT NULL')
+    end
+
+    def subscribed_to_stripe
+      where('people.stripe_id IS NOT NULL')
+    end
+
   end
 
   extend Scopes
+
+  scope :visible, -> { where(visible: true) }
 
   has_many :connections
   has_many :contacts, :through => :connections, :conditions => {"connections.status" => Connection::ACCEPTED}
@@ -118,8 +189,6 @@ class Person < ActiveRecord::Base
   :conditions => ["people.deactivated = ?", false],
   :include => :person
 
-  #  has_many :page_views, :order => 'created_at DESC'
-
   has_many :own_groups, :class_name => "Group", :foreign_key => "person_id", :order => "name ASC"
   has_many :memberships
   has_many :groups, :through => :memberships, :source => :group, :conditions => "status = 0", :order => "name ASC"
@@ -127,6 +196,7 @@ class Person < ActiveRecord::Base
 
   has_many :accounts
   has_many :addresses, :inverse_of => :person
+  accepts_nested_attributes_for :addresses
   has_many :client_applications
   has_many :tokens, :class_name => "OauthToken", :order => "authorized_at DESC", :include => [:client_application]
 
@@ -135,13 +205,17 @@ class Person < ActiveRecord::Base
   has_many :offers
   has_many :reqs
   has_many :bids
+  has_many :charges
   has_many :invitations, :order => 'created_at DESC'
   belongs_to :default_group, :class_name => "Group", :foreign_key => "default_group_id"
   belongs_to :sponsor, :class_name => "Person", :foreign_key => "sponsor_id"
   belongs_to :support_contact, :class_name => "Person", :foreign_key => "support_contact_id"
   belongs_to :business_type
   belongs_to :activity_status
-  belongs_to :plan_type
+  belongs_to :fee_plan
+
+  has_many :person_metadata#, :inverse_of => :person
+  accepts_nested_attributes_for :person_metadata, :allow_destroy => true
 
   validates :name, :presence => true, :length => { :maximum => MAX_NAME }
   validates :description, :length => { :maximum => MAX_DESCRIPTION }
@@ -149,6 +223,8 @@ class Person < ActiveRecord::Base
   validates :business_name, :length => { :maximum => 100 }, :presence => true, :if => lambda { |p| p.org }
   validates :legal_business_name, :length => { :maximum => 100 }
   validates :business_type, :presence => true, :if => lambda { |p| p.org }
+
+  # validates :fee_plan_id, :presence => true
   #  validates_presence_of     :password,              :if => :password_required?
   #  validates_presence_of     :password_confirmation, :if => :password_required?
   #  validates_length_of       :password, :within => 4..MAX_PASSWORD,
@@ -159,19 +235,50 @@ class Person < ActiveRecord::Base
 
   # XXX just doing jquery validation
   #validates_acceptance_of :accept_agreement, :accept => true, :message => "Please accept the agreement to complete registration", :on => :create
-
+  validate :credit_card_is_required_if_monetary_fee_plan_was_choosed
   before_create :check_config_for_deactivation
   before_create :set_language_and_default_group
   after_create :create_address
   after_create :join_mandatory_groups
+  after_create :subscribe_to_default_plan
   before_save :update_group_letter
+  before_save :update_fee_plan_if_deactivated
   before_validation :prepare_email, :handle_nil_description
   #after_create :connect_to_admin
   before_update :deactivation_notification
   before_update :set_old_description
   after_update :log_activity_description_changed
   before_destroy :destroy_activities, :destroy_feeds
+  before_save :update_plan_start_date
+  before_save { |user| user.display_name = user.legacy_display_name }
 
+  # If monetary fee plan was choosed return false, so message "Credit card required" will be added to errors
+  # and stripe will proceed with checking card. If stripe will succeed, it will try to save record,
+  # so validation will be checked once again and then should pass.
+  # If trade credits or free fee plan was choosed return true, so no credit card is needed.
+  # Note this validation will not affect admin users when creating person
+  def credit_card_is_required_if_monetary_fee_plan_was_choosed
+    return true if Thread.current[:current_person].try(:admin) # skip this validation if current person is admin
+    if self.have_monetary_fee_plan?
+      if self.stripe_id.nil?
+        errors.add(:credit_card, "Credit card required!")
+        return false
+      else
+        return true
+      end
+    else
+      return true
+    end
+  end
+
+  after_validation do
+    return if(self.person_metadata.empty?)
+    destroy_array = []
+    self.person_metadata.each do |metadata|
+      destroy_array << metadata if metadata.value.nil?
+    end
+    self.person_metadata.destroy(destroy_array)
+  end
 
   # Return the first admin created.
   # We suggest using this admin as the primary administrative contact.
@@ -185,7 +292,7 @@ class Person < ActiveRecord::Base
   end
 
   # Display name based upon entity type
-  def display_name
+  def legacy_display_name
     org ? business_name : name
   end
 
@@ -468,7 +575,22 @@ class Person < ActiveRecord::Base
     after_transaction { PersonMailerQueue.email_verification(self) }
   end
 
+  def have_monetary_fee_plan?
+    self.fee_plan.contains_stripe_fees? unless self.fee_plan.nil?
+  end
+
+  def credit_card_required?
+    self.have_monetary_fee_plan? && # only for persons with monetary fee plans
+    self.stripe_id.nil? && # Customer not created yet
+    self.requires_credit_card # Admin can override it to false so person won't need to enter credit card data
+  end
+
+
   protected
+
+  def subscribe_to_default_plan
+    self.update_attribute(:fee_plan, FeePlan.find_by_name("default")) if self.fee_plan.nil?
+  end
 
   def map_openid_registration(sreg_registration, ax_registration)
     unless sreg_registration.nil?
@@ -502,7 +624,14 @@ class Person < ActiveRecord::Base
   end
 
   def update_group_letter
-    self.first_letter = display_name.mb_chars.first.upcase.to_s
+    self.first_letter = self.legacy_display_name.mb_chars.first.upcase.to_s
+  end
+
+  def update_fee_plan_if_deactivated
+    if self.deactivated?
+      self.fee_plan_id =
+          Person.global_prefs.default_deactivated_fee_plan_id
+    end
   end
 
   def check_config_for_deactivation
@@ -545,6 +674,10 @@ class Person < ActiveRecord::Base
     true
     #(crypted_password.blank? && identity_url.nil?) || !password.blank? ||
     #!verify_password.nil?
+  end
+
+  def update_plan_start_date
+    plan_started_at = Time.now if fee_plan_id_changed?
   end
 
 end

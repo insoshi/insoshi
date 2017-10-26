@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: topics
+#
+#  id                :integer          not null, primary key
+#  forum_id          :integer
+#  person_id         :integer
+#  name              :string(255)
+#  forum_posts_count :integer          default(0), not null
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Topic do

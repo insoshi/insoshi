@@ -1,0 +1,51 @@
+# == Schema Information
+#
+# Table name: memberships
+#
+#  id          :integer          not null, primary key
+#  group_id    :integer
+#  person_id   :integer
+#  status      :integer
+#  accepted_at :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
+#  roles_mask  :integer
+#
+
+one:
+  id: 1
+  group_id: 1
+  person_id: 1
+  status: 0
+  roles_mask: 3
+
+two:
+  id: 2
+  group_id: 1
+  person_id: 2
+  status: 0
+  roles_mask: 1
+
+three:
+  id: 3
+  group_id: 1
+  person_id: 3
+  status: 0
+  roles_mask: 1
+
+four:
+  id: 4
+  group_id: 1
+  person_id: 4
+  status: 0
+  roles_mask: 1
+
+frank_one:
+  group: one
+  person: frank
+  status: 0
+
+doug_one:
+  group: one
+  person: doug
+  status: 0

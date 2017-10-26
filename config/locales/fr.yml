@@ -270,6 +270,9 @@ fr:
       profile: "Profile"
       inbox: "Inbox"
       sign_out: "Déconnecter"
+      administration: "[Administration]"
+      manage: "[Manage]"
+      import: "[Import]"
     index:
       header: "Accueil"
       tab_exchanges: "Exchanges"
@@ -410,6 +413,7 @@ fr:
       header: "Enregistrez votre groupe"
       respond: "Répondre"
       no_membership_request: "No membership request (yet)"
+      field_is_required: "is required"
     show:
       header: "Profil"
       support_contact: "Support Contact"

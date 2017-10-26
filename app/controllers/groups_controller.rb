@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_filter :login_or_oauth_required
+  before_filter :login_or_oauth_required, :credit_card_required
   skip_before_filter :require_activation
   load_and_authorize_resource
   
@@ -14,6 +14,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @person = current_person
     membership_display
 
     if membership

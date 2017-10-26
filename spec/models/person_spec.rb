@@ -1,6 +1,64 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id                       :integer          not null, primary key
+#  email                    :string(255)
+#  name                     :string(255)
+#  crypted_password         :string(255)
+#  password_salt            :string(255)
+#  persistence_token        :string(255)
+#  description              :text
+#  last_contacted_at        :datetime
+#  last_logged_in_at        :datetime
+#  forum_posts_count        :integer          default(0), not null
+#  created_at               :datetime
+#  updated_at               :datetime
+#  admin                    :boolean          default(FALSE), not null
+#  deactivated              :boolean          default(FALSE), not null
+#  connection_notifications :boolean          default(TRUE)
+#  message_notifications    :boolean          default(TRUE)
+#  email_verified           :boolean
+#  identity_url             :string(255)
+#  phone                    :string(255)
+#  first_letter             :string(255)
+#  zipcode                  :string(255)
+#  phoneprivacy             :boolean          default(TRUE)
+#  language                 :string(255)
+#  openid_identifier        :string(255)
+#  perishable_token         :string(255)      default(""), not null
+#  default_group_id         :integer
+#  org                      :boolean          default(FALSE)
+#  activator                :boolean          default(FALSE)
+#  sponsor_id               :integer
+#  broadcast_emails         :boolean          default(TRUE), not null
+#  web_site_url             :string(255)
+#  business_name            :string(255)
+#  legal_business_name      :string(255)
+#  business_type_id         :integer
+#  title                    :string(255)
+#  activity_status_id       :integer
+#  fee_plan_id              :integer
+#  support_contact_id       :integer
+#  mailchimp_subscribed     :boolean          default(FALSE)
+#  time_zone                :string(255)
+#  date_style               :string(255)
+#  posts_per_page           :integer          default(25)
+#  stripe_id                :string(255)
+#  requires_credit_card     :boolean          default(TRUE)
+#  rollover_balance         :decimal(, )      default(0.0)
+#  plan_started_at          :datetime
+#  display_name             :string(255)
+#  visible                  :boolean          default(TRUE)
+#  update_card              :boolean          default(FALSE)
+#  junior_admin             :boolean          default(FALSE)
+#
+
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Person do
+
+  fixtures :fee_plans
 
   before(:each) do
     @person = people(:quentin)
@@ -129,6 +187,17 @@ describe Person do
       @person.should be_deactivated
     end
 
+    it "after deactivate should be in 'Closed' plan" do
+      @pref = preferences(:one)
+      @fee_plan = fee_plans(:closed)
+      @pref.default_deactivated_fee_plan_id = @fee_plan.id
+      @pref.save
+
+      @person.deactivated = true
+      @person.save
+      @person.fee_plan.name.should eq('Closed')
+    end
+
     it "should reactivate a person" do
       @person.toggle(:deactivated)
       @person.should be_deactivated
@@ -162,7 +231,7 @@ describe Person do
 
       Req.custom_search(nil, group, true, 1, 25, nil).should be_empty
       @person.deactivated = false
-      @person.save      
+      @person.save
       Req.custom_search(nil, group, true, 1, 25, nil).should_not be_empty
     end
 
@@ -178,7 +247,7 @@ describe Person do
 
       Offer.custom_search(nil, group, true, 1, 25, nil).should be_empty
       @person.deactivated = false
-      @person.save      
+      @person.save
       Offer.custom_search(nil, group, true, 1, 25, nil).should_not be_empty
     end
 
@@ -244,6 +313,30 @@ describe Person do
     end
   end
 
+  describe "stripe associated methods" do
+    before(:each) do
+      @fee_plan = FeePlan.new(name: 'with stripe plans')
+      @fee_plan.save!
+      stripe_fee = FixedTransactionStripeFee.new(fee_plan: @fee_plan, amount: 1)
+      stripe_fee.save!
+      @person.fee_plan = @fee_plan
+    end
+
+    it "should return true if person got fee plan with any stripe fees" do
+      @person.have_monetary_fee_plan?.should be_true
+    end
+
+    it "should return true if person needs to submit their credit card credentials" do
+      @person.stripe_id = nil
+      @person.credit_card_required?.should be_true
+    end
+
+    it "should be possible for admin to override forcing credit card credentials" do
+      @person.requires_credit_card = false
+      @person.credit_card_required?.should_not be_true
+    end
+  end
+
   describe "your requests" do
     it "should not include requests associated with direct payments" do
       group = created_group_id(@person)
@@ -286,7 +379,7 @@ describe Person do
         :expiration_date => DateTime.now + 1.day
         })
       offer.person_id = person.id
-      
+
       offer.valid?
       offer.save!
       offer

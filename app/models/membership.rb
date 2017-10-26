@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: memberships
+#
+#  id          :integer          not null, primary key
+#  group_id    :integer
+#  person_id   :integer
+#  status      :integer
+#  accepted_at :datetime
+#  created_at  :datetime
+#  updated_at  :datetime
+#  roles_mask  :integer
+#
+
 require 'will_paginate/array'
 
 class Membership < ActiveRecord::Base
@@ -6,6 +20,7 @@ class Membership < ActiveRecord::Base
 
   scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
   scope :active, :include => :person, :conditions => {'people.deactivated' => false}
+  scope :visible, include: :person, conditions: { 'people.visible' => true }
   scope :listening, :include => [:member_preference, :person], :conditions => {'people.deactivated' => false, 'member_preferences.forum_notifications' => true}
 
   belongs_to :group
@@ -35,21 +50,40 @@ class Membership < ActiveRecord::Base
     # case when people.business_name is null then '' else people.business_name end) || people.name
     def custom_search(category,group,page,posts_per_page,search=nil)
       unless category
-        group.memberships.active.search_by(search).paginate(:page => page,
-                                                            :conditions => ['status = ?', Membership::ACCEPTED],
-                                                            :order => "lower((case when people.business_name is null then '' else people.business_name end) || people.name) ASC",
-                                                            :include => :person,
-                                                            :per_page => posts_per_page)
+        group
+          .memberships
+          .visible
+          .active
+          .search_by(search)
+          .paginate(
+            page: page,
+            conditions: [ 'status = ?', Membership::ACCEPTED ],
+            order: "lower((case when people.business_name is null then '' else people.business_name end) || people.name) ASC",
+            include: :person,
+            per_page: posts_per_page
+          )
       else
-        category.people.all(:joins => :memberships,
-                            :select => "people.*,memberships.id as categorized_membership",
-                            :conditions => {:memberships => {:group_id => group.id},
-                                            :people => {:deactivated => false}},
-                            :order => "lower((case when people.business_name is null then '' else people.business_name end) || people.name) ASC"
-        ).map {|p| Membership.find(p.categorized_membership)}.paginate(:page => page,
-                                                                       :conditions => ['status = ?', Membership::ACCEPTED],
-                                                                       :include => :person,
-                                                                       :per_page => posts_per_page)
+        category.people.all(
+          joins: :memberships,
+          select: "people.*,memberships.id as categorized_membership",
+          conditions: {
+            memberships: {
+              group_id: group.id
+            },
+            people: {
+              deactivated: false,
+              visible: true,
+            }
+          },
+          order: "lower((case when people.business_name is null then '' else people.business_name end) || people.name) ASC"
+        ).map do |p|
+          Membership.find(p.categorized_membership)
+        end.paginate(
+          page: page,
+          conditions: [ 'status = ?', Membership::ACCEPTED ],
+          include: :person,
+          per_page: posts_per_page
+        )
       end
     end
   end

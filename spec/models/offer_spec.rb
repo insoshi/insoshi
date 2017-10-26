@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: offers
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  description     :text
+#  price           :decimal(8, 2)    default(0.0)
+#  expiration_date :datetime
+#  person_id       :integer
+#  created_at      :datetime
+#  updated_at      :datetime
+#  total_available :integer          default(1)
+#  available_count :integer
+#  group_id        :integer
+#
+
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Offer do

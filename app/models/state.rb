@@ -1,13 +1,12 @@
 # == Schema Information
-# Schema version: 20090216032013
 #
 # Table name: states
 #
-#  id           :integer(4)      not null, primary key
-#  name         :string(25)      default(""), not null
-#  abbreviation :string(2)       default(""), not null
-#  created_at   :datetime        
-#  updated_at   :datetime        
+#  id           :integer          not null, primary key
+#  name         :string(25)       not null
+#  abbreviation :string(2)        not null
+#  created_at   :datetime
+#  updated_at   :datetime
 #
 
 class State < ActiveRecord::Base

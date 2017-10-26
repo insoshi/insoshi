@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: feed_posts
+#
+#  id             :integer          not null, primary key
+#  feedid         :string(255)
+#  title          :string(255)
+#  urls           :string(255)
+#  categories     :string(255)
+#  content        :text
+#  authors        :string(255)
+#  date_published :datetime
+#  last_updated   :datetime
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 require 'feed-normalizer'
 require 'open-uri'
 

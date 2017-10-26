@@ -2,6 +2,12 @@
 
 module ApplicationHelper
 
+  def stripe_include_tag
+    content_for(:head) do
+      javascript_include_tag "https://js.stripe.com/v2/"
+    end
+  end
+
   def current_page_pre22?(options)
     url_string = CGI.escapeHTML(url_for(options))
     request_uri = request.fullpath
@@ -41,7 +47,7 @@ module ApplicationHelper
   def theme_url(theme_name)
       theme_matrix[theme_name] || "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap.no-icons.min.css"
   end
-  
+
   ## Menu helpers
 
   def display_help?
@@ -54,7 +60,12 @@ module ApplicationHelper
       global_prefs.questions.blank?
     )
   end
-  
+
+  def display_group_nav?
+    # TODO: Should this be a preference for VBSR?
+    admin? ? true : false
+  end
+
   def menu
     home     = menu_element("Home",   home_path)
     categories = menu_element("SkillBank", categories_path)
@@ -127,21 +138,21 @@ module ApplicationHelper
   def menu_element(content, address)
     { :content => content, :href => address }
   end
-  
+
   def menu_link_to(link, options = {})
     link_to(link[:content], link[:href], options)
   end
-  
+
   def menu_li(link, options = {})
     klass = "n-#{link[:content].downcase}"
     klass += " active" if current_page?(link[:href])
     content_tag(:li, menu_link_to(link, options), :class => klass)
   end
-  
+
   def admin?
     logged_in? and current_person.admin?
   end
-  
+
   # Set the input focus for a specific id
   # Usage: <%= set_focus_to 'form_field_label' %>
   def set_focus_to(id)
@@ -153,7 +164,9 @@ module ApplicationHelper
   end
 
   def markdown_parser
-    @markdown_parser ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(:hard_wrap => true, :filter_html => true, :safe_links_only => true))
+    renderer = Redcarpet::Render::HTML.new(:hard_wrap => true, :filter_html => true, :safe_links_only => true)
+    plugins = { underline: true }
+    @markdown_parser ||= Redcarpet::Markdown.new(renderer, plugins)
   end
 
   # Display text by sanitizing and formatting.
@@ -175,12 +188,12 @@ module ApplicationHelper
     end
     add_tag_options(processed_text, tag_opts).html_safe
   end
-  
+
   # Output a column div.
   # The current two-column layout has primary & secondary columns.
-  # The options hash is handled so that the caller can pass options to 
+  # The options hash is handled so that the caller can pass options to
   # content_tag.
-  # The LEFT, RIGHT, and FULL constants are defined in 
+  # The LEFT, RIGHT, and FULL constants are defined in
   # config/initializers/global_constants.rb
   def column_div(options = {}, &block)
     klass = options.delete(:type) == :primary ? "col1" : "col2"
@@ -193,9 +206,9 @@ module ApplicationHelper
   def account_link(account, options = {})
     label = options[:label] || ""
     metric = case label
-      when t('balance') then   nice_decimal(account.balance_with_initial_offset)  
-      when t('paid') then   nice_decimal(account.paid) 
-      when t('earned') then  nice_decimal(account.earned) 
+      when t('balance') then   nice_decimal(account.balance_with_initial_offset)
+      when t('paid') then   nice_decimal(account.paid)
+      when t('earned') then  nice_decimal(account.earned)
       else 0
     end
 
@@ -206,10 +219,10 @@ module ApplicationHelper
     else
       credit_limit = account.credit_limit.nil? ? "" : "(limit: #{nice_decimal(account.credit_limit)})"
       action = "#{metric} #{account.group.unit} #{credit_limit}"
-      str = link_to(img,path, options)
-      str << " #{label}: "
+      #str = link_to(img,path, options)
+      str = " #{label}: "
       str << link_to_unless_current(action, path, options)
-      # str.html_safe
+      str.html_safe
     end
   end
 
@@ -222,6 +235,21 @@ module ApplicationHelper
       action = t('exchanges.credit')
     end
     str = link_to(action,path,options)
+  end
+
+  # NOTE: We do not create a link if the transaction
+  # metadata type is itself an Exchange because there
+  # is currently no screen to display details for
+  # an Exchange (only Reqs and Offers)
+  # See: app/views/groups/_exchange.html.erb and
+  # app/views/shared/_transact.html.erb for usage
+  def txn_link(metadata, options = {})
+    if metadata.is_a? Exchange
+      h(metadata.name)
+    else
+      str = link_to(h(metadata.name),metadata,options)
+      str << " "
+    end
   end
 
   def support_link(person, group = nil, options = {})
@@ -264,7 +292,7 @@ module ApplicationHelper
                   "http://daringfireball.net/projects/markdown/basics",
                   :popup => true)}
        formatting supported)
-    else 
+    else
       "HTML formatting supported"
     end
   end
@@ -285,21 +313,29 @@ module ApplicationHelper
     end
   end
 
-def nice_decimal(decimal)
-  number_with_precision(decimal, precision: 2)
-end
+  def nice_decimal(decimal)
+    number_with_precision(decimal, precision: 2)
+  end
+
+  # Provides the membership for the current group for the current logged in user
+  # or the specified user.
+  #
+  # @param [Person] person  The person whomes membershop is required
+  def current_membership(group = current_gorup, person = current_person)
+    group.memberships.where(person_id: person.id).first
+  end
 
 
   private
-  
+
     def inflect(word, number)
       number > 1 ? word.pluralize : word
     end
-    
+
     def add_tag_options(text, options)
       text.gsub("<p>", "<p#{options}>")
     end
-    
+
     # Format text using BlueCloth (or RDiscount) if available.
     def format(text)
       if text.nil?
@@ -314,12 +350,12 @@ end
         text
       end
     end
-    
+
     # Is a Markdown library present?
     def markdown?
       defined?(RDiscount) or defined?(BlueCloth)
     end
-    
+
     # Return true if the text *doesn't* start with a paragraph tag.
     def no_paragraph_tag?(text)
       text !~ /^\<p/

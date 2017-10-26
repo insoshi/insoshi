@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
 
-  before_filter :login_required, :setup
+  before_filter :login_required, :setup, :credit_card_required
   before_filter :authenticate_person, :only => :show
   before_filter :handle_cancel, :only => :create
 

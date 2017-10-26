@@ -1,4 +1,61 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id                       :integer          not null, primary key
+#  email                    :string(255)
+#  name                     :string(255)
+#  crypted_password         :string(255)
+#  password_salt            :string(255)
+#  persistence_token        :string(255)
+#  description              :text
+#  last_contacted_at        :datetime
+#  last_logged_in_at        :datetime
+#  forum_posts_count        :integer          default(0), not null
+#  created_at               :datetime
+#  updated_at               :datetime
+#  admin                    :boolean          default(FALSE), not null
+#  deactivated              :boolean          default(FALSE), not null
+#  connection_notifications :boolean          default(TRUE)
+#  message_notifications    :boolean          default(TRUE)
+#  email_verified           :boolean
+#  identity_url             :string(255)
+#  phone                    :string(255)
+#  first_letter             :string(255)
+#  zipcode                  :string(255)
+#  phoneprivacy             :boolean          default(TRUE)
+#  language                 :string(255)
+#  openid_identifier        :string(255)
+#  perishable_token         :string(255)      default(""), not null
+#  default_group_id         :integer
+#  org                      :boolean          default(FALSE)
+#  activator                :boolean          default(FALSE)
+#  sponsor_id               :integer
+#  broadcast_emails         :boolean          default(TRUE), not null
+#  web_site_url             :string(255)
+#  business_name            :string(255)
+#  legal_business_name      :string(255)
+#  business_type_id         :integer
+#  title                    :string(255)
+#  activity_status_id       :integer
+#  fee_plan_id              :integer
+#  support_contact_id       :integer
+#  mailchimp_subscribed     :boolean          default(FALSE)
+#  time_zone                :string(255)
+#  date_style               :string(255)
+#  posts_per_page           :integer          default(25)
+#  stripe_id                :string(255)
+#  requires_credit_card     :boolean          default(TRUE)
+#  rollover_balance         :decimal(, )      default(0.0)
+#  plan_started_at          :datetime
+#  display_name             :string(255)
+#  visible                  :boolean          default(TRUE)
+#  update_card              :boolean          default(FALSE)
+#  junior_admin             :boolean          default(FALSE)
+#
+
 quentin:
+  id: 1
   email: quentin@example.com
   name: Quentin
   description: I'm Quentin
@@ -12,8 +69,10 @@ quentin:
   connection_notifications: true
   message_notifications: true
   email_verified: true
+  stripe_id: test_cus_1
 
 aaron:
+  id: 2
   email: aaron@example.com
   name: Aaron
   description: I'm Aaron
@@ -26,6 +85,7 @@ aaron:
   connection_notifications: true
   message_notifications: true
   email_verified: true
+  fee_plan_id: 1
 
 buzzard:
   email: buzzard@example.com
@@ -53,7 +113,8 @@ kelly:
   deactivated: false
   connection_notifications: true
   message_notifications: true
-  
+  stripe_id: test_cus_2
+
 admin:
   email: admin@example.com
   name: admin
@@ -88,5 +149,30 @@ email_unverified:
   persistence_token: <%= Authlogic::Random.hex_token %>
   perishable_token: <%= Authlogic::Random.friendly_token %>
   created_at: <%= 1.day.ago.to_s :db %>
-  email_verified: false 
-  
+  email_verified: false
+
+frank:
+  email: frank@example.com
+  name: frank
+  description: I'm Frank
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
+  created_at: <%= 1.day.ago.to_s :db %>
+  deactivated: false
+  connection_notifications: true
+  message_notifications: true
+
+doug:
+  email: doug@example.com
+  name: doug
+  description: I'm doug
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("benrocks" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+  perishable_token: <%= Authlogic::Random.friendly_token %>
+  created_at: <%= 1.day.ago.to_s :db %>
+  deactivated: false
+  connection_notifications: true
+  message_notifications: true

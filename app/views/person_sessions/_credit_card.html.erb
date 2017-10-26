@@ -1,0 +1,12 @@
+<h2> Please enter credit card credentials </h2>
+<%= form_tag "/credit_card", :help => :block,  :remote => remote do |f| -%>
+	<div id="stripe_data">
+		<%= label_tag "credit_card", "Credit card" %>
+		<%= text_field_tag :credit_card, nil, placeholder: "XXXX XXXX XXXX XXXX", value: nil %>
+		<%= label_tag "expire", "Expire" %>
+		<%= text_field_tag :expire, nil, placeholder: "MM/YYYY", value: nil, :maxlength => 7 %>
+		<%= label_tag "cvc", "CVC" %>
+		<%= text_field_tag :cvc, nil %>
+	</div>
+	<%= submit_tag "Submit", :class => "btn btn-primary" %>
+<% end %>

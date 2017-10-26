@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: posts
+#
+#  id         :integer          not null, primary key
+#  blog_id    :integer
+#  topic_id   :integer
+#  person_id  :integer
+#  title      :string(255)
+#  body       :text
+#  type       :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ForumPost do

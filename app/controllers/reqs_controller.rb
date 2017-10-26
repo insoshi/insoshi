@@ -4,6 +4,7 @@ class ReqsController < ApplicationController
 
   skip_before_filter :require_activation, :only => [:show, :index]
   before_filter :login_required, :except => [:show, :index]
+  before_filter :credit_card_required, :except => [:show, :index]
   before_filter :login_or_oauth_required, :only => [:show, :index]
   load_resource :group
   load_and_authorize_resource :req, :through => :group, :shallow => true
@@ -15,14 +16,18 @@ class ReqsController < ApplicationController
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
     @authorized = @group.authorized_to_view_reqs?(current_person)
+
     if @authorized
-      @reqs = Req.custom_search(@selected_neighborhood || @selected_category,
-                              @group,
-                              active=params[:scope].nil?, # if a scope is not passed, just return actives
-                              params[:page],
-                              ajax_posts_per_page,
-                              params[:search]
-                              ).order("reqs.updated_at desc")
+      @reqs = Req.custom_search(
+        @selected_neighborhood || @selected_category,
+        @group,
+        params[:scope].nil?, # if a scope is not passed, just return actives
+        params[:page],
+        ajax_posts_per_page,
+        params[:search]
+      ).order("reqs.updated_at desc")
+
+      ReqReport.create(record: params[:search], person: current_person, group: @group) if params[:search]
     else
       flash[:notice] = t('notice_member_to_view_requests')
       @reqs = Req.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
@@ -36,6 +41,7 @@ class ReqsController < ApplicationController
   # GET /reqs/1
   # GET /reqs/1.xml
   def show
+    return redirect_to group_path(@req.group, anchor: "reqs/#{ @req.id }") unless request.xhr?
     @req = Req.find(params[:id])
     @bid = Bid.new
     @bid.estimated_hours = @req.estimated_hours
@@ -91,7 +97,7 @@ class ReqsController < ApplicationController
 
     respond_to do |format|
       if @req.save
-        @reqs = Req.custom_search(nil,@group,active=true,page=1,ajax_posts_per_page,nil).order("updated_at desc")
+        @reqs = Req.custom_search(nil,@group,true,1,ajax_posts_per_page,nil).order("updated_at desc")
         flash[:notice] = t('success_request_created')
         #respond_with @req
         #format.html { redirect_to(@req) }
@@ -117,7 +123,7 @@ class ReqsController < ApplicationController
     respond_to do |format|
       if @req.update_attributes(params[:req])
         flash[:notice] = t('notice_request_updated')
-        @reqs = Req.custom_search(nil,@group,active=true,page=1,ajax_posts_per_page,nil).order("updated_at desc")
+        @reqs = Req.custom_search(nil, @group, true, 1, ajax_posts_per_page, nil).order("updated_at desc")
         format.html { redirect_to(@req) }
         format.js
         format.xml  { head :ok }

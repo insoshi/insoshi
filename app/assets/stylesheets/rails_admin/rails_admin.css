@@ -1,0 +1,8 @@
+/*
+ *= require rails_admin/imports.css.scss
+ *= require simplemde/dist/simplemde.min
+*/
+
+.editor-toolbar.fullscreen {
+  z-index: 1050;
+}

@@ -4,6 +4,7 @@ class PeopleController < ApplicationController
   skip_before_filter :admin_warning, :only => [ :show, :update ]
   #before_filter :login_or_oauth_required, :only => [ :index, :show, :edit, :update ]
   before_filter :login_required, :only => [ :index, :show, :edit, :update ]
+  before_filter :credit_card_required, :only => [ :index, :show, :edit, :update ]
   before_filter :correct_person_required, :only => [ :edit, :update ]
 
   def index
@@ -49,35 +50,41 @@ class PeopleController < ApplicationController
   def new
     @body = "register single-col"
     @person = Person.new
+    @person.addresses.build
+
+    FormSignupField.count.times { @person.person_metadata.build }
+
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @extra_fields = FormSignupField.all_with_order
     respond_to do |format|
       format.html
     end
   end
 
   def create
-    @person = Person.new(params[:person])
+    person = params[:person]
+    @person = Person.new(person)
+    address = Address.new(params[:person][:addresses_attributes]['0'])
+    address.primary = true
+    @person.addresses = [address]
+
+    set_credit_card(@person, person)
+    set_metadata(@person, person) # set metadata
     @person.email_verified = false if global_prefs.email_verifications?
+    update_credit_card(@person)
     @person.save do |result|
       respond_to do |format|
         if result
-          if global_prefs.can_send_email? && !global_prefs.new_member_notification.blank?
-            PersonMailerQueue.registration_notification(@person)
-          end
-          if global_prefs.email_verifications?
-            @person.deliver_email_verification!
-            flash[:notice] = t('notice_thanks_for_signing_up_check_email')
-            format.html { redirect_to(home_url) }
-          else
-            # XXX self.current_person = @person
-            flash[:notice] = t('notice_thanks_for_signing_up')
-            format.html { redirect_to(home_url) }
-          end
+          flash[:notice] = handle_create_notifications
+          format.html { redirect_to(home_url) }
         else
+
           @body = "register single-col"
           @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
           @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+          flash[:error] = @person.errors.messages.values.join(", ")
+          @extra_fields = FormSignupField.all_with_order
           format.html { render :action => 'new' }
         end
       end
@@ -91,6 +98,18 @@ class PeopleController < ApplicationController
     warning = "ActionController::InvalidAuthenticityToken: #{params.inspect}"
     logger.warn warning
     redirect_to home_url
+  end
+
+  def handle_create_notifications
+    if global_prefs.can_send_email? && !global_prefs.new_member_notification.blank?
+      PersonMailerQueue.registration_notification(@person)
+    end
+    if global_prefs.email_verifications?
+      @person.deliver_email_verification!
+      t('notice_thanks_for_signing_up_check_email')
+    else
+      t('notice_thanks_for_signing_up')
+    end
   end
 
   def verify_email
@@ -114,6 +133,12 @@ class PeopleController < ApplicationController
     @category = Category.new
     @all_categories = Category.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
     @all_neighborhoods = Neighborhood.find(:all, :order => "parent_id, name").sort_by { |a| a.long_name }
+    @extra_fields = FormSignupField.all_with_order
+
+    set_up_metadata
+
+    num_builds = FormSignupField.count - @person.person_metadata.count
+    num_builds.times { @person.person_metadata.build }
     respond_to do |format|
       format.html
     end
@@ -165,7 +190,13 @@ class PeopleController < ApplicationController
       end
       #when 'openid_edit'
     else
-      @person.attributes = params[:person]
+      @person.credit_card = params[:person][:credit_card]
+      @person.expire = params[:person][:expire]
+      @person.cvc = params[:person][:cvc]
+
+      @person.update_card = false
+
+      update_credit_card(@person)
       @person.save do |result|
         respond_to do |format|
           if result
@@ -180,6 +211,21 @@ class PeopleController < ApplicationController
           end
         end
       end
+    end
+  end
+
+  def transaction_history
+    # Do not allow other person seeing other people fees.
+    if can?(:view_transactions, Person.find(params[:id]))
+      @interval = params[:interval]
+      @interval = 'week' unless ['week', 'month', 'year'].include? @interval
+      @all_fees = current_person.account(current_person.default_group).fees_invoice_for(@interval)
+      respond_to do |format|
+        format.html
+      end
+    else
+      flash[:error] = "You can't view other people fees invoices."
+      redirect_to transaction_history_person_path(current_person)
     end
   end
 
@@ -232,23 +278,66 @@ class PeopleController < ApplicationController
   end
 
   private
-    def correct_person_required
-      @person = Person.find(params[:id])
-      unless(params[:task].blank?)
-        can_change_status = case params[:task]
-        when 'deactivated'
-          current_person.admin? || (global_prefs.whitelist? && current_person.activator?)
-        when 'activator'
-          current_person.admin?
-        end
-        flash[:error] = t('error_admin_access_required') unless can_change_status
-        redirect_to person_path(@person) unless can_change_status
-      else
-        redirect_to home_url unless ( current_person.admin? or Person.find(params[:id]) == current_person )
+
+  def correct_person_required
+    @person = Person.find(params[:id])
+    unless(params[:task].blank?)
+      can_change_status = case params[:task]
+      when 'deactivated'
+        current_person.admin? || (global_prefs.whitelist? && current_person.activator?)
+      when 'activator'
+        current_person.admin?
+      end
+      flash[:error] = t('error_admin_access_required') unless can_change_status
+      redirect_to person_path(@person) unless can_change_status
+    else
+      redirect_to home_url unless ( current_person.admin? or Person.find(params[:id]) == current_person )
+    end
+  end
+
+  def cancel?
+    params["commit"] == t('button_cancel');
+  end
+
+  def set_up_metadata
+    @extra_fields
+    @person.person_metadata.each do |metadata|
+      obj = @extra_fields.select do |field|
+        field.id = metadata.form_signup_field_id
+      end
+      if obj.empty?
+        metadata.destroy
       end
     end
+  end
 
-    def cancel?
-      params["commit"] == t('button_cancel');
+  def update_credit_card(person)
+    if person.credit_card
+
+      if person.stripe_id
+        stripe_ret = StripeOps.create_customer(person.credit_card, person.expire, person.cvc, person.name, person.email)
+      else
+        stripe_ret = StripeOps.create_customer(person.credit_card, person.expire, person.cvc, person.name, person.email)
+      end
+
+      if stripe_ret.kind_of?(Stripe::Customer)
+        person.stripe_id = stripe_ret[:id]
+      else
+        person.errors.add(:stripe, stripe_ret)
+      end
     end
+  end
+
+  def set_metadata person, person_params
+    metadata_attrs = person_params[:person_metadata_attributes]
+    metadata_attrs.each do |key, value|
+      person.person_metadata.build(value)
+    end if metadata_attrs
+  end
+
+  def set_credit_card person, person_params
+    person.credit_card = person_params[:credit_card]
+    person.expire = person_params[:expire]
+    person.cvc = person_params[:cvc]
+  end
 end

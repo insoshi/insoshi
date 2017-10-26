@@ -67,7 +67,10 @@ namespace :heroku do
       end
     end
     puts "done."
-
+    
+    print "Setting up scheduler"
+    heroku.post_addon(app_name, 'scheduler')
+      
     print "Setting up memcache... "
     begin
     heroku.post_addon(app_name, 'memcachier')

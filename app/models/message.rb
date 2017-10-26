@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: communications
+#
+#  id                   :integer          not null, primary key
+#  subject              :string(255)
+#  content              :text
+#  sender_id            :integer
+#  recipient_id         :integer
+#  sender_deleted_at    :datetime
+#  sender_read_at       :datetime
+#  recipient_deleted_at :datetime
+#  recipient_read_at    :datetime
+#  replied_at           :datetime
+#  type                 :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  parent_id            :integer
+#  conversation_id      :integer
+#
+
 class Message < Communication
   extend PreferencesHelper
   include ActionView::Helpers::TextHelper
@@ -28,6 +49,15 @@ class Message < Communication
     end
   end
 
+  # System-generated messages do not always have a sender, so cause
+  # errors in the message views. In most cases, the sender would be
+  # considered the system or admin, so this method will return the
+  # administrator for this installation if the sender is nil. A better 
+  # solution would be to always assign a sender to the messages.
+  def sent_by
+    sender || Person.find_first_admin
+  end
+
   def parent
     return @parent unless @parent.nil?
     return Message.find(parent_id) unless parent_id.nil?
@@ -40,7 +70,7 @@ class Message < Communication
   
   # Return the sender/recipient that *isn't* the given person.
   def other_person(person)
-    person == sender ? recipient : sender
+    person == sender ? recipient : (sender || sent_by)
   end
 
   # Put the message in the trash for the given person.

@@ -2,7 +2,7 @@ class OffersController < ApplicationController
 
   respond_to :html, :xml, :json, :js
 
-  before_filter :login_required
+  before_filter :login_required, :credit_card_required
   load_resource :group
   load_and_authorize_resource :offer, :through => :group, :shallow => true
   before_filter :correct_person_required, :only => [:edit, :update, :destroy]
@@ -12,14 +12,18 @@ class OffersController < ApplicationController
     @selected_neighborhood = params[:neighborhood_id].nil? ? nil : Neighborhood.find(params[:neighborhood_id])
 
     @authorized = @group.authorized_to_view_offers?(current_person)
+
     if @authorized
-      @offers = Offer.custom_search(@selected_neighborhood || @selected_category,
-                                  @group,
-                                  active=params[:scope].nil?, # if a scope is not passed, just return actives
-                                  params[:page],
-                                  ajax_posts_per_page,
-                                  params[:search]
-                                  ).order("offers.updated_at desc")
+      @offers = Offer.custom_search(
+        @selected_neighborhood || @selected_category,
+        @group,
+        params[:scope].nil?, # if a scope is not passed, just return actives
+        params[:page],
+        ajax_posts_per_page,
+        params[:search]
+      ).order("offers.id desc")
+
+      OfferReport.create(record: params[:search], person: current_person, group: @group) if params[:search]
     else
       flash[:notice] = t('notice_member_to_view_offers')
       @offers = Offer.where('1=0').paginate(:page => 1, :per_page => ajax_posts_per_page)
@@ -31,7 +35,10 @@ class OffersController < ApplicationController
   end
 
   def show
+    return redirect_to group_path(@offer.group, anchor: "offers/#{ @offer.id }") unless request.xhr?
     @group = @offer.group
+    @transact_paid = Transact.where(:metadata_id => @offer.id, :worker_id => @offer.person_id).first
+    @transact_received = Transact.where(:metadata_id => @offer.id, :customer_id => @offer.person_id).first
     if @group.authorized_to_view_offers?(current_person)
       respond_with @offer do |format|
         format.js {render :action => 'reject' if not request.xhr?}
@@ -61,9 +68,7 @@ class OffersController < ApplicationController
     respond_to do |format|
       if @offer.save
         flash[:notice] = t('success_offer_created') if @offer.save
-        @offers = Offer.custom_search(nil,@group,active=true,page=1,ajax_posts_per_page,nil).order("updated_at desc")
-        #respond_with @offer
-        #format.html { redirect_to(@offer) }
+        @offers = Offer.custom_search(nil, @group, true, 1, ajax_posts_per_page, nil).order("id desc")
         format.js
         format.xml  { head :ok }
       else
@@ -93,7 +98,7 @@ class OffersController < ApplicationController
     respond_to do |format|
       if @offer.update_attributes(params[:offer])
         flash[:notice] = t('notice_offer_updated')
-        @offers = Offer.custom_search(nil,@group,active=true,page=1,ajax_posts_per_page,nil).order("updated_at desc")
+        @offers = Offer.custom_search(nil, @group, true, 1, ajax_posts_per_page, nil).order("id desc")
         #format.html { redirect_to(@offer) }
         format.js
         format.xml  { head :ok }

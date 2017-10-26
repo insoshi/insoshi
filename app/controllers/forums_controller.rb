@@ -1,7 +1,7 @@
 class ForumsController < ApplicationController
   load_resource :group, :only => [:show]
   
-  before_filter :login_required, :setup
+  before_filter :login_required, :setup, :credit_card_required
 
   def show
     @forum = @group.forum

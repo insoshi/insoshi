@@ -1,0 +1,17 @@
+Reqs
+
+<% @reports.reqs.each do |req| %>
+  => <%= req.record %> : <%= req.person.try(:name) %>
+<% end %>
+
+Offers
+
+<% @reports.offers.each do |offer| %>
+  => <%= offer.record %> : <%= offer.person.try(:name) %>
+<% end %>
+
+Memberships
+
+<% @reports.memberships.each do |membership| %>
+  => <%= membership.record %> : <%= membership.person.try(:name) %>
+<% end %>
