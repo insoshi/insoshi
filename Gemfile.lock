@@ -24,7 +24,6 @@ PATH
 
 GEM
   remote: https://rubygems.org/
-  remote: https://code.stripe.com/
   specs:
     aasm (3.0.15)
     actionmailer (3.2.16)

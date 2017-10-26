@@ -1,7 +1,6 @@
 #!/usr/bin/ruby
 
 source 'https://rubygems.org'
-source 'https://code.stripe.com'
 
 ruby "2.1.5"
 
