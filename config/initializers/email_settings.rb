@@ -3,8 +3,8 @@ if Rails.env.development?
 elsif Rails.env.test?
   ActionMailer::Base.delivery_method = :test
 else
-  global_prefs = Preference.first
-  if global_prefs.using_email?
+  global_prefs = Preference.first rescue nil
+  if global_prefs.try(:using_email?)
     ActionMailer::Base.delivery_method = :smtp
 
     smtp_port = ENV['SMTP_PORT'] ? ENV['SMTP_PORT'].to_i : 587
