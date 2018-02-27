@@ -181,7 +181,7 @@ end
   end
 
   config.model AccountImport do
-    parent Account 
+    parent Account
     list do
       field :person do
         label "Uploaded by"
@@ -384,6 +384,7 @@ end
       end
       field :mailchimp_send_welcome
       field :registration_intro
+      field :login_intro
       field :agreement
       field :about
       field :practice
@@ -925,7 +926,7 @@ end
 
   config.model 'OfferReport' do
     parent Report
-    
+
     label 'Report'
     label_plural 'Reports'
 
