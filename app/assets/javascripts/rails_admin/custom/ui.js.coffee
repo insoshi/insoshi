@@ -4,3 +4,4 @@
 
 $(document).on 'ready pjax:success', ->
   new SimpleMDE({ element: document.getElementById("offer_description") }) if $('#offer_description')
+  new SimpleMDE({ element: document.getElementById("preference_login_intro") }) if $('#preference_login_intro')
