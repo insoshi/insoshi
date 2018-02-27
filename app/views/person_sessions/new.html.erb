@@ -1,5 +1,9 @@
 
-<%= markdown global_prefs.login_intro if global_prefs.login_intro.try(:length).try(:>, 0) %>
+<%- if global_prefs.login_intro.try(:length).try(:>, 0) %>
+  <div class="login-intro">
+    <%= markdown global_prefs.login_intro %>
+  </div>
+<%- end %>
 
 <%= bootstrap_form_for @person_session, :html => {:class => 'form-signin'} do |f| -%>
   <h2 class="form-signin-heading"><%= t('sessions.new.header') %></h2>
