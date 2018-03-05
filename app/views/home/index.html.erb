@@ -1,5 +1,11 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'home' } %>
 
+<%- if preference_intro :category_intro %>
+  <div class="category-intro">
+    <%= markdown preference_intro :category_intro %>
+  </div>
+<%- end %>
+
 <div class="row">
   <div class="span9">
     <% pages = %w[about practice steps contact faq].select {|p| global_prefs.send(p).present?} %>
