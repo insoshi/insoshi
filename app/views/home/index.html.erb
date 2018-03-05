@@ -1,8 +1,10 @@
 <%= render :partial => 'shared/jscript', :locals => { :jscript_file_name => 'home' } %>
 
 <%- if preference_intro :category_intro %>
-  <div class="category-intro">
-    <%= markdown preference_intro :category_intro %>
+  <div class="row">
+    <div class="span12">
+      <%= markdown preference_intro :category_intro %>
+    </div>
   </div>
 <%- end %>
 
