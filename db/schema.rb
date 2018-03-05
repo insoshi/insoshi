@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180227052124) do
+ActiveRecord::Schema.define(:version => 20180305141432) do
 
   create_table "account_imports", :force => true do |t|
     t.integer  "person_id",                     :null => false
@@ -620,6 +620,7 @@ ActiveRecord::Schema.define(:version => 20180227052124) do
     t.boolean  "show_neighborhood",               :default => true
     t.integer  "admin_contact_id"
     t.text     "login_intro"
+    t.text     "category_intro"
   end
 
   create_table "privacy_settings", :force => true do |t|
