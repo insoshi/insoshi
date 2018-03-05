@@ -385,6 +385,7 @@ end
       field :mailchimp_send_welcome
       field :registration_intro
       field :login_intro
+      field :category_intro
       field :agreement
       field :about
       field :practice
