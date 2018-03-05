@@ -331,7 +331,7 @@ module ApplicationHelper
     intro = global_prefs.send key
     return if intro.nil?
     return if intro.strip.empty?
-    true
+    intro
   end
 
 
