@@ -1,7 +1,7 @@
 
-<%- if global_prefs.login_intro.try(:length).try(:>, 0) %>
+<%- if preference_intro :login_intro %>
   <div class="login-intro">
-    <%= markdown global_prefs.login_intro %>
+    <%= markdown preference_intro :login_intro %>
   </div>
 <%- end %>
 
