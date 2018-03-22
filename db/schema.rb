@@ -582,8 +582,8 @@ ActiveRecord::Schema.define(:version => 20180322113046) do
   add_index "posts", ["type"], :name => "index_posts_on_type"
 
   create_table "preferences", :force => true do |t|
-    t.boolean  "email_notifications",             :default => false,       :null => false
-    t.boolean  "email_verifications",             :default => false,       :null => false
+    t.boolean  "email_notifications",             :default => false, :null => false
+    t.boolean  "email_verifications",             :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "analytics"
@@ -603,8 +603,8 @@ ActiveRecord::Schema.define(:version => 20180322113046) do
     t.string   "new_member_notification"
     t.text     "registration_intro"
     t.integer  "default_group_id"
-    t.integer  "topic_refresh_seconds",           :default => 30,          :null => false
-    t.boolean  "groups",                          :default => true,        :null => false
+    t.integer  "topic_refresh_seconds",           :default => 30,    :null => false
+    t.boolean  "groups",                          :default => true,  :null => false
     t.string   "alt_signup_link"
     t.boolean  "protected_categories",            :default => false
     t.string   "mailchimp_list_id"
@@ -621,7 +621,7 @@ ActiveRecord::Schema.define(:version => 20180322113046) do
     t.integer  "admin_contact_id"
     t.text     "login_intro"
     t.text     "category_intro"
-    t.string   "logo_link",                       :default => "root_path"
+    t.string   "logo_link"
   end
 
   create_table "privacy_settings", :force => true do |t|
