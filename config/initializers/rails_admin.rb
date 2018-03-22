@@ -350,6 +350,7 @@ end
         help "*** Some preferences require server restart to take effect after change ***"
       end
       field :app_name
+      field :logo_link
       field :server_name
       field :admin_contact_id do
         properties[:collection] = Person.where(admin: true).order(:created_at).map {|p| [p.name,p.id]}
