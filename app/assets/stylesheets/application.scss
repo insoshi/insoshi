@@ -95,3 +95,11 @@ $button-color: $purple-color;
 .editor-toolbar.fullscreen {
   z-index: 1050;
 }
+
+.login-intro {
+  padding: 29px;
+  max-width: 300px;
+  margin: 0 auto 20px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+}

@@ -26,7 +26,5 @@ describe ApplicationHelper, :type => :helper do
       shortened.split.should have(8).words
       sentence.should start_with(shortened)
     end
-
   end
-
 end

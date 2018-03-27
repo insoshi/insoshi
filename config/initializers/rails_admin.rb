@@ -181,7 +181,7 @@ end
   end
 
   config.model AccountImport do
-    parent Account 
+    parent Account
     list do
       field :person do
         label "Uploaded by"
@@ -350,6 +350,7 @@ end
         help "*** Some preferences require server restart to take effect after change ***"
       end
       field :app_name
+      field :logo_link
       field :server_name
       field :admin_contact_id do
         properties[:collection] = Person.where(admin: true).order(:created_at).map {|p| [p.name,p.id]}
@@ -384,6 +385,8 @@ end
       end
       field :mailchimp_send_welcome
       field :registration_intro
+      field :login_intro
+      field :category_intro
       field :agreement
       field :about
       field :practice
@@ -925,7 +928,7 @@ end
 
   config.model 'OfferReport' do
     parent Report
-    
+
     label 'Report'
     label_plural 'Reports'
 

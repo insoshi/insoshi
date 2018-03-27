@@ -29,7 +29,7 @@
       js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.10&appId=136222976990921";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
-    
+
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -39,8 +39,9 @@
           <%- elsif current_person -%>
             <%= link_to global_prefs.app_name, group_path(current_person.default_group), :class => "brand" %>
           <% else -%>
-            <%= link_to global_prefs.app_name, 'https://www.vbsrmarket.com', :class => "brand" %>
+            <%= link_to global_prefs.app_name, global_prefs.logo_link, :class => "brand" %>
           <%- end -%>
+
           <%- if logged_in? -%>
             <form accept-charset="UTF-8" class="search_form navbar-form span1" method="get">
               <%= text_field_tag :search, params[:search], :placeholder => t('button_search'), :class => 'search_input' %>
@@ -149,8 +150,8 @@
           <div class="span6">
 
             <% admin = get_admin_contact() %>
-            
-            <div>  
+
+            <div>
               <!-- The admin contact information -->
               Please contact <%= admin.name %> for assistance.
               <br/>

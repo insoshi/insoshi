@@ -325,6 +325,15 @@ module ApplicationHelper
     group.memberships.where(person_id: person.id).first
   end
 
+  # Checks preference for the key and returns if its there.
+  # @param key [Symbol] the attribute name
+  def preference_intro(key)
+    intro = global_prefs.send key
+    return if intro.nil?
+    return if intro.strip.empty?
+    intro
+  end
+
 
   private
 
